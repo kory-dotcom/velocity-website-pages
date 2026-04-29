@@ -862,6 +862,28 @@
   outline: none !important;
   text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 0 1px rgba(255,255,255,0.4);
 }
+/* Mobile Explore: white button, digital magenta text */
+.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link {
+  margin: calc(6px * var(--vsl-ui-scale)) 0;
+  padding: calc(14px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale)) !important;
+  background: #fff !important;
+  color: var(--magenta) !important;
+  border: 1px solid rgba(16, 24, 43, 0.1) !important;
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  text-shadow: none !important;
+}
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link,
+.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:hover,
+.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus,
+.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible,
+.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:active {
+  background: #fff !important;
+  color: var(--magenta) !important;
+  border-color: rgba(238, 38, 95, 0.35) !important;
+  box-shadow: 0 2px 12px rgba(238, 38, 95, 0.1) !important;
+  text-shadow: none !important;
+}
 .vsl-navbar__overlay-arrow {
   width: calc(14px * var(--vsl-ui-scale));
   height: calc(14px * var(--vsl-ui-scale));
@@ -1198,18 +1220,20 @@
 }
 /* ── Race mega-menu ── */
 .vsl-navbar__race-trigger {
-  border: 1px solid var(--vsl-race-border);
+  border: 1px solid rgba(16, 24, 43, 0.12);
   border-radius: calc(6px * var(--vsl-ui-scale));
-  background: var(--vsl-race-bg);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   margin-left: calc(4px * var(--vsl-ui-scale));
+  color: var(--magenta) !important;
 }
 .vsl-navbar__race-trigger:hover,
 .vsl-navbar__race-trigger.is-open {
-  border-color: rgba(255,163,196,0.9);
-  background: rgba(238,38,95,0.32);
-  text-shadow: 0 0 8px rgba(238,38,95,0.3);
-  color: #fff !important;
+  border-color: rgba(238, 38, 95, 0.4);
+  background: #fff !important;
+  box-shadow: 0 2px 10px rgba(238, 38, 95, 0.12);
+  text-shadow: none !important;
+  color: var(--magenta) !important;
 }
 /* Focus alone (after click-close) must not keep the “open” pink — Elementor/themes often style button:focus */
 .vsl-navbar__race-trigger:focus-visible {
@@ -1218,11 +1242,11 @@
 }
 .vsl-navbar__race-trigger:focus:not(:hover):not(.is-open),
 .vsl-navbar__race-trigger:focus-visible:not(:hover):not(.is-open) {
-  border-color: var(--vsl-race-border) !important;
-  background: var(--vsl-race-bg) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08) !important;
+  border-color: rgba(16, 24, 43, 0.12) !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
   text-shadow: none !important;
-  color: var(--vsl-link-color) !important;
+  color: var(--magenta) !important;
 }
 .vsl-navbar__race-trigger::after { display: none; }
 .vsl-navbar__race-trigger .vsl-navbar__arrow {
