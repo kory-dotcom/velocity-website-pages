@@ -2889,18 +2889,10 @@
 
     root.querySelectorAll('a.vsl-bn-card').forEach(function(card) {
       card.setAttribute('data-elementor-open-lightbox', 'no');
-      card.removeAttribute('target');
-      card.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        var href = card.getAttribute('href');
-        if (!href || href.charAt(0) === '#') return;
-        var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
-        var title = nameEl ? nameEl.textContent.trim() : 'Book Now';
-        openModal(href, title);
-        return false;
-      }, true);
+      if (!card.getAttribute('target')) {
+        card.setAttribute('target', '_blank');
+      }
+      card.setAttribute('rel', 'noopener noreferrer');
     });
 
     var memModal = root.querySelector('#vsl-bn-mem-modal');
