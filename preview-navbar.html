@@ -873,7 +873,6 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
   text-shadow: none !important;
 }
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link,
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:hover,
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus,
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible,
@@ -882,6 +881,18 @@
   color: var(--vsl-bar-bg) !important;
   border-color: rgba(238, 38, 95, 0.35) !important;
   box-shadow: 0 2px 12px rgba(238, 38, 95, 0.1) !important;
+  text-shadow: none !important;
+}
+/* Mobile Explore open (after tap): digital magenta button, white label + chevron */
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link,
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:hover,
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus,
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible,
+.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:active {
+  background: var(--magenta) !important;
+  color: #fff !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 2px 14px rgba(238, 38, 95, 0.45) !important;
   text-shadow: none !important;
 }
 .vsl-navbar__overlay-arrow {
@@ -1227,13 +1238,21 @@
   margin-left: calc(4px * var(--vsl-ui-scale));
   color: var(--vsl-bar-bg) !important;
 }
-.vsl-navbar__race-trigger:hover,
-.vsl-navbar__race-trigger.is-open {
+.vsl-navbar__race-trigger:hover {
   border-color: rgba(238, 38, 95, 0.4);
   background: #fff !important;
   box-shadow: 0 2px 10px rgba(238, 38, 95, 0.12);
   text-shadow: none !important;
   color: var(--vsl-bar-bg) !important;
+}
+/* Desktop Explore open (after click): digital magenta button, white label + chevron */
+.vsl-navbar__race-trigger.is-open,
+.vsl-navbar__race-trigger.is-open:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: var(--magenta) !important;
+  box-shadow: 0 2px 14px rgba(238, 38, 95, 0.45);
+  text-shadow: none !important;
+  color: #fff !important;
 }
 /* Focus alone (after click-close) must not keep the “open” pink — Elementor/themes often style button:focus */
 .vsl-navbar__race-trigger:focus-visible {
