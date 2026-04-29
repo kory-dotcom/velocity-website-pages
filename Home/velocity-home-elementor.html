@@ -168,6 +168,27 @@
     color: var(--magenta);
     -webkit-text-fill-color: var(--magenta);
   }
+  .vsl-home-edr__eyebrow-mark {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    text-decoration: underline;
+    text-decoration-color: var(--magenta);
+    text-decoration-thickness: 0.11em;
+    text-underline-offset: 0.18em;
+    text-decoration-skip-ink: none;
+  }
+  .vsl-home-edr__eyebrow-tx {
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+    white-space: nowrap;
+  }
+  .vsl-home-edr__eyebrow-tx-star {
+    display: inline-block;
+    margin-right: 0.22em;
+    font-size: 0.85em;
+    line-height: 1;
+    vertical-align: 0.05em;
+  }
   .vsl-home-edr.is-in-view .vsl-home-edr__eyebrow {
     opacity: 0.95;
     transform: translateY(0);
@@ -967,70 +988,146 @@
     .vsl-home-how__steps { grid-template-columns: 1fr; }
   }
   .vsl-home-step {
+    --vsl-step-accent: var(--magenta);
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: clamp(24px, 3vw, 36px) clamp(16px, 2vw, 24px);
-    border-radius: 14px;
-    background: #fff;
-    border: 1px solid rgba(16,24,43,0.1);
+    text-align: left;
+    padding: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 60%, #0a0f1f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow:
-      0 12px 36px rgba(0, 0, 0, 0.32),
-      0 4px 12px rgba(0, 0, 0, 0.18);
-    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      0 14px 40px rgba(0, 0, 0, 0.5),
+      0 4px 12px rgba(0, 0, 0, 0.28);
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.45s ease,
+      border-color 0.35s ease;
     cursor: default;
+  }
+  .vsl-home-step:nth-child(1) { --vsl-step-accent: var(--red); }
+  .vsl-home-step:nth-child(2) { --vsl-step-accent: var(--yellow); }
+  .vsl-home-step:nth-child(3) { --vsl-step-accent: #4A6CF7; }
+  .vsl-home-step:nth-child(4) { --vsl-step-accent: var(--magenta); }
+  .vsl-home-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--vsl-step-accent);
+    z-index: 5;
+    pointer-events: none;
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-home-step:hover {
-      border-color: rgba(16,24,43,0.18);
+      border-color: rgba(255, 255, 255, 0.18);
       box-shadow:
-        0 24px 56px rgba(0, 0, 0, 0.42),
-        0 8px 20px rgba(0, 0, 0, 0.24);
-      transform: scale(1.08) translateY(-8px);
+        0 28px 64px rgba(0, 0, 0, 0.6),
+        0 10px 24px rgba(0, 0, 0, 0.36),
+        0 0 60px color-mix(in srgb, var(--vsl-step-accent) 18%, transparent);
+      transform: scale(1.05) translateY(-8px);
     }
-    .vsl-home-step:nth-child(1):hover { transform: scale(1.08) translateY(-8px) rotate(-1.2deg); }
-    .vsl-home-step:nth-child(2):hover { transform: scale(1.08) translateY(-8px) rotate(0.8deg); }
-    .vsl-home-step:nth-child(3):hover { transform: scale(1.08) translateY(-8px) rotate(-0.9deg); }
-    .vsl-home-step:nth-child(4):hover { transform: scale(1.08) translateY(-8px) rotate(1.1deg); }
+    .vsl-home-step:nth-child(1):hover { transform: scale(1.05) translateY(-8px) rotate(-1.2deg); }
+    .vsl-home-step:nth-child(2):hover { transform: scale(1.05) translateY(-8px) rotate(0.8deg); }
+    .vsl-home-step:nth-child(3):hover { transform: scale(1.05) translateY(-8px) rotate(-0.9deg); }
+    .vsl-home-step:nth-child(4):hover { transform: scale(1.05) translateY(-8px) rotate(1.1deg); }
+    .vsl-home-step:hover .vsl-home-step__media-img,
+    .vsl-home-step:hover .vsl-home-step__icon {
+      transform: scale(1.06);
+    }
   }
-  .vsl-home-step__num {
+  .vsl-home-step__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 70%),
+      repeating-linear-gradient(-32deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 16px),
+      linear-gradient(150deg, color-mix(in srgb, var(--vsl-step-accent) 18%, var(--deep-indigo)) 0%, var(--navy) 55%, #0a0f1f 100%);
+  }
+  .vsl-home-step__media-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+  }
+  .vsl-home-step__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 65% at 50% 35%, transparent 0%, rgba(8, 12, 28, 0.18) 60%, rgba(8, 12, 28, 0.7) 100%),
+      linear-gradient(to bottom, transparent 55%, rgba(8, 12, 28, 0.85) 100%);
+  }
+  .vsl-home-step__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 4;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px; height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--red), var(--magenta));
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.25rem;
-    font-style: italic;
+    background: var(--vsl-step-accent);
     color: #fff;
-    margin-bottom: 1rem;
-    flex-shrink: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(0, 0, 0, 0.25);
   }
+  .vsl-home-step:nth-child(2) .vsl-home-step__badge { color: var(--navy); }
   .vsl-home-step__icon {
-    width: 40px; height: 40px;
-    margin-bottom: 0.75rem;
-    fill: var(--magenta);
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    z-index: 3;
+    width: 30px; height: 30px;
+    fill: var(--vsl-step-accent);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .vsl-home-step__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(18px, 2.4vw, 26px) clamp(18px, 2.2vw, 26px) clamp(20px, 2.6vw, 28px);
   }
   .vsl-home-step__title {
-    margin: 0 0 0.35em;
+    margin: 0 0 0.5em;
     font-family: var(--font-display);
     font-size: var(--text-step-title);
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--navy);
+    color: #fff;
     line-height: 1.15;
   }
   .vsl-home-step__text {
     margin: 0;
     font-size: 0.9rem;
-    color: var(--slate-violet);
+    color: rgba(234, 234, 234, 0.78);
     line-height: 1.55;
+  }
+  @media (max-width: 560px) {
+    .vsl-home-step__media { aspect-ratio: 16 / 10; }
   }
 
   /* ── BUILT FOR SECTION: Feature callouts ── */
@@ -1423,7 +1520,7 @@
   <main>
     <!-- ═══════ HERO: Eat. Drink. Race. ═══════ -->
     <section class="vsl-home-edr" id="home-hero" aria-labelledby="vsl-home-edr-eyebrow">
-      <p class="vsl-home-edr__eyebrow" id="vsl-home-edr-eyebrow"><span class="vsl-home-edr__eyebrow-white">Houston's Premier</span> <span class="vsl-home-edr__eyebrow-accent">Sim Racing Lounge</span></p>
+      <p class="vsl-home-edr__eyebrow" id="vsl-home-edr-eyebrow"><span class="vsl-home-edr__eyebrow-white"><span class="vsl-home-edr__eyebrow-city" data-vsl-city-name>Houston</span>'s Premier</span> <span class="vsl-home-edr__eyebrow-accent">Sim Racing Lounge</span></p>
       <div class="vsl-home-edr__row">
         <figure class="vsl-home-edr__col">
           <div class="vsl-home-edr__media">
@@ -1505,8 +1602,8 @@
         </figure>
       </div>
       <div class="vsl-home-edr__ctas">
-        <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary">Book a Private Event</a>
-        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary vsl-home-edr__cta-events">Book Now</a>
+        <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary" data-vsl-cta-key="events">Book a Private Event</a>
+        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary vsl-home-edr__cta-events" data-vsl-cta-key="book">Book Now</a>
       </div>
       <div class="vsl-home-hero__finish" aria-hidden="true"></div>
     </section>
@@ -1523,31 +1620,51 @@
         <div class="vsl-home-how__steps">
 
           <div class="vsl-home-step">
-            <div class="vsl-home-step__num">1</div>
-            <svg class="vsl-home-step__icon" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
-            <h3 class="vsl-home-step__title">Book Online</h3>
-            <p class="vsl-home-step__text">Reserve a simulator for you and your crew. Walk-ins welcome, but online booking is the fastest way to lock in your seat.</p>
+            <div class="vsl-home-step__media">
+              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
+              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+              <div class="vsl-home-step__badge" aria-hidden="true">1</div>
+            </div>
+            <div class="vsl-home-step__body">
+              <h3 class="vsl-home-step__title">Book Online</h3>
+              <p class="vsl-home-step__text">Reserve a simulator for you and your crew. Walk-ins welcome, but online booking is the fastest way to lock in your seat.</p>
+            </div>
           </div>
 
           <div class="vsl-home-step">
-            <div class="vsl-home-step__num">2</div>
-            <svg class="vsl-home-step__icon" viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
-            <h3 class="vsl-home-step__title">Eat & Drink</h3>
-            <p class="vsl-home-step__text">From wagyu sliders to craft cocktails, fuel up about an hour before your session so you're ready when the green flag drops.</p>
+            <div class="vsl-home-step__media">
+              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
+              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+              <div class="vsl-home-step__badge" aria-hidden="true">2</div>
+            </div>
+            <div class="vsl-home-step__body">
+              <h3 class="vsl-home-step__title">Eat &amp; Drink</h3>
+              <p class="vsl-home-step__text">From wagyu sliders to craft cocktails, fuel up about an hour before your session so you're ready when the green flag drops.</p>
+            </div>
           </div>
 
           <div class="vsl-home-step">
-            <div class="vsl-home-step__num">3</div>
-            <svg class="vsl-home-step__icon" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
-            <h3 class="vsl-home-step__title">Choose Your Ride</h3>
-            <p class="vsl-home-step__text">Pick from a selection of cars, tracks, and experiences — including a virtual Houston 610 loop. Race solo or go head-to-head.</p>
+            <div class="vsl-home-step__media">
+              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
+              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              <div class="vsl-home-step__badge" aria-hidden="true">3</div>
+            </div>
+            <div class="vsl-home-step__body">
+              <h3 class="vsl-home-step__title">Choose Your Ride</h3>
+              <p class="vsl-home-step__text">Pick from a selection of cars, tracks, and experiences — including a <span data-vsl-city-variant data-houston="virtual Houston 610 loop" data-dallas="virtual Dallas circuit">virtual Houston 610 loop</span>. Race solo or go head-to-head.</p>
+            </div>
           </div>
 
           <div class="vsl-home-step">
-            <div class="vsl-home-step__num">4</div>
-            <svg class="vsl-home-step__icon" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
-            <h3 class="vsl-home-step__title">Race & Win</h3>
-            <p class="vsl-home-step__text">Hit the track and compete. Join monthly leaderboard challenges for bragging rights, prizes, and the top spot on our boards.</p>
+            <div class="vsl-home-step__media">
+              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
+              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              <div class="vsl-home-step__badge" aria-hidden="true">4</div>
+            </div>
+            <div class="vsl-home-step__body">
+              <h3 class="vsl-home-step__title">Race &amp; Win</h3>
+              <p class="vsl-home-step__text">Hit the track and compete. Join monthly leaderboard challenges for bragging rights, prizes, and the top spot on our boards.</p>
+            </div>
           </div>
 
         </div>
@@ -1560,7 +1677,7 @@
         <div class="vsl-home-built__content">
           <h2 class="vsl-home-built__title">Built for <em>Every Kind</em> of Racer</h2>
           <p class="vsl-home-built__text">
-            Velocity isn't just Houston's sim racing destination — it's where Houston comes to race, celebrate, and hang out. We are the go-to spot for:
+            Velocity isn't just <span data-vsl-city-name>Houston</span>'s sim racing destination — it's where <span data-vsl-city-name>Houston</span> comes to race, celebrate, and hang out. We are the go-to spot for:
           </p>
           <ul class="vsl-home-built__list">
             <li>
@@ -1587,7 +1704,7 @@
           <p class="vsl-home-built__text">
             Part of your crew not in the competitive spirit? No worries — we've got a full restaurant and bar to keep everyone occupied and happy.
           </p>
-          <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--primary">Plan Your Event</a>
+          <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--primary" data-vsl-cta-key="events">Plan Your Event</a>
         </div>
         <div class="vsl-home-built__visual">
           <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
@@ -1602,7 +1719,7 @@
       <div class="vsl-home-sims__inner">
         <h2 class="vsl-home-sims__title">The Best Racing Simulators in Texas</h2>
         <p class="vsl-home-sims__sub">
-          Professional-grade rigs designed for realism, comfort, and competition. From motion platforms to triple-screen setups, we've got the most immersive sim racing experience in Houston.
+          Professional-grade rigs designed for realism, comfort, and competition. From motion platforms to triple-screen setups, we've got the most immersive sim racing experience in <span data-vsl-city-name>Houston</span>.
         </p>
         <div class="vsl-home-sims__grid">
           <div class="vsl-home-sim-card">
@@ -1693,7 +1810,7 @@
           </div>
 
         </div>
-        <a href="https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0" target="_blank" rel="noopener" class="vsl-home-reviews__link">
+        <a href="https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0" target="_blank" rel="noopener" class="vsl-home-reviews__link" data-vsl-cta-key="reviews">
           Read All Reviews on Google
           <svg viewBox="0 0 24 24"><path d="M14 3l-1.4 1.4 5.6 5.6H3v2h15.2l-5.6 5.6L14 19l8-8z"/></svg>
         </a>
@@ -1706,7 +1823,7 @@
         <h2 class="vsl-home-cta__title">Ready to Race?</h2>
         <p class="vsl-home-cta__text">Whether it's your first lap or your hundredth, the starting grid is always open. Book online and get behind the wheel today.</p>
         <div class="vsl-home-cta__actions">
-          <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary">Book a Simulator</a>
+          <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary" data-vsl-cta-key="book">Book a Simulator</a>
           <a href="https://velocitysimlounge.com/food-and-drink/" class="vsl-home-btn vsl-home-btn--secondary">View Our Menu</a>
         </div>
       </div>
@@ -1749,6 +1866,56 @@
     var imgBase = isReplica ? '../Home/' : '';
     root.querySelectorAll('[data-vsl-home-img]').forEach(function(img) {
       img.src = imgBase + img.getAttribute('data-vsl-home-img');
+    });
+
+    /* ── Sync home page (city names, variant text, CTAs) with navbar location switcher ── */
+    var VSL_HOME_LOCATIONS = {
+      houston: {
+        label: 'Houston',
+        ctas: {
+          book:    'https://velocitysimlounge.com/book-now/',
+          events:  'https://velocitysimlounge.com/group-events/',
+          reviews: 'https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0'
+        }
+      },
+      dallas: {
+        label: 'Dallas',
+        ctas: {
+          book:    'https://velocitysimlounge.com/dallas',
+          events:  'https://velocitysimlounge.com/dallas',
+          reviews: 'https://velocitysimlounge.com/dallas'
+        }
+      }
+    };
+    function vslHomeApplyLocation(key) {
+      var cfg = VSL_HOME_LOCATIONS[key] || VSL_HOME_LOCATIONS.houston;
+      root.querySelectorAll('[data-vsl-city-name]').forEach(function(el) {
+        el.textContent = cfg.label;
+      });
+      root.querySelectorAll('[data-vsl-city-variant]').forEach(function(el) {
+        var text = el.getAttribute('data-' + key);
+        if (text) el.textContent = text;
+      });
+      root.querySelectorAll('[data-vsl-cta-key]').forEach(function(el) {
+        var ctaKey = el.getAttribute('data-vsl-cta-key');
+        var url = cfg.ctas[ctaKey];
+        if (url) {
+          el.setAttribute('href', url);
+          if (ctaKey === 'book' || ctaKey === 'events') {
+            el.setAttribute('aria-label', el.textContent.trim() + ' at ' + cfg.label);
+          }
+        }
+      });
+    }
+    var initialCity = 'houston';
+    try {
+      var stored = localStorage.getItem('vslPreferredLocation');
+      if (stored && VSL_HOME_LOCATIONS[stored]) initialCity = stored;
+    } catch (_) {}
+    vslHomeApplyLocation(initialCity);
+    window.addEventListener('_vslLocationChanged', function(e) {
+      var key = e && e.detail && e.detail.location;
+      if (key && VSL_HOME_LOCATIONS[key]) vslHomeApplyLocation(key);
     });
 
     /* ── Eat. Drink. Race. hero: trigger staggered reveal when in view ── */

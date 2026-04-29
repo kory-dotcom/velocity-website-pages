@@ -56,6 +56,11 @@
     // to the local replica. Do NOT add velocitysimracinglounge.tripleseat.com here.
   };
 
+  /** Browser tab: 'Page name' : Velocity Staging Site */
+  function replicaDocumentTitle(pageTitle) {
+    return "'" + pageTitle + "' : Velocity Staging Site";
+  }
+
   var navbarRoot = document.getElementById("replica-navbar-root");
   var pageRoot = document.getElementById("replica-page-root");
   var params = new URLSearchParams(window.location.search);
@@ -303,7 +308,7 @@
 
   function loadModulePage() {
     var page = REPLICA_PAGES[pageKey];
-    document.title = page.title + " | Velocity Local Replica";
+    document.title = replicaDocumentTitle(page.title);
 
     if (!page.modulePath) {
       pageRoot.innerHTML = makeHomeMarkup();
@@ -321,8 +326,10 @@
         executeInlineScripts(pageRoot);
         applyLocalLinks(pageRoot);
         applySectionReveals(pageRoot);
+        document.title = replicaDocumentTitle(page.title);
       })
       .catch(function (err) {
+        document.title = replicaDocumentTitle(page.title);
         pageRoot.innerHTML =
           '<div style="padding:24px;color:#eaeaea;font-family:Inter,sans-serif;">' +
           "<h2>Unable to load page module</h2>" +
@@ -342,6 +349,7 @@
       return loadModulePage();
     })
     .catch(function (err) {
+      document.title = replicaDocumentTitle("Navbar");
       navbarRoot.innerHTML = "";
       pageRoot.innerHTML =
         '<div style="padding:24px;color:#eaeaea;font-family:Inter,sans-serif;">' +
