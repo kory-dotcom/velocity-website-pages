@@ -862,12 +862,12 @@
   outline: none !important;
   text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 0 1px rgba(255,255,255,0.4);
 }
-/* Mobile Explore: white button, digital magenta text */
+/* Mobile Explore: white button, navbar navy text */
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link {
   margin: calc(6px * var(--vsl-ui-scale)) 0;
   padding: calc(14px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale)) !important;
   background: #fff !important;
-  color: var(--magenta) !important;
+  color: var(--vsl-bar-bg) !important;
   border: 1px solid rgba(16, 24, 43, 0.1) !important;
   border-radius: calc(8px * var(--vsl-ui-scale));
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
@@ -879,7 +879,7 @@
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible,
 .vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:active {
   background: #fff !important;
-  color: var(--magenta) !important;
+  color: var(--vsl-bar-bg) !important;
   border-color: rgba(238, 38, 95, 0.35) !important;
   box-shadow: 0 2px 12px rgba(238, 38, 95, 0.1) !important;
   text-shadow: none !important;
@@ -1225,7 +1225,7 @@
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   margin-left: calc(4px * var(--vsl-ui-scale));
-  color: var(--magenta) !important;
+  color: var(--vsl-bar-bg) !important;
 }
 .vsl-navbar__race-trigger:hover,
 .vsl-navbar__race-trigger.is-open {
@@ -1233,7 +1233,7 @@
   background: #fff !important;
   box-shadow: 0 2px 10px rgba(238, 38, 95, 0.12);
   text-shadow: none !important;
-  color: var(--magenta) !important;
+  color: var(--vsl-bar-bg) !important;
 }
 /* Focus alone (after click-close) must not keep the “open” pink — Elementor/themes often style button:focus */
 .vsl-navbar__race-trigger:focus-visible {
@@ -1246,7 +1246,7 @@
   background: #fff !important;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
   text-shadow: none !important;
-  color: var(--magenta) !important;
+  color: var(--vsl-bar-bg) !important;
 }
 .vsl-navbar__race-trigger::after { display: none; }
 .vsl-navbar__race-trigger .vsl-navbar__arrow {
