@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location — Velocity Sim Racing Lounge (Preview)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #101828; }
+    .preview-controls {
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      z-index: 99999;
+      display: flex;
+      gap: 6px;
+      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    }
+    .preview-controls button {
+      padding: 8px 16px;
+      border: 1px solid rgba(234,234,234,0.3);
+      border-radius: 6px;
+      background: rgba(16,24,40,0.9);
+      color: #eaeaea;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .preview-controls button:hover { background: rgba(41,56,147,0.6); border-color: rgba(234,234,234,0.5); }
+    .preview-controls button.active { background: #EE265F; border-color: #EE265F; color: #fff; }
+  </style>
+</head>
+<body>
+
+<div class="preview-controls">
+  <button onclick="switchLoc('houston')" id="btn-houston" class="active">Houston</button>
+  <button onclick="switchLoc('dallas')" id="btn-dallas">Dallas</button>
+</div>
+
+<div id="module-mount"></div>
+
+<script>
+function switchLoc(key) {
+  try { localStorage.setItem('vslPreferredLocation', key); } catch(e) {}
+  document.getElementById('btn-houston').classList.toggle('active', key === 'houston');
+  document.getElementById('btn-dallas').classList.toggle('active', key === 'dallas');
+  window.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: key } }));
+}
+
+(function() {
+  var mount = document.getElementById('module-mount');
+  var loaded = false;
+  fetch('velocity-contact-elementor.html')
+    .then(function(r) { return r.text(); })
+    .then(function(html) {
+      if (loaded) return;
+      loaded = true;
+      mount.innerHTML = html;
+      var scripts = mount.querySelectorAll('script');
+      scripts.forEach(function(s) {
+        if (s.src) return;
+        var ns = document.createElement('script');
+        ns.textContent = s.textContent;
+        s.parentNode.replaceChild(ns, s);
+      });
+    });
+})();
+</script>
+
+</body>
+</html>

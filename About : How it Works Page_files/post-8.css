@@ -1,0 +1,100 @@
+.elementor-kit-8{--e-global-color-primary:#FF0096;--e-global-color-secondary:#FFFFFF;--e-global-color-text:#D4D4D4;--e-global-color-accent:#16274A;--e-global-color-4c2f347:#F1DCAA;--e-global-color-9af77bc:#0E1827;--e-global-color-0c2c3bb:#FFFFFF;--e-global-color-bb82ae2:#202020;--e-global-color-2a2276c:#14F8EF;--e-global-color-4841d1a:#EA1313;--e-global-color-7695369:#D22026;--e-global-color-bf213f3:#EE265F;--e-global-color-c862426:#FDC70C;--e-global-color-f9b4f42:#293893;--e-global-color-68cb31f:#10182B;--e-global-color-35f03c8:#EAEAEA;--e-global-color-97dfe79:#DFDFDE;--e-global-color-90d673e:#B2AEBF;--e-global-color-9b4556b:#5F5782;--e-global-color-677fa29:#191B4D;--e-global-typography-primary-font-family:"Anton";--e-global-typography-primary-font-size:1.8em;--e-global-typography-primary-font-weight:800;--e-global-typography-primary-text-transform:uppercase;--e-global-typography-primary-font-style:italic;--e-global-typography-secondary-font-family:"Archivo Narrow";--e-global-typography-secondary-font-size:1.2em;--e-global-typography-secondary-font-weight:500;--e-global-typography-text-font-family:"Archivo Narrow";--e-global-typography-text-font-size:1.3em;--e-global-typography-text-font-weight:400;--e-global-typography-accent-font-family:"Archivo Narrow";--e-global-typography-accent-font-weight:500;--e-global-typography-accent-font-style:italic;--e-global-typography-618fedf-font-family:"Anton";color:var( --e-global-color-secondary );}.elementor-kit-8 e-page-transition{background-color:#FFBC7D;}.elementor-kit-8 h1{color:var( --e-global-color-secondary );}.elementor-kit-8 h2{color:var( --e-global-color-secondary );}.elementor-kit-8 h3{color:var( --e-global-color-secondary );}.elementor-kit-8 h4{color:var( --e-global-color-secondary );}.elementor-kit-8 h5{color:var( --e-global-color-secondary );}.elementor-kit-8 button,.elementor-kit-8 input[type="button"],.elementor-kit-8 input[type="submit"],.elementor-kit-8 .elementor-button{color:#FFFFFF;}.elementor-kit-8 button:hover,.elementor-kit-8 button:focus,.elementor-kit-8 input[type="button"]:hover,.elementor-kit-8 input[type="button"]:focus,.elementor-kit-8 input[type="submit"]:hover,.elementor-kit-8 input[type="submit"]:focus,.elementor-kit-8 .elementor-button:hover,.elementor-kit-8 .elementor-button:focus{color:#FFFFFF;}.elementor-kit-8 img{filter:brightness( 100% ) contrast( 100% ) saturate( 100% ) blur( 0px ) hue-rotate( 0deg );}.elementor-kit-8 img:hover{filter:brightness( 100% ) contrast( 100% ) saturate( 100% ) blur( 0px ) hue-rotate( 0deg );}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1140px;}.e-con{--container-max-width:1140px;}.elementor-widget:not(:last-child){margin-block-end:20px;}.elementor-element{--widgets-spacing:20px 20px;--widgets-spacing-row:20px;--widgets-spacing-column:20px;}{}h1.entry-title{display:var(--page-title-display);}.site-header{padding-inline-end:0px;padding-inline-start:0px;}.site-footer .site-branding{flex-direction:column;align-items:stretch;}@media(max-width:1024px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}/* Start custom CSS *//* Fix horizontal scroll without breaking vertical physics */
+body {
+    overflow-x: hidden;
+    position: relative; 
+}
+
+/* Ensure HTML tag stays flexible for the browser */
+html {
+    overflow-x: unset !important;
+}
+
+
+/* INSTRUCTIONS:
+   1. Open Elementor.
+   2. Select the "Column" (gray icon) for each package.
+   3. Go to Advanced > Layout > CSS Classes.
+   4. Add the word: event-card
+   5. Copy/Paste this code into Site Settings > Custom CSS.
+*/
+
+/* =========================================
+   1. BANNER UNDERLINE FIX
+   ========================================= */
+.headline-underline {
+    width: 100% !important; /* Spans the whole line of text */
+    max-width: 500px;
+    height: 20px;
+    /* Force no-repeat to prevent "multiple lines" on mobile */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 20'%3E%3Cpath d='M10 10 C 120 5, 380 15, 490 10' stroke='%23ff0090' stroke-width='8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center bottom !important;
+    margin: 5px auto 0 !important;
+    transform: translateX(0);
+}
+
+/* =========================================
+   2. EVENT CARD GRID FIXES (Structural Only)
+   ========================================= */
+.event-card {
+    /* FIX 1: The "Stay Inside" Rule */
+    /* Forces images to respect the rounded corners you set in Elementor */
+    overflow: hidden !important;
+
+    /* FIX 2: The "Size Match" Rule */
+    /* Ensures padding/borders don't push the width of cards out of sync */
+    box-sizing: border-box !important;
+
+    /* FIX 3: Flex Alignment */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+
+    /* Removed border and radius so they don't conflict with your Elementor settings */
+    padding: 0 !important; 
+
+    /* ZOOM STABILITY: Keeps the cards crisp during hover animations */
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Brings the zoomed card to the front of the stack */
+.event-card:hover {
+    z-index: 10 !important;
+}
+
+.event-card .elementor-widget-image {
+    line-height: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.event-card img {
+    /* FIX 5: Standardize the Viewport */
+    /* Ensures all card images align horizontally regardless of original size */
+    width: 100% !important;
+    height: 250px !important; 
+    object-fit: cover !important; 
+    
+    /* Smooth transition for the image zoom effect */
+    transition: transform 0.5s ease !important;
+}
+
+/* Mobile Specific Spacing and Clipping */
+@media (max-width: 767px) {
+    .event-card {
+        margin-bottom: 30px !important; /* Controlled spacing between cards on mobile */
+        width: 100% !important;
+        display: block !important; /* Fixes potential flex-width issues on older browsers */
+    }
+    
+    .event-card img {
+        height: 220px !important; /* Slightly shorter for mobile screens */
+    }
+
+    .headline-underline {
+        max-width: 90%; /* Prevents horizontal scroll on small devices */
+    }
+}/* End custom CSS */

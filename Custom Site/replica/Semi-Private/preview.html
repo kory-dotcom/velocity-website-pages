@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview — Semi-Private Group Events | Velocity Sim Racing Lounge</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #101828;
+      color: #eaeaea;
+    }
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: #1e2a3a;
+      border-bottom: 2px solid #293893;
+      padding: 10px 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #B2AEBF;
+    }
+    .preview-bar strong { color: #FDC70C; font-weight: 700; }
+    .preview-bar code {
+      background: rgba(234, 234, 234, 0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #EAEAEA;
+    }
+    .preview-shell {
+      max-width: 100%;
+      margin: 0 auto;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="preview-bar">
+    <strong>PREVIEW MODE</strong>
+    <span>Module: <code>velocity-semi-private-elementor.html</code></span>
+    <span>&mdash; This bar simulates the site header area. It will not appear in production.</span>
+  </div>
+
+  <div class="preview-shell">
+    <script>
+      fetch('velocity-semi-private-elementor.html')
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+          document.querySelector('.preview-shell').innerHTML = html;
+          var scripts = document.querySelector('.preview-shell').querySelectorAll('script');
+          scripts.forEach(function(orig) {
+            var s = document.createElement('script');
+            if (orig.src) {
+              s.src = orig.src;
+            } else {
+              s.textContent = orig.textContent;
+            }
+            orig.parentNode.replaceChild(s, orig);
+          });
+        })
+        .catch(function(err) {
+          document.querySelector('.preview-shell').innerHTML =
+            '<p style="padding:40px;color:red;font-size:18px;">Failed to load module: ' + err.message + '<br>Make sure preview.html and velocity-semi-private-elementor.html are in the same folder and served via a local server (e.g. <code>npx serve .</code>).</p>';
+        });
+    </script>
+  </div>
+
+</body>
+</html>

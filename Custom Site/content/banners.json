@@ -1,0 +1,26 @@
+[
+  {
+    "id": "welcome",
+    "text": "Welcome to the Velocity CMS test site! This is a sample banner.",
+    "type": "info",
+    "locations": [],
+    "startDate": null,
+    "endDate": null,
+    "dismissable": true,
+    "priority": 1,
+    "active": true
+  },
+  {
+    "id": "houston-hours",
+    "text": "Houston: Extended hours this weekend -- open until midnight!",
+    "type": "promo",
+    "locations": [
+      "houston"
+    ],
+    "startDate": null,
+    "endDate": null,
+    "dismissable": true,
+    "priority": 2,
+    "active": true
+  }
+]

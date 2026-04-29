@@ -1,0 +1,248 @@
+{
+  "page": "promotions",
+  "label": "Promotions",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "eyebrow": {
+          "type": "text",
+          "label": "Eyebrow Text"
+        },
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Hero Photo",
+          "perLocation": true
+        }
+      }
+    },
+    "discounts": {
+      "label": "Everyday Discounts",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Discount Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            },
+            "badge": {
+              "type": "text",
+              "label": "Badge Text"
+            },
+            "note": {
+              "type": "text",
+              "label": "Note"
+            }
+          }
+        }
+      }
+    },
+    "ladiesNight": {
+      "label": "Ladies Night",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "schedule": {
+          "type": "text",
+          "label": "Schedule",
+          "perLocation": true
+        },
+        "time": {
+          "type": "text",
+          "label": "Time",
+          "perLocation": true
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "image": {
+          "type": "image",
+          "label": "Photo",
+          "perLocation": true
+        },
+        "tags": {
+          "type": "text",
+          "label": "Tags (comma-separated)"
+        }
+      }
+    },
+    "spotlight": {
+      "label": "Calendar Spotlight",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Spotlight Items",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            }
+          }
+        }
+      }
+    },
+    "seasonal": {
+      "label": "Seasonal Promotion",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "title": {
+          "type": "text",
+          "label": "Featured Promo Title"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "highlight": {
+          "type": "text",
+          "label": "Highlight Line"
+        },
+        "image": {
+          "type": "image",
+          "label": "Image",
+          "perLocation": true
+        },
+        "startDate": {
+          "type": "datetime",
+          "label": "Start Date"
+        },
+        "endDate": {
+          "type": "datetime",
+          "label": "End Date"
+        }
+      }
+    },
+    "explore": {
+      "label": "Explore More",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Crosslink Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "tag": {
+              "type": "text",
+              "label": "Tag (e.g. from $65)"
+            },
+            "image": {
+              "type": "image",
+              "label": "Image"
+            },
+            "link": {
+              "type": "url",
+              "label": "Link"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Link",
+          "perLocation": true
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Link",
+          "perLocation": true
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

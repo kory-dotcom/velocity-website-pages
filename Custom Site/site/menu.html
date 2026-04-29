@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | Velocity Sim Racing Lounge</title>
+  <link rel="stylesheet" href="/cms/style.css">
+</head>
+<body data-page="food-drink">
+
+  <script>
+    if (new URLSearchParams(window.location.search).get('env') === 'staging') {
+      document.write('<div class="staging-indicator">Staging Preview — Changes are not live</div>');
+    }
+  </script>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="/" class="logo">Velocity<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/site/menu.html">Menu</a>
+        <a href="/site/contact.html">Contact</a>
+        <div data-cms-location-switcher></div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" data-cms-bg="hero.backgroundImage">
+    <div class="container">
+      <h1 data-cms="hero.heading">Our Menu</h1>
+      <p data-cms="hero.subcopy">Fuel up before, during, or after your race.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <!-- Menu categories repeater -->
+      <div data-cms-repeater="categories.items">
+        <div class="menu-category">
+          <h3 data-cms-field="name">Category Name</h3>
+          <p data-cms-field="description">Category description</p>
+          <!-- Note: nested repeaters render via initial seed data; 
+               deep nesting handled in content JSON directly for menu items -->
+        </div>
+      </div>
+
+      <!-- Static fallback menu display (hydrated from flat content) -->
+      <div id="menuDisplay"></div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Race?</h2>
+      <p>Book your simulator session and enjoy our full menu while you race.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-hero">Book Now</a>
+        <a href="/" class="btn-outline">Back to Home</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Velocity Sim Racing Lounge — Houston & Dallas</p>
+    </div>
+  </footer>
+
+  <script src="/cms/hydrate.js"></script>
+  <script>
+    // Enhanced menu rendering: fetch content and render the nested menu structure
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const env = params.get('env') || 'production';
+      const loc = params.get('loc') || localStorage.getItem('vsl_location') || '';
+
+      try {
+        const res = await fetch(`/api/content/food-drink?env=${env}&loc=${loc}`);
+        if (!res.ok) return;
+        const content = await res.json();
+
+        const display = document.getElementById('menuDisplay');
+        if (!display) return;
+
+        const categories = content?.categories?.items || [];
+        // Hide the repeater template
+        document.querySelectorAll('[data-cms-repeater="categories.items"]').forEach(el => el.style.display = 'none');
+
+        categories.forEach(cat => {
+          const section = document.createElement('div');
+          section.className = 'menu-category';
+
+          section.innerHTML = `<h3>${cat.name || ''}</h3><p>${cat.description || ''}</p>`;
+
+          const grid = document.createElement('div');
+          grid.className = 'menu-grid';
+
+          (cat.menuItems || []).forEach(item => {
+            const el = document.createElement('div');
+            el.className = 'menu-item';
+            el.innerHTML = `
+              <div class="menu-item-img">${item.image ? `<img src="${item.image}" alt="${item.name}">` : ''}</div>
+              <div class="menu-item-info">
+                <h4>${item.name || ''}</h4>
+                <p>${item.description || ''}</p>
+                ${item.price ? `<div class="price">${item.price}</div>` : ''}
+              </div>
+            `;
+            grid.appendChild(el);
+          });
+
+          section.appendChild(grid);
+          display.appendChild(section);
+        });
+      } catch (err) {
+        console.warn('[Menu] Render error:', err);
+      }
+    })();
+  </script>
+</body>
+</html>

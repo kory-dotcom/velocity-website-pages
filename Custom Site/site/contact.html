@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Velocity Sim Racing Lounge</title>
+  <link rel="stylesheet" href="/cms/style.css">
+</head>
+<body data-page="contact">
+
+  <script>
+    if (new URLSearchParams(window.location.search).get('env') === 'staging') {
+      document.write('<div class="staging-indicator">Staging Preview — Changes are not live</div>');
+    }
+  </script>
+
+  <nav class="site-nav">
+    <div class="container">
+      <a href="/" class="logo">Velocity<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/site/menu.html">Menu</a>
+        <a href="/site/contact.html">Contact</a>
+        <div data-cms-location-switcher></div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1 data-cms="hero.heading">Contact Us</h1>
+      <p data-cms="hero.subcopy">Have a question or want to plan an event? We'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <!-- Locations -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Locations</h2>
+      </div>
+      <div class="locations-grid" id="locationsDisplay"></div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class="section" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container" style="max-width:600px">
+      <div class="section-header">
+        <h2>Get in Touch</h2>
+        <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+      </div>
+      <div data-cms-form="contact"></div>
+    </div>
+  </section>
+
+  <!-- Corporate Events -->
+  <section class="section">
+    <div class="container" style="max-width:600px">
+      <div class="section-header">
+        <h2>Planning a Corporate Event?</h2>
+        <p>We host team building events, client entertainment, and private parties.</p>
+      </div>
+      <div data-cms-form="corporate-inquiry"></div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Velocity Sim Racing Lounge — Houston & Dallas</p>
+    </div>
+  </footer>
+
+  <script src="/cms/hydrate.js"></script>
+  <script>
+    // Render location cards from content
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const env = params.get('env') || 'production';
+      const loc = params.get('loc') || '';
+
+      try {
+        const res = await fetch(`/api/content/contact?env=${env}&loc=${loc}`);
+        if (!res.ok) return;
+        const content = await res.json();
+
+        const display = document.getElementById('locationsDisplay');
+        if (!display) return;
+
+        const items = content?.locations?.items || [];
+        items.forEach(location => {
+          const card = document.createElement('div');
+          card.className = 'location-card';
+          card.innerHTML = `
+            <h3>${location.name || ''}</h3>
+            <div class="detail">
+              <div class="detail-label">Address</div>
+              <div class="detail-value">${location.address || ''}</div>
+            </div>
+            <div class="detail">
+              <div class="detail-label">Phone</div>
+              <div class="detail-value"><a href="tel:${(location.phone || '').replace(/[^0-9+]/g, '')}">${location.phone || ''}</a></div>
+            </div>
+            <div class="detail">
+              <div class="detail-label">Email</div>
+              <div class="detail-value"><a href="mailto:${location.email || ''}">${location.email || ''}</a></div>
+            </div>
+            <div class="detail">
+              <div class="detail-label">Hours</div>
+              <div class="detail-value">${location.hours || ''}</div>
+            </div>
+          `;
+          display.appendChild(card);
+        });
+      } catch (err) {
+        console.warn('[Contact] Render error:', err);
+      }
+    })();
+  </script>
+</body>
+</html>

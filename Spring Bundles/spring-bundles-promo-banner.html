@@ -1,0 +1,425 @@
+<!-- CSS for the Spring Bundles Floating Banner (Desktop) & Sticky Bar (Mobile) -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&display=swap');
+
+	:root {
+		--sb-navy: #10182B;
+		--sb-magenta: #EE265F;
+		--sb-blue: #293893;
+		--sb-yellow: #FDC70C;
+	}
+
+	/* =========================================
+	   DESKTOP STYLES (Floating Card)
+	   ========================================= */
+	#sb-promo-card {
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 520px;
+		z-index: 999999;
+		background: white;
+		border-radius: 28px;
+		overflow: hidden;
+		box-shadow: 0 30px 60px rgba(16, 24, 43, 0.45);
+		text-align: center;
+		font-family: 'Khand', system-ui, sans-serif;
+		animation: sb-card-entry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	#sb-promo-minimized {
+		display: none;
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		z-index: 999999;
+		background: var(--sb-magenta);
+		color: white;
+		padding: 12px 28px;
+		border-radius: 50px;
+		cursor: pointer;
+		font-family: 'Khand', system-ui, sans-serif;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 17px;
+		letter-spacing: 0.5px;
+		box-shadow: 0 10px 20px rgba(238, 38, 95, 0.35);
+		transition: transform 0.2s;
+		animation: sb-bounce-in 0.5s;
+	}
+
+	#sb-promo-minimized:hover {
+		transform: scale(1.1);
+	}
+
+	.sb-card-header {
+		background: linear-gradient(162deg, #191B4D 0%, var(--sb-navy) 100%);
+		padding: 40px 24px 48px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sb-eyebrow {
+		display: inline-block;
+		padding: 6px 20px;
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #fff;
+		background: linear-gradient(135deg, #D22026 0%, var(--sb-magenta) 100%);
+		border-radius: 0;
+		margin-bottom: 16px;
+	}
+
+	.sb-headline {
+		font-size: 42px;
+		line-height: 1.05;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		color: white;
+		letter-spacing: 0.02em;
+		margin: 0;
+	}
+
+	.sb-headline span {
+		color: var(--sb-yellow);
+	}
+
+	.sb-card-body {
+		padding: 28px 36px 40px;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.sb-subtitle {
+		font-size: 20px;
+		text-transform: uppercase;
+		color: var(--sb-navy);
+		font-weight: 600;
+		font-style: italic;
+		margin: 0;
+		line-height: 1.25;
+		letter-spacing: 0.02em;
+	}
+
+	.sb-date-text {
+		font-family: 'Archivo Narrow', 'Inter', Arial, sans-serif;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--sb-navy);
+		opacity: 0.6;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	#sb-card-timer {
+		font-size: 34px;
+		color: var(--sb-navy);
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.5px;
+		margin: 8px 0;
+		padding: 5px 20px;
+		border-top: 1px solid #eee;
+		width: 100%;
+	}
+
+	.sb-card-btn {
+		position: relative;
+		background: var(--sb-magenta);
+		color: white;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		font-size: 28px;
+		font-weight: 700;
+		font-style: italic;
+		display: inline-block;
+		border-radius: 14px;
+		padding: 14px 48px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		transition: all 0.3s ease;
+		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		animation: sb-btn-pulse 2s infinite;
+	}
+
+	.sb-card-btn:hover {
+		transform: scale(1.05);
+		background: #d41e53;
+		color: white;
+	}
+
+	.sb-controls {
+		position: absolute;
+		top: 14px;
+		right: 18px;
+		z-index: 10;
+	}
+
+	.sb-control-btn {
+		cursor: pointer;
+		font-size: 22px;
+		color: rgba(255,255,255,0.4);
+		transition: all 0.2s;
+		font-family: Arial, sans-serif;
+	}
+
+	.sb-control-btn:hover { color: white; }
+
+	/* =========================================
+	   MOBILE STYLES (Sticky Bar)
+	   ========================================= */
+	@media (max-width: 768px) {
+		#sb-promo-card { display: none !important; }
+
+		#sb-mobile-bar {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+			width: 100%;
+			background: linear-gradient(162deg, #191B4D 0%, var(--sb-navy) 100%);
+			padding: 22px 15px;
+			text-align: center;
+			box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+			border-bottom: 5px solid var(--sb-magenta);
+		}
+
+		.sb-mobile-eyebrow {
+			font-family: 'Khand', system-ui, sans-serif;
+			display: inline-block;
+			padding: 4px 14px;
+			font-size: 11px;
+			font-weight: 700;
+			font-style: italic;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: #fff;
+			background: linear-gradient(135deg, #D22026 0%, var(--sb-magenta) 100%);
+			margin-bottom: 8px;
+		}
+
+		.sb-mobile-headline {
+			font-family: 'Khand', system-ui, sans-serif;
+			color: white;
+			font-size: 24px;
+			font-weight: 700;
+			font-style: italic;
+			text-transform: uppercase;
+			margin-bottom: 2px;
+			letter-spacing: 0.02em;
+			line-height: 1.1;
+		}
+
+		.sb-mobile-headline span { color: var(--sb-yellow); }
+
+		.sb-mobile-subtitle {
+			font-family: 'Khand', system-ui, sans-serif;
+			font-size: 13px;
+			text-transform: uppercase;
+			color: #ffffff;
+			font-weight: 600;
+			font-style: italic;
+			margin-bottom: 6px;
+			letter-spacing: 0.04em;
+			opacity: 0.85;
+		}
+
+		.sb-mobile-timer-label {
+			font-family: 'Archivo Narrow', 'Inter', Arial, sans-serif;
+			font-size: 10px;
+			text-transform: uppercase;
+			color: rgba(255,255,255,0.6);
+			font-weight: 700;
+			letter-spacing: 0.08em;
+			margin-bottom: 2px;
+		}
+
+		#sb-mobile-timer {
+			font-family: 'Khand', system-ui, sans-serif;
+			color: white;
+			font-size: 26px;
+			font-weight: 700;
+			font-style: italic;
+			margin-bottom: 10px;
+			letter-spacing: 0.5px;
+		}
+
+		.sb-mobile-btn {
+			background: var(--sb-magenta);
+			color: white;
+			text-decoration: none;
+			font-family: 'Khand', system-ui, sans-serif;
+			font-size: 20px;
+			font-weight: 700;
+			font-style: italic;
+			padding: 10px 42px;
+			border-radius: 12px;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+			animation: sb-btn-pulse 2s infinite;
+		}
+
+		#sb-mobile-close {
+			position: absolute;
+			top: 10px;
+			right: 14px;
+			color: rgba(255,255,255,0.45);
+			font-size: 22px;
+			cursor: pointer;
+			font-weight: bold;
+		}
+	}
+
+	/* Animations */
+	@keyframes sb-card-entry {
+		from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	}
+	@keyframes sb-bounce-in {
+		0% { transform: scale(0); }
+		100% { transform: scale(1); }
+	}
+	@keyframes sb-btn-pulse {
+		0% { box-shadow: 0 0 0 0 rgba(238, 38, 95, 0.4); }
+		70% { box-shadow: 0 0 0 15px rgba(238, 38, 95, 0); }
+		100% { box-shadow: 0 0 0 0 rgba(238, 38, 95, 0); }
+	}
+</style>
+
+<!-- DESKTOP: MAIN CARD -->
+<div id="sb-promo-card">
+	<div class="sb-controls">
+		<div id="sb-btn-minimize" class="sb-control-btn" title="Close">&#10005;</div>
+	</div>
+
+	<div class="sb-card-header">
+		<div class="sb-eyebrow">Spring Special</div>
+		<div class="sb-headline">Eat & Race <span>Bundles</span></div>
+	</div>
+
+	<div class="sb-card-body">
+		<div class="sb-subtitle">Sim Racing + Food Packages</div>
+		<div class="sb-date-text">SPECIAL PRICING &bull; APRIL 2026 ONLY</div>
+
+		<div id="sb-card-timer">Loading...</div>
+
+		<a href="https://velocitysimlounge.com/spring-bundles/" target="_blank" class="sb-card-btn">
+			View Bundles
+		</a>
+	</div>
+</div>
+
+<!-- SHARED: MINIMIZED TAB -->
+<div id="sb-promo-minimized">
+	Eat & Race Bundles
+</div>
+
+<!-- MOBILE: STICKY TOP BAR -->
+<div id="sb-mobile-bar" style="display:none;">
+	<div id="sb-mobile-close">&#10005;</div>
+
+	<div class="sb-mobile-eyebrow">Spring Special</div>
+	<div class="sb-mobile-headline">Eat & Race <span>Bundles</span></div>
+	<div class="sb-mobile-subtitle">Sim Racing + Food Packages</div>
+	<div class="sb-mobile-timer-label">OFFER ENDS IN</div>
+	<div id="sb-mobile-timer">Loading...</div>
+
+	<a href="https://velocitysimlounge.com/spring-bundles/" target="_blank" class="sb-mobile-btn">
+		View Bundles
+	</a>
+</div>
+
+<!-- JavaScript Logic -->
+<script>
+(function() {
+	var endDate = "Apr 30, 2026 23:59:59";
+	var version = "sb-spring-v1";
+
+	if (sessionStorage.getItem('sbPromoVersion') !== version) {
+		sessionStorage.removeItem('sbMobileMin');
+		sessionStorage.removeItem('sbDesktopMin');
+		sessionStorage.setItem('sbPromoVersion', version);
+	}
+
+	var card = document.getElementById("sb-promo-card");
+	var mini = document.getElementById("sb-promo-minimized");
+	var bar = document.getElementById("sb-mobile-bar");
+	var btnMin = document.getElementById("sb-btn-minimize");
+	var btnMobClose = document.getElementById("sb-mobile-close");
+	var timerD = document.getElementById("sb-card-timer");
+	var timerM = document.getElementById("sb-mobile-timer");
+
+	function isMobile() { return window.innerWidth <= 768; }
+
+	function showCard() {
+		if (isMobile()) return;
+		if (card) card.style.display = "block";
+		if (mini) mini.style.display = "none";
+		sessionStorage.setItem('sbDesktopMin', 'false');
+	}
+	function hideCard() {
+		if (isMobile()) return;
+		if (card) card.style.display = "none";
+		if (mini) mini.style.display = "block";
+		sessionStorage.setItem('sbDesktopMin', 'true');
+	}
+	function openBar() {
+		if (!isMobile()) return;
+		if (bar) bar.style.display = 'flex';
+		if (mini) mini.style.display = 'none';
+		sessionStorage.setItem('sbMobileMin', 'false');
+	}
+	function closeBar() {
+		if (!isMobile()) return;
+		if (bar) bar.style.display = 'none';
+		if (mini) mini.style.display = 'block';
+		sessionStorage.setItem('sbMobileMin', 'true');
+	}
+
+	if (isMobile()) {
+		if (card) card.style.display = 'none';
+		sessionStorage.getItem('sbMobileMin') === 'true' ? closeBar() : openBar();
+	} else {
+		if (bar) bar.style.display = 'none';
+		sessionStorage.getItem('sbDesktopMin') === 'true' ? hideCard() : showCard();
+	}
+
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (btnMobClose) btnMobClose.addEventListener('click', closeBar);
+	if (mini) mini.addEventListener('click', function() { isMobile() ? openBar() : showCard(); });
+
+	var target = new Date(endDate).getTime();
+	setInterval(function() {
+		var now = new Date().getTime();
+		var dist = target - now;
+		if (dist <= 0) {
+			if (timerD) timerD.innerHTML = "OFFER ENDED";
+			if (timerM) timerM.innerHTML = "OFFER ENDED";
+			return;
+		}
+		var d = Math.floor(dist / 86400000);
+		var h = Math.floor((dist % 86400000) / 3600000);
+		var m = Math.floor((dist % 3600000) / 60000);
+		var s = Math.floor((dist % 60000) / 1000);
+		var str = d + "d " + h + "h " + m + "m " + s + "s";
+		if (timerD) timerD.innerHTML = str;
+		if (timerM) timerM.innerHTML = str;
+	}, 1000);
+})();
+</script>

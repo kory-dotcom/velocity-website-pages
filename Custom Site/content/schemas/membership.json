@@ -1,0 +1,147 @@
+{
+  "page": "membership",
+  "label": "Membership",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy (price teaser)"
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Button Text"
+        }
+      }
+    },
+    "benefits": {
+      "label": "Benefits",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Benefit Cards",
+          "fields": {
+            "image": {
+              "type": "image",
+              "label": "Card Image"
+            },
+            "frontTitle": {
+              "type": "text",
+              "label": "Front Title"
+            },
+            "backTitle": {
+              "type": "text",
+              "label": "Back Title"
+            },
+            "backDescription": {
+              "type": "textarea",
+              "label": "Back Description"
+            }
+          }
+        }
+      }
+    },
+    "tiers": {
+      "label": "Pricing Tiers",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "plans": {
+          "type": "repeater",
+          "label": "Tier Plans",
+          "fields": {
+            "name": {
+              "type": "text",
+              "label": "Tier Name"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price"
+            },
+            "period": {
+              "type": "text",
+              "label": "Period (e.g. /month)"
+            },
+            "tag": {
+              "type": "text",
+              "label": "Tag Line"
+            },
+            "features": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "joinLink": {
+              "type": "url",
+              "label": "Join Link",
+              "perLocation": true
+            },
+            "ctaText": {
+              "type": "text",
+              "label": "Button Text"
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

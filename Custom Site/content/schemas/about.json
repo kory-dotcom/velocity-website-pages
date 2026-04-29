@@ -1,0 +1,219 @@
+{
+  "page": "about",
+  "label": "About / How It Works",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "heroVideo": {
+          "type": "url",
+          "label": "Background Video URL"
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Fallback Hero Image"
+        }
+      }
+    },
+    "intro": {
+      "label": "Intro",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "body": {
+          "type": "textarea",
+          "label": "Body Text"
+        },
+        "asideTitle": {
+          "type": "text",
+          "label": "Aside Title"
+        },
+        "asideBody": {
+          "type": "textarea",
+          "label": "Aside Text"
+        }
+      }
+    },
+    "video": {
+      "label": "Video Walkthrough",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "embedUrl": {
+          "type": "url",
+          "label": "Video Embed URL",
+          "perLocation": true
+        }
+      }
+    },
+    "racing": {
+      "label": "Racing Flow",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Intro Text"
+        },
+        "steps": {
+          "type": "repeater",
+          "label": "Steps",
+          "fields": {
+            "number": {
+              "type": "text",
+              "label": "Step Number"
+            },
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            }
+          }
+        },
+        "quickRaceTitle": {
+          "type": "text",
+          "label": "Quick Race Title"
+        },
+        "quickRaceDesc": {
+          "type": "textarea",
+          "label": "Quick Race Description"
+        },
+        "doubleRaceTitle": {
+          "type": "text",
+          "label": "Double Race Title"
+        },
+        "doubleRaceDesc": {
+          "type": "textarea",
+          "label": "Double Race Description"
+        }
+      }
+    },
+    "simulators": {
+      "label": "Simulators",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "tiers": {
+          "type": "repeater",
+          "label": "Simulator Tiers",
+          "fields": {
+            "name": {
+              "type": "text",
+              "label": "Tier Name"
+            },
+            "image": {
+              "type": "image",
+              "label": "Tier Image"
+            },
+            "features": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            }
+          }
+        }
+      }
+    },
+    "carsAndTracks": {
+      "label": "Cars & Tracks",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "proTipTitle": {
+          "type": "text",
+          "label": "Pro Tip Title"
+        },
+        "proTipBody": {
+          "type": "textarea",
+          "label": "Pro Tip Text"
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "Button Text"
+        },
+        "ctaLink": {
+          "type": "url",
+          "label": "Button Link"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity CMS</title>
+  <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1>Velocity CMS</h1>
+      <span>Content Management</span>
+    </div>
+    <nav class="sidebar-nav" id="sidebarNav">
+      <div class="sidebar-section">Content</div>
+      <!-- Page links injected dynamically -->
+
+      <div class="sidebar-section" style="margin-top:12px">Tools</div>
+      <a class="sidebar-link" data-view="pricing">
+        <span class="icon">$</span> Pricing
+      </a>
+      <a class="sidebar-link" data-view="banners">
+        <span class="icon">!</span> Banners
+      </a>
+      <a class="sidebar-link" data-view="forms">
+        <span class="icon">&#9634;</span> Forms
+      </a>
+      <a class="sidebar-link" data-view="media">
+        <span class="icon">&#9635;</span> Media Library
+      </a>
+      <a class="sidebar-link" data-view="locations">
+        <span class="icon">&#9737;</span> Locations
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <span class="user" id="currentUser">—</span>
+      <button id="logoutBtn">Sign Out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h2 id="viewTitle">Dashboard</h2>
+      <div class="topbar-right">
+        <div id="globalTopbarSlot"></div>
+        <div class="topbar-actions" id="topbarActions"></div>
+      </div>
+    </div>
+    <div class="content-area" id="contentArea">
+      <div class="empty-state">
+        <div class="icon">&#9881;</div>
+        <p>Select a page or tool from the sidebar</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toasts"></div>
+
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

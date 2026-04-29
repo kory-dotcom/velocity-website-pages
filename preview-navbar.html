@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Navbar — Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+  <link rel="preconnect" href="https://velocitysimlounge.com">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/LogoAsset-180@300x.png">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg" media="(max-width: 900px)">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp" media="(max-width: 900px)">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp" media="(max-width: 900px)">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp" media="(max-width: 900px)">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/deals-and-promotions-768x432.webp" media="(max-width: 900px)">
+  <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg" media="(max-width: 900px)">
+  <script>
+    (function() {
+      var isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+      var urls = isMobile ? [
+        'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/deals-and-promotions-768x432.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg'
+      ] : [
+        'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/deals-and-promotions-1024x576.webp',
+        'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg'
+      ];
+      urls.forEach(function(u) {
+        var img = new Image();
+        img.decoding = 'async';
+        img.fetchPriority = 'high';
+        img.src = u;
+      });
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #101828;
+      color: #EAEAEA;
+      font-family: 'Archivo Narrow', 'Inter', sans-serif;
+    }
+    .preview-hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+      padding: 80px 32px;
+      background: #101828;
+    }
+    .preview-hero h1 {
+      font-family: 'Khand', sans-serif;
+      font-weight: 700;
+      font-size: clamp(32px, 6vw, 64px);
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      color: var(--vsl-link-color);
+      line-height: 1.1;
+    }
+    .preview-hero p {
+      margin-top: 16px;
+      font-size: 18px;
+      color: #B2AEBF;
+      max-width: 540px;
+    }
+    .preview-section {
+      padding: 120px 64px;
+      border-top: 1px solid rgba(234,234,234,0.06);
+    }
+    .preview-section h2 {
+      font-family: 'Khand', sans-serif;
+      font-weight: 600;
+      font-size: 28px;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      color: #EAEAEA;
+    }
+    .preview-section p {
+      margin-top: 12px;
+      color: #5F5782;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     NAVBAR COMPONENT START (same as velocity-navbar.html)
+     ═══════════════════════════════════════════════════════════════ -->
+<style>
+/* Elementor container overrides */
+.elementor-widget-html .elementor-widget-container,
+.elementor-element .elementor-widget-container,
+.elementor-section .elementor-container,
+.elementor-element.elementor-widget-html {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.elementor-section:has(.vsl-navbar),
+.elementor-element:has(.vsl-navbar) {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+
+.vsl-navbar *,
+.vsl-navbar *::before,
+.vsl-navbar *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.vsl-navbar {
+  --navy:       #101828;
+  --navy-deep:  #191840;
+  --blue:       #293893;
+  --red:        #D22026;
+  --magenta:    #EE265F;
+  --yellow:     #FDC70C;
+  --light:      #EAEAEA;
+  --light-alt:  #DFDFDE;
+  --text-muted: #B2AEBF;
+  --text-dim:   #5F5782;
+  --font-head: 'Khand', sans-serif;
+  --font-body: 'Archivo Narrow', 'Inter', sans-serif;
+  /* Global UI scale (1 = design baseline). */
+  --vsl-ui-scale: 1.15;
+  --nav-height: calc(72px * var(--vsl-ui-scale));
+  --stripe-h:   calc(3px * var(--vsl-ui-scale));
+  --z-navbar:    9999;
+  --z-overlay:   10000;
+  --vsl-stripe-bg: #ff2f5a;
+  --vsl-bar-bg: #10182B;
+  --vsl-bar-border: rgba(196,204,255,0.2);
+  --vsl-link-color: #f7f8ff;
+  --vsl-link-shadow: 0 1px 2px rgba(0,0,0,0.22);
+  --vsl-cta-loc-bg: rgba(86,104,212,0.42);
+  --vsl-cta-loc-bg-hover: rgba(104,123,234,0.55);
+  --vsl-race-bg: rgba(238,38,95,0.2);
+  --vsl-race-border: rgba(255,92,148,0.6);
+  position: relative;
+  z-index: var(--z-navbar);
+  width: 100%;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+.vsl-navbar__stripe {
+  height: var(--stripe-h);
+  background: var(--vsl-stripe-bg);
+  width: 100%;
+}
+.vsl-navbar__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-height);
+  padding: 0 calc(48px * var(--vsl-ui-scale)) 0 calc(24px * var(--vsl-ui-scale));
+  background: var(--vsl-bar-bg);
+  border-bottom: 1px solid var(--vsl-bar-border);
+}
+.vsl-navbar__logo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.vsl-navbar__logo img {
+  height: calc(42px * var(--vsl-ui-scale));
+  width: auto;
+  display: block;
+  opacity: 1;
+  transform: translateY(calc(-2px * var(--vsl-ui-scale)));
+  transition: filter 0.35s ease;
+}
+.vsl-navbar__logo:hover img,
+.vsl-navbar__sticky-logo:hover img {
+  filter: brightness(1.18) drop-shadow(0 0 6px rgba(210,32,38,0.4)) drop-shadow(0 0 14px rgba(210,32,38,0.15));
+}
+.vsl-navbar__menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: calc(4px * var(--vsl-ui-scale));
+  margin-right: auto;
+  margin-left: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__item {
+  position: relative;
+}
+.vsl-navbar__link {
+  display: flex;
+  align-items: center;
+  gap: calc(5px * var(--vsl-ui-scale));
+  padding: calc(8px * var(--vsl-ui-scale)) calc(16px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(16px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+.vsl-navbar__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: calc(16px * var(--vsl-ui-scale));
+  right: calc(16px * var(--vsl-ui-scale));
+  height: calc(2px * var(--vsl-ui-scale));
+  background: var(--vsl-stripe-bg);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.vsl-navbar__link:hover,
+.vsl-navbar__link:focus-visible { color: #fff; }
+.vsl-navbar__link:hover::after,
+.vsl-navbar__link:focus-visible::after,
+.vsl-navbar__item--open > .vsl-navbar__link::after,
+.vsl-navbar__link--active::after { transform: scaleX(1); }
+.vsl-navbar__arrow {
+  width: calc(10px * var(--vsl-ui-scale));
+  height: calc(10px * var(--vsl-ui-scale));
+  fill: currentColor;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+.vsl-navbar__item--open > .vsl-navbar__link .vsl-navbar__arrow { transform: rotate(180deg); }
+.vsl-navbar__dropdown {
+  position: absolute;
+  top: calc(100% + (8px * var(--vsl-ui-scale)));
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: calc(200px * var(--vsl-ui-scale));
+  background: var(--navy-deep);
+  border: 1px solid rgba(41,56,147,0.3);
+  border-left: calc(3px * var(--vsl-ui-scale)) solid var(--blue);
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  box-shadow: 0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.45);
+  padding: calc(8px * var(--vsl-ui-scale)) 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(calc(8px * var(--vsl-ui-scale)));
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  list-style: none;
+}
+.vsl-navbar__dropdown::before {
+  content: '';
+  position: absolute;
+  top: calc(-8px * var(--vsl-ui-scale)); left: 0; right: 0; height: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__item--open > .vsl-navbar__dropdown {
+  opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.vsl-navbar__dropdown-link {
+  display: block;
+  padding: calc(10px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: calc(14px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease, padding-left 0.2s ease;
+  white-space: nowrap;
+}
+.vsl-navbar__dropdown-link:hover,
+.vsl-navbar__dropdown-link:focus-visible {
+  background: rgba(41,56,147,0.2);
+  color: #fff;
+  padding-left: calc(24px * var(--vsl-ui-scale));
+}
+.vsl-navbar__dropdown-sub {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: calc(12px * var(--vsl-ui-scale));
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  margin-top: calc(2px * var(--vsl-ui-scale));
+}
+/* ── Book Now CTA (unified pill: location | book) ── */
+.vsl-navbar__cta-wrap {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: calc(16px * var(--vsl-ui-scale));
+  display: flex;
+  align-items: stretch;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  overflow: visible;
+}
+.vsl-navbar__cta-loc {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale));
+  background: var(--vsl-cta-loc-bg);
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: calc(6px * var(--vsl-ui-scale)) 0 0 calc(6px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(15px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-shadow: var(--vsl-link-shadow);
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.vsl-navbar__cta-loc:hover,
+.vsl-navbar__cta-loc:focus-visible {
+  background: var(--vsl-cta-loc-bg-hover);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.15);
+}
+.vsl-navbar__cta-loc:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.vsl-navbar__cta-loc-pin {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: var(--magenta);
+  flex-shrink: 0;
+}
+.vsl-navbar__cta-loc-pin {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+/* Fixed slot so Houston/Dallas swaps don't resize the bar (min-width ignored on plain inline) */
+.vsl-navbar__cta-loc-name,
+[data-sticky-location],
+[data-book-now-mobile-title] {
+  display: inline-block;
+  min-width: 6em;
+  text-align: center;
+  vertical-align: baseline;
+}
+.vsl-navbar__cta-arrow {
+  width: calc(10px * var(--vsl-ui-scale));
+  height: calc(10px * var(--vsl-ui-scale));
+  fill: currentColor;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+.vsl-navbar__cta-wrap--open .vsl-navbar__cta-loc .vsl-navbar__cta-arrow {
+  transform: rotate(180deg);
+}
+.vsl-navbar__cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: calc(10px * var(--vsl-ui-scale)) calc(28px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(16px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: var(--magenta);
+  border: none;
+  outline: none;
+  border-radius: 0 calc(6px * var(--vsl-ui-scale)) calc(6px * var(--vsl-ui-scale)) 0;
+  cursor: pointer;
+  transition: box-shadow 0.22s ease, filter 0.22s ease;
+  white-space: nowrap;
+  line-height: 1;
+  text-decoration: none;
+}
+.vsl-navbar__cta:hover {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.22),
+    0 0 calc(20px * var(--vsl-ui-scale)) rgba(255, 110, 170, 0.4),
+    0 0 calc(36px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.42);
+}
+.vsl-navbar__cta:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.vsl-navbar__cta:active {
+  filter: brightness(0.97);
+  box-shadow: inset 0 calc(2px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) rgba(0,0,0,0.22);
+}
+
+/* Location Detail Panel */
+.vsl-navbar__cta-dropdown {
+  position: absolute;
+  top: calc(100% + (6px * var(--vsl-ui-scale)));
+  right: 0;
+  width: calc(300px * var(--vsl-ui-scale));
+  background: var(--navy-deep);
+  border: 1px solid rgba(41,56,147,0.35);
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  box-shadow: 0 calc(14px * var(--vsl-ui-scale)) calc(36px * var(--vsl-ui-scale)) rgba(0,0,0,0.5);
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(calc(6px * var(--vsl-ui-scale)));
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  list-style: none;
+  overflow: hidden;
+}
+.vsl-navbar__cta-dropdown::before {
+  content: '';
+  position: absolute;
+  top: calc(-8px * var(--vsl-ui-scale));
+  left: 0;
+  right: 0;
+  height: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__cta-wrap--open .vsl-navbar__cta-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.vsl-navbar__loc-detail {
+  display: none;
+  padding: calc(16px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-detail.is-active { display: block; }
+.vsl-navbar__loc-detail-header {
+  display: flex;
+  align-items: baseline;
+  gap: calc(10px * var(--vsl-ui-scale));
+  margin-bottom: calc(6px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-detail-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(20px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #fff;
+}
+.vsl-navbar__loc-detail-hours {
+  font-family: var(--font-body);
+  font-size: calc(11px * var(--vsl-ui-scale));
+  color: var(--yellow);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.vsl-navbar__loc-detail-address {
+  font-family: var(--font-body);
+  font-size: calc(12px * var(--vsl-ui-scale));
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-detail-phone {
+  display: inline-block;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(14px * var(--vsl-ui-scale));
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid var(--magenta);
+  padding-bottom: 1px;
+  margin-bottom: calc(12px * var(--vsl-ui-scale));
+  transition: color 0.2s ease;
+}
+.vsl-navbar__loc-detail-phone:hover { color: var(--magenta); }
+.vsl-navbar__loc-detail-links {
+  display: flex;
+  flex-direction: column;
+  gap: calc(6px * var(--vsl-ui-scale));
+  margin-bottom: calc(12px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-detail-action {
+  display: flex;
+  align-items: center;
+  gap: calc(8px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: calc(12px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.vsl-navbar__loc-detail-action:hover { color: var(--magenta); }
+.vsl-navbar__loc-detail-action svg {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+}
+.vsl-navbar__loc-detail-divider {
+  height: 1px;
+  background: rgba(234,234,234,0.08);
+  margin: calc(4px * var(--vsl-ui-scale)) 0;
+}
+.vsl-navbar__loc-detail-switch {
+  display: flex;
+  gap: calc(6px * var(--vsl-ui-scale));
+  padding: calc(12px * var(--vsl-ui-scale)) calc(16px * var(--vsl-ui-scale));
+  background: rgba(41,56,147,0.18);
+  border-bottom: 1px solid rgba(234,234,234,0.08);
+}
+.vsl-navbar__loc-detail-switch-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(6px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(13px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(234,234,234,0.55);
+  text-decoration: none;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  cursor: pointer;
+  outline: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.vsl-navbar__loc-detail-switch-btn:hover {
+  background: rgba(41,56,147,0.3);
+  border-color: rgba(234,234,234,0.2);
+  color: #fff;
+}
+.vsl-navbar__loc-detail-switch-btn.is-current {
+  background: rgba(210,32,38,0.18);
+  border-color: rgba(210,32,38,0.5);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(210,32,38,0.2);
+}
+.vsl-navbar__loc-detail-switch-btn svg {
+  width: calc(13px * var(--vsl-ui-scale));
+  height: calc(13px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── Location prompt ── */
+.vsl-navbar__geo-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 8, 18, 0.88) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 999998;
+  display: none;
+}
+.vsl-navbar__geo-backdrop:not([hidden]) { display: block !important; }
+/* Panel — portaled to body so must be fully self-contained */
+.vsl-navbar__geo-panel,
+#vsl-location-dialog.vsl-navbar__geo-panel {
+  position: fixed !important;
+  z-index: 999999 !important;
+  box-sizing: border-box !important;
+  background: linear-gradient(168deg, #1c2054 0%, #131638 55%, #0e1030 100%) !important;
+  border: 1px solid rgba(104, 124, 238, 0.32) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.6),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 1px 0 rgba(255,255,255,0.06) inset !important;
+  padding: 28px 26px 22px !important;
+  width: min(340px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  overflow: visible !important;
+  outline: none !important;
+  opacity: 1 !important;
+  text-align: center !important;
+  font-family: 'Khand', sans-serif !important;
+}
+.vsl-navbar__geo-panel[hidden] { display: none !important; }
+.vsl-navbar__geo-panel:not([hidden]) { display: block !important; }
+.vsl-navbar__geo-panel *,
+.vsl-navbar__geo-panel *::before,
+.vsl-navbar__geo-panel *::after {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+@media (min-width: 901px) {
+  .vsl-navbar__geo-panel,
+  #vsl-location-dialog.vsl-navbar__geo-panel {
+    left: auto !important;
+    top: calc(var(--nav-height, 83px) + var(--stripe-h, 3px) + 14px) !important;
+    right: 20px !important;
+    transform: none !important;
+    width: 320px !important;
+    text-align: left !important;
+  }
+  .vsl-navbar__geo-backdrop { display: none !important; }
+}
+/* Red accent stripe at top */
+.vsl-navbar__geo-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, #D22026 0%, #EE265F 100%);
+  border-radius: 0 0 2px 2px;
+}
+.vsl-navbar__geo-title {
+  font-family: 'Khand', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 22px !important;
+  font-style: italic !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  margin-top: 4px !important;
+  line-height: 1.15 !important;
+}
+.vsl-navbar__geo-text {
+  margin-top: 8px !important;
+  color: rgba(178, 174, 191, 0.95) !important;
+  font-family: 'Archivo Narrow', 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+.vsl-navbar__geo-picks {
+  margin-top: 18px !important;
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 10px !important;
+}
+.vsl-navbar__geo-pick {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+  border: 1px solid rgba(104, 124, 238, 0.4) !important;
+  background: rgba(41, 56, 147, 0.28) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 14px 10px !important;
+  font-family: 'Khand', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+  text-decoration: none !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+}
+.vsl-navbar__geo-pick:hover,
+.vsl-navbar__geo-pick:focus-visible {
+  border-color: rgba(238, 38, 95, 0.65) !important;
+  background: rgba(210, 32, 38, 0.22) !important;
+  box-shadow: 0 0 16px rgba(210, 32, 38, 0.18) !important;
+}
+.vsl-navbar__geo-pick:active {
+  background: rgba(210, 32, 38, 0.32) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+.vsl-navbar__geo-pick-divider {
+  display: none !important;
+}
+.vsl-navbar__geo-dismiss {
+  display: inline-block !important;
+  margin-top: 16px !important;
+  border: none !important;
+  background: none !important;
+  color: rgba(178, 174, 191, 0.7) !important;
+  font-family: 'Archivo Narrow', 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: none !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+  padding: 4px 8px !important;
+}
+.vsl-navbar__geo-dismiss:hover,
+.vsl-navbar__geo-dismiss:focus-visible {
+  color: #fff !important;
+}
+.vsl-navbar__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: calc(44px * var(--vsl-ui-scale));
+  height: calc(44px * var(--vsl-ui-scale));
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  gap: calc(6px * var(--vsl-ui-scale));
+  z-index: calc(var(--z-overlay) + 1);
+}
+.vsl-navbar__toggle-line {
+  display: block;
+  width: calc(26px * var(--vsl-ui-scale));
+  height: calc(2px * var(--vsl-ui-scale));
+  background: var(--light);
+  border-radius: calc(2px * var(--vsl-ui-scale));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.vsl-navbar__toggle--active .vsl-navbar__toggle-line:nth-child(1) { transform: translateY(calc(8px * var(--vsl-ui-scale))) rotate(45deg); }
+.vsl-navbar__toggle--active .vsl-navbar__toggle-line:nth-child(2) { opacity: 0; }
+.vsl-navbar__toggle--active .vsl-navbar__toggle-line:nth-child(3) { transform: translateY(calc(-8px * var(--vsl-ui-scale))) rotate(-45deg); }
+.vsl-navbar__overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--navy-deep);
+  flex-direction: column;
+  padding: calc(var(--nav-height) + var(--stripe-h) + (32px * var(--vsl-ui-scale))) calc(32px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale));
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.vsl-navbar__overlay--open { display: flex; opacity: 1; }
+.vsl-navbar__overlay-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+.vsl-navbar__overlay-brand {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(80px * var(--vsl-ui-scale));
+  max-height: calc(180px * var(--vsl-ui-scale));
+  padding: calc(20px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+.vsl-navbar__overlay-brand img {
+  width: min(58vw, calc(200px * var(--vsl-ui-scale)));
+  height: auto;
+  max-height: min(28vh, calc(200px * var(--vsl-ui-scale)));
+  object-fit: contain;
+  animation: vsl-holo 6s ease-in-out infinite;
+}
+.vsl-navbar__overlay-brand::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  width: 40%;
+  height: 140%;
+  background: rgba(255,255,255,0.14);
+  animation: vsl-gleam 4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes vsl-holo {
+  0%   { filter: sepia(0.45) saturate(2.5) hue-rotate(0deg)   brightness(1.1) drop-shadow(0 0 14px rgba(238,38,95,0.4)); }
+  25%  { filter: sepia(0.45) saturate(3)   hue-rotate(90deg)  brightness(1.15) drop-shadow(0 0 16px rgba(95,238,38,0.4)); }
+  50%  { filter: sepia(0.45) saturate(2.5) hue-rotate(180deg) brightness(1.1) drop-shadow(0 0 14px rgba(38,95,238,0.4)); }
+  75%  { filter: sepia(0.45) saturate(3)   hue-rotate(270deg) brightness(1.15) drop-shadow(0 0 16px rgba(238,38,238,0.4)); }
+  100% { filter: sepia(0.45) saturate(2.5) hue-rotate(360deg) brightness(1.1) drop-shadow(0 0 14px rgba(238,38,95,0.4)); }
+}
+@keyframes vsl-gleam {
+  0%   { left: -50%; opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { left: 110%; opacity: 1; }
+  60%  { opacity: 0; }
+  100% { left: 110%; opacity: 0; }
+}
+.vsl-navbar__overlay-item {
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid rgba(234,234,234,0.07);
+  transition: opacity 0.1s ease-out;
+}
+.vsl-navbar__overlay-item--open { z-index: 5; }
+.vsl-navbar__overlay-menu--sub-open .vsl-navbar__overlay-item:not(.vsl-navbar__overlay-item--open) {
+  opacity: 0;
+  pointer-events: none;
+}
+.vsl-navbar__overlay-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  touch-action: manipulation;
+  padding: calc(16px * var(--vsl-ui-scale)) 0;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(22px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+  text-decoration: none !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+  width: 100%;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+  -webkit-appearance: none;
+}
+.vsl-navbar__overlay-link:hover,
+.vsl-navbar__overlay-link:focus,
+.vsl-navbar__overlay-link:focus-visible,
+.vsl-navbar__overlay-link:active {
+  color: #fff !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 0 1px rgba(255,255,255,0.4);
+}
+.vsl-navbar__overlay-arrow {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: currentColor;
+  transition: transform 0.25s ease;
+}
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-link .vsl-navbar__overlay-arrow { transform: rotate(180deg); }
+/* Sub-menus: text-based (Our Menu etc.) use max-height reveal */
+.vsl-navbar__overlay-sub {
+  list-style: none;
+  position: relative;
+  z-index: 2;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-left: calc(16px * var(--vsl-ui-scale));
+  padding-right: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub {
+  max-height: calc(400px * var(--vsl-ui-scale));
+  padding-bottom: calc(12px * var(--vsl-ui-scale));
+}
+/* Explore cards sub-panel: instant display toggle, no max-height animation */
+.vsl-navbar__overlay-sub--cards {
+  padding-left: 0;
+  padding-right: 0;
+  max-height: 0;
+  transition: none;
+  contain: layout style;
+}
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards {
+  max-height: none;
+  overflow: visible;
+}
+/* Cards appear instantly when parent opens — no fade delay. Optional keyframe polish. */
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card {
+  animation: vsl-card-pop 0.18s ease-out both;
+}
+@keyframes vsl-card-pop {
+  from { opacity: 0.4; transform: translateY(4px); }
+  to   { opacity: 1;   transform: translateY(0); }
+}
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(1) { animation-delay: 0s; }
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(2) { animation-delay: 0.02s; }
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(3) { animation-delay: 0.04s; }
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(4) { animation-delay: 0.06s; }
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(5) { animation-delay: 0.08s; }
+.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(6) { animation-delay: 0.10s; }
+.vsl-navbar__overlay-sub-link {
+  display: block;
+  padding: calc(10px * var(--vsl-ui-scale)) 0;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: calc(17px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.96);
+  text-shadow: var(--vsl-link-shadow);
+  text-decoration: none;
+  transition: color 0.2s ease, border-left-color 0.2s ease, text-shadow 0.2s ease;
+  border-left: calc(2px * var(--vsl-ui-scale)) solid rgba(41,56,147,0.5);
+  padding-left: calc(16px * var(--vsl-ui-scale));
+}
+.vsl-navbar__overlay-sub-link:hover {
+  color: #fff;
+  border-left-color: rgba(210,32,38,0.75);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.35);
+}
+/* ── Mobile Explore image cards ── */
+.vsl-navbar__overlay-cards {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 8px 0 4px;
+}
+.vsl-navbar__overlay-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  min-height: 120px;
+  border-radius: 8px;
+  border: 1px solid rgba(104,124,238,0.3);
+  text-decoration: none;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+.vsl-navbar__overlay-card__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.85);
+  display: block;
+  width: fit-content;
+  max-width: calc(100% - 34px);
+  padding: 5px 8px;
+  background: rgba(4, 7, 20, 0.88);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 1;
+}
+.vsl-navbar__overlay-card__arrow {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #3fbc44;
+  background: rgba(5, 9, 28, 0.58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.vsl-navbar__overlay-card__arrow svg {
+  width: 10px;
+  height: 10px;
+  fill: #3fbc44;
+}
+/* Theme / Elementor a:hover often recolors these links — keep labels white */
+.vsl-navbar__overlay-card,
+.vsl-navbar__overlay-card:hover,
+.vsl-navbar__overlay-card:focus,
+.vsl-navbar__overlay-card:focus-visible,
+.vsl-navbar__overlay-card:active,
+.vsl-navbar__overlay-card:visited {
+  color: #fff !important;
+}
+.vsl-navbar__overlay-card__title,
+.vsl-navbar__overlay-card:hover .vsl-navbar__overlay-card__title,
+.vsl-navbar__overlay-card:focus .vsl-navbar__overlay-card__title,
+.vsl-navbar__overlay-card:focus-visible .vsl-navbar__overlay-card__title,
+.vsl-navbar__overlay-card:active .vsl-navbar__overlay-card__title {
+  color: #fff !important;
+}
+.vsl-navbar__overlay-card--book {
+  background-color: #2a1515;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg');
+}
+.vsl-navbar__overlay-card--events {
+  background-color: #1a1d3a;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__overlay-card--how {
+  background-color: #1e2338;
+  isolation: isolate;
+}
+.vsl-navbar__overlay-card--how::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+.vsl-navbar__overlay-card--membership {
+  background-color: #2c2332;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp');
+}
+.vsl-navbar__overlay-card--promos {
+  background-color: #2a1520;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/deals-and-promotions-768x432.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-color: rgba(210,32,38,0.35);
+}
+.vsl-navbar__overlay-card--contact {
+  background-color: #1a1d3a;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* Mobile CTA (stacked: location on top, book now below) */
+.vsl-navbar__overlay-cta {
+  flex-shrink: 0;
+  margin-bottom: calc(12px * var(--vsl-ui-scale));
+  padding-bottom: calc(16px * var(--vsl-ui-scale));
+  border-bottom: 1px solid rgba(234,234,234,0.1);
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__overlay-cta-loc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8px * var(--vsl-ui-scale));
+  padding: calc(14px * var(--vsl-ui-scale));
+  background: rgba(41,56,147,0.35);
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: calc(8px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale)) 0 0;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(18px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1;
+  transition: background 0.2s ease;
+}
+.vsl-navbar__overlay-cta-loc:hover {
+  background: rgba(41,56,147,0.5);
+}
+.vsl-navbar__overlay-cta-loc:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.vsl-navbar__overlay-cta-loc .vsl-navbar__cta-arrow {
+  width: calc(12px * var(--vsl-ui-scale));
+  height: calc(12px * var(--vsl-ui-scale));
+  transition: transform 0.25s ease;
+}
+.vsl-navbar__overlay-cta-dropdown {
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0;
+  background: rgba(15,15,40,0.95);
+  border: none;
+  border-radius: 0;
+}
+.vsl-navbar__overlay-cta--loc-open .vsl-navbar__overlay-cta-dropdown {
+  max-height: calc(200px * var(--vsl-ui-scale));
+  padding: calc(6px * var(--vsl-ui-scale)) 0;
+}
+.vsl-navbar__overlay-cta--loc-open .vsl-navbar__overlay-cta-book {
+  border-radius: 0;
+}
+.vsl-navbar__overlay-cta--loc-open .vsl-navbar__overlay-cta-loc .vsl-navbar__cta-arrow {
+  transform: rotate(180deg);
+}
+.vsl-navbar__overlay-cta-dropdown-link {
+  display: block;
+  padding: calc(14px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: calc(17px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.vsl-navbar__overlay-cta-dropdown-link:hover {
+  background: rgba(210,32,38,0.15);
+  color: #fff;
+}
+.vsl-navbar__overlay-cta-dropdown-link.is-current {
+  color: #fff;
+  background: rgba(210,32,38,0.22);
+}
+.vsl-navbar__overlay-cta-book {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(18px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(20px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-decoration: none;
+  outline: none;
+  background: var(--magenta);
+  border-radius: 0 0 calc(8px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale));
+  transition: box-shadow 0.22s ease, filter 0.22s ease;
+  line-height: 1;
+}
+.vsl-navbar__overlay-cta-book:hover {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.22),
+    0 0 calc(18px * var(--vsl-ui-scale)) rgba(255, 110, 170, 0.36),
+    0 0 calc(32px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.4);
+}
+.vsl-navbar__overlay-cta-book:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.vsl-navbar__overlay-cta-book:active {
+  filter: brightness(0.97);
+  box-shadow: inset 0 calc(2px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) rgba(0,0,0,0.22);
+}
+.vsl-navbar__overlay-social {
+  display: flex;
+  gap: calc(20px * var(--vsl-ui-scale));
+  flex-shrink: 0;
+  padding-top: calc(16px * var(--vsl-ui-scale));
+  justify-content: center;
+  position: relative;
+  z-index: 0;
+}
+.vsl-navbar__overlay-social a {
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.vsl-navbar__overlay-social a:hover { color: #fff; }
+.vsl-navbar__overlay-social svg {
+  width: calc(22px * var(--vsl-ui-scale));
+  height: calc(22px * var(--vsl-ui-scale));
+  fill: currentColor;
+}
+/* ── Race mega-menu ── */
+.vsl-navbar__race-trigger {
+  border: 1px solid var(--vsl-race-border);
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  background: var(--vsl-race-bg);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  margin-left: calc(4px * var(--vsl-ui-scale));
+}
+.vsl-navbar__race-trigger:hover,
+.vsl-navbar__race-trigger.is-open {
+  border-color: rgba(255,163,196,0.9);
+  background: rgba(238,38,95,0.32);
+  text-shadow: 0 0 8px rgba(238,38,95,0.3);
+  color: #fff !important;
+}
+/* Focus alone (after click-close) must not keep the “open” pink — Elementor/themes often style button:focus */
+.vsl-navbar__race-trigger:focus-visible {
+  outline: 2px solid rgba(222, 230, 255, 0.92);
+  outline-offset: 2px;
+}
+.vsl-navbar__race-trigger:focus:not(:hover):not(.is-open),
+.vsl-navbar__race-trigger:focus-visible:not(:hover):not(.is-open) {
+  border-color: var(--vsl-race-border) !important;
+  background: var(--vsl-race-bg) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08) !important;
+  text-shadow: none !important;
+  color: var(--vsl-link-color) !important;
+}
+.vsl-navbar__race-trigger::after { display: none; }
+.vsl-navbar__race-trigger .vsl-navbar__arrow {
+  transition: transform 0.1s ease-out;
+}
+.vsl-navbar__race-trigger.is-open .vsl-navbar__arrow { transform: rotate(180deg); }
+
+.vsl-navbar__mega {
+  position: absolute;
+  top: calc(var(--nav-height) + var(--stripe-h) - 1px);
+  left: 0;
+  right: 0;
+  background: #1a1b4f;
+  border-top: none;
+  border-bottom: 1px solid rgba(76,93,205,0.45);
+  box-shadow: 0 calc(18px * var(--vsl-ui-scale)) calc(48px * var(--vsl-ui-scale)) rgba(0,0,0,0.42);
+  padding: calc(24px * var(--vsl-ui-scale)) calc(48px * var(--vsl-ui-scale));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateZ(0);
+  contain: layout style;
+  z-index: calc(var(--z-navbar) - 1);
+  transition: none;
+}
+.vsl-navbar__mega.is-preloading {
+  opacity: 1;
+  visibility: visible;
+  z-index: -1;
+  pointer-events: none;
+}
+.vsl-navbar__mega.is-preloading .vsl-navbar__mega-card,
+.vsl-navbar__mega.is-preloading .vsl-navbar__mega-utils {
+  animation: none !important;
+}
+.vsl-navbar__mega.is-ready {
+  transition: opacity 0.12s ease-out, visibility 0.12s ease-out;
+}
+.vsl-navbar__mega.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+@keyframes vsl-card-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card {
+  animation: vsl-card-in 0.18s cubic-bezier(0, 0, 0.2, 1) both;
+}
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(1) { animation-delay: 0s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(2) { animation-delay: 0.025s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(3) { animation-delay: 0.05s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(4) { animation-delay: 0.075s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(5) { animation-delay: 0.1s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(6) { animation-delay: 0.125s; }
+.vsl-navbar__mega.is-open .vsl-navbar__mega-utils {
+  animation: vsl-card-in 0.18s cubic-bezier(0, 0, 0.2, 1) 0.1s both;
+}
+.vsl-navbar__mega-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: calc(10px * var(--vsl-ui-scale));
+  max-width: calc(1100px * var(--vsl-ui-scale));
+  margin: 0 auto;
+}
+.vsl-navbar__mega-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(20px * var(--vsl-ui-scale));
+  padding-right: calc(66px * var(--vsl-ui-scale));
+  background: rgba(58,76,176,0.18);
+  border: 1px solid rgba(104,124,238,0.36);
+  border-radius: calc(10px * var(--vsl-ui-scale));
+  text-decoration: none;
+  color: #fff;
+  transform: translateZ(0) scale(1);
+  transform-origin: center center;
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  min-height: calc(110px * var(--vsl-ui-scale));
+  position: relative;
+  overflow: hidden;
+}
+.vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--contact):not(.vsl-navbar__mega-card--promos):hover {
+  z-index: 2;
+  background: rgba(72,92,204,0.3);
+  border-color: rgba(238,38,95,0.62);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow: 0 calc(14px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.34);
+}
+.vsl-navbar__mega-card--lg {
+  grid-row: span 2;
+  min-height: calc(230px * var(--vsl-ui-scale));
+}
+.vsl-navbar__mega-card--book {
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__mega-card--book:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card--events {
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__mega-card--events:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card--membership {
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__mega-card--membership:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card--contact {
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__mega-card--contact:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card--promos {
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/deals-and-promotions-1024x576.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-color: rgba(210, 32, 38, 0.35);
+}
+.vsl-navbar__mega-card--promos:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card--how {
+  background-color: #1e2338;
+  isolation: isolate;
+}
+.vsl-navbar__mega-card--how::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scaleX(-1);
+  pointer-events: none;
+  z-index: -1;
+  border-radius: inherit;
+}
+.vsl-navbar__mega-card--how:hover {
+  z-index: 2;
+  border-color: rgba(210,32,38,0.55);
+  overflow: visible;
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  box-shadow:
+    0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
+    0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
+}
+.vsl-navbar__mega-card__title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(18px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: calc(6px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  margin-bottom: calc(6px * var(--vsl-ui-scale));
+  background: rgba(5, 9, 28, 0.84);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: calc(10px * var(--vsl-ui-scale));
+  box-shadow: 0 calc(4px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale)) rgba(0,0,0,0.4);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 2px 12px rgba(0,0,0,0.3);
+}
+.vsl-navbar__mega-card--lg .vsl-navbar__mega-card__title {
+  font-size: calc(20px * var(--vsl-ui-scale));
+  letter-spacing: 0.04em;
+  position: absolute;
+  left: calc(20px * var(--vsl-ui-scale));
+  bottom: calc(82px * var(--vsl-ui-scale));
+  margin: 0;
+  max-width: calc(100% - 86px * var(--vsl-ui-scale));
+  width: -moz-fit-content;
+  width: fit-content;
+  z-index: 2;
+}
+.vsl-navbar__mega-card__sub {
+  font-family: var(--font-body);
+  font-size: calc(12px * var(--vsl-ui-scale));
+  color: rgba(233,232,244,0.88);
+  line-height: 1.4;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: calc(4px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale));
+  background: rgba(5, 9, 28, 0.74);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.25);
+}
+.vsl-navbar__mega-card__arrow {
+  position: absolute;
+  bottom: calc(18px * var(--vsl-ui-scale));
+  right: calc(18px * var(--vsl-ui-scale));
+  width: calc(28px * var(--vsl-ui-scale));
+  height: calc(28px * var(--vsl-ui-scale));
+  border: 1px solid rgba(234,234,234,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.vsl-navbar__mega-card:hover .vsl-navbar__mega-card__arrow {
+  border-color: var(--magenta);
+  background: rgba(210,32,38,0.18);
+}
+.vsl-navbar__mega-card__arrow svg {
+  width: calc(12px * var(--vsl-ui-scale));
+  height: calc(12px * var(--vsl-ui-scale));
+  fill: #fff;
+}
+.vsl-navbar__mega-utils {
+  display: flex;
+  gap: calc(32px * var(--vsl-ui-scale));
+  padding-top: calc(14px * var(--vsl-ui-scale));
+  margin-top: calc(16px * var(--vsl-ui-scale));
+  border-top: 1px solid rgba(234,234,234,0.14);
+  max-width: calc(1100px * var(--vsl-ui-scale));
+  margin-left: auto;
+  margin-right: auto;
+}
+.vsl-navbar__mega-util {
+  display: flex;
+  align-items: center;
+  gap: calc(8px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: calc(13px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(226,224,240,0.9);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.vsl-navbar__mega-util:hover { color: #fff; }
+.vsl-navbar__mega-util svg {
+  width: calc(16px * var(--vsl-ui-scale));
+  height: calc(16px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Elementor / theme link:hover often overrides anchor color — keep mega text stable */
+.vsl-navbar__mega-card,
+.vsl-navbar__mega-card:hover,
+.vsl-navbar__mega-card:focus,
+.vsl-navbar__mega-card:focus-visible,
+.vsl-navbar__mega-card:active,
+.vsl-navbar__mega-card:visited {
+  color: #fff !important;
+}
+.vsl-navbar__mega-card__title,
+.vsl-navbar__mega-card:hover .vsl-navbar__mega-card__title,
+.vsl-navbar__mega-card:focus .vsl-navbar__mega-card__title,
+.vsl-navbar__mega-card:focus-visible .vsl-navbar__mega-card__title {
+  color: #fff !important;
+}
+.vsl-navbar__mega-card__sub,
+.vsl-navbar__mega-card:hover .vsl-navbar__mega-card__sub,
+.vsl-navbar__mega-card:focus .vsl-navbar__mega-card__sub,
+.vsl-navbar__mega-card:focus-visible .vsl-navbar__mega-card__sub {
+  color: rgba(233, 232, 244, 0.88) !important;
+}
+.vsl-navbar__mega-util,
+.vsl-navbar__mega-util:hover,
+.vsl-navbar__mega-util:focus,
+.vsl-navbar__mega-util:focus-visible,
+.vsl-navbar__mega-util:active,
+.vsl-navbar__mega-util:visited {
+  color: rgba(226, 224, 240, 0.9) !important;
+}
+
+/* ── Sticky Book Now Bar ── */
+.vsl-navbar__sticky {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  width: max-content;
+  max-width: calc(100vw - 8px);
+  z-index: var(--z-navbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(18px * var(--vsl-ui-scale));
+  height: calc(60px * var(--vsl-ui-scale));
+  padding: 0 calc(24px * var(--vsl-ui-scale));
+  background: var(--vsl-bar-bg);
+  border-bottom: 1px solid var(--vsl-bar-border);
+  border-left: 1px solid var(--vsl-bar-border);
+  border-right: 1px solid var(--vsl-bar-border);
+  border-radius: 0 0 calc(10px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  box-shadow: 0 calc(6px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)) rgba(0,0,0,0.45);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.vsl-navbar__sticky.is-visible {
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+.vsl-navbar__sticky::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--stripe-h);
+  background: var(--vsl-stripe-bg);
+  border-radius: 0;
+}
+.vsl-navbar__sticky-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.vsl-navbar__sticky-logo img {
+  height: calc(35px * var(--vsl-ui-scale));
+  width: auto;
+  display: block;
+  opacity: 1;
+  transition: filter 0.35s ease;
+}
+.vsl-navbar__sticky-logo:hover img {
+  filter: brightness(1.18) drop-shadow(0 0 6px rgba(210,32,38,0.4)) drop-shadow(0 0 14px rgba(210,32,38,0.15));
+}
+.vsl-navbar__sticky-book {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  flex-shrink: 0;
+  min-width: 0;
+  margin: calc(8px * var(--vsl-ui-scale)) 0;
+}
+.vsl-navbar__sticky-loc {
+  display: flex;
+  align-items: center;
+  gap: calc(6px * var(--vsl-ui-scale));
+  padding: 0 calc(12px * var(--vsl-ui-scale));
+  background: var(--vsl-cta-loc-bg);
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: calc(6px * var(--vsl-ui-scale)) 0 0 calc(6px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(14px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  white-space: nowrap;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.vsl-navbar__sticky-loc:hover,
+.vsl-navbar__sticky-loc:focus-visible {
+  background: var(--vsl-cta-loc-bg-hover);
+}
+.vsl-navbar__sticky-loc:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+}
+.vsl-navbar__sticky-loc-pin {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.vsl-navbar__sticky-loc-arrow {
+  width: calc(10px * var(--vsl-ui-scale));
+  height: calc(10px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.vsl-navbar__sticky-cta {
+  display: flex;
+  align-items: center;
+  padding: 0 calc(32px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(16px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: var(--magenta);
+  border: none;
+  border-radius: 0 calc(6px * var(--vsl-ui-scale)) calc(6px * var(--vsl-ui-scale)) 0;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+  transition: box-shadow 0.22s ease, filter 0.22s ease;
+}
+.vsl-navbar__sticky-cta:hover {
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.22),
+    0 0 calc(16px * var(--vsl-ui-scale)) rgba(255,110,170,0.4),
+    0 0 calc(28px * var(--vsl-ui-scale)) rgba(238,38,95,0.42);
+}
+.vsl-navbar__sticky-cta:active {
+  filter: brightness(0.97);
+  box-shadow: inset 0 calc(2px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale)) rgba(0,0,0,0.22);
+}
+
+@media (max-width: 1100px) {
+  .vsl-navbar__bar { padding: 0 calc(24px * var(--vsl-ui-scale)); }
+  .vsl-navbar__link { padding: calc(8px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)); font-size: calc(15px * var(--vsl-ui-scale)); }
+  .vsl-navbar__link::after { left: calc(10px * var(--vsl-ui-scale)); right: calc(10px * var(--vsl-ui-scale)); }
+  .vsl-navbar__cta { padding: calc(10px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale)); font-size: calc(15px * var(--vsl-ui-scale)); }
+  .vsl-navbar__cta-loc { padding: calc(9px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)); font-size: calc(12px * var(--vsl-ui-scale)); }
+  .vsl-navbar__mega { padding: calc(20px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)); }
+}
+@media (max-width: 900px) {
+  .vsl-navbar { --vsl-ui-scale: 1; }
+  .vsl-navbar__menu,
+  .vsl-navbar__cta-wrap,
+  .vsl-navbar__mega { display: none !important; }
+  .vsl-navbar__toggle { display: flex; }
+  .vsl-navbar__bar { padding: 0 calc(20px * var(--vsl-ui-scale)); }
+}
+@media (max-width: 600px) {
+  .vsl-navbar__sticky {
+    gap: calc(12px * var(--vsl-ui-scale));
+    padding: 0 calc(14px * var(--vsl-ui-scale));
+    height: calc(54px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__sticky-logo img { height: calc(30px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-book { margin: calc(6px * var(--vsl-ui-scale)) 0; }
+  .vsl-navbar__sticky-cta { padding: 0 calc(18px * var(--vsl-ui-scale)); font-size: calc(14px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-loc { padding: 0 calc(10px * var(--vsl-ui-scale)); font-size: calc(12px * var(--vsl-ui-scale)); gap: calc(4px * var(--vsl-ui-scale)); }
+}
+@media (max-width: 420px) {
+  .vsl-navbar__sticky {
+    gap: calc(8px * var(--vsl-ui-scale));
+    padding: 0 calc(10px * var(--vsl-ui-scale));
+    height: calc(50px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__sticky-logo img { height: calc(26px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-book { margin: calc(5px * var(--vsl-ui-scale)) 0; }
+  .vsl-navbar__sticky-cta { padding: 0 calc(14px * var(--vsl-ui-scale)); font-size: calc(13px * var(--vsl-ui-scale)); letter-spacing: 0.06em; }
+  .vsl-navbar__sticky-loc { padding: 0 calc(8px * var(--vsl-ui-scale)); font-size: calc(11px * var(--vsl-ui-scale)); gap: calc(3px * var(--vsl-ui-scale)); letter-spacing: 0.06em; }
+  .vsl-navbar__sticky-loc-pin { width: calc(12px * var(--vsl-ui-scale)); height: calc(12px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-loc-arrow { width: calc(8px * var(--vsl-ui-scale)); height: calc(8px * var(--vsl-ui-scale)); }
+}
+@media (max-width: 350px) {
+  .vsl-navbar__sticky {
+    gap: calc(6px * var(--vsl-ui-scale));
+    padding: 0 calc(8px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__sticky-logo img { height: calc(24px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-cta { padding: 0 calc(12px * var(--vsl-ui-scale)); font-size: calc(12px * var(--vsl-ui-scale)); }
+  .vsl-navbar__sticky-loc-pin { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsl-navbar *, .vsl-navbar *::before, .vsl-navbar *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+
+<nav class="vsl-navbar" role="navigation" aria-label="Main navigation">
+  <div class="vsl-navbar__stripe" aria-hidden="true"></div>
+  <div class="vsl-navbar__bar">
+    <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" aria-label="Velocity Sim Racing Lounge — Home">
+      <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/LogoAsset-180@300x.png" alt="Velocity Sim Racing Lounge" width="230" height="48" loading="eager" decoding="async" fetchpriority="high">
+    </a>
+    <ul class="vsl-navbar__menu">
+      <li class="vsl-navbar__item">
+        <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__link">Group Events</a>
+      </li>
+      <li class="vsl-navbar__item">
+        <a href="https://velocitysimlounge.com/food-and-drink/" class="vsl-navbar__link">Our Menu</a>
+      </li>
+      <li class="vsl-navbar__item">
+        <button class="vsl-navbar__link vsl-navbar__race-trigger" type="button" data-race-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-mega-panel">
+          Explore
+          <svg class="vsl-navbar__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </li>
+    </ul>
+    <div class="vsl-navbar__cta-wrap" data-cta-dropdown>
+      <button type="button" class="vsl-navbar__cta-loc" data-cta-change aria-haspopup="true" aria-expanded="false" aria-controls="vsl-book-now-locations">
+        <svg class="vsl-navbar__cta-loc-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+        <span class="vsl-navbar__cta-loc-name" data-book-now-location>Houston</span>
+        <svg class="vsl-navbar__cta-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__cta" data-book-now-primary>Book Now</a>
+      <div id="vsl-book-now-locations" class="vsl-navbar__cta-dropdown">
+        <div class="vsl-navbar__loc-detail-switch">
+          <button type="button" class="vsl-navbar__loc-detail-switch-btn is-current" data-location-option="houston">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Houston
+          </button>
+          <button type="button" class="vsl-navbar__loc-detail-switch-btn" data-location-option="dallas">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+            Dallas
+          </button>
+        </div>
+        <div class="vsl-navbar__loc-detail is-active" data-loc-detail="houston">
+          <div class="vsl-navbar__loc-detail-header">
+            <span class="vsl-navbar__loc-detail-name">Houston</span>
+            <span class="vsl-navbar__loc-detail-hours" data-loc-hours>Mon–Thu 2PM–10PM</span>
+          </div>
+          <div class="vsl-navbar__loc-detail-address">2110 Edwards St<br>Houston, TX 77007</div>
+          <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
+          <div class="vsl-navbar__loc-detail-links">
+            <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+              Get Directions
+            </a>
+            <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__loc-detail-action">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              Location Info
+            </a>
+          </div>
+        </div>
+        <div class="vsl-navbar__loc-detail" data-loc-detail="dallas">
+          <div class="vsl-navbar__loc-detail-header">
+            <span class="vsl-navbar__loc-detail-name">Dallas</span>
+            <span class="vsl-navbar__loc-detail-hours">Coming Summer 2026</span>
+          </div>
+          <div class="vsl-navbar__loc-detail-address">Location details coming soon</div>
+          <div class="vsl-navbar__loc-detail-links">
+            <a href="https://velocitysimlounge.com/dallas" class="vsl-navbar__loc-detail-action">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+              Learn More
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="vsl-navbar__toggle" aria-label="Open menu" aria-expanded="false">
+      <span class="vsl-navbar__toggle-line"></span>
+      <span class="vsl-navbar__toggle-line"></span>
+      <span class="vsl-navbar__toggle-line"></span>
+    </button>
+  </div>
+
+  <!-- Sticky Book Now Bar (appears on scroll) -->
+  <div class="vsl-navbar__sticky" aria-hidden="true">
+    <a href="https://velocitysimlounge.com/" class="vsl-navbar__sticky-logo" aria-label="Velocity Sim Racing Lounge — Home">
+      <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/LogoAsset-180@300x.png" alt="Velocity Sim Racing Lounge" width="160" height="34" loading="eager" decoding="async" fetchpriority="high">
+    </a>
+    <div class="vsl-navbar__sticky-book">
+      <button type="button" class="vsl-navbar__sticky-loc" data-sticky-loc-toggle aria-label="Switch location">
+        <svg class="vsl-navbar__sticky-loc-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+        <span data-sticky-location>Houston</span>
+        <svg class="vsl-navbar__sticky-loc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+      </button>
+      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__sticky-cta" data-sticky-book-now>Book Now</a>
+    </div>
+  </div>
+
+  <!-- Race Mega-Menu Panel -->
+  <div class="vsl-navbar__mega is-preloading" id="vsl-mega-panel" aria-hidden="true" inert>
+    <div class="vsl-navbar__mega-grid">
+      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__mega-card vsl-navbar__mega-card--lg vsl-navbar__mega-card--book" data-mega-book>
+        <span class="vsl-navbar__mega-card__title">Book a Race</span>
+        <span class="vsl-navbar__mega-card__sub">Reserve your simulator session now</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+      <a href="https://velocitysimlounge.com/party-packs/" class="vsl-navbar__mega-card vsl-navbar__mega-card--lg vsl-navbar__mega-card--events">
+        <span class="vsl-navbar__mega-card__title">Party Packs</span>
+        <span class="vsl-navbar__mega-card__sub">Celebrating? Book a party pack for groups of 5-18 drivers.</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+      <a href="https://velocitysimlounge.com/about/" class="vsl-navbar__mega-card vsl-navbar__mega-card--how">
+        <span class="vsl-navbar__mega-card__title">How It Works</span>
+        <span class="vsl-navbar__mega-card__sub">Your first visit explained</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+      <a href="https://velocitysimlounge.com/membership/" class="vsl-navbar__mega-card vsl-navbar__mega-card--membership">
+        <span class="vsl-navbar__mega-card__title">Membership</span>
+        <span class="vsl-navbar__mega-card__sub">Exclusive perks &amp; unlimited racing</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+      <a href="Promotions/velocity-promotions-elementor.html" class="vsl-navbar__mega-card vsl-navbar__mega-card--promos">
+        <span class="vsl-navbar__mega-card__title">Deals &amp; Promotions</span>
+        <span class="vsl-navbar__mega-card__sub">Discounts, happy hour, and specials</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+      <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__mega-card vsl-navbar__mega-card--contact">
+        <span class="vsl-navbar__mega-card__title">Contact</span>
+        <span class="vsl-navbar__mega-card__sub">Hours, address, and help</span>
+        <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
+      </a>
+    </div>
+    <div class="vsl-navbar__mega-utils">
+      <a href="https://velocitysimlounge.com/contact/#faq" class="vsl-navbar__mega-util">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+        FAQ
+      </a>
+      <a href="https://velocitysimlounge.com/blog/" class="vsl-navbar__mega-util">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        Velocity News
+      </a>
+    </div>
+  </div>
+
+  <div class="vsl-navbar__overlay" aria-hidden="true">
+    <div class="vsl-navbar__overlay-cta" data-mobile-cta-wrap>
+      <button type="button" class="vsl-navbar__overlay-cta-loc" data-mobile-loc-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-mobile-book-locations">
+        <span data-book-now-mobile-title>Houston</span>
+        <svg class="vsl-navbar__cta-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__overlay-cta-book" data-book-now-mobile-primary>Book Now</a>
+      <ul id="vsl-mobile-book-locations" class="vsl-navbar__overlay-cta-dropdown">
+        <li><a href="#" class="vsl-navbar__overlay-cta-dropdown-link" data-mobile-location="houston">Houston</a></li>
+        <li><a href="#" class="vsl-navbar__overlay-cta-dropdown-link" data-mobile-location="dallas">Dallas</a></li>
+      </ul>
+    </div>
+    <ul class="vsl-navbar__overlay-menu">
+      <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
+        <button class="vsl-navbar__overlay-link">Explore
+          <svg class="vsl-navbar__overlay-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="vsl-navbar__overlay-sub vsl-navbar__overlay-sub--cards">
+          <div class="vsl-navbar__overlay-cards">
+            <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--book" data-mobile-mega-book>
+              <span class="vsl-navbar__overlay-card__title">Plan a Visit</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="https://velocitysimlounge.com/party-packs/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--events">
+              <span class="vsl-navbar__overlay-card__title">Party Packs</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="https://velocitysimlounge.com/membership/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--membership">
+              <span class="vsl-navbar__overlay-card__title">Memberships</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="https://velocitysimlounge.com/about/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--how">
+              <span class="vsl-navbar__overlay-card__title">How it Works</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="Promotions/velocity-promotions-elementor.html" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--promos">
+              <span class="vsl-navbar__overlay-card__title">Promotions</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+            <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--contact">
+              <span class="vsl-navbar__overlay-card__title">Contact</span>
+              <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="vsl-navbar__overlay-item">
+        <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__overlay-link">Group Events</a>
+      </li>
+      <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
+        <button class="vsl-navbar__overlay-link">Our Menu
+          <svg class="vsl-navbar__overlay-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="vsl-navbar__overlay-sub">
+          <li><a href="https://velocitysimlounge.com/food-and-drink/" class="vsl-navbar__overlay-sub-link">Full Menu</a></li>
+          <li><a href="https://velocitysimlounge.com/food-and-drink#food" class="vsl-navbar__overlay-sub-link">The Food</a></li>
+          <li><a href="https://velocitysimlounge.com/food-and-drink#drinks" class="vsl-navbar__overlay-sub-link">The Drinks</a></li>
+        </ul>
+      </li>
+      <li class="vsl-navbar__overlay-item">
+        <a href="https://velocitysimlounge.com/contact/#faq" class="vsl-navbar__overlay-link">FAQ</a>
+      </li>
+    </ul>
+    <div class="vsl-navbar__overlay-social">
+      <a href="https://www.instagram.com/velocitysimlounge/" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      <a href="https://www.facebook.com/VelocitySimLounge/" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+      <a href="https://www.tiktok.com/@velocitysimlounge" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+    </div>
+  </div>
+
+  <div class="vsl-navbar__geo-backdrop" data-location-backdrop hidden></div>
+  <div class="vsl-navbar__geo-panel" id="vsl-location-dialog" data-location-panel hidden role="dialog" aria-modal="true" aria-labelledby="vsl-location-title">
+    <svg style="width:28px;height:28px;fill:#EE265F;margin:0 auto 6px !important;display:block" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+    <h2 id="vsl-location-title" class="vsl-navbar__geo-title">Choose your lounge</h2>
+    <p class="vsl-navbar__geo-text">Select your nearest Velocity location. Your booking links will update automatically.</p>
+    <div class="vsl-navbar__geo-picks" role="group" aria-label="Select city">
+      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="houston">Houston</button>
+      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="dallas">Dallas</button>
+    </div>
+    <button class="vsl-navbar__geo-dismiss" type="button" data-location-dismiss>Skip for now</button>
+  </div>
+</nav>
+
+<script>
+(function() {
+  var navbar = document.querySelector('.vsl-navbar');
+  if (!navbar) return;
+
+
+  (function markActiveLink() {
+    var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+    navbar.querySelectorAll('.vsl-navbar__menu .vsl-navbar__link[href]').forEach(function(a) {
+      var linkPath = '';
+      try { linkPath = new URL(a.href).pathname.replace(/\/+$/, '').toLowerCase(); } catch (_) { return; }
+      if (path === linkPath) a.classList.add('vsl-navbar__link--active');
+    });
+  })();
+
+  var items = navbar.querySelectorAll('[data-dropdown]');
+  var ctaWrap = navbar.querySelector('[data-cta-dropdown]');
+  var ctaBtn = ctaWrap ? ctaWrap.querySelector('.vsl-navbar__cta') : null;
+  var ctaLocBtn = ctaWrap ? ctaWrap.querySelector('[data-cta-change]') : null;
+  var STORAGE_KEY = 'vslPreferredLocation';
+  var SESSION_DISMISS_KEY = 'vslLocationPromptDismissed';
+  var LOCATIONS = {
+    houston: {
+      key: 'houston',
+      label: 'Houston',
+      bookingUrl: 'https://velocitysimlounge.com/book-now/',
+      mobileLabel: 'Houston - Book Now'
+    },
+    dallas: {
+      key: 'dallas',
+      label: 'Dallas',
+      bookingUrl: 'https://velocitysimlounge.com/dallas',
+      mobileLabel: 'Dallas - Book Now'
+    }
+  };
+
+  var primaryCta = navbar.querySelector('[data-book-now-primary]');
+  var primaryCtaLocation = navbar.querySelector('[data-book-now-location]');
+  var mobileCtaTitle = navbar.querySelector('[data-book-now-mobile-title]');
+  var mobileCtaPrimary = navbar.querySelector('[data-book-now-mobile-primary]');
+  var stickyBookNow = navbar.querySelector('[data-sticky-book-now]');
+  var stickyLocation = navbar.querySelector('[data-sticky-location]');
+  var locationLinks = navbar.querySelectorAll('[data-location-option]');
+
+  var locationBackdrop = navbar.querySelector('[data-location-backdrop]');
+  var locationPanel = navbar.querySelector('[data-location-panel]');
+  var dismissBtn = navbar.querySelector('[data-location-dismiss]');
+  var pickButtons = navbar.querySelectorAll('[data-location-pick]');
+  var locationOpenButtons = navbar.querySelectorAll('[data-location-open]');
+  var faqNavLinks = navbar.querySelectorAll('a[href*="/contact/#faq"], a[href*="/contact/#FAQ"]');
+  var currentLocation = 'houston';
+
+  function normalizeLocation(key) {
+    return LOCATIONS[key] ? key : 'houston';
+  }
+
+  function markCurrentLocation(key) {
+    locationLinks.forEach(function(link) {
+      var isCurrent = link.getAttribute('data-location-option') === key;
+      link.classList.toggle('is-current', isCurrent);
+      if (isCurrent) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+    navbar.querySelectorAll('[data-mobile-location]').forEach(function(link) {
+      link.classList.toggle('is-current', link.getAttribute('data-mobile-location') === key);
+    });
+    navbar.querySelectorAll('[data-loc-detail]').forEach(function(panel) {
+      panel.classList.toggle('is-active', panel.getAttribute('data-loc-detail') === key);
+    });
+  }
+
+  function applyLocation(key) {
+    var normalized = normalizeLocation(key);
+    var config = LOCATIONS[normalized];
+    currentLocation = normalized;
+
+    if (primaryCta) {
+      primaryCta.href = config.bookingUrl;
+      primaryCta.setAttribute('aria-label', 'Book now at ' + config.label);
+    }
+    if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
+    if (mobileCtaTitle) mobileCtaTitle.textContent = config.label;
+    if (mobileCtaPrimary) {
+      mobileCtaPrimary.href = config.bookingUrl;
+    }
+    megaBookLinks.forEach(function(el) { el.href = config.bookingUrl; });
+    mobileBookLinks.forEach(function(el) { el.href = config.bookingUrl; });
+    if (stickyBookNow) stickyBookNow.href = config.bookingUrl;
+    if (stickyLocation) stickyLocation.textContent = config.label;
+
+    markCurrentLocation(normalized);
+
+    try {
+      window.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: normalized } }));
+    } catch (_) {}
+  }
+
+  function persistLocation(key) {
+    try {
+      localStorage.setItem(STORAGE_KEY, normalizeLocation(key));
+    } catch (_) {}
+  }
+
+  function readPersistedLocation() {
+    try {
+      return normalizeLocation(localStorage.getItem(STORAGE_KEY));
+    } catch (_) {
+      return 'houston';
+    }
+  }
+
+  function isSessionDismissed() {
+    try {
+      return sessionStorage.getItem(SESSION_DISMISS_KEY) === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function dismissForSession() {
+    try {
+      sessionStorage.setItem(SESSION_DISMISS_KEY, '1');
+    } catch (_) {}
+  }
+
+  function isMobileViewport() {
+    return window.matchMedia('(max-width: 900px)').matches;
+  }
+
+  function isElementorEditorContext() {
+    try {
+      if (/elementor-preview|elementor-library/i.test(window.location.href)) return true;
+      if (document.body.classList.contains('elementor-editor-active')) return true;
+      if (window.top !== window.self && window.top.document.body.classList.contains('elementor-editor-active')) {
+        return true;
+      }
+    } catch (err) {}
+    return false;
+  }
+
+  function isContactPagePath() {
+    return /^\/contact\/?$/.test(window.location.pathname);
+  }
+
+  function scrollFaqIntoView(attempt) {
+    var target = document.getElementById('faq') || document.getElementById('FAQ');
+    if (!target) {
+      var candidates = document.querySelectorAll('h1, h2, h3');
+      for (var i = 0; i < candidates.length; i++) {
+        if (/frequently asked questions/i.test(candidates[i].textContent || '')) {
+          target = candidates[i];
+          break;
+        }
+      }
+    }
+    if (!target) {
+      if (attempt < 20) setTimeout(function() { scrollFaqIntoView(attempt + 1); }, 300);
+      return;
+    }
+    var navOffset = Math.round((navbar ? navbar.offsetHeight : 0) + 12);
+    var top = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+    window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+  }
+
+  function maybeScrollToFaq() {
+    var shouldScroll = (window.location.hash || '').toLowerCase() === '#faq';
+    try {
+      if (sessionStorage.getItem('vslScrollTarget') === 'faq') {
+        shouldScroll = true;
+        sessionStorage.removeItem('vslScrollTarget');
+      }
+    } catch (_) {}
+    if (shouldScroll && isContactPagePath()) {
+      setTimeout(function() { scrollFaqIntoView(0); }, 180);
+    }
+  }
+
+  function portalLocationPromptToBody() {
+    if (!locationBackdrop || !locationPanel || !navbar) return;
+    if (locationPanel.parentNode === document.body) return;
+    document.body.appendChild(locationBackdrop);
+    document.body.appendChild(locationPanel);
+  }
+
+  function restoreLocationPromptToNavbar() {
+    if (!locationBackdrop || !locationPanel || !navbar) return;
+    if (locationPanel.parentNode !== document.body) return;
+    navbar.appendChild(locationBackdrop);
+    navbar.appendChild(locationPanel);
+  }
+
+  function setLocationPromptAria(open) {
+    locationOpenButtons.forEach(function(btn) {
+      if (btn.hasAttribute('aria-expanded')) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  function openLocationPrompt() {
+    if (!locationPanel) return;
+    portalLocationPromptToBody();
+    locationPanel.hidden = false;
+    if (locationBackdrop && isMobileViewport()) {
+      locationBackdrop.hidden = false;
+    }
+    setLocationPromptAria(true);
+  }
+
+  function closeLocationPrompt() {
+    if (locationPanel) locationPanel.hidden = true;
+    if (locationBackdrop) locationBackdrop.hidden = true;
+    restoreLocationPromptToNavbar();
+    setLocationPromptAria(false);
+  }
+
+  function handleLocationChoice(key, shouldPersist) {
+    applyLocation(key);
+    if (shouldPersist) persistLocation(key);
+    dismissForSession();
+    closeLocationPrompt();
+  }
+
+  function closeNavDropdowns() {
+    items.forEach(function(it) {
+      it.classList.remove('vsl-navbar__item--open');
+      var t = it.querySelector('.vsl-navbar__link[aria-expanded]');
+      if (t) t.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function closeCtaDropdown() {
+    if (ctaWrap) {
+      ctaWrap.classList.remove('vsl-navbar__cta-wrap--open');
+      if (ctaLocBtn) ctaLocBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  var raceToggle = navbar.querySelector('[data-race-toggle]');
+  var megaPanel = navbar.querySelector('#vsl-mega-panel');
+  var megaBookLinks = navbar.querySelectorAll('[data-mega-book]');
+  var mobileBookLinks = navbar.querySelectorAll('[data-mobile-mega-book]');
+
+  function warmMegaAssets() {
+    if (!megaPanel || warmMegaAssets._ran) return;
+    warmMegaAssets._ran = true;
+    var seen = Object.create(null);
+    var cards = megaPanel.querySelectorAll('.vsl-navbar__mega-card');
+    cards.forEach(function(card) {
+      var bg = window.getComputedStyle(card).backgroundImage || '';
+      var match;
+      var re = /url\((['"]?)(.*?)\1\)/g;
+      while ((match = re.exec(bg))) {
+        var src = match[2];
+        if (!src || seen[src]) continue;
+        seen[src] = true;
+        var img = new Image();
+        img.decoding = 'async';
+        img.src = src;
+        if (img.decode) img.decode().catch(function() {});
+      }
+    });
+  }
+
+  function warmOverlayCards() {
+    if (warmOverlayCards._ran) return;
+    warmOverlayCards._ran = true;
+    var seen = Object.create(null);
+    var cards = navbar.querySelectorAll('.vsl-navbar__overlay-card');
+    cards.forEach(function(card) {
+      var bg = window.getComputedStyle(card).backgroundImage || '';
+      var match;
+      var re = /url\((['"]?)(.*?)\1\)/g;
+      while ((match = re.exec(bg))) {
+        var src = match[2];
+        if (!src || seen[src]) continue;
+        seen[src] = true;
+        var img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = src;
+        if (img.decode) img.decode().catch(function() {});
+      }
+    });
+  }
+
+  if (megaPanel) {
+    if (isMobileViewport()) {
+      megaPanel.classList.remove('is-preloading');
+      megaPanel.classList.add('is-ready');
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(warmOverlayCards, { timeout: 1500 });
+      } else {
+        setTimeout(warmOverlayCards, 400);
+      }
+    } else {
+      requestAnimationFrame(function() {
+        megaPanel.classList.remove('is-preloading');
+        requestAnimationFrame(function() {
+          megaPanel.classList.add('is-ready');
+        });
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(warmMegaAssets, { timeout: 2000 });
+          requestIdleCallback(warmOverlayCards, { timeout: 3000 });
+        } else {
+          setTimeout(warmMegaAssets, 600);
+          setTimeout(warmOverlayCards, 1200);
+        }
+      });
+    }
+  }
+
+  var mobileOverlay = navbar.querySelector('.vsl-navbar__overlay');
+  if (mobileOverlay) {
+    var toggleBtn = navbar.querySelector('.vsl-navbar__toggle');
+    if (toggleBtn) {
+      ['touchstart', 'mouseenter', 'focus'].forEach(function(evt) {
+        toggleBtn.addEventListener(evt, warmOverlayCards, { once: true, passive: true });
+      });
+    }
+  }
+
+  var stickyBar = navbar.querySelector('.vsl-navbar__sticky');
+  var navBar = navbar.querySelector('.vsl-navbar__bar');
+  if (stickyBar && navBar && 'IntersectionObserver' in window) {
+    var stickyObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) {
+          stickyBar.classList.add('is-visible');
+          stickyBar.setAttribute('aria-hidden', 'false');
+        } else {
+          stickyBar.classList.remove('is-visible');
+          stickyBar.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }, { threshold: 0 });
+    stickyObserver.observe(navBar);
+  }
+
+  var stickyLocToggle = navbar.querySelector('[data-sticky-loc-toggle]');
+  if (stickyLocToggle) {
+    stickyLocToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var next = currentLocation === 'houston' ? 'dallas' : 'houston';
+      applyLocation(next);
+      persistLocation(next);
+    });
+  }
+
+  function closeMega() {
+    if (raceToggle) {
+      raceToggle.classList.remove('is-open');
+      raceToggle.setAttribute('aria-expanded', 'false');
+    }
+    if (megaPanel) {
+      megaPanel.classList.remove('is-open');
+      megaPanel.setAttribute('aria-hidden', 'true');
+      megaPanel.setAttribute('inert', '');
+    }
+  }
+
+  function openMega() {
+    closeNavDropdowns();
+    closeCtaDropdown();
+    if (raceToggle) {
+      raceToggle.classList.add('is-open');
+      raceToggle.setAttribute('aria-expanded', 'true');
+    }
+    if (megaPanel) {
+      megaPanel.removeAttribute('inert');
+      megaPanel.classList.add('is-open');
+      megaPanel.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function closeAllDesktop() {
+    closeNavDropdowns();
+    closeCtaDropdown();
+    closeMega();
+  }
+
+  function openCtaDropdown() {
+    if (!ctaWrap) return;
+    closeNavDropdowns();
+    closeMega();
+    ctaWrap.classList.add('vsl-navbar__cta-wrap--open');
+    if (ctaLocBtn) ctaLocBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  if (raceToggle) {
+    raceToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = raceToggle.classList.contains('is-open');
+      if (isOpen) closeMega();
+      else openMega();
+    });
+  }
+
+  items.forEach(function(item) {
+    var trigger = item.querySelector('.vsl-navbar__link');
+    if (!trigger) return;
+    trigger.addEventListener('click', function(e) {
+      var isOpen = item.classList.contains('vsl-navbar__item--open');
+      closeAllDesktop();
+      if (!isOpen) {
+        item.classList.add('vsl-navbar__item--open');
+        trigger.setAttribute('aria-expanded', 'true');
+        e.preventDefault();
+      }
+    });
+    item.addEventListener('mouseenter', function() {
+      closeMega();
+      closeCtaDropdown();
+      closeNavDropdowns();
+      item.classList.add('vsl-navbar__item--open');
+      if (trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'true');
+    });
+    item.addEventListener('mouseleave', function() {
+      item.classList.remove('vsl-navbar__item--open');
+      if (trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  if (ctaWrap && ctaLocBtn) {
+    ctaLocBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var isOpen = ctaWrap.classList.contains('vsl-navbar__cta-wrap--open');
+      if (isOpen) closeCtaDropdown();
+      else openCtaDropdown();
+    });
+  }
+
+  locationLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var key = link.getAttribute('data-location-option');
+      if (key === currentLocation) return;
+      handleLocationChoice(key, true);
+    });
+  });
+
+  if (dismissBtn) {
+    dismissBtn.addEventListener('click', function() {
+      dismissForSession();
+      closeLocationPrompt();
+    });
+  }
+
+  if (locationBackdrop) {
+    locationBackdrop.addEventListener('click', function() {
+      dismissForSession();
+      closeLocationPrompt();
+    });
+  }
+
+  locationOpenButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openLocationPrompt();
+    });
+  });
+
+  faqNavLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeMega();
+      if (isContactPagePath()) {
+        scrollFaqIntoView(0);
+      } else {
+        try { sessionStorage.setItem('vslScrollTarget', 'faq'); } catch (_) {}
+        window.location.href = 'https://velocitysimlounge.com/contact/#faq';
+      }
+    });
+  });
+
+  var mobileCtaWrap = navbar.querySelector('[data-mobile-cta-wrap]');
+  var mobileLocToggle = navbar.querySelector('[data-mobile-loc-toggle]');
+  var mobileLocLinks = navbar.querySelectorAll('[data-mobile-location]');
+
+  if (mobileLocToggle && mobileCtaWrap) {
+    mobileLocToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var open = mobileCtaWrap.classList.toggle('vsl-navbar__overlay-cta--loc-open');
+      mobileLocToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  mobileLocLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var key = link.getAttribute('data-mobile-location');
+      if (key === currentLocation) return;
+      handleLocationChoice(key, true);
+    });
+  });
+
+  pickButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var selected = btn.getAttribute('data-location-pick');
+      handleLocationChoice(selected, true);
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    var inLocationUi =
+      (locationPanel && locationPanel.contains(e.target)) ||
+      (locationBackdrop && !locationBackdrop.hidden && locationBackdrop.contains(e.target));
+    var clickInsideOpenPrompt =
+      (locationPanel && !locationPanel.hidden && locationPanel.contains(e.target)) ||
+      (locationBackdrop && !locationBackdrop.hidden && locationBackdrop.contains(e.target));
+    var inMega = megaPanel && megaPanel.contains(e.target);
+    var inRaceToggle = raceToggle && raceToggle.contains(e.target);
+    if (!navbar.contains(e.target) && !inMega) {
+      closeAllDesktop();
+      if (locationPanel && !locationPanel.hidden && !clickInsideOpenPrompt) {
+        dismissForSession();
+        closeLocationPrompt();
+      }
+    } else if (!inMega && !inRaceToggle && raceToggle && raceToggle.classList.contains('is-open')) {
+      closeMega();
+    }
+    if (ctaWrap && !ctaWrap.contains(e.target) && !inMega && !inRaceToggle) {
+      closeCtaDropdown();
+      if (locationPanel && !locationPanel.hidden && !inLocationUi) {
+        dismissForSession();
+        closeLocationPrompt();
+      }
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (megaPanel && megaPanel.classList.contains('is-open')) {
+        closeMega();
+        return;
+      }
+      if (locationPanel && !locationPanel.hidden) {
+        dismissForSession();
+        closeLocationPrompt();
+        return;
+      }
+      closeAllDesktop();
+      closeMobile();
+    }
+  });
+  var toggle = navbar.querySelector('.vsl-navbar__toggle');
+  var overlay = navbar.querySelector('.vsl-navbar__overlay');
+  toggle.addEventListener('click', function() {
+    var isOpen = overlay.classList.contains('vsl-navbar__overlay--open');
+    if (isOpen) { closeMobile(); }
+    else {
+      overlay.classList.add('vsl-navbar__overlay--open');
+      overlay.setAttribute('aria-hidden', 'false');
+      toggle.classList.add('vsl-navbar__toggle--active');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    }
+  });
+  function closeMobile() {
+    overlay.classList.remove('vsl-navbar__overlay--open');
+    overlay.setAttribute('aria-hidden', 'true');
+    toggle.classList.remove('vsl-navbar__toggle--active');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    if (mobileCtaWrap) mobileCtaWrap.classList.remove('vsl-navbar__overlay-cta--loc-open');
+    if (mobileLocToggle) mobileLocToggle.setAttribute('aria-expanded', 'false');
+    var om = overlay.querySelector('.vsl-navbar__overlay-menu');
+    if (om) om.classList.remove('vsl-navbar__overlay-menu--sub-open');
+    overlay.querySelectorAll('.vsl-navbar__overlay-item--open').forEach(function(el) { el.classList.remove('vsl-navbar__overlay-item--open'); });
+  }
+  var mobileItems = overlay.querySelectorAll('[data-mobile-dropdown]');
+  var overlayMenu = overlay.querySelector('.vsl-navbar__overlay-menu');
+  mobileItems.forEach(function(mi) {
+    var btn = mi.querySelector('.vsl-navbar__overlay-link');
+    btn.addEventListener('click', function() {
+      var wasOpen = mi.classList.contains('vsl-navbar__overlay-item--open');
+      mobileItems.forEach(function(other) { other.classList.remove('vsl-navbar__overlay-item--open'); });
+      if (!wasOpen) {
+        mi.classList.add('vsl-navbar__overlay-item--open');
+        if (overlayMenu) overlayMenu.classList.add('vsl-navbar__overlay-menu--sub-open');
+      } else {
+        if (overlayMenu) overlayMenu.classList.remove('vsl-navbar__overlay-menu--sub-open');
+      }
+    });
+  });
+
+  applyLocation(readPersistedLocation());
+  maybeScrollToFaq();
+
+  try {
+    var hasStoredLocation = !!localStorage.getItem(STORAGE_KEY);
+    if (!hasStoredLocation && !isSessionDismissed() && !isElementorEditorContext()) {
+      setTimeout(function() {
+        openLocationPrompt();
+      }, isMobileViewport() ? 400 : 500);
+    }
+  } catch (_) {}
+})();
+</script>
+<!-- ═══════════════════════════════════════════════════════════════
+     NAVBAR COMPONENT END
+     ═══════════════════════════════════════════════════════════════ -->
+
+</body>
+</html>

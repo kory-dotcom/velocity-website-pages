@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Group Events Hub — Preview</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #101828;
+      color: #eaeaea;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Simulates the Elementor widget wrapper -->
+<div class="elementor-widget-html">
+  <div class="elementor-widget-container">
+
+    <!-- ═══ INCLUDE START ═══ -->
+    <script>
+      fetch('velocity-parties-events-elementor.html')
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('vsl-mount').innerHTML = html;
+          document.querySelectorAll('#vsl-mount link[rel="preconnect"]').forEach(l => document.head.appendChild(l.cloneNode(true)));
+          document.querySelectorAll('#vsl-mount link[href*="fonts.googleapis"]').forEach(l => document.head.appendChild(l.cloneNode(true)));
+          var styles = document.querySelectorAll('#vsl-mount style');
+          styles.forEach(function(s) { document.head.appendChild(s.cloneNode(true)); });
+          var scripts = document.querySelectorAll('#vsl-mount script');
+          scripts.forEach(function(s) {
+            var ns = document.createElement('script');
+            ns.textContent = s.textContent;
+            document.body.appendChild(ns);
+          });
+        })
+        .catch(function() {
+          document.getElementById('vsl-mount').innerHTML =
+            '<p style="padding:2rem;color:#EE265F;font-size:1.2rem;">Could not load velocity-parties-events-elementor.html &mdash; make sure this preview is served via a local HTTP server (e.g. <code>npx serve .</code>).</p>';
+        });
+    </script>
+    <div id="vsl-mount"></div>
+    <!-- ═══ INCLUDE END ═══ -->
+
+  </div>
+</div>
+
+<noscript>
+  <p style="padding:2rem;color:#EE265F;">JavaScript is required for this preview.</p>
+</noscript>
+
+</body>
+</html>

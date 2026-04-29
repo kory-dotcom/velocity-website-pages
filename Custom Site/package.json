@@ -1,0 +1,26 @@
+{
+  "name": "velocity-custom-cms",
+  "version": "1.0.0",
+  "description": "Custom CMS platform for Velocity Sim Racing Lounge",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build-pages.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "add-user": "node scripts/add-user.js",
+    "seed": "node scripts/seed-content.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cheerio": "^1.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.33.2",
+    "socket.io": "^4.8.3"
+  }
+}

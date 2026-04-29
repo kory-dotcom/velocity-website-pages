@@ -1,0 +1,3195 @@
+<link rel="preconnect" href="https://velocitysimlounge.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  .vsl-booknow {
+    --c0: #10182B;
+    --c1: #191B4D;
+    --c2: #EE265F;
+    --c3: #293893;
+    --c4: #FDC70C;
+    --c5: #D22026;
+    --c6: #EAEAEA;
+    --c7: #DFDFDE;
+    --c8: #B2AEBF;
+    --c9: #5F5782;
+    --gutter: clamp(24px, 3vw, 40px);
+    --page-margin: 64px;
+    --soft: 8px;
+    --f0: 'Khand', system-ui, sans-serif;
+    --f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(2.2rem, 1rem + 5.5vw, 3.8rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --text-card-price: clamp(1.7rem, 1.05rem + 2.6vw, 2.5rem);
+    --text-card-name: clamp(1.3rem, 0.85rem + 1.7vw, 1.75rem);
+    --vsl-outdent: 0px;
+    --vsl-bleed-top: 0px;
+    --vsl-bleed-bottom: 0px;
+    --vsl-hero-finish: none;
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+
+    font-family: var(--f1);
+    color: var(--c0);
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 0 clamp(60px, 10vh, 120px);
+    background-color: var(--c0);
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .vsl-booknow:has(> main > .vsl-bn-hero:first-of-type) {
+    margin-top: var(--vsl-bleed-top);
+    margin-bottom: var(--vsl-bleed-bottom);
+  }
+  .vsl-booknow > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--c0);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .vsl-booknow *, .vsl-booknow *::before, .vsl-booknow *::after { box-sizing: border-box; }
+  .vsl-booknow a { text-decoration: none; color: inherit; }
+
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-booknow) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-booknow),
+  .elementor-container:has(.vsl-booknow),
+  .elementor-column:has(.vsl-booknow),
+  .elementor-column-wrap:has(.vsl-booknow),
+  .elementor-widget-wrap:has(.vsl-booknow),
+  .elementor-widget:has(.vsl-booknow) {
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: min-content !important;
+  }
+  .e-con:has(.vsl-booknow),
+  .e-con-inner:has(.vsl-booknow),
+  .e-con-inner > .elementor-widget:has(.vsl-booknow),
+  .elementor-element:has(> .elementor-widget-container > .vsl-booknow) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: min-content !important;
+  }
+  .vsl-booknow,
+  .vsl-booknow main,
+  .vsl-booknow section,
+  .vsl-bn-card,
+  .vsl-bn-btn {
+    pointer-events: auto !important;
+  }
+  .vsl-booknow h1, .vsl-booknow h2, .vsl-booknow h3,
+  .vsl-booknow h4, .vsl-booknow h5, .vsl-booknow h6 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .vsl-booknow p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .vsl-booknow ul { list-style-type: none; }
+  .vsl-booknow li { display: flex !important; visibility: visible !important; }
+  .vsl-booknow li.vsl-bn-faq__item { display: block !important; }
+
+  .vsl-booknow button.vsl-bn-tab,
+  .vsl-booknow .vsl-bn-tabs button.vsl-bn-tab,
+  .vsl-booknow .vsl-bn-tab,
+  .elementor-widget-container .vsl-booknow button.vsl-bn-tab,
+  button.vsl-bn-tab {
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+    border-color: var(--c6) !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    text-decoration: none !important;
+    line-height: normal !important;
+    text-shadow: none !important;
+    fill: currentColor !important;
+  }
+  .vsl-booknow button.vsl-bn-tab[aria-selected="true"],
+  .vsl-booknow .vsl-bn-tabs button.vsl-bn-tab[aria-selected="true"],
+  .vsl-booknow .vsl-bn-tab[aria-selected="true"],
+  .elementor-widget-container .vsl-booknow button.vsl-bn-tab[aria-selected="true"],
+  button.vsl-bn-tab[aria-selected="true"] {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+  .vsl-booknow button.vsl-bn-tab:hover,
+  .vsl-booknow .vsl-bn-tab:hover,
+  button.vsl-bn-tab:hover {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow button.vsl-bn-tab[aria-selected="true"]:hover,
+  .vsl-booknow .vsl-bn-tab[aria-selected="true"]:hover,
+  button.vsl-bn-tab[aria-selected="true"]:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-booknow .vsl-bn-section-title {
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+    font-family: var(--f0) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+  }
+  .vsl-booknow .vsl-bn-section-title em {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-card,
+  .elementor-widget-container .vsl-bn-card,
+  .elementor-element .vsl-bn-card {
+    text-decoration: none !important;
+    color: inherit !important;
+    pointer-events: auto !important;
+  }
+  .vsl-booknow .vsl-bn-card__overlay-name {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-family: var(--f0) !important;
+  }
+  .vsl-booknow .vsl-bn-card__features li {
+    color: var(--c9) !important;
+    -webkit-text-fill-color: var(--c9) !important;
+  }
+  .vsl-booknow .vsl-bn-card__cta-hint {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-card:hover .vsl-bn-card__cta-hint {
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
+    background: var(--c4) !important;
+  }
+  .vsl-booknow .vsl-bn-modal__close {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 22px !important;
+  }
+  .vsl-booknow .vsl-bn-card__price-badge {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-card__ticket {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+  }
+  .vsl-booknow .vsl-bn-card__badge--popular {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-booknow .vsl-bn-card__badge--value {
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
+  }
+  .vsl-booknow .vsl-bn-card__tag {
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
+  }
+  .vsl-booknow a.vsl-bn-card,
+  .vsl-booknow a.vsl-bn-card:visited,
+  .vsl-booknow a.vsl-bn-card:hover,
+  .vsl-booknow a.vsl-bn-card:focus {
+    text-decoration: none !important;
+  }
+  .vsl-booknow .vsl-bn-features__label {
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+  }
+  .vsl-booknow .vsl-bn-features__icon {
+    background: #fff !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  }
+  .vsl-booknow .vsl-bn-spring-label {
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+    font-family: 'Archivo Narrow', var(--f1) !important;
+    text-transform: none !important;
+    font-style: normal !important;
+  }
+  .vsl-booknow .vsl-bn-spring-label strong {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-membership__title {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-booknow .vsl-bn-membership__title-accent {
+    color: var(--c4) !important;
+    -webkit-text-fill-color: var(--c4) !important;
+  }
+  .vsl-booknow .vsl-bn-faq__title {
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+  }
+  .vsl-booknow .vsl-bn-faq__trigger {
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+  .vsl-booknow .vsl-bn-faq__trigger:hover,
+  .vsl-booknow .vsl-bn-faq__trigger:focus {
+    background: rgba(16, 24, 43, 0.04) !important;
+    background-color: rgba(16, 24, 43, 0.04) !important;
+  }
+  .vsl-booknow .vsl-bn-faq__label {
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+    font-family: var(--f1) !important;
+    font-style: normal !important;
+    text-transform: none !important;
+  }
+  .vsl-booknow .vsl-bn-faq__answer {
+    color: var(--c9) !important;
+    -webkit-text-fill-color: var(--c9) !important;
+  }
+  .vsl-booknow .vsl-bn-faq__answer a {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-faq__panel {
+    background: #fff !important;
+    background-color: #fff !important;
+  }
+  .vsl-booknow .vsl-bn-membership__inner {
+    position: relative !important;
+    overflow: visible !important;
+  }
+  .vsl-booknow .vsl-bn-membership__tiers {
+    overflow: visible !important;
+  }
+  .vsl-booknow .vsl-bn-membership__vip {
+    position: absolute !important;
+    right: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .vsl-booknow .vsl-bn-membership__tier--vip {
+    pointer-events: none !important;
+    cursor: default !important;
+    border-color: rgba(253,199,12,0.35) !important;
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 50%, #1a1a1a 100%) !important;
+  }
+  .vsl-booknow .vsl-bn-membership__tier--vip .vsl-bn-membership__tier-name {
+    background: linear-gradient(135deg, #FDC70C 0%, #f5d442 40%, #d4a90a 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+  }
+  .vsl-booknow .vsl-bn-membership__tier--vip .vsl-bn-membership__tier-price {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+
+  .vsl-bn-hero {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: visible;
+    isolation: isolate;
+    width: 100%;
+    min-height: 0;
+    background: linear-gradient(162deg, var(--c1) 0%, var(--c0) 48%, #0d1322 100%);
+    color: var(--c6);
+  }
+  .vsl-bn-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%);
+  }
+  .vsl-bn-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -10%;
+    width: 120%;
+    height: 42%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(8deg, rgba(238,38,95,0.09) 0%, transparent 58%);
+    transform: skewY(-2deg);
+    transform-origin: bottom left;
+  }
+  .vsl-bn-hero__rings {
+    position: absolute;
+    inset: -5% -25% 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .vsl-bn-hero__rings span {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    border: 1px solid rgba(234,234,234,0.07);
+    transform: translate(-50%, -50%) rotate(-14deg);
+    aspect-ratio: 2.35 / 1;
+  }
+  .vsl-bn-hero__rings span:nth-child(1) { width: min(118vw, 920px); box-shadow: 0 0 0 1px rgba(238,38,95,0.04); }
+  .vsl-bn-hero__rings span:nth-child(2) { width: min(138vw, 1080px); opacity: 0.85; border-color: rgba(41,56,147,0.12); }
+  .vsl-bn-hero__rings span:nth-child(3) { width: min(162vw, 1280px); opacity: 0.55; border-color: rgba(253,199,12,0.08); }
+  .vsl-bn-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(28px, 4vw, 48px) clamp(20px, 5vw, var(--page-margin)) clamp(20px, 3vw, 32px);
+    max-width: 52rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .vsl-bn-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 6px 20px;
+    font-family: var(--f0);
+    font-size: clamp(0.85rem, 0.65rem + 1vw, 1.1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--c5) 0%, var(--c2) 100%);
+    border: none;
+    border-radius: 0;
+  }
+  .vsl-bn-hero__title {
+    margin: 0 0 0.45em;
+    padding: 10px 12px;
+    font-family: var(--f0);
+    font-size: clamp(2.4rem, 1.1rem + 5.8vw, 4rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.02;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-bn-hero__title-accent { color: var(--c2); }
+  .vsl-bn-hero__sub {
+    margin: 0;
+    padding: 6px 12px;
+    font-size: clamp(1rem, 0.92rem + 0.4vw, 1.18rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(234,234,234,0.92);
+    max-width: 44ch;
+    background: rgba(4, 7, 18, 0.68);
+    border-radius: 8px;
+  }
+  .vsl-bn-hero__finish {
+    display: none;
+  }
+
+  .vsl-bn-grid {
+    position: relative;
+    width: min(1520px, calc(100% - 2 * clamp(20px, 4vw, 48px)));
+    margin-inline: auto;
+  }
+
+  .vsl-bn-experiences {
+    background: var(--c1) !important;
+    background-color: var(--c1) !important;
+    color: var(--c6);
+    padding: clamp(12px, 2vh, 20px) 0 clamp(40px, 5vh, 64px);
+    position: relative;
+  }
+  .vsl-bn-hero + .vsl-bn-experiences {
+    margin-top: -1px;
+    padding-top: calc(clamp(16px, 3vh, 28px) + 1px);
+  }
+  .vsl-bn-section-title {
+    margin: 0 auto 0.25em;
+    font-family: var(--f0);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--c6);
+  }
+  .vsl-bn-section-title em { font-style: italic; color: var(--c2); }
+  .vsl-bn-section-title::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin: 0.3em auto 0;
+    background: linear-gradient(135deg, var(--c2) 0%, var(--c5) 100%);
+    border-radius: 2px;
+  }
+  .vsl-bn-section-sub {
+    margin: 0 auto clamp(1rem, 1.5vh, 1.5rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: 48ch;
+    color: var(--c6);
+    opacity: 0.85;
+  }
+
+  .vsl-bn-tabs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: clamp(1rem, 2vh, 1.5rem);
+  }
+  button.vsl-bn-tab,
+  .vsl-bn-tab {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    position: relative !important;
+    border: 2px solid var(--c6) !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: var(--c6) !important;
+    -webkit-text-fill-color: var(--c6) !important;
+    font-family: var(--f0) !important;
+    font-size: clamp(0.9rem, 0.75rem + 0.65vw, 1.1rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    padding: 14px 36px !important;
+    border-radius: 10px !important;
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.18s ease, background 0.3s ease;
+    min-height: 44px;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    line-height: 1.3 !important;
+    background: transparent !important;
+  }
+  button.vsl-bn-tab:hover,
+  .vsl-bn-tab:hover {
+    border-color: var(--c2) !important;
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+    background: transparent !important;
+    box-shadow: 0 4px 18px rgba(238,38,95,0.12) !important;
+    transform: translateY(-2px);
+  }
+  button.vsl-bn-tab[aria-selected="true"],
+  .vsl-bn-tab[aria-selected="true"] {
+    border-color: transparent !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--c2) !important;
+    background-size: 200% 200% !important;
+    box-shadow: 0 6px 24px rgba(238,38,95,0.3), 0 0 0 1px rgba(238,38,95,0.1) !important;
+    transform: translateY(-1px);
+    animation: vsl-tab-gradient 3s ease infinite;
+  }
+  button.vsl-bn-tab[aria-selected="true"]:hover,
+  .vsl-bn-tab[aria-selected="true"]:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  @keyframes vsl-tab-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  .vsl-bn-tab:active {
+    transform: translateY(0) scale(0.97);
+  }
+  .vsl-bn-tab:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 3px;
+  }
+
+  .vsl-bn-panel { display: none; }
+  .vsl-bn-panel[aria-hidden="false"] { display: block; }
+
+  @keyframes vsl-card-enter {
+    from {
+      opacity: 0;
+      transform: translateY(28px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .vsl-bn-card.vsl-entering {
+    opacity: 0;
+    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .vsl-bn-card-grid {
+    display: grid;
+    gap: var(--gutter);
+    align-items: stretch;
+    transform: scale(0.95);
+    transform-origin: top center;
+    margin-bottom: -2.5%;
+  }
+  .vsl-bn-card-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .vsl-bn-card-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3vw, 36px);
+    max-width: min(720px, 100%);
+    margin-inline: auto;
+  }
+
+  .vsl-bn-spring-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+    align-items: stretch;
+  }
+  .vsl-bn-spring-grid .vsl-bn-card__media {
+    aspect-ratio: 4 / 3;
+  }
+  .vsl-bn-spring-grid .vsl-bn-card__body {
+    padding: clamp(22px, 2.8vw, 32px) clamp(24px, 3.2vw, 38px) clamp(26px, 3vw, 38px);
+    gap: 0.85rem;
+  }
+  
+  .vsl-bn-spring-label {
+    margin: 0 0 clamp(1.2rem, 2.5vh, 1.8rem);
+    font-family: 'Archivo Narrow', var(--f1);
+    font-size: clamp(1.15rem, 0.85rem + 1.3vw, 1.6rem);
+    font-weight: 600;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    text-align: center;
+    line-height: 1.4;
+    color: var(--c6);
+  }
+  .vsl-bn-spring-label strong {
+    color: var(--c2);
+    -webkit-text-fill-color: var(--c2);
+  }
+
+  .vsl-bn-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18), 0 1px 0 rgba(255,255,255,0.9) inset;
+    cursor: pointer;
+    border: 1px solid rgba(16,24,43,0.08);
+    color: inherit;
+    text-decoration: none;
+    transform: translateY(0) scale(1);
+  }
+  .vsl-bn-card:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 3px;
+  }
+
+  .vsl-bn-card::before {
+    content: none;
+  }
+
+  .vsl-bn-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: rgba(16,24,43,0.06);
+  }
+  .vsl-bn-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vsl-bn-card__media::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 35%;
+    background: linear-gradient(to bottom, transparent 0%, rgba(16,24,43,0.75) 100%);
+    pointer-events: none;
+  }
+
+  .vsl-bn-card__overlay-name {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+    right: 20px;
+    z-index: 3;
+    margin: 0;
+    font-family: var(--f0);
+    font-size: var(--text-card-name);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .vsl-bn-card__ticket {
+    position: absolute;
+    bottom: 58px;
+    left: 20px;
+    z-index: 5;
+    display: inline-block;
+    padding: 6px 20px 6px 18px;
+    background: linear-gradient(155deg, #f7d96a 0%, #d4a930 45%, #e8c44a 100%);
+    color: #1a1a1a;
+    font-family: var(--f0);
+    font-weight: 800;
+    font-style: italic;
+    font-size: clamp(0.52rem, 0.44rem + 0.4vw, 0.68rem);
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    border-radius: 5px;
+    box-shadow:
+      inset 0 0 0 2px rgba(160,120,20,0.25),
+      inset 0 0 0 4px rgba(255,230,120,0.18),
+      0 2px 10px rgba(0,0,0,0.45);
+  }
+  .vsl-bn-card__ticket::before,
+  .vsl-bn-card__ticket::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(16,24,43,0.85);
+    transform: translateY(-50%);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .vsl-bn-card__ticket::before { left: -5px; }
+  .vsl-bn-card__ticket::after { right: -5px; }
+
+  .vsl-bn-card--badged {
+    overflow: visible;
+  }
+  .vsl-bn-card--badged .vsl-bn-card__media {
+    border-radius: 18px 18px 0 0;
+    overflow: hidden;
+  }
+  .vsl-bn-card__badge {
+    position: absolute;
+    top: 12px;
+    left: -10px;
+    z-index: 7;
+    padding: clamp(8px, 1.2vw, 12px) clamp(14px, 2vw, 22px) clamp(8px, 1.2vw, 12px) clamp(18px, 2.5vw, 28px);
+    font-family: var(--f0);
+    font-size: clamp(0.82rem, 0.65rem + 0.7vw, 1.1rem);
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.15;
+    white-space: nowrap;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .vsl-bn-card__badge::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 10px;
+    height: 6px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  .vsl-bn-card__badge--popular {
+    background: linear-gradient(135deg, #EE265F 0%, #d41e52 100%);
+    color: #fff;
+  }
+  .vsl-bn-card__badge--popular::after {
+    background: #a1193f;
+  }
+  .vsl-bn-card__badge--value {
+    background: linear-gradient(135deg, #FDC70C 0%, #e8b40a 100%);
+    color: var(--c0);
+  }
+  .vsl-bn-card__badge--value::after {
+    background: #b8900a;
+  }
+
+  .vsl-bn-spring-group {
+    position: relative;
+    display: contents;
+  }
+  .vsl-bn-card--tagged {
+    overflow: visible;
+  }
+  .vsl-bn-card--tagged .vsl-bn-card__media {
+    border-radius: 18px 18px 0 0;
+  }
+  .vsl-bn-card--tagged .vsl-bn-card__body {
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+  }
+  .vsl-bn-card--tagged .vsl-bn-card__tag {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    z-index: 8;
+    padding: clamp(8px, 1.2vw, 14px) clamp(18px, 2.5vw, 28px) clamp(8px, 1.2vw, 14px) clamp(16px, 2.2vw, 24px);
+    background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+    color: var(--c0);
+    font-family: var(--f0);
+    font-size: clamp(0.82rem, 0.65rem + 0.7vw, 1.1rem);
+    font-weight: 800;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    border-radius: 8px 0 0 8px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .vsl-bn-card--tagged .vsl-bn-card__tag::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 0;
+    width: 10px;
+    height: 6px;
+    background: #c0c0c0;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+
+  .vsl-bn-card__body {
+    padding: clamp(22px, 2.8vw, 32px) clamp(24px, 3.2vw, 38px) clamp(26px, 3vw, 38px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .vsl-bn-card__price-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .vsl-bn-card__price-badge {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 6px 16px;
+    background: var(--c2);
+    color: #fff;
+    border-radius: 8px;
+    font-family: var(--f0);
+    font-size: var(--text-card-price);
+    font-weight: 700;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .vsl-bn-card__price-from {
+    font-size: 0.42em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.85;
+  }
+  .vsl-bn-card__was {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--c8);
+  }
+  .vsl-bn-card__was s { text-decoration: line-through; }
+  .vsl-bn-card__save {
+    display: inline-block;
+    padding: 3px 10px;
+    font-family: var(--f0);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--c3);
+    border-radius: 4px;
+  }
+
+  .vsl-bn-card__features {
+    margin: 0;
+    padding: 0;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vsl-bn-card__features li {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: clamp(0.82rem, 0.76rem + 0.25vw, 0.92rem);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--c9);
+  }
+  .vsl-bn-card__features li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    background-color: var(--c3);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+  }
+
+  .vsl-bn-card__cta-hint {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: auto;
+    padding: 11px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--c2);
+    font-family: var(--f1);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    transition: background 0.22s ease, transform 0.18s ease, color 0.22s ease;
+  }
+  .vsl-bn-card:hover .vsl-bn-card__cta-hint {
+    background: var(--c4);
+    color: var(--c0);
+    -webkit-text-fill-color: var(--c0);
+    transform: translateY(-1px);
+  }
+  .vsl-bn-card__cta-hint svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.22s ease;
+  }
+  .vsl-bn-card:hover .vsl-bn-card__cta-hint svg {
+    transform: translateX(3px);
+  }
+
+  .vsl-bn-features {
+    background: var(--c0);
+    color: var(--c6);
+    padding: clamp(14px, 2vh, 24px) 0;
+  }
+  .vsl-bn-features__row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--gutter);
+    text-align: center;
+  }
+  .vsl-bn-features__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .vsl-bn-features__icon {
+    width: clamp(140px, 20vw, 200px);
+    height: clamp(140px, 20vw, 200px);
+    border-radius: 28px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18);
+  }
+  .vsl-bn-features__icon img {
+    width: 65%;
+    height: 65%;
+    object-fit: contain;
+  }
+  .vsl-bn-features__label {
+    font-family: var(--f0);
+    font-size: clamp(0.95rem, 0.8rem + 0.6vw, 1.15rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.25;
+    color: var(--c6);
+    max-width: 14ch;
+  }
+
+  .vsl-bn-membership {
+    position: relative;
+    background: linear-gradient(162deg, var(--c1) 0%, var(--c0) 48%, #0d1322 100%);
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: var(--c6);
+  }
+  .vsl-bn-membership::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(41,56,147,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 45% at 80% 20%, rgba(238,38,95,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(25,27,77,0.3) 0%, transparent 55%);
+  }
+  .vsl-bn-membership::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle 400px at 15% 85%, rgba(238,38,95,0.15) 0%, transparent 70%),
+      radial-gradient(circle 350px at 85% 15%, rgba(253,199,12,0.1) 0%, transparent 70%);
+    animation: vsl-mem-glow 6s ease-in-out infinite alternate;
+  }
+  @keyframes vsl-mem-glow {
+    0% { opacity: 0.4; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+  .vsl-bn-membership__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .vsl-bn-membership__media {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    aspect-ratio: 1.15 / 1;
+  }
+  .vsl-bn-membership__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: box-shadow 0.4s ease;
+    animation: vsl-mem-float 5s ease-in-out infinite alternate;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-membership__media img:hover {
+      box-shadow: 0 8px 32px rgba(238,38,95,0.25), 0 4px 16px rgba(0,0,0,0.3);
+    }
+  }
+  .vsl-bn-membership__media img:first-child {
+    grid-row: 1 / -1;
+  }
+  .vsl-bn-membership__media img:nth-child(2) {
+    animation-delay: 1.5s;
+  }
+  .vsl-bn-membership__media img:nth-child(3) {
+    animation-delay: 3s;
+  }
+  @keyframes vsl-mem-float {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-6px) scale(1); }
+  }
+  
+  .vsl-bn-membership__eyebrow {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 6px 18px;
+    font-family: var(--f0);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--c3) 0%, var(--c1) 100%);
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(41,56,147,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+  .vsl-bn-membership__eyebrow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: vsl-eyebrow-shimmer 3s ease-in-out infinite;
+  }
+  @keyframes vsl-eyebrow-shimmer {
+    0% { left: -100%; }
+    50%, 100% { left: 150%; }
+  }
+  .vsl-bn-membership__title {
+    margin: 0 0 0.35em;
+    font-family: var(--f0);
+    font-size: clamp(1.8rem, 1rem + 3.5vw, 3rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    color: #fff;
+  }
+  .vsl-bn-membership__title-accent {
+    color: var(--c4);
+    text-shadow: 0 0 20px rgba(253,199,12,0.4);
+  }
+  .vsl-bn-membership__desc {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(234,234,234,0.88);
+    max-width: 42ch;
+  }
+  .vsl-bn-membership__tiers {
+    display: flex;
+    gap: 16px;
+    margin: 0 0 clamp(20px, 3vh, 32px);
+    flex-wrap: wrap;
+  }
+  .vsl-bn-membership__tier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    min-width: 110px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: default;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-membership__tier:hover {
+      transform: translateY(-4px);
+      border-color: rgba(253,199,12,0.4);
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 8px 24px rgba(253,199,12,0.15), 0 0 0 1px rgba(253,199,12,0.1);
+    }
+  }
+  .vsl-bn-membership__tier-name {
+    font-family: var(--f0);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c8);
+    margin-bottom: 4px;
+  }
+  .vsl-bn-membership__tier-price {
+    font-family: var(--f0);
+    font-size: clamp(1.3rem, 1rem + 1.2vw, 1.7rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+  }
+  .vsl-bn-membership__tier-price span {
+    font-size: 0.5em;
+    font-weight: 600;
+    color: var(--c8);
+  }
+  .vsl-bn-membership__vip {
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(circle 65px at var(--vip-x, -200px) var(--vip-y, -200px), black 0%, transparent 100%);
+    mask-image: radial-gradient(circle 65px at var(--vip-x, -200px) var(--vip-y, -200px), black 0%, transparent 100%);
+  }
+  .vsl-bn-membership__tier--vip {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 50%, #1a1a1a 100%);
+    border: 1.5px solid rgba(253,199,12,0.35);
+    cursor: default;
+    pointer-events: none;
+    box-shadow:
+      0 0 20px rgba(253,199,12,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      inset 0 -1px 0 rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .vsl-bn-membership__tier--vip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(253,199,12,0.06) 50%, transparent 70%);
+    pointer-events: none;
+  }
+  .vsl-bn-membership__tier--vip .vsl-bn-membership__tier-name {
+    background: linear-gradient(135deg, #FDC70C 0%, #f5d442 40%, #d4a90a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.15em;
+    font-size: 0.85rem;
+    text-shadow: none;
+  }
+  .vsl-bn-membership__tier--vip .vsl-bn-membership__tier-price {
+    color: #fff;
+    text-shadow: 0 0 12px rgba(253,199,12,0.2);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-membership__tier--vip:hover {
+      transform: none;
+      border-color: rgba(253,199,12,0.35);
+      background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 50%, #1a1a1a 100%);
+      box-shadow:
+        0 0 20px rgba(253,199,12,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        inset 0 -1px 0 rgba(0,0,0,0.3);
+    }
+  }
+  .vsl-bn-membership__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    min-height: 52px;
+    padding: 14px 36px;
+    font-family: var(--f0);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
+    cursor: pointer;
+    border: 2px solid var(--c4);
+    border-radius: 10px;
+    background: var(--c4);
+    box-shadow: 0 6px 24px rgba(253,199,12,0.22);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+    animation: vsl-mem-cta-pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes vsl-mem-cta-pulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(253,199,12,0.22); }
+    50% { box-shadow: 0 6px 32px rgba(253,199,12,0.45), 0 0 0 6px rgba(253,199,12,0.08); }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-membership__cta:hover {
+      background: #e8b600;
+      border-color: #e8b600;
+      box-shadow: 0 12px 36px rgba(253,199,12,0.4);
+      transform: translateY(-3px);
+      animation: none;
+    }
+  }
+  .vsl-bn-membership__cta:active {
+    transform: translateY(0) scale(0.97);
+  }
+  .vsl-bn-membership__cta:focus-visible {
+    outline: 3px solid var(--c2);
+    outline-offset: 3px;
+  }
+  .vsl-bn-membership__cta svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    transition: transform 0.2s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-membership__cta:hover svg {
+      transform: translateX(4px);
+    }
+  }
+  @media (max-width: 900px) {
+    .vsl-bn-membership__inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: clamp(28px, 5vw, 44px);
+    }
+    .vsl-bn-membership__media {
+      max-width: 420px;
+      margin: 0 auto;
+      order: -1;
+    }
+    .vsl-bn-membership__eyebrow {
+      margin-top: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .vsl-bn-membership__tiers {
+      justify-content: center;
+    }
+    .vsl-bn-membership__desc {
+      margin-inline: auto;
+    }
+  }
+  @media (max-width: 639px) {
+    .vsl-bn-membership { padding: 40px 0; }
+    .vsl-bn-membership__media { max-width: 320px; }
+  }
+
+  .vsl-bn-cta {
+    background: var(--c0);
+    color: var(--c6);
+    padding: clamp(48px, 8vh, 96px) 0;
+  }
+  .vsl-bn-cta__panel {
+    max-width: min(1100px, 100%);
+    margin: 0 auto;
+    border: 1px solid rgba(16,24,40,0.09);
+    border-top: 3px solid var(--c2);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 28px 64px rgba(0,0,0,0.36), 0 10px 24px rgba(0,0,0,0.22);
+    padding: clamp(48px, 8vh, 96px) clamp(36px, 7vw, 88px);
+    text-align: center;
+  }
+  .vsl-bn-cta__panel h2 {
+    margin: 0 0 clamp(16px, 2.5vh, 22px) !important;
+    font-family: var(--f0) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: clamp(1.85rem, 1.15rem + 2.4vw, 3rem) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.045em !important;
+    line-height: 1.08 !important;
+    color: var(--c3);
+    text-wrap: balance;
+  }
+  .vsl-bn-cta__panel p {
+    margin: 0 auto clamp(28px, 4vh, 40px) !important;
+    color: var(--c9) !important;
+    -webkit-text-fill-color: var(--c9) !important;
+    line-height: 1.65 !important;
+    font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.3rem) !important;
+    font-weight: 400 !important;
+    max-width: 44ch;
+  }
+
+  .vsl-bn-faq {
+    background: var(--c1);
+    color: var(--c6);
+    padding: clamp(56px, 8vh, 96px) 0 clamp(72px, 10vh, 120px);
+  }
+  .vsl-bn-faq__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 48px);
+  }
+  .vsl-bn-faq__title {
+    margin: 0 auto 1.5rem;
+    text-align: center;
+    font-family: var(--f0);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    color: var(--c6);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .vsl-bn-faq__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255,255,255,0.9) inset;
+    overflow: hidden;
+    text-align: left;
+  }
+  .vsl-bn-faq__item {
+    display: block !important;
+    border-bottom: 1px solid rgba(16, 24, 43, 0.1);
+    background: #fff;
+  }
+  .vsl-bn-faq__item:last-child { border-bottom: none; }
+  .vsl-bn-faq__trigger {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
+    padding: clamp(14px, 3vw, 18px);
+    font-family: inherit;
+    font-size: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    font-weight: 600;
+    text-align: left;
+    color: #111;
+    white-space: normal;
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.22s ease;
+  }
+  .vsl-bn-faq__trigger:hover {
+    background-color: rgba(16, 24, 43, 0.04);
+  }
+  .vsl-bn-faq__label {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--f1);
+    font-size: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    font-weight: 600;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    color: inherit;
+  }
+  .vsl-bn-faq__trigger:focus-visible {
+    outline: 3px solid var(--c3);
+    outline-offset: 2px;
+  }
+  .vsl-bn-faq__chev {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: transparent center / 100% 100% no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2310182b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vsl-bn-faq__item.is-open .vsl-bn-faq__chev {
+    transform: rotate(180deg);
+  }
+  .vsl-bn-faq__panel {
+    padding: 16px 22px 26px;
+    font-size: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    line-height: 1.55;
+    color: var(--c9);
+    background: #fff;
+  }
+  .vsl-bn-faq__panel[hidden] { display: none; }
+  .vsl-bn-faq__item.is-open .vsl-bn-faq__panel { display: block; }
+  .vsl-bn-faq__answer {
+    margin: 0;
+    padding-top: 2px;
+    color: var(--c9);
+    max-width: 62ch;
+  }
+  .vsl-bn-faq__answer a {
+    color: var(--c2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.2s ease;
+  }
+  .vsl-bn-faq__answer a:hover {
+    color: var(--c3);
+  }
+
+  .vsl-bn-cta {
+    background: var(--c0);
+    color: var(--c6);
+    padding: clamp(48px, 8vh, 96px) 0;
+  }
+  .vsl-bn-cta__panel {
+    max-width: min(1100px, 100%);
+    margin: 0 auto;
+    border: 1px solid rgba(16,24,40,0.09);
+    border-top: 3px solid var(--c2);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 28px 64px rgba(0,0,0,0.36), 0 10px 24px rgba(0,0,0,0.22);
+    padding: clamp(48px, 8vh, 96px) clamp(36px, 7vw, 88px);
+    text-align: center;
+  }
+  .vsl-bn-cta__panel h2 {
+    margin: 0 0 clamp(16px, 2.5vh, 22px) !important;
+    font-family: var(--f0) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: clamp(1.85rem, 1.15rem + 2.4vw, 3rem) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.045em !important;
+    line-height: 1.08 !important;
+    color: var(--c3);
+    text-wrap: balance;
+  }
+
+  .vsl-bn-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 54px;
+    padding: 15px 44px;
+    font-family: var(--f0);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background: var(--c2);
+    background-size: auto;
+    animation: none;
+    box-shadow:
+      0 6px 24px rgba(238,38,95,0.28),
+      0 0 0 0 rgba(238,38,95,0);
+    overflow: hidden;
+    z-index: 0;
+    transition: box-shadow 0.25s ease, transform 0.18s ease;
+  }
+  .vsl-bn-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -75%;
+    width: 50%;
+    height: 200%;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,255,255,0.18) 48%,
+      rgba(255,255,255,0.24) 50%,
+      rgba(255,255,255,0.18) 52%,
+      transparent 70%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
+    z-index: 1;
+    pointer-events: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-btn:hover::before {
+      left: 125%;
+    }
+    .vsl-bn-btn:hover {
+      box-shadow:
+        0 12px 36px rgba(238,38,95,0.38),
+        0 0 20px rgba(238,38,95,0.15);
+      transform: translateY(-3px) scale(1.03);
+    }
+  }
+  .vsl-bn-btn:active {
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 3px 14px rgba(238,38,95,0.22);
+  }
+  .vsl-bn-btn:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 4px;
+  }
+  @keyframes vsl-btn-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  @media (max-width: 1100px) {
+    .vsl-bn-card-grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .vsl-bn-spring-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .vsl-bn-card-grid--4,
+    .vsl-bn-card-grid--2 {
+      grid-template-columns: 1fr;
+      max-width: min(480px, 100%);
+      margin-inline: auto;
+    }
+    .vsl-bn-spring-grid {
+      grid-template-columns: 1fr;
+      max-width: min(480px, 100%);
+      margin-inline: auto;
+    }
+    .vsl-bn-features__row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(24px, 4vw, 36px);
+    }
+  }
+  @media (max-width: 639px) {
+    .vsl-bn-hero { min-height: 0; }
+    .vsl-bn-hero__inner {
+      padding: clamp(24px, 6vw, 40px) clamp(16px, 5vw, var(--page-margin)) clamp(16px, 3vw, 24px);
+    }
+    .vsl-bn-experiences { padding: 36px 0 12px; }
+    .vsl-bn-hero + .vsl-bn-experiences { padding-top: calc(36px + 1px); }
+    .vsl-bn-card__media { aspect-ratio: 4 / 3; }
+    .vsl-bn-card__ticket {
+      font-size: 0.78rem;
+      padding: 8px 24px 8px 22px;
+      bottom: 54px;
+      left: 16px;
+    }
+    .vsl-bn-card__ticket::before,
+    .vsl-bn-card__ticket::after {
+      width: 12px;
+      height: 12px;
+    }
+    .vsl-bn-card__ticket::before { left: -6px; }
+    .vsl-bn-card__ticket::after { right: -6px; }
+    .vsl-bn-card__body { padding: 14px 16px 18px; }
+    .vsl-bn-tab { padding: 8px 18px; font-size: 0.8rem; }
+    .vsl-bn-features { padding: 10px 0; }
+    .vsl-bn-features__row { flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .vsl-bn-cta { padding: 40px 0 48px; }
+    .vsl-bn-cta__panel {
+      padding: clamp(36px, 9vw, 56px) clamp(22px, 6vw, 32px);
+      border-radius: 18px;
+    }
+    .vsl-bn-cta__panel .vsl-bn-btn {
+      width: 100%;
+      max-width: 320px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-bn-card { transition: box-shadow 0.22s ease; }
+    .vsl-bn-card:hover { transform: none; }
+    .vsl-bn-card:hover .vsl-bn-card__media img { transform: none; }
+    .vsl-bn-btn { transition: box-shadow 0.22s ease; animation: none; }
+    .vsl-bn-btn::before { display: none; }
+    .vsl-bn-btn:hover { transform: none; }
+    .vsl-bn-btn:active { transform: none; }
+    .vsl-bn-tab { transition: border-color 0.22s ease, color 0.22s ease; }
+    .vsl-bn-tab:hover { transform: none; }
+    .vsl-bn-tab:active { transform: none; }
+    .vsl-bn-tab[aria-selected="true"] { animation: none; }
+    .vsl-bn-card__cta-hint svg { transition: none; }
+    .vsl-bn-card:hover .vsl-bn-card__cta-hint svg { transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  .vsl-bn-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 3vw, 40px);
+  }
+  .vsl-bn-modal[aria-hidden="false"] {
+    display: flex;
+  }
+  .vsl-bn-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(16,24,43,0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: vsl-modal-fadeIn 0.25s ease;
+    cursor: pointer;
+  }
+  .vsl-bn-modal__window {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    height: min(88vh, 720px);
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 80px rgba(0,0,0,0.35),
+      0 0 0 1px rgba(255,255,255,0.08) inset;
+    animation: vsl-modal-slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .vsl-bn-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--c0);
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .vsl-bn-modal__title {
+    font-family: var(--f0);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .vsl-bn-modal__close {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: background 0.18s ease, transform 0.14s ease;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    font-family: Arial, sans-serif;
+  }
+  .vsl-bn-modal__close:hover {
+    background: var(--c2);
+    border-color: var(--c2);
+    transform: scale(1.08);
+  }
+  .vsl-bn-modal__close:active {
+    transform: scale(0.95);
+  }
+  .vsl-bn-modal__close:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 2px;
+  }
+  .vsl-bn-modal__body {
+    flex: 1;
+    position: relative;
+    background: #f5f5f5;
+  }
+  .vsl-bn-modal__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .vsl-bn-modal__loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  .vsl-bn-modal__loader[data-loaded="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .vsl-bn-modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(16,24,43,0.1);
+    border-top-color: var(--c2);
+    border-radius: 50%;
+    animation: vsl-modal-spin 0.7s linear infinite;
+  }
+  @keyframes vsl-modal-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes vsl-modal-slideUp {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes vsl-modal-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 639px) {
+    .vsl-bn-modal { padding: 0; }
+    .vsl-bn-modal__window {
+      max-width: 100%;
+      height: 100%;
+      border-radius: 0;
+      max-height: 100vh;
+    }
+  }
+
+  .vsl-bn-mem-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 3vw, 40px);
+  }
+  .vsl-bn-mem-modal[aria-hidden="false"] {
+    display: flex;
+  }
+  .vsl-bn-mem-modal .vsl-bn-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(16,24,43,0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: vsl-modal-fadeIn 0.25s ease;
+    cursor: pointer;
+  }
+  .vsl-bn-mem-modal__window {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1020px;
+    max-height: min(92vh, 720px);
+    overflow-y: auto;
+    background: linear-gradient(168deg, var(--c1) 0%, var(--c0) 100%);
+    border-radius: 22px;
+    box-shadow:
+      0 32px 80px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(255,255,255,0.06) inset;
+    animation: vsl-modal-slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 48px);
+  }
+  .vsl-bn-mem-modal__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.18s ease, transform 0.14s ease;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1;
+    font-family: Arial, sans-serif;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-bn-mem-modal__close:hover {
+    background: var(--c2);
+    border-color: var(--c2);
+    transform: scale(1.08);
+  }
+  .vsl-bn-mem-modal__close:active { transform: scale(0.95); }
+  .vsl-bn-mem-modal__close:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 2px;
+  }
+  .vsl-bn-mem-modal__header {
+    text-align: center;
+    margin-bottom: clamp(24px, 3.5vh, 36px);
+  }
+  .vsl-bn-mem-modal__eyebrow {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 5px 16px;
+    font-family: var(--f0);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--c3) 0%, var(--c1) 100%);
+    border-radius: 0;
+  }
+  .vsl-bn-mem-modal__title {
+    margin: 0 0 0.25em;
+    font-family: var(--f0);
+    font-size: clamp(1.6rem, 0.9rem + 3vw, 2.5rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.08;
+    letter-spacing: 0.03em;
+    color: #fff;
+  }
+  .vsl-bn-mem-modal__title em {
+    font-style: italic;
+    color: var(--c4);
+  }
+  .vsl-bn-mem-modal__subtitle {
+    margin: 0;
+    font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1.05rem);
+    color: var(--c8);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .vsl-bn-mem-modal__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .vsl-bn-mem-tier {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--c0);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-mem-tier:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.22);
+      z-index: 2;
+    }
+  }
+  .vsl-bn-mem-tier:active {
+    transform: translateY(-2px) scale(1.005);
+  }
+  .vsl-bn-mem-tier:focus-visible {
+    outline: 3px solid var(--c4);
+    outline-offset: 3px;
+  }
+  .vsl-bn-mem-tier__accent {
+    height: 5px;
+    flex-shrink: 0;
+  }
+  .vsl-bn-mem-tier:nth-child(1) .vsl-bn-mem-tier__accent { background: var(--c3); }
+  .vsl-bn-mem-tier:nth-child(2) .vsl-bn-mem-tier__accent { background: var(--c2); }
+  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__accent { background: var(--c4); }
+  .vsl-bn-mem-tier__body {
+    padding: clamp(20px, 2.5vw, 28px) clamp(18px, 2.5vw, 26px) clamp(22px, 2.5vw, 28px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    text-align: center;
+  }
+  .vsl-bn-mem-tier__name {
+    margin: 0 0 6px;
+    font-family: var(--f0);
+    font-size: clamp(1.05rem, 0.8rem + 1vw, 1.3rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c0);
+  }
+  .vsl-bn-mem-tier__price {
+    margin: 0 0 6px;
+    font-size: clamp(1.8rem, 1.2rem + 2.5vw, 2.4rem);
+    font-weight: 700;
+    color: var(--c2);
+    line-height: 1.1;
+  }
+  .vsl-bn-mem-tier__price span {
+    font-size: 0.45em;
+    font-weight: 600;
+    color: var(--c9);
+  }
+  .vsl-bn-mem-tier__tag {
+    margin: 0 0 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--c9);
+    line-height: 1.35;
+  }
+  .vsl-bn-mem-tier__rule {
+    display: block;
+    height: 1px;
+    background: rgba(16,24,43,0.1);
+    border: 0;
+    margin: 0 0 14px;
+    flex-shrink: 0;
+  }
+  .vsl-bn-mem-tier__list {
+    margin: 0 0 18px;
+    padding: 0;
+    list-style: none;
+    font-size: clamp(0.82rem, 0.78rem + 0.2vw, 0.9rem);
+    color: var(--c9);
+    line-height: 1.4;
+    text-align: left;
+    flex: 1;
+  }
+  .vsl-bn-mem-tier__list li {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 0.5em;
+  }
+  .vsl-bn-mem-tier__list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    background: var(--c3);
+    mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+  }
+  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__list li::before {
+    background: var(--c4);
+  }
+  .vsl-bn-mem-tier__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 20px;
+    font-family: var(--f0);
+    font-size: 0.88rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c2);
+    border: 2px solid var(--c2);
+    border-radius: 10px;
+    background: transparent;
+    transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+    margin-top: auto;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-mem-tier:hover .vsl-bn-mem-tier__btn {
+      background: var(--c2);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(238,38,95,0.25);
+    }
+  }
+  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__btn {
+    color: var(--c0);
+    border-color: var(--c4);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bn-mem-tier:nth-child(3):hover .vsl-bn-mem-tier__btn {
+      background: var(--c4);
+      color: var(--c0);
+      box-shadow: 0 6px 20px rgba(253,199,12,0.3);
+    }
+  }
+  .vsl-bn-mem-modal__footer {
+    text-align: center;
+    margin-top: clamp(16px, 2.5vh, 24px);
+  }
+  .vsl-bn-mem-modal__footer a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c8);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+  .vsl-bn-mem-modal__footer a:hover {
+    color: #fff;
+  }
+  @media (max-width: 768px) {
+    .vsl-bn-mem-modal__grid {
+      grid-template-columns: 1fr;
+      max-width: 380px;
+      margin-inline: auto;
+    }
+    .vsl-bn-mem-modal__window {
+      max-height: 100vh;
+      border-radius: 0;
+    }
+    .vsl-bn-mem-modal { padding: 0; }
+  }
+</style>
+<script>(function(){var o=new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(function(n){if(n.querySelectorAll){n.querySelectorAll('img[data-s]').forEach(function(i){try{i.src=atob(i.getAttribute('data-s'));}catch(e){}});}});});});o.observe(document,{childList:true,subtree:true});})();</script>
+
+<div class="vsl-booknow" data-cfg='{
+  "links": {
+    "quickRace":      "https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1",
+    "doubleRace":     "https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1",
+    "sixTen":         "https://book.velocitysimlounge.com/book/610-challenge/15",
+    "leaderboard":    "https://book.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1",
+    "twoSeaterQuick": "https://book.velocitysimlounge.com/book/2-seater-quick-race/22",
+    "twoSeaterDouble":"https://book.velocitysimlounge.com/book/2-seater-double-race/23",
+    "springQuick":    "https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==",
+    "springDouble":   "https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==",
+    "springSprint":   "https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9",
+    "springEndurance":"https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==",
+    "bookNow":        "https://velocitysimlounge.com/book-now/"
+  },
+  "images": {
+    "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
+    "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
+    "sixTen":         "https://velocitysimlounge.com/wp-content/uploads/2026/01/610-challenge-cover.jpeg",
+    "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard.webp",
+    "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
+    "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
+    "springQuick":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp",
+    "springDouble":   "https://velocitysimlounge.com/wp-content/uploads/2026/04/DSC01771.webp",
+    "springSprint":   "https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T.webp",
+    "springEndurance":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_T.webp",
+    "heroFinishLine": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png",
+    "featureHeight":  "https://velocitysimlounge.com/wp-content/uploads/2026/01/3.png",
+    "featureFriends": "https://velocitysimlounge.com/wp-content/uploads/2026/01/Icons.png",
+    "featureTracks":  "https://velocitysimlounge.com/wp-content/uploads/2026/01/4-1.png",
+    "featureHeadsets":"https://velocitysimlounge.com/wp-content/uploads/2026/01/2-1.png"
+  }
+}'>
+  <main>
+
+    <section class="vsl-bn-hero" aria-labelledby="bn-hero-title">
+    </section>
+
+    <section class="vsl-bn-experiences" id="experiences" aria-labelledby="experiences-heading">
+      <div class="vsl-bn-grid">
+        <h2 class="vsl-bn-section-title" id="experiences-heading">
+          Choose Your <em>Experience</em>
+        </h2>
+
+        <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
+          <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true">Main Experiences</button>
+          <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false">2-Seater Experiences</button>
+          <button class="vsl-bn-tab" role="tab" id="tab-spring" aria-controls="panel-spring" aria-selected="false">Eat &amp; Race Bundles</button>
+        </div>
+
+        <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--4">
+
+            <a class="vsl-bn-card" data-l="quickRace" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcXVpY2tfcmFjZS53ZWJw" alt="Quick Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high">
+                <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Perfect for first-time drivers</li>
+                  <li>Approx. 25 minute experience</li>
+                  <li>Race solo or with friends</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card vsl-bn-card--badged" data-l="doubleRace" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvZG91YmxlX3JhY2Uud2VicA==" alt="Double Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high">
+                <span class="vsl-bn-card__badge vsl-bn-card__badge--popular">Most Popular</span>
+                <h3 class="vsl-bn-card__overlay-name">Double Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $49</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Save over 20%</li>
+                  <li>Approx. 55 minute experience</li>
+                  <li>Two races, double the fun</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="sixTen" href="https://book.velocitysimlounge.com/book/610-challenge/15" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="sixTen" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="610 Challenge virtual Houston loop at Velocity" width="1024" height="1008" loading="eager" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">610 Challenge</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>A Velocity Exclusive</li>
+                  <li>Race a virtual Houston 610 Loop</li>
+                  <li>Nearly 40 miles with AI traffic</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="leaderboard" href="https://book.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvbGVhZGVyYm9hcmQud2VicA==" alt="Leaderboard Challenge competitive time-attack at Velocity" width="1200" height="800" loading="eager" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Leaderboard Challenge</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Competitive time-attack mode</li>
+                  <li>Monthly prizes for Top 3 drivers</li>
+                  <li>30-minute qualifying session</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="vsl-bn-panel" id="panel-2seater" role="tabpanel" aria-labelledby="tab-2seater" aria-hidden="true">
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--2">
+
+            <a class="vsl-bn-card" data-l="twoSeaterQuick" href="https://book.velocitysimlounge.com/book/2-seater-quick-race/22" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="twoSeaterQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjUuMjAtUE0ucG5n" alt="2-Seater Quick Race side-by-side simulator" width="1200" height="649" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">2-Seater Quick Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $45</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>The only motion 2-seater in America</li>
+                  <li>Approx. 25 minute experience</li>
+                  <li>Share the experience and swap drivers at any time</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="twoSeaterDouble" href="https://book.velocitysimlounge.com/book/2-seater-double-race/23" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="twoSeaterDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjcuMzMtUE0ucG5n" alt="2-Seater Double Race on famous tracks" width="1200" height="717" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">2-Seater Double Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $59</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Save over 30%</li>
+                  <li>Approx. 55 minute experience</li>
+                  <li>Drive and race on famous tracks together</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        <div class="vsl-bn-panel" id="panel-spring" role="tabpanel" aria-labelledby="tab-spring" aria-hidden="true">
+
+          <p class="vsl-bn-spring-label">Limited time, 2 driver bundles offer unbeatable value. Eat &amp; Race <strong>TOGETHER.</strong></p>
+
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--4">
+
+            <a class="vsl-bn-card" data-l="springQuick" href="https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="springQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjMxMDUud2VicA==" alt="Spring Quick Race bundle at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
+                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
+                <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $85</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Eat &amp; Race bundle for 2 drivers</li>
+                  <li>Each driver gets their own sim</li>
+                  <li>2 food tickets included</li>
+                  <li>Approx. 25 minute experience</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="springDouble" href="https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="springDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRFNDMDE3NzEud2VicA==" alt="Spring Double Race bundle at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
+                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
+                <h3 class="vsl-bn-card__overlay-name">Double Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $115</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Double the races, double the fun</li>
+                  <li>Save over 20% with this bundle</li>
+                  <li>Choose 2 different cars &amp; tracks to race together</li>
+                  <li>Includes 2 food tickets for entree of your choice</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card vsl-bn-card--tagged" data-l="springSprint" href="https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9" target="_blank" rel="noopener noreferrer">
+              <span class="vsl-bn-card__tag">2-Seater</span>
+              <div class="vsl-bn-card__media">
+                <img data-i="springSprint" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvVmVsb2NpdHlfM19ULndlYnA=" alt="Sprint Bundle 2-seater at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
+                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
+                <h3 class="vsl-bn-card__overlay-name">Eat &amp; Race, 1 Race</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $65</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Eat &amp; Race bundle for 2</li>
+                  <li>Approx. 25 minute experience</li>
+                  <li>Includes 2 food tickets for entree of your choice</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card vsl-bn-card--tagged" data-l="springEndurance" href="https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==" target="_blank" rel="noopener noreferrer">
+              <span class="vsl-bn-card__tag">2-Seater</span>
+              <div class="vsl-bn-card__media">
+                <img data-i="springEndurance" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvVmVsb2NpdHlfVC53ZWJw" alt="Double Race Bundle 2-seater at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
+                <span class="vsl-bn-card__badge vsl-bn-card__badge--value">Best Value</span>
+                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
+                <h3 class="vsl-bn-card__overlay-name">Eat &amp; Race, 2 Races</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $89</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Double the drive time, approx. 55 minute experience</li>
+                  <li>2 food tickets</li>
+                  <li>Choose from a variety of driving options</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <section class="vsl-bn-features" aria-label="Experience highlights">
+      <div class="vsl-bn-grid">
+        <div class="vsl-bn-features__row">
+          <div class="vsl-bn-features__item">
+            <div class="vsl-bn-features__icon">
+              <img data-i="featureHeight" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvMy5wbmc=" alt="Height recommendation icon" width="500" height="500" loading="lazy" decoding="async">
+            </div>
+            <span class="vsl-bn-features__label">Recommended Height: 5' or Taller</span>
+          </div>
+          <div class="vsl-bn-features__item">
+            <div class="vsl-bn-features__icon">
+              <img data-i="featureFriends" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvSWNvbnMucG5n" alt="Race together with friends icon" width="500" height="500" loading="lazy" decoding="async">
+            </div>
+            <span class="vsl-bn-features__label">Race Together With Friends</span>
+          </div>
+          <div class="vsl-bn-features__item">
+            <div class="vsl-bn-features__icon">
+              <img data-i="featureTracks" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNC0xLnBuZw==" alt="Famous tracks and cars icon" width="500" height="500" loading="lazy" decoding="async">
+            </div>
+            <span class="vsl-bn-features__label">Famous Tracks &amp; Cars</span>
+          </div>
+          <div class="vsl-bn-features__item">
+            <div class="vsl-bn-features__icon">
+              <img data-i="featureHeadsets" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvMi0xLnBuZw==" alt="Headsets for group chat icon" width="500" height="500" loading="lazy" decoding="async">
+            </div>
+            <span class="vsl-bn-features__label">Headsets for Group Chat</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-bn-membership" aria-labelledby="bn-membership-heading">
+      <div class="vsl-bn-grid">
+        <div class="vsl-bn-membership__inner">
+          <div class="vsl-bn-membership__media">
+            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvRFNDMDI5NTYud2VicA==" alt="Members racing at Velocity Sim Lounge" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjI3NTUud2VicA==" alt="Velocity member event" width="1200" height="800" loading="lazy" decoding="async">
+            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRFNDRjcyMzEud2VicA==" alt="Members enjoying food and racing" width="1200" height="800" loading="lazy" decoding="async">
+          </div>
+          <div class="vsl-bn-membership__content">
+            <span class="vsl-bn-membership__eyebrow">Members Club</span>
+            <h2 class="vsl-bn-membership__title" id="bn-membership-heading">
+              Race More, <span class="vsl-bn-membership__title-accent">Pay Less</span>
+            </h2>
+            <p class="vsl-bn-membership__desc">
+              Monthly races, food &amp; drink discounts, priority booking, members-only events, and exclusive perks — starting at just $99/mo.
+            </p>
+            <div class="vsl-bn-membership__tiers">
+              <div class="vsl-bn-membership__tier">
+                <span class="vsl-bn-membership__tier-name">Racer</span>
+                <span class="vsl-bn-membership__tier-price">$99<span>/mo</span></span>
+              </div>
+              <div class="vsl-bn-membership__tier">
+                <span class="vsl-bn-membership__tier-name">Pro</span>
+                <span class="vsl-bn-membership__tier-price">$169<span>/mo</span></span>
+              </div>
+              <div class="vsl-bn-membership__tier">
+                <span class="vsl-bn-membership__tier-name">Ultimate</span>
+                <span class="vsl-bn-membership__tier-price">$299<span>/mo</span></span>
+              </div>
+            </div>
+            <a class="vsl-bn-membership__cta" href="https://velocitysimlounge.com/membership/">
+              View Memberships
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <div class="vsl-bn-membership__vip" id="vsl-vip-egg" aria-hidden="true">
+            <div class="vsl-bn-membership__tier vsl-bn-membership__tier--vip">
+              <span class="vsl-bn-membership__tier-name">VIP</span>
+              <span class="vsl-bn-membership__tier-price">$???<span>/mo</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-bn-faq" id="bn-faq" aria-labelledby="bn-faq-heading">
+      <div class="vsl-bn-faq__inner">
+        <h2 class="vsl-bn-faq__title" id="bn-faq-heading">Frequently <em style="font-style:italic;color:var(--c2)">Asked</em></h2>
+        <ul class="vsl-bn-faq__list">
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-1" aria-expanded="false" aria-controls="bn-faq-panel-1">
+              <span class="vsl-bn-faq__label">Is sim racing beginner friendly?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-1" role="region" aria-labelledby="bn-faq-btn-1" hidden>
+              <p class="vsl-bn-faq__answer">Yes, Velocity&rsquo;s sim racing experience is all about fun for every skill level. Our Pit Crew team is trained to help you select a fun driving experience whether it is your first time or you&rsquo;re an experienced driver preparing for your next trackday &mdash; there&rsquo;s something for everyone at Velocity.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-2" aria-expanded="false" aria-controls="bn-faq-panel-2">
+              <span class="vsl-bn-faq__label">Is there an age requirement?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-2" role="region" aria-labelledby="bn-faq-btn-2" hidden>
+              <p class="vsl-bn-faq__answer">Velocity is a family friendly venue. However, we serve alcohol on premise and ask that parents please keep children under supervision at all times.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-3" aria-expanded="false" aria-controls="bn-faq-panel-3">
+              <span class="vsl-bn-faq__label">Is there a height requirement?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-3" role="region" aria-labelledby="bn-faq-btn-3" hidden>
+              <p class="vsl-bn-faq__answer">There is no age requirement to drive at Velocity, however, there is a minimum height recommendation of 5&rsquo; or taller to comfortably operate the simulators. If you are close to 5&rsquo; we recommend visiting in store before booking online.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-4" aria-expanded="false" aria-controls="bn-faq-panel-4">
+              <span class="vsl-bn-faq__label">Am I racing alone or with people?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-4" role="region" aria-labelledby="bn-faq-btn-4" hidden>
+              <p class="vsl-bn-faq__answer">If you come alone, you can drive solo and challenge the leaderboard. You also have the option to race AI. If you come as a group, you&rsquo;ll be racing with each other &mdash; complete with headsets so you can talk to one another.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-5" aria-expanded="false" aria-controls="bn-faq-panel-5">
+              <span class="vsl-bn-faq__label">How early do I need to arrive?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-5" role="region" aria-labelledby="bn-faq-btn-5" hidden>
+              <p class="vsl-bn-faq__answer">If you&rsquo;re planning to eat or drink before your race, we recommend arriving 30&ndash;45 minutes before your booking. You can also enjoy food and drinks after your driving session.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-6" aria-expanded="false" aria-controls="bn-faq-panel-6">
+              <span class="vsl-bn-faq__label">What type of cars are available?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-6" role="region" aria-labelledby="bn-faq-btn-6" hidden>
+              <p class="vsl-bn-faq__answer">We have a huge selection of cars spanning different driving series and classes from GT3 to IndyCar and much more. Learn more about available cars on our <a href="https://velocitysimlounge.com/about/#cars" target="_blank" rel="noopener noreferrer">Cars page</a>.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-7" aria-expanded="false" aria-controls="bn-faq-panel-7">
+              <span class="vsl-bn-faq__label">What type of tracks are available?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-7" role="region" aria-labelledby="bn-faq-btn-7" hidden>
+              <p class="vsl-bn-faq__answer">We have virtually every major track in the world including regional tracks from around America and Europe. There are nearly 100+ available tracks. Learn more about tracks at Velocity on our <a href="https://velocitysimlounge.com/about/#tracks" target="_blank" rel="noopener noreferrer">Tracks page</a>.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-8" aria-expanded="false" aria-controls="bn-faq-panel-8">
+              <span class="vsl-bn-faq__label">Do you serve food &amp; drinks at Velocity?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-8" role="region" aria-labelledby="bn-faq-btn-8" hidden>
+              <p class="vsl-bn-faq__answer">Yes, we have great food &amp; drinks including fresh made flatbreads and craft cocktails &amp; mocktails. Visit our <a href="https://velocitysimlounge.com/food-and-drink/" target="_blank" rel="noopener noreferrer">food &amp; drink page</a> to see our full menu.</p>
+            </div>
+          </li>
+          <li class="vsl-bn-faq__item">
+            <button type="button" class="vsl-bn-faq__trigger" id="bn-faq-btn-9" aria-expanded="false" aria-controls="bn-faq-panel-9">
+              <span class="vsl-bn-faq__label">Do you offer group discounts or promotions?</span>
+              <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-bn-faq__panel" id="bn-faq-panel-9" role="region" aria-labelledby="bn-faq-btn-9" hidden>
+              <p class="vsl-bn-faq__answer">We offer students, service members, and teachers discounts (20% off) available in store only. We also have Eat &amp; Race bundles for 2 drivers (simply purchase additional bundles for larger groups). Lastly, we also offer event packages, to learn more about hosting a large group or event at Velocity, visit our <a href="https://velocitysimlounge.com/group-events/" target="_blank" rel="noopener noreferrer">Group Events page</a>.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vsl-bn-cta" aria-labelledby="bn-cta-heading">
+      <div class="vsl-bn-grid">
+        <div class="vsl-bn-cta__panel">
+          <h2 id="bn-cta-heading">Hey — You <em style="font-style:italic;color:var(--c2)">Scrolled</em> Too Far!</h2>
+          <button class="vsl-bn-btn" type="button" id="vsl-scroll-top">Take Me Back to the Grid</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="vsl-bn-modal" id="vsl-bn-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Book experience">
+      <div class="vsl-bn-modal__backdrop" data-mc></div>
+      <div class="vsl-bn-modal__window">
+        <div class="vsl-bn-modal__header">
+          <span class="vsl-bn-modal__title" id="vsl-bn-modal-title">Book Now</span>
+          <button class="vsl-bn-modal__close" data-mc aria-label="Close booking window">&times;</button>
+        </div>
+        <div class="vsl-bn-modal__body">
+          <div class="vsl-bn-modal__loader" id="vsl-bn-modal-loader">
+            <div class="vsl-bn-modal__spinner"></div>
+          </div>
+          <iframe class="vsl-bn-modal__iframe" id="vsl-bn-modal-iframe" title="Booking page"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="vsl-bn-mem-modal" id="vsl-bn-mem-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Velocity Memberships">
+      <div class="vsl-bn-modal__backdrop" data-xm></div>
+      <div class="vsl-bn-mem-modal__window">
+        <button class="vsl-bn-mem-modal__close" data-xm aria-label="Close memberships">&times;</button>
+
+        <div class="vsl-bn-mem-modal__header">
+          <span class="vsl-bn-mem-modal__eyebrow">Members Club</span>
+          <h2 class="vsl-bn-mem-modal__title">Race More, <em>Pay Less</em></h2>
+          <p class="vsl-bn-mem-modal__subtitle">Monthly races, discounts, exclusive events — pick your tier.</p>
+        </div>
+
+        <div class="vsl-bn-mem-modal__grid">
+
+          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=45fb8e9b-357c-43fa-31b3-08de7364d6fd&product=prod_U2IhFrfWjxEnaQ" target="_blank" rel="noopener noreferrer">
+            <div class="vsl-bn-mem-tier__accent"></div>
+            <div class="vsl-bn-mem-tier__body">
+              <p class="vsl-bn-mem-tier__name">Racer</p>
+              <p class="vsl-bn-mem-tier__price">$99<span>/mo</span></p>
+              <p class="vsl-bn-mem-tier__tag">Drive more, save more.</p>
+              <hr class="vsl-bn-mem-tier__rule">
+              <ul class="vsl-bn-mem-tier__list">
+                <li>4 races per month</li>
+                <li>Monday – Friday</li>
+                <li>Racer sim only</li>
+                <li>10% off additional bookings</li>
+                <li>Members-only events</li>
+              </ul>
+              <span class="vsl-bn-mem-tier__btn">Join Now</span>
+            </div>
+          </a>
+
+          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=95225a4b-1747-4c49-31b4-08de7364d6fd&product=prod_U2J7KuCQDlrbLq" target="_blank" rel="noopener noreferrer">
+            <div class="vsl-bn-mem-tier__accent"></div>
+            <div class="vsl-bn-mem-tier__body">
+              <p class="vsl-bn-mem-tier__name">Pro</p>
+              <p class="vsl-bn-mem-tier__price">$169<span>/mo</span></p>
+              <p class="vsl-bn-mem-tier__tag">Can't get enough? We've got you.</p>
+              <hr class="vsl-bn-mem-tier__rule">
+              <ul class="vsl-bn-mem-tier__list">
+                <li>6 races per month</li>
+                <li>Sunday – Friday</li>
+                <li>Pro or Racer sim</li>
+                <li>10% off additional bookings</li>
+                <li>10% off food &amp; non-alcoholic drinks</li>
+                <li>10% off competition fees</li>
+              </ul>
+              <span class="vsl-bn-mem-tier__btn">Join Now</span>
+            </div>
+          </a>
+
+          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=d676ceb4-f587-48e9-31b5-08de7364d6fd&product=prod_U2J9JjlIBUf6kn" target="_blank" rel="noopener noreferrer">
+            <div class="vsl-bn-mem-tier__accent"></div>
+            <div class="vsl-bn-mem-tier__body">
+              <p class="vsl-bn-mem-tier__name">Ultimate</p>
+              <p class="vsl-bn-mem-tier__price">$299<span>/mo</span></p>
+              <p class="vsl-bn-mem-tier__tag"><em>Everything in Pro, dialed to eleven.</em></p>
+              <hr class="vsl-bn-mem-tier__rule">
+              <ul class="vsl-bn-mem-tier__list">
+                <li>8 races per month</li>
+                <li>Any day, any location</li>
+                <li>Any sim</li>
+                <li>15% off additional bookings</li>
+                <li>10% off food &amp; non-alcoholic drinks</li>
+                <li>Early access &amp; VIP events</li>
+              </ul>
+              <span class="vsl-bn-mem-tier__btn">Join Now</span>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="vsl-bn-mem-modal__footer">
+          <a href="https://velocitysimlounge.com/membership/" target="_blank" rel="noopener noreferrer">View full membership details →</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  function _vI() {
+    var root = document.querySelector('.vsl-booknow');
+    if (!root || root._vslInitDone) return;
+    root._vslInitDone = true;
+
+    function forceParentHeight() {
+      var el = root.parentElement;
+      var rootH = root.scrollHeight + 'px';
+      while (el && el !== document.body) {
+        el.style.setProperty('height', rootH, 'important');
+        el.style.setProperty('min-height', rootH, 'important');
+        el.style.setProperty('max-height', 'none', 'important');
+        el.style.setProperty('overflow', 'visible', 'important');
+        el.style.setProperty('padding-bottom', '0', 'important');
+        el = el.parentElement;
+      }
+    }
+    forceParentHeight();
+    setTimeout(forceParentHeight, 100);
+    setTimeout(forceParentHeight, 500);
+    setTimeout(forceParentHeight, 1500);
+    setTimeout(forceParentHeight, 3000);
+    window.addEventListener('resize', function() { setTimeout(forceParentHeight, 50); });
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(forceParentHeight).observe(root);
+    }
+
+    root.querySelectorAll('img[data-s]').forEach(function(img) {
+      try { img.src = atob(img.getAttribute('data-s')); } catch(e) {}
+    });
+
+    var cfg;
+    try { cfg = JSON.parse(root.getAttribute('data-cfg') || '{}'); } catch(e) { cfg = {}; }
+    var images = cfg.images || {};
+    var links = cfg.links || {};
+
+    if (images.heroFinishLine) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+    }
+
+    root.querySelectorAll('img[data-i]').forEach(function(img) {
+      var key = img.getAttribute('data-i');
+      if (key && images[key]) img.src = images[key];
+    });
+
+    root.querySelectorAll('[data-l]').forEach(function(el) {
+      var key = el.getAttribute('data-l');
+      if (key && links[key]) {
+        el.setAttribute('href', links[key]);
+        if (/^https?:\/\//i.test(links[key])) {
+          el.setAttribute('target', '_blank');
+          el.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
+    });
+
+    var tabs = root.querySelectorAll('.vsl-bn-tab[role="tab"]');
+    var panels = root.querySelectorAll('.vsl-bn-panel[role="tabpanel"]');
+
+    var STAGGER_MS = 80;
+    var reduceMotionForTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function staggerCards(panel) {
+      if (reduceMotionForTabs) return;
+      var cards = panel.querySelectorAll('.vsl-bn-card');
+      cards.forEach(function(card, i) {
+        card.classList.remove('vsl-entering');
+        void card.offsetWidth;
+        card.style.animationDelay = (i * STAGGER_MS) + 'ms';
+        card.classList.add('vsl-entering');
+      });
+    }
+
+    function equalizeCardHeights() {
+      var allCards = root.querySelectorAll('.vsl-bn-card');
+      allCards.forEach(function(c) { c.style.minHeight = ''; });
+      var hiddenPanels = [];
+      panels.forEach(function(p) {
+        if (p.getAttribute('aria-hidden') === 'true') {
+          hiddenPanels.push(p);
+          p.style.display = 'block';
+          p.style.visibility = 'hidden';
+          p.style.position = 'absolute';
+          p.style.left = '0';
+          p.style.right = '0';
+          p.style.pointerEvents = 'none';
+        }
+      });
+      var maxH = 0;
+      allCards.forEach(function(c) {
+        var h = c.offsetHeight;
+        if (h > maxH) maxH = h;
+      });
+      hiddenPanels.forEach(function(p) {
+        p.style.display = '';
+        p.style.visibility = '';
+        p.style.position = '';
+        p.style.left = '';
+        p.style.right = '';
+        p.style.pointerEvents = '';
+      });
+      if (maxH > 0) {
+        allCards.forEach(function(c) { c.style.minHeight = maxH + 'px'; });
+      }
+    }
+
+    var eqTimer;
+    function debouncedEqualize() {
+      clearTimeout(eqTimer);
+      eqTimer = setTimeout(equalizeCardHeights, 150);
+    }
+    window.addEventListener('resize', debouncedEqualize);
+
+    var tabIds = [];
+    tabs.forEach(function(t) { if (t.id) tabIds.push('#' + t.id); });
+    if (tabIds.length) {
+      var all = tabIds.join(',\n');
+      var allSel = tabIds.map(function(id) { return id + '[aria-selected="true"]'; }).join(',\n');
+      var allHov = tabIds.map(function(id) { return id + ':hover'; }).join(',\n');
+      var allSelHov = tabIds.map(function(id) { return id + '[aria-selected="true"]:hover'; }).join(',\n');
+      var styleEl = document.createElement('style');
+      styleEl.textContent =
+        all + ' { color: #EAEAEA !important; -webkit-text-fill-color: #EAEAEA !important; background: transparent !important; border-color: #EAEAEA !important; }\n' +
+        allSel + ' { color: #fff !important; -webkit-text-fill-color: #fff !important; background: linear-gradient(135deg,#EE265F 0%,#d41e52 50%,#E5253C 100%) !important; border-color: transparent !important; }\n' +
+        allHov + ' { color: #EE265F !important; -webkit-text-fill-color: #EE265F !important; border-color: #EE265F !important; }\n' +
+        allSelHov + ' { color: #fff !important; -webkit-text-fill-color: #fff !important; border-color: transparent !important; }';
+      document.head.appendChild(styleEl);
+    }
+
+    function styleTabColors() {
+      tabs.forEach(function(t) {
+        var selected = t.getAttribute('aria-selected') === 'true';
+        t.style.setProperty('color', selected ? '#fff' : '#EAEAEA', 'important');
+        t.style.setProperty('-webkit-text-fill-color', selected ? '#fff' : '#EAEAEA', 'important');
+        t.style.setProperty('border-color', selected ? 'transparent' : '#EAEAEA', 'important');
+        if (selected) {
+          t.style.setProperty('background', 'linear-gradient(135deg, #EE265F 0%, #d41e52 50%, #E5253C 100%)', 'important');
+        } else {
+          t.style.setProperty('background', 'transparent', 'important');
+        }
+      });
+    }
+
+    function activateTab(tab) {
+      tabs.forEach(function(t) { t.setAttribute('aria-selected', 'false'); });
+      panels.forEach(function(p) { p.setAttribute('aria-hidden', 'true'); });
+      tab.setAttribute('aria-selected', 'true');
+      styleTabColors();
+      var panelId = tab.getAttribute('aria-controls');
+      var panel = root.querySelector('#' + panelId);
+      if (panel) {
+        panel.setAttribute('aria-hidden', 'false');
+        staggerCards(panel);
+      }
+    }
+
+    styleTabColors();
+    setTimeout(styleTabColors, 100);
+    setTimeout(styleTabColors, 500);
+    setTimeout(styleTabColors, 1500);
+
+    if (typeof MutationObserver !== 'undefined') {
+      var mo = new MutationObserver(function() { styleTabColors(); });
+      tabs.forEach(function(t) {
+        mo.observe(t, { attributes: true, attributeFilter: ['style', 'class'] });
+      });
+    }
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() { activateTab(tab); });
+
+      tab.addEventListener('mouseenter', function() {
+        if (tab.getAttribute('aria-selected') !== 'true') {
+          tab.style.setProperty('color', '#EE265F', 'important');
+          tab.style.setProperty('-webkit-text-fill-color', '#EE265F', 'important');
+          tab.style.setProperty('border-color', '#EE265F', 'important');
+        }
+      });
+      tab.addEventListener('mouseleave', function() {
+        styleTabColors();
+      });
+
+      tab.addEventListener('keydown', function(e) {
+        var tabArr = Array.prototype.slice.call(tabs);
+        var idx = tabArr.indexOf(tab);
+        var next;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          next = tabArr[(idx + 1) % tabArr.length];
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          next = tabArr[(idx - 1 + tabArr.length) % tabArr.length];
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          next = tabArr[0];
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          next = tabArr[tabArr.length - 1];
+        }
+        if (next) { next.focus(); activateTab(next); }
+      });
+    });
+
+    var initialPanel = root.querySelector('.vsl-bn-panel[aria-hidden="false"]');
+    if (initialPanel) staggerCards(initialPanel);
+
+    requestAnimationFrame(function() { equalizeCardHeights(); });
+
+    var modal = root.querySelector('#vsl-bn-modal');
+    var modalIframe = root.querySelector('#vsl-bn-modal-iframe');
+    var modalLoader = root.querySelector('#vsl-bn-modal-loader');
+    var modalTitle = root.querySelector('#vsl-bn-modal-title');
+    var lastFocused = null;
+
+    function openModal(url, title) {
+      if (!modal || !modalIframe) return;
+      lastFocused = document.activeElement;
+      modalTitle.textContent = title || 'Book Now';
+      modalLoader.removeAttribute('data-loaded');
+      modalIframe.src = url;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      modalIframe.onload = function() {
+        modalLoader.setAttribute('data-loaded', 'true');
+      };
+
+      setTimeout(function() {
+        var closeBtn = modal.querySelector('.vsl-bn-modal__close');
+        if (closeBtn) closeBtn.focus();
+      }, 80);
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.setAttribute('aria-hidden', 'true');
+      modalIframe.src = 'about:blank';
+      document.body.style.overflow = '';
+      if (lastFocused) { try { lastFocused.focus(); } catch(e){} }
+    }
+
+    if (modal) {
+      modal.querySelectorAll('[data-mc]').forEach(function(el) {
+        el.addEventListener('click', closeModal);
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+          closeModal();
+        }
+      });
+    }
+
+    root.querySelectorAll('a.vsl-bn-card').forEach(function(card) {
+      card.setAttribute('data-elementor-open-lightbox', 'no');
+      card.removeAttribute('target');
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var href = card.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;
+        var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
+        var title = nameEl ? nameEl.textContent.trim() : 'Book Now';
+        openModal(href, title);
+        return false;
+      }, true);
+    });
+
+    var memModal = root.querySelector('#vsl-bn-mem-modal');
+    var memLastFocused = null;
+    if (memModal) {
+      memModal.querySelectorAll('a').forEach(function(a) {
+        a.setAttribute('data-elementor-open-lightbox', 'no');
+      });
+    }
+
+    function openMemModal() {
+      if (!memModal) return;
+      memLastFocused = document.activeElement;
+      memModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() {
+        var closeBtn = memModal.querySelector('.vsl-bn-mem-modal__close');
+        if (closeBtn) closeBtn.focus();
+      }, 80);
+    }
+
+    function closeMemModal() {
+      if (!memModal) return;
+      memModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (memLastFocused) { try { memLastFocused.focus(); } catch(e){} }
+    }
+
+    if (memModal) {
+      memModal.querySelectorAll('[data-xm]').forEach(function(el) {
+        el.addEventListener('click', closeMemModal);
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && memModal.getAttribute('aria-hidden') === 'false') {
+          closeMemModal();
+        }
+      });
+    }
+
+    var membershipCta = root.querySelector('.vsl-bn-membership__cta');
+    if (membershipCta) {
+      membershipCta.setAttribute('data-elementor-open-lightbox', 'no');
+      membershipCta.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        openMemModal();
+      });
+    }
+
+    root.querySelectorAll('.vsl-bn-membership__tier:not(.vsl-bn-membership__tier--vip)').forEach(function(tier) {
+      tier.style.cursor = 'pointer';
+      tier.addEventListener('click', function() { openMemModal(); });
+    });
+
+    var vipEgg = document.getElementById('vsl-vip-egg');
+    if (vipEgg) {
+      var memSection = root.querySelector('.vsl-bn-membership');
+      var tiersRow = root.querySelector('.vsl-bn-membership__tiers');
+      var innerBox = root.querySelector('.vsl-bn-membership__inner');
+      function alignVip() {
+        if (!tiersRow || !innerBox) return;
+        var tRect = tiersRow.getBoundingClientRect();
+        var iRect = innerBox.getBoundingClientRect();
+        vipEgg.style.setProperty('top', (tRect.top - iRect.top) + 'px', 'important');
+        vipEgg.style.setProperty('position', 'absolute', 'important');
+        vipEgg.style.setProperty('right', '0', 'important');
+        vipEgg.style.setProperty('pointer-events', 'none', 'important');
+        vipEgg.style.setProperty('z-index', '2', 'important');
+        vipEgg.style.setProperty('display', 'block', 'important');
+        vipEgg.style.setProperty('visibility', 'visible', 'important');
+        vipEgg.style.setProperty('opacity', '1', 'important');
+        var vipTier = vipEgg.querySelector('.vsl-bn-membership__tier--vip');
+        if (vipTier) {
+          vipTier.style.setProperty('pointer-events', 'none', 'important');
+          vipTier.style.setProperty('cursor', 'default', 'important');
+        }
+      }
+      alignVip();
+      setTimeout(alignVip, 200);
+      setTimeout(alignVip, 600);
+      setTimeout(alignVip, 1500);
+      setTimeout(alignVip, 3000);
+      window.addEventListener('load', alignVip);
+      window.addEventListener('resize', alignVip);
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(alignVip).observe(innerBox);
+      }
+      if (memSection) {
+        memSection.addEventListener('mousemove', function(e) {
+          var rect = vipEgg.getBoundingClientRect();
+          var x = e.clientX - rect.left;
+          var y = e.clientY - rect.top;
+          vipEgg.style.setProperty('--vip-x', x + 'px');
+          vipEgg.style.setProperty('--vip-y', y + 'px');
+        });
+        memSection.addEventListener('mouseleave', function() {
+          vipEgg.style.setProperty('--vip-x', '-200px');
+          vipEgg.style.setProperty('--vip-y', '-200px');
+        });
+      }
+    }
+
+    var scrollBtn = document.getElementById('vsl-scroll-top') || root.querySelector('#vsl-scroll-top');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var target = document.getElementById('bn-tabs') || root.querySelector('#bn-tabs');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, true);
+    }
+
+    var bnFaqItems = root.querySelectorAll('.vsl-bn-faq__item');
+    bnFaqItems.forEach(function(item) {
+      var btn = item.querySelector('.vsl-bn-faq__trigger');
+      var panel = item.querySelector('.vsl-bn-faq__panel');
+      if (!btn || !panel) return;
+      btn.addEventListener('click', function() {
+        var willClose = item.classList.contains('is-open');
+        bnFaqItems.forEach(function(other) {
+          if (other === item) return;
+          other.classList.remove('is-open');
+          var ob = other.querySelector('.vsl-bn-faq__trigger');
+          var op = other.querySelector('.vsl-bn-faq__panel');
+          if (ob && op) { ob.setAttribute('aria-expanded', 'false'); op.hidden = true; }
+        });
+        if (willClose) {
+          item.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          panel.hidden = true;
+        } else {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.hidden = false;
+        }
+      });
+    });
+
+    var scrollBtn = document.getElementById('vsl-scroll-top') || root.querySelector('#vsl-scroll-top');
+    if (scrollBtn) {
+      scrollBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var target = document.getElementById('bn-tabs') || root.querySelector('#bn-tabs');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, true);
+    }
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduceMotion.matches) return;
+
+    var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    if (isCoarse) return;
+
+    root.querySelectorAll('.vsl-bn-card').forEach(function(card) {
+      if (card._vslTiltBound) return;
+      card._vslTiltBound = true;
+
+      var TILT = 4;
+      var raf = null;
+      var targetRx = 0, targetRy = 0, targetScale = 1;
+      var currentRx = 0, currentRy = 0, currentScale = 1;
+      var LERP = 0.1;
+
+      card.style.setProperty('transition', 'box-shadow 0.3s ease', 'important');
+
+      function animate() {
+        currentRx += (targetRx - currentRx) * LERP;
+        currentRy += (targetRy - currentRy) * LERP;
+        currentScale += (targetScale - currentScale) * LERP;
+        card.style.setProperty('transform',
+          'perspective(900px) rotateX(' + currentRx.toFixed(2) + 'deg) rotateY(' + currentRy.toFixed(2) + 'deg) scale(' + currentScale.toFixed(4) + ')', 'important');
+
+        if (Math.abs(targetRx - currentRx) > 0.01 || Math.abs(targetRy - currentRy) > 0.01 || Math.abs(targetScale - currentScale) > 0.0001) {
+          raf = requestAnimationFrame(animate);
+        } else {
+          raf = null;
+        }
+      }
+
+      function startAnim() {
+        if (!raf) raf = requestAnimationFrame(animate);
+      }
+
+      card.addEventListener('mouseenter', function() {
+        targetScale = 1.025;
+        card.style.setProperty('box-shadow', '0 16px 40px rgba(16,24,43,0.13)', 'important');
+        startAnim();
+      });
+
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var mx = (e.clientX - rect.left) / rect.width;
+        var my = (e.clientY - rect.top) / rect.height;
+        targetRx = (my - 0.5) * -TILT;
+        targetRy = (mx - 0.5) * TILT;
+        startAnim();
+      });
+
+      card.addEventListener('mouseleave', function() {
+        targetRx = 0;
+        targetRy = 0;
+        targetScale = 1;
+        card.style.setProperty('box-shadow', '0 4px 16px rgba(16,24,43,0.08), 0 1px 0 rgba(255,255,255,0.9) inset', 'important');
+        startAnim();
+      });
+    });
+
+    root.querySelectorAll('.vsl-bn-features__icon').forEach(function(icon) {
+      if (icon._vslTiltBound) return;
+      icon._vslTiltBound = true;
+
+      var ICON_TILT = 8;
+      var iRaf = null;
+      var iTrx = 0, iTry = 0, iTsc = 1;
+      var iCrx = 0, iCry = 0, iCsc = 1;
+      var ILERP = 0.12;
+
+      icon.style.setProperty('transition', 'box-shadow 0.3s ease', 'important');
+
+      function iconAnimate() {
+        iCrx += (iTrx - iCrx) * ILERP;
+        iCry += (iTry - iCry) * ILERP;
+        iCsc += (iTsc - iCsc) * ILERP;
+        icon.style.setProperty('transform',
+          'perspective(600px) rotateX(' + iCrx.toFixed(2) + 'deg) rotateY(' + iCry.toFixed(2) + 'deg) scale(' + iCsc.toFixed(4) + ')', 'important');
+        if (Math.abs(iTrx - iCrx) > 0.01 || Math.abs(iTry - iCry) > 0.01 || Math.abs(iTsc - iCsc) > 0.0001) {
+          iRaf = requestAnimationFrame(iconAnimate);
+        } else {
+          iRaf = null;
+        }
+      }
+      function iconStart() { if (!iRaf) iRaf = requestAnimationFrame(iconAnimate); }
+
+      icon.addEventListener('mouseenter', function() {
+        iTsc = 1.06;
+        icon.style.setProperty('box-shadow', '0 18px 44px rgba(0,0,0,0.42), 0 6px 14px rgba(0,0,0,0.22)', 'important');
+        iconStart();
+      });
+      icon.addEventListener('mousemove', function(e) {
+        var rect = icon.getBoundingClientRect();
+        var mx = (e.clientX - rect.left) / rect.width;
+        var my = (e.clientY - rect.top) / rect.height;
+        iTrx = (my - 0.5) * -ICON_TILT;
+        iTry = (mx - 0.5) * ICON_TILT;
+        iconStart();
+      });
+      icon.addEventListener('mouseleave', function() {
+        iTrx = 0; iTry = 0; iTsc = 1;
+        icon.style.setProperty('box-shadow', '0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18)', 'important');
+        iconStart();
+      });
+    });
+  }
+
+  function tryInit() { try { _vI(); } catch(e) { console.error('[init]', e); } }
+
+  if (document.readyState !== 'loading') { tryInit(); } else { document.addEventListener('DOMContentLoaded', tryInit); }
+
+  if (window.elementorFrontend && window.elementorFrontend.hooks) {
+    window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+  } else {
+    window.addEventListener('elementor/frontend/init', function() {
+      if (window.elementorFrontend && window.elementorFrontend.hooks) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+      }
+    });
+  }
+
+  window.addEventListener('load', tryInit);
+
+  var attempts = 0;
+  var poller = setInterval(function() {
+    attempts++;
+    var r = document.querySelector('.vsl-booknow');
+    if (r && r._vslInitDone) { clearInterval(poller); return; }
+    tryInit();
+    if (attempts >= 20) clearInterval(poller);
+  }, 300);
+})();
+</script>

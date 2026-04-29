@@ -1,0 +1,2623 @@
+<script>
+  window.VSL_HOW_CONFIG = {
+    links: {
+      bookNow: "https://velocitysimlounge.com/book-now/",
+      compare: "#our_simulators",
+      process: "#racing"
+    },
+    video: {
+      walkthroughEmbed: "https://www.youtube.com/embed/ScMzIvxBSi4",
+      heroBackground: "https://velocitysimlounge.com/wp-content/uploads/2026/04/Fast-Onboard-3_5_2026-10_44-PM-1.mp4"
+    },
+    images: {
+      hero: "https://velocitysimlounge.com/wp-content/uploads/2025/02/website_howitworks_racerrig-1.webp",
+      flow: "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp",
+      racer: "https://velocitysimlounge.com/wp-content/uploads/2025/12/Velocity_VitolEvent_QUITNGUYEN_DSCF5852.jpg",
+      pro: "https://velocitysimlounge.com/wp-content/uploads/2026/01/Untitled-design-1.webp",
+      ultimate: "https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg",
+      twoSeater: "https://velocitysimlounge.com/wp-content/uploads/2026/04/2-seater.webp",
+      cars: "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_driveyourdreamcar.webp",
+      tracks: "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+      carsGallery: [
+        "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_driveyourdreamcar.webp",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/12/Velocity_VitolEvent_QUITNGUYEN_DSCF5852.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2026/01/Untitled-design-1.webp",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2026/04/2-seater.webp",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp"
+      ],
+      tracksGallery: [
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg",
+        "https://velocitysimlounge.com/wp-content/uploads/2025/01/monza_track_shot.jpg"
+      ]
+    }
+  };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  html, html.no-smooth-scroll { scroll-behavior: auto !important; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    /* Paint the page itself navy so any seam between sibling Elementor sections (e.g. between the
+       navbar widget above and our widget, or between our widget and the next section below) reads
+       as the same dark blue — no white hairline ever shows through, regardless of theme defaults.
+       This stylesheet only loads on pages that include the How it Works widget, so it doesn't leak
+       to other pages. */
+    background-color: #101828 !important;
+  }
+  .vsl-how-it-works {
+    --obsidian: #101828;
+    --navy: #101828;
+    --obsidian-dark: #101828;
+    --circuit-white: #EAEAEA;
+    --alloy: #DFDFDE;
+    --secondary-blue: #293893;
+    /* Was #191840 (slightly purple, ~9% lighter than --navy). Setting it to the SAME value as
+       --navy means every section that uses --deep-indigo (intro, simulators, faq, and the
+       gradient sections flow + cars-tracks) paints identically to the hero — no color seam can
+       appear at section boundaries, which is what was reading as the "white-ish strip" below
+       the hero. */
+    --deep-indigo: #101828;
+    --digital-magenta: #EE265F;
+    --sector-red: #D22026;
+    --apex-yellow: #FDC70C;
+    --mist-gray: #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --vsl-outdent: 12px;
+    --vsl-bleed-top: -12px;
+    --vsl-bleed-bottom: -12px;
+    --font-display: "Khand", sans-serif;
+    --font-body: "Archivo Narrow", "Inter", sans-serif;
+    --text-xs: 0.75rem;
+    --text-sm: 0.844rem;
+    --text-body: 1rem;
+    --text-lg: 1.333rem;
+    --text-xl: 1.777rem;
+    --text-xxl: 2.369rem;
+    --box-radius: 14px;
+    --box-border-light: 1px solid rgba(16, 24, 43, 0.1);
+    --box-border-dark: 1px solid rgba(234, 234, 234, 0.22);
+    --box-shadow-light: 0 8px 36px rgba(16, 24, 43, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    --box-shadow-dark: 0 2px 8px rgba(16, 24, 43, 0.1), 0 1px 2px rgba(16, 24, 43, 0.06);
+    color: var(--obsidian);
+    font-family: var(--font-body) !important;
+    /* Navy backdrop so any pre-paint seam between sections (or the wrapper itself, before sections
+       finish loading) reads as the same dark blue as the hero/intro/walkthrough/racing sections —
+       no flash of white/grey before sections render. */
+    background: var(--navy);
+    box-sizing: border-box;
+    overflow-x: clip;
+    position: relative;
+    /* Full-bleed to viewport edges. Using 100vw + a margin equal to (100% - 100vw) / 2 means the
+       widget always extends to the actual screen edges no matter how much padding the parent
+       Elementor section/column adds — kills the thin light vertical strips on the sides of the hero. */
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc((100% - 100vw) / 2);
+    margin-right: calc((100% - 100vw) / 2);
+    margin-top: var(--vsl-bleed-top);
+    margin-bottom: var(--vsl-bleed-bottom);
+    padding: 0;
+  }
+  /* Kill the navbar widget's bottom border. .vsl-navbar__bar has
+     `border-bottom: 1px solid rgba(196,204,255,0.2)` which is the thin light line you've been
+     seeing right under the navbar, above the hero video. This rule lives in our widget's CSS so
+     it only applies on pages that include this widget (other pages still show the navbar border). */
+  .vsl-navbar__bar {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+  /* Same defensive treatment on any common wrappers/sections below us so a sibling widget can't
+     introduce a thin top border above the next section. */
+  .elementor-section + .elementor-section,
+  .e-con + .e-con {
+    border-top: 0 !important;
+  }
+  /* Kill the replica-app.js reveal animation transforms. The replica injects
+     `.vsl-reveal { opacity: 0; transform: translateY(32px); }` on every section — the 32px Y
+     translation literally moves the next section down 32px, leaving a visible band above it where
+     the body background shows through. Forcing opacity 1 and transform: none keeps every section
+     in its natural position from page load, so there's no gap below the hero (or anywhere else). */
+  .vsl-reveal,
+  .vsl-reveal--hero,
+  .vsl-reveal--left,
+  .vsl-reveal--right,
+  .vsl-reveal--scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .vsl-reveal [data-vsl-stagger],
+  .vsl-reveal.is-visible [data-vsl-stagger] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  /* Force every common WordPress / Elementor / theme / local-replica page wrapper to the EXACT same
+     navy as the widget's --navy (#101828). The boundary you've been seeing between the navbar and
+     the hero is the replica shell's body bg (#0f1533, slightly purplish navy) showing through
+     where the navbar widget ends and our widget begins — different navy ⇒ visible seam. Forcing
+     every wrapper to #101828 (matching the widget's hero/intro/walkthrough/racing backgrounds)
+     makes the seam invisible regardless of which wrapper is in play. */
+  html,
+  body,
+  body.elementor-page,
+  #page,
+  #main,
+  #content,
+  #replica-navbar-root,
+  #replica-page-root,
+  .site,
+  .site-main,
+  .site-content,
+  .page-content,
+  .entry-content,
+  .elementor-page,
+  .elementor-edit-area,
+  .elementor-inner,
+  .elementor-location-single,
+  .elementor-location-archive,
+  main,
+  article {
+    background-color: #101828 !important;
+  }
+  /* Immediate Elementor wrappers around our widget — strip padding so no light gap shows
+     above/below the hero, AND paint navy so any pixel that does remain reads as the same dark
+     blue as the widget itself. Scoped to the wrappers that contain ONLY this widget so sibling
+     widgets (navbar stripe, promo banners, etc.) aren't affected. */
+  .elementor-widget-html:has(> .elementor-widget-container > .vsl-how-it-works),
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-how-it-works) {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    background-color: #101828 !important;
+  }
+  /* Outer Elementor section/column structure — strip layout AND paint navy so any seam between
+     the parent section and adjacent sections (above/below) reads as navy. The selectors only match
+     containers that hold our widget, not the navbar/banner sections (which are separate top-level
+     Elementor sections sitting outside this chain). */
+  .elementor-section:has(.vsl-how-it-works),
+  .elementor-container:has(.vsl-how-it-works),
+  .elementor-column:has(.vsl-how-it-works),
+  .elementor-widget:has(.vsl-how-it-works),
+  .elementor-widget-wrap:has(.vsl-how-it-works),
+  .e-con:has(.vsl-how-it-works),
+  .e-con-inner:has(.vsl-how-it-works) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    background-color: #101828 !important;
+  }
+  .vsl-how-it-works > main#how-primary-content {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  .vsl-how-it-works [id] {
+    scroll-margin-top: 5rem;
+  }
+  .vsl-how-it-works *,
+  .vsl-how-it-works *::before,
+  .vsl-how-it-works *::after {
+    box-sizing: border-box;
+  }
+  .vsl-how-it-works a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .vsl-how-it-works img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .vsl-how-grid {
+    width: min(1220px, calc(100% - (2 * var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-how-section {
+    padding: 72px 0;
+  }
+  .vsl-how-dark {
+    position: relative;
+    isolation: isolate;
+  }
+  .vsl-how-dark > .vsl-how-grid {
+    position: relative;
+    z-index: 2;
+  }
+  .vsl-how-eyebrow {
+    display: inline-block;
+    margin: 0 0 16px;
+    padding: 5px 11px;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid rgba(234, 234, 234, 0.28);
+    color: var(--circuit-white);
+    background: rgba(234, 234, 234, 0.04);
+  }
+  .vsl-how-heading {
+    margin: 0 0 14px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: clamp(1.6rem, 1rem + 2.3vw, var(--text-xxl)) !important;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .vsl-how-copy {
+    margin: 0;
+    max-width: 64ch;
+    line-height: 1.58;
+    color: var(--mist-gray);
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  /* Hero — completely rebuilt with the simplest possible grid stacking layout. The previous
+     setup (flex column + flex:1 child + position:absolute video with negative inset + scale 1.2)
+     had subtle interactions where the video element wasn't actually filling the section, leaving
+     huge bands above and below where the page background showed through. This version uses
+     position:absolute inset:0 on every child so the video, scrim, and overlay copy all literally
+     fill the hero section's box, no exceptions. !important on the dimensions guards against any
+     theme/Elementor/replica style trying to constrain the video's natural <video> aspect ratio. */
+  .vsl-how-section.vsl-how-hero {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .vsl-how-hero {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    /* Generous fixed height so the video has a dominant presence. min-height locks in the floor. */
+    height: clamp(480px, 78vh, 860px) !important;
+    height: clamp(480px, 78svh, 860px) !important;
+    min-height: clamp(480px, 78vh, 860px) !important;
+    min-height: clamp(480px, 78svh, 860px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #101828 !important;
+    color: var(--circuit-white);
+    isolation: isolate;
+  }
+  /* The media wrapper literally IS the hero box — absolute fill so it's exactly the hero's size. */
+  .vsl-how-hero__media {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #101828 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+  /* Video literally fills the media wrapper — inset:0, 100% width and height, object-fit cover.
+     The source .mp4 has white letterbox bars baked into the top and bottom of the frame
+     (~25% of the source height each). A scale(1.8) zooms the video in enough that those bars
+     get pushed past the container's clipped edges, so they're never visible. The 1.8× crop is
+     framed around center, so the cockpit/track view stays composed. If the bars ever creep
+     back in (e.g. on very tall/narrow viewports), bump this scale up a bit more. */
+  .vsl-how-hero__video {
+    position: absolute !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    pointer-events: none;
+    z-index: 0;
+    background: #101828 !important;
+    transform: scale(2);
+    transform-origin: center center;
+  }
+  .vsl-how-hero__scrim {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1;
+    pointer-events: none;
+    background: transparent !important;
+  }
+  /* Overlay copy — absolute fill so it's perfectly centered on top of the video, regardless of
+     any flex/grid quirks elsewhere. Uses its own internal flex centering. */
+  .vsl-how-hero__inner {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 2;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+    gap: 0;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: clamp(12px, 2.5vh, 24px) clamp(20px, 5vw, var(--page-margin));
+    box-sizing: border-box;
+  }
+  .vsl-how-hero__title {
+    margin: 0 0 18px;
+    padding: 10px 12px;
+    max-width: 18ch;
+    margin-inline: auto;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: clamp(2rem, 1.35rem + 2.8vw, 3.3rem) !important;
+    line-height: 1.02;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-how-hero__accent {
+    color: var(--digital-magenta);
+  }
+  .vsl-how-hero__sub {
+    margin: 0 0 26px;
+    padding: 6px 12px;
+    max-width: 58ch;
+    margin-inline: auto;
+    font-size: clamp(1rem, 0.94rem + 0.48vw, 1.22rem);
+    line-height: 1.5;
+    color: var(--circuit-white);
+    text-align: center;
+    background: rgba(4, 7, 18, 0.68);
+    border-radius: 8px;
+  }
+  .vsl-how-hero__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+  }
+  .vsl-how-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    min-height: 44px;
+    border: 2px solid var(--digital-magenta);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    background: linear-gradient(135deg, var(--red, #D22026), var(--digital-magenta));
+    box-shadow: 0 4px 16px rgba(238, 38, 95, 0.25);
+    transition:
+      color 0.22s ease,
+      background-color 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease,
+      transform 0.14s ease,
+      filter 0.14s ease;
+  }
+  .vsl-how-btn--primary {
+    border-color: var(--digital-magenta);
+    color: #fff;
+    background: linear-gradient(135deg, var(--red, #D22026), var(--digital-magenta));
+  }
+  .vsl-how-btn--secondary {
+    background: var(--secondary-blue);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 18px rgba(41, 56, 147, 0.4);
+  }
+  .vsl-how-btn:hover {
+    color: #fff;
+    filter: brightness(1.08);
+    box-shadow: 0 8px 28px rgba(238, 38, 95, 0.35);
+  }
+  .vsl-how-btn--secondary:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 8px 26px rgba(41, 56, 147, 0.5);
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+  .vsl-how-btn:active {
+    color: #fff;
+    filter: brightness(0.93);
+    transform: scale(0.99);
+    box-shadow: 0 3px 14px rgba(238, 38, 95, 0.2);
+  }
+  .vsl-how-btn--secondary:active {
+    filter: brightness(0.96);
+    box-shadow: 0 3px 14px rgba(41, 56, 147, 0.35);
+  }
+  .vsl-how-btn:focus-visible {
+    outline: 3px solid var(--apex-yellow);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+  .vsl-how-hero__helper {
+    margin: 14px 0 0;
+    font-size: var(--text-body);
+    color: var(--alloy);
+  }
+  .vsl-how-intro {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+  }
+  .vsl-how-section.vsl-how-intro {
+    padding-bottom: 76px;
+  }
+  .vsl-how-intro .vsl-how-heading {
+    color: var(--circuit-white);
+  }
+  .vsl-how-intro .vsl-how-copy {
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-how-intro__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+    align-items: start;
+  }
+  .vsl-how-intro__copy {
+    grid-column: span 7;
+  }
+  .vsl-how-intro__panel {
+    grid-column: span 5;
+    border: var(--box-border-light);
+    border-radius: var(--box-radius);
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    padding: 18px;
+    background: #fff;
+  }
+  .vsl-how-intro__panel h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: var(--text-lg) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--secondary-blue) !important;
+    -webkit-text-fill-color: var(--secondary-blue) !important;
+    text-align: center;
+  }
+  .vsl-how-intro__panel p {
+    margin: 0;
+    color: var(--slate-violet);
+    line-height: 1.5;
+  }
+
+  .vsl-how-section.vsl-how-walkthrough {
+    padding: 28px 0 64px;
+    background: var(--navy);
+    color: var(--circuit-white);
+    /* Removed `border-top: 1px solid rgba(255,255,255,0.08)` — that 1px white-ish line was
+       reading as a visible seam between this section and the one above it. With every section
+       now painting the exact same navy, the boundary is invisible without needing a divider. */
+    border-top: 0;
+  }
+  .vsl-how-walkthrough .vsl-how-video {
+    margin: 0 auto;
+    max-width: 1056px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    color: var(--circuit-white);
+    box-shadow: none;
+  }
+  .vsl-how-walkthrough .vsl-how-video__heading {
+    margin: 0 0 16px;
+    font-size: clamp(1.25rem, 1rem + 1vw, var(--text-xl)) !important;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+  }
+  .vsl-how-walkthrough .vsl-how-video__frame-wrap {
+    border: var(--box-border-light);
+    border-radius: var(--box-radius);
+    background: #fff;
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+  }
+
+  .vsl-how-flow {
+    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    color: var(--circuit-white);
+  }
+  .vsl-how-flow .vsl-how-heading {
+    color: var(--apex-yellow);
+  }
+  .vsl-how-flow .vsl-how-copy {
+    color: rgba(234, 234, 234, 0.94);
+  }
+  .vsl-how-flow__formats {
+    margin-top: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    color: #fff;
+    padding: 20px 22px;
+  }
+  .vsl-how-flow__formats h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: var(--text-lg) !important;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-align: center;
+  }
+  .vsl-how-formats__examples {
+    display: grid;
+    gap: 14px;
+    max-width: 680px;
+    margin: 14px auto 0;
+  }
+  .vsl-how-formats__group-label {
+    margin: 4px 0 -2px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: #fff !important;
+    text-align: left;
+  }
+  .vsl-how-formats__row {
+    display: grid;
+    gap: 4px;
+  }
+  .vsl-how-formats__bar {
+    display: flex;
+    height: 38px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+      0 2px 5px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  }
+  .vsl-how-formats__seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    white-space: nowrap;
+    padding: 0 8px;
+    color: var(--navy);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+  }
+  .vsl-how-formats__seg:not(:first-child) {
+    box-shadow:
+      inset 1px 0 0 rgba(255, 255, 255, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+  }
+  /* Race breakdown bars: light grey → lavender → warm yellow (reference proportions ~20 / 30 / 50) */
+  .vsl-how-formats__seg--practice {
+    background: #e6e6ea;
+    color: var(--navy);
+  }
+  .vsl-how-formats__seg--qualify {
+    background: #a8aac8;
+    color: var(--navy);
+  }
+  .vsl-how-formats__seg--race {
+    background: #f0c40c;
+    color: var(--navy);
+  }
+  .vsl-how-formats__seg--swap {
+    flex: 0 0 2px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  .vsl-how-formats__row-label {
+    margin: 0;
+    font-family: var(--font-display) !important;
+    font-size: var(--text-sm) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: rgba(255, 255, 255, 0.75) !important;
+    text-align: left;
+  }
+  .vsl-how-formats__intro {
+    margin: 0 auto 14px;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.55;
+    text-align: center;
+    max-width: 62ch;
+  }
+  .vsl-how-flow__steps {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+  .vsl-how-step {
+    grid-column: span 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 34px 24px 28px;
+    min-height: 194px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--circuit-white);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition:
+      transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.35s ease,
+      background 0.35s ease;
+  }
+  .vsl-how-step:hover {
+    transform: translateY(-8px) scale(1.03);
+    background: rgba(255, 255, 255, 0.10);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(41, 56, 147, 0.35);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+  .vsl-how-step::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--secondary-blue) 0%, rgba(41, 56, 147, 0.15) 100%);
+  }
+  /* Step accents: red, yellow, blue, magenta (matches other Velocity 4-card sections) */
+  .vsl-how-flow__steps .vsl-how-step:nth-child(1)::before {
+    background: linear-gradient(90deg, var(--sector-red) 0%, rgba(210, 32, 38, 0.2) 100%);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--apex-yellow) 0%, rgba(253, 199, 12, 0.22) 100%);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--secondary-blue) 0%, rgba(41, 56, 147, 0.2) 100%);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(4)::before {
+    background: linear-gradient(90deg, var(--digital-magenta) 0%, rgba(238, 38, 95, 0.2) 100%);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(1):hover {
+    background: rgba(210, 32, 38, 0.12);
+    border-color: rgba(210, 32, 38, 0.42);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(210, 32, 38, 0.38);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(2):hover {
+    background: rgba(253, 199, 12, 0.1);
+    border-color: rgba(253, 199, 12, 0.45);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(253, 199, 12, 0.35);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(3):hover {
+    background: rgba(41, 56, 147, 0.18);
+    border-color: rgba(41, 56, 147, 0.5);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(41, 56, 147, 0.42);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(4):hover {
+    background: rgba(238, 38, 95, 0.12);
+    border-color: rgba(238, 38, 95, 0.42);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.32), 0 0 0 1px rgba(238, 38, 95, 0.38);
+  }
+  .vsl-how-step__num {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--secondary-blue);
+    border: 1px solid rgba(41, 56, 147, 0.5);
+    border-radius: 10px;
+    box-shadow:
+      0 4px 14px rgba(41, 56, 147, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(1) .vsl-how-step__num {
+    background: var(--sector-red);
+    border-color: rgba(210, 32, 38, 0.55);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(210, 32, 38, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(2) .vsl-how-step__num {
+    background: var(--apex-yellow);
+    border-color: rgba(253, 199, 12, 0.65);
+    color: var(--navy);
+    box-shadow: 0 4px 14px rgba(253, 199, 12, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(3) .vsl-how-step__num {
+    background: var(--secondary-blue);
+    border-color: rgba(41, 56, 147, 0.55);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(41, 56, 147, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  .vsl-how-flow__steps .vsl-how-step:nth-child(4) .vsl-how-step__num {
+    background: var(--digital-magenta);
+    border-color: rgba(238, 38, 95, 0.55);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(238, 38, 95, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  }
+  .vsl-how-step h3 {
+    margin: 4px 0 2px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: 1.22rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    line-height: 1.15;
+    text-align: center;
+  }
+  .vsl-how-step p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.6;
+    max-width: 34ch;
+    text-align: center;
+    font-size: var(--text-sm);
+  }
+  .vsl-how-video__heading {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .vsl-how-video__copy {
+    margin: 0 0 12px;
+    color: var(--slate-violet);
+    line-height: 1.5;
+  }
+  .vsl-how-video__frame-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .vsl-how-video__frame {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .vsl-how-simulators {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+  }
+  .vsl-how-simulators::after {
+    background-image: none;
+  }
+  .vsl-how-simulators .vsl-how-copy {
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-how-simulators .vsl-how-heading {
+    color: var(--circuit-white);
+  }
+  .vsl-how-tier-grid {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gutter);
+    align-items: stretch;
+  }
+  .vsl-how-tier {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+  .vsl-how-tier__media {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    line-height: 0;
+    background: var(--obsidian);
+  }
+  .vsl-how-tier__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .vsl-how-tier__body {
+    padding: 20px 22px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .vsl-how-tier h3 {
+    margin: 0 0 4px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: var(--text-xl) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--obsidian) !important;
+    -webkit-text-fill-color: var(--obsidian) !important;
+  }
+  .vsl-how-tier__tag {
+    margin: 0 0 10px;
+    color: var(--digital-magenta);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .vsl-how-tier__copy {
+    margin: 0 0 12px;
+    color: var(--slate-violet);
+    line-height: 1.52;
+  }
+  .vsl-how-tier__level {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+  }
+  .vsl-how-tier__level-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--slate-violet);
+    white-space: nowrap;
+  }
+  .vsl-how-tier__level-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(16, 24, 43, 0.1);
+    overflow: hidden;
+  }
+  .vsl-how-tier__level-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--secondary-blue);
+    transition: width 0.4s ease;
+  }
+  .vsl-how-tier__features {
+    margin: 0 0 10px;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .vsl-how-tier__features li {
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 24, 43, 0.14);
+    background: rgba(16, 24, 43, 0.04);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--obsidian);
+    white-space: nowrap;
+  }
+  .vsl-how-tier__rule {
+    height: 1px;
+    background: rgba(16, 24, 43, 0.12);
+    margin: 6px 0 0;
+    border: 0;
+  }
+  .vsl-how-tier__details-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: auto;
+    padding: 10px 0;
+    border: none;
+    background: transparent;
+    color: var(--secondary-blue);
+    font-family: inherit;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+  .vsl-how-tier__details-btn:hover {
+    background: rgba(41, 56, 147, 0.06);
+  }
+  .vsl-how-tier__details-btn::after {
+    content: "";
+    width: 0.7em;
+    height: 0.7em;
+    background: transparent center / 100% 100% no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%23293893' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    transition: transform 0.25s ease;
+  }
+  .vsl-how-tier.is-expanded .vsl-how-tier__details-btn::after {
+    transform: rotate(180deg);
+  }
+  .vsl-how-tier__details {
+    padding: 0 22px 16px;
+  }
+  .vsl-how-tier__details[hidden] {
+    display: none;
+  }
+  .vsl-how-tier__specs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .vsl-how-tier__specs li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(16, 24, 43, 0.08);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: var(--text-sm);
+    line-height: 1.35;
+  }
+  .vsl-how-tier__specs li:last-child {
+    border-bottom: none;
+  }
+  .vsl-how-tier__spec-label {
+    color: var(--slate-violet);
+  }
+  .vsl-how-tier__spec-value {
+    font-weight: 600;
+    color: var(--obsidian);
+    text-align: right;
+  }
+
+  .vsl-how-tier__flipper {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vsl-how-tier.is-flipped .vsl-how-tier__flipper {
+    transform: rotateY(180deg);
+  }
+  .vsl-how-tier--wide.is-flipped .vsl-how-tier__flipper {
+    transform: rotateX(-180deg);
+  }
+  .vsl-how-tier__front,
+  .vsl-how-tier__back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .vsl-how-tier__front {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: #fff;
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    border-radius: 12px;
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    color: var(--obsidian);
+    transition: box-shadow 0.3s ease;
+  }
+  .vsl-how-tier:hover .vsl-how-tier__front {
+    box-shadow:
+      0 24px 56px rgba(0, 0, 0, 0.42),
+      0 8px 20px rgba(0, 0, 0, 0.24);
+  }
+  .vsl-how-tier__back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    /* Solid dark indigo backdrop (matches the requested swatch) — flat color, no gradient. */
+    background: #2d3148;
+    color: var(--circuit-white);
+    border: 1px solid rgba(234, 234, 234, 0.15);
+    border-radius: 12px;
+    padding: 28px 24px 20px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(16, 24, 43, 0.2);
+    transition: box-shadow 0.3s ease;
+  }
+  .vsl-how-tier:hover .vsl-how-tier__back {
+    box-shadow: 0 16px 40px rgba(16, 24, 43, 0.25);
+  }
+  .vsl-how-tier__back h3 {
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    text-align: center;
+  }
+  .vsl-how-tier__back-label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--digital-magenta);
+    margin: 4px 0 10px;
+    text-align: center;
+  }
+  .vsl-how-tier__spec-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex: 1;
+  }
+  .vsl-how-tier__spec-list li {
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(234, 234, 234, 0.12);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: rgba(234, 234, 234, 0.88);
+  }
+  .vsl-how-tier__spec-list li:last-child {
+    border-bottom: none;
+  }
+  .vsl-how-tier__flip-hint {
+    display: block;
+    margin-top: auto;
+    padding: 10px 0 4px;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-blue);
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+  }
+  .vsl-how-tier:hover .vsl-how-tier__front .vsl-how-tier__flip-hint {
+    opacity: 1;
+  }
+  .vsl-how-tier__back .vsl-how-tier__flip-hint {
+    color: var(--circuit-white);
+    opacity: 0.5;
+  }
+  .vsl-how-tier:hover .vsl-how-tier__back .vsl-how-tier__flip-hint {
+    opacity: 0.8;
+  }
+  .vsl-how-tier--wide {
+    grid-column: 1 / -1;
+    max-width: 65%;
+    margin-inline: auto;
+  }
+  .vsl-how-tier--wide .vsl-how-tier__front .vsl-how-tier__media {
+    aspect-ratio: auto;
+    max-height: 260px;
+  }
+  .vsl-how-tier--wide .vsl-how-tier__front .vsl-how-tier__body {
+    padding: 28px 32px;
+    text-align: center;
+  }
+  .vsl-how-tier--wide .vsl-how-tier__back {
+    transform: rotateX(180deg);
+    padding: 28px 32px 20px;
+    justify-content: center;
+  }
+  .vsl-how-tier--wide .vsl-how-tier__spec-list {
+    columns: 2;
+    column-gap: 28px;
+  }
+  .vsl-how-tier--wide .vsl-how-tier__spec-list li {
+    break-inside: avoid;
+  }
+  @media (max-width: 720px) {
+    .vsl-how-tier--wide {
+      max-width: 100%;
+    }
+    .vsl-how-tier--wide .vsl-how-tier__front .vsl-how-tier__media {
+      aspect-ratio: 16 / 9;
+    }
+    .vsl-how-tier--wide .vsl-how-tier__back {
+      flex-direction: column;
+      padding: 28px 24px 20px;
+    }
+    .vsl-how-tier--wide .vsl-how-tier__back h3 {
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+    .vsl-how-tier--wide .vsl-how-tier__spec-list {
+      columns: 1;
+    }
+  }
+
+  .vsl-how-cars-tracks {
+    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    color: var(--circuit-white);
+  }
+  .vsl-how-cars-tracks::after {
+    background-image: url("data:image/svg+xml,%3Csvg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20191.99%2096.05%22%3E%0A%20%20%3Cg%20id%3D%22Content%22%3E%0A%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m190.65%2C72.39c-1.57-2.46-4.25-3.93-7.17-3.93h-79.3c-.23%2C0-.45-.09-.62-.25-1.8-1.7-5.33-4.56-8.71-4.56-2.72%2C0-4.07.63-4.97%2C1.06-.19.09-.33.16-.45.2-1.79-1.3-8.86-7.53-20.96-18.81-11.8-11-19.82-18.82-20.48-19.75-.33-.47-1.14-1.68-2.18-3.22C31.1%2C1.12%2C29.38%2C0%2C27.79%2C0c-2.27%2C0-17.68%2C2.92-21.27%2C3.85-2.82.73-4.91%2C2.22-5.88%2C4.19-.6%2C1.2-1.07%2C3.19.04%2C5.85%2C1.63%2C3.9%2C9.74%2C20.93%2C11.35%2C24.3.39.82%2C1.12%2C1.41%2C2.01%2C1.62l1.37.3%2C4.72%2C31.38c1%2C6.64%2C4.35%2C12.71%2C9.44%2C17.09%2C5.09%2C4.38%2C11.59%2C6.79%2C18.3%2C6.79h14.19c1.04%2C0%2C2.05-.2%2C3.02-.58l5.76-2.33c.16-.06.34-.02.46.1l1.58%2C1.65c.7.74%2C1.69%2C1.16%2C2.71%2C1.16h54.09s.67%2C0%2C.67%2C0v-.67h-.67s-54.09%2C0-54.09%2C0c-.84%2C0-1.65-.35-2.23-.95l-1.58-1.65c-.21-.21-.49-.34-.78-.34-.14%2C0-.28.03-.41.08l-5.76%2C2.33c-.89.36-1.82.53-2.77.53h-14.19c-6.56%2C0-12.9-2.35-17.87-6.63-4.97-4.27-8.24-10.2-9.21-16.68l-4.75-31.61c-.02-.14-.12-.25-.26-.28l-1.6-.35c-.69-.16-1.26-.62-1.56-1.25-1.61-3.37-9.71-20.38-11.34-24.27-1.01-2.43-.59-4.22-.06-5.3.89-1.8%2C2.83-3.16%2C5.46-3.84%2C3.57-.93%2C18.86-3.83%2C21.1-3.83%2C1.25%2C0%2C3.33%2C1.68%2C17.49%2C22.84%2C1.03%2C1.53%2C1.84%2C2.74%2C2.18%2C3.22.68.96%2C8.74%2C8.82%2C20.57%2C19.85%2C12.46%2C11.61%2C19.61%2C17.9%2C21.17%2C18.97.08.05.18.07.28.04.19-.05.39-.14.7-.29.84-.39%2C2.12-.99%2C4.68-.99%2C3.15%2C0%2C6.52%2C2.75%2C8.25%2C4.38.3.28.68.43%2C1.09.43h79.3c2.69%2C0%2C5.16%2C1.36%2C6.61%2C3.62%2C1.44%2C2.26%2C1.64%2C5.07.5%2C7.51-4.07%2C8.78-12.94%2C14.45-22.62%2C14.45h-32.42v.67h32.42c9.94%2C0%2C19.05-5.82%2C23.22-14.83%2C1.23-2.65%2C1.02-5.7-.55-8.15Z%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%22130.35%22%20y%3D%2295.38%22%20width%3D%22.67%22%20height%3D%22.67%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m189.99%2C79.98c-3.96%2C8.54-12.6%2C14.06-22.01%2C14.06h-29.06v-.67h29.06c9.16%2C0%2C17.56-5.37%2C21.4-13.68.94-2.02.78-4.35-.42-6.23-1.2-1.88-3.25-3-5.48-3h-79.3c-.75%2C0-1.46-.28-2.01-.8-1.27-1.21-4.54-4.02-7.33-4.02-2.27%2C0-3.29.48-4.12.86-.53.25-.99.46-1.61.46-1.8%2C0-41.07-37.09-42.77-39.48-.35-.49-1.13-1.66-2.21-3.27-3.65-5.46-14.76-22.05-16.36-22.22-1.95%2C0-16.92%2C2.79-20.76%2C3.78-2.25.58-3.88%2C1.7-4.59%2C3.15-.6%2C1.2-.57%2C2.61.09%2C4.19%2C1.6%2C3.82%2C9.7%2C20.84%2C11.31%2C24.21.12.27.37.46.66.53l1.62.38c.66.15%2C1.15.68%2C1.25%2C1.35l4.76%2C31.61c1.93%2C12.85%2C12.77%2C22.18%2C25.76%2C22.18h14.19c.78%2C0%2C1.55-.15%2C2.27-.44l5.76-2.33c.29-.12.61-.18.91-.18.65%2C0%2C1.28.26%2C1.75.75l1.58%2C1.65c.33.34.79.54%2C1.27.54h54.76v.67h-54.76c-.66%2C0-1.3-.28-1.75-.75l-1.57-1.65c-.5-.52-1.26-.68-1.93-.41l-5.76%2C2.33c-.81.33-1.65.49-2.52.49h-14.19c-6.4%2C0-12.58-2.3-17.43-6.47-4.85-4.17-8.04-9.95-8.99-16.27l-4.76-31.61c-.06-.39-.35-.71-.74-.8l-1.62-.38c-.49-.11-.89-.44-1.11-.89-1.61-3.37-9.72-20.4-11.32-24.24-.74-1.77-.76-3.36-.08-4.74.81-1.62%2C2.59-2.86%2C5.02-3.49%2C3.46-.9%2C18.81-3.81%2C20.94-3.81%2C1.33%2C0%2C6.08%2C6.32%2C16.92%2C22.52%2C1.08%2C1.61%2C1.85%2C2.77%2C2.2%2C3.26%2C2.19%2C3.08%2C40.28%2C38.41%2C42.26%2C39.2.46%2C0%2C.81-.17%2C1.3-.4.83-.39%2C1.98-.93%2C4.4-.93%2C2.92%2C0%2C6.13%2C2.63%2C7.79%2C4.2.42.4.97.62%2C1.55.62h79.3c2.46%2C0%2C4.72%2C1.24%2C6.04%2C3.31%2C1.32%2C2.07%2C1.5%2C4.64.46%2C6.87Z%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m188.78%2C79.41c-3.74%2C8.07-11.9%2C13.28-20.8%2C13.28h-26.14v-.67h26.14c8.64%2C0%2C16.56-5.06%2C20.19-12.9.78-1.7.59-3.7-.52-5.22-.97-1.32-2.59-2.12-4.34-2.12h-79.13c-1.09%2C0-2.13-.41-2.91-1.15-2.42-2.3-4.82-3.66-6.42-3.66-1.97%2C0-2.85.41-3.55.74-.33.15-.7.33-1.13.45l-.6.16c-.47.13-.98.04-1.39-.23l-.51-.36c-2.03-1.4-10.27-8.76-21.48-19.22-9.62-8.97-19.9-18.81-20.93-20.26-.36-.5-1.14-1.67-2.22-3.29-3.26-4.88-13.08-19.56-15.63-21.62-3%2C.27-16.71%2C2.85-20.06%2C3.72-1.84.48-3.2%2C1.37-3.74%2C2.44-.41.84-.37%2C1.87.13%2C3.08%2C1.57%2C3.77%2C9.45%2C20.31%2C11.2%2C23.99l1.54.34c1.12.25%2C1.99%2C1.17%2C2.16%2C2.3l4.78%2C31.76c.88%2C5.85%2C3.83%2C11.2%2C8.31%2C15.05%2C4.48%2C3.86%2C10.21%2C5.98%2C16.12%2C5.98h14.19c.61%2C0%2C1.21-.12%2C1.77-.34l5.75-2.32c.45-.19.92-.28%2C1.41-.28.13%2C0%2C.27%2C0%2C.4.02.88.09%2C1.73.53%2C2.4%2C1.23l1.5%2C1.56c.08.08.19.13.3.13h54.09s.67%2C0%2C.67%2C0v.67h-.67s-54.09%2C0-54.09%2C0c-.29%2C0-.58-.12-.78-.33l-1.49-1.56c-.56-.59-1.27-.95-1.99-1.03-.52-.05-1.02.02-1.49.21l-5.75%2C2.32c-.65.26-1.33.39-2.02.39h-14.19c-6.08%2C0-11.95-2.18-16.56-6.14-4.6-3.96-7.64-9.45-8.54-15.46l-4.77-31.76c-.13-.86-.79-1.56-1.64-1.75l-1.7-.37c-.1-.02-.19-.09-.23-.18-1.6-3.36-9.68-20.33-11.28-24.16-.58-1.39-.62-2.61-.12-3.63.62-1.25%2C2.14-2.26%2C4.16-2.79%2C3.51-.91%2C17.48-3.54%2C20.31-3.75.08%2C0%2C.16.02.22.07%2C2.22%2C1.63%2C10.12%2C13.25%2C15.87%2C21.85%2C1.09%2C1.63%2C1.86%2C2.79%2C2.22%2C3.29%2C1%2C1.42%2C11.24%2C11.21%2C20.84%2C20.16%2C11.19%2C10.43%2C19.39%2C17.77%2C21.4%2C19.16l.52.35c.24.16.54.22.82.14l.61-.16c.37-.1.7-.25%2C1.02-.41.76-.36%2C1.71-.8%2C3.83-.8%2C1.77%2C0%2C4.35%2C1.44%2C6.88%2C3.85.66.62%2C1.53.97%2C2.45.97h79.13c1.97%2C0%2C3.79.9%2C4.88%2C2.39%2C1.25%2C1.71%2C1.47%2C3.97.58%2C5.89Z%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%22130.35%22%20y%3D%2291.36%22%20width%3D%22.67%22%20height%3D%22.67%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%22130.35%22%20y%3D%2294.04%22%20width%3D%22.67%22%20height%3D%22.67%22%2F%3E%0A%20%20%20%20%20%20%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%22130.35%22%20y%3D%2292.7%22%20width%3D%22.67%22%20height%3D%22.67%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+  }
+  .vsl-how-cars-tracks .vsl-how-copy {
+    color: rgba(234, 234, 234, 0.92);
+  }
+  .vsl-how-cars-tracks__intro {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+    align-items: start;
+  }
+  .vsl-how-cars-tracks__intro-main {
+    grid-column: span 8;
+  }
+  .vsl-how-cars-tracks__tip {
+    grid-column: span 4;
+    border: 1px solid rgba(16, 24, 43, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: var(--obsidian);
+    padding: 16px 16px 14px;
+  }
+  .vsl-how-cars-tracks__tip h3 {
+    margin: 0 0 6px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: var(--text-lg) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--obsidian) !important;
+    -webkit-text-fill-color: var(--obsidian) !important;
+    text-align: center;
+  }
+  .vsl-how-cars-tracks__tip p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--slate-violet);
+    text-align: center;
+  }
+  .vsl-how-cars-tracks .vsl-how-heading {
+    color: var(--apex-yellow);
+  }
+  .vsl-how-showcase {
+    margin-top: 30px;
+    display: grid;
+    gap: var(--gutter);
+  }
+  .vsl-how-showcase-card {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0;
+    border: 1px solid rgba(16, 24, 43, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    color: var(--obsidian);
+    overflow: hidden;
+  }
+  .vsl-how-showcase-card__media {
+    grid-column: span 5;
+    margin: 0;
+    padding: 12px;
+    line-height: 0;
+    background: rgba(16, 24, 43, 0.04);
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .vsl-how-showcase-card__carousel {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+  .vsl-how-showcase-card__carousel[hidden] {
+    display: none;
+  }
+  .vsl-how-showcase-card__carousel-viewport {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    box-shadow: 0 6px 22px rgba(16, 24, 43, 0.12);
+    background: rgba(16, 24, 43, 0.06);
+  }
+  .vsl-how-showcase-card__carousel-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.55s ease;
+    z-index: 1;
+  }
+  .vsl-how-showcase-card__carousel-img.is-active {
+    opacity: 1;
+    z-index: 2;
+  }
+  .vsl-how-showcase-card__carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    background: rgba(16, 24, 40, 0.55);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  }
+  .vsl-how-showcase-card__carousel-btn:hover {
+    background: rgba(16, 24, 40, 0.78);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  .vsl-how-showcase-card__carousel-btn:focus-visible {
+    outline: 3px solid var(--apex-yellow);
+    outline-offset: 3px;
+  }
+  .vsl-how-showcase-card__carousel-btn--prev {
+    left: 10px;
+  }
+  .vsl-how-showcase-card__carousel-btn--next {
+    right: 10px;
+  }
+  .vsl-how-showcase-card__carousel-btn[hidden] {
+    display: none;
+  }
+  [data-vsl-carousel]:focus-visible {
+    outline: 3px solid var(--apex-yellow);
+    outline-offset: 3px;
+    border-radius: 12px;
+  }
+  .vsl-how-showcase-card__carousel-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    pointer-events: none;
+  }
+  .vsl-how-showcase-card__body {
+    grid-column: span 7;
+    padding: 20px 20px 18px;
+    display: grid;
+    gap: 12px;
+    color: var(--obsidian) !important;
+  }
+  .vsl-how-showcase-card h3 {
+    margin: 0;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: var(--text-xl) !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--obsidian) !important;
+    -webkit-text-fill-color: var(--obsidian) !important;
+    text-align: center;
+  }
+  .vsl-how-showcase-card p {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--slate-violet);
+  }
+  .vsl-how-class-picker {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid rgba(16, 24, 43, 0.18);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(16, 24, 43, 0.03);
+    max-width: 100%;
+    width: fit-content;
+  }
+  .vsl-how-class-chip {
+    min-height: 36px;
+    padding: 7px 12px;
+    border-radius: 0;
+    border: none;
+    border-right: 1px solid rgba(16, 24, 43, 0.12);
+    background: #fff !important;
+    color: #101828 !important;
+    -webkit-text-fill-color: #101828 !important;
+    flex: 0 1 auto;
+    white-space: nowrap;
+    font-family: inherit !important;
+    font-size: var(--text-sm) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vsl-how-class-chip:last-child {
+    border-right: none;
+  }
+  .vsl-how-class-chip:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--secondary-blue) !important;
+  }
+  .vsl-how-class-chip[data-active="true"] {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--secondary-blue) !important;
+  }
+  .vsl-how-class-chip:active,
+  .vsl-how-class-chip[data-active="true"]:hover,
+  .vsl-how-class-chip[data-active="true"]:active {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-how-class-chip:focus-visible {
+    outline: 3px solid var(--secondary-blue);
+    outline-offset: -2px;
+  }
+  .vsl-how-class-panels {
+    margin: 0;
+    padding: 0;
+  }
+  .vsl-how-class-panels--tracks {
+    min-height: 196px;
+  }
+  .vsl-how-class-panel {
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    border-radius: 10px;
+    background: rgba(16, 24, 43, 0.03);
+    padding: 12px 14px;
+    color: var(--obsidian) !important;
+  }
+  .vsl-how-class-panel[hidden] {
+    display: none;
+  }
+  .vsl-how-class-panel p {
+    margin: 0 0 8px;
+    font-size: var(--text-sm);
+    color: var(--slate-violet);
+  }
+  .vsl-how-class-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--obsidian) !important;
+    line-height: 1.45;
+    columns: 2;
+    column-gap: 22px;
+  }
+  .vsl-how-class-list li + li {
+    margin-top: 3px;
+  }
+  .vsl-how-detail-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--obsidian);
+    line-height: 1.45;
+    columns: 2;
+    column-gap: 24px;
+  }
+  .vsl-how-detail-list li + li {
+    margin-top: 4px;
+  }
+  .vsl-how-showcase-note {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--slate-violet);
+  }
+
+  .vsl-how-faq {
+    margin-top: 0;
+    padding-top: 56px;
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+  }
+  .vsl-how-faq .vsl-how-heading {
+    margin: 0 auto 12px;
+    color: var(--circuit-white);
+    text-align: center;
+  }
+  .vsl-how-faq .vsl-how-copy {
+    color: var(--circuit-white);
+    opacity: 0.85;
+    max-width: 56ch;
+    margin: 0 auto 24px;
+    text-align: center;
+  }
+  .vsl-how-faq__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    text-align: left;
+  }
+  .vsl-how-faq__item {
+    border-bottom: 1px solid rgba(16, 24, 43, 0.1);
+    background: #fff;
+  }
+  .vsl-how-faq__item:last-child {
+    border-bottom: none;
+  }
+  .vsl-how-faq__trigger {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--obsidian) !important;
+    -webkit-text-fill-color: var(--obsidian) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: 52px;
+    padding: clamp(14px, 3vw, 18px) clamp(14px, 3vw, 18px);
+    text-align: left;
+    font-family: inherit !important;
+    font-size: var(--text-body) !important;
+    font-weight: 600 !important;
+    white-space: normal !important;
+    list-style: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    transition: background-color 0.22s ease, color 0.2s ease;
+  }
+  .vsl-how-faq__trigger:hover {
+    background-color: rgba(16, 24, 43, 0.04);
+  }
+  .vsl-how-faq__label {
+    flex: 1;
+    min-width: 0;
+    font-family: Inter, system-ui, sans-serif;
+    font-size: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    font-weight: 600;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    color: inherit;
+  }
+  .vsl-how-faq__trigger:focus-visible {
+    outline: 3px solid var(--secondary-blue);
+    outline-offset: 2px;
+  }
+  .vsl-how-faq__chev {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    background: transparent center / 100% 100% no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2310182b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vsl-how-faq__item.is-open .vsl-how-faq__chev {
+    transform: rotate(180deg);
+  }
+  .vsl-how-faq__panel {
+    padding: 16px 22px 26px;
+    font-size: var(--text-body);
+    line-height: 1.35;
+    color: var(--slate-violet);
+    background: #fff;
+  }
+  .vsl-how-faq__panel[hidden] {
+    display: none;
+  }
+  .vsl-how-faq__item.is-open .vsl-how-faq__panel {
+    display: block;
+  }
+  .vsl-how-faq__answer {
+    margin: 0;
+    padding-top: 2px;
+    color: var(--slate-violet);
+    max-width: 62ch;
+  }
+
+  .vsl-how-cta {
+    background: var(--navy);
+    color: var(--circuit-white);
+    padding-bottom: 96px;
+  }
+  .vsl-how-cta__panel {
+    max-width: 760px;
+    margin: 0 auto;
+    border: 1px solid rgba(16, 24, 40, 0.12);
+    background: #fff;
+    border-radius: 14px;
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    padding: clamp(22px, 4.5vw, 36px);
+    text-align: center;
+  }
+  .vsl-how-cta__panel h2 {
+    margin: 0 0 12px;
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    font-size: clamp(1.3rem, 1rem + 1.2vw, 1.9rem) !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--secondary-blue) !important;
+    -webkit-text-fill-color: var(--secondary-blue) !important;
+    text-align: center;
+  }
+  .vsl-how-cta__panel p {
+    margin: 0 auto 18px;
+    color: var(--slate-violet);
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+  .vsl-how-cta__buttons {
+    display: flex;
+    justify-content: center;
+  }
+  .vsl-how-cta .vsl-how-btn--primary {
+    border-color: var(--digital-magenta);
+    color: var(--digital-magenta);
+    background: transparent;
+  }
+
+  @media (max-width: 1024px) {
+    .vsl-how-it-works {
+      --page-margin: 24px;
+    }
+    .vsl-how-grid {
+      width: min(1220px, calc(100% - (2 * var(--page-margin))));
+    }
+    .vsl-how-step {
+      grid-column: span 6;
+    }
+    .vsl-how-tier-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .vsl-how-showcase-card__media,
+    .vsl-how-showcase-card__body {
+      grid-column: span 12;
+    }
+    .vsl-how-cars-tracks__intro-main,
+    .vsl-how-cars-tracks__tip {
+      grid-column: span 12;
+    }
+    .vsl-how-showcase-card {
+      grid-template-columns: 1fr;
+    }
+    .vsl-how-showcase-card__media {
+      grid-column: span 1;
+      aspect-ratio: 16 / 9;
+    }
+    .vsl-how-showcase-card__body {
+      grid-column: span 1;
+    }
+    .vsl-how-intro__copy,
+    .vsl-how-intro__panel {
+      grid-column: span 12;
+    }
+    .vsl-how-faq {
+      padding-top: 44px;
+    }
+  }
+  @media (max-width: 720px) {
+    /* Comfortable side inset on phones; cancel theme outdent so content isn’t flush to the viewport */
+    .vsl-how-it-works {
+      --page-margin: 22px;
+      --gutter: 18px;
+      --vsl-outdent: 0px;
+      --vsl-bleed-top: 0px;
+      --vsl-bleed-bottom: 0px;
+      /* Keep full-bleed to viewport edges on mobile too (matches the desktop rule) so there are
+         no light strips on the sides of the hero. overflow-x: clip on the wrapper prevents any
+         horizontal scroll from a scrollbar's contribution to 100vw. */
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+    }
+    .vsl-how-grid {
+      width: min(1220px, calc(100% - (2 * var(--page-margin))));
+    }
+    .vsl-how-section {
+      padding: 56px 0;
+    }
+    .vsl-how-section.vsl-how-intro {
+      padding-bottom: 56px;
+    }
+    .vsl-how-section.vsl-how-walkthrough {
+      padding: 22px 0 48px;
+    }
+    .vsl-how-section.vsl-how-hero {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .vsl-how-hero__media {
+      /* Mobile inherits the desktop rule: media fills 100% of the hero section. No extra height
+         constraints needed since the parent .vsl-how-hero now has a definite height. */
+      height: 100%;
+    }
+    .vsl-how-hero {
+      /* Mobile hero — generous height so the video stays the dominant visual */
+      height: clamp(440px, 75vh, 720px);
+      height: clamp(440px, 75svh, 720px);
+      min-height: clamp(440px, 75vh, 720px);
+      min-height: clamp(440px, 75svh, 720px);
+    }
+    .vsl-how-hero__inner {
+      padding: clamp(10px, 2vh, 20px) var(--page-margin);
+    }
+    .vsl-how-step {
+      grid-column: span 12;
+    }
+    .vsl-how-tier-grid {
+      grid-template-columns: 1fr;
+    }
+    .vsl-how-class-picker {
+      flex-wrap: wrap;
+    }
+    .vsl-how-class-chip {
+      flex: 1 1 auto;
+      text-align: center;
+      justify-content: center;
+    }
+    .vsl-how-class-list {
+      columns: 1;
+    }
+    .vsl-how-class-panels--tracks {
+      min-height: 0;
+    }
+    .vsl-how-detail-list {
+      columns: 1;
+    }
+    .vsl-how-showcase-card__media {
+      padding: 8px;
+    }
+    .vsl-how-showcase-card__body {
+      padding: 14px 14px 12px;
+    }
+    .vsl-how-faq__trigger {
+      font-size: var(--text-body);
+    }
+    .vsl-how-faq {
+      padding-top: 44px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-how-step {
+      transition: none;
+    }
+    .vsl-how-step:hover {
+      transform: none;
+    }
+    .vsl-how-btn {
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.14s ease;
+    }
+    .vsl-how-btn:hover,
+    .vsl-how-btn:active {
+      transform: none;
+    }
+    .vsl-how-tier__flipper {
+      transition: transform 0.01s;
+    }
+    .vsl-how-hero__video {
+      display: none;
+      transform: none;
+    }
+    .vsl-how-showcase-card__carousel-img {
+      transition: none;
+    }
+  }
+</style>
+
+<!--
+SEO HANDOFF (apply in page-level SEO plugin/theme controls):
+- Suggested Meta Title: How Sim Racing Works at Velocity | Compare Racer, Pro, Ultimate
+- Suggested Meta Description: Discover how driving at Velocity works: choose your simulator, pick your car and track, and race with support from our staff. Compare Racer, Pro, and Ultimate options in minutes.
+- Suggested Canonical: https://velocitysimlounge.com/about/
+- Suggested OG Title: How Sim Racing Works at Velocity
+- Suggested OG Description: Compare simulators, explore cars and tracks, and see how easy it is to get racing at Velocity.
+- Suggested OG Image: https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp
+- Suggested Schema: WebPage + FAQPage
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Velocity beginner-friendly if I have never used a simulator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every level is welcome, and our team helps with setup, controls, and race format so you can jump in confidently."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I choose between Racer, Pro, Ultimate, and 2-Seater?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Start with how immersive you want the session to feel. Racer is the easiest entry point, Pro adds deeper immersion, Ultimate delivers the highest-intensity experience, and the 2-Seater lets you share the ride with a passenger. Staff guidance is available for all tiers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I pick a car and track before I arrive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can plan ahead, and our team also helps you choose a car class and track at check-in based on your goals and comfort level."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do Quick Races and Double Races work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each race is divided into a Qualifying and Race period, with approximately 25 minutes of total drive time. If you're driving solo, you'll get 25-30 minutes of practice time. Any format can be raced solo or with friends, complete with headsets for comms."
+      }
+    }
+  ]
+}
+</script>
+
+<div class="vsl-how-it-works">
+  <main id="how-primary-content">
+    <section class="vsl-how-section vsl-how-dark vsl-how-hero" id="how-hero" aria-labelledby="how-hero-title">
+      <div class="vsl-how-hero__media">
+        <video class="vsl-how-hero__video" data-vsl-hero-video autoplay muted loop playsinline aria-hidden="true"
+          poster="https://velocitysimlounge.com/wp-content/uploads/2025/02/website_howitworks_racerrig-1.webp">
+          <source src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Fast-Onboard-3_5_2026-10_44-PM-1.mp4" type="video/mp4">
+        </video>
+        <div class="vsl-how-hero__scrim" aria-hidden="true"></div>
+        <div class="vsl-how-grid vsl-how-hero__inner">
+          <h1 class="vsl-how-hero__title" id="how-hero-title">
+            How it <span class="vsl-how-hero__accent">works</span>
+          </h1>
+          <p class="vsl-how-hero__sub">
+            From your first session to your fastest lap, we make sim racing simple and fun.
+          </p>
+          <div class="vsl-how-hero__cta-row">
+            <a class="vsl-how-btn vsl-how-btn--secondary" data-vsl-link="process" href="#racing">See the process</a>
+            <a class="vsl-how-btn vsl-how-btn--primary" data-vsl-link="compare" href="#our_simulators">Compare simulators</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-intro" id="how-intro" aria-labelledby="how-intro-heading">
+      <div class="vsl-how-grid vsl-how-intro__grid">
+        <div class="vsl-how-intro__copy">
+          <h2 class="vsl-how-heading" id="how-intro-heading">What to expect at Velocity</h2>
+          <p class="vsl-how-copy">
+            Expect a premium racing inspired venue with a fun and approachable sim racing experience. You'll be greeted warmly by our staff who will help you select from a variety of cars, tracks, and driving experiences. The Drivers Briefing will help orient and familiarize you with operating a racing simulator. From start to finish, Velocity's team is there for you so you can have an amazing time.
+          </p>
+        </div>
+        <aside class="vsl-how-intro__panel" aria-label="First-time onboarding">
+          <h3>Support tailored to your comfort level</h3>
+          <p>
+            New to sim racing or trying Pro/Ultimate for the first time? Our team helps with setup, controls, and pacing so you can enjoy the experience with confidence.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-walkthrough" id="how-video" aria-labelledby="how-video-heading">
+      <div class="vsl-how-grid">
+        <div class="vsl-how-video" aria-label="Race session walkthrough video">
+          <h3 class="vsl-how-video__heading" id="how-video-heading">Video walkthrough</h3>
+          <div class="vsl-how-video__frame-wrap">
+            <iframe
+              class="vsl-how-video__frame"
+              data-vsl-video="walkthroughEmbed"
+              src=""
+              title="Velocity race session walkthrough"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-dark vsl-how-flow" id="racing" aria-labelledby="how-flow-heading">
+      <div class="vsl-how-grid">
+        <h2 class="vsl-how-heading" id="how-flow-heading">Four elements of The Velocity Experience</h2>
+        <p class="vsl-how-copy">
+          Every session is built around these four elements: check-in, cars, tracks, and simulator tier.
+        </p>
+        <div class="vsl-how-flow__steps">
+          <article class="vsl-how-step">
+            <span class="vsl-how-step__num">1</span>
+            <h3>Book your session</h3>
+            <p>Choose your simulator tier (Racer, Pro, or Ultimate) and session length (Quick Race or Double Race) when you book online. Walk-ins are also welcome, though we strongly recommend booking online for the weekends.</p>
+          </article>
+          <article class="vsl-how-step">
+            <span class="vsl-how-step__num">2</span>
+            <h3>Check in</h3>
+            <p>Arrive and check in. First-time drivers complete a one-time waiver and driver profile. Returning drivers are ready to go straight to Race Control.</p>
+          </article>
+          <article class="vsl-how-step">
+            <span class="vsl-how-step__num">3</span>
+            <h3>Pick your car and track</h3>
+            <p>Choose from a variety of car classes such as GT4, GT3, open-wheel, and more. Pair it with a track that matches your comfort level, from beginner-friendly to expert. Not interested in racing the track? We even have a virtual Houston for you to relive your Fast &amp; Furious dreams.</p>
+          </article>
+          <article class="vsl-how-step">
+            <span class="vsl-how-step__num">4</span>
+            <h3>Race</h3>
+            <p>Structure your time however you want: all practice, a full race format, or anything in between. Drive solo or race together with friends and talk through built-in headsets.</p>
+          </article>
+        </div>
+        <div class="vsl-how-flow__formats" aria-label="How races work">
+          <h3>How do Quick Races and Double Races work?</h3>
+          <p class="vsl-how-formats__intro">
+            Each race is divided into a Qualifying and Race period, with approximately 25 minutes of total drive time. If you're driving solo, you'll get 25-30 minutes of practice time - be sure to check the leaderboards to see where you stand. Any format can be raced solo or with friends, complete with headsets for comms.
+          </p>
+          <div class="vsl-how-formats__examples">
+            <p class="vsl-how-formats__group-label">Quick Race</p>
+            <div class="vsl-how-formats__row">
+              <p class="vsl-how-formats__row-label">All practice</p>
+              <div class="vsl-how-formats__bar">
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--practice" style="flex:1">Practice</div>
+              </div>
+            </div>
+            <div class="vsl-how-formats__row">
+              <p class="vsl-how-formats__row-label">Balanced</p>
+              <div class="vsl-how-formats__bar">
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--practice" style="flex:2">Practice</div>
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--qualify" style="flex:3">Qualify</div>
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--race" style="flex:5">Race</div>
+              </div>
+            </div>
+            <p class="vsl-how-formats__group-label">Double Race</p>
+            <div class="vsl-how-formats__row">
+              <p class="vsl-how-formats__row-label">Two separate sessions — pick any car and track for each</p>
+              <div style="display:flex;gap:8px">
+                <div style="flex:1;display:grid;gap:4px">
+                  <div style="font-size:0.68rem;font-weight:600;letter-spacing:0.02em;color:rgba(255,255,255,0.5);text-align:center;font-style:italic">e.g. GT4 / Monza</div>
+                  <div class="vsl-how-formats__bar">
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--practice" style="flex:2">Practice</div>
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--qualify" style="flex:3">Qualify</div>
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--race" style="flex:5">Race</div>
+                  </div>
+                </div>
+                <div style="flex:1;display:grid;gap:4px">
+                  <div style="font-size:0.68rem;font-weight:600;letter-spacing:0.02em;color:rgba(255,255,255,0.5);text-align:center;font-style:italic">e.g. IndyCar / Spa</div>
+                  <div class="vsl-how-formats__bar">
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--practice" style="flex:2">Practice</div>
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--qualify" style="flex:3">Qualify</div>
+                    <div class="vsl-how-formats__seg vsl-how-formats__seg--race" style="flex:5">Race</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vsl-how-formats__row">
+              <p class="vsl-how-formats__row-label">One long session</p>
+              <div class="vsl-how-formats__bar">
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--practice" style="flex:2">Practice</div>
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--qualify" style="flex:3">Qualify</div>
+                <div class="vsl-how-formats__seg vsl-how-formats__seg--race" style="flex:5">Race</div>
+              </div>
+            </div>
+          </div>
+          <p style="margin:16px 0 0;font-size:var(--text-sm);color:rgba(255,255,255,0.7);text-align:center;line-height:1.45;font-weight:600;font-style:italic">Cars, tracks, and session formats shown above are just examples — mix and match from what's available on the day. The staff at Race Control can help you find the right setup.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-simulators" id="our_simulators" aria-labelledby="how-simulators-heading">
+      <div class="vsl-how-grid">
+        <h2 class="vsl-how-heading" id="how-simulators-heading">The BEST Simulators - <span style="color:var(--digital-magenta) !important;-webkit-text-fill-color:var(--digital-magenta) !important">Only at Velocity</span></h2>
+        <p class="vsl-how-copy">
+          We're proud to offer the very best in motion racing simulator experiences. Every simulator at Velocity is a motion simulator. Each tier offers a different level of immersion and experience. Which will you choose?
+        </p>
+        <div class="vsl-how-tier-grid">
+          <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__flipper">
+              <div class="vsl-how-tier__front">
+                <figure class="vsl-how-tier__media">
+                  <img data-vsl-how="racer" src="" alt="Velocity Racer simulator cockpit with ultrawide display" width="800" height="600" loading="lazy" decoding="async">
+                </figure>
+                <div class="vsl-how-tier__body">
+                  <h3>Racer</h3>
+                  <p class="vsl-how-tier__tag">Best first step</p>
+                  <p class="vsl-how-tier__copy">A beginner friendly motion-enabled driving simulator. Ideal for first time drivers or those looking for an accessible entry into sim racing at Velocity.</p>
+                  <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap for specs</span>
+                </div>
+              </div>
+              <div class="vsl-how-tier__back">
+                <h3>Racer</h3>
+                <p class="vsl-how-tier__back-label">Under the hood</p>
+                <ul class="vsl-how-tier__spec-list">
+                  <li>Motion system with 3 axis of movement</li>
+                  <li>Single large 57" curved display</li>
+                  <li>Simucube direct drive for precision controls</li>
+                  <li>Beginner friendly — great for first-timers</li>
+                </ul>
+                <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
+              </div>
+            </div>
+          </article>
+          <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__flipper">
+              <div class="vsl-how-tier__front">
+                <figure class="vsl-how-tier__media">
+                  <img data-vsl-how="pro" src="" alt="Velocity Pro simulator with panoramic triple-screen setup" width="800" height="600" loading="lazy" decoding="async">
+                </figure>
+                <div class="vsl-how-tier__body">
+                  <h3>Pro</h3>
+                  <p class="vsl-how-tier__tag">Enhanced immersion</p>
+                  <p class="vsl-how-tier__copy">Deeper realism with a panoramic triple-screen setup and stronger precision. Pro rigs add "traction-loss" — feel the rear tires sliding mid-corner.</p>
+                  <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap for specs</span>
+                </div>
+              </div>
+              <div class="vsl-how-tier__back">
+                <h3>Pro</h3>
+                <p class="vsl-how-tier__back-label">Under the hood</p>
+                <ul class="vsl-how-tier__spec-list">
+                  <li>Advanced motion with "traction-loss" — feel the rear tires sliding mid-corner</li>
+                  <li>Triple 45" curved displays for incredible immersion</li>
+                  <li>Simucube Pro direct drive with open-wheel style steering</li>
+                </ul>
+                <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
+              </div>
+            </div>
+          </article>
+          <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__flipper">
+              <div class="vsl-how-tier__front">
+                <figure class="vsl-how-tier__media">
+                  <img data-vsl-how="ultimate" src="" alt="Velocity Ultimate simulator with advanced motion platform and premium displays" width="800" height="600" loading="lazy" decoding="async">
+                </figure>
+                <div class="vsl-how-tier__body">
+                  <h3>Ultimate</h3>
+                  <p class="vsl-how-tier__tag">Maximum realism</p>
+                  <p class="vsl-how-tier__copy">A full-throttle premium rig for the highest-intensity immersion available. The only one in Texas — with 6 axis of motion, a custom canopy, and the very best hardware.</p>
+                  <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap for specs</span>
+                </div>
+              </div>
+              <div class="vsl-how-tier__back">
+                <h3>Ultimate</h3>
+                <p class="vsl-how-tier__back-label">Under the hood</p>
+                <ul class="vsl-how-tier__spec-list">
+                  <li>The only one in Texas</li>
+                  <li>Most advanced motion system available with 6 axis of movement</li>
+                  <li>Simucube Ultimate wheel and Simucube Active pedals for the ultimate level of control and precision</li>
+                  <li>Massive triple 55" curved displays and custom canopy for maximum immersion</li>
+                </ul>
+                <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
+              </div>
+            </div>
+          </article>
+          <article class="vsl-how-tier vsl-how-tier--wide" data-vsl-tier>
+            <div class="vsl-how-tier__flipper">
+              <div class="vsl-how-tier__front">
+                <figure class="vsl-how-tier__media">
+                  <img data-vsl-how="twoSeater" src="" alt="Velocity 2-Seater motion simulator with triple OLED displays" width="1200" height="675" loading="lazy" decoding="async">
+                </figure>
+                <div class="vsl-how-tier__body">
+                  <h3>2-Seater</h3>
+                  <p class="vsl-how-tier__tag">Race together</p>
+                  <p class="vsl-how-tier__copy">The only motion 2-seater system in America. Share the driver's seat with a passenger and swap in at any point. An OLED-powered experience you won't find anywhere else.</p>
+                  <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap for specs</span>
+                </div>
+              </div>
+              <div class="vsl-how-tier__back">
+                <h3>2-Seater</h3>
+                <p class="vsl-how-tier__back-label">Under the hood</p>
+                <ul class="vsl-how-tier__spec-list">
+                  <li>The only motion 2-seater system in America</li>
+                  <li>Huge triple 65" OLED displays</li>
+                  <li>Simucube direct drive</li>
+                  <li>Share the experience with a passenger — swap drivers at any point during your session</li>
+                </ul>
+                <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-dark vsl-how-cars-tracks" id="how-cars-tracks" aria-labelledby="how-cars-tracks-heading">
+      <div class="vsl-how-grid">
+        <div class="vsl-how-cars-tracks__intro">
+          <div class="vsl-how-cars-tracks__intro-main">
+            <h2 class="vsl-how-heading" id="how-cars-tracks-heading">Cars and tracks worth coming back for</h2>
+            <p class="vsl-how-copy">
+              This is where sessions become personal. Pick the car style you want to drive, then choose from iconic circuits with different pacing and challenge levels.
+            </p>
+          </div>
+          <aside class="vsl-how-cars-tracks__tip" aria-label="Pro tip">
+            <h3>Pro tip</h3>
+            <p>If you are new, start with a GT4 or Skip Barber car on a Beginner track to get comfortable. From there, step up to GT3, open-wheel, or Intermediate and Expert tracks as your confidence grows.</p>
+          </aside>
+        </div>
+
+        <div class="vsl-how-showcase">
+          <article class="vsl-how-showcase-card" aria-labelledby="how-cars-heading">
+            <figure class="vsl-how-showcase-card__media">
+              <div class="vsl-how-showcase-card__carousel" data-vsl-gallery="cars" role="region" aria-label="Example car photos" data-vsl-carousel tabindex="0">
+                <div class="vsl-how-showcase-card__carousel-viewport">
+                  <img class="vsl-how-showcase-card__carousel-img is-active" src="" alt="Cars available in the Velocity sim" width="960" height="600" loading="lazy" decoding="async" data-carousel-layer="0">
+                  <img class="vsl-how-showcase-card__carousel-img" src="" alt="" width="960" height="600" loading="lazy" decoding="async" aria-hidden="true" data-carousel-layer="1">
+                  <button type="button" class="vsl-how-showcase-card__carousel-btn vsl-how-showcase-card__carousel-btn--prev" data-vsl-carousel-prev aria-label="Previous car photo" hidden>
+                    <svg class="vsl-how-showcase-card__carousel-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button type="button" class="vsl-how-showcase-card__carousel-btn vsl-how-showcase-card__carousel-btn--next" data-vsl-carousel-next aria-label="Next car photo" hidden>
+                    <svg class="vsl-how-showcase-card__carousel-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </div>
+            </figure>
+            <div class="vsl-how-showcase-card__body">
+              <h3 id="cars">Cars</h3>
+              <p>Choose the driving style you want, from confidence-building entries to high-precision race formats.</p>
+              <div class="vsl-how-class-picker" data-vsl-class-picker aria-label="Car class categories">
+                <button type="button" class="vsl-how-class-chip" data-class-target="cars-gt4" aria-controls="cars-gt4-panel" aria-pressed="true" data-active="true">GT4</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="cars-gt3" aria-controls="cars-gt3-panel" aria-pressed="false">GT3</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="cars-openwheel" aria-controls="cars-openwheel-panel" aria-pressed="false">Open-wheel</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="cars-endurance" aria-controls="cars-endurance-panel" aria-pressed="false">Endurance</button>
+              </div>
+              <div class="vsl-how-class-panels vsl-how-class-panels--tracks">
+                <div class="vsl-how-class-panel" id="cars-gt4-panel" data-class-panel="cars-gt4">
+                  <p>Common GT4 options:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Porsche 718 Cayman GT4 Clubsport</li>
+                    <li>BMW M4 GT4</li>
+                    <li>Mercedes-AMG GT4</li>
+                    <li>Aston Martin Vantage GT4</li>
+                    <li>McLaren 570S GT4</li>
+                    <li>Toyota GR Supra GT4</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="cars-gt3-panel" data-class-panel="cars-gt3" hidden>
+                  <p>Common GT3 options:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Porsche 911 GT3 R</li>
+                    <li>BMW M4 GT3</li>
+                    <li>Ferrari 296 GT3</li>
+                    <li>Mercedes-AMG GT3</li>
+                    <li>Lamborghini Huracan GT3 EVO2</li>
+                    <li>McLaren 720S GT3 EVO</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="cars-openwheel-panel" data-class-panel="cars-openwheel" hidden>
+                  <p>Common open-wheel options:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Skip Barber</li>
+                    <li>USF 2000</li>
+                    <li>Indy NXT</li>
+                    <li>IndyCar</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="cars-endurance-panel" data-class-panel="cars-endurance" hidden>
+                  <p>Common endurance options:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>LMP2 prototypes</li>
+                    <li>Hypercar / GTP class</li>
+                    <li>GTE class cars</li>
+                    <li>GT endurance entries</li>
+                    <li>Multi-class race formats</li>
+                    <li>Long-run stint setups</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="vsl-how-showcase-card" aria-labelledby="how-tracks-heading">
+            <figure class="vsl-how-showcase-card__media">
+              <div class="vsl-how-showcase-card__carousel" data-vsl-gallery="tracks" role="region" aria-label="Example track photos" data-vsl-carousel tabindex="0">
+                <div class="vsl-how-showcase-card__carousel-viewport">
+                  <img class="vsl-how-showcase-card__carousel-img is-active" src="" alt="Tracks and circuits in the Velocity sim" width="960" height="600" loading="lazy" decoding="async" data-carousel-layer="0">
+                  <img class="vsl-how-showcase-card__carousel-img" src="" alt="" width="960" height="600" loading="lazy" decoding="async" aria-hidden="true" data-carousel-layer="1">
+                  <button type="button" class="vsl-how-showcase-card__carousel-btn vsl-how-showcase-card__carousel-btn--prev" data-vsl-carousel-prev aria-label="Previous track photo" hidden>
+                    <svg class="vsl-how-showcase-card__carousel-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                  <button type="button" class="vsl-how-showcase-card__carousel-btn vsl-how-showcase-card__carousel-btn--next" data-vsl-carousel-next aria-label="Next track photo" hidden>
+                    <svg class="vsl-how-showcase-card__carousel-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </button>
+                </div>
+              </div>
+            </figure>
+            <div class="vsl-how-showcase-card__body">
+              <h3 id="tracks">Tracks</h3>
+              <p>Choose a track tier based on comfort and challenge level, then dial in from there.</p>
+              <div class="vsl-how-class-picker" data-vsl-class-picker aria-label="Track categories">
+                <button type="button" class="vsl-how-class-chip" data-class-target="tracks-beginner" aria-controls="tracks-beginner-panel" aria-pressed="true" data-active="true">Beginner</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="tracks-intermediate" aria-controls="tracks-intermediate-panel" aria-pressed="false">Intermediate</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="tracks-expert" aria-controls="tracks-expert-panel" aria-pressed="false">Expert</button>
+                <button type="button" class="vsl-how-class-chip" data-class-target="tracks-special" aria-controls="tracks-special-panel" aria-pressed="false">Special</button>
+              </div>
+              <div class="vsl-how-class-panels">
+                <div class="vsl-how-class-panel" id="tracks-beginner-panel" data-class-panel="tracks-beginner">
+                  <p>Common beginner-friendly picks:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Monza (Italy)</li>
+                    <li>Red Bull Ring (Austria)</li>
+                    <li>Barcelona GP (Spain)</li>
+                    <li>Silverstone National (UK)</li>
+                    <li>Laguna Seca (United States)</li>
+                    <li>Zandvoort (Netherlands)</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="tracks-intermediate-panel" data-class-panel="tracks-intermediate" hidden>
+                  <p>Common intermediate challenge tracks:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Suzuka Circuit (Japan)</li>
+                    <li>Circuit of the Americas (United States)</li>
+                    <li>Imola Circuit (Italy)</li>
+                    <li>Nurburgring GP (Germany)</li>
+                    <li>Road Atlanta (United States)</li>
+                    <li>Fuji Speedway (Japan)</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="tracks-expert-panel" data-class-panel="tracks-expert" hidden>
+                  <p>Common expert-level sessions:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>Spa-Francorchamps</li>
+                    <li>Nurburgring Nordschleife</li>
+                    <li>Le Mans (Circuit de la Sarthe)</li>
+                    <li>Sebring</li>
+                    <li>Mount Panorama Bathurst (Australia)</li>
+                    <li>Watkins Glen Long Course</li>
+                  </ul>
+                </div>
+                <div class="vsl-how-class-panel" id="tracks-special-panel" data-class-panel="tracks-special" hidden>
+                  <p>Special modes and featured experiences:</p>
+                  <ul class="vsl-how-class-list">
+                    <li>610 Challenge (virtual Houston)</li>
+                    <li>Monthly leaderboard challenges</li>
+                    <li>Car meet competitions</li>
+                    <li>Team endurance races</li>
+                    <li>League races</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-faq" id="how-faq" aria-labelledby="how-faq-heading">
+      <div class="vsl-how-grid">
+        <h2 class="vsl-how-heading" id="how-faq-heading">Frequently asked questions</h2>
+        <p class="vsl-how-copy">
+          Everything you need to know before your first session.
+        </p>
+        <div class="vsl-how-faq__list" data-vsl-faq>
+          <article class="vsl-how-faq__item">
+            <button class="vsl-how-faq__trigger" type="button" id="vsl-how-faq-btn-1" aria-expanded="false" aria-controls="vsl-how-faq-panel-1">
+              <span class="vsl-how-faq__label">I am new. Is this still for me?</span>
+              <span class="vsl-how-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-how-faq__panel" id="vsl-how-faq-panel-1" role="region" aria-labelledby="vsl-how-faq-btn-1" hidden>
+              <p class="vsl-how-faq__answer">Yes. You do not need prior sim-racing experience. Our staff helps you with controls, setup, and pacing so you can enjoy your first session confidently.</p>
+            </div>
+          </article>
+          <article class="vsl-how-faq__item">
+            <button class="vsl-how-faq__trigger" type="button" id="vsl-how-faq-btn-2" aria-expanded="false" aria-controls="vsl-how-faq-panel-2">
+              <span class="vsl-how-faq__label">Will Pro or Ultimate be too much?</span>
+              <span class="vsl-how-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-how-faq__panel" id="vsl-how-faq-panel-2" role="region" aria-labelledby="vsl-how-faq-btn-2" hidden>
+              <p class="vsl-how-faq__answer">Not if we guide you in. Pro and Ultimate are more immersive, but the onboarding process stays beginner-friendly, and we tune setup based on your comfort.</p>
+            </div>
+          </article>
+          <article class="vsl-how-faq__item">
+            <button class="vsl-how-faq__trigger" type="button" id="vsl-how-faq-btn-3" aria-expanded="false" aria-controls="vsl-how-faq-panel-3">
+              <span class="vsl-how-faq__label">How do I pick the right car and track?</span>
+              <span class="vsl-how-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-how-faq__panel" id="vsl-how-faq-panel-3" role="region" aria-labelledby="vsl-how-faq-btn-3" hidden>
+              <p class="vsl-how-faq__answer">Tell us your goals and comfort level. We will recommend a car class and circuit that gives the right mix of confidence, challenge, and fun.</p>
+            </div>
+          </article>
+          <article class="vsl-how-faq__item">
+            <button class="vsl-how-faq__trigger" type="button" id="vsl-how-faq-btn-4" aria-expanded="false" aria-controls="vsl-how-faq-panel-4">
+              <span class="vsl-how-faq__label">Can I race with friends who have different skill levels?</span>
+              <span class="vsl-how-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-how-faq__panel" id="vsl-how-faq-panel-4" role="region" aria-labelledby="vsl-how-faq-btn-4" hidden>
+              <p class="vsl-how-faq__answer">Absolutely. We can format sessions for mixed groups so everyone feels included, from first-timers to experienced racers.</p>
+            </div>
+          </article>
+          <article class="vsl-how-faq__item">
+            <button class="vsl-how-faq__trigger" type="button" id="vsl-how-faq-btn-5" aria-expanded="false" aria-controls="vsl-how-faq-panel-5">
+              <span class="vsl-how-faq__label">How do Quick Races and Double Races work?</span>
+              <span class="vsl-how-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-how-faq__panel" id="vsl-how-faq-panel-5" role="region" aria-labelledby="vsl-how-faq-btn-5" hidden>
+              <p class="vsl-how-faq__answer">Each race is divided into a Qualifying and Race period, with approximately 25 minutes of total drive time. If you're driving solo, you'll get 25-30 minutes of practice time. Any format can be raced solo or with friends, complete with headsets for comms.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-how-section vsl-how-cta" id="how-cta" aria-labelledby="how-cta-heading">
+      <div class="vsl-how-grid">
+        <div class="vsl-how-cta__panel">
+          <h2 id="how-cta-heading">Ready to race?</h2>
+          <p>
+            Book your session and our team will help you choose the right simulator, car, and track when you arrive.
+          </p>
+          <div class="vsl-how-cta__buttons">
+            <a class="vsl-how-btn vsl-how-btn--primary" data-vsl-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  (function () {
+    var config = window.VSL_HOW_CONFIG || {};
+    var images = config.images || {};
+    var video = config.video || {};
+
+    var root = document.querySelector(".vsl-how-it-works");
+    if (!root) return;
+
+    var hero = root.querySelector(".vsl-how-hero");
+    var heroVideo = root.querySelector("[data-vsl-hero-video]");
+    if (heroVideo && video.heroBackground) {
+      heroVideo.src = video.heroBackground;
+      if (images.hero) heroVideo.poster = images.hero;
+    } else if (hero && images.hero) {
+      var mediaEl = hero.querySelector(".vsl-how-hero__media");
+      var bg =
+        "linear-gradient(145deg, rgba(14, 22, 52, 0.78) 0%, rgba(10, 18, 46, 0.9) 62%, rgba(10, 18, 46, 0.97) 100%), url('" + images.hero + "')";
+      if (mediaEl) {
+        mediaEl.style.backgroundImage = bg;
+        mediaEl.style.backgroundSize = "cover";
+        mediaEl.style.backgroundPosition = "center center";
+      } else {
+        hero.style.backgroundImage = bg;
+      }
+    }
+
+    root.querySelectorAll("[data-vsl-how]").forEach(function (img) {
+      var key = img.getAttribute("data-vsl-how");
+      if (images[key]) img.src = images[key];
+    });
+
+    var galleryMap = { cars: "carsGallery", tracks: "tracksGallery" };
+
+    function filterGalleryUrls(arr) {
+      if (!Array.isArray(arr)) return [];
+      return arr.filter(function (u) {
+        return u && String(u).trim();
+      });
+    }
+
+    root.querySelectorAll("[data-vsl-gallery]").forEach(function (carousel) {
+      var g = carousel.getAttribute("data-vsl-gallery");
+      var prop = galleryMap[g];
+      if (!prop || !images[prop] || !Array.isArray(images[prop])) return;
+      var urls = filterGalleryUrls(images[prop]);
+      var imgs = carousel.querySelectorAll(".vsl-how-showcase-card__carousel-img");
+      if (imgs.length < 2) return;
+
+      if (!urls.length) {
+        carousel.setAttribute("hidden", "");
+        return;
+      }
+
+      var a = imgs[0];
+      var b = imgs[1];
+      var btnPrev = carousel.querySelector("[data-vsl-carousel-prev]");
+      var btnNext = carousel.querySelector("[data-vsl-carousel-next]");
+
+      a.src = urls[0];
+      a.classList.add("is-active");
+      b.classList.remove("is-active");
+      b.removeAttribute("src");
+
+      var activeIdx = 0;
+      var frontIsA = true;
+
+      function showArrows(show) {
+        if (btnPrev) btnPrev.hidden = !show;
+        if (btnNext) btnNext.hidden = !show;
+      }
+
+      if (urls.length < 2) {
+        showArrows(false);
+        carousel.removeAttribute("tabindex");
+        return;
+      }
+
+      showArrows(true);
+
+      function goToIndex(nextIdx) {
+        if (nextIdx === activeIdx || nextIdx < 0 || nextIdx >= urls.length) return;
+        var nextUrl = urls[nextIdx];
+        var outEl = frontIsA ? a : b;
+        var inEl = frontIsA ? b : a;
+
+        var settled = false;
+        function finish() {
+          if (settled) return;
+          settled = true;
+          inEl.onload = null;
+          inEl.onerror = null;
+          inEl.classList.add("is-active");
+          outEl.classList.remove("is-active");
+          frontIsA = !frontIsA;
+          activeIdx = nextIdx;
+        }
+
+        inEl.onload = finish;
+        inEl.onerror = finish;
+        inEl.src = nextUrl;
+        if (inEl.complete) window.setTimeout(finish, 0);
+      }
+
+      if (btnPrev) {
+        btnPrev.addEventListener("click", function () {
+          goToIndex((activeIdx - 1 + urls.length) % urls.length);
+        });
+      }
+      if (btnNext) {
+        btnNext.addEventListener("click", function () {
+          goToIndex((activeIdx + 1) % urls.length);
+        });
+      }
+
+      carousel.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          goToIndex((activeIdx - 1 + urls.length) % urls.length);
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          goToIndex((activeIdx + 1) % urls.length);
+        }
+      });
+    });
+
+    root.querySelectorAll("[data-vsl-link]").forEach(function (link) {
+      var key = link.getAttribute("data-vsl-link");
+      if (config.links && config.links[key]) link.href = config.links[key];
+    });
+    root.querySelectorAll("[data-vsl-video]").forEach(function (frame) {
+      var key = frame.getAttribute("data-vsl-video");
+      if (video[key]) frame.src = video[key];
+    });
+
+    root.querySelectorAll("[data-vsl-class-picker]").forEach(function (picker) {
+      var chips = picker.querySelectorAll(".vsl-how-class-chip");
+      var panels = picker.parentElement ? picker.parentElement.querySelectorAll("[data-class-panel]") : [];
+      if (!chips.length || !panels.length) return;
+
+      function setActive(targetId) {
+        chips.forEach(function (chip) {
+          var isActive = chip.getAttribute("data-class-target") === targetId;
+          chip.setAttribute("aria-pressed", isActive ? "true" : "false");
+          chip.setAttribute("data-active", isActive ? "true" : "false");
+        });
+        panels.forEach(function (panel) {
+          panel.hidden = panel.getAttribute("data-class-panel") !== targetId;
+        });
+      }
+
+      var hasActive = false;
+      chips.forEach(function (chip) {
+        if (chip.getAttribute("data-active") === "true") {
+          hasActive = true;
+          setActive(chip.getAttribute("data-class-target"));
+        }
+      });
+      if (!hasActive) {
+        setActive(chips[0].getAttribute("data-class-target"));
+      }
+
+      chips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          setActive(chip.getAttribute("data-class-target"));
+        });
+      });
+    });
+
+    root.querySelectorAll("[data-vsl-tier]").forEach(function (tier) {
+      tier.addEventListener("click", function () {
+        tier.classList.toggle("is-flipped");
+      });
+    });
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var isCoarse = window.matchMedia("(pointer: coarse)").matches;
+    if (!reduceMotion.matches && !isCoarse) {
+      root.querySelectorAll(".vsl-how-tier").forEach(function (card) {
+        if (card._vslTiltBound) return;
+        card._vslTiltBound = true;
+
+        var TILT = 4;
+        var raf = null;
+        var targetRx = 0, targetRy = 0, targetScale = 1;
+        var currentRx = 0, currentRy = 0, currentScale = 1;
+        var LERP = 0.1;
+
+        function animate() {
+          currentRx += (targetRx - currentRx) * LERP;
+          currentRy += (targetRy - currentRy) * LERP;
+          currentScale += (targetScale - currentScale) * LERP;
+          card.style.setProperty("transform",
+            "perspective(900px) rotateX(" + currentRx.toFixed(2) + "deg) rotateY(" + currentRy.toFixed(2) + "deg) scale(" + currentScale.toFixed(4) + ")", "important");
+          if (Math.abs(targetRx - currentRx) > 0.01 || Math.abs(targetRy - currentRy) > 0.01 || Math.abs(targetScale - currentScale) > 0.0001) {
+            raf = requestAnimationFrame(animate);
+          } else {
+            raf = null;
+          }
+        }
+
+        function startAnim() {
+          if (!raf) raf = requestAnimationFrame(animate);
+        }
+
+        card.addEventListener("mouseenter", function () {
+          targetScale = 1.025;
+          startAnim();
+        });
+
+        card.addEventListener("mousemove", function (e) {
+          var rect = card.getBoundingClientRect();
+          var mx = (e.clientX - rect.left) / rect.width;
+          var my = (e.clientY - rect.top) / rect.height;
+          targetRx = (my - 0.5) * -TILT;
+          targetRy = (mx - 0.5) * TILT;
+          startAnim();
+        });
+
+        card.addEventListener("mouseleave", function () {
+          targetRx = 0;
+          targetRy = 0;
+          targetScale = 1;
+          startAnim();
+        });
+      });
+    }
+
+    var faqRoot = root.querySelector("[data-vsl-faq]");
+    if (faqRoot) {
+      var faqItems = faqRoot.querySelectorAll(".vsl-how-faq__item");
+      faqItems.forEach(function (item) {
+        var trigger = item.querySelector(".vsl-how-faq__trigger");
+        var panel = item.querySelector(".vsl-how-faq__panel");
+        if (!trigger || !panel) return;
+        trigger.addEventListener("click", function () {
+          var willClose = item.classList.contains("is-open");
+          faqItems.forEach(function (other) {
+            other.classList.remove("is-open");
+            var otherBtn = other.querySelector(".vsl-how-faq__trigger");
+            var otherPanel = other.querySelector(".vsl-how-faq__panel");
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+            if (otherPanel) otherPanel.hidden = true;
+          });
+          if (!willClose) {
+            item.classList.add("is-open");
+            trigger.setAttribute("aria-expanded", "true");
+            panel.hidden = false;
+          }
+        });
+      });
+    }
+
+    function scrollToHash() {
+      var hash = window.location.hash;
+      if (!hash) return;
+      var target = document.querySelector(hash);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    window.addEventListener("hashchange", scrollToHash);
+    if (window.location.hash) setTimeout(scrollToHash, 300);
+  })();
+</script>
+
+</script>
+
+
+
+
+
+

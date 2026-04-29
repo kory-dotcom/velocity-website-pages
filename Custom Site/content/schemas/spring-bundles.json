@@ -1,0 +1,143 @@
+{
+  "page": "spring-bundles",
+  "label": "Spring Bundles",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "eyebrow": {
+          "type": "text",
+          "label": "Eyebrow (e.g. Spring Special)"
+        },
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "heroVideo": {
+          "type": "url",
+          "label": "Hero Video URL",
+          "perLocation": true
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Fallback Hero Image",
+          "perLocation": true
+        }
+      }
+    },
+    "twoDriver": {
+      "label": "Two-Driver Bundles",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "packages": {
+          "type": "repeater",
+          "label": "Packages",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Package Name"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price Display (e.g. From $65)"
+            },
+            "image": {
+              "type": "image",
+              "label": "Package Image"
+            },
+            "bullets": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "bookingLink": {
+              "type": "url",
+              "label": "Booking Link",
+              "perLocation": true
+            },
+            "ctaText": {
+              "type": "text",
+              "label": "Button Text"
+            }
+          }
+        }
+      }
+    },
+    "twoSeater": {
+      "label": "2-Seater Bundles",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "packages": {
+          "type": "repeater",
+          "label": "Packages",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Package Name"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price Display"
+            },
+            "image": {
+              "type": "image",
+              "label": "Package Image"
+            },
+            "bullets": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "bookingLink": {
+              "type": "url",
+              "label": "Booking Link",
+              "perLocation": true
+            },
+            "ctaText": {
+              "type": "text",
+              "label": "Button Text"
+            }
+          }
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

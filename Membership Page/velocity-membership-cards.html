@@ -1,0 +1,423 @@
+<!--
+  Benefits-only snippet for Elementor HTML widget.
+  Canonical full page: velocity-membership-page.html — sync this section + styles if you change benefits.
+
+  ►►► Editable URLs in the <script> block immediately below. ◄◄◄
+-->
+<script>
+  /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     BENEFIT CARDS — EDIT URLS (re-paste into Elementor after changes)
+
+     images.benefit1–5    Full image URLs from WP Media → Library → Copy URL
+     elementorColumnOutdentPx  Side bleed (try 10–16); 0 = none
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+  window.VSL_CONFIG = {
+    images: {
+      benefit1: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp',
+      benefit2: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
+      benefit3: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_610Launch_QUITNGUYEN_DSCF2755.webp',
+      benefit4: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
+      benefit5: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp'
+    },
+    elementorColumnOutdentPx: 12
+  };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  .vsl-membership {
+    --red:      #D22026;
+    --magenta:  #EE265F;
+    --yellow:   #FDC70C;
+    --blue:     #293893;
+    --navy:     #10182B;
+    --deep-indigo: #191B4D;
+    --white:    #EAEAEA;
+    /* Circuit White: light text on Obsidian. Section bands use #fafafa. */
+    --circuit-white: #EAEAEA;
+    --silver:   #DFDFDE;
+    --mist:     #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --vsl-text-xs: 0.75rem;
+    --vsl-text-body: 1rem;
+    --vsl-text-body-lg: 1.333rem;
+    --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+    --vsl-text-card-label: clamp(1.0625rem, 0.88rem + 1.05vw, 1.25rem);
+    --vsl-text-card-back-title: clamp(1rem, 0.82rem + 1.15vw, 1.1875rem);
+    --vsl-text-card-back-body: clamp(1.0625rem, 0.94rem + 0.55vw, 1.1875rem);
+    --vsl-outdent: 0px;
+
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
+  }
+  .vsl-membership *,
+  .vsl-membership *::before,
+  .vsl-membership *::after { box-sizing: border-box; }
+
+  .vsl-benefits {
+    position: relative;
+    width: 100%;
+    background-color: #fafafa;
+    --vsl-benefits-top-pull: 8px;
+    margin-top: calc(-1 * var(--vsl-benefits-top-pull));
+    padding: calc(72px + var(--vsl-benefits-top-pull)) clamp(20px, 5vw, var(--page-margin)) 80px;
+    overflow: hidden;
+  }
+  .vsl-benefits::before { display: none; }
+  .vsl-benefits__heading-wrap {
+    display: flex;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 1;
+    padding: 0 clamp(12px, 2vw, 16px);
+  }
+  .vsl-benefits__heading {
+    margin: 0 auto;
+    max-width: 48rem;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--blue) !important;
+    -webkit-text-fill-color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    padding: 0 clamp(0.35rem, 2.5vw, 0.5rem);
+    text-wrap: balance;
+  }
+  .vsl-benefits__heading-line {
+    display: inline-block;
+  }
+  .vsl-benefits__heading-line--blue {
+    color: var(--blue) !important;
+    -webkit-text-fill-color: var(--blue) !important;
+  }
+  .vsl-benefits__heading-line--magenta {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+  }
+  .vsl-benefits__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--gutter);
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-card {
+    perspective: 1400px;
+    min-height: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vsl-card:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 4px;
+    border-radius: 10px;
+  }
+  .vsl-card-inner {
+    position: relative;
+    width: 100%;
+    padding-bottom: 148%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-card:hover .vsl-card-inner { transform: rotateY(180deg); }
+  }
+  .vsl-card.is-flipped .vsl-card-inner { transform: rotateY(180deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-card-inner { transition: none; }
+  }
+  @media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+    .vsl-card:hover .vsl-card-inner { transform: none; }
+  }
+
+  .vsl-card-front,
+  .vsl-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  .vsl-card-front {
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(16, 24, 43, 0.08), 0 1px 2px rgba(16, 24, 43, 0.05);
+    display: flex;
+    flex-direction: column;
+  }
+  .vsl-benefits__grid .vsl-card:nth-child(1) .vsl-card-front { border-top: 4px solid var(--red); }
+  .vsl-benefits__grid .vsl-card:nth-child(2) .vsl-card-front { border-top: 4px solid var(--blue); }
+  .vsl-benefits__grid .vsl-card:nth-child(3) .vsl-card-front { border-top: 4px solid var(--yellow); }
+  .vsl-benefits__grid .vsl-card:nth-child(4) .vsl-card-front { border-top: 4px solid var(--magenta); }
+  .vsl-benefits__grid .vsl-card:nth-child(5) .vsl-card-front { border-top: 4px solid var(--blue); }
+
+  .vsl-card-front .vsl-card-media {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  .vsl-card-front img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+  .vsl-card-front img[data-vsl-benefit] {
+    background: #e0e0e0;
+    min-height: 120px;
+  }
+  .vsl-card-label {
+    flex-shrink: 0;
+    box-sizing: border-box;
+    min-height: calc(2 * 1.2 * 1.0625rem + 16px + 14px);
+    padding: 16px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--soft);
+    text-align: left;
+  }
+  .vsl-card-label h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-card-label);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+  .vsl-card-back {
+    transform: rotateY(180deg);
+    background: var(--navy);
+    padding: 24px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .vsl-benefits__grid .vsl-card:nth-child(1) .vsl-card-back { border-top: 4px solid var(--red); }
+  .vsl-benefits__grid .vsl-card:nth-child(2) .vsl-card-back { border-top: 4px solid var(--blue); }
+  .vsl-benefits__grid .vsl-card:nth-child(3) .vsl-card-back { border-top: 4px solid var(--yellow); }
+  .vsl-benefits__grid .vsl-card:nth-child(4) .vsl-card-back { border-top: 4px solid var(--magenta); }
+  .vsl-benefits__grid .vsl-card:nth-child(5) .vsl-card-back { border-top: 4px solid var(--blue); }
+
+  .vsl-card-back h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-card-back-title);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--yellow);
+  }
+  .vsl-card-back p {
+    margin: 0;
+    font-size: var(--vsl-text-card-back-body);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--mist);
+  }
+  .vsl-card-back::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    right: -16px;
+    width: 100px;
+    height: 71px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 437.9 308.98'%3E%3Cpath fill='%23eaeaea' opacity='.04' d='m437.9,0l-166.17,292.22c-5.83,10.43-16.76,16.76-28.88,16.76s-23.25-6.67-29.04-17.26l-19.5-35.71c-9.22-16.91-26.98-27.51-46.14-27.51-4.27,0-9.04.68-13.99,1.87L0,267.59v-121.81s161.16.18,161.16.18c17.78,0,34.18,9.72,42.72,25.27l39.47,72.13L381.69,0h56.22Z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+
+  @media (max-width: 1199px) {
+    .vsl-benefits { padding: calc(56px + var(--vsl-benefits-top-pull, 8px)) clamp(20px, 4vw, var(--page-margin)) 64px; }
+    .vsl-benefits__grid { grid-template-columns: repeat(2, 1fr); gap: var(--gutter); }
+  }
+  @media (max-width: 639px) {
+    .vsl-benefits { padding: calc(40px + var(--vsl-benefits-top-pull, 8px)) clamp(16px, 5vw, var(--page-margin)) 48px; }
+    .vsl-benefits__grid { grid-template-columns: 1fr; gap: 16px; }
+    .vsl-card-inner { padding-bottom: 118%; }
+    .vsl-benefits__heading {
+      line-height: 1.2;
+    }
+    .vsl-card-label {
+      min-height: 0;
+      padding: 12px 16px 16px;
+      justify-content: center;
+    }
+    .vsl-card-label h3 {
+      font-size: clamp(1.125rem, 3.8vw + 0.72rem, 1.3125rem);
+      line-height: 1.25;
+    }
+    .vsl-card-back {
+      justify-content: flex-start;
+      padding: clamp(22px, 7vw, 32px) clamp(18px, 5vw, 22px) clamp(24px, 7vw, 32px);
+    }
+    .vsl-card-back h3 {
+      font-size: clamp(1.0625rem, 2.8vw + 0.78rem, 1.25rem);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .vsl-card-back p {
+      font-size: clamp(1.0625rem, 2.2vw + 0.82rem, 1.25rem);
+      line-height: 1.4;
+    }
+  }
+</style>
+
+<div class="vsl-membership">
+  <section class="vsl-benefits" id="membership-benefits" aria-labelledby="benefits-heading-cards">
+    <div class="vsl-benefits__heading-wrap">
+      <h2 class="vsl-benefits__heading" id="benefits-heading-cards"><span class="vsl-benefits__heading-line vsl-benefits__heading-line--blue">What&rsquo;s included</span><br><span class="vsl-benefits__heading-line vsl-benefits__heading-line--magenta">in your membership</span></h2>
+    </div>
+    <div class="vsl-benefits__grid">
+
+      <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Monthly races. Flip card for details.">
+        <div class="vsl-card-inner">
+          <div class="vsl-card-front">
+            <figure class="vsl-card-media">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit1" alt="Driver at a professional sim racing cockpit with triple monitors" width="600" height="800" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-card-label">
+              <h3>Monthly races</h3>
+            </div>
+          </div>
+          <div class="vsl-card-back">
+            <h3>Monthly races</h3>
+            <p>Membership includes monthly races as well as exclusive members-only leagues, competitions, and social events.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Members only events. Flip card for details.">
+        <div class="vsl-card-inner">
+          <div class="vsl-card-front">
+            <figure class="vsl-card-media">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit2" alt="Velocity members celebrating at a Grand Prix community event" width="600" height="800" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-card-label">
+              <h3>Members only events</h3>
+            </div>
+          </div>
+          <div class="vsl-card-back">
+            <h3>Members only events</h3>
+            <p>League nights, car rallies, and track experiences reserved for members.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Early access. Flip card for details.">
+        <div class="vsl-card-inner">
+          <div class="vsl-card-front">
+            <figure class="vsl-card-media">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit3" alt="Velocity lounge interior with track-inspired lighting" width="600" height="800" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-card-label">
+              <h3>Early access to new experiences</h3>
+            </div>
+          </div>
+          <div class="vsl-card-back">
+            <h3>Early access</h3>
+            <p>Be first to try new sims, formats, and venue features before the public.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Food and drink discounts. Flip card for details.">
+        <div class="vsl-card-inner">
+          <div class="vsl-card-front">
+            <figure class="vsl-card-media">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit4" alt="Gourmet burger and sides at Velocity" width="600" height="800" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-card-label">
+              <h3>Food &amp; drink discounts</h3>
+            </div>
+          </div>
+          <div class="vsl-card-back">
+            <h3>Food &amp; drink discounts</h3>
+            <p>Ongoing savings on the full food and beverage menu for members.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Exclusive perks. Flip card for details.">
+        <div class="vsl-card-inner">
+          <div class="vsl-card-front">
+            <figure class="vsl-card-media">
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit5" alt="Velocity Race Control neon signage" width="600" height="800" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-card-label">
+              <h3>Exclusive perks</h3>
+            </div>
+          </div>
+          <div class="vsl-card-back">
+            <h3>Exclusive perks</h3>
+            <p>Automotive partnerships and member-only perks beyond the simulator.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vsl-membership');
+    var cfg = window.VSL_CONFIG || {};
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (root && px > 0) {
+      root.style.setProperty('--vsl-outdent', px + 'px');
+    }
+    var map = cfg.images || {};
+    if (root) {
+      root.querySelectorAll('img[data-vsl-benefit]').forEach(function (img) {
+        var key = img.getAttribute('data-vsl-benefit');
+        if (key && map[key]) img.src = map[key];
+      });
+    }
+
+    var cards = document.querySelectorAll('[data-vsl-card]');
+    var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (finePointer) return;
+        e.preventDefault();
+        card.classList.toggle('is-flipped');
+      });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          card.classList.toggle('is-flipped');
+        }
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,76 @@
+---
+description: Velocity Sim Racing Lounge visual standards enforcement for all page work
+globs: **/*.{html,css,scss}
+alwaysApply: false
+---
+
+# Velocity Sim Racing Lounge Design Compliance (V1.0.0)
+
+Act as the official Velocity Design Compliance Agent for all page changes. Enforce these non-negotiable standards.
+
+## 0) Implementation context (Elementor custom HTML blocks)
+- Build page content modules only, intended for insertion into existing WordPress/Elementor pages.
+- Do not include global site chrome in deliverables: no menu/nav bars, no global logo blocks, no site footer sections.
+- Scope styles/scripts to a unique wrapper class (example: `.vsl-membership`) to avoid collisions with theme/Elementor styles.
+- Avoid global resets or selectors that target `body`, `html`, or unscoped tag selectors when they could leak outside the module.
+- Include only content sections that belong inside the page body (hero/content/CTA/FAQ/sections), not site shell.
+
+## 0.1) Visual harmony baseline
+- Use `Membership Page/velocity-membership-elementor.html` as the visual reference for tone and structure.
+- Match the same design language: premium motorsport feel, strong section rhythm, modular cards, restrained but high-impact accents, and clear CTA hierarchy.
+- Keep interactions polished but controlled (avoid overly playful motion; honor `prefers-reduced-motion` where relevant).
+- Maintain consistent naming conventions for component classes (prefer `vsl-` prefixed patterns).
+
+## 1) Identity and logo usage
+- Keep Velocity marks in original aspect ratio; never rotate, mirror, stretch, or redraw.
+- Preserve clear space around the mark; avoid crowding with other UI elements.
+- Avoid low-contrast placement and avoid busy/high-contrast backgrounds behind the logo.
+
+## 2) Color system (60-30-10)
+- 60% neutrals: `#101828`, `#EAEAEA`, `#DFDFDE`.
+- 30% secondary accents: `#293893`, `#191840`.
+- 10% primary accents (CTAs/high-impact): `#EE265F`, `#D22026`, `#FDC70C`.
+- Paragraph/data text only: `#B2AEBF`, `#5F5782`.
+- Use primary accents sparingly in UI; they should signal action, not dominate.
+
+### Gradients and pairings
+- Allowed gradients only: `#101828 + #191840`, `#D22026 + #EE265F`, `#191840 + #293893`.
+- Never create gradients with paragraph colors.
+- Never pair these together in gradients: dark + light neutrals, red + yellow, red + blue, blue + yellow.
+
+### Opacity logic
+- Dark-mode cards: `#EAEAEA` at 4% overlay.
+- Light-mode cards: `#101828` at 7% overlay.
+- Over red/magenta accents: `#101828` at 7% overlay.
+- Over blue/indigo accents: `#EAEAEA` at 7% overlay.
+
+## 3) Typography and alignment
+- Base body size: 16px with Perfect Fourth scale ratio `1.333`.
+- Main headings and buttons: Khand font, ALL CAPS, italicized. Body/fine print: Inter.
+- Prefer left alignment; never right-align text.
+- Do not mix alignment systems in one section/layout.
+- Center-aligned body or fine print must be 2 lines max.
+- For 3-5 word marketing lines, use symmetrical 2-line breaks when possible.
+
+## 4) Layout and grid architecture
+- Use a 12-column grid.
+- Gutter: 24px. Outer margins: 64px. Soft internal padding: 8px.
+
+## 5) Graphic assets and shapes
+- Circuits: use in high brand-context surfaces; bleeding off edges is allowed.
+- Swoosh: use in low brand-context assets; must bleed from the left and can ignore grid.
+- Finish line: use as partial divider or partial border element.
+
+## 6) SEO and metadata efficiency (required)
+- Build each page module with semantic structure that supports ranking and review: one clear `h1`, logical `h2/h3` hierarchy, descriptive section labels, and meaningful link text.
+- Keep copy crawlable and specific: include target service/location intent naturally in headings and body (avoid vague hero-only text).
+- Ensure media is SEO-safe: descriptive `alt` text, explicit image dimensions where possible, and lazy-loading for below-the-fold assets.
+- When page-level SEO fields (meta title, meta description, canonical, OG/Twitter tags) are outside the HTML block, provide a short "SEO handoff" payload with recommended values.
+- Where appropriate, provide schema recommendations (for example: `LocalBusiness`, `FAQPage`, `Product`/`Offer`) to be implemented at page level by WordPress/SEO plugin.
+- Avoid SEO regressions from embeds: do not hide primary content behind interactions that require JS to reveal critical copy.
+- Prioritize technical quality signals that impact SEO outcomes: fast paint, low layout shift, accessible markup, and mobile-first responsiveness.
+
+## Output behavior for page edits
+- Prefer minimal changes that improve compliance over broad redesigns.
+- If asked to break a rule, call out the conflict and provide a compliant alternative.
+- For every significant page update, include a brief compliance check for color, type, alignment, grid, and SEO readiness.

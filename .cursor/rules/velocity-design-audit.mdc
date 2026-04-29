@@ -1,0 +1,36 @@
+---
+description: Velocity page compliance audit checklist for major updates
+globs: **/*.{html,css,scss}
+alwaysApply: false
+---
+
+# Velocity Design Audit Rule (V1.0.0)
+
+After any significant page change, output a short compliance audit.
+
+## When to run the audit
+- Run when a layout, component style, section structure, CTA treatment, or branding element was added/changed.
+- Skip only for tiny edits (typos, whitespace, trivial copy tweaks).
+
+## Required audit format
+Use this exact structure:
+
+- `Elementor Content-Only Context`: PASS or FAIL - confirm no global nav/logo/footer shell was added.
+- `Scoped Module Architecture`: PASS or FAIL - confirm wrapper scoping and no leaking global selectors.
+- `Reference Harmony (Membership Baseline)`: PASS or FAIL - one short reason on stylistic consistency.
+- `Identity/Logo`: PASS or FAIL - one short reason.
+- `Color System (60-30-10)`: PASS or FAIL - one short reason.
+- `Gradients/Pairings`: PASS or FAIL - one short reason.
+- `Typography/Alignment`: PASS or FAIL - confirm Khand + ALL CAPS + italicized treatment for main headings/buttons, plus alignment compliance.
+- `Grid/Spacing`: PASS or FAIL - one short reason.
+- `Assets/Shapes`: PASS or FAIL - one short reason.
+- `SEO Structure`: PASS or FAIL - heading hierarchy, semantic sections, crawlable copy.
+- `Metadata Handoff`: PASS or FAIL - meta title/description/canonical/OG recommendations provided when needed.
+- `Schema Readiness`: PASS or FAIL - relevant schema recommendation included (or not applicable).
+- `Overall`: PASS if all categories pass, otherwise FAIL.
+
+## Failure handling
+- If any item is FAIL, include a `Fixes` section with minimal, concrete changes needed.
+- Prioritize fixes that preserve the current design intent while restoring compliance.
+- Do not introduce new colors, spacing systems, or typography outside the standards.
+- When applicable, verify compatibility with WordPress/Elementor embedding constraints.

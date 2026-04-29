@@ -1,0 +1,236 @@
+{
+  "page": "book-now",
+  "label": "Book Now",
+  "sections": {
+    "experiences": {
+      "label": "Experiences",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "tabs": {
+          "type": "repeater",
+          "label": "Experience Tabs",
+          "fields": {
+            "tabName": {
+              "type": "text",
+              "label": "Tab Name"
+            },
+            "cards": {
+              "type": "textarea",
+              "label": "Cards JSON (advanced)"
+            }
+          }
+        }
+      }
+    },
+    "mainExperiences": {
+      "label": "Main Experiences",
+      "fields": {
+        "cards": {
+          "type": "repeater",
+          "label": "Booking Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price Display (e.g. From $30)"
+            },
+            "badge": {
+              "type": "text",
+              "label": "Badge (e.g. Most Popular)"
+            },
+            "image": {
+              "type": "image",
+              "label": "Card Image"
+            },
+            "bullets": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "bookingLink": {
+              "type": "url",
+              "label": "Booking Link",
+              "perLocation": true
+            }
+          }
+        }
+      }
+    },
+    "twoSeater": {
+      "label": "2-Seater Experiences",
+      "fields": {
+        "cards": {
+          "type": "repeater",
+          "label": "2-Seater Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price Display"
+            },
+            "image": {
+              "type": "image",
+              "label": "Card Image"
+            },
+            "bullets": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "bookingLink": {
+              "type": "url",
+              "label": "Booking Link",
+              "perLocation": true
+            }
+          }
+        }
+      }
+    },
+    "springBundles": {
+      "label": "Spring Bundle Experiences",
+      "fields": {
+        "intro": {
+          "type": "textarea",
+          "label": "Intro Text"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Bundle Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price Display"
+            },
+            "image": {
+              "type": "image",
+              "label": "Card Image"
+            },
+            "bullets": {
+              "type": "textarea",
+              "label": "Features (one per line)"
+            },
+            "bookingLink": {
+              "type": "url",
+              "label": "Booking Link",
+              "perLocation": true
+            }
+          }
+        }
+      }
+    },
+    "features": {
+      "label": "Feature Strip",
+      "fields": {
+        "items": {
+          "type": "repeater",
+          "label": "Features",
+          "fields": {
+            "icon": {
+              "type": "image",
+              "label": "Icon"
+            },
+            "label": {
+              "type": "text",
+              "label": "Label"
+            }
+          }
+        }
+      }
+    },
+    "membershipPromo": {
+      "label": "Membership Promo",
+      "fields": {
+        "eyebrow": {
+          "type": "text",
+          "label": "Eyebrow"
+        },
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "description": {
+          "type": "textarea",
+          "label": "Description"
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Text"
+        },
+        "ctaLink": {
+          "type": "url",
+          "label": "CTA Link"
+        },
+        "tierChips": {
+          "type": "repeater",
+          "label": "Tier Price Chips",
+          "fields": {
+            "name": {
+              "type": "text",
+              "label": "Tier Name"
+            },
+            "price": {
+              "type": "text",
+              "label": "Price"
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "page": "semi-private",
+  "label": "Semi-Private Events",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Hero Image",
+          "perLocation": true
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Button Text"
+        },
+        "ctaLink": {
+          "type": "url",
+          "label": "CTA Link (Inquiry)",
+          "perLocation": true
+        }
+      }
+    },
+    "features": {
+      "label": "What You Get",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "bullets": {
+          "type": "textarea",
+          "label": "Feature List (one per line)",
+          "perLocation": true
+        },
+        "image": {
+          "type": "image",
+          "label": "Side Image",
+          "perLocation": true
+        }
+      }
+    },
+    "useCases": {
+      "label": "Perfect For",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "Use Cases",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            }
+          }
+        }
+      }
+    },
+    "gallery": {
+      "label": "Gallery",
+      "fields": {
+        "images": {
+          "type": "repeater",
+          "label": "Gallery Images",
+          "fields": {
+            "image": {
+              "type": "image",
+              "label": "Image"
+            },
+            "alt": {
+              "type": "text",
+              "label": "Alt Text"
+            }
+          }
+        }
+      }
+    },
+    "included": {
+      "label": "What's Included",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Included Items",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "image": {
+              "type": "image",
+              "label": "Image"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Link"
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Link"
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

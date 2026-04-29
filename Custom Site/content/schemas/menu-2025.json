@@ -1,0 +1,69 @@
+{
+  "page": "menu-2025",
+  "label": "Menu 2025",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "backgroundImage": {
+          "type": "image",
+          "label": "Hero Background",
+          "perLocation": true
+        }
+      }
+    },
+    "categories": {
+      "label": "Menu Categories",
+      "fields": {
+        "items": {
+          "type": "repeater",
+          "label": "Categories",
+          "fields": {
+            "name": {
+              "type": "text",
+              "label": "Category Name"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Category Description"
+            },
+            "menuItems": {
+              "type": "textarea",
+              "label": "Menu Items JSON (advanced)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

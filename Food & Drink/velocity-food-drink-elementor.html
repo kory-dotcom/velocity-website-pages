@@ -1,0 +1,970 @@
+<!-- VSL Food+Drink v4 — Full interactive menu is embedded on this page. Hero button scrolls to #full-menu. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+    html, html.no-smooth-scroll { scroll-behavior: auto !important; }
+    .vsl-fooddrink {
+      --navy: #10182B;
+      --deep-indigo: #191B4D;
+      --magenta: #EE265F;
+      --blue: #293893;
+      --yellow: #FDC70C;
+      --red: #D22026;
+      --circuit-white: #EAEAEA;
+      --silver: #DFDFDE;
+      --mist: #B2AEBF;
+      --slate-violet: #5F5782;
+      --gutter: 24px;
+      --page-margin: 64px;
+      --soft: 8px;
+      --font-display: 'Khand', system-ui, sans-serif;
+      --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+      --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
+      --vsl-outdent: 0px;
+      --vsl-hero-bleed-top: -12px;
+      --vsl-hero-bleed-bottom: -12px;
+      --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+      --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+      --vsl-hero-photo: url("https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248.webp");
+      --vsl-vh: 1vh;
+      --vsl-hero-offset: 0px;
+
+      font-family: var(--font-body);
+      color: var(--navy);
+      box-sizing: border-box;
+      width: calc(100% + 2 * var(--vsl-outdent));
+      max-width: none;
+      margin-left: calc(-1 * var(--vsl-outdent));
+      margin-right: calc(-1 * var(--vsl-outdent));
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .vsl-fooddrink:has(> main > section.vsl-fooddrink-hero:first-of-type) {
+      margin-top: var(--vsl-hero-bleed-top);
+      margin-bottom: var(--vsl-hero-bleed-bottom);
+    }
+    .vsl-fooddrink > main#primary-content {
+      display: block;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-block-start: 0;
+      padding-block-end: 0;
+    }
+    .elementor-section:has(.vsl-fooddrink),
+    .elementor-column:has(.vsl-fooddrink),
+    .elementor-widget-wrap:has(.vsl-fooddrink),
+    .elementor-widget-html:has(.vsl-fooddrink),
+    .elementor-widget-container:has(.vsl-fooddrink),
+    .e-con:has(.vsl-fooddrink),
+    .e-con-inner:has(.vsl-fooddrink) {
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: 0 !important;
+    }
+    .elementor-widget-html .elementor-widget-container:has(> .vsl-fooddrink) {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .vsl-fooddrink *,
+    .vsl-fooddrink *::before,
+    .vsl-fooddrink *::after { box-sizing: border-box; }
+
+    #food-hero,
+    #full-menu,
+    #food-cta {
+      scroll-margin-top: 5rem;
+    }
+
+    .vsl-fooddrink-hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      margin-top: 0;
+      background: var(--navy);
+      color: var(--circuit-white);
+      overflow: clip;
+      isolation: isolate;
+      min-height: calc((var(--vsl-vh) * 100) - var(--vsl-hero-offset));
+    }
+    @supports (height: 100svh) {
+      .vsl-fooddrink-hero {
+        min-height: calc(100svh - var(--vsl-hero-offset));
+      }
+    }
+    .vsl-fooddrink-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: #1a1f2a;
+      background-image: var(--vsl-hero-photo);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    .vsl-fooddrink-hero__inner {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(22px, 4vh, 44px) clamp(20px, 5vw, var(--page-margin)) clamp(56px, 10vh, 112px);
+      max-width: 40rem;
+      margin: 0 auto;
+      width: 100%;
+      background: none;
+      pointer-events: none;
+    }
+    .vsl-fooddrink-hero__inner > * {
+      pointer-events: auto;
+    }
+    .vsl-fooddrink-hero__title {
+      margin: 0 0 0.35em;
+      padding: 18px 36px;
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 1.2rem + 5vw, 4rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-wrap: balance;
+      background: linear-gradient(135deg, rgba(16, 24, 43, 0.82) 0%, rgba(25, 27, 77, 0.78) 100%);
+      border-radius: 14px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      background: rgba(4, 7, 18, 0.72);
+      border-radius: 10px;
+    }
+    .vsl-fooddrink-hero__sub {
+      margin: 0 0 1.25rem;
+      padding: 6px 12px;
+      font-size: clamp(0.9rem, 0.82rem + 0.35vw, 1.05rem);
+      font-weight: 400;
+      font-style: normal;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.94) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+      max-width: 40ch;
+      background: rgba(4, 7, 18, 0.68);
+      border-radius: 8px;
+    }
+    .vsl-fooddrink-hero__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 36px;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: var(--magenta);
+      border: 2px solid var(--magenta);
+      box-shadow: 0 8px 32px rgba(238, 38, 95, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .vsl-fooddrink-hero__btn:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 12px 40px rgba(238, 38, 95, 0.55);
+      transform: translateY(-2px);
+    }
+    .vsl-fooddrink-hero__btn:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+    }
+    .vsl-fooddrink-hero__btn:active {
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-hero__btn { transition: filter 0.2s ease, box-shadow 0.2s ease; }
+      .vsl-fooddrink-hero__btn:hover { transform: none; }
+    }
+    @media (max-width: 680px) {
+      .vsl-fooddrink-hero__inner {
+        justify-content: flex-start;
+        padding-top: clamp(68px, 14vh, 120px);
+        padding-bottom: clamp(24px, 4vh, 40px);
+      }
+      .vsl-fooddrink-hero__sub {
+        margin-bottom: 0.9rem;
+      }
+      .vsl-fooddrink-hero__btn {
+        min-height: 46px;
+        padding: 10px 24px;
+      }
+    }
+
+    .vsl-fooddrink-section--light {
+      background: var(--navy);
+      color: var(--circuit-white);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) 80px;
+      position: relative;
+    }
+    .vsl-fooddrink-section--light + .vsl-fooddrink-section--light {
+      padding-top: 48px;
+    }
+    .vsl-fooddrink-section__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .vsl-fooddrink-section__title {
+      margin: 0 0 1.25em;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      text-wrap: balance;
+    }
+
+    .vsl-fooddrink-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--gutter);
+    }
+    @media (min-width: 640px) {
+      .vsl-fooddrink-grid--share { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .vsl-fooddrink-grid--share { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 640px) {
+      .vsl-fooddrink-grid--three { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .vsl-fooddrink-grid--three { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .vsl-fooddrink-card {
+      background: #fff;
+      border-radius: calc(var(--soft) + 2px);
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(16, 24, 43, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.28s ease, transform 0.28s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover {
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.42), 0 8px 18px rgba(0, 0, 0, 0.22);
+        transform: translateY(-3px);
+      }
+    }
+    .vsl-fooddrink-card__media {
+      position: relative;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: none;
+      cursor: zoom-in;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: linear-gradient(145deg, #e8eaef 0%, #cfd3dc 100%);
+    }
+    .vsl-fooddrink-card__media:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 2px;
+      z-index: 1;
+    }
+    .vsl-fooddrink-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media img {
+        transform: scale(1.05);
+      }
+    }
+    .vsl-fooddrink-card__media-hint {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 12px;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(16, 24, 43, 0.72);
+      border-radius: 4px;
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media-hint {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .vsl-fooddrink-card__body {
+      padding: 1.25rem 1.35rem 1.35rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .vsl-fooddrink-card__name {
+      margin: 0 0 var(--soft);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.85rem + 0.6vw, 1.125rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.25;
+      color: var(--navy) !important;
+      -webkit-text-fill-color: var(--navy) !important;
+    }
+    .vsl-fooddrink-card__desc {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: normal;
+      line-height: 1.45;
+      color: var(--slate-violet);
+    }
+
+    .vsl-fooddrink-section--dark {
+      background: var(--navy);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) 80px;
+      position: relative;
+      overflow: clip;
+    }
+    .vsl-fooddrink-section--dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(160deg, rgba(25, 27, 77, 0.45) 0%, transparent 62%);
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-section__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-section__title {
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(234, 234, 234, 0.12);
+      box-shadow: none;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-section--dark .vsl-fooddrink-card:hover {
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+      }
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__media {
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(234, 234, 234, 0.1);
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__name {
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__desc {
+      color: var(--mist);
+    }
+
+    .vsl-fooddrink-fullmenu {
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+      padding: 56px clamp(16px, 5vw, var(--page-margin)) 70px;
+    }
+    .vsl-fooddrink-fullmenu__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .vsl-fooddrink-fullmenu__intro {
+      margin: 0 auto 1rem;
+      max-width: 72ch;
+      text-align: center;
+      color: var(--circuit-white);
+      opacity: 0.85;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+    .vsl-fooddrink-menu-nav {
+      position: sticky;
+      top: 0.75rem;
+      z-index: 4;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.55rem;
+      margin: 0 auto 1.25rem;
+      max-width: max-content;
+      border-radius: 10px;
+      background: rgba(16, 24, 43, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(234, 234, 234, 0.12);
+    }
+    .vsl-fooddrink-menu-nav a {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(234, 234, 234, 0.2);
+      background: rgba(255, 255, 255, 0.08);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      white-space: nowrap;
+    }
+    .vsl-fooddrink-menu-nav a:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: var(--magenta);
+      border-color: var(--magenta);
+    }
+    .vsl-fooddrink-menu-block {
+      margin: 1.5rem 0 2rem;
+    }
+    .vsl-fooddrink-menu-block__title {
+      margin: 0 0 1rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 3px solid var(--magenta);
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 0.85rem + 1.6vw, 1.75rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-fooddrink-card__row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin: 0 0 var(--soft);
+    }
+    .vsl-fooddrink-card__price {
+      margin: 0;
+      color: var(--magenta);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .vsl-fooddrink-card__media--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ebedf2 0%, #d7dbe4 100%);
+      cursor: default;
+    }
+    .vsl-fooddrink-card__media--placeholder span {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      color: rgba(16, 24, 43, 0.2);
+      text-transform: uppercase;
+    }
+    .vsl-fooddrink-listgrid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 760px) {
+      .vsl-fooddrink-listgrid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .vsl-fooddrink-listcard {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid rgba(16, 24, 43, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      color: var(--slate-violet);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .vsl-fooddrink-cta {
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) clamp(96px, 14vw, 120px);
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+    }
+    .vsl-fooddrink-cta__card {
+      max-width: 640px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid rgba(16, 24, 43, 0.1);
+      border-top: 4px solid var(--magenta);
+      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.36), 0 10px 24px rgba(0, 0, 0, 0.22);
+      padding: clamp(28px, 5vw, 40px) clamp(22px, 4vw, 36px);
+      text-align: center;
+    }
+    .vsl-fooddrink-cta__title {
+      margin: 0 0 1.25rem;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--blue) !important;
+      -webkit-text-fill-color: var(--blue) !important;
+      line-height: 1.15;
+    }
+    .vsl-fooddrink-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+    }
+    .vsl-fooddrink-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 28px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.14s ease,
+        filter 0.14s ease;
+    }
+    .vsl-fooddrink-cta__btn--primary {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--magenta);
+      border: 2px solid var(--magenta);
+      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.22);
+    }
+    .vsl-fooddrink-cta__btn--primary:hover {
+      filter: brightness(1.06);
+      box-shadow: 0 8px 28px rgba(238, 38, 95, 0.3);
+    }
+    .vsl-fooddrink-cta__btn--outline {
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+      background-color: transparent;
+      border: 2px solid var(--magenta);
+    }
+    .vsl-fooddrink-cta__btn--outline:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--magenta);
+      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.26);
+    }
+    .vsl-fooddrink-cta__btn:active {
+      filter: brightness(0.93);
+      transform: scale(0.99);
+    }
+    .vsl-fooddrink-cta__btn:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-cta__btn { transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease; }
+      .vsl-fooddrink-cta__btn:active { transform: none; }
+    }
+    @media (max-width: 639px) {
+      .vsl-fooddrink-section--light,
+      .vsl-fooddrink-section--dark { padding: 48px clamp(16px, 5vw, var(--page-margin)) 56px; }
+    }
+
+    .vsl-fooddrink-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 4vw, 28px);
+    }
+    .vsl-fooddrink-lightbox[hidden] {
+      display: none !important;
+    }
+    .vsl-fooddrink-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: rgba(16, 24, 43, 0.94);
+      cursor: pointer;
+    }
+    .vsl-fooddrink-lightbox__panel {
+      position: relative;
+      z-index: 1;
+      max-width: min(96vw, 1120px);
+      max-height: min(88vh, 900px);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .vsl-fooddrink-lightbox__panel > * {
+      pointer-events: auto;
+    }
+    .vsl-fooddrink-lightbox__close {
+      align-self: flex-end;
+      margin: 0 0 4px;
+      width: 44px;
+      height: 44px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .vsl-fooddrink-lightbox__close:hover {
+      border-color: var(--yellow);
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .vsl-fooddrink-lightbox__close:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+    .vsl-fooddrink-lightbox__img {
+      max-width: 100%;
+      max-height: min(72vh, 760px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+    .vsl-fooddrink-lightbox__caption {
+      margin: 0;
+      max-width: 42rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+      font-weight: 600;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--circuit-white);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-card,
+      .vsl-fooddrink-card__media img,
+      .vsl-fooddrink-card__media-hint { transition: none; }
+      .vsl-fooddrink-card:hover { transform: none; }
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media img { transform: none; }
+    }
+    @media (hover: none) {
+      .vsl-fooddrink-card__media-hint {
+        opacity: 0.9;
+        transform: none;
+      }
+    }
+</style>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+  <main id="primary-content">
+    <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
+      <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
+      <div class="vsl-fooddrink-hero__inner">
+        <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our <span style="color:var(--magenta);-webkit-text-fill-color:var(--magenta);">Menu</span></h1>
+        <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
+        <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
+      </div>
+    </section>
+
+    <section class="vsl-fooddrink-fullmenu" id="full-menu" aria-labelledby="full-menu-heading">
+      <div class="vsl-fooddrink-fullmenu__inner">
+        <h2 class="vsl-fooddrink-section__title" id="full-menu-heading">Full Menu</h2>
+        <nav class="vsl-fooddrink-menu-nav" aria-label="Full menu sections">
+          <a href="#entrees">Entrees</a>
+          <a href="#appetizers">Appetizers</a>
+          <a href="#sweet">Sweet</a>
+          <a href="#cocktails">Cocktails</a>
+          <a href="#classics">Classics</a>
+          <a href="#zero-proof">Zero Proof</a>
+          <a href="#beer-wine">Beer + Wine</a>
+          <a href="#flights">Flights</a>
+        </nav>
+
+        <section class="vsl-fooddrink-menu-block" id="entrees" aria-labelledby="entrees-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="entrees-heading">Entrees</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card">
+              <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczNrQ96xPEajhmKVKk4bbV5qS7TYqO751SSW3VTRCIZggcWuM9i277IieCjCStnyr6fk8MGNuXUADc9kQPYVLliCgbRRiFXiTi_LvS6iR8B4qtyuwJ4=w1600-h1200-no" aria-label="Open larger photo: Chicken Diavolo Taquitos">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNrQ96xPEajhmKVKk4bbV5qS7TYqO751SSW3VTRCIZggcWuM9i277IieCjCStnyr6fk8MGNuXUADc9kQPYVLliCgbRRiFXiTi_LvS6iR8B4qtyuwJ4=w900-h600-no" alt="Chicken Diavolo Taquitos" width="900" height="600" loading="lazy" decoding="async">
+              </button>
+              <div class="vsl-fooddrink-card__body">
+                <div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Chicken Diavolo Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div>
+                <p class="vsl-fooddrink-card__desc">Spicy baked chicken taquitos filled with shredded chicken, cream cheese, sour cream, cheddar jack, with a chipotle sauce.</p>
+              </div>
+            </article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOAkyKROSkz04hzXt1e6dV2fqLdrUvJix6ez8e65zvu2S3ZqCY5q2yakaBUckCYebhfCMh4YFcP1dP065WlBFygCtXAIan6lsNPlY0Ytmu7dajrkvg=w1600-h1200-no" aria-label="Open larger photo: Beef Taquitos"><img src="https://lh3.googleusercontent.com/pw/AP1GczOAkyKROSkz04hzXt1e6dV2fqLdrUvJix6ez8e65zvu2S3ZqCY5q2yakaBUckCYebhfCMh4YFcP1dP065WlBFygCtXAIan6lsNPlY0Ytmu7dajrkvg=w900-h600-no" alt="Beef Taquitos" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Beef Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Ground beef taquitos smothered in queso and sour cream.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w1600-h1200-no" aria-label="Open larger photo: Cheesy Sliders"><img src="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w900-h600-no" alt="Cheesy Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Cheesy Sliders</h4><p class="vsl-fooddrink-card__price">$14</p></div><p class="vsl-fooddrink-card__desc">Beef sliders with caramelized onions, dill relish, and cheese.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" aria-label="Open larger photo: Bacon Cheeseburger"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" alt="Bacon Cheeseburger" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Bacon Cheeseburger</h4><p class="vsl-fooddrink-card__price">$10</p></div><p class="vsl-fooddrink-card__desc">Beef burger with caramelized onions and cheese. Add chips +$2.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w1600-h1200-no" aria-label="Open larger photo: Wagyu Sliders"><img src="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w900-h600-no" alt="Wagyu Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Wagyu Sliders</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Wagyu sliders with caramelized onions, garlic mustard aioli, and cheese, with a side of fries.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPGxvJU0CDnyUrX-1KTYsUMwzhBZQPlpRsIUrRBJJPPdYwSmBbYiMiqHmtMuvUUyqccF4mcNlZr_Hd7D8cZThuFb9xKkl3oxZShGOAY0I-8GBRLlV4=w1600-h1200-no" aria-label="Open larger photo: Margherita Flatbread"><img src="https://lh3.googleusercontent.com/pw/AP1GczPGxvJU0CDnyUrX-1KTYsUMwzhBZQPlpRsIUrRBJJPPdYwSmBbYiMiqHmtMuvUUyqccF4mcNlZr_Hd7D8cZThuFb9xKkl3oxZShGOAY0I-8GBRLlV4=w900-h600-no" alt="Margherita Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Margherita Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Tomatoes, fresh mozzarella, and fresh basil flatbread.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMGfB2glz3dcHL3tVoCG9wZqyWDskYZSm8KiZLXu_dsUnXUF6e_TjxXLCnlCWlsOfbNB0virmO8x6TMT_CLGT0ZgPyonvoTgL2rfwxMBUyU1X9Y6h8=w1600-h1200-no" aria-label="Open larger photo: BBQ Cheese Flatbread"><img src="https://lh3.googleusercontent.com/pw/AP1GczMGfB2glz3dcHL3tVoCG9wZqyWDskYZSm8KiZLXu_dsUnXUF6e_TjxXLCnlCWlsOfbNB0virmO8x6TMT_CLGT0ZgPyonvoTgL2rfwxMBUyU1X9Y6h8=w900-h600-no" alt="BBQ Cheese Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">BBQ Cheese Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Gochujang BBQ sauce, mozzarella, cheddar, and sliced red onions.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczNwwcIfeneBZu2FGelt1SL6sMhrG5nxDKPhzlDelDo40p9ZN-wGA2520p5hzvPS1JwWfuSvkjlE2FdqU1r9bKjKyOKFvSb-jn174ZWdN8pcuVnFC2I=w1600-h1200-no" aria-label="Open larger photo: Tsukune Meatballs"><img src="https://lh3.googleusercontent.com/pw/AP1GczNwwcIfeneBZu2FGelt1SL6sMhrG5nxDKPhzlDelDo40p9ZN-wGA2520p5hzvPS1JwWfuSvkjlE2FdqU1r9bKjKyOKFvSb-jn174ZWdN8pcuVnFC2I=w900-h600-no" alt="Tsukune Meatballs" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Tsukune Meatballs</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Japanese-style teriyaki chicken meatballs on creamy, mashed garlic sweet potatoes.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMD-OXo9sttSdhLyFB1BhfFfHQwOSsuGBmKKAd6SM2uPIwwANtFiCrtDM7XhI3bNy8HMYrFNjQTFyYjdPSPgDGqMmsHtM4e5vv2lCWK26G9xgrAt6w=w1600-h1200-no" aria-label="Open larger photo: Flatbread Lineup"><img src="https://lh3.googleusercontent.com/pw/AP1GczMD-OXo9sttSdhLyFB1BhfFfHQwOSsuGBmKKAd6SM2uPIwwANtFiCrtDM7XhI3bNy8HMYrFNjQTFyYjdPSPgDGqMmsHtM4e5vv2lCWK26G9xgrAt6w=w900-h600-no" alt="All five flatbreads" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Flatbread Lineup</h4><p class="vsl-fooddrink-card__desc">All five flatbreads in one shot.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" aria-label="Open larger photo: Pork Belly Lettuce Wraps"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" alt="Pork Belly Lettuce Wraps" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Pork Belly Lettuce Wraps</h4><p class="vsl-fooddrink-card__price">$16</p></div><p class="vsl-fooddrink-card__desc">Pineapple marinated pork belly, pickled carrots, bean sprouts, lettuce, with gochujang sauce.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="appetizers" aria-labelledby="appetizers-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="appetizers-heading">Appetizers + Sweet</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOwiFwP_cfup5CmxaPcwyhsKWuHZ7rBOJdMJvHh_MNUvdqTYx_HuD8dnXDJ6rR6ukoye0ayNjYTwhi1phdJq-7PituACQzZEruc8uZCOjhNEj2XWSI=w1600-h1200-no" aria-label="Open larger photo: Triple Crown Platter"><img src="https://lh3.googleusercontent.com/pw/AP1GczOwiFwP_cfup5CmxaPcwyhsKWuHZ7rBOJdMJvHh_MNUvdqTYx_HuD8dnXDJ6rR6ukoye0ayNjYTwhi1phdJq-7PituACQzZEruc8uZCOjhNEj2XWSI=w900-h600-no" alt="Triple Crown Platter" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Triple Crown Platter</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Chips &amp; queso, chicken diavolo taquitos, and cheesy sliders.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczM_bO5OYNlpvphVbJtscWzO6Tp2y65-1mi1NDvM311XFGlhkxGt_AytYnzlM_7ARy4-vKsEMxeq5q40B11K5vlJrfJnZ0yaHxeamzalRQUPDQKWqN0=w1600-h1200-no" aria-label="Open larger photo: Charcuterie Board"><img src="https://lh3.googleusercontent.com/pw/AP1GczM_bO5OYNlpvphVbJtscWzO6Tp2y65-1mi1NDvM311XFGlhkxGt_AytYnzlM_7ARy4-vKsEMxeq5q40B11K5vlJrfJnZ0yaHxeamzalRQUPDQKWqN0=w900-h600-no" alt="Charcuterie Board" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Charcuterie Board</h4><p class="vsl-fooddrink-card__price">$22</p></div><p class="vsl-fooddrink-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOOqmGoehf18JbGd0Ald_iX3KZo_SIpXtz6PpKPo60q-1cJtqiQATxVhZH65tFpd3wQMpGYBm5-D4FrayGzy8PamMgQUQFOz8AzmI36OfKppiCLphI=w1600-h1200-no" aria-label="Open larger photo: Hummus and Pita"><img src="https://lh3.googleusercontent.com/pw/AP1GczOOqmGoehf18JbGd0Ald_iX3KZo_SIpXtz6PpKPo60q-1cJtqiQATxVhZH65tFpd3wQMpGYBm5-D4FrayGzy8PamMgQUQFOz8AzmI36OfKppiCLphI=w900-h600-no" alt="Hummus and pita" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Hummus &amp; Pita</h4><p class="vsl-fooddrink-card__price">Photo</p></div><p class="vsl-fooddrink-card__desc">Photo reference provided for menu visuals.</p></div></article>
+            <article class="vsl-fooddrink-card"><div class="vsl-fooddrink-card__media vsl-fooddrink-card__media--placeholder"><span>S</span></div><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Salmon Dip</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Smoked salmon, onions, dill, scallions, capers, lemon juice, kettle-cooked chips.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP6vVzoM7CI0zdwrLtOIqOSRuE462a5Y3FZS18YyEbPLyfm8YElTRpcamOwW6REVhCOAYur3LBEjx32vMQJB_dBzvDgK1B736mAkZymM6wWxN2QViM=w1600-h1200-no" aria-label="Open larger photo: Mac and Cheese"><img src="https://lh3.googleusercontent.com/pw/AP1GczP6vVzoM7CI0zdwrLtOIqOSRuE462a5Y3FZS18YyEbPLyfm8YElTRpcamOwW6REVhCOAYur3LBEjx32vMQJB_dBzvDgK1B736mAkZymM6wWxN2QViM=w900-h600-no" alt="Mac and cheese" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Mac &amp; Cheese</h4><p class="vsl-fooddrink-card__price">Photo</p></div><p class="vsl-fooddrink-card__desc">Photo reference provided for menu visuals.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="cocktails" aria-labelledby="cocktails-full-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="cocktails-full-heading">Signature Cocktails</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--three">
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Suzuka Old Fashioned"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Suzuka Old Fashioned" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Suzuka Old Fashioned</h4><p class="vsl-fooddrink-card__desc">Suntory whiskey, simple, bitters, orange, cherry.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w1600-h1200-no" aria-label="Open larger photo: Rain Master Caipirinha"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Rain Master Caipirinha" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Rain Master Caipirinha</h4><p class="vsl-fooddrink-card__desc">Cachaça, lime, orange, mint.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Cafe Racer Carajillo"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Cafe Racer Carajillo" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Cafe Racer Carajillo</h4><p class="vsl-fooddrink-card__desc">Cold brew, liqueur 43, topped with cinnamon.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Le Mans 75"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Le Mans 75 cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Le Mans 75</h4><p class="vsl-fooddrink-card__desc">Gin, prosecco, elderflower, chambord, lemon.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w1600-h1200-no" aria-label="Open larger photo: Pace Car"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Pace Car cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Pace Car</h4><p class="vsl-fooddrink-card__desc">Remy Martin VSOP, cointreau, lemon, orange.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w1600-h1200-no" aria-label="Open larger photo: The Green Hell"><img src="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w900-h600-no" alt="The Green Hell cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">The Green Hell</h4><p class="vsl-fooddrink-card__desc">Absinthe, elderflower, melon liqueur, lime, pineapple, midori with a digestif chaser.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Race Classics + Zero Proof</h3>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Margarita</strong>: blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong>: pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong>: irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong>: tequila, cointreau, lime, topo chico</p>
+            <p class="vsl-fooddrink-listcard"><strong>Agua de Jamaica</strong>: hibiscus, lime, sugar, water<br><strong>The Quattro</strong>: lemon, mint &amp; white peach syrup, topo chico<br><strong>Virgin Mojito</strong>: lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong>: spicy ginger, mint lavender, strawberry</p>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="zero-proof" aria-labelledby="beer-wine-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="beer-wine-heading">Beer + Wine + Soft Drinks</h3>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Domestic</strong>: Austin East Cider, Coors Light, Michelob Ultra, Miller Lite, Pacifico, Saint Arnold Citrus Shandy, Saint Arnold Seasonal, White Claw<br><strong>Draft</strong>: Blue Moon, Karbach Love Street, Modelo Especial, Mini Boss, Seasonal, Shiner Bock<br><strong>Import</strong>: Corona, Dos Equis, Guinness, Stella Artois, Heineken 0.0</p>
+            <p class="vsl-fooddrink-listcard"><strong>Wine by glass/bottle</strong>: Chardonnay, Sauvignon Blanc, Spanish White, Riesling, Chianti, Pinot Noir, Spanish Red, Prosecco<br><strong>Soda/Tea/Coffee</strong>: Coke, Coke Zero, Diet Coke, Dr Pepper, Ginger Ale, Sprite, Iced Coffee, Iced Tea, Red Bull, Saint Arnold Root Beer, Topo Chico</p>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="flights" aria-labelledby="flights-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="flights-heading">Flights</h3>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Race Around the World</strong>: Still Austin, Glenfiddich 14 Blue Swift, Yamazaki<br><strong>Smooth is Fast</strong>: Buffalo Trace, Basil Hayden, Eagle Rare, Angel&rsquo;s Envy<br><strong>Tourist Trophy</strong>: Tullamore DEW, Laphroaig 10, Glenlivet 12, Glenfiddich 14</p>
+            <p class="vsl-fooddrink-listcard"><strong>The JWM</strong>: Toki Suntory, Yamazaki, Nikka Coffey Grain, Matsui Mizunara<br><strong>Texas Track Meet</strong>: Yellow Rose, TX Whiskey, Garrison Brothers, Still Austin<br><strong>Sparkle GT Mimosas</strong>: cucumber basil, jalapeno lime, strawberry lemonade, mint mango</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+
+    <section class="vsl-fooddrink-cta" id="food-cta" aria-labelledby="cta-heading">
+      <div class="vsl-fooddrink-cta__card">
+        <h2 class="vsl-fooddrink-cta__title" id="cta-heading">Ready to Race?</h2>
+        <div class="vsl-fooddrink-cta__actions">
+          <a class="vsl-fooddrink-cta__btn vsl-fooddrink-cta__btn--primary" href="https://velocitysimlounge.com/book-now/" data-vsl-link="bookNow">Book Now</a>
+          <a class="vsl-fooddrink-cta__btn vsl-fooddrink-cta__btn--outline" href="https://velocitysimlounge.com/group-events/" data-vsl-link="events">View Our Events</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="vsl-fooddrink-lightbox" id="vsl-fooddrink-lightbox" hidden aria-modal="true" role="dialog" aria-label="Enlarged menu photo">
+    <button type="button" class="vsl-fooddrink-lightbox__backdrop" aria-label="Close enlarged photo"></button>
+    <div class="vsl-fooddrink-lightbox__panel">
+      <button type="button" class="vsl-fooddrink-lightbox__close" aria-label="Close">&times;</button>
+      <img class="vsl-fooddrink-lightbox__img" src="" alt="">
+      <p class="vsl-fooddrink-lightbox__caption"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vsl-fooddrink');
+    if (!root) return;
+    function setRealViewportHeight() {
+      var vh = window.innerHeight * 0.01;
+      root.style.setProperty('--vsl-vh', vh + 'px');
+      var hero = root.querySelector('.vsl-fooddrink-hero');
+      if (hero) {
+        var topOffset = Math.max(0, hero.offsetTop || 0);
+        root.style.setProperty('--vsl-hero-offset', topOffset + 'px');
+      }
+    }
+    setRealViewportHeight();
+    window.addEventListener('load', function () { setRealViewportHeight(); }, { once: true });
+    var cfg = {};
+    try {
+      var raw = root.getAttribute('data-vsl-config');
+      if (raw) cfg = JSON.parse(raw);
+    } catch (e) {}
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+    var map = cfg.images || {};
+    var links = cfg.links || {};
+    var heroFinish = map.heroFinishLine;
+    if (heroFinish) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + heroFinish + '")');
+    }
+    var heroBg = map.heroBackground;
+    if (heroBg) {
+      root.style.setProperty('--vsl-hero-photo', 'url("' + heroBg + '")');
+    }
+    root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
+      var k = a.getAttribute('data-vsl-link');
+      if (k && links[k]) a.setAttribute('href', links[k]);
+    });
+
+    var lb = root.querySelector('#vsl-fooddrink-lightbox');
+    if (!lb) return;
+    var lbImg = lb.querySelector('.vsl-fooddrink-lightbox__img');
+    var lbCap = lb.querySelector('.vsl-fooddrink-lightbox__caption');
+    var lbClose = lb.querySelector('.vsl-fooddrink-lightbox__close');
+    var lbBackdrop = lb.querySelector('.vsl-fooddrink-lightbox__backdrop');
+    var lastFocus = null;
+
+    function openLightbox(fullUrl, caption, alt) {
+      lastFocus = document.activeElement;
+      lbImg.src = fullUrl;
+      lbImg.alt = alt || '';
+      lbCap.textContent = caption || '';
+      lb.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+      if (lbClose) lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lb.hidden = true;
+      lbImg.removeAttribute('src');
+      lbImg.alt = '';
+      lbCap.textContent = '';
+      document.documentElement.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    root.querySelectorAll('[data-vsl-lightbox]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var full = btn.getAttribute('data-full');
+        var card = btn.closest('.vsl-fooddrink-card');
+        var titleEl = card && card.querySelector('.vsl-fooddrink-card__name');
+        var img = btn.querySelector('img');
+        var caption = titleEl ? titleEl.textContent.trim() : '';
+        var alt = img ? img.getAttribute('alt') || caption : caption;
+        var src = full || (img && img.getAttribute('src')) || '';
+        if (!src) return;
+        openLightbox(src, caption, alt);
+      });
+    });
+
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', function (e) {
+      if (!lb || lb.hidden) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+      }
+    });
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "name": "Velocity Sim Lounge Food and Drink Menu",
+  "inLanguage": "en",
+  "hasMenuSection": [
+    {
+      "@type": "MenuSection",
+      "name": "Entrees",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Chicken Diavolo Taquitos", "offers": { "@type": "Offer", "price": "12", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Cheesy Sliders", "offers": { "@type": "Offer", "price": "14", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Margherita Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Signature Cocktails",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Le Mans 75" },
+        { "@type": "MenuItem", "name": "Pace Car" },
+        { "@type": "MenuItem", "name": "The Green Hell" }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Zero Proof",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Agua de Jamaica" },
+        { "@type": "MenuItem", "name": "Virgin Mojito" }
+      ]
+    }
+  ]
+}
+</script>

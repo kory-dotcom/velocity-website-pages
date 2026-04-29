@@ -1,0 +1,1292 @@
+<script>
+  window.VSL_CONFIG = {
+    joinLinks: {
+      racer: 'https://members.velocitysimlounge.com/login?type=subscription&id=45fb8e9b-357c-43fa-31b3-08de7364d6fd&product=prod_U2IhFrfWjxEnaQ',
+      pro: 'https://members.velocitysimlounge.com/login?type=subscription&id=95225a4b-1747-4c49-31b4-08de7364d6fd&product=prod_U2J7KuCQDlrbLq',
+      ultimate: 'https://members.velocitysimlounge.com/login?type=subscription&id=d676ceb4-f587-48e9-31b5-08de7364d6fd&product=prod_U2J9JjlIBUf6kn'
+    },
+    images: {
+      benefit1: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp',
+      benefit2: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
+      benefit3: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_610Launch_QUITNGUYEN_DSCF2755.webp',
+      benefit4: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
+      benefit5: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp',
+      heroFinishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png'
+    },
+    elementorColumnOutdentPx: 12
+  };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+    .vsl-membership {
+      --red:      #D22026;
+      --magenta:  #EE265F;
+      --yellow:   #FDC70C;
+      --blue:     #293893;
+      --navy:     #10182B;
+      --deep-indigo: #191B4D;
+      --white:    #EAEAEA;
+      /* Circuit White: light text on Obsidian (e.g. pricing intro). Section bands use #fafafa, not this token. */
+      --circuit-white: #EAEAEA;
+      --silver:   #DFDFDE;
+      --mist:     #B2AEBF;
+      --slate-violet: #5F5782;
+      --gutter: 24px;
+      --page-margin: 64px;
+      --soft: 8px;
+      --font-display: 'Khand', system-ui, sans-serif;
+      --vsl-text-xs: 0.75rem;
+      --vsl-text-body: 1rem;
+      --vsl-text-body-lg: 1.333rem;
+      /* Fluid type: rem floor/ceiling + vw for smooth phone → tablet → desktop */
+      --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+      --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
+      --vsl-text-tier-price: clamp(1.5rem, 0.92rem + 2.35vw, 2.25rem);
+      --vsl-text-tier-name: clamp(1.0625rem, 0.68rem + 1.25vw, 1.3125rem);
+      /* Benefit cards: higher floors so labels stay readable on narrow phones */
+      --vsl-text-card-label: clamp(1.0625rem, 0.88rem + 1.05vw, 1.25rem);
+      --vsl-text-card-back-title: clamp(1rem, 0.82rem + 1.15vw, 1.1875rem);
+      --vsl-text-card-back-body: clamp(1.0625rem, 0.94rem + 0.55vw, 1.1875rem);
+      --vsl-text-faq-label: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+      --vsl-outdent: 0px;
+      /* Negative margins close hairlines if theme/section/widget leave gaps; set to 0 if layout overlaps neighbors */
+      --vsl-hero-bleed-top: -12px;
+      --vsl-hero-bleed-bottom: -12px;
+
+      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      color: var(--navy);
+      box-sizing: border-box;
+      width: calc(100% + 2 * var(--vsl-outdent));
+      max-width: none;
+      margin-left: calc(-1 * var(--vsl-outdent));
+      margin-right: calc(-1 * var(--vsl-outdent));
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    /* Flush under header / above footer: counter theme + HTML widget spacing when hero is first section */
+    .vsl-membership:has(> main > section.vsl-membership-hero:first-of-type) {
+      margin-top: var(--vsl-hero-bleed-top);
+      margin-bottom: var(--vsl-hero-bleed-bottom);
+    }
+    .vsl-membership > main#primary-content {
+      display: block;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-block-start: 0;
+      padding-block-end: 0;
+    }
+    /* Elementor: remove vertical padding on the HTML widget wrapper (white hairlines top + bottom) */
+    .elementor-widget-html .elementor-widget-container:has(> .vsl-membership) {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .vsl-membership *,
+    .vsl-membership *::before,
+    .vsl-membership *::after { box-sizing: border-box; }
+
+    #membership-hero,
+    #membership-benefits,
+    #memberships,
+    #membership-faq {
+      scroll-margin-top: 5rem;
+    }
+
+
+    .vsl-membership-hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      margin-top: 0;
+      background: var(--navy);
+      color: var(--circuit-white);
+      overflow: hidden;
+      isolation: isolate;
+      --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+      /* Finish-line strip: scales up on tablet/desktop; cap keeps squares readable */
+      --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+    }
+    .vsl-membership-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(160deg, rgba(25, 27, 77, 0.38) 0%, transparent 62%);
+    }
+    .vsl-membership-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20150.13%2087.77%22%3E%3Cg%20id%3D%22Content%22%3E%3Cg%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m149.81%2C1.79c-.52-1.09-1.63-1.79-2.81-1.79-.36%2C0-.72.06-1.1.2-43.92%2C14.86-79.76%2C17.79-89.7%2C18.33-1.13.06-2.14.74-2.64%2C1.75-.5%2C1.02-.41%2C2.23.24%2C3.16l7.97%2C11.47s.03.04%2C0%2C.09c-.02.04-.04.04-.08.04h-3.16c-.56%2C0-1.28-.29-1.89-2.51l-.04-.17c-.29-1-2.79-5.88-6.08-6.39-.91-.14-2.02-.25-3.31-.3-1.08-.05-2.09.53-2.6%2C1.48-.49.92-.43%2C2.02.15%2C2.88%2C2.84%2C4.2%2C4.94%2C8.16%2C6.42%2C12.11%2C1.93%2C5.14-4.31%2C8.5-5.03%2C8.86-.76.39-2.14.62-3.67.62-3.1%2C0-5.86-.9-6.87-2.26-2.38-3.19-6.98-9.4-9.32-12.53-.88-1.19-2.29-1.89-3.77-1.89-.63%2C0-1.25.12-1.84.37L1.93%2C43.25c-1.04.44-1.75%2C1.38-1.9%2C2.5-.15%2C1.12.3%2C2.21%2C1.19%2C2.9l23.01%2C17.96.41-.53L1.63%2C48.12c-.7-.55-1.05-1.4-.94-2.29.12-.88.68-1.62%2C1.5-1.97l18.77-7.93c.5-.21%2C1.03-.32%2C1.57-.32%2C1.27%2C0%2C2.48.61%2C3.24%2C1.63%2C2.33%2C3.13%2C6.94%2C9.33%2C9.32%2C12.53%2C1.12%2C1.51%2C4.1%2C2.53%2C7.4%2C2.53%2C1.64%2C0%2C3.12-.26%2C3.98-.69.78-.4%2C7.49-4.01%2C5.35-9.69-1.5-3.99-3.62-8-6.49-12.24-.44-.66-.49-1.5-.11-2.2.38-.73%2C1.15-1.17%2C1.97-1.13%2C1.27.06%2C2.35.16%2C3.24.29%2C2.92.46%2C5.32%2C5.13%2C5.54%2C5.91l.05.17c.38%2C1.4%2C1.02%2C3%2C2.53%2C3h3.16c.29%2C0%2C.53-.15.67-.41.13-.25.12-.54-.05-.78l-7.97-11.47c-.51-.73-.58-1.68-.19-2.48.39-.8%2C1.19-1.33%2C2.08-1.38%2C9.96-.55%2C45.87-3.49%2C89.87-18.37%2C0%2C0%2C.04-.02.04-.02.27-.1.56-.15.84-.15.93%2C0%2C1.79.55%2C2.21%2C1.41.41.85.3%2C1.85-.29%2C2.6l-17.39%2C22.06c-1.3%2C1.65-3.15%2C2.81-5.21%2C3.26l-10.92%2C2.37c-.31.07-.63.1-.95.1-1.3%2C0-2.53-.57-3.38-1.56l-1.48-1.73c-.5-.58-1.23-.92-1.99-.92-.72%2C0-1.39.28-1.89.8-1.26%2C1.31-2.19%2C2.25-2.76%2C2.81l-.48.48c-1.67%2C1.67-3.75%2C3.74-5.87%2C3.74-1.01%2C0-2.39-.66-4.57-1.75-2.05-1.02-4.61-2.29-6.14-2.29-2.79%2C0-5.98%2C1.74-6.95%2C3.8-.43.91-.7%2C2.16-.96%2C3.37-.43%2C1.97-.83%2C3.84-2.01%2C4.76-.74.58-1.76%2C1.07-2.74%2C1.55-1.13.54-2.4%2C1.16-3%2C1.82-.37.42-.75%2C1.48-1.2%2C2.81-.66%2C1.95-1.34%2C3.96-2.67%2C4.89-1.33.94-6.19%2C4.11-14.45%2C9.43-3.11%2C2.01-1.5%2C9.87%2C0%2C13.45.49%2C1.17%2C1.39%2C3.06%2C2.66%2C5.63.38.76.34%2C1.64-.1%2C2.35-.45.73-1.25%2C1.18-2.09%2C1.18-.54%2C0-1.06-.18-1.5-.53l-20.25-15.8.22-.28.19-.24.53.41h0s19.72%2C15.39%2C19.72%2C15.39c.35.27.72.38%2C1.07.38.43%2C0%2C.83-.16%2C1.13-.41.54-.45.9-1.28.47-2.16-1.28-2.59-2.18-4.49-2.68-5.67-1.47-3.48-3.44-11.89.25-14.27%2C8.26-5.33%2C13.11-8.5%2C14.42-9.41%2C1.15-.81%2C1.8-2.72%2C2.42-4.56.43-1.28.84-2.49%2C1.34-3.04.68-.75%2C1.97-1.38%2C3.2-1.97.99-.48%2C1.93-.94%2C2.62-1.47.99-.77%2C1.37-2.53%2C1.77-4.39.27-1.24.55-2.53%2C1.01-3.51%2C1.09-2.3%2C4.48-4.18%2C7.56-4.18%2C1.68%2C0%2C4.21%2C1.26%2C6.44%2C2.36%2C1.81.9%2C3.37%2C1.68%2C4.27%2C1.68%2C1.84%2C0%2C3.81-1.97%2C5.4-3.55.16-.16.33-.32.48-.48.57-.56%2C1.5-1.51%2C2.75-2.8.64-.66%2C1.55-1.04%2C2.46-1%2C.93.03%2C1.8.45%2C2.4%2C1.15l1.48%2C1.73c.9%2C1.06%2C2.31%2C1.53%2C3.67%2C1.23l10.92-2.38c1.91-.41%2C3.62-1.49%2C4.83-3.02l17.38-22.06c.51-.65.53-1.5.05-2.17-.48-.67-1.29-.92-2.06-.65l-.05.02c-44.08%2C14.91-80.07%2C17.86-90.05%2C18.4-.66.04-1.23.41-1.52%2C1-.29.59-.24%2C1.27.14%2C1.81l7.97%2C11.47c.31.44.34.99.09%2C1.47s-.72.76-1.26.76h-3.16c-1.99%2C0-2.77-1.99-3.18-3.49l-.04-.16c-.2-.69-2.43-5.04-5-5.44-.86-.13-1.93-.23-3.16-.29-.57-.03-1.07.26-1.34.74-.28.49-.25%2C1.07.06%2C1.54%2C2.9%2C4.29%2C5.04%2C8.34%2C6.56%2C12.39%2C2.34%2C6.22-4.85%2C10.1-5.67%2C10.52-2.79%2C1.42-10.01.94-12.23-2.03-2.38-3.19-6.98-9.4-9.32-12.53-.93-1.25-2.58-1.7-4.01-1.09l-18.77%2C7.93c-.6.26-1.01.79-1.1%2C1.44-.08.65.17%2C1.27.69%2C1.68l19.11%2C14.91.41-.53L2.45%2C47.07c-.33-.26-.49-.66-.44-1.07.06-.41.32-.75.7-.91l18.77-7.93c1.15-.49%2C2.47-.13%2C3.21.87%2C2.33%2C3.13%2C6.94%2C9.33%2C9.32%2C12.53%2C2.58%2C3.46%2C10.34%2C3.62%2C13.06%2C2.23.88-.45%2C8.54-4.59%2C6-11.35-1.54-4.09-3.71-8.19-6.64-12.53-.17-.25-.18-.57-.04-.83.15-.27.43-.42.73-.41%2C1.21.06%2C2.25.15%2C3.09.28%2C2.08.33%2C4.25%2C4.24%2C4.46%2C4.97l.04.15c.27.99%2C1.09%2C3.99%2C3.82%2C3.99h3.16c.78%2C0%2C1.49-.43%2C1.85-1.12.36-.69.31-1.52-.13-2.16l-7.97-11.47c-.24-.34-.27-.76-.08-1.13.18-.37.53-.61.95-.63%2C10-.55%2C46.07-3.5%2C90.23-18.44l.06-.02c.59-.21%2C1.06.08%2C1.3.41s.36.86-.03%2C1.36l-17.38%2C22.06c-1.11%2C1.41-2.69%2C2.4-4.45%2C2.78l-10.92%2C2.38c-1.12.25-2.28-.14-3.02-1.02l-1.48-1.73c-.72-.85-1.78-1.35-2.89-1.39-1.11-.02-2.19.41-2.97%2C1.21-1.25%2C1.29-2.17%2C2.23-2.74%2C2.79-.16.16-.32.32-.49.48-1.5%2C1.49-3.37%2C3.35-4.93%2C3.35-.74%2C0-2.31-.78-3.97-1.6-2.3-1.14-4.9-2.43-6.74-2.43-3.31%2C0-6.97%2C2.05-8.16%2C4.56-.5%2C1.05-.78%2C2.38-1.06%2C3.66-.38%2C1.73-.73%2C3.37-1.53%2C4-.62.49-1.53.93-2.5%2C1.4-1.3.63-2.64%2C1.27-3.41%2C2.13-.59.66-1.03%2C1.93-1.48%2C3.27-.56%2C1.66-1.2%2C3.55-2.17%2C4.23-1.31.91-6.16%2C4.08-14.41%2C9.4-4.48%2C2.89-1.53%2C12.64-.49%2C15.09.5%2C1.19%2C1.41%2C3.1%2C2.69%2C5.7.29.58.02%2C1.09-.29%2C1.34-.32.26-.86.41-1.37.02l-20.25-15.8.41-.52h0s-.53-.41-.53-.41l-.41.53.52.41-.28.36-.13.16-.53-.41-.41.53.53.41-.14.18-.27.34h0s.52.41.52.41h0s19.72%2C15.39%2C19.72%2C15.39c.56.44%2C1.22.67%2C1.91.67%2C1.07%2C0%2C2.09-.57%2C2.66-1.49.57-.91.62-2.03.13-3-1.26-2.55-2.15-4.44-2.64-5.59-1.48-3.51-2.88-10.94-.27-12.62%2C8.26-5.33%2C13.13-8.51%2C14.47-9.45%2C1.51-1.06%2C2.22-3.18%2C2.92-5.23.3-.89.75-2.22%2C1.07-2.57.5-.56%2C1.72-1.15%2C2.79-1.67%2C1.01-.49%2C2.06-1%2C2.86-1.62%2C1.37-1.07%2C1.8-3.05%2C2.26-5.15.25-1.17.51-2.38.91-3.22.87-1.85%2C3.78-3.41%2C6.34-3.41%2C1.37%2C0%2C3.85%2C1.23%2C5.84%2C2.22%2C2.26%2C1.12%2C3.71%2C1.81%2C4.86%2C1.81%2C2.39%2C0%2C4.58-2.18%2C6.34-3.94l.48-.47c.58-.56%2C1.51-1.52%2C2.78-2.83.37-.38.87-.59%2C1.4-.59.57%2C0%2C1.11.25%2C1.48.68l1.48%2C1.73c.97%2C1.14%2C2.39%2C1.79%2C3.89%2C1.79.37%2C0%2C.73-.04%2C1.09-.12l10.92-2.38c2.21-.48%2C4.19-1.73%2C5.59-3.5l17.39-22.06c.75-.95.89-2.22.36-3.3Z%22%2F%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m32.42%2C69.6l19.72%2C15.39c.09.07.17.1.26.1h0c.14%2C0%2C.3-.1.38-.23.04-.07.1-.21%2C0-.41-1.29-2.6-2.2-4.53-2.71-5.74-1.67-3.96-3.69-13.06.75-15.92%2C10.26-6.61%2C13.48-8.75%2C14.38-9.38.79-.55%2C1.39-2.33%2C1.92-3.9.58-1.71.98-2.79%2C1.61-3.5.86-.95%2C2.26-1.63%2C3.63-2.29.88-.43%2C1.8-.87%2C2.37-1.31.56-.44.89-1.77%2C1.28-3.61.29-1.32.58-2.68%2C1.11-3.8%2C1.31-2.78%2C5.16-4.95%2C8.76-4.95%2C1.85%2C0%2C4.08%2C1.04%2C7.04%2C2.51%2C1.68.83%2C3.11%2C1.52%2C3.66%2C1.53%2C1.19%2C0%2C2.78-1.49%2C4.45-3.16l.49-.49c.56-.55%2C1.48-1.49%2C2.72-2.78.88-.91%2C2.06-1.41%2C3.33-1.41%2C1.36%2C0%2C2.64.59%2C3.52%2C1.62l1.48%2C1.73c.58.68%2C1.51.99%2C2.38.8l10.92-2.38c1.6-.35%2C3.05-1.25%2C4.07-2.54l17.39-22.06c.12-.15.13-.32.06-.48-.08-.16-.24-.27-.41-.28-.07%2C0-.13.02-.2.04h-.04c-44.24%2C14.98-80.38%2C17.94-90.4%2C18.48-.16%2C0-.31.11-.39.26-.07.15-.05.33.04.46l7.97%2C11.47c.59.85.66%2C1.94.18%2C2.85-.47.92-1.41%2C1.48-2.45%2C1.48h-3.16c-2.15%2C0-3.66-1.5-4.47-4.47l-.04-.15c-.42-1.19-2.44-4.26-3.92-4.49-.72-.11-1.59-.2-2.6-.25-.13%2C0-.25.06-.31.17-.06.11-.06.25.01.35%2C2.84%2C4.26%2C4.96%2C8.29%2C6.48%2C12.32%2C2.09%2C5.55-2.1%2C10.03-6.32%2C12.19-1.56.79-3.73.91-4.89.91-3.16%2C0-7.19-.87-9.01-3.33-2.38-3.2-6.99-9.4-9.32-12.53-.54-.73-1.57-1.02-2.42-.66l-18.77%2C7.93c-.17.07-.27.21-.29.38-.02.18.04.33.18.45l17.17%2C13.4.41-.53L3.52%2C46.2l18.48-7.81c.57-.25%2C1.26-.05%2C1.62.44%2C2.33%2C3.13%2C6.94%2C9.33%2C9.32%2C12.53%2C1.98%2C2.66%2C6.24%2C3.61%2C9.55%2C3.61%2C1.22%2C0%2C3.51-.12%2C5.19-.99%2C4.47-2.27%2C8.88-7.05%2C6.64-13.02-1.47-3.9-3.49-7.8-6.18-11.9.71.05%2C1.33.12%2C1.87.21%2C1.07.16%2C2.98%2C2.89%2C3.39%2C4.03l.04.13c.9%2C3.29%2C2.62%2C4.96%2C5.11%2C4.96h3.16c1.28%2C0%2C2.45-.7%2C3.04-1.85.6-1.13.51-2.49-.22-3.54l-7.75-11.16c10.51-.6%2C46.11-3.65%2C89.62-18.29l-16.96%2C21.52c-.92%2C1.17-2.23%2C1.98-3.68%2C2.3l-10.92%2C2.38c-.63.14-1.31-.09-1.73-.58l-1.48-1.73c-1.01-1.18-2.47-1.85-4.02-1.85-1.45%2C0-2.8.57-3.81%2C1.61-1.24%2C1.28-2.15%2C2.22-2.71%2C2.76l-.49.49c-1.11%2C1.11-2.97%2C2.96-3.97%2C2.96-.45%2C0-2.42-.99-3.38-1.46-3.03-1.51-5.34-2.58-7.33-2.58-3.84%2C0-7.96%2C2.34-9.37%2C5.33-.56%2C1.19-.86%2C2.59-1.16%2C3.94-.23%2C1.09-.62%2C2.9-1.04%2C3.23-.51.4-1.39.83-2.26%2C1.25-1.41.68-2.88%2C1.39-3.82%2C2.43-.73.81-1.15%2C1.95-1.75%2C3.74-.45%2C1.32-1.06%2C3.13-1.68%2C3.56-.9.63-4.11%2C2.76-14.36%2C9.37-4.79%2C3.09-2.75%2C12.61-1%2C16.74.45%2C1.07%2C1.21%2C2.7%2C2.27%2C4.85l-19.43-15.16.41-.53h0s-.53-.41-.53-.41l-.41.53.52.41-.41.53h0s0%2C0%2C0%2C0l.53.41h0Z%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%2229.44%22%20y%3D%2271.02%22%20width%3D%22.67%22%20height%3D%22.67%22%20transform%3D%22translate%28-44.74%2050.71%29%20rotate%28-51.87%29%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+      background-repeat: no-repeat;
+      background-size: min(130vw, 2000px) auto;
+      background-position: 50% 45%;
+      /* Fade map in the center so lines frame the headline instead of crossing it */
+      -webkit-mask-image: radial-gradient(
+        ellipse 92% 88% at 50% 40%,
+        transparent 0%,
+        transparent 18%,
+        rgba(0, 0, 0, 0.2) 38%,
+        rgba(0, 0, 0, 0.65) 58%,
+        #000 100%
+      );
+      mask-image: radial-gradient(
+        ellipse 92% 88% at 50% 40%,
+        transparent 0%,
+        transparent 18%,
+        rgba(0, 0, 0, 0.2) 38%,
+        rgba(0, 0, 0, 0.65) 58%,
+        #000 100%
+      );
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+    @media (max-width: 639px) {
+      .vsl-membership-hero::after {
+        -webkit-mask-image: radial-gradient(
+          ellipse 95% 90% at 50% 36%,
+          transparent 0%,
+          transparent 14%,
+          rgba(0, 0, 0, 0.18) 32%,
+          rgba(0, 0, 0, 0.62) 54%,
+          #000 100%
+        );
+        mask-image: radial-gradient(
+          ellipse 95% 90% at 50% 36%,
+          transparent 0%,
+          transparent 14%,
+          rgba(0, 0, 0, 0.18) 32%,
+          rgba(0, 0, 0, 0.62) 54%,
+          #000 100%
+        );
+      }
+    }
+    .vsl-membership-hero__inner {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(48px, 12vw, 96px) clamp(20px, 5vw, var(--page-margin)) clamp(28px, 6vw, 48px);
+      max-width: 56rem;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .vsl-membership-hero__title {
+      margin: 0 0 0.65em;
+      padding: 10px 12px;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 0.85rem + 4.8vw, 3rem);
+      font-weight: 700;
+      font-style: normal;
+      text-transform: none;
+      line-height: 1.12;
+      letter-spacing: 0.04em;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-wrap: balance;
+      background: rgba(4, 7, 18, 0.72);
+      border-radius: 10px;
+    }
+    .vsl-membership-hero__accent {
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+    }
+    .vsl-membership-hero__sub {
+      margin: 0 0 1.5rem;
+      padding: 6px 12px;
+      font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.4;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      max-width: 36ch;
+      background: rgba(4, 7, 18, 0.68);
+      border-radius: 8px;
+    }
+    /* Match .vsl-tier__btn (pricing “Join now”): outline, fill on hover, shadow — not full width */
+    .vsl-membership-hero__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 28px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      cursor: pointer;
+      border: 2px solid var(--magenta);
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--red, #D22026), var(--magenta));
+      box-shadow: 0 4px 16px rgba(238, 38, 95, 0.25);
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.14s ease,
+        filter 0.14s ease;
+    }
+    .vsl-membership-hero__cta:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      filter: brightness(1.08);
+      box-shadow: 0 8px 28px rgba(238, 38, 95, 0.35);
+    }
+    .vsl-membership-hero__cta:active {
+      filter: brightness(0.93);
+      transform: scale(0.99);
+      box-shadow: 0 3px 14px rgba(238, 38, 95, 0.2);
+    }
+    .vsl-membership-hero__cta:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-membership-hero__cta {
+        transition:
+          color 0.22s ease,
+          background-color 0.22s ease,
+          border-color 0.22s ease,
+          box-shadow 0.22s ease,
+          filter 0.14s ease;
+      }
+      .vsl-membership-hero__cta:active {
+        transform: none;
+      }
+    }
+    .vsl-membership-hero__finish {
+      position: relative;
+      z-index: 3;
+      flex-shrink: 0;
+      display: block;
+      width: 100%;
+      height: var(--vsl-hero-finish-h);
+      margin: 0;
+      padding: 0;
+      background-color: var(--navy);
+      background-image: var(--vsl-hero-finish);
+      background-repeat: repeat-x;
+      background-position: center center;
+      background-size: auto 100%;
+    }
+
+    /* Pull-up overlaps our finish line; keep benefits flush below the hero strip */
+    .vsl-membership-hero + .vsl-benefits {
+      margin-top: 0;
+      --vsl-benefits-top-pull: 0px;
+    }
+
+    .vsl-benefits {
+      position: relative;
+      z-index: 0;
+      width: 100%;
+      background-color: var(--deep-indigo);
+      color: var(--circuit-white);
+      --vsl-benefits-top-pull: 8px;
+      margin-top: calc(-1 * var(--vsl-benefits-top-pull));
+      padding: calc(72px + var(--vsl-benefits-top-pull)) clamp(20px, 5vw, var(--page-margin)) 80px;
+      overflow: hidden;
+    }
+    .vsl-benefits::before { display: none; }
+    .vsl-benefits__heading-wrap {
+      display: flex;
+      justify-content: center;
+      max-width: 1400px;
+      margin: 0 auto 40px;
+      position: relative;
+      z-index: 1;
+      padding: 0 clamp(12px, 2vw, 16px);
+    }
+    .vsl-benefits__heading {
+      margin: 0 auto;
+      max-width: 48rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      padding: 0 clamp(0.35rem, 2.5vw, 0.5rem);
+      text-wrap: balance;
+    }
+    .vsl-benefits__heading-line {
+      display: inline-block;
+    }
+    .vsl-benefits__heading-line--blue {
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-benefits__heading-line--magenta {
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+    }
+    .vsl-benefits__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--gutter);
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .vsl-card {
+      perspective: 1400px;
+      min-height: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .vsl-card:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+    .vsl-card-inner {
+      position: relative;
+      width: 100%;
+      padding-bottom: 148%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-card:hover .vsl-card-inner { transform: rotateY(180deg); }
+    }
+    .vsl-card.is-flipped .vsl-card-inner { transform: rotateY(180deg); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-card-inner { transition: none; }
+    }
+    @media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
+      .vsl-card:hover .vsl-card-inner { transform: none; }
+    }
+
+    .vsl-card-front,
+    .vsl-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .vsl-card-front {
+      background: #fff;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+    .vsl-benefits__grid .vsl-card:nth-child(1) .vsl-card-front { border-top: 4px solid var(--red); }
+    .vsl-benefits__grid .vsl-card:nth-child(2) .vsl-card-front { border-top: 4px solid var(--blue); }
+    .vsl-benefits__grid .vsl-card:nth-child(3) .vsl-card-front { border-top: 4px solid var(--yellow); }
+    .vsl-benefits__grid .vsl-card:nth-child(4) .vsl-card-front { border-top: 4px solid var(--magenta); }
+    .vsl-benefits__grid .vsl-card:nth-child(5) .vsl-card-front { border-top: 4px solid var(--blue); }
+
+    .vsl-card-front .vsl-card-media {
+      flex: 1;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    .vsl-card-front img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+    }
+    .vsl-card-front img[data-vsl-benefit] {
+      background: #e0e0e0;
+      min-height: 120px;
+    }
+    .vsl-card-label {
+      flex-shrink: 0;
+      box-sizing: border-box;
+      /* Band height tracks label type (2-line wrap on desktop grid) */
+      min-height: calc(2 * 1.2 * 1.0625rem + 16px + 14px);
+      padding: 16px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--soft);
+      text-align: left;
+    }
+    .vsl-card-label h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-card-label);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    .vsl-card-back {
+      transform: rotateY(180deg);
+      background: var(--navy);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .vsl-benefits__grid .vsl-card:nth-child(1) .vsl-card-back { border-top: 4px solid var(--red); }
+    .vsl-benefits__grid .vsl-card:nth-child(2) .vsl-card-back { border-top: 4px solid var(--blue); }
+    .vsl-benefits__grid .vsl-card:nth-child(3) .vsl-card-back { border-top: 4px solid var(--yellow); }
+    .vsl-benefits__grid .vsl-card:nth-child(4) .vsl-card-back { border-top: 4px solid var(--magenta); }
+    .vsl-benefits__grid .vsl-card:nth-child(5) .vsl-card-back { border-top: 4px solid var(--blue); }
+
+    .vsl-card-back h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-card-back-title);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+      color: var(--yellow);
+    }
+    .vsl-card-back p {
+      margin: 0;
+      font-size: var(--vsl-text-card-back-body);
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--mist);
+    }
+    .vsl-card-back::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      right: -16px;
+      width: 100px;
+      height: 71px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 437.9 308.98'%3E%3Cpath fill='%23eaeaea' opacity='.04' d='m437.9,0l-166.17,292.22c-5.83,10.43-16.76,16.76-28.88,16.76s-23.25-6.67-29.04-17.26l-19.5-35.71c-9.22-16.91-26.98-27.51-46.14-27.51-4.27,0-9.04.68-13.99,1.87L0,267.59v-121.81s161.16.18,161.16.18c17.78,0,34.18,9.72,42.72,25.27l39.47,72.13L381.69,0h56.22Z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+    }
+
+    @media (max-width: 1199px) {
+      .vsl-benefits { padding: calc(56px + var(--vsl-benefits-top-pull, 8px)) clamp(20px, 4vw, var(--page-margin)) 64px; }
+      .vsl-benefits__grid { grid-template-columns: repeat(2, 1fr); gap: var(--gutter); }
+    }
+    @media (max-width: 639px) {
+      .vsl-benefits { padding: calc(40px + var(--vsl-benefits-top-pull, 8px)) clamp(16px, 5vw, var(--page-margin)) 48px; }
+      .vsl-benefits__grid { grid-template-columns: 1fr; gap: 16px; }
+      .vsl-card-inner { padding-bottom: 118%; }
+      .vsl-benefits__heading,
+      .vsl-membership-hero__title,
+      .vsl-pricing__title,
+      .vsl-faq__title {
+        line-height: 1.2;
+      }
+      /* Larger type + tighter label band; back copy sits higher in tall cards */
+      .vsl-card-label {
+        min-height: 0;
+        padding: 12px 16px 16px;
+        justify-content: center;
+        text-align: center;
+      }
+      .vsl-card-label h3 {
+        font-size: clamp(1.125rem, 3.8vw + 0.72rem, 1.3125rem);
+        line-height: 1.25;
+      }
+      .vsl-card-back {
+        justify-content: flex-start;
+        padding: clamp(22px, 7vw, 32px) clamp(18px, 5vw, 22px) clamp(24px, 7vw, 32px);
+        text-align: center;
+      }
+      .vsl-card-back h3 {
+        font-size: clamp(1.0625rem, 2.8vw + 0.78rem, 1.25rem);
+        margin-bottom: 12px;
+        line-height: 1.25;
+      }
+      .vsl-card-back p {
+        font-size: clamp(1.0625rem, 2.2vw + 0.82rem, 1.25rem);
+        line-height: 1.4;
+      }
+    }
+
+    .vsl-pricing {
+      background: var(--navy);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) 88px;
+      position: relative;
+      overflow: hidden;
+    }
+    .vsl-pricing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(160deg, rgba(25, 27, 77, 0.38) 0%, transparent 62%);
+    }
+    .vsl-pricing::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg%20id%3D%22Layer_2%22%20data-name%3D%22Layer%202%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20129.53%20105.03%22%3E%3Cg%20id%3D%22Content%22%3E%3Cg%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m126.1%2C23.38c.03-.1.07-.21.1-.31.48-1.47%2C1.28-3.92-.78-6.67-1.39-1.85-2.45-2.23-3.5-2.49q-.38-.09-.53-.3c-1.25-1.61-5.28-4.05-8.53-4.05-1.15%2C0-2.15.29-2.96.86-2.12%2C1.49-2.05%2C3.17-2.01%2C4.28.03.8.05%2C1.44-.59%2C2.39-.76%2C1.14-1.25%2C1.63-1.77%2C1.93.04-.13.08-.27.1-.41.2-1.15-.33-2.02-.75-2.59-.72-.97-1.97-.97-2.38-.97-1.26%2C0-3.02.4-4.58.74-.65.15-1.26.29-1.74.37-1.41.25-2.42%2C1.28-3.5%2C2.36-1.13%2C1.14-2.2%2C2.22-3.56%2C2.22-.95%2C0-1.87-.75-3.04-1.69-1.84-1.49-4.12-3.34-7.89-3.36l-6.92-.46h-.06c-3.46%2C0-6.28-2.82-6.28-6.28v-4.85c0-2.13-1.6-3.93-3.65-4.11-1.02-.08-1.98.21-2.79.84-.41.33-.83.68-1.25%2C1.03-.84.71-2.4%2C2.02-2.95%2C2.02h-.29c-3.27%2C0-6.05.8-8.26%2C2.38-1.4%2C1-1.53%2C2.55-1.61%2C3.58-.02.19-.04.43-.07.64-.16-.07-.33-.14-.47-.2-.86-.38-1.93-.86-3.26-.86-1.8%2C0-3.23.9-4.2%2C1.51-.01%2C0-.02.01-.04.02-.54-.68-1.3-1.39-2.32-2.15-1.28-.97-2.51-1.44-3.74-1.44-1.9%2C0-3.25%2C1.1-4.42%2C2.28-1.03%2C1.04-1.09%2C2.06-1.12%2C2.67-.02.37-.03.54-1.22%2C1.14-2.04%2C1.07-3.08%2C2.13-3.4%2C3.42-.25%2C1.04%2C0%2C2.1.78%2C3.23%2C1.33%2C1.93%2C3.36%2C2.31%2C4.74%2C2.57.09.02.19.04.28.05.08.34.08%2C1.34-.7%2C2.66-.86%2C1.46-3.75%2C4.1-5.67%2C5.84-1.44%2C1.31-2.14%2C1.96-2.47%2C2.42-.54.77-.63%2C1.64-.26%2C2.62-1.47%2C1.34-1.4%2C2.97-1.33%2C4.55.02.42.04.86.04%2C1.36%2C0%2C1.38-4.34%2C5.83-8.94%2C8.67-1.34.82-2.39%2C1.16-3.24%2C1.43-1.38.43-3.09.98-3.09%2C3.54%2C0%2C2.82%2C2.65%2C3.89%2C4.23%2C4.53.45.18.86.35%2C1.09.48.37.27%2C1.29%2C1.68%2C3.55%2C6.89.28.63.5%2C1.14.64%2C1.44.4.84.83%2C5.23.83%2C8.54%2C0%2C.87-.33%2C1.63-.72%2C2.51-.44%2C1-.94%2C2.13-.94%2C3.52%2C0%2C3.87%2C9.23%2C10.62%2C9.32%2C10.68%2C1.41.97%2C1.58%2C1.45%2C1.77%2C1.96.15.41.35.97.89%2C1.53.76.8%2C2.03%2C1.22%2C3.77%2C1.26%2C4.44%2C4.9%2C5.14%2C4.9%2C5.83%2C4.9s1.27-.26%2C1.65-.44c.13-.06.32-.15.38-.16.67%2C0%2C1.11.21%2C1.77.52.96.45%2C2.15%2C1.02%2C4.21%2C1.02%2C2.64%2C0%2C4.22-1.91%2C5.22-3.3.31.41.77.96%2C1.43%2C1.44h0s0%2C0%2C0%2C0l.43-.51-.51-.43h-.01c-.44-.39-.79-.84-1.08-1.26-.06-.09-.17-.13-.28-.13h0c-.11%2C0-.22.06-.28.15-.89%2C1.27-2.39%2C3.38-4.93%2C3.38-1.91%2C0-3.03-.53-3.93-.95-.69-.32-1.23-.58-2.05-.58-.19%2C0-.4.1-.66.22-.36.16-.81.37-1.37.37-.44%2C0-1.11%2C0-5.43-4.79-.06-.07-.15-.11-.25-.11-1.63-.02-2.79-.37-3.44-1.06-.44-.45-.6-.9-.74-1.3-.21-.56-.43-1.19-2.01-2.28-2-1.37-9.04-7.16-9.04-10.13%2C0-1.25.47-2.31.88-3.25.41-.95.78-1.77.78-2.78%2C0-3.16-.4-7.8-.9-8.83-.14-.29-.36-.79-.63-1.42-1.94-4.48-3.11-6.68-3.8-7.18-.29-.17-.74-.35-1.2-.54-1.61-.65-3.81-1.54-3.81-3.91%2C0-2.07%2C1.27-2.47%2C2.63-2.9.88-.28%2C1.97-.63%2C3.38-1.49%2C4.17-2.57%2C9.26-7.34%2C9.26-9.24%2C0-.51-.02-.96-.04-1.4-.07-1.61-.13-3.01%2C1.27-4.16.12-.1.16-.26.09-.4-.38-.84-.34-1.56.1-2.18.29-.41.98-1.04%2C2.38-2.32%2C1.94-1.77%2C4.88-4.44%2C5.79-5.99.97-1.64.96-3.03.64-3.48-.05-.07-.12-.12-.2-.14-.15-.03-.3-.06-.5-.1-1.23-.23-3.1-.59-4.27-2.29-.67-.97-.9-1.85-.69-2.7.27-1.09%2C1.21-2.01%2C3.05-2.99%2C1.39-.7%2C1.54-1.04%2C1.58-1.7.04-.58.08-1.38.93-2.24%2C1.07-1.08%2C2.28-2.08%2C3.94-2.08%2C1.08%2C0%2C2.17.43%2C3.33%2C1.3%2C1.09.82%2C1.86%2C1.56%2C2.37%2C2.26.1.14.29.18.45.09.1-.06.2-.13.33-.21.88-.55%2C2.21-1.39%2C3.82-1.39%2C1.18%2C0%2C2.18.45%2C3%2C.8.27.12.64.29.88.35.16.05.34-.04.4-.19.12-.28.16-.74.19-1.15.08-1.01.19-2.26%2C1.34-3.09%2C2.1-1.5%2C4.75-2.26%2C7.87-2.26h.29c.73%2C0%2C1.91-.94%2C3.38-2.17.41-.34.82-.69%2C1.23-1.01.67-.53%2C1.48-.77%2C2.32-.7%2C1.7.14%2C3.03%2C1.65%2C3.03%2C3.44v4.85c0%2C3.83%2C3.12%2C6.95%2C6.97%2C6.94h0l6.94.46c3.56.01%2C5.74%2C1.79%2C7.49%2C3.21%2C1.27%2C1.03%2C2.27%2C1.84%2C3.46%2C1.84%2C1.64%2C0%2C2.8-1.18%2C4.04-2.42.99-1.01%2C1.93-1.95%2C3.14-2.17.49-.09%2C1.11-.23%2C1.77-.37%2C1.52-.34%2C3.24-.73%2C4.43-.73.33%2C0%2C1.32%2C0%2C1.85.7.34.46.78%2C1.17.62%2C2.07-.06.35-.2.68-.42%2C1.02-.08.12-.08.28.01.39.09.12.25.16.38.11%2C1.09-.41%2C1.73-.79%2C2.92-2.55.77-1.14.74-1.94.7-2.79-.04-1.08-.09-2.42%2C1.73-3.7.7-.49%2C1.56-.74%2C2.58-.74%2C3.04%2C0%2C6.83%2C2.28%2C8%2C3.79.29.37.44.42.9.53.97.24%2C1.87.57%2C3.12%2C2.24%2C1.86%2C2.47%2C1.12%2C4.72.68%2C6.07-.06.18-.13.41-.18.59-.04.15.03.31.16.38l.22.12c1.45.77%2C3.1%2C1.64%2C3.1%2C4.44s-.71%2C4.51-4.23%2C4.51h-2.13c-.12%2C0-.24.07-.29.17l-1.68%2C3.11c-.41.76-.63%2C1.63-.63%2C2.5v3.94c0%2C1.69-1.22%2C3.13-2.9%2C3.41-1%2C.16-1.39.36-1.5.44-1.44.9-2.38%2C2.59-3.2%2C4.07-.6%2C1.07-1.11%2C2-1.77%2C2.58-1.14%2C1-3.71%2C2.84-8.18%2C3.98-1.77.45-2.92.64-3.85.64-1.49%2C0-2.31-.52-3.16-1.14-.2-.15-.52-.23-.9-.23-.69%2C0-1.22.25-1.42.36-.11.06-.17.17-.17.29%2C0%2C.12.06.24.17.29.4.23%2C1.04.49%2C1.52.67%2C2.26.9%2C5.35%2C2.14%2C5.35%2C5.93%2C0%2C2.66-1.48%2C4.19-2.88%2C4.74-.25.1-.47.23-.63.33l-33.38%2C20.48c-1.35.83-2.55%2C1.86-3.57%2C3.08l-4.73%2C5.64.51.43%2C4.73-5.64c.97-1.16%2C2.11-2.15%2C3.4-2.94l33.38-20.48c.21-.13.37-.22.53-.28%2C1.6-.63%2C3.3-2.37%2C3.3-5.36%2C0-4.24-3.48-5.63-5.78-6.55-.21-.08-.46-.18-.71-.29.12-.02.24-.04.37-.04.29%2C0%2C.45.07.5.1.87.64%2C1.87%2C1.27%2C3.55%2C1.27.99%2C0%2C2.18-.2%2C4.01-.66%2C4.6-1.17%2C7.27-3.09%2C8.46-4.13.75-.66%2C1.29-1.63%2C1.92-2.75.79-1.41%2C1.68-3.02%2C2.98-3.83%2C0%2C0%2C.29-.19%2C1.25-.34%2C2.01-.33%2C3.46-2.05%2C3.46-4.07v-3.94c0-.76.19-1.51.55-2.18l1.58-2.93h1.93c4.31%2C0%2C4.9-2.49%2C4.9-5.18%2C0-3.18-1.97-4.24-3.43-5.01Z%22%2F%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m98.58%2C23.58c-.11.04-.21.09-.33.13-.2.08-.26.24-.28.33-.03.16.02.32.14.42l.07.06s.06.05.1.06c.04.02.11.03.15.03.16%2C0%2C.3-.09.38-.25.06-.11.12-.22.18-.32.07-.12.06-.28-.03-.39-.09-.11-.25-.15-.38-.09Z%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%2244.64%22%20y%3D%22103.3%22%20width%3D%22.67%22%20height%3D%22.67%22%20transform%3D%22translate%28-63%2070.39%29%20rotate%28-49.43%29%22%2F%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m47.11%2C100.62h.01c-.06-.04-.1-.09-.15-.12l-.36-.31h0c-.3-.29-.55-.65-.8-1.01-.45-.68-1.07-1.6-2.26-1.6s-1.82.9-2.5%2C1.86c-.87%2C1.23-1.68%2C2.25-2.75%2C2.25-1.31%2C0-1.96-.31-2.79-.7-.83-.39-1.77-.84-3.19-.84-.77%2C0-1.36.27-1.77.46-.81-.7-2.54-2.48-4.1-4.22l-.43-.49c-.07-.08-.17-.12-.27-.11l-.65.04s-.15%2C0-.34%2C0h0c-1.08%2C0-1.59-.21-1.64-.24-.04-.04-.06-.08-.16-.36-.38-1.05-.9-2.11-3.01-3.57-3.5-2.41-7.81-6.94-7.88-7.93%2C0-.68.3-1.37.66-2.17.47-1.07%2C1-2.28%2C1-3.86%2C0-.08-.07-7.72-1.16-9.99-.13-.26-.32-.71-.57-1.27l-.02-.05c-2.15-4.94-3.49-7.6-4.89-8.42-.48-.28-1-.49-1.57-.72-1.62-.66-2.14-1-2.14-1.43v-.1c.2-.08.54-.19.76-.25.97-.31%2C2.29-.73%2C3.98-1.77.11-.06%2C10.53-6.71%2C10.53-11.52%2C0-.56-.02-1.05-.04-1.51-.08-1.79-.03-1.82.62-2.2.46-.25.81-.66.96-1.14.27-.85-.1-1.56-.34-2%2C0%2C0%2C0%2C0%2C0%2C0%2C.4-.39%2C1.11-1.04%2C1.75-1.62%2C2.3-2.1%2C5.17-4.72%2C6.29-6.61%2C1.21-2.05%2C1.53-4.2.85-5.77-.41-.95-1.14-1.59-2.06-1.8-.21-.05-.43-.09-.66-.13-1.04-.2-2.02-.38-2.57-1.18-.24-.34-.29-.53-.29-.54%2C0%2C0%2C.15-.44%2C1.71-1.26%2C2.63-1.32%2C2.93-2.65%2C3-3.9q.02-.37.16-.51c.76-.78%2C1.4-1.29%2C2.04-1.29.47%2C0%2C1.05.26%2C1.72.76%2C1.4%2C1.05%2C1.75%2C1.59%2C1.96%2C1.91.26.39.69%2C1.04%2C1.77%2C1.19.09.01.2.02.3.02.79%2C0%2C1.45-.41%2C2.15-.86.73-.46%2C1.55-.98%2C2.39-.98.62%2C0%2C1.27.29%2C1.9.57.73.32%2C1.41.63%2C2.21.63s1.44-.29%2C1.97-.85c.88-.93.98-2.12%2C1.05-3%2C.04-.41.08-1.03.23-1.13%2C1.64-1.17%2C3.77-1.77%2C6.32-1.77h.25c1.81%2C0%2C3.42-1.36%2C5.17-2.82.38-.32.76-.64%2C1.14-.94.12-.09.24-.14.37-.14.26%2C0%2C.65.21.65.64v4.99c0%2C5.28%2C4.3%2C9.59%2C9.56%2C9.61l6.92.46h.06c2.64%2C0%2C4.27%2C1.33%2C5.85%2C2.61%2C1.48%2C1.2%2C3%2C2.44%2C5.14%2C2.44%2C2.76%2C0%2C4.52-1.78%2C5.94-3.22.6-.6%2C1.34-1.35%2C1.71-1.42.54-.09%2C1.19-.24%2C1.89-.4%2C1.07-.24%2C2.34-.53%2C3.26-.63-.15.12-.34.27-.6.45l-.14.09c-1.1.74-2.6%2C1.75-3.85%2C2.22-1.02.39-1.75%2C1.25-1.96%2C2.32s.14%2C2.15.94%2C2.9l.07.07c.57.53%2C1.3.82%2C2.07.82%2C1.17%2C0%2C2.23-.66%2C2.77-1.71.43-.84%2C1.54-1.76%2C2.91-2.39.52-.24.97-.4%2C1.4-.56%2C1.71-.62%2C2.87-1.18%2C4.56-3.7%2C1.25-1.86%2C1.2-3.32%2C1.16-4.39-.04-.9-.04-.97.59-1.41.24-.17.59-.25%2C1.04-.25%2C2.05%2C0%2C5.16%2C1.82%2C5.88%2C2.75.87%2C1.13%2C1.78%2C1.35%2C2.38%2C1.5.47.12.83.21%2C1.62%2C1.25%2C1.03%2C1.36.68%2C2.41.28%2C3.63-.31.96-.96%2C2.95.93%2C3.99.17.09.34.18.51.27l.06.03c1.32.7%2C1.67.88%2C1.67%2C2.07q0%2C1.84-1.56%2C1.84h-2.22c-1.06%2C0-2.02.58-2.52%2C1.5l-1.72%2C3.19c-.62%2C1.15-.94%2C2.45-.94%2C3.76v3.94c0%2C.38-.28.7-.66.77-1.12.18-1.94.45-2.51.82-1.99%2C1.25-3.16%2C3.34-4.09%2C5.02-.41.74-.89%2C1.59-1.2%2C1.87-.95.84-3.14%2C2.4-7.07%2C3.4-1.5.38-2.51.56-3.19.56-.63%2C0-.92-.14-1.57-.62-.67-.49-1.53-.75-2.48-.75-2.17%2C0-4.5%2C1.33-4.5%2C3.3s2%2C2.83%2C3.6%2C3.47c2.29.91%2C3.67%2C1.6%2C3.67%2C3.45s-1.04%2C2.22-1.29%2C2.29l-.38.16s-.03.01-.04.02l-33.9%2C20.8c-1.6.98-3.02%2C2.2-4.22%2C3.64l-.59.71.51.43.59-.71c1.16-1.38%2C2.52-2.56%2C4.06-3.5l33.88-20.79.31-.13c.29-.08%2C1.74-.6%2C1.74-2.92s-1.7-3.11-4.09-4.07c-1.56-.62-3.18-1.27-3.18-2.85s1.98-2.63%2C3.83-2.63c.81%2C0%2C1.53.22%2C2.09.62.72.53%2C1.15.75%2C1.97.75.73%2C0%2C1.8-.18%2C3.35-.58%2C4.07-1.04%2C6.35-2.67%2C7.35-3.54.4-.35.86-1.18%2C1.35-2.05.9-1.61%2C2.02-3.61%2C3.86-4.77.5-.32%2C1.24-.56%2C2.26-.73.71-.12%2C1.23-.72%2C1.23-1.43v-3.94c0-1.2.3-2.39.86-3.45l1.72-3.19c.38-.71%2C1.12-1.15%2C1.93-1.15h2.22c1.98%2C0%2C2.23-.28%2C2.23-2.51%2C0-1.59-.68-1.95-2.03-2.66l-.06-.03c-.16-.08-.33-.17-.49-.26-1.31-.72-1-2.03-.62-3.2.41-1.28.85-2.6-.38-4.24-.93-1.23-1.44-1.36-1.99-1.49-.58-.14-1.29-.32-2.02-1.26-.79-1.03-4.05-3.01-6.41-3.01-.59%2C0-1.07.13-1.42.37-.89.62-.92.95-.88%2C1.99.04.97.08%2C2.3-1.04%2C3.98-1.62%2C2.4-2.61%2C2.85-4.23%2C3.44-.44.16-.9.33-1.45.58-1.49.7-2.72%2C1.73-3.22%2C2.69-.42.83-1.26%2C1.34-2.17%2C1.34-.6%2C0-1.17-.23-1.61-.64l-.07-.07c-.63-.58-.9-1.44-.74-2.28.16-.84.74-1.52%2C1.54-1.82%2C1.32-.5%2C2.86-1.54%2C3.98-2.3l.14-.09c.91-.61%2C1.19-1%2C1.27-1.18.04-.08.04-.18%2C0-.27%2C0-.02-.02-.05-.04-.08-.05-.11-.16-.17-.28-.18-.04%2C0-.09%2C0-.15%2C0-.96%2C0-2.64.37-4.01.69-.67.15-1.31.29-1.83.39-.58.1-1.31.83-2.07%2C1.6-1.33%2C1.35-2.99%2C3.02-5.46%2C3.02-1.9%2C0-3.34-1.17-4.72-2.29-.83-.68-1.68-1.37-2.68-1.89-1-.52-2.16-.87-3.61-.87l-6.94-.46c-4.91-.03-8.91-4.04-8.91-8.95V3.99c0-.81-.69-1.31-1.32-1.31-.29%2C0-.55.09-.78.28-.38.3-.77.63-1.19.98-1.62%2C1.36-3.15%2C2.64-4.71%2C2.64h-.25c-2.7%2C0-4.96.63-6.71%2C1.89-.38.27-.44.79-.5%2C1.62-.07.86-.15%2C1.84-.86%2C2.59-.4.42-.91.64-1.49.64-.66%2C0-1.27-.28-1.93-.57-.7-.31-1.42-.63-2.18-.63-1.03%2C0-1.94.58-2.75%2C1.08-.67.42-1.19.75-1.79.75-.07%2C0-.14%2C0-.21-.01-.78-.11-1.07-.55-1.3-.9-.24-.36-.63-.96-2.11-2.08-.79-.6-1.51-.9-2.13-.9-.87%2C0-1.63.59-2.51%2C1.48-.32.33-.33.52-.36.95-.07%2C1.14-.31%2C2.18-2.63%2C3.35-1.56.82-1.98%2C1.38-2.05%2C1.69-.02.09-.09.38.39%2C1.08.7%2C1.02%2C1.92%2C1.25%2C3%2C1.45.22.04.44.08.64.13.7.16%2C1.27.66%2C1.6%2C1.41.59%2C1.37.29%2C3.31-.82%2C5.17-1.07%2C1.81-3.89%2C4.39-6.16%2C6.45-.75.68-1.6%2C1.46-1.94%2C1.82-.1.1-.12.25-.06.37.04.08.08.16.13.26.2.37.47.88.29%2C1.46-.1.32-.33.58-.65.76-1.02.6-1.04%2C1.04-.96%2C2.83.02.43.04.91.04%2C1.46%2C0%2C3.48-7.02%2C8.98-10.22%2C10.95-1.62%2C1-2.9%2C1.4-3.84%2C1.7-.52.16-.86.28-1.03.39-.07.04-.12.12-.14.2-.02.1-.04.23-.04.4%2C0%2C.95%2C1.01%2C1.43%2C2.56%2C2.05.53.21%2C1.04.42%2C1.48.67%2C1.22.72%2C2.61%2C3.51%2C4.61%2C8.1l.02.05c.25.57.45%2C1.03.58%2C1.29.83%2C1.74%2C1.09%2C7.72%2C1.09%2C9.7%2C0%2C1.44-.5%2C2.58-.95%2C3.59-.38.87-.71%2C1.61-.71%2C2.46.1%2C1.48%2C4.84%2C6.16%2C8.17%2C8.46%2C1.95%2C1.34%2C2.42%2C2.3%2C2.76%2C3.24.12.32.17.45.32.61.23.21.97.43%2C2.11.43h0c.21%2C0%2C.36%2C0%2C.38%2C0l.49-.04.33.37c1.46%2C1.63%2C3.48%2C3.74%2C4.34%2C4.43.09.08.23.09.34.04l.2-.09c.39-.18.87-.4%2C1.5-.4%2C1.27%2C0%2C2.14.41%2C2.9.77.83.39%2C1.62.76%2C3.08.76s2.32-1.15%2C3.3-2.53c.63-.88%2C1.12-1.58%2C1.96-1.58s1.3.7%2C1.71%2C1.31c.37.55.77%2C1.14%2C1.4%2C1.55l.04.03.43-.51h0Z%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%2247.25%22%20y%3D%22100.25%22%20width%3D%22.67%22%20height%3D%22.67%22%20transform%3D%22translate%28-59.77%2071.31%29%20rotate%28-49.43%29%22%2F%3E%3Cpath%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20d%3D%22m46.31%2C102.58l-.51-.43h0s.43-.51.43-.51h0s0%2C0%2C0%2C0c0%2C0%2C0%2C0%2C0%2C0l-.5-.42v.02c-.45-.42-.77-.89-1.05-1.3-.38-.57-.68-1.01-1.15-1.01s-.86.52-1.41%2C1.3c-.84%2C1.19-2%2C2.81-3.85%2C2.81-1.61%2C0-2.5-.42-3.36-.82-.77-.37-1.5-.71-2.62-.71-.48%2C0-.87.18-1.22.34-.29.13-.54.25-.78.25-.47-.12-2.85-2.54-4.87-4.8-.07-.08-.16-.11-.27-.11-.64.04-2.42.01-3.04-.63-.25-.25-.33-.51-.45-.83-.26-.71-.58-1.59-2.51-2.92-2.97-2.05-8.46-7.15-8.46-9.03%2C0-.96.37-1.81.77-2.71.44-.99.89-2.03.89-3.32%2C0-2.46-.31-7.92-1.03-9.41-.13-.28-.34-.76-.61-1.37-1.48-3.41-3.16-7.1-4.34-7.79-.4-.23-.88-.43-1.4-.64-1.46-.59-2.97-1.2-2.97-2.67%2C0-1.09.42-1.23%2C1.69-1.63.9-.29%2C2.13-.68%2C3.69-1.63%2C3.45-2.13%2C9.9-7.36%2C9.9-10.38%2C0-.54-.02-1.03-.04-1.45-.08-1.78-.12-2.6%2C1.29-3.42.22-.11.31-.27.35-.38.1-.31-.07-.62-.24-.95-.26-.49-.41-.83-.18-1.15.22-.31%2C1.14-1.14%2C2.19-2.11%2C2.12-1.93%2C5.02-4.58%2C6.04-6.3.98-1.66%2C1.28-3.41.78-4.56-.24-.55-.64-.91-1.13-1.03-.19-.04-.4-.08-.61-.12-1.14-.21-2.56-.49-3.42-1.73-.45-.65-.6-1.16-.49-1.62.16-.68.93-1.36%2C2.38-2.13%2C2.19-1.1%2C2.24-2.01%2C2.29-2.8.03-.47.05-.88.54-1.38%2C1.44-1.45%2C2.94-2.6%2C5.52-.65%2C1.58%2C1.19%2C2.03%2C1.88%2C2.27%2C2.24.2.3.35.54.83.61.43.06.93-.25%2C1.56-.64.84-.53%2C1.88-1.18%2C3.1-1.18.9%2C0%2C1.72.37%2C2.45.69.99.44%2C1.93.86%2C2.67.08.55-.58.62-1.4.68-2.18.07-.85.13-1.64.78-2.11%2C1.93-1.38%2C4.42-2.05%2C7.36-2.01h.03c1.27%2C0%2C2.71-1.21%2C4.23-2.49.4-.33.8-.67%2C1.2-.99.6-.47%2C1.37-.56%2C2.07-.22.69.33%2C1.11%2C1.02%2C1.11%2C1.78v4.99c0%2C2.28.94%2C4.35%2C2.43%2C5.85%2C1.5%2C1.5%2C3.56%2C2.43%2C5.83%2C2.43l6.94.46c3.11%2C0%2C5.01%2C1.55%2C6.69%2C2.91%2C1.36%2C1.1%2C2.63%2C2.14%2C4.3%2C2.14%2C2.2%2C0%2C3.68-1.5%2C4.99-2.82.84-.85%2C1.64-1.65%2C2.43-1.8.52-.09%2C1.15-.24%2C1.83-.39%2C1.59-.36%2C4.55-1.02%2C4.91-.53.33.43.43.74.38%2C1.05-.08.49-.62%2C1.07-1.59%2C1.73l-.14.09c-1.15.78-2.73%2C1.84-4.12%2C2.37-.58.22-1%2C.72-1.12%2C1.33-.12.62.08%2C1.23.54%2C1.66l.07.06c.39.37.92.53%2C1.45.43.55-.09%2C1.02-.44%2C1.28-.95.57-1.11%2C1.89-2.22%2C3.53-2.99.58-.27%2C1.07-.45%2C1.51-.6%2C1.4-.51%2C2.33-.85%2C3.9-3.18%2C1.01-1.5.97-2.66.93-3.59-.04-1.03-.07-1.7%2C1.16-2.56%2C2.34-1.64%2C7.52%2C1.19%2C8.75%2C2.77.59.76%2C1.13.89%2C1.64%2C1.02.64.16%2C1.3.32%2C2.37%2C1.74%2C1.44%2C1.92.91%2C3.54.48%2C4.85-.32.98-.62%2C1.89.31%2C2.4.18.1.37.2.54.29%2C1.39.73%2C2.38%2C1.26%2C2.38%2C3.25%2C0%2C2.42-.4%2C3.17-2.89%2C3.17h-2.22c-.56%2C0-1.08.31-1.34.8l-1.72%2C3.18c-.51.96-.78%2C2.04-.78%2C3.13v3.94c0%2C1.04-.75%2C1.92-1.78%2C2.09-.92.15-1.6.37-2.01.63-1.71%2C1.07-2.78%2C3-3.65%2C4.54-.53.96-1%2C1.79-1.49%2C2.22-1.04.92-3.43%2C2.62-7.63%2C3.69-3.92%2C1-4.64.64-5.88-.28-.99-.73-2.58-.57-3.64-.03-.77.39-1.21.93-1.21%2C1.5%2C0%2C1.13%2C1.28%2C1.64%2C2.75%2C2.23%2C2.12.85%2C4.52%2C1.81%2C4.52%2C4.68%2C0%2C2.49-1.47%2C3.29-2.1%2C3.52-.17.06-.32.13-.45.22l-33.69%2C20.67c-1.48.9-2.79%2C2.04-3.9%2C3.36l-2.5%2C2.99.51.43%2C2.5-2.99c1.07-1.27%2C2.32-2.35%2C3.73-3.22l33.7-20.67c.09-.06.21-.11.33-.16.6-.21%2C2.55-1.15%2C2.55-4.15%2C0-3.33-2.85-4.48-4.93-5.3-1.25-.5-2.34-.94-2.34-1.61%2C0-.29.32-.64.84-.9.86-.43%2C2.18-.59%2C2.95-.03%2C1.48%2C1.09%2C2.42%2C1.41%2C6.44.38%2C4.33-1.1%2C6.81-2.87%2C7.9-3.83.58-.5%2C1.07-1.38%2C1.63-2.4.87-1.56%2C1.85-3.32%2C3.42-4.31.33-.21.94-.4%2C1.76-.53%2C1.36-.23%2C2.34-1.38%2C2.34-2.75v-3.94c0-.98.24-1.95.7-2.81l1.72-3.18c.15-.28.44-.45.75-.45h2.22c3.03%2C0%2C3.56-1.24%2C3.56-3.84%2C0-2.4-1.33-3.1-2.74-3.84-.17-.09-.35-.19-.53-.29-.4-.22-.32-.6%2C0-1.61.42-1.3%2C1.07-3.26-.58-5.46-1.22-1.62-2.06-1.83-2.75-1.99-.48-.12-.83-.2-1.28-.78-1.21-1.57-6.79-4.92-9.66-2.91-1.52%2C1.07-1.48%2C2.07-1.44%2C3.13.04.92.07%2C1.87-.82%2C3.19-1.45%2C2.16-2.25%2C2.45-3.58%2C2.93-.45.16-.96.34-1.56.62-1.77.82-3.21%2C2.05-3.85%2C3.29-.16.32-.45.54-.8.6-.33.05-.64-.04-.88-.27l-.07-.06c-.29-.27-.41-.66-.34-1.04.08-.38.33-.7.7-.83%2C1.47-.56%2C3.08-1.64%2C4.26-2.43l.14-.09c1.16-.78%2C1.75-1.47%2C1.87-2.17.11-.64-.21-1.17-.5-1.56-.58-.78-2.59-.39-5.59.28-.66.15-1.29.29-1.8.38-1%2C.18-1.86%2C1.05-2.78%2C1.98-1.22%2C1.23-2.59%2C2.63-4.52%2C2.63-1.43%2C0-2.56-.92-3.88-1.99-1.77-1.44-3.77-3.06-7.09-3.06h0l-6.94-.46c-4.19%2C0-7.61-3.42-7.61-7.62V3.99c0-1.02-.58-1.93-1.5-2.38-.91-.44-1.97-.33-2.77.3-.41.32-.81.66-1.22%2C1-1.36%2C1.15-2.77%2C2.33-3.8%2C2.33h-.02c-3.08-.04-5.71.67-7.76%2C2.14-.9.64-.99%2C1.68-1.06%2C2.6-.06.7-.12%2C1.37-.5%2C1.78-.4.41-.93.21-1.91-.23-.79-.35-1.68-.74-2.72-.74-1.42%2C0-2.6.74-3.46%2C1.28-.43.27-.91.58-1.11.54-.18-.02-.2-.04-.37-.31-.27-.4-.76-1.15-2.42-2.41-3.01-2.27-4.88-.82-6.4.71-.67.68-.7%2C1.28-.74%2C1.81-.04.7-.08%2C1.31-1.93%2C2.25-1.67.88-2.51%2C1.67-2.73%2C2.56-.16.66.03%2C1.34.59%2C2.16%2C1.02%2C1.47%2C2.65%2C1.78%2C3.85%2C2.01.21.04.41.08.59.12.36.08.56.39.66.63.31.72.31%2C2.19-.74%2C3.96-.97%2C1.64-3.82%2C4.24-5.91%2C6.15-1.17%2C1.07-2.02%2C1.85-2.29%2C2.22-.49.69-.12%2C1.39.13%2C1.85.08.15.19.37.21.41l-.04.02c-1.78%2C1.04-1.72%2C2.23-1.64%2C4.04.02.42.04.9.04%2C1.42%2C0%2C2.42-5.58%2C7.35-9.58%2C9.81-1.48.91-2.67%2C1.29-3.53%2C1.56-1.3.41-2.16.68-2.16%2C2.26%2C0%2C1.92%2C1.88%2C2.68%2C3.39%2C3.29.49.2.96.39%2C1.31.59%2C1.08.63%2C3.09%2C5.26%2C4.06%2C7.48.27.62.48%2C1.11.62%2C1.39.64%2C1.34.96%2C6.57.96%2C9.12%2C0%2C1.15-.42%2C2.12-.83%2C3.05-.41.92-.82%2C1.87-.82%2C2.98%2C0%2C2.46%2C6.34%2C7.92%2C8.75%2C9.58%2C1.76%2C1.21%2C2.02%2C1.95%2C2.26%2C2.6.12.35.25.71.6%2C1.07.84.87%2C2.78.87%2C3.4.85%2C1.69%2C1.89%2C4.51%2C4.9%2C5.23%2C4.9.41%2C0%2C.76-.16%2C1.09-.31.31-.14.61-.28.94-.28.97%2C0%2C1.6.3%2C2.34.65.88.41%2C1.88.89%2C3.64.89%2C2.2%2C0%2C3.52-1.86%2C4.39-3.09.29-.42.7-.99.86-1.02.12%2C0%2C.41.43.6.72.36.54.86%2C1.29%2C1.67%2C1.85l-.43.51.51.43.43-.51Z%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.14%22%20x%3D%2246.38%22%20y%3D%22101.27%22%20width%3D%22.67%22%20height%3D%22.67%22%20transform%3D%22translate%28-60.84%2070.99%29%20rotate%28-49.42%29%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+      background-repeat: no-repeat;
+      background-size: min(130vw, 2000px) auto;
+      background-position: 50% 45%;
+    }
+    .vsl-pricing__inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .vsl-pricing__title {
+      margin: 0 0 0.35em;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      padding: 0 clamp(0.35rem, 2.5vw, 0.5rem);
+      text-wrap: balance;
+    }
+    .vsl-pricing__sub {
+      margin: 0 auto 2.5rem;
+      text-align: center;
+      font-size: var(--vsl-text-section-sub);
+      font-weight: 500;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      line-height: 1.35;
+      max-width: 42ch;
+    }
+    .vsl-pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+      text-align: left;
+      padding: 8px 2px 12px;
+    }
+    .vsl-tier {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      border: 1px solid rgba(16, 24, 43, 0.15);
+      border-radius: 12px;
+      padding: 28px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-pricing__grid .vsl-tier:hover {
+        transform: scale(1.04);
+        z-index: 3;
+        box-shadow: 0 20px 52px rgba(0, 0, 0, 0.28);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-pricing__grid .vsl-tier {
+        transition: none;
+      }
+      .vsl-pricing__grid .vsl-tier:hover {
+        transform: none;
+      }
+    }
+    .vsl-membership .vsl-pricing .vsl-tier__name {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-tier-name);
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: #10182b !important;
+      -webkit-text-fill-color: #10182b !important;
+      background: none !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+    }
+    .vsl-tier__price {
+      margin: 0 0 6px;
+      font-size: var(--vsl-text-tier-price);
+      font-weight: 700;
+      color: var(--magenta);
+    }
+    .vsl-tier__tag {
+      margin: 0 0 10px;
+      font-size: var(--vsl-text-section-sub);
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      color: rgba(16, 24, 43, 0.55);
+    }
+    .vsl-tier__tag em {
+      font-style: italic;
+      font-weight: 500;
+      color: inherit;
+    }
+    .vsl-tier__rule {
+      height: 1px;
+      background: rgba(16, 24, 43, 0.16);
+      margin: 6px 0 18px;
+      border: 0;
+    }
+    .vsl-tier__list {
+      margin: 0 0 22px;
+      padding: 2px 0 0 1.1em;
+      flex: 1;
+      font-size: var(--vsl-text-body);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--slate-violet);
+    }
+    .vsl-tier__list li { margin-bottom: 0.5em; }
+    .vsl-tier__price .vsl-tier__period {
+      font-size: 0.5em;
+      font-weight: 600;
+      color: var(--slate-violet);
+    }
+    .vsl-tier__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 44px;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      color: var(--magenta);
+      cursor: pointer;
+      position: relative;
+      border: 2px solid var(--magenta);
+      border-radius: 8px;
+      background-color: transparent;
+      box-shadow: none;
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.14s ease,
+        filter 0.14s ease;
+    }
+    .vsl-tier:hover .vsl-tier__btn,
+    .vsl-tier__btn:hover {
+      color: #fff;
+      background-color: var(--magenta);
+      border-color: var(--magenta);
+      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.26);
+    }
+    .vsl-tier:active .vsl-tier__btn,
+    .vsl-tier__btn:active {
+      filter: brightness(0.93);
+      transform: scale(0.99);
+      box-shadow: 0 3px 14px rgba(238, 38, 95, 0.2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-tier__btn {
+        transition:
+          color 0.22s ease,
+          background-color 0.22s ease,
+          border-color 0.22s ease,
+          box-shadow 0.22s ease,
+          filter 0.14s ease;
+      }
+      .vsl-tier:hover .vsl-tier__btn,
+      .vsl-tier__btn:hover,
+      .vsl-tier:active .vsl-tier__btn,
+      .vsl-tier__btn:active {
+        transform: none;
+      }
+    }
+    .vsl-tier:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+      border-radius: 12px;
+    }
+    @media (max-width: 900px) {
+      .vsl-pricing__grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+    }
+    @media (max-width: 639px) {
+      .vsl-membership .vsl-pricing .vsl-tier__name {
+        font-size: clamp(1.1875rem, 4.5vw + 0.7rem, 1.75rem);
+        letter-spacing: 0.065em;
+        margin-bottom: 12px;
+      }
+    }
+
+    .vsl-faq {
+      background-color: var(--deep-indigo);
+      color: var(--circuit-white);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) clamp(96px, 14vw, 140px);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Match .vsl-benefits::before (perks section) — same V SVG, size, and centering */
+    .vsl-faq::before { display: none; }
+    .vsl-faq__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .vsl-faq__title {
+      margin: 0 auto 1.5rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      line-height: 1.15;
+      max-width: 48rem;
+      padding: 0 clamp(0.35rem, 2.5vw, 0.5rem);
+      text-wrap: balance;
+    }
+    .vsl-membership #membership-faq h2.vsl-faq__title,
+    .vsl-membership #membership-faq h2#faq-heading,
+    #membership-faq h2#faq-heading.vsl-faq__title {
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      background: none !important;
+      background-image: none !important;
+      -webkit-background-clip: border-box !important;
+      background-clip: border-box !important;
+    }
+    .vsl-faq__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+      text-align: left;
+    }
+    .vsl-faq__item {
+      border-bottom: 1px solid rgba(16, 24, 43, 0.1);
+      background: #fff;
+      border-radius: 0;
+    }
+    .vsl-faq__item:last-child { border-bottom: none; }
+    .vsl-faq__trigger {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 52px;
+      padding: clamp(14px, 3vw, 18px) clamp(14px, 3vw, 18px);
+      font-family: inherit;
+      font-size: var(--vsl-text-body);
+      font-weight: 600;
+      text-align: left;
+      color: #111 !important;
+      -webkit-text-fill-color: #111 !important;
+      white-space: normal !important;
+      background-color: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      list-style: none;
+      transition: background-color 0.22s ease, color 0.2s ease;
+    }
+    .vsl-faq__trigger:hover {
+      background-color: rgba(16, 24, 43, 0.04);
+    }
+    .vsl-faq__label {
+      flex: 1;
+      min-width: 0;
+      font-family: Inter, system-ui, sans-serif;
+      font-size: var(--vsl-text-faq-label);
+      font-weight: 600;
+      font-style: normal;
+      text-transform: none;
+      letter-spacing: 0.03em;
+      line-height: 1.45;
+      white-space: normal !important;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      color: inherit !important;
+      -webkit-text-fill-color: currentColor !important;
+    }
+    .vsl-faq__trigger:focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 2px;
+    }
+    /* Elementor / theme global <button> styles often use accent magenta; keep FAQ rows neutral */
+    .vsl-membership #membership-faq button.vsl-faq__trigger {
+      background: #fff !important;
+      background-color: #fff !important;
+      background-image: none !important;
+      box-shadow: none !important;
+    }
+    .vsl-membership #membership-faq button.vsl-faq__trigger:hover,
+    .vsl-membership #membership-faq button.vsl-faq__trigger:focus {
+      background: rgba(16, 24, 43, 0.04) !important;
+      background-color: rgba(16, 24, 43, 0.04) !important;
+      background-image: none !important;
+    }
+    .vsl-membership #membership-faq button.vsl-faq__trigger:active {
+      background: rgba(16, 24, 43, 0.06) !important;
+      background-color: rgba(16, 24, 43, 0.06) !important;
+    }
+    .vsl-faq__chev {
+      flex-shrink: 0;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin: 0;
+      background: transparent center / 100% 100% no-repeat;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2310182b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      transform: rotate(0deg);
+      transform-origin: 50% 50%;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .vsl-faq__item.is-open .vsl-faq__chev {
+      transform: rotate(180deg);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-faq__trigger { transition: none; }
+      .vsl-faq__chev { transition: none; }
+    }
+    .vsl-faq__panel {
+      padding: 16px 22px 26px;
+      font-size: var(--vsl-text-body);
+      line-height: 1.35;
+      color: var(--slate-violet);
+      background: #fff;
+    }
+    .vsl-membership #membership-faq .vsl-faq__panel {
+      background: #fff !important;
+      background-color: #fff !important;
+    }
+    .vsl-faq__panel[hidden] {
+      display: none;
+    }
+    .vsl-faq__item.is-open .vsl-faq__panel {
+      display: block;
+    }
+    .vsl-faq__answer {
+      margin: 0;
+      padding-top: 2px;
+      color: var(--slate-violet);
+      max-width: 62ch;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+</style>
+<div class="vsl-membership">
+    <main id="primary-content">
+    <section class="vsl-membership-hero" id="membership-hero" aria-labelledby="membership-hero-heading">
+      <div class="vsl-membership-hero__inner">
+        <h1 class="vsl-membership-hero__title" id="membership-hero-heading">Become a <span class="vsl-membership-hero__accent">member</span> and take your Velocity experience to the next level</h1>
+        <p class="vsl-membership-hero__sub">Memberships start at $99/month and offer unbeatable value</p>
+        <a class="vsl-membership-hero__cta" href="#membership-benefits">Learn more</a>
+      </div>
+      <div class="vsl-membership-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <section class="vsl-benefits" id="membership-benefits" aria-labelledby="benefits-heading">
+      <div class="vsl-benefits__heading-wrap">
+        <h2 class="vsl-benefits__heading" id="benefits-heading"><span class="vsl-benefits__heading-line vsl-benefits__heading-line--blue">What&rsquo;s included</span><br><span class="vsl-benefits__heading-line vsl-benefits__heading-line--magenta">in your membership</span></h2>
+      </div>
+      <div class="vsl-benefits__grid">
+
+        <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Monthly races. Flip card for details.">
+          <div class="vsl-card-inner">
+            <div class="vsl-card-front">
+              <figure class="vsl-card-media">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit1" alt="Driver at a professional sim racing cockpit with triple monitors" width="600" height="800" loading="lazy" decoding="async">
+              </figure>
+              <div class="vsl-card-label">
+                <h3>Monthly races</h3>
+              </div>
+            </div>
+            <div class="vsl-card-back">
+              <h3>Monthly races</h3>
+              <p>Membership includes monthly races as well as exclusive members-only leagues, competitions, and social events.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Members only events. Flip card for details.">
+          <div class="vsl-card-inner">
+            <div class="vsl-card-front">
+              <figure class="vsl-card-media">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit2" alt="Velocity members celebrating at a Grand Prix community event" width="600" height="800" loading="lazy" decoding="async">
+              </figure>
+              <div class="vsl-card-label">
+                <h3>Members only events</h3>
+              </div>
+            </div>
+            <div class="vsl-card-back">
+              <h3>Members only events</h3>
+              <p>League nights, car rallies, and track experiences reserved for members.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Early access. Flip card for details.">
+          <div class="vsl-card-inner">
+            <div class="vsl-card-front">
+              <figure class="vsl-card-media">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit3" alt="Velocity lounge interior with track-inspired lighting" width="600" height="800" loading="lazy" decoding="async">
+              </figure>
+              <div class="vsl-card-label">
+                <h3>Early access to new experiences</h3>
+              </div>
+            </div>
+            <div class="vsl-card-back">
+              <h3>Early access</h3>
+              <p>Be first to try new sims, formats, and venue features before the public.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Food and drink discounts. Flip card for details.">
+          <div class="vsl-card-inner">
+            <div class="vsl-card-front">
+              <figure class="vsl-card-media">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit4" alt="Gourmet burger and sides at Velocity" width="600" height="800" loading="lazy" decoding="async">
+              </figure>
+              <div class="vsl-card-label">
+                <h3>Food &amp; drink discounts</h3>
+              </div>
+            </div>
+            <div class="vsl-card-back">
+              <h3>Food &amp; drink discounts</h3>
+              <p>Ongoing savings on the full food and beverage menu for members.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="vsl-card" tabindex="0" data-vsl-card aria-label="Exclusive perks. Flip card for details.">
+          <div class="vsl-card-inner">
+            <div class="vsl-card-front">
+              <figure class="vsl-card-media">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-vsl-benefit="benefit5" alt="Velocity Race Control neon signage" width="600" height="800" loading="lazy" decoding="async">
+              </figure>
+              <div class="vsl-card-label">
+                <h3>Exclusive perks</h3>
+              </div>
+            </div>
+            <div class="vsl-card-back">
+              <h3>Exclusive perks</h3>
+              <p>Automotive partnerships and member-only perks beyond the simulator.</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="vsl-pricing memberships" id="memberships" aria-labelledby="pricing-heading">
+      <div class="vsl-pricing__inner">
+        <h2 class="vsl-pricing__title" id="pricing-heading">Choose your membership tier</h2>
+        <p class="vsl-pricing__sub">Ready, set, go! Enjoy unbeatable benefits. Cancel anytime.</p>
+        <div class="vsl-pricing__grid">
+
+          <a class="vsl-tier" href="#" data-vsl-join="racer" target="_blank" rel="noopener noreferrer" aria-label="Join Racer membership tier (opens in new tab)">
+            <p class="vsl-tier__name">Racer</p>
+            <p class="vsl-tier__price">$99<span class="vsl-tier__period">/mo</span></p>
+            <p class="vsl-tier__tag">Drive more, save more.</p>
+            <hr class="vsl-tier__rule">
+            <ul class="vsl-tier__list">
+              <li>4 races per month</li>
+              <li>Monday &ndash; Friday</li>
+              <li>Racer sim only</li>
+              <li>10% off additional bookings (excludes happy hour)</li>
+              <li>Members only events</li>
+            </ul>
+            <span class="vsl-tier__btn">Join now</span>
+          </a>
+
+          <a class="vsl-tier" href="#" data-vsl-join="pro" target="_blank" rel="noopener noreferrer" aria-label="Join Pro membership tier (opens in new tab)">
+            <p class="vsl-tier__name">Pro</p>
+            <p class="vsl-tier__price">$169<span class="vsl-tier__period">/mo</span></p>
+            <p class="vsl-tier__tag">Can&rsquo;t get enough? We&rsquo;ve got you.</p>
+            <hr class="vsl-tier__rule">
+            <ul class="vsl-tier__list">
+              <li>6 races per month</li>
+              <li>Sunday &ndash; Friday</li>
+              <li>Pro or Racer sim</li>
+              <li>10% off additional bookings</li>
+              <li>10% off food &amp; non-alcoholic drinks</li>
+              <li>10% off competition fees</li>
+            </ul>
+            <span class="vsl-tier__btn">Join now</span>
+          </a>
+
+          <a class="vsl-tier" href="#" data-vsl-join="ultimate" target="_blank" rel="noopener noreferrer" aria-label="Join Ultimate membership tier (opens in new tab)">
+            <p class="vsl-tier__name">Ultimate</p>
+            <p class="vsl-tier__price">$299<span class="vsl-tier__period">/mo</span></p>
+            <p class="vsl-tier__tag"><em>Everything in Pro, dialed to eleven. Extremely limited availability.</em></p>
+            <hr class="vsl-tier__rule">
+            <ul class="vsl-tier__list">
+              <li>8 races per month</li>
+              <li>Any day, any location</li>
+              <li>Any sim</li>
+              <li>15% off additional bookings</li>
+              <li>10% off food &amp; non-alcoholic drinks</li>
+              <li>Early access to new experiences &amp; VIP events</li>
+            </ul>
+            <span class="vsl-tier__btn">Join now</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-faq" id="membership-faq" aria-labelledby="faq-heading">
+      <div class="vsl-faq__inner">
+        <h2 class="vsl-faq__title" id="faq-heading">You may be wondering:</h2>
+        <ul class="vsl-faq__list">
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-1" aria-expanded="false" aria-controls="vsl-faq-panel-1">
+              <span class="vsl-faq__label">How do I redeem my monthly races?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-1" role="region" aria-labelledby="vsl-faq-btn-1" hidden>
+              <p class="vsl-faq__answer">To redeem your monthly races, please visit Velocity in store. For Ultimate memberships, you can also call in ahead of time to book via phone.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-2" aria-expanded="false" aria-controls="vsl-faq-panel-2">
+              <span class="vsl-faq__label">How do I receive my monthly card?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-2" role="region" aria-labelledby="vsl-faq-btn-2" hidden>
+              <p class="vsl-faq__answer">Each month you will receive a new monthly card for the month. You&rsquo;ll be able to use the monthly membership card to redeem your monthly races as well as other membership benefits.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-3" aria-expanded="false" aria-controls="vsl-faq-panel-3">
+              <span class="vsl-faq__label">When does my membership begin?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-3" role="region" aria-labelledby="vsl-faq-btn-3" hidden>
+              <p class="vsl-faq__answer">Your membership begins the day your first payment is processed. The monthly cards will be available immediately upon this payment, please visit the store in person to redeem your card.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-4" aria-expanded="false" aria-controls="vsl-faq-panel-4">
+              <span class="vsl-faq__label">Can I redeem my monthly races via online booking?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-4" role="region" aria-labelledby="vsl-faq-btn-4" hidden>
+              <p class="vsl-faq__answer">Not at this time, we are working on a new system to enable this and we appreciate your patience in the meantime.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-5" aria-expanded="false" aria-controls="vsl-faq-panel-5">
+              <span class="vsl-faq__label">Do my unused monthly races roll over to the next month?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-5" role="region" aria-labelledby="vsl-faq-btn-5" hidden>
+              <p class="vsl-faq__answer">No, they do not roll over.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-6" aria-expanded="false" aria-controls="vsl-faq-panel-6">
+              <span class="vsl-faq__label">What are some other membership benefits?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-6" role="region" aria-labelledby="vsl-faq-btn-6" hidden>
+              <p class="vsl-faq__answer">The Velocity membership goes well beyond sim racing. We&rsquo;re excited to bring together unique members-only events from car rallies to special celebrations.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-7" aria-expanded="false" aria-controls="vsl-faq-panel-7">
+              <span class="vsl-faq__label">Can I share my monthly races?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-7" role="region" aria-labelledby="vsl-faq-btn-7" hidden>
+              <p class="vsl-faq__answer">You can share monthly races if you choose but you need to be present with your guest in order to do so.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-8" aria-expanded="false" aria-controls="vsl-faq-panel-8">
+              <span class="vsl-faq__label">Can I share other membership benefits?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-8" role="region" aria-labelledby="vsl-faq-btn-8" hidden>
+              <p class="vsl-faq__answer">You cannot share benefits beyond monthly races. For example, early access to certain products and experiences can only be redeemed by a current card holder.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-9" aria-expanded="false" aria-controls="vsl-faq-panel-9">
+              <span class="vsl-faq__label">What type of experiences are included in the Ultimate membership?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-9" role="region" aria-labelledby="vsl-faq-btn-9" hidden>
+              <p class="vsl-faq__answer">The Ultimate membership is limited to just a lucky 24 members. These members will have exclusive access to new driving experiences, professional coaching, and more.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-10" aria-expanded="false" aria-controls="vsl-faq-panel-10">
+              <span class="vsl-faq__label">What is included in the competition discount?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-10" role="region" aria-labelledby="vsl-faq-btn-10" hidden>
+              <p class="vsl-faq__answer">Pro &amp; Ultimate tiers get 10% off of leagues and Race of Champions fees. This excludes Endurance races, Car Meet races, and spontaneous races (such as April Fool&rsquo;s race).</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-11" aria-expanded="false" aria-controls="vsl-faq-panel-11">
+              <span class="vsl-faq__label">When can I use my additional booking discounts?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-11" role="region" aria-labelledby="vsl-faq-btn-11" hidden>
+              <p class="vsl-faq__answer">Discounts are available after you&rsquo;ve used all of your monthly sessions. Walk-ins only and excludes Happy Hour.</p>
+            </div>
+          </li>
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-12" aria-expanded="false" aria-controls="vsl-faq-panel-12">
+              <span class="vsl-faq__label">How do I cancel my monthly membership?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-12" role="region" aria-labelledby="vsl-faq-btn-12" hidden>
+              <p class="vsl-faq__answer">To cancel your membership, please call Velocity (832-627-4981) or visit us in store.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.vsl-membership');
+      var cfg = window.VSL_CONFIG || {};
+      var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+      if (root && px > 0) {
+        root.style.setProperty('--vsl-outdent', px + 'px');
+      }
+      var map = cfg.images || {};
+      var joins = cfg.joinLinks || {};
+      if (root) {
+        var heroFinish = map.heroFinishLine;
+        if (heroFinish) {
+          root.style.setProperty('--vsl-hero-finish', 'url("' + heroFinish + '")');
+        }
+        root.querySelectorAll('img[data-vsl-benefit]').forEach(function (img) {
+          var key = img.getAttribute('data-vsl-benefit');
+          if (key && map[key]) img.src = map[key];
+        });
+        root.querySelectorAll('a[data-vsl-join]').forEach(function (a) {
+          var k = a.getAttribute('data-vsl-join');
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+          if (k && joins[k]) a.setAttribute('href', joins[k]);
+        });
+
+        var benefitsSec = root.querySelector('#membership-benefits');
+        var tiersSec = root.querySelector('#memberships');
+        if (benefitsSec && tiersSec) {
+          var reduceScroll = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          benefitsSec.addEventListener('click', function (e) {
+            if (e.target.closest('.vsl-card')) return;
+            if (e.target.closest('a[href]')) return;
+            tiersSec.scrollIntoView({ behavior: reduceScroll ? 'auto' : 'smooth', block: 'start' });
+          });
+        }
+      }
+
+      var cards = document.querySelectorAll('[data-vsl-card]');
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      cards.forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          if (finePointer) return;
+          e.preventDefault();
+          card.classList.toggle('is-flipped');
+        });
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.classList.toggle('is-flipped');
+          }
+        });
+      });
+
+      var faqRoot = root || document;
+      var faqItems = faqRoot.querySelectorAll('.vsl-faq__item');
+      faqItems.forEach(function (item) {
+        var btn = item.querySelector('.vsl-faq__trigger');
+        var panel = item.querySelector('.vsl-faq__panel');
+        if (!btn || !panel) return;
+
+        btn.addEventListener('click', function () {
+          var willClose = item.classList.contains('is-open');
+          faqItems.forEach(function (other) {
+            if (other === item) return;
+            other.classList.remove('is-open');
+            var ob = other.querySelector('.vsl-faq__trigger');
+            var op = other.querySelector('.vsl-faq__panel');
+            if (ob && op) {
+              ob.setAttribute('aria-expanded', 'false');
+              op.hidden = true;
+            }
+          });
+          if (willClose) {
+            item.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+            panel.hidden = true;
+          } else {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+            panel.hidden = false;
+          }
+        });
+      });
+    })();
+  </script>

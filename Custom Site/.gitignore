@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Secrets
+.env
+.cms-users.json
+
+# Runtime / generated content (never commit live site content)
+content/staging/
+content/production/
+content/uploads/
+content/form-submissions/
+content/sync-meta.json
+content/backups/
+
+# Auto-generated HTML pages (rebuild with: npm run build)
+pages/*.html
+
+# OS / editor
+.DS_Store
+*.swp
+*.swo

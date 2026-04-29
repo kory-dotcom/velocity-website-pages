@@ -1,0 +1,1061 @@
+<!-- Velocity Party Pack Landing — VSM 1.0.0 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════
+     Velocity Party Pack Landing — VSM 1.0.0
+     ═══════════════════════════════════════════════ */
+  .vsl-partypack {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --silver: #DFDFDE;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: clamp(22px, 2.8vw, 36px);
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --vsl-outdent: 0px;
+    --vsl-bleed-top: 0px;
+    --vsl-bleed-bottom: 0px;
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .vsl-partypack:has(> main > .vsl-pp-hero:first-of-type) {
+    margin-top: var(--vsl-bleed-top);
+    margin-bottom: var(--vsl-bleed-bottom);
+  }
+  .vsl-partypack > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-partypack) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-partypack),
+  .elementor-container:has(.vsl-partypack),
+  .elementor-column:has(.vsl-partypack),
+  .elementor-column-wrap:has(.vsl-partypack),
+  .elementor-widget-wrap:has(.vsl-partypack),
+  .elementor-widget:has(.vsl-partypack) {
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .e-con:has(.vsl-partypack),
+  .e-con-inner:has(.vsl-partypack),
+  .e-con-inner > .elementor-widget:has(.vsl-partypack),
+  .elementor-element:has(> .elementor-widget-container > .vsl-partypack) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .vsl-partypack *, .vsl-partypack *::before, .vsl-partypack *::after { box-sizing: border-box; }
+  .vsl-partypack a { text-decoration: none; color: inherit; }
+  .vsl-partypack,
+  .vsl-partypack main,
+  .vsl-partypack section,
+  .vsl-pp-btn,
+  .vsl-pp-hero__inner {
+    pointer-events: auto !important;
+  }
+  #pp-hero, #pp-included, #pp-perfect-for, #pp-enhancements, #pp-cta { scroll-margin-top: 5rem; }
+
+  /* ── ELEMENTOR GLOBAL RESETS ── */
+  .vsl-partypack h1,
+  .vsl-partypack h2,
+  .vsl-partypack h3,
+  .vsl-partypack h4,
+  .vsl-partypack h5,
+  .vsl-partypack h6 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .vsl-partypack hr {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: 0 !important;
+    border-top: none !important;
+    background: rgba(16,24,43,0.1) !important;
+  }
+  .vsl-partypack p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .vsl-partypack ul {
+    display: block !important;
+    visibility: visible !important;
+    list-style-type: disc !important;
+  }
+  .vsl-partypack ul li {
+    display: list-item !important;
+    visibility: visible !important;
+  }
+
+  /* ── HERO ── */
+  .vsl-pp-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: visible;
+    isolation: isolate;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    background:
+      linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 48%, #0d1322 100%);
+    color: var(--circuit-white);
+  }
+  .vsl-pp-hero--hero-bg-vimeo {
+    background: linear-gradient(180deg, #0c1020 0%, var(--navy) 38%, #0d1322 100%);
+  }
+  .vsl-pp-hero--hero-bg-vimeo::before { opacity: 0.72; }
+  .vsl-pp-hero__video,
+  .vsl-pp-hero__banner-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    pointer-events: none;
+    display: none;
+    filter: brightness(0.72) contrast(1.05);
+  }
+  .vsl-pp-hero--has-video .vsl-pp-hero__video { display: block; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__video { display: none; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__banner-img { display: block; }
+  .vsl-pp-hero__vimeo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+    filter: brightness(0.72) contrast(1.05);
+  }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__vimeo { display: block; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__video,
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__banner-img { display: none !important; }
+  .vsl-pp-hero__vimeo iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-width: 177.78vh;
+    min-height: 100%;
+    border: 0;
+    transform: translate(-50%, -50%) scale(1.09);
+    transform-origin: center center;
+  }
+  .vsl-pp-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%);
+  }
+  .vsl-pp-hero::after {
+    content: '';
+    position: absolute;
+    bottom: var(--vsl-hero-finish-h);
+    left: -10%;
+    width: 120%;
+    height: 42%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(8deg, rgba(238,38,95,0.09) 0%, transparent 58%);
+    transform: skewY(-2deg);
+    transform-origin: bottom left;
+  }
+  .vsl-pp-hero__rings {
+    position: absolute;
+    inset: -5% -25% 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .vsl-pp-hero__rings span {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 234, 234, 0.07);
+    transform: translate(-50%, -50%) rotate(-14deg);
+    aspect-ratio: 2.35 / 1;
+  }
+  .vsl-pp-hero__rings span:nth-child(1) {
+    width: min(118vw, 920px);
+    opacity: 1;
+    box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.04);
+  }
+  .vsl-pp-hero__rings span:nth-child(2) {
+    width: min(138vw, 1080px);
+    opacity: 0.85;
+    border-color: rgba(41, 56, 147, 0.12);
+  }
+  .vsl-pp-hero__rings span:nth-child(3) {
+    width: min(162vw, 1280px);
+    opacity: 0.55;
+    border-color: rgba(253, 199, 12, 0.08);
+  }
+  .vsl-pp-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(56px, 14vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 8vw, 56px);
+    max-width: 52rem;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 0;
+  }
+  .vsl-pp-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 24px;
+    padding: 10px 28px;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 0.7rem + 1.2vw, 1.25rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+    border: none;
+    border-radius: 0;
+  }
+  .vsl-pp-hero__title {
+    margin: 0 0 0.55em;
+    padding: 10px 12px;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 1.2rem + 6vw, 4.2rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.02;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-align: center;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-pp-hero__title-accent { color: var(--magenta); }
+  .vsl-pp-hero__sub-panel {
+    position: relative;
+    margin: 0 0 2rem;
+    padding: 0.5rem 0.75rem;
+    max-width: 48ch;
+    border-radius: 8px;
+    background: rgba(4, 7, 18, 0.68);
+    border: none;
+  }
+  .vsl-pp-hero__sub {
+    margin: 0;
+    font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.62;
+    letter-spacing: 0.01em;
+    color: rgba(234, 234, 234, 0.92);
+  }
+  .vsl-pp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 28px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition:
+      color 0.22s ease, background-color 0.22s ease,
+      border-color 0.22s ease, box-shadow 0.22s ease,
+      transform 0.14s ease, filter 0.14s ease;
+  }
+  .vsl-pp-btn:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background-color: #d41e52;
+    border-color: #d41e52;
+    box-shadow: 0 8px 28px rgba(238,38,95,0.35);
+  }
+  .vsl-pp-btn:active {
+    filter: brightness(0.9);
+    transform: scale(0.98);
+    box-shadow: 0 3px 14px rgba(238,38,95,0.2);
+  }
+  .vsl-pp-btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-pp-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    box-sizing: border-box;
+    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* ── SECTION GRID ── */
+  .vsl-pp-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-pp-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: left;
+    text-wrap: balance;
+  }
+  .vsl-pp-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: left;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.55;
+    max-width: 52ch;
+  }
+
+  /* ── WHAT'S INCLUDED (dark) ── */
+  .vsl-pp-included {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+    padding: clamp(64px, 10vh, 120px) 0;
+    position: relative;
+  }
+  .vsl-pp-hero + .vsl-pp-included {
+    margin-top: -1px;
+    padding-top: calc(clamp(56px, 10vh, 120px) + 1px);
+  }
+  .vsl-pp-included .vsl-pp-section-title {
+    color: var(--circuit-white);
+  }
+  .vsl-pp-included .vsl-pp-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-pp-included .vsl-pp-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-pp-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .vsl-pp-split__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .vsl-pp-split__content .vsl-pp-section-sub {
+    margin-bottom: 0.5rem;
+  }
+  .vsl-pp-included-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .vsl-pp-included-list li {
+    display: flex !important;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.08rem);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--circuit-white);
+    opacity: 0.85;
+    list-style: none !important;
+  }
+  .vsl-pp-included-list li::before {
+    content: '';
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--magenta) 0%, var(--red) 100%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E");
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .vsl-pp-split__media {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18);
+  }
+  .vsl-pp-split__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .vsl-pp-split__cta {
+    margin-top: 0.5rem;
+  }
+
+  /* ── PERFECT FOR (dark) ── */
+  .vsl-pp-perfect {
+    background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(64px, 10vh, 120px) 0;
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+    color: var(--circuit-white);
+  }
+  .vsl-pp-perfect .vsl-pp-section-title {
+    color: var(--yellow);
+    text-align: center;
+  }
+  .vsl-pp-perfect .vsl-pp-section-title em {
+    font-style: italic;
+    color: var(--circuit-white);
+  }
+  .vsl-pp-perfect .vsl-pp-section-sub {
+    text-align: center;
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-pp-occasions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gutter);
+  }
+  .vsl-pp-occasion {
+    position: relative;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(234,234,234,0.08);
+    border-radius: 16px;
+    padding: clamp(24px, 3vw, 36px) clamp(20px, 2.5vw, 28px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    transition: box-shadow 0.35s ease, transform 0.25s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-pp-occasion:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+      transform: translateY(-4px);
+    }
+  }
+  .vsl-pp-occasion__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(238,38,95,0.18) 0%, rgba(41,56,147,0.18) 100%);
+    border: 1px solid rgba(234,234,234,0.06);
+    flex-shrink: 0;
+  }
+  .vsl-pp-occasion__icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: var(--circuit-white);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vsl-pp-occasion__name {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 0.8rem + 0.8vw, 1.2rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--circuit-white);
+    line-height: 1.25;
+  }
+  .vsl-pp-occasion__desc {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(234,234,234,0.72);
+  }
+
+  /* ── ENHANCEMENTS (dark) ── */
+  .vsl-pp-enhancements {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+    padding: clamp(64px, 10vh, 120px) 0;
+    position: relative;
+  }
+  .vsl-pp-enhancements .vsl-pp-section-title {
+    color: var(--circuit-white);
+    text-align: center;
+  }
+  .vsl-pp-enhancements .vsl-pp-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-pp-enhancements .vsl-pp-section-sub {
+    text-align: center;
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-pp-enhance-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gutter);
+  }
+  .vsl-pp-enhance-card {
+    background: #fff;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: clamp(28px, 3.5vw, 40px) clamp(24px, 3vw, 32px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18);
+    transition: box-shadow 0.35s ease, transform 0.25s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-pp-enhance-card:hover {
+      box-shadow: 0 18px 44px rgba(0,0,0,0.4), 0 6px 16px rgba(0,0,0,0.22);
+      transform: translateY(-4px);
+    }
+  }
+  .vsl-pp-enhance-card__accent {
+    height: 5px;
+    width: 48px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .vsl-pp-enhance-card:nth-child(1) .vsl-pp-enhance-card__accent { background: var(--magenta); }
+  .vsl-pp-enhance-card:nth-child(2) .vsl-pp-enhance-card__accent { background: var(--yellow); }
+  .vsl-pp-enhance-card:nth-child(3) .vsl-pp-enhance-card__accent { background: var(--blue); }
+  .vsl-pp-enhance-card__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 0.8rem + 0.9vw, 1.25rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--navy);
+    line-height: 1.25;
+  }
+  .vsl-pp-enhance-card__desc {
+    font-size: clamp(0.92rem, 0.86rem + 0.3vw, 1.02rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--slate-violet);
+  }
+
+  /* ── CTA SECTION ── */
+  .vsl-pp-cta-section {
+    background: var(--navy);
+    padding: clamp(48px, 8vh, 96px) 0 clamp(64px, 10vh, 120px);
+  }
+  .vsl-pp-cta__panel {
+    max-width: min(1100px, 100%);
+    margin: 0 auto;
+    border: 1px solid rgba(234, 234, 234, 0.08);
+    border-top: 3px solid var(--magenta);
+    border-radius: 22px;
+    background: rgba(255,255,255,0.04);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 20px 48px rgba(0,0,0,0.18);
+    padding: clamp(48px, 8vh, 96px) clamp(36px, 7vw, 88px);
+    text-align: center;
+  }
+  .vsl-pp-cta__panel h2 {
+    margin: 0 0 clamp(16px, 2.5vh, 22px);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(1.85rem, 1.15rem + 2.4vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    line-height: 1.08;
+    color: var(--yellow);
+    text-wrap: balance;
+  }
+  .vsl-pp-cta__panel p {
+    margin: 0 auto clamp(28px, 4vh, 40px);
+    color: rgba(234,234,234,0.85);
+    line-height: 1.65;
+    font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.3rem);
+    font-weight: 400;
+    max-width: 50ch;
+  }
+  .vsl-pp-cta__buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .vsl-pp-cta__panel .vsl-pp-btn {
+    min-height: 52px;
+    padding: 14px 40px;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(238, 38, 95, 0.22);
+  }
+  .vsl-pp-cta__panel .vsl-pp-btn:hover {
+    box-shadow: 0 10px 32px rgba(238, 38, 95, 0.32);
+  }
+  .vsl-pp-btn--outline {
+    background-color: transparent;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+  }
+  .vsl-pp-btn--outline:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background-color: var(--magenta);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .vsl-pp-occasions-grid,
+    .vsl-pp-enhance-grid {
+      grid-template-columns: 1fr;
+      max-width: min(480px, 100%);
+      margin-inline: auto;
+    }
+  }
+  @media (max-width: 900px) {
+    .vsl-pp-split {
+      grid-template-columns: 1fr;
+    }
+    .vsl-pp-split__media {
+      order: -1;
+      aspect-ratio: 16 / 10;
+    }
+    .vsl-pp-section-title,
+    .vsl-pp-section-sub {
+      text-align: left;
+    }
+  }
+  @media (max-width: 639px) {
+    .vsl-pp-hero__title { line-height: 1.08; }
+    .vsl-pp-section-title { line-height: 1.2; }
+    .vsl-pp-included { padding: 48px 0; }
+    .vsl-pp-hero + .vsl-pp-included { padding-top: calc(48px + 1px); }
+    .vsl-pp-perfect { padding: 48px 0; }
+    .vsl-pp-enhancements { padding: 48px 0; }
+    .vsl-pp-cta-section { padding: 40px 0 48px; }
+    .vsl-pp-cta__panel {
+      padding: clamp(36px, 9vw, 56px) clamp(22px, 6vw, 32px);
+      border-radius: 18px;
+    }
+    .vsl-pp-cta__panel .vsl-pp-btn {
+      min-height: 48px;
+      padding: 12px 32px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .vsl-pp-hero__inner {
+      padding: clamp(44px, 12vw, 80px) clamp(16px, 5vw, var(--page-margin)) clamp(24px, 6vw, 40px);
+    }
+    .vsl-pp-occasions-grid,
+    .vsl-pp-enhance-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-pp-btn {
+      transition: color 0.22s ease, background-color 0.22s ease,
+        border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease;
+    }
+    .vsl-pp-btn:active { transform: none; }
+    .vsl-pp-occasion, .vsl-pp-enhance-card { transition: none; }
+    .vsl-pp-occasion:hover, .vsl-pp-enhance-card:hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+</style>
+
+<div class="vsl-partypack" data-vsl-config='{"links":{"inquire":"https://velocitysimracinglounge.tripleseat.com/party_request/45723","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"included":"https://velocitysimlounge.com/wp-content/uploads/2025/07/DSC01015.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"","elementorColumnOutdentPx":0}'>
+  <main>
+
+    <!-- ▸ Hero -->
+    <section class="vsl-pp-hero" id="pp-hero" aria-labelledby="pp-hero-title">
+      <div class="vsl-pp-hero__vimeo" data-vsl-pp-vimeo hidden aria-hidden="true"></div>
+      <video class="vsl-pp-hero__video" data-vsl-pp-video autoplay muted loop playsinline aria-hidden="true"></video>
+      <img class="vsl-pp-hero__banner-img" data-vsl-pp-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      <div class="vsl-pp-hero__rings" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vsl-pp-hero__inner">
+        <span class="vsl-pp-hero__eyebrow">Party Packs</span>
+        <h1 class="vsl-pp-hero__title" id="pp-hero-title">
+          Big Thrills for <span class="vsl-pp-hero__title-accent">Social Celebrations</span>
+        </h1>
+        <div class="vsl-pp-hero__sub-panel">
+          <p class="vsl-pp-hero__sub">
+            Celebrating a birthday, bachelor or bachelorette party, graduation, or special milestone? Party Packs give groups of 5&ndash;16 guests an unbeatable package at Houston's most exciting venue.
+          </p>
+        </div>
+        <a class="vsl-pp-btn" data-vsl-pp-link="inquire" href="https://velocitysimracinglounge.tripleseat.com/party_request/45723" target="_blank" rel="noopener noreferrer">Inquire today</a>
+      </div>
+      <div class="vsl-pp-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ What's Included -->
+    <section class="vsl-pp-included" id="pp-included" aria-labelledby="pp-included-heading">
+      <div class="vsl-pp-grid">
+        <div class="vsl-pp-split">
+          <div class="vsl-pp-split__content">
+            <h2 class="vsl-pp-section-title" id="pp-included-heading">
+              What's <em>Included</em>
+            </h2>
+            <p class="vsl-pp-section-sub">Everything you need for an unforgettable celebration, all in one package. Arrive, race, eat, drink, and celebrate &mdash; we handle the rest.</p>
+            <ul class="vsl-pp-included-list">
+              <li>Dedicated racing simulators for your entire group</li>
+              <li>Reserved seating and lounge area</li>
+              <li>Full Velocity dinner-and-drinks experience</li>
+              <li>Everyone races together and celebrates together</li>
+              <li>Groups of 5&ndash;16 guests</li>
+              <li>Dedicated event manager and support staff</li>
+            </ul>
+            <a class="vsl-pp-btn vsl-pp-split__cta" data-vsl-pp-link="inquire" href="https://velocitysimracinglounge.tripleseat.com/party_request/45723" target="_blank" rel="noopener noreferrer">Inquire today</a>
+          </div>
+          <div class="vsl-pp-split__media">
+            <img data-vsl-pp-img="included" src="https://velocitysimlounge.com/wp-content/uploads/2025/07/DSC01015.webp" alt="Party Pack guests celebrating at Velocity Sim Racing Lounge Houston" width="2400" height="1600" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Perfect For -->
+    <section class="vsl-pp-perfect" id="pp-perfect-for" aria-labelledby="pp-perfect-heading">
+      <div class="vsl-pp-grid">
+        <h2 class="vsl-pp-section-title" id="pp-perfect-heading">
+          Perfect <em>For</em>
+        </h2>
+        <p class="vsl-pp-section-sub">Party Packs are designed for groups ready to celebrate. Whatever the occasion, Velocity makes it unforgettable.</p>
+
+        <div class="vsl-pp-occasions-grid">
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Birthday Parties</h3>
+            <p class="vsl-pp-occasion__desc">Make it a birthday to remember. Race your friends, then celebrate with food and drinks at the lounge.</p>
+          </div>
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Bachelor &amp; Bachelorette</h3>
+            <p class="vsl-pp-occasion__desc">An adrenaline-fueled celebration before the big day. Compete, laugh, and make memories on the track.</p>
+          </div>
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Coming of Age</h3>
+            <p class="vsl-pp-occasion__desc">Mark the milestone in style. A premium, high-energy venue for teens and young adults ready to celebrate.</p>
+          </div>
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Graduation Parties</h3>
+            <p class="vsl-pp-occasion__desc">They earned it &mdash; now celebrate it. Graduation parties at Velocity are anything but ordinary.</p>
+          </div>
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Special Milestones</h3>
+            <p class="vsl-pp-occasion__desc">Anniversaries, promotions, or just because &mdash; any milestone is worth celebrating at full throttle.</p>
+          </div>
+
+          <div class="vsl-pp-occasion">
+            <div class="vsl-pp-occasion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="vsl-pp-occasion__name">Friend &amp; Family Gatherings</h3>
+            <p class="vsl-pp-occasion__desc">Get the crew together for a night of friendly competition, great food, and non-stop fun.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Enhancements -->
+    <section class="vsl-pp-enhancements" id="pp-enhancements" aria-labelledby="pp-enhance-heading">
+      <div class="vsl-pp-grid">
+        <h2 class="vsl-pp-section-title" id="pp-enhance-heading">
+          Make It <em>Unforgettable</em>
+        </h2>
+        <p class="vsl-pp-section-sub">Velocity-only enhancements that take your celebration to the next level.</p>
+
+        <div class="vsl-pp-enhance-grid">
+
+          <div class="vsl-pp-enhance-card">
+            <div class="vsl-pp-enhance-card__accent"></div>
+            <h3 class="vsl-pp-enhance-card__name">Custom Racetrack Branding</h3>
+            <p class="vsl-pp-enhance-card__desc">Put your name, logo, or message on a custom-designed racetrack. Your guests race on a track built just for you.</p>
+          </div>
+
+          <div class="vsl-pp-enhance-card">
+            <div class="vsl-pp-enhance-card__accent"></div>
+            <h3 class="vsl-pp-enhance-card__name">Custom Trophies &amp; Podium</h3>
+            <p class="vsl-pp-enhance-card__desc">Celebrate your winners with custom branded trophies and a podium ceremony &mdash; complete with the full racing fanfare.</p>
+          </div>
+
+          <div class="vsl-pp-enhance-card">
+            <div class="vsl-pp-enhance-card__accent"></div>
+            <h3 class="vsl-pp-enhance-card__name">Specialty Event Cocktail</h3>
+            <p class="vsl-pp-enhance-card__desc">Collaborate with our in-house mixologists to craft a signature drink created exclusively for your celebration.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Bottom CTA -->
+    <section class="vsl-pp-cta-section" id="pp-cta" aria-labelledby="pp-cta-heading">
+      <div class="vsl-pp-grid">
+        <div class="vsl-pp-cta__panel">
+          <h2 id="pp-cta-heading">Ready to Party?</h2>
+          <p>Lock in your Party Pack and give your group the most exciting celebration in Houston. Inquire today and our events team will handle the rest.</p>
+          <div class="vsl-pp-cta__buttons">
+            <a class="vsl-pp-btn" data-vsl-pp-link="inquire" href="https://velocitysimracinglounge.tripleseat.com/party_request/45723" target="_blank" rel="noopener noreferrer">Inquire today</a>
+            <a class="vsl-pp-btn vsl-pp-btn--outline" data-vsl-pp-link="allEvents" href="https://velocitysimlounge.com/group-events/">View all events</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  function vslPPInit() {
+    var root = document.querySelector('.vsl-partypack');
+    if (!root || root._vslInitDone) return;
+    root._vslInitDone = true;
+
+    var cfg;
+    try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
+    window.VSL_PP_CONFIG = cfg;
+
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+    var images = cfg.images || {};
+    var links = cfg.links || {};
+
+    if (images.heroFinishLine) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+    }
+
+    var heroVideo = cfg.heroVideo || '';
+    if (heroVideo) {
+      var video = root.querySelector('video[data-vsl-pp-video]');
+      var bannerImg = root.querySelector('[data-vsl-pp-hero-banner]');
+      var vimeoWrap = root.querySelector('[data-vsl-pp-vimeo]');
+      var hero = root.querySelector('.vsl-pp-hero');
+      if (hero) {
+        var path = heroVideo.split('?')[0].split('#')[0];
+        var vimeoMatch = heroVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        var isVideoFile = /\.(mp4|webm|ogg|mov|m4v)$/i.test(path);
+        hero.classList.remove('vsl-pp-hero--hero-bg-image', 'vsl-pp-hero--hero-bg-vimeo');
+        if (vimeoMatch && vimeoWrap) {
+          var vid = vimeoMatch[1];
+          var vimeoSrc =
+            'https://player.vimeo.com/video/' + vid +
+            '?autoplay=1&muted=1&loop=1&background=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&api=1';
+          vimeoWrap.innerHTML =
+            '<iframe id="vsl-pp-vimeo-iframe" src="' +
+            vimeoSrc.replace(/"/g, '&quot;') +
+            '" style="position:absolute;top:50%;left:50%;width:110%;height:110%;transform:translate(-50%,-50%) scale(1.09);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+          vimeoWrap.removeAttribute('hidden');
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-pp-hero--has-video', 'vsl-pp-hero--hero-bg-vimeo');
+          (function(iframeEl) {
+            if (!iframeEl) return;
+            function bindLoop() {
+              try {
+                if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+                var pl = new Vimeo.Player(iframeEl);
+                pl.on('ended', function(){ pl.setCurrentTime(0).then(function(){ return pl.play(); }).catch(function(){}); });
+              } catch(e){}
+            }
+            var sid = 'vsl-pp-vimeo-player-api';
+            if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindLoop(); }
+            else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindLoop); }
+            else {
+              var sc = document.createElement('script');
+              sc.id = sid;
+              sc.src = 'https://player.vimeo.com/api/player.js';
+              sc.async = true;
+              sc.onload = bindLoop;
+              document.head.appendChild(sc);
+            }
+          })(vimeoWrap.querySelector('iframe'));
+        } else if (isVideoFile && video) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          video.src = heroVideo;
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          hero.classList.add('vsl-pp-hero--has-video');
+        } else if (bannerImg) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          bannerImg.src = heroVideo;
+          bannerImg.removeAttribute('hidden');
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-pp-hero--has-video', 'vsl-pp-hero--hero-bg-image');
+        }
+      }
+    }
+
+    root.querySelectorAll('img[data-vsl-pp-img]').forEach(function(img) {
+      var key = img.getAttribute('data-vsl-pp-img');
+      if (key && images[key]) img.src = images[key];
+    });
+
+    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function(a) {
+      var key = a.getAttribute('data-vsl-pp-link');
+      if (key && links[key]) {
+        var href = links[key];
+        a.setAttribute('href', href);
+        if (/^https?:\/\//i.test(href)) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
+    });
+  }
+
+  function tryInit() { try { vslPPInit(); } catch(e) { console.error('[VSL Party Pack] init error:', e); } }
+
+  if (document.readyState !== 'loading') { tryInit(); } else { document.addEventListener('DOMContentLoaded', tryInit); }
+
+  if (window.elementorFrontend && window.elementorFrontend.hooks) {
+    window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+  } else {
+    window.addEventListener('elementor/frontend/init', function() {
+      if (window.elementorFrontend && window.elementorFrontend.hooks) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+      }
+    });
+  }
+
+  window.addEventListener('load', tryInit);
+
+  var attempts = 0;
+  var poller = setInterval(function() {
+    attempts++;
+    var r = document.querySelector('.vsl-partypack');
+    if (r && r._vslInitDone) { clearInterval(poller); return; }
+    tryInit();
+    if (attempts >= 20) clearInterval(poller);
+  }, 300);
+})();
+</script>

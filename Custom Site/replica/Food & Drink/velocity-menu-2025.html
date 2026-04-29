@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Menu — Interactive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700&family=Khand:ital,wght@0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #10182B;
+      --indigo: #191B4D;
+      --magenta: #EE265F;
+      --blue: #293893;
+      --yellow: #FDC70C;
+      --paper: #f4f3ef;
+      --card: #fff;
+      --ink: #1a1f2e;
+      --muted: #5F5782;
+      --nav-h: 52px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .vm-card { transition: none; }
+      .vm-nav__track { scroll-behavior: auto; }
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.45;
+      padding-bottom: 3rem;
+    }
+    .vm-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--navy);
+      color: #eaeaea;
+      padding: 0.65rem clamp(1rem, 3vw, 1.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-bottom: 3px solid var(--magenta);
+    }
+    .vm-header a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .vm-header a:hover { color: var(--yellow); }
+    .vm-header__title {
+      font-family: Khand, sans-serif;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 1rem;
+    }
+    .vm-hero {
+      position: relative;
+      min-height: 38vh;
+      display: flex;
+      align-items: flex-end;
+      padding: clamp(1.75rem, 5vw, 3rem);
+      background: #0a0e18 center/cover no-repeat;
+      background-image:
+        linear-gradient(180deg, rgba(16, 24, 43, 0.25) 0%, rgba(16, 24, 43, 0.82) 100%),
+        url("https://lh3.googleusercontent.com/pw/AP1GczNnCpUlPCLW_VbBvMzBt932OvyjjLuN_5l6JlRLvb6DacvTIwLXqDN_qx_x7pydc0jwpRm-nFbaT-cVCU_5ZAnjCtDib5lL_zdbi1bu3XuSC4QHc3k=w1920-h1280-no");
+    }
+    .vm-hero h1 {
+      margin: 0 0 0.25em;
+      font-family: Khand, sans-serif;
+      font-size: clamp(1.85rem, 4.5vw, 3rem);
+      font-weight: 700;
+      font-style: italic;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .vm-hero p {
+      margin: 0;
+      max-width: 36rem;
+      color: rgba(255,255,255,0.92);
+      font-size: 0.95rem;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+    }
+    .vm-nav {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 40;
+      background: rgba(244, 243, 239, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(16, 24, 43, 0.08);
+      box-shadow: 0 4px 20px rgba(16, 24, 43, 0.06);
+    }
+    .vm-nav__track {
+      display: flex;
+      gap: 0.35rem;
+      padding: 0.65rem clamp(0.75rem, 2vw, 1.25rem);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+    .vm-nav__track::-webkit-scrollbar { height: 4px; }
+    .vm-nav__track::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 4px; }
+    .vm-nav a {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--blue);
+      background: #fff;
+      border: 1px solid rgba(41, 56, 147, 0.2);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .vm-nav a:hover, .vm-nav a:focus-visible {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      outline: none;
+    }
+    .vm-main { max-width: 1180px; margin: 0 auto; padding: clamp(1rem, 3vw, 2rem); }
+    .vm-section {
+      margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+      scroll-margin-top: calc(var(--nav-h) + 56px);
+    }
+    .vm-section__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.65rem;
+      border-bottom: 3px solid var(--magenta);
+    }
+    .vm-section__head h2 {
+      margin: 0;
+      font-family: Khand, sans-serif;
+      font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+    }
+    .vm-section__note {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .vm-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+    @media (min-width: 560px) { .vm-grid--2 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .vm-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 560px) { .vm-grid--3 { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .vm-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+    .vm-card {
+      background: var(--card);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(16, 24, 43, 0.07);
+      box-shadow: 0 6px 24px rgba(16, 24, 43, 0.07);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+    @media (hover: hover) {
+      .vm-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 40px rgba(16, 24, 43, 0.12);
+      }
+    }
+    .vm-card__media {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, #e4e6ec, #c8ccd6);
+      cursor: zoom-in;
+      border: none;
+      padding: 0;
+      width: 100%;
+      display: block;
+    }
+    .vm-card__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .vm-card__media--placeholder {
+      cursor: default;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Khand, sans-serif;
+      font-style: italic;
+      font-size: 2rem;
+      font-weight: 700;
+      color: rgba(16, 24, 43, 0.15);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .vm-card__body { padding: 1rem 1.1rem 1.15rem; }
+    .vm-card__row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.35rem 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+    .vm-card__name {
+      margin: 0;
+      font-family: Khand, sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .vm-card__price {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--magenta);
+      white-space: nowrap;
+    }
+    .vm-card__desc {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .vm-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+    .vm-tag {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(253, 199, 12, 0.25);
+      color: #6b5500;
+    }
+    .vm-tag--gf { background: rgba(41, 56, 147, 0.12); color: var(--blue); }
+    .vm-tag--v { background: rgba(238, 38, 95, 0.12); color: var(--magenta); }
+    .vm-list-block {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.25rem 1.35rem;
+      border: 1px solid rgba(16, 24, 43, 0.07);
+      margin-bottom: 1rem;
+    }
+    .vm-list-block h3 {
+      margin: 0 0 0.65rem;
+      font-family: Khand, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--blue);
+    }
+    .vm-list-block ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      columns: 1;
+    }
+    @media (min-width: 640px) {
+      .vm-list-block ul.columns-2 { columns: 2; gap: 1.5rem; }
+      .vm-list-block ul.columns-3 { columns: 3; gap: 1rem; }
+    }
+    .vm-list-block li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding: 0.2rem 0;
+      break-inside: avoid;
+    }
+    .vm-cocktail-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-style: italic;
+      margin: 0.15rem 0 0;
+    }
+    .vm-footer {
+      max-width: 720px;
+      margin: 2rem auto 0;
+      padding: 1.25rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.55;
+      border-top: 1px solid rgba(16, 24, 43, 0.1);
+    }
+    .vm-footer a { color: var(--blue); font-weight: 600; }
+    .vm-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: rgba(16, 24, 43, 0.93);
+    }
+    .vm-lightbox[hidden] { display: none !important; }
+    .vm-lightbox__close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.35);
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .vm-lightbox img {
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <header class="vm-header">
+    <a href="https://velocitysimlounge.com/food-and-drink/">← Food &amp; Drink</a>
+    <span class="vm-header__title">Velocity Menu</span>
+    <a href="https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3" target="_blank" rel="noopener noreferrer">Photo gallery</a>
+  </header>
+
+  <div class="vm-hero">
+    <div>
+      <h1>Full menu</h1>
+      <p>Built from our 2025 menu. Tap a photo to enlarge. Items and prices may change—ask your server for today’s specials.</p>
+    </div>
+  </div>
+
+  <nav class="vm-nav" aria-label="Menu sections">
+    <div class="vm-nav__track">
+      <a href="#entrees">Entrées</a>
+      <a href="#appetizers">Appetizers</a>
+      <a href="#sweet">Sweet</a>
+      <a href="#cocktails">Cocktails</a>
+      <a href="#classics">Race classics</a>
+      <a href="#zero">Zero proof</a>
+      <a href="#beer">Beer</a>
+      <a href="#wine">Wine</a>
+      <a href="#bar">Bar &amp; coffee</a>
+      <a href="#flights">Flights</a>
+    </div>
+  </nav>
+
+  <main class="vm-main">
+    <section class="vm-section" id="entrees" aria-labelledby="h-entrees">
+      <div class="vm-section__head">
+        <h2 id="h-entrees">Entrées</h2>
+        <p class="vm-section__note">GF = no gluten ingredients; cross-contact still possible.</p>
+      </div>
+      <div class="vm-grid vm-grid--3">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Chicken Diavolo Taquitos">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNbUCFmSjanuoYm1LqK_BxGN677NKHVTIvojnE9UutlX_B8iPDnRDSzI9fPPJ82DcJOqp1nDXRXWX1HXkp3w7OJ8_Enrp-Gau-HUGpbvP_ywOV3HDM=w900-h600-no" alt="Chicken Diavolo Taquitos" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Chicken Diavolo Taquitos</h3>
+              <span class="vm-card__price">$12</span>
+            </div>
+            <p class="vm-card__desc">Spicy baked chicken taquitos filled with shredded chicken, cream cheese, sour cream, cheddar jack, with chipotle sauce.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">V</div>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Beef Taquitos</h3>
+              <span class="vm-card__price">$12</span>
+            </div>
+            <p class="vm-card__desc">Ground beef taquitos smothered in queso and sour cream.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Cheesy Sliders">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNnCpUlPCLW_VbBvMzBt932OvyjjLuN_5l6JlRLvb6DacvTIwLXqDN_qx_x7pydc0jwpRm-nFbaT-cVCU_5ZAnjCtDib5lL_zdbi1bu3XuSC4QHc3k=w900-h600-no" alt="Cheesy Sliders" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Cheesy Sliders</h3>
+              <span class="vm-card__price">$14</span>
+            </div>
+            <p class="vm-card__desc">Beef sliders with caramelized onions, dill relish, and cheese.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">B</div>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Bacon Cheeseburger</h3>
+              <span class="vm-card__price">$10</span>
+            </div>
+            <p class="vm-card__desc">Beef burger with caramelized onions and cheese. Add chips +$2.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Wagyu Sliders">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNnCpUlPCLW_VbBvMzBt932OvyjjLuN_5l6JlRLvb6DacvTIwLXqDN_qx_x7pydc0jwpRm-nFbaT-cVCU_5ZAnjCtDib5lL_zdbi1bu3XuSC4QHc3k=w900-h600-no" alt="Wagyu Sliders" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Wagyu Sliders</h3>
+              <span class="vm-card__price">$18</span>
+            </div>
+            <p class="vm-card__desc">Wagyu sliders with caramelized onions, garlic mustard aioli, and cheese, with a side of fries.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Margherita Flatbread">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w900-h600-no" alt="Margherita Flatbread" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Margherita Flatbread</h3>
+              <span class="vm-card__price">$15</span>
+            </div>
+            <p class="vm-card__desc">Tomatoes, fresh mozzarella, and fresh basil flatbread.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: BBQ Chicken Flatbread">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w900-h600-no" alt="BBQ Chicken Flatbread" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">BBQ Chicken Flatbread</h3>
+              <span class="vm-card__price">$16</span>
+            </div>
+            <p class="vm-card__desc">Gochujang BBQ sauce, shredded cheese, and chicken flatbread.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">Q</div>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">BBQ Cheese Flatbread</h3>
+              <span class="vm-card__price">$15</span>
+            </div>
+            <p class="vm-card__desc">Gochujang BBQ sauce, mozzarella, cheddar, and sliced red onions.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Tsukune Meatballs">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPJKU6Yyhsey8ZLvm8-HmG6IYBi1-zMADyaxBvAWm7w_CX_2oEfWVTqlXdb0QXYLKxXCvDRbBUVylKkAAkDDBun-IiJiQkWWTLrL5kSDBhrQVnHTwY=w900-h600-no" alt="Tsukune Meatballs" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Tsukune Meatballs</h3>
+              <span class="vm-card__price">$15</span>
+            </div>
+            <p class="vm-card__desc">Japanese-style teriyaki chicken meatballs on creamy mashed garlic sweet potatoes.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Pork Belly Lettuce Wraps">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczM4_9qUHTk5sVI444hMee1CWXC_b3mrY7MlYZAlUcz0YVb-ifI3d7rcqbrL6WxpcxbFbtXKvi6jQCW158Lq3d6Yv8nwWq1-f4PnwHT-A77hsa0d0Sk=w900-h600-no" alt="Pork Belly Lettuce Wraps" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Pork Belly Lettuce Wraps</h3>
+              <span class="vm-card__price">$16</span>
+            </div>
+            <p class="vm-card__desc">Pineapple marinated pork belly, pickled carrots, bean sprouts, lettuce, with gochujang sauce.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="appetizers" aria-labelledby="h-app">
+      <div class="vm-section__head">
+        <h2 id="h-app">Appetizers</h2>
+      </div>
+      <div class="vm-grid vm-grid--3">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Triple Crown Platter">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczP-elxqw9dVSwOGyF-522RHhz0HsW3aRaVVsnd7bJQoH8j5hn_YwQeXebVYvWLFwhWOQdY4STKsMEgOEU2yC9UUmeHG1UsCVQhdw09626UOjyehdKc=w900-h600-no" alt="Triple Crown Platter" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Triple Crown Platter</h3>
+              <span class="vm-card__price">$18</span>
+            </div>
+            <p class="vm-card__desc">Chips &amp; queso, chicken diavolo taquitos, &amp; cheesy sliders.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">C</div>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Chips &amp; Queso</h3>
+              <span class="vm-card__price">$11</span>
+            </div>
+            <p class="vm-card__desc">White American queso, pico de gallo, chipotle salsa, tortilla chips. Add ground beef +$2.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">S</div>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Salmon Dip</h3>
+              <span class="vm-card__price">$12</span>
+            </div>
+            <p class="vm-card__desc">Smoked salmon, onions, dill, scallions, capers, lemon juice, kettle-cooked chips.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Charcuterie Board">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczP-elxqw9dVSwOGyF-522RHhz0HsW3aRaVVsnd7bJQoH8j5hn_YwQeXebVYvWLFwhWOQdY4STKsMEgOEU2yC9UUmeHG1UsCVQhdw09626UOjyehdKc=w900-h600-no" alt="Charcuterie Board" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Charcuterie Board</h3>
+              <span class="vm-card__price">$22</span>
+            </div>
+            <p class="vm-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="sweet" aria-labelledby="h-sweet">
+      <div class="vm-section__head">
+        <h2 id="h-sweet">Sweet</h2>
+      </div>
+      <div class="vm-grid vm-grid--2">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge photo: Skillet Cookie">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPHQXnr8GSXHNxhn-pX3RLu98Jw3htcXOv8xnSuQc0bVNgFwaeUpL7HU2lys_hRGl6cTsyISmebc5sEhRVWEAlp10BTgy4tasqYpY9T-H55BOjf4l8=w900-h600-no" alt="Skillet chocolate cookie" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <div class="vm-card__row">
+              <h3 class="vm-card__name">Skillet Chocolate Cookie &amp; Ice Cream</h3>
+              <span class="vm-card__price">$8</span>
+            </div>
+            <p class="vm-card__desc">Chocolate chip cookie topped with Cosmic vanilla bean ice cream, drizzled with chocolate and caramel.</p>
+            <div class="vm-tags"><span class="vm-tag vm-tag--gf">GF</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="cocktails" aria-labelledby="h-sig">
+      <div class="vm-section__head">
+        <h2 id="h-sig">Signature Cocktails</h2>
+      </div>
+      <div class="vm-grid vm-grid--3">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: Suzuka Old Fashioned">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Cocktail" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">Suzuka Old Fashioned</h3>
+            <p class="vm-cocktail-desc">A smooth take on an icon.</p>
+            <p class="vm-card__desc">Suntory whiskey, simple, bitters, orange, cherry.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: Rain Master Caipirinha">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Cocktail" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">Rain Master Caipirinha</h3>
+            <p class="vm-cocktail-desc">A Brazilian classic, timeless like the legend.</p>
+            <p class="vm-card__desc">Cachaça, lime, orange, mint.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: The Hudson Hornet">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w900-h600-no" alt="Cocktail" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">The Hudson Hornet</h3>
+            <p class="vm-cocktail-desc">Floatin’ like a Cadillac.</p>
+            <p class="vm-card__desc">Grey Goose, fresh blueberries, lime juice, orange juice, simple syrup, blackberry syrup.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: Cafe Racer Carajillo">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Cocktail" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">Cafe Racer Carajillo</h3>
+            <p class="vm-cocktail-desc">When espresso and cinnamon come together, the result is pure ignition.</p>
+            <p class="vm-card__desc">Cold brew, Licor 43, topped with cinnamon.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: Le Mans 75">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Le Mans 75" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">Le Mans 75</h3>
+            <p class="vm-cocktail-desc">A refreshing take on the most famous race in the world.</p>
+            <p class="vm-card__desc">Gin, prosecco, elderflower, Chambord, lemon.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: Pace Car">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Pace Car" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">Pace Car</h3>
+            <p class="vm-cocktail-desc">So delicious, you’ll have to pace yourself.</p>
+            <p class="vm-card__desc">Rémy Martin VSOP, Cointreau, lemon, orange.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Enlarge: The Green Hell">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w900-h600-no" alt="The Green Hell" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name" style="margin-bottom:0.25rem">The Green Hell</h3>
+            <p class="vm-cocktail-desc">The Nürburgring’s Nordschleife twists and turns in liquid form.</p>
+            <p class="vm-card__desc">Absinthe, elderflower, melon liqueur, lime, pineapple, Midori with a digestif chaser.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="classics" aria-labelledby="h-classics">
+      <div class="vm-section__head">
+        <h2 id="h-classics">Race Classics</h2>
+      </div>
+      <div class="vm-grid vm-grid--2">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Margarita">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Margarita" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Margarita</h3>
+            <p class="vm-card__desc">Blanco tequila, lime, agave.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">P</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Pimm’s Cup</h3>
+            <p class="vm-card__desc">Pimm’s #1, gin, lemon, cucumber, ginger ale.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">I</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Irish Mule</h3>
+            <p class="vm-card__desc">Irish whiskey, lime, ginger beer.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">R</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Ranch Water</h3>
+            <p class="vm-card__desc">Tequila, Cointreau, lime, Topo Chico.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="zero" aria-labelledby="h-zero">
+      <div class="vm-section__head">
+        <h2 id="h-zero">Zero proof</h2>
+        <p class="vm-section__note">Specialty lemonades: spicy ginger, mint lavender, or strawberry.</p>
+      </div>
+      <div class="vm-grid vm-grid--3">
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Agua de Jamaica">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczO9glU9GXt9clyDA_s_3W8vz5MMkStqTNAq3xYl_SVkvkc5e9sdByBARV9ZAQlzlDzwbwLVE4VP3OzFAVrUPTlHoDuQrH0gxPJKTA-qhjfArcfXObM=w900-h600-no" alt="Agua de Jamaica" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Agua de Jamaica</h3>
+            <p class="vm-card__desc">Hibiscus, lime, sugar, water.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Spicy Ginger Lemonade">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczOaMTWcaSNcAPOGMNd1vr1AxHoAvk8TUASfnpxgSx1t72EfMvsdVd2RsvSyg458DeWrFdPd0zK7FUWjTYXchvM33rtD7VVnVe4BzJxQG3nuJLu4APE=w900-h600-no" alt="Spicy Ginger Lemonade" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Spicy Ginger Lemonade</h3>
+            <p class="vm-card__desc">One of our three specialty lemonades.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">Q</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">The Quattro</h3>
+            <p class="vm-card__desc">Lemon, mint &amp; white peach syrup, Topo Chico.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Virgin Mojito">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczNqQ8wahCAdePWSUNaC35Sned9K1Q8o52f-8cfb-0uNHejYAD2qSU8yFsmB0O1gKicxl-pA0aj72uVKKtdVzy8h54wTAyuHKXrg9dYfH_60MjqWASw=w900-h600-no" alt="Virgin Mojito" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Virgin Mojito</h3>
+            <p class="vm-card__desc">Lime, mint, sugar, soda.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="vm-section" id="beer" aria-labelledby="h-beer">
+      <div class="vm-section__head">
+        <h2 id="h-beer">Beer</h2>
+      </div>
+      <div class="vm-list-block">
+        <h3>Domestic</h3>
+        <ul class="columns-2">
+          <li>Austin East Cider</li>
+          <li>Coors Light</li>
+          <li>Michelob Ultra</li>
+          <li>Miller Lite</li>
+          <li>Pacifico</li>
+          <li>Saint Arnold Citrus Shandy</li>
+          <li>Saint Arnold Seasonal</li>
+          <li>White Claw</li>
+        </ul>
+      </div>
+      <div class="vm-list-block">
+        <h3>Draft</h3>
+        <ul class="columns-2">
+          <li>Blue Moon</li>
+          <li>Karbach Love Street</li>
+          <li>Modelo Especial</li>
+          <li>Mini Boss</li>
+          <li>Seasonal</li>
+          <li>Shiner Bock</li>
+        </ul>
+      </div>
+      <div class="vm-list-block">
+        <h3>Import</h3>
+        <ul class="columns-2">
+          <li>Corona</li>
+          <li>Dos Equis</li>
+          <li>Guinness</li>
+          <li>Stella Artois</li>
+          <li>Heineken 0.0</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vm-section" id="wine" aria-labelledby="h-wine">
+      <div class="vm-section__head">
+        <h2 id="h-wine">Wine by the glass or bottle</h2>
+      </div>
+      <div class="vm-list-block">
+        <div class="vm-grid vm-grid--2" style="gap:1.25rem">
+          <div>
+            <h3>White</h3>
+            <ul>
+              <li>Chardonnay</li>
+              <li>Sauvignon Blanc</li>
+              <li>Spanish white</li>
+              <li>Riesling</li>
+              <li>Prosecco</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Red</h3>
+            <ul>
+              <li>Chianti</li>
+              <li>Pinot Noir</li>
+              <li>Spanish red</li>
+            </ul>
+          </div>
+        </div>
+        <p class="vm-card__desc" style="margin-top:0.75rem">Ask your server for today’s pours, prices, and bottles.</p>
+      </div>
+    </section>
+
+    <section class="vm-section" id="bar" aria-labelledby="h-bar">
+      <div class="vm-section__head">
+        <h2 id="h-bar">Soda, tea, coffee &amp; more</h2>
+      </div>
+      <div class="vm-list-block">
+        <ul class="columns-2">
+          <li>Coke / Coke Zero / Diet Coke</li>
+          <li>Dr Pepper</li>
+          <li>Ginger Ale</li>
+          <li>Sprite</li>
+          <li>Iced coffee — Mavin cold brew, cane sugar, milk</li>
+          <li>Iced tea — unsweetened</li>
+          <li>Red Bull</li>
+          <li>Saint Arnold Root Beer</li>
+          <li>Topo Chico</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vm-section" id="flights" aria-labelledby="h-flights">
+      <div class="vm-section__head">
+        <h2 id="h-flights">Flights</h2>
+      </div>
+      <div class="vm-grid vm-grid--2">
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">W</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Race Around the World Whiskey Flight</h3>
+            <p class="vm-card__desc">Motorsports is a global passion, so is whiskey. Still Austin, Glenfiddich 14 Blue Swift, Yamazaki.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">S</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Smooth is Fast</h3>
+            <p class="vm-card__desc">Buffalo Trace, Basil Hayden, Eagle Rare, Angel’s Envy.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">T</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Tourist Trophy</h3>
+            <p class="vm-card__desc">Tullamore DEW, Laphroaig 10, Glenlivet 12, Glenfiddich 14.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">J</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">The JWM</h3>
+            <p class="vm-card__desc">Toki Suntory, Yamazaki, Nikka Coffey Grain, Matsui Mizunara.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <div class="vm-card__media vm-card__media--placeholder" aria-hidden="true">X</div>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Texas Track Meet</h3>
+            <p class="vm-card__desc">Yellow Rose, TX Whiskey, Garrison Brothers, Still Austin.</p>
+          </div>
+        </article>
+        <article class="vm-card">
+          <button type="button" class="vm-card__media vm-zoom" aria-label="Mimosas">
+            <img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Sparkle GT mimosas" width="900" height="560" loading="lazy">
+          </button>
+          <div class="vm-card__body">
+            <h3 class="vm-card__name">Sparkle GT — Mimosas</h3>
+            <p class="vm-card__desc">Refreshing medley: Cucumber Basil, Jalapeño Lime, Strawberry Lemonade, Mint Mango.</p>
+          </div>
+        </article>
+      </div>
+      <p class="vm-section__note" style="margin-top:1rem">Whiskey and mimosa flights — ask your server for current flight menus and pricing.</p>
+    </section>
+  </main>
+
+  <footer class="vm-footer">
+    <p>While we take every precaution to prevent cross-contamination, our kitchen handles various ingredients; trace allergens may be present. Please tell your server about allergies or sensitivities.</p>
+    <p>20% gratuity may apply for parties of 6+ and walked tabs. <a href="https://velocitysimlounge.com/">velocitysimlounge.com</a></p>
+  </footer>
+
+  <div class="vm-lightbox" id="vm-lightbox" hidden>
+    <button type="button" class="vm-lightbox__close" aria-label="Close">&times;</button>
+    <img src="" alt="">
+  </div>
+
+  <script>
+    (function () {
+      var lb = document.getElementById('vm-lightbox');
+      if (!lb) return;
+      var img = lb.querySelector('img');
+      var close = lb.querySelector('.vm-lightbox__close');
+      document.querySelectorAll('.vm-zoom').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var shot = btn.querySelector('img');
+          if (!shot || !shot.src) return;
+          img.src = shot.currentSrc || shot.src;
+          img.alt = shot.alt || '';
+          lb.hidden = false;
+          document.documentElement.style.overflow = 'hidden';
+        });
+      });
+      function shut() {
+        lb.hidden = true;
+        img.removeAttribute('src');
+        document.documentElement.style.overflow = '';
+      }
+      close.addEventListener('click', shut);
+      lb.addEventListener('click', function (e) {
+        if (e.target === lb) shut();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (!lb.hidden && e.key === 'Escape') shut();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,923 @@
+<script>
+  window.VSL_SP_CONFIG = {
+    inquiryLink: 'https://velocitysimracinglounge.tripleseat.com/party_request/45556',
+    allEventsLink: 'https://velocitysimlounge.com/group-events/',
+    images: {
+      hero: 'https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg',
+      corporate: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
+      racer: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp',
+      atmosphere: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp',
+      venue: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
+      finishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png'
+    },
+    elementorColumnOutdentPx: 12
+  };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  .vsl-semiprivate {
+    --red:      #D22026;
+    --magenta:  #EE265F;
+    --yellow:   #FDC70C;
+    --blue:     #293893;
+    --navy:     #10182B;
+    --deep-indigo: #191B4D;
+    --white:    #EAEAEA;
+    --circuit-white: #EAEAEA;
+    --silver:   #DFDFDE;
+    --mist:     #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+
+    --vsl-text-body: 1rem;
+    --vsl-text-body-lg: 1.333rem;
+    --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+    --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
+    --vsl-text-hero: clamp(1.75rem, 0.85rem + 4.8vw, 3rem);
+    --vsl-text-card-label: clamp(1.0625rem, 0.88rem + 1.05vw, 1.25rem);
+
+    --vsl-outdent: 0px;
+    --vsl-hero-bleed-top: -12px;
+    --vsl-hero-bleed-bottom: -12px;
+    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .vsl-semiprivate:has(> main > section.vsl-sp-hero:first-of-type) {
+    margin-top: var(--vsl-hero-bleed-top);
+    margin-bottom: var(--vsl-hero-bleed-bottom);
+  }
+  .vsl-semiprivate > main#sp-primary-content {
+    display: block;
+    margin-block: 0;
+    padding-block: 0;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-semiprivate) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .vsl-semiprivate *,
+  .vsl-semiprivate *::before,
+  .vsl-semiprivate *::after { box-sizing: border-box; }
+
+
+  /* ── HERO ────────────────────────────────────────────── */
+
+  .vsl-sp-hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--navy);
+    color: var(--circuit-white);
+    overflow: hidden;
+    isolation: isolate;
+    min-height: max(420px, 58vh);
+    min-height: max(420px, 58svh);
+  }
+  .vsl-sp-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .vsl-sp-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+  .vsl-sp-hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 24, 40, 0.52) 0%,
+      rgba(16, 24, 40, 0.78) 55%,
+      rgba(16, 24, 40, 0.94) 100%
+    );
+  }
+  .vsl-sp-hero__inner {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(56px, 14vw, 112px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .vsl-sp-hero__title {
+    margin: 0 0 0.65em;
+    padding: 10px 12px;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-hero);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-sp-hero__accent {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+  }
+  .vsl-sp-hero__sub {
+    margin: 0 0 1.75rem;
+    padding: 6px 12px;
+    font-size: clamp(1rem, 0.88rem + 0.55vw, 1.1875rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    max-width: 44ch;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.68);
+    border-radius: 8px;
+  }
+
+  .vsl-sp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 32px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition:
+      color 0.22s ease,
+      background-color 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease,
+      transform 0.14s ease,
+      filter 0.14s ease;
+  }
+  .vsl-sp-btn--primary {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: linear-gradient(135deg, var(--red), var(--magenta));
+    border: 2px solid transparent;
+    box-shadow: 0 4px 18px rgba(210, 32, 38, 0.3);
+  }
+  .vsl-sp-btn--primary:hover {
+    box-shadow: 0 8px 28px rgba(238, 38, 95, 0.4);
+    filter: brightness(1.08);
+  }
+  .vsl-sp-btn--primary:active {
+    filter: brightness(0.93);
+    transform: scale(0.98);
+    box-shadow: 0 3px 14px rgba(238, 38, 95, 0.25);
+  }
+  .vsl-sp-btn--outline {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    background: transparent;
+    border: 2px solid var(--magenta);
+    box-shadow: none;
+  }
+  .vsl-sp-btn--outline:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--magenta);
+    box-shadow: 0 6px 22px rgba(238, 38, 95, 0.26);
+  }
+  .vsl-sp-btn--outline:active {
+    filter: brightness(0.93);
+    transform: scale(0.98);
+  }
+  .vsl-sp-btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-sp-btn {
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        filter 0.14s ease;
+    }
+    .vsl-sp-btn:active { transform: none; }
+  }
+
+  .vsl-sp-hero__finish {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    display: block;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    background-image: var(--vsl-sp-finish, none);
+    background-repeat: repeat-x;
+    background-position: center center;
+    background-size: auto 100%;
+  }
+
+
+  /* ── WHAT YOU GET ────────────────────────────────────── */
+
+  .vsl-sp-features {
+    position: relative;
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+    padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin)) clamp(56px, 10vw, 88px);
+    overflow: hidden;
+  }
+  .vsl-sp-features__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .vsl-sp-features__content {
+    text-align: left;
+  }
+  .vsl-sp-features__title {
+    margin: 0 0 0.6em;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    text-wrap: balance;
+  }
+  .vsl-sp-features__list {
+    margin: 0 0 0.5rem;
+    padding: 0 0 0 1.25em;
+    list-style: none;
+  }
+  .vsl-sp-features__list li {
+    position: relative;
+    margin-bottom: 0.85em;
+    font-size: var(--vsl-text-body-lg);
+    font-weight: 400;
+    line-height: 1.45;
+    color: rgba(234, 234, 234, 0.88);
+    padding-left: 0.3em;
+  }
+  .vsl-sp-features__list li::before {
+    content: '';
+    position: absolute;
+    left: -1.25em;
+    top: 0.45em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--magenta);
+  }
+  .vsl-sp-features__media {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.42), 0 6px 18px rgba(0, 0, 0, 0.24);
+  }
+  .vsl-sp-features__media img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+  }
+  .vsl-sp-features__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    .vsl-sp-features__inner {
+      grid-template-columns: 1fr;
+    }
+    .vsl-sp-features__media {
+      order: -1;
+    }
+  }
+
+
+  /* ── PERFECT FOR ─────────────────────────────────────── */
+
+  .vsl-sp-usecases {
+    position: relative;
+    background: linear-gradient(160deg, var(--navy) 0%, var(--deep-indigo) 100%);
+    padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin));
+    overflow: hidden;
+    color: var(--circuit-white);
+  }
+  .vsl-sp-usecases__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .vsl-sp-usecases__title {
+    margin: 0 0 0.6em;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    color: var(--yellow) !important;
+    -webkit-text-fill-color: var(--yellow) !important;
+    text-wrap: balance;
+  }
+  .vsl-sp-usecases__sub {
+    margin: 0 auto 2.5rem;
+    font-size: var(--vsl-text-section-sub);
+    font-weight: 500;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    line-height: 1.4;
+    max-width: 42ch;
+  }
+  .vsl-sp-usecases__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .vsl-sp-usecase {
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.08);
+    border-radius: 12px;
+    padding: clamp(24px, 4vw, 36px) clamp(16px, 3vw, 24px);
+    text-align: center;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-sp-usecase:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-sp-usecase { transition: none; }
+    .vsl-sp-usecase:hover { transform: none; }
+  }
+  .vsl-sp-usecase__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vsl-sp-usecase__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .vsl-sp-usecase__label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-card-label);
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    color: var(--circuit-white);
+  }
+
+  @media (max-width: 767px) {
+    .vsl-sp-usecases__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 420px) {
+    .vsl-sp-usecases__grid {
+      grid-template-columns: 1fr;
+      max-width: 280px;
+    }
+  }
+
+
+  /* ── WHAT'S INCLUDED (image grid) ────────────────────── */
+
+  .vsl-sp-included {
+    position: relative;
+    background: var(--navy);
+    color: var(--circuit-white);
+    padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin));
+    overflow: hidden;
+  }
+  .vsl-sp-included__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .vsl-sp-included__title {
+    margin: 0 0 0.6em;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    text-wrap: balance;
+  }
+  .vsl-sp-included__sub {
+    margin: 0 auto 2.5rem;
+    font-size: var(--vsl-text-section-sub);
+    font-weight: 500;
+    color: var(--circuit-white);
+    opacity: 0.85;
+    line-height: 1.4;
+    max-width: 42ch;
+  }
+  .vsl-sp-included__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .vsl-sp-card {
+    position: relative;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+    text-align: left;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-sp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48), 0 8px 18px rgba(0, 0, 0, 0.26);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-sp-card { transition: none; }
+    .vsl-sp-card:hover { transform: none; }
+  }
+  .vsl-sp-card__media {
+    overflow: hidden;
+    margin: 0;
+  }
+  .vsl-sp-card__media img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    display: block;
+  }
+  .vsl-sp-card__accent {
+    height: 4px;
+    width: 100%;
+  }
+  .vsl-sp-included__grid .vsl-sp-card:nth-child(1) .vsl-sp-card__accent { background: var(--red); }
+  .vsl-sp-included__grid .vsl-sp-card:nth-child(2) .vsl-sp-card__accent { background: var(--blue); }
+  .vsl-sp-included__grid .vsl-sp-card:nth-child(3) .vsl-sp-card__accent { background: var(--yellow); }
+  .vsl-sp-included__grid .vsl-sp-card:nth-child(4) .vsl-sp-card__accent { background: var(--magenta); }
+  .vsl-sp-card__body {
+    padding: 18px 18px 22px;
+  }
+  .vsl-sp-card__label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-card-label);
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    color: var(--navy);
+  }
+
+  @media (max-width: 900px) {
+    .vsl-sp-included__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .vsl-sp-included__grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+  }
+
+
+  /* ── FINISH LINE DIVIDER ─────────────────────────────── */
+
+  .vsl-sp-finish-divider {
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-sp-finish, none);
+    background-repeat: repeat-x;
+    background-position: center center;
+    background-size: auto 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  /* ── BOTTOM CTA ──────────────────────────────────────── */
+
+  .vsl-sp-cta {
+    position: relative;
+    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(56px, 10vw, 96px) clamp(20px, 5vw, var(--page-margin));
+    overflow: hidden;
+    text-align: center;
+    color: var(--circuit-white);
+  }
+  .vsl-sp-cta__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .vsl-sp-cta__title {
+    margin: 0 0 0.5em;
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-wrap: balance;
+  }
+  .vsl-sp-cta__sub {
+    margin: 0 auto 2rem;
+    font-size: var(--vsl-text-section-sub);
+    font-weight: 400;
+    color: var(--mist);
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+  .vsl-sp-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  /* ── GALLERY STRIP ───────────────────────────────────── */
+
+  .vsl-sp-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .vsl-sp-gallery__item {
+    overflow: hidden;
+    margin: 0;
+  }
+  .vsl-sp-gallery__item img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-sp-gallery__item img:hover {
+      transform: scale(1.04);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-sp-gallery__item img { transition: none; }
+    .vsl-sp-gallery__item img:hover { transform: none; }
+  }
+  @media (max-width: 639px) {
+    .vsl-sp-gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+
+
+  /* ── RESPONSIVE HERO ─────────────────────────────────── */
+
+  @media (max-width: 639px) {
+    .vsl-sp-hero {
+      min-height: max(320px, 52vh);
+      min-height: max(320px, 52svh);
+    }
+    .vsl-sp-hero__title { line-height: 1.18; }
+    .vsl-sp-cta__actions { flex-direction: column; }
+    .vsl-sp-cta__actions .vsl-sp-btn { width: 100%; max-width: 320px; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vsl-semiprivate { scroll-behavior: smooth; }
+  }
+
+  #sp-hero,
+  #sp-features,
+  #sp-usecases,
+  #sp-included,
+  #sp-cta {
+    scroll-margin-top: 5rem;
+  }
+</style>
+
+<div class="vsl-semiprivate"
+     data-vsl-config='{
+       "inquiryLink": "https://velocitysimracinglounge.tripleseat.com/party_request/45556",
+       "allEventsLink": "https://velocitysimlounge.com/group-events/"
+     }'>
+  <main id="sp-primary-content">
+
+    <!-- HERO -->
+    <section class="vsl-sp-hero" id="sp-hero" aria-labelledby="sp-hero-heading">
+      <div class="vsl-sp-hero__bg">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg"
+             data-vsl-sp-img="hero"
+             alt="Guests enjoying a semi-private group event at Velocity Sim Racing Lounge"
+             width="1600" height="900" fetchpriority="high" decoding="async">
+      </div>
+      <div class="vsl-sp-hero__inner">
+        <h1 class="vsl-sp-hero__title" id="sp-hero-heading">
+          Semi-Private <span class="vsl-sp-hero__accent">Group Events</span>
+        </h1>
+        <p class="vsl-sp-hero__sub">Host a fun and memorable event at Velocity. Dedicated space, premium experience, and nonstop energy&nbsp;&mdash; perfect for groups who want more than the ordinary.</p>
+        <a class="vsl-sp-btn vsl-sp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556" data-vsl-sp-link="inquiry" target="_blank" rel="noopener noreferrer">Inquire Today</a>
+      </div>
+      <div class="vsl-sp-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+
+    <!-- WHAT YOU GET -->
+    <section class="vsl-sp-features" id="sp-features" aria-labelledby="sp-features-heading">
+      <div class="vsl-sp-features__inner">
+        <div class="vsl-sp-features__content">
+          <h2 class="vsl-sp-features__title" id="sp-features-heading">What You Get</h2>
+          <ul class="vsl-sp-features__list">
+            <li>Dedicated simulators for your group</li>
+            <li>Reserved lounge area</li>
+            <li>Curated food and drink options from our craft bar and kitchen</li>
+            <li>Comprehensive audio and video solutions for workshops and group presentations</li>
+            <li>Ideal for groups of 10&ndash;40</li>
+          </ul>
+        </div>
+        <figure class="vsl-sp-features__media">
+          <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
+               data-vsl-sp-img="corporate"
+               alt="Corporate team building event at Velocity Sim Racing Lounge"
+               width="800" height="600" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- PERFECT FOR -->
+    <section class="vsl-sp-usecases" id="sp-usecases" aria-labelledby="sp-usecases-heading">
+      <div class="vsl-sp-usecases__inner">
+        <h2 class="vsl-sp-usecases__title" id="sp-usecases-heading">Perfect For</h2>
+        <p class="vsl-sp-usecases__sub">Whatever the occasion, we&rsquo;ll make it unforgettable.</p>
+        <div class="vsl-sp-usecases__grid">
+
+          <div class="vsl-sp-usecase">
+            <div class="vsl-sp-usecase__icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="6" y="10" width="36" height="28" rx="3" stroke="#FDC70C" stroke-width="2.5"/>
+                <path d="M6 18h36" stroke="#FDC70C" stroke-width="2.5"/>
+                <circle cx="24" cy="30" r="5" stroke="#FDC70C" stroke-width="2.5"/>
+                <path d="M17 10V6M31 10V6" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="vsl-sp-usecase__label">Corporate Team Building</h3>
+          </div>
+
+          <div class="vsl-sp-usecase">
+            <div class="vsl-sp-usecase__icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M24 6l3 9h9l-7.5 5.5 3 9L24 24l-7.5 5.5 3-9L12 15h9l3-9z" stroke="#FDC70C" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M8 38c0-4 6-6 16-6s16 2 16 6v4H8v-4z" stroke="#FDC70C" stroke-width="2.5"/>
+              </svg>
+            </div>
+            <h3 class="vsl-sp-usecase__label">Holiday Celebrations</h3>
+          </div>
+
+          <div class="vsl-sp-usecase">
+            <div class="vsl-sp-usecase__icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="8" y="6" width="32" height="36" rx="3" stroke="#FDC70C" stroke-width="2.5"/>
+                <path d="M16 16h16M16 24h12M16 32h8" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="vsl-sp-usecase__label">Workshops &amp; Sales Meetings</h3>
+          </div>
+
+          <div class="vsl-sp-usecase">
+            <div class="vsl-sp-usecase__icon">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="16" cy="16" r="6" stroke="#FDC70C" stroke-width="2.5"/>
+                <circle cx="32" cy="16" r="6" stroke="#FDC70C" stroke-width="2.5"/>
+                <path d="M4 38c0-5 5-8 12-8 2.5 0 4.8.4 6.7 1.2M32 30c7 0 12 3 12 8v4H26v-4c0-2 .8-3.8 2.3-5.3" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3 class="vsl-sp-usecase__label">Networking Mixers</h3>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- GALLERY STRIP -->
+    <div class="vsl-sp-gallery" role="presentation" aria-hidden="true">
+      <figure class="vsl-sp-gallery__item">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp"
+             data-vsl-sp-img="racer"
+             alt="Racer in a professional sim racing rig at Velocity" width="800" height="450" loading="lazy" decoding="async">
+      </figure>
+      <figure class="vsl-sp-gallery__item">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp"
+             data-vsl-sp-img="atmosphere"
+             alt="Lively event atmosphere at Velocity Sim Racing Lounge" width="800" height="450" loading="lazy" decoding="async">
+      </figure>
+      <figure class="vsl-sp-gallery__item">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp"
+             data-vsl-sp-img="venue"
+             alt="Velocity Sim Racing Lounge venue interior" width="800" height="450" loading="lazy" decoding="async">
+      </figure>
+    </div>
+
+
+    <!-- WHAT'S INCLUDED -->
+    <section class="vsl-sp-included" id="sp-included" aria-labelledby="sp-included-heading">
+      <div class="vsl-sp-included__inner">
+        <h2 class="vsl-sp-included__title" id="sp-included-heading">What&rsquo;s Included</h2>
+        <p class="vsl-sp-included__sub">Everything your group needs for an incredible experience.</p>
+        <div class="vsl-sp-included__grid">
+
+          <article class="vsl-sp-card">
+            <figure class="vsl-sp-card__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp"
+                   data-vsl-sp-img="racer"
+                   alt="Dedicated racing simulator cockpit at Velocity" width="600" height="400" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-sp-card__accent"></div>
+            <div class="vsl-sp-card__body">
+              <h3 class="vsl-sp-card__label">Dedicated Racing Simulators</h3>
+            </div>
+          </article>
+
+          <article class="vsl-sp-card">
+            <figure class="vsl-sp-card__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp"
+                   data-vsl-sp-img="venue"
+                   alt="Reserved lounge area and seating at Velocity" width="600" height="400" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-sp-card__accent"></div>
+            <div class="vsl-sp-card__body">
+              <h3 class="vsl-sp-card__label">Reserved Area &amp; Seating</h3>
+            </div>
+          </article>
+
+          <article class="vsl-sp-card">
+            <figure class="vsl-sp-card__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp"
+                   data-vsl-sp-img="atmosphere"
+                   alt="Curated food and drink menu at a Velocity event" width="600" height="400" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-sp-card__accent"></div>
+            <div class="vsl-sp-card__body">
+              <h3 class="vsl-sp-card__label">Choice of Menu</h3>
+            </div>
+          </article>
+
+          <article class="vsl-sp-card">
+            <figure class="vsl-sp-card__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
+                   data-vsl-sp-img="corporate"
+                   alt="Event manager assisting guests at Velocity" width="600" height="400" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-sp-card__accent"></div>
+            <div class="vsl-sp-card__body">
+              <h3 class="vsl-sp-card__label">Event Manager &amp; Staff</h3>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FINISH LINE DIVIDER -->
+    <div class="vsl-sp-finish-divider" role="presentation" aria-hidden="true"></div>
+
+
+    <!-- BOTTOM CTA -->
+    <section class="vsl-sp-cta" id="sp-cta" aria-labelledby="sp-cta-heading">
+      <div class="vsl-sp-cta__inner">
+        <h2 class="vsl-sp-cta__title" id="sp-cta-heading">Book Your Semi-Private Event</h2>
+        <p class="vsl-sp-cta__sub">Ready to host something extraordinary? Get in touch and let us plan the perfect event for your group.</p>
+        <div class="vsl-sp-cta__actions">
+          <a class="vsl-sp-btn vsl-sp-btn--primary"
+             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             data-vsl-sp-link="inquiry"
+             target="_blank" rel="noopener noreferrer">Inquire Today</a>
+          <a class="vsl-sp-btn vsl-sp-btn--outline"
+             href="https://velocitysimlounge.com/group-events/"
+             data-vsl-sp-link="allEvents">Back to All Events</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vsl-semiprivate');
+    if (!root) return;
+
+    var cfg = window.VSL_SP_CONFIG || {};
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+    var map = cfg.images || {};
+
+    if (map.finishLine) {
+      var finishUrl = 'url("' + map.finishLine + '")';
+      root.style.setProperty('--vsl-sp-finish', finishUrl);
+    }
+
+    root.querySelectorAll('img[data-vsl-sp-img]').forEach(function (img) {
+      var key = img.getAttribute('data-vsl-sp-img');
+      if (key && map[key]) img.src = map[key];
+    });
+
+    var links = {
+      inquiry: cfg.inquiryLink,
+      allEvents: cfg.allEventsLink
+    };
+    root.querySelectorAll('a[data-vsl-sp-link]').forEach(function (a) {
+      var k = a.getAttribute('data-vsl-sp-link');
+      if (k && links[k]) a.setAttribute('href', links[k]);
+    });
+
+    var jsonAttr = root.getAttribute('data-vsl-config');
+    if (jsonAttr) {
+      try {
+        var overrides = JSON.parse(jsonAttr);
+        if (overrides.inquiryLink) {
+          root.querySelectorAll('a[data-vsl-sp-link="inquiry"]').forEach(function (a) {
+            a.setAttribute('href', overrides.inquiryLink);
+          });
+        }
+        if (overrides.allEventsLink) {
+          root.querySelectorAll('a[data-vsl-sp-link="allEvents"]').forEach(function (a) {
+            a.setAttribute('href', overrides.allEventsLink);
+          });
+        }
+      } catch (e) { /* ignore parse errors */ }
+    }
+  })();
+</script>

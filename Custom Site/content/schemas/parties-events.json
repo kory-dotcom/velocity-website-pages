@@ -1,0 +1,220 @@
+{
+  "page": "parties-events",
+  "label": "Group Events",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "tagline": {
+          "type": "text",
+          "label": "Tagline",
+          "perLocation": true
+        },
+        "heroVideo": {
+          "type": "url",
+          "label": "Hero Video URL",
+          "perLocation": true
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Fallback Hero Image",
+          "perLocation": true
+        },
+        "testimonialQuote": {
+          "type": "textarea",
+          "label": "Testimonial Quote"
+        },
+        "testimonialAuthor": {
+          "type": "text",
+          "label": "Testimonial Author"
+        },
+        "testimonialStars": {
+          "type": "text",
+          "label": "Star Rating"
+        }
+      }
+    },
+    "eventTypes": {
+      "label": "Event Types",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Event Type Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            },
+            "meta": {
+              "type": "text",
+              "label": "Meta Line (e.g. capacity)",
+              "perLocation": true
+            },
+            "image": {
+              "type": "image",
+              "label": "Image",
+              "perLocation": true
+            },
+            "primaryText": {
+              "type": "text",
+              "label": "Primary CTA Text"
+            },
+            "primaryLink": {
+              "type": "url",
+              "label": "Primary CTA Link",
+              "perLocation": true
+            },
+            "secondaryText": {
+              "type": "text",
+              "label": "Secondary CTA Text"
+            },
+            "secondaryLink": {
+              "type": "url",
+              "label": "Secondary CTA Link",
+              "perLocation": true
+            }
+          }
+        }
+      }
+    },
+    "includes": {
+      "label": "Every Event Includes",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "Included Items",
+          "fields": {
+            "label": {
+              "type": "text",
+              "label": "Label"
+            }
+          }
+        }
+      }
+    },
+    "difference": {
+      "label": "The Velocity Difference",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Differentiator Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy",
+          "perLocation": true
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Link",
+          "perLocation": true
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Link",
+          "perLocation": true
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

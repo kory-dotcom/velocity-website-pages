@@ -1,0 +1,200 @@
+{
+  "page": "home",
+  "label": "Home Page",
+  "sections": {
+    "hero": {
+      "label": "Hero Section",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Hero Heading"
+        },
+        "subheading": {
+          "type": "textarea",
+          "label": "Hero Subheading"
+        },
+        "backgroundImage": {
+          "type": "image",
+          "label": "Background Image",
+          "perLocation": true
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Button Text"
+        },
+        "ctaLink": {
+          "type": "url",
+          "label": "CTA Button Link",
+          "perLocation": true
+        }
+      }
+    },
+    "promos": {
+      "label": "Promotions Carousel",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Promo Cards",
+          "fields": {
+            "image": {
+              "type": "image",
+              "label": "Card Image"
+            },
+            "badge": {
+              "type": "text",
+              "label": "Badge Text"
+            },
+            "title": {
+              "type": "text",
+              "label": "Card Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            },
+            "ctaText": {
+              "type": "text",
+              "label": "Button Text"
+            },
+            "ctaLink": {
+              "type": "url",
+              "label": "Button Link",
+              "perLocation": true
+            },
+            "startDate": {
+              "type": "datetime",
+              "label": "Start Date"
+            },
+            "endDate": {
+              "type": "datetime",
+              "label": "End Date"
+            }
+          }
+        }
+      }
+    },
+    "howItWorks": {
+      "label": "How It Works",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "steps": {
+          "type": "repeater",
+          "label": "Steps",
+          "fields": {
+            "number": {
+              "type": "text",
+              "label": "Step Number"
+            },
+            "title": {
+              "type": "text",
+              "label": "Step Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Step Description"
+            }
+          }
+        }
+      }
+    },
+    "reviews": {
+      "label": "Reviews",
+      "fields": {
+        "rating": {
+          "type": "text",
+          "label": "Star Rating"
+        },
+        "reviewCount": {
+          "type": "text",
+          "label": "Review Count"
+        },
+        "reviews": {
+          "type": "repeater",
+          "label": "Featured Reviews",
+          "fields": {
+            "stars": {
+              "type": "text",
+              "label": "Stars (1-5)"
+            },
+            "quote": {
+              "type": "textarea",
+              "label": "Review Text"
+            },
+            "author": {
+              "type": "text",
+              "label": "Author Name"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "CTA Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "CTA Text"
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button Text"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Button Link",
+          "perLocation": true
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button Text"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Button Link",
+          "perLocation": true
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

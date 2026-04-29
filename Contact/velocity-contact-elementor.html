@@ -1,0 +1,1188 @@
+<!--
+  Velocity Sim Racing Lounge — Location Page
+  Elementor Custom HTML module  ·  v2.0.0
+
+  ── SEO Handoff ──
+  Meta title:    Velocity Sim Racing Lounge Houston | Sim Racing, Events & Bar
+  Meta desc:     Visit Velocity Sim Racing Lounge in Houston — 16 professional simulators, full bar & restaurant, private event space. 2110 Edwards St, Houston TX 77007.
+  Canonical:     https://velocitysimlounge.com/contact/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg
+
+  ── Schema Recommendation (implement via Yoast / RankMath) ──
+  FAQPage schema for the 8 FAQ items in #faq.
+  LocalBusiness schema with address, phone, email, and openingHours.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  .vsl-contact {
+    --red:      #D22026;
+    --magenta:  #EE265F;
+    --yellow:   #FDC70C;
+    --blue:     #293893;
+    --navy:     #10182B;
+    --deep-indigo: #191B4D;
+    --white:    #EAEAEA;
+    --circuit-white: #EAEAEA;
+    --silver:   #DFDFDE;
+    --mist:     #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --vsl-text-xs: 0.75rem;
+    --vsl-text-body: 1rem;
+    --vsl-text-body-lg: 1.333rem;
+    --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+    --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
+    --vsl-text-faq-label: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    --vsl-outdent: 0px;
+    --vsl-hero-bleed-top: -12px;
+    --vsl-hero-bleed-bottom: -12px;
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .vsl-contact:has(> main > section.vsl-loc-hero:first-of-type) {
+    margin-top: var(--vsl-hero-bleed-top);
+    margin-bottom: var(--vsl-hero-bleed-bottom);
+  }
+  .vsl-contact > main#primary-content {
+    display: block;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-contact) {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .vsl-contact *,
+  .vsl-contact *::before,
+  .vsl-contact *::after { box-sizing: border-box; }
+
+  #loc-hero, #loc-features, #loc-about, #contact-info, #faq, #contact-cta { scroll-margin-top: 5rem; }
+
+  /* ═══ Hero ═══ */
+  .vsl-loc-hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 48%, #0d1322 100%);
+    color: var(--circuit-white);
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 60vh;
+    min-height: 60svh;
+  }
+  .vsl-loc-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .vsl-loc-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    opacity: 0.22;
+  }
+  .vsl-loc-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.14) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.2) 0%, transparent 68%);
+  }
+  .vsl-loc-hero__rings {
+    position: absolute;
+    inset: -5% -25% 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .vsl-loc-hero__rings span {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 234, 234, 0.06);
+    transform: translate(-50%, -50%) rotate(-14deg);
+    aspect-ratio: 2.35 / 1;
+  }
+  .vsl-loc-hero__rings span:nth-child(1) { width: min(118vw, 920px); opacity: 1; }
+  .vsl-loc-hero__rings span:nth-child(2) { width: min(138vw, 1080px); opacity: 0.7; border-color: rgba(41, 56, 147, 0.1); }
+  .vsl-loc-hero__rings span:nth-child(3) { width: min(162vw, 1280px); opacity: 0.45; border-color: rgba(253, 199, 12, 0.07); }
+  .vsl-loc-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(56px, 14vw, 110px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .vsl-loc-hero__logo {
+    display: block;
+    margin: 0 auto 24px;
+    width: clamp(200px, 30vw, 320px);
+    height: auto;
+    filter: brightness(1.05);
+  }
+  .vsl-loc-hero__title {
+    margin: 0 0 0.35em;
+    padding: 10px 12px;
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 2rem + 8vw, 6rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-loc-hero__sub {
+    margin: 0 0 2rem;
+    padding: 6px 12px;
+    font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(234, 234, 234, 0.9);
+    max-width: 42ch;
+    background: rgba(4, 7, 18, 0.68);
+    border-radius: 8px;
+  }
+  .vsl-loc-hero__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .vsl-loc-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    display: block;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
+  }
+
+  /* ═══ Buttons ═══ */
+  .vsl-loc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 14px 32px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background: var(--magenta);
+    box-shadow: 0 4px 18px rgba(238,38,95,0.22);
+    transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-loc-btn:hover {
+      filter: brightness(1.06);
+      box-shadow: 0 8px 28px rgba(238,38,95,0.32);
+    }
+  }
+  .vsl-loc-btn:active {
+    filter: brightness(0.93);
+    transform: scale(0.99);
+  }
+  .vsl-loc-btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-loc-btn--outline {
+    background: transparent;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    border-color: var(--magenta);
+    box-shadow: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-loc-btn--outline:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: var(--magenta);
+      box-shadow: 0 6px 22px rgba(238,38,95,0.26);
+    }
+  }
+  .vsl-loc-btn--on-dark.vsl-loc-btn--outline {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    border-color: rgba(234,234,234,0.35);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-loc-btn--on-dark.vsl-loc-btn--outline:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(234,234,234,0.6);
+    }
+  }
+
+  /* Quick Info Bar removed — contact info consolidated into enhanced card section */
+
+  /* ═══ Features & Amenities (icon list) ═══ */
+  .vsl-loc-features {
+    background: var(--navy);
+    color: var(--circuit-white);
+    padding: clamp(40px, 7vw, 72px) clamp(20px, 5vw, var(--page-margin));
+  }
+  .vsl-loc-features__inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .vsl-loc-section-title {
+    margin: 0 auto clamp(12px, 2vw, 20px);
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .vsl-loc-section-title--center { text-align: center; }
+  .vsl-loc-section-title--blue { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-loc-section-title--yellow { color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-loc-section-title--white { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-loc-section-title em { font-style: italic; color: var(--magenta); }
+  .vsl-loc-section-sub {
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+    font-size: var(--vsl-text-section-sub);
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 52ch;
+  }
+  .vsl-loc-section-sub--center { text-align: center; }
+  .vsl-loc-section-sub--muted { color: var(--slate-violet); }
+  .vsl-loc-section-sub--light { color: rgba(234,234,234,0.85); }
+  .vsl-loc-features__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .vsl-loc-feat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: clamp(14px, 2vw, 20px) 0;
+    border-bottom: 1px solid rgba(234,234,234,0.07);
+    color: var(--circuit-white);
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 0.78rem + 0.4vw, 1rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .vsl-loc-feat:nth-child(odd) { padding-right: clamp(16px, 3vw, 32px); }
+  .vsl-loc-feat:nth-child(even) { padding-left: clamp(16px, 3vw, 32px); border-left: 1px solid rgba(234,234,234,0.07); }
+  .vsl-loc-feat:nth-last-child(1),
+  .vsl-loc-feat:nth-last-child(2) { border-bottom: none; }
+  .vsl-loc-feat__icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vsl-loc-feat__icon svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--magenta);
+    stroke: none;
+  }
+  .vsl-loc-feat__icon--stroke svg {
+    fill: none;
+    stroke: var(--magenta);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vsl-loc-feat a {
+    color: var(--circuit-white);
+    text-decoration: none;
+    border-bottom: 2px solid var(--magenta);
+    padding-bottom: 1px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .vsl-loc-feat a:hover {
+    color: var(--magenta);
+  }
+  .vsl-loc-feat a:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  @media (max-width: 600px) {
+    .vsl-loc-features__list { grid-template-columns: 1fr; }
+    .vsl-loc-feat:nth-child(even) { padding-left: 0; border-left: none; }
+    .vsl-loc-feat:nth-child(odd) { padding-right: 0; }
+    .vsl-loc-feat:last-child { border-bottom: none; }
+    .vsl-loc-feat:nth-last-child(2) { border-bottom: 1px solid rgba(234,234,234,0.07); }
+  }
+
+  /* ═══ About Section ═══ */
+  .vsl-loc-about {
+    background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(64px, 10vh, 120px) clamp(20px, 5vw, var(--page-margin));
+    color: var(--circuit-white);
+    position: relative;
+    overflow: hidden;
+  }
+  .vsl-loc-about__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .vsl-loc-about__split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .vsl-loc-about__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .vsl-loc-about__content .vsl-loc-section-sub {
+    margin-bottom: 0;
+  }
+  .vsl-loc-about__text {
+    font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.08rem);
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgba(234,234,234,0.85);
+  }
+  .vsl-loc-about__media {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  }
+  .vsl-loc-about__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 900px) {
+    .vsl-loc-about__split { grid-template-columns: 1fr; }
+    .vsl-loc-about__media { order: -1; aspect-ratio: 16/10; }
+  }
+
+  /* ═══ Contact Info Strip (under hero) ═══ */
+  .vsl-loc-info {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+    border-top: 1px solid rgba(234,234,234,0.06);
+    border-bottom: 1px solid rgba(234,234,234,0.06);
+    padding: clamp(28px, 4.5vw, 48px) clamp(20px, 5vw, var(--page-margin));
+  }
+  .vsl-loc-info__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .vsl-loc-info__grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .vsl-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+  }
+  .vsl-info-card + .vsl-info-card {
+    padding-left: clamp(20px, 3vw, 40px);
+    border-left: 1px solid rgba(234,234,234,0.08);
+  }
+  .vsl-info-card__icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(41,56,147,0.25);
+    color: var(--circuit-white);
+  }
+  .vsl-info-card__icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vsl-info-card__body {
+    flex: 1;
+    min-width: 0;
+  }
+  .vsl-info-card__label {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    color: var(--mist);
+  }
+  .vsl-info-card__value {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--circuit-white);
+  }
+  .vsl-info-card__value a {
+    color: var(--circuit-white);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .vsl-info-card__value a:hover { color: var(--magenta); }
+  .vsl-info-card__value a:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .vsl-info-card__hours {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--circuit-white);
+  }
+  .vsl-info-card__hours li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 2px 0;
+  }
+  .vsl-info-card__hours .vsl-day { font-weight: 600; white-space: nowrap; }
+  .vsl-info-card__hours .vsl-time { text-align: right; color: var(--mist); }
+  .vsl-info-card__hours .vsl-time--closed { color: var(--magenta); font-style: italic; font-size: 0.86rem; }
+  @media (max-width: 900px) {
+    .vsl-loc-info__grid { flex-wrap: wrap; }
+    .vsl-info-card { flex: 0 0 calc(50% - 20px); }
+    .vsl-info-card:nth-child(3) { border-left: none; padding-left: 0; }
+  }
+  @media (max-width: 520px) {
+    .vsl-loc-info__grid { flex-direction: column; gap: 18px; }
+    .vsl-info-card { flex: none; width: 100%; }
+    .vsl-info-card + .vsl-info-card { border-left: none; padding-left: 0; padding-top: 18px; border-top: 1px solid rgba(234,234,234,0.08); }
+  }
+
+  /* ═══ FAQ ═══ */
+  .vsl-loc-faq {
+    background: var(--deep-indigo);
+    color: var(--circuit-white);
+    padding: clamp(56px, 12vw, 88px) clamp(20px, 5vw, var(--page-margin));
+    position: relative;
+    overflow: hidden;
+  }
+  .vsl-loc-faq::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 70% 80% at 50% 0%, rgba(86, 104, 212, 0.16) 0%, transparent 60%);
+  }
+  .vsl-loc-faq__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .vsl-faq__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid rgba(16, 24, 43, 0.1);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    overflow: hidden;
+    text-align: left;
+  }
+  .vsl-faq__item {
+    border-bottom: 1px solid rgba(16, 24, 43, 0.1);
+    background: #fff;
+  }
+  .vsl-faq__item:last-child { border-bottom: none; }
+  .vsl-faq__trigger {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
+    padding: clamp(14px, 3vw, 18px);
+    font-family: inherit;
+    font-size: var(--vsl-text-body);
+    font-weight: 600;
+    text-align: left;
+    color: #111 !important;
+    -webkit-text-fill-color: #111 !important;
+    white-space: normal !important;
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    list-style: none;
+    transition: background-color 0.22s ease;
+  }
+  .vsl-faq__trigger:hover { background-color: rgba(16, 24, 43, 0.04); }
+  .vsl-faq__label {
+    flex: 1;
+    min-width: 0;
+    font-family: 'Archivo Narrow', Inter, system-ui, sans-serif;
+    font-size: var(--vsl-text-faq-label);
+    font-weight: 600;
+    line-height: 1.45;
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+  .vsl-faq__trigger:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
+  .vsl-contact .vsl-loc-faq button.vsl-faq__trigger {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .vsl-contact .vsl-loc-faq button.vsl-faq__trigger:hover,
+  .vsl-contact .vsl-loc-faq button.vsl-faq__trigger:focus {
+    background: rgba(16, 24, 43, 0.04) !important;
+  }
+  .vsl-faq__chev {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: transparent center / 100% 100% no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2310182b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    transform: rotate(0deg);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vsl-faq__item.is-open .vsl-faq__chev { transform: rotate(180deg); }
+  .vsl-faq__panel {
+    padding: 16px 22px 26px;
+    font-size: var(--vsl-text-body);
+    line-height: 1.35;
+    color: var(--slate-violet);
+    background: #fff;
+  }
+  .vsl-contact .vsl-loc-faq .vsl-faq__panel {
+    background: #fff !important;
+  }
+  .vsl-faq__panel[hidden] { display: none; }
+  .vsl-faq__item.is-open .vsl-faq__panel { display: block; }
+  .vsl-faq__answer {
+    margin: 0;
+    padding-top: 2px;
+    color: var(--slate-violet);
+    max-width: 62ch;
+  }
+  .vsl-faq__answer a {
+    color: var(--blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.18s ease;
+  }
+  .vsl-faq__answer a:hover { color: var(--magenta); }
+
+  /* ═══ Bottom CTA ═══ */
+  .vsl-loc-cta {
+    position: relative;
+    z-index: 1;
+    background: var(--navy);
+    color: var(--circuit-white);
+    overflow: hidden;
+    padding: clamp(56px, 12vw, 96px) clamp(20px, 5vw, var(--page-margin)) clamp(64px, 14vw, 120px);
+  }
+  .vsl-loc-cta__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .vsl-loc-cta__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+    opacity: 0.08;
+  }
+  .vsl-loc-cta__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .vsl-loc-cta__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* ═══ Coming Soon Teaser ═══ */
+  .vsl-loc-teaser {
+    background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(64px, 12vw, 120px) clamp(20px, 5vw, var(--page-margin));
+    text-align: center;
+    color: var(--circuit-white);
+  }
+  .vsl-loc-teaser__inner {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .vsl-loc-teaser__badge {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 10px 28px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    background: rgba(253,199,12,0.1);
+    border: 1px solid rgba(253,199,12,0.25);
+    border-radius: 6px;
+  }
+  .vsl-loc-teaser__text {
+    margin: 0 auto 2rem;
+    font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.25rem);
+    line-height: 1.6;
+    color: rgba(234,234,234,0.85);
+    max-width: 42ch;
+  }
+  .vsl-loc-teaser__cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ═══ Visibility toggles ═══ */
+  .vsl-loc-open-only { display: block; }
+  .vsl-loc-teaser-only { display: none; }
+  .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-open-only { display: none; }
+  .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-teaser-only { display: block; }
+
+  /* ═══ Responsive ═══ */
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-loc-btn { transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease; }
+    .vsl-loc-btn:active { transform: none; }
+    .vsl-info-card { transition: none; }
+    .vsl-info-card:hover { transform: none; }
+    .vsl-loc-feature { transition: none; }
+    .vsl-loc-feature:hover { transform: none; }
+    .vsl-faq__trigger { transition: none; }
+    .vsl-faq__chev { transition: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  @media (max-width: 639px) {
+    .vsl-loc-hero__title { line-height: 1.02; }
+    .vsl-loc-section-title { line-height: 1.2; }
+    .vsl-loc-cta__actions { flex-direction: column; }
+    .vsl-loc-cta__actions .vsl-loc-btn { width: 100%; max-width: 320px; }
+    .vsl-loc-hero__actions { flex-direction: column; align-items: center; }
+    .vsl-loc-hero__actions .vsl-loc-btn { width: 100%; max-width: 280px; }
+  }
+</style>
+
+<div class="vsl-contact" data-vsl-config='{"elementorColumnOutdentPx":12}'>
+  <main id="primary-content">
+
+    <!-- ═══ Hero ═══ -->
+    <section class="vsl-loc-hero" id="loc-hero" aria-labelledby="loc-hero-heading">
+      <div class="vsl-loc-hero__bg" aria-hidden="true">
+        <img data-vsl-loc="heroImage" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg"
+             alt="" width="2400" height="1600" loading="eager" decoding="async">
+      </div>
+      <div class="vsl-loc-hero__rings" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vsl-loc-hero__inner">
+        <!-- Logo: update src to your hosted logo URL in Elementor (e.g. /wp-content/uploads/.../Velocity_Sim_Lounge_Logo_White.svg) -->
+        <img class="vsl-loc-hero__logo" src="../navbar-assets/logoasset184.svg" alt="Velocity Sim Racing Lounge" width="595" height="116">
+        <h1 class="vsl-loc-hero__title" id="loc-hero-heading" data-vsl-loc="cityName">Houston</h1>
+        <p class="vsl-loc-hero__sub" data-vsl-loc="tagline">Houston's premier sim racing lounge, bar &amp; event venue. 16 professional-grade simulators, full bar &amp; restaurant, and 5,000 sqft of private event space.</p>
+        <div class="vsl-loc-hero__actions vsl-loc-open-only">
+          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Now</a>
+          <a class="vsl-loc-btn vsl-loc-btn--outline vsl-loc-btn--on-dark" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Plan an Event</a>
+        </div>
+      </div>
+      <div class="vsl-loc-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ═══ Contact Info Strip ═══ -->
+    <section class="vsl-loc-info vsl-loc-open-only" id="contact-info" aria-label="Contact information">
+      <div class="vsl-loc-info__inner">
+        <div class="vsl-loc-info__grid">
+
+          <div class="vsl-info-card">
+            <div class="vsl-info-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="vsl-info-card__body">
+              <div class="vsl-info-card__label">Address</div>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="googleMaps" href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer"><span data-vsl-loc="address">2110 Edwards St</span>, <span data-vsl-loc="cityStateZip">Houston, TX 77007</span></a></p>
+            </div>
+          </div>
+
+          <div class="vsl-info-card">
+            <div class="vsl-info-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.94.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.87.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div class="vsl-info-card__body">
+              <div class="vsl-info-card__label">Phone</div>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="phoneTel" href="tel:+18326274981"><span data-vsl-loc="phone">832-627-4981</span></a></p>
+            </div>
+          </div>
+
+          <div class="vsl-info-card">
+            <div class="vsl-info-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="vsl-info-card__body">
+              <div class="vsl-info-card__label">Hours</div>
+              <ul class="vsl-info-card__hours" data-vsl-loc-hours>
+                <li><span class="vsl-day">Mon</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
+                <li><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
+                <li><span class="vsl-day">Wed &ndash; Thu</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
+                <li><span class="vsl-day">Fri</span><span class="vsl-time">12PM &ndash; 12AM</span></li>
+                <li><span class="vsl-day">Sat &ndash; Sun</span><span class="vsl-time">11AM &ndash; 12AM</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="vsl-info-card">
+            <div class="vsl-info-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22 7 12 13 2 7"/></svg>
+            </div>
+            <div class="vsl-info-card__body">
+              <div class="vsl-info-card__label">Email</div>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="emailLink" href="mailto:info@velocitysimlounge.com"><span data-vsl-loc="email">info@velocitysimlounge.com</span></a></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Features & Amenities ═══ -->
+    <section class="vsl-loc-features vsl-loc-open-only" id="loc-features" aria-labelledby="features-heading">
+      <div class="vsl-loc-features__inner">
+        <h2 class="vsl-loc-section-title vsl-loc-section-title--white" id="features-heading">Features &amp; Amenities</h2>
+        <div class="vsl-loc-features__list">
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
+            16 Professional Simulators
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg></span>
+            4K Displays &amp; Screens
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+            <a data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Simulator</a>
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+            <a data-vsl-loc-link="menu" href="https://velocitysimlounge.com/food-and-drink/">Full Bar &amp; Restaurant</a>
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+            Free Wi-Fi
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span>
+            <a data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Private Event Spaces</a>
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+            5,000 sqft Venue
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
+            70-Foot Covered Patio
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+            On-Site Parking
+          </div>
+
+          <div class="vsl-loc-feat">
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+            214-Person Capacity
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ About This Location ═══ -->
+    <section class="vsl-loc-about vsl-loc-open-only" id="loc-about" aria-labelledby="about-heading">
+      <div class="vsl-loc-about__inner">
+        <div class="vsl-loc-about__split">
+          <div class="vsl-loc-about__content">
+            <h2 class="vsl-loc-section-title vsl-loc-section-title--white" id="about-heading">About Velocity <em data-vsl-loc="cityName">Houston</em></h2>
+            <p class="vsl-loc-about__text" data-vsl-loc="aboutText">Welcome to Velocity Sim Racing Lounge in Houston &mdash; the city's premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you're a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 16 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 5,000 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.</p>
+            <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Your Session</a>
+          </div>
+          <div class="vsl-loc-about__media">
+            <img data-vsl-loc="venueImage" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg"
+                 alt="Chef-crafted shareables and dining at Velocity Sim Racing Lounge Houston" width="2400" height="1600" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Coming Soon Teaser (hidden when location is open) ═══ -->
+    <section class="vsl-loc-teaser vsl-loc-teaser-only" aria-labelledby="teaser-heading">
+      <div class="vsl-loc-teaser__inner">
+        <span class="vsl-loc-teaser__badge" data-vsl-loc="teaserBadge">Coming Summer 2026</span>
+        <h2 class="vsl-loc-section-title vsl-loc-section-title--center vsl-loc-section-title--white" id="teaser-heading">We're Coming to <em data-vsl-loc="cityName">Dallas</em></h2>
+        <p class="vsl-loc-teaser__text" data-vsl-loc="teaserText">Velocity Sim Racing Lounge is expanding. Be the first to know when we open our doors &mdash; follow us on social media or reach out for more details.</p>
+        <div class="vsl-loc-teaser__cta">
+          <a class="vsl-loc-btn" href="mailto:info@velocitysimlounge.com">Get Notified</a>
+          <a class="vsl-loc-btn vsl-loc-btn--outline vsl-loc-btn--on-dark" href="https://www.instagram.com/velocitysimlounge/" target="_blank" rel="noopener noreferrer">Follow Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section class="vsl-loc-faq" id="faq" aria-labelledby="faq-heading">
+      <div class="vsl-loc-faq__inner">
+        <h2 class="vsl-loc-section-title vsl-loc-section-title--center vsl-loc-section-title--yellow" id="faq-heading">Frequently Asked Questions</h2>
+        <p class="vsl-loc-section-sub vsl-loc-section-sub--center vsl-loc-section-sub--light">Everything you need to know before your visit.</p>
+        <ul class="vsl-faq__list">
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-1" aria-expanded="false" aria-controls="vsl-faq-panel-1">
+              <span class="vsl-faq__label">Is there a minimum age to race?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-1" role="region" aria-labelledby="vsl-faq-btn-1" hidden>
+              <p class="vsl-faq__answer">No, but there is a minimum height requirement of 5&rsquo;0&rdquo;. Drivers must be able to reach the pedals to operate the simulators. Additionally, drivers under the age of 17 must have a guardian/parent sign a waiver.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-2" aria-expanded="false" aria-controls="vsl-faq-panel-2">
+              <span class="vsl-faq__label">Do I need a drivers license to race?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-2" role="region" aria-labelledby="vsl-faq-btn-2" hidden>
+              <p class="vsl-faq__answer">No license or experience is required to drive Velocity&rsquo;s simulators.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-3" aria-expanded="false" aria-controls="vsl-faq-panel-3">
+              <span class="vsl-faq__label">Can I just watch other people race?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-3" role="region" aria-labelledby="vsl-faq-btn-3" hidden>
+              <p class="vsl-faq__answer">Absolutely! Come in and enjoy some great food and drinks while taking in all the racing action. We also have watch parties for racing and other sporting events.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-4" aria-expanded="false" aria-controls="vsl-faq-panel-4">
+              <span class="vsl-faq__label">What should I wear?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-4" role="region" aria-labelledby="vsl-faq-btn-4" hidden>
+              <p class="vsl-faq__answer">We encourage you to wear comfortable clothing so that you can operate the pedals and steering wheels. While it is possible to drive with heels, flat or athletic shoes will be easier to use.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-5" aria-expanded="false" aria-controls="vsl-faq-panel-5">
+              <span class="vsl-faq__label">Do you play live watch parties?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-5" role="region" aria-labelledby="vsl-faq-btn-5" hidden>
+              <p class="vsl-faq__answer">Yes, we do our best to show live watch parties for famous races and sporting events from around the world.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-6" aria-expanded="false" aria-controls="vsl-faq-panel-6">
+              <span class="vsl-faq__label">How much does it cost to drive a simulator?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-6" role="region" aria-labelledby="vsl-faq-btn-6" hidden>
+              <p class="vsl-faq__answer">Prices can vary based on the type of simulator and experience that you choose. Check out our <a href="https://velocitysimlounge.com/book-now/" data-vsl-loc-link="bookNow">Book Now</a> page for more information.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-7" aria-expanded="false" aria-controls="vsl-faq-panel-7">
+              <span class="vsl-faq__label">Do you have food and drinks?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-7" role="region" aria-labelledby="vsl-faq-btn-7" hidden>
+              <p class="vsl-faq__answer">Yes, Velocity has a full bar and kitchen. We are proud to feature signature cocktails and delicious fresh made food. Check out our <a href="https://velocitysimlounge.com/food-and-drink/" data-vsl-loc-link="menu">Menu</a> for more information.</p>
+            </div>
+          </li>
+
+          <li class="vsl-faq__item">
+            <button type="button" class="vsl-faq__trigger" id="vsl-faq-btn-8" aria-expanded="false" aria-controls="vsl-faq-panel-8">
+              <span class="vsl-faq__label">Can I rent out the space?</span>
+              <span class="vsl-faq__chev" aria-hidden="true"></span>
+            </button>
+            <div class="vsl-faq__panel" id="vsl-faq-panel-8" role="region" aria-labelledby="vsl-faq-btn-8" hidden>
+              <p class="vsl-faq__answer">Yes, Velocity is available for private events. We have nearly 5,000sqft of space with a 214 occupancy rating (inside) and a large 70&rsquo; patio for more guests. We offer food and drinks and can provide an all inclusive package. For more information, please reach out to <a href="mailto:events@velocitysimlounge.com">events@velocitysimlounge.com</a>.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ Bottom CTA ═══ -->
+    <section class="vsl-loc-cta vsl-loc-open-only" id="contact-cta" aria-labelledby="cta-heading">
+      <div class="vsl-loc-cta__bg" aria-hidden="true">
+        <img data-vsl-loc="venueImage" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg"
+             alt="" width="2400" height="1600" loading="lazy" decoding="async">
+      </div>
+      <div class="vsl-loc-cta__inner">
+        <h2 class="vsl-loc-section-title vsl-loc-section-title--center vsl-loc-section-title--white" id="cta-heading">Ready to Race?</h2>
+        <div class="vsl-loc-cta__actions">
+          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Now</a>
+          <a class="vsl-loc-btn vsl-loc-btn--outline" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Plan an Event</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'vslPreferredLocation';
+
+  var VSL_LOCATIONS = {
+    houston: {
+      cityName: 'Houston',
+      tagline: "Houston\u2019s premier sim racing lounge, bar & event venue. 16 professional-grade simulators, full bar & restaurant, and 5,000 sqft of private event space.",
+      address: '2110 Edwards St',
+      cityStateZip: 'Houston, TX 77007',
+      phone: '832-627-4981',
+      phoneTel: 'tel:+18326274981',
+      email: 'info@velocitysimlounge.com',
+      emailLink: 'mailto:info@velocitysimlounge.com',
+      googleMaps: 'https://maps.app.goo.gl/B9jCNecVWwU5HsVo6',
+      bookNow: 'https://velocitysimlounge.com/book-now/',
+      planEvent: 'https://velocitysimlounge.com/group-events/',
+      menu: 'https://velocitysimlounge.com/food-and-drink/',
+      hoursSummary: 'Mon\u2013Thu 2PM\u201311PM \u00b7 Fri 12PM\u201312AM \u00b7 Sat\u2013Sun 11AM\u201312AM',
+      hoursHtml: '<li><span class="vsl-day">Mon</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
+        + '<li><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>'
+        + '<li><span class="vsl-day">Wed \u2013 Thu</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
+        + '<li><span class="vsl-day">Fri</span><span class="vsl-time">12PM \u2013 12AM</span></li>'
+        + '<li><span class="vsl-day">Sat \u2013 Sun</span><span class="vsl-time">11AM \u2013 12AM</span></li>',
+      aboutText: "Welcome to Velocity Sim Racing Lounge in Houston \u2014 the city\u2019s premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you\u2019re a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 16 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 5,000 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.",
+      heroImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg',
+      venueImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg',
+      status: 'open'
+    },
+    dallas: {
+      cityName: 'Dallas',
+      tagline: "Something big is coming to Dallas. Velocity Sim Racing Lounge is expanding \u2014 bringing professional-grade sim racing, a full bar & restaurant, and world-class event space to DFW.",
+      address: '',
+      cityStateZip: 'Dallas, TX',
+      phone: '',
+      phoneTel: '',
+      email: 'info@velocitysimlounge.com',
+      emailLink: 'mailto:info@velocitysimlounge.com',
+      googleMaps: '',
+      bookNow: 'https://velocitysimlounge.com/dallas',
+      planEvent: 'https://velocitysimlounge.com/dallas',
+      menu: 'https://velocitysimlounge.com/food-and-drink/',
+      hoursSummary: 'Coming Summer 2026',
+      hoursHtml: '<li><span class="vsl-day">Coming Soon</span><span class="vsl-time">Summer 2026</span></li>',
+      aboutText: '',
+      teaserBadge: 'Coming Summer 2026',
+      teaserText: "Velocity Sim Racing Lounge is expanding to Dallas. Be the first to know when we open our doors \u2014 follow us on social media or reach out for more details.",
+      heroImage: 'https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp',
+      venueImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
+      status: 'coming_soon'
+    }
+  };
+
+  var root = document.querySelector('.vsl-contact');
+  if (!root) return;
+
+  var cfg;
+  try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }
+  var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+  if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+  function readLocation() {
+    try { return localStorage.getItem(STORAGE_KEY) || 'houston'; } catch (e) { return 'houston'; }
+  }
+
+  function applyLocation(key) {
+    var loc = VSL_LOCATIONS[key] || VSL_LOCATIONS.houston;
+
+    root.setAttribute('data-loc-status', loc.status || 'open');
+
+    root.querySelectorAll('[data-vsl-loc]').forEach(function (el) {
+      var field = el.getAttribute('data-vsl-loc');
+      if (field && loc[field] !== undefined) {
+        if (el.tagName === 'IMG') {
+          if (loc[field]) el.src = loc[field];
+        } else {
+          el.textContent = loc[field];
+        }
+      }
+    });
+
+    root.querySelectorAll('[data-vsl-loc-link]').forEach(function (a) {
+      var field = a.getAttribute('data-vsl-loc-link');
+      if (field && loc[field]) {
+        a.setAttribute('href', loc[field]);
+      }
+    });
+
+    var hoursEl = root.querySelector('[data-vsl-loc-hours]');
+    if (hoursEl && loc.hoursHtml) {
+      hoursEl.innerHTML = loc.hoursHtml;
+    }
+
+    document.title = 'Velocity Sim Racing Lounge ' + loc.cityName + ' | Sim Racing, Events & Bar';
+  }
+
+  applyLocation(readLocation());
+
+  window.addEventListener('storage', function (e) {
+    if (e.key === STORAGE_KEY && e.newValue) {
+      applyLocation(e.newValue);
+    }
+  });
+
+  var customEvent = '_vslLocationChanged';
+  window.addEventListener(customEvent, function (e) {
+    if (e.detail && e.detail.location) {
+      applyLocation(e.detail.location);
+    }
+  });
+
+  // FAQ accordion
+  var faqItems = root.querySelectorAll('.vsl-faq__item');
+  faqItems.forEach(function (item) {
+    var btn = item.querySelector('.vsl-faq__trigger');
+    var panel = item.querySelector('.vsl-faq__panel');
+    if (!btn || !panel) return;
+
+    btn.addEventListener('click', function () {
+      var willClose = item.classList.contains('is-open');
+      faqItems.forEach(function (other) {
+        if (other === item) return;
+        other.classList.remove('is-open');
+        var ob = other.querySelector('.vsl-faq__trigger');
+        var op = other.querySelector('.vsl-faq__panel');
+        if (ob && op) {
+          ob.setAttribute('aria-expanded', 'false');
+          op.hidden = true;
+        }
+      });
+      if (willClose) {
+        item.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+      } else {
+        item.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      }
+    });
+  });
+})();
+</script>

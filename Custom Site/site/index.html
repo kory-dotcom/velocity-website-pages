@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Sim Racing Lounge</title>
+  <link rel="stylesheet" href="/cms/style.css">
+</head>
+<body data-page="home">
+
+  <!-- Staging indicator (hidden in production, shown via hydrate.js logic) -->
+  <script>
+    if (new URLSearchParams(window.location.search).get('env') === 'staging') {
+      document.write('<div class="staging-indicator">Staging Preview — Changes are not live</div>');
+    }
+  </script>
+
+  <!-- Nav -->
+  <nav class="site-nav">
+    <div class="container">
+      <a href="/" class="logo">Velocity<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/site/menu.html">Menu</a>
+        <a href="/site/contact.html">Contact</a>
+        <div data-cms-location-switcher></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" data-cms-bg="hero.backgroundImage">
+    <div class="container">
+      <h1 data-cms="hero.heading">Velocity Sim Racing Lounge</h1>
+      <p data-cms="hero.subheading">The most immersive sim racing experience in Texas.</p>
+      <a href="#" class="btn-hero" data-cms="hero.ctaText" data-cms-href="hero.ctaLink">Book Now</a>
+    </div>
+  </section>
+
+  <!-- Promos -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-cms="promos.heading">What's Happening</h2>
+        <p data-cms="promos.subcopy">Check out our latest deals and events</p>
+      </div>
+      <div class="card-grid">
+        <!-- Repeater template: CMS will clone this for each card -->
+        <div class="promo-card" data-cms-repeater="promos.cards">
+          <div class="promo-card-img">
+            <img data-cms-field-src="image" src="" alt="">
+          </div>
+          <div class="promo-card-body">
+            <span class="promo-card-badge" data-cms-field="badge">Badge</span>
+            <h3 data-cms-field="title">Promo Title</h3>
+            <p data-cms-field="description">Promo description goes here.</p>
+            <a href="#" data-cms-field="ctaText" data-cms-field-href="ctaLink">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works -->
+  <section class="section" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-cms="howItWorks.heading">How It Works</h2>
+        <p data-cms="howItWorks.subcopy">Getting started is easy</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-item" data-cms-repeater="howItWorks.steps">
+          <div class="step-number" data-cms-field="number">1</div>
+          <h3 data-cms-field="title">Step Title</h3>
+          <p data-cms-field="description">Step description here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Reviews</h2>
+      </div>
+      <div class="reviews-header">
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="rating" data-cms="reviews.rating">4.8</span>
+        <span class="count">(<span data-cms="reviews.reviewCount">750+</span> Google reviews)</span>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card" data-cms-repeater="reviews.reviews">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote data-cms-field="quote">Review text here.</blockquote>
+          <span class="author" data-cms-field="author">Author Name</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 data-cms="cta.heading">Ready to Race?</h2>
+      <p data-cms="cta.subcopy">Book your simulator session today.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-hero" data-cms="cta.primaryText" data-cms-href="cta.primaryLink">Book Now</a>
+        <a href="#" class="btn-outline" data-cms="cta.secondaryText" data-cms-href="cta.secondaryLink">View Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>Velocity Sim Racing Lounge — Houston & Dallas</p>
+    </div>
+  </footer>
+
+  <script src="/cms/hydrate.js"></script>
+</body>
+</html>

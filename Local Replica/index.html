@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Local Replica</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #0f1533; }
+    body { overflow-x: clip; }
+    #replica-page-root { min-height: 100vh; }
+    .vsl-local-home {
+      min-height: calc(100vh - 80px);
+      padding: 56px 24px;
+      color: #eaeaea;
+      font-family: Inter, system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 10%, rgba(41,56,147,0.32) 0%, rgba(15,21,51,1) 50%, rgba(10,14,33,1) 100%);
+    }
+    .vsl-local-home__inner { max-width: 1120px; margin: 0 auto; }
+    .vsl-local-home h1 {
+      margin: 0 0 10px;
+      font-family: Khand, Inter, sans-serif;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+    .vsl-local-home p { margin: 0 0 28px; color: #b2aebf; font-size: 1rem; }
+    .vsl-local-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .vsl-local-grid a {
+      display: block;
+      padding: 16px 14px;
+      text-decoration: none;
+      border: 1px solid rgba(234,234,234,0.16);
+      border-left: 3px solid #ee265f;
+      color: #eaeaea;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      font-weight: 600;
+      transition: transform 0.18s ease, background 0.18s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-local-grid a:hover { transform: translateY(-2px); background: rgba(255,255,255,0.07); }
+    }
+    @media (max-width: 900px) { .vsl-local-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .vsl-local-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="replica-navbar-root"></div>
+  <div id="replica-page-root"></div>
+  <script src="./replica-app.js"></script>
+</body>
+</html>

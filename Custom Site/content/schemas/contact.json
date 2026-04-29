@@ -1,0 +1,185 @@
+{
+  "page": "contact",
+  "label": "Contact Page",
+  "sections": {
+    "hero": {
+      "label": "Hero Section",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "City Name",
+          "perLocation": true
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Tagline",
+          "perLocation": true
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Hero Image",
+          "perLocation": true
+        }
+      }
+    },
+    "info": {
+      "label": "Contact Info",
+      "fields": {
+        "address": {
+          "type": "textarea",
+          "label": "Address",
+          "perLocation": true
+        },
+        "phone": {
+          "type": "text",
+          "label": "Phone",
+          "perLocation": true
+        },
+        "email": {
+          "type": "text",
+          "label": "Email",
+          "perLocation": true
+        },
+        "hours": {
+          "type": "textarea",
+          "label": "Hours",
+          "perLocation": true
+        },
+        "mapEmbed": {
+          "type": "url",
+          "label": "Google Maps Link",
+          "perLocation": true
+        },
+        "bookNowLink": {
+          "type": "url",
+          "label": "Book Now Link",
+          "perLocation": true
+        },
+        "inquiryLink": {
+          "type": "url",
+          "label": "Event Inquiry Link",
+          "perLocation": true
+        }
+      }
+    },
+    "about": {
+      "label": "About Section",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "About Heading",
+          "perLocation": true
+        },
+        "body": {
+          "type": "textarea",
+          "label": "About Text",
+          "perLocation": true
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Button Text"
+        },
+        "venueImage": {
+          "type": "image",
+          "label": "Venue Image",
+          "perLocation": true
+        }
+      }
+    },
+    "features": {
+      "label": "Features & Amenities",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "Feature Items",
+          "fields": {
+            "label": {
+              "type": "text",
+              "label": "Feature Text"
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Section Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Section Subcopy"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Link",
+          "perLocation": true
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Link",
+          "perLocation": true
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

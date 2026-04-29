@@ -1,0 +1,91 @@
+{
+  "page": "food-drink",
+  "label": "Food & Drink",
+  "sections": {
+    "hero": {
+      "label": "Hero Section",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Page Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Intro Text"
+        },
+        "backgroundImage": {
+          "type": "image",
+          "label": "Hero Background",
+          "perLocation": true
+        }
+      }
+    },
+    "categories": {
+      "label": "Menu Categories",
+      "fields": {
+        "items": {
+          "type": "repeater",
+          "label": "Categories",
+          "fields": {
+            "name": {
+              "type": "text",
+              "label": "Category Name"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Category Description"
+            },
+            "menuItems": {
+              "type": "repeater",
+              "label": "Menu Items",
+              "fields": {
+                "name": {
+                  "type": "text",
+                  "label": "Item Name"
+                },
+                "description": {
+                  "type": "textarea",
+                  "label": "Description"
+                },
+                "price": {
+                  "type": "text",
+                  "label": "Price"
+                },
+                "image": {
+                  "type": "image",
+                  "label": "Photo"
+                },
+                "locations": {
+                  "type": "locations",
+                  "label": "Available At"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

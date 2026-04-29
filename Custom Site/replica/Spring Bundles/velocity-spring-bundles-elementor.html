@@ -1,0 +1,1285 @@
+<!-- Config is embedded as a data attribute on .vsl-spring below for Elementor compatibility -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════════
+     Velocity Spring Bundles — VSM 1.0.0
+     ═══════════════════════════════════════════════ */
+  .vsl-spring {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --silver: #DFDFDE;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: clamp(22px, 2.8vw, 36px);
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --text-bundle-price: clamp(1.7rem, 1rem + 2.85vw, 2.65rem);
+    --text-bundle-name: clamp(1.15rem, 0.72rem + 1.45vw, 1.5rem);
+    --vsl-outdent: 0px;
+    --vsl-bleed-top: 0px;
+    --vsl-bleed-bottom: 0px;
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    box-sizing: border-box;
+    /* Break out of Elementor column padding: full viewport width */
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    /* hidden + visible: avoid clip (patchy in older Safari) and never clip vertically */
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+  .vsl-spring:has(> main > .vsl-spring-hero:first-of-type) {
+    margin-top: var(--vsl-bleed-top);
+    margin-bottom: var(--vsl-bleed-bottom);
+  }
+  /* Navy behind all sections so subpixel seams never flash the page (white) */
+  .vsl-spring > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-spring) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-spring),
+  .elementor-container:has(.vsl-spring),
+  .elementor-column:has(.vsl-spring),
+  .elementor-column-wrap:has(.vsl-spring),
+  .elementor-widget-wrap:has(.vsl-spring),
+  .elementor-widget:has(.vsl-spring) {
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .e-con:has(.vsl-spring),
+  .e-con-inner:has(.vsl-spring),
+  .e-con-inner > .elementor-widget:has(.vsl-spring),
+  .elementor-element:has(> .elementor-widget-container > .vsl-spring) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .vsl-spring *, .vsl-spring *::before, .vsl-spring *::after { box-sizing: border-box; }
+  .vsl-spring a { text-decoration: none; color: inherit; }
+  /* Elementor sometimes sets pointer-events:none on widget wrappers — force interactive on cards & hero */
+  .vsl-spring,
+  .vsl-spring main,
+  .vsl-spring section,
+  .vsl-spring-card,
+  .vsl-spring-card__body,
+  .vsl-spring-hero__inner,
+  .vsl-spring-btn,
+  .vsl-spring-card__cta {
+    pointer-events: auto !important;
+  }
+  #spring-hero, #spring-bundles, #spring-2seater, #spring-cta { scroll-margin-top: 5rem; }
+
+  /* ── ELEMENTOR GLOBAL RESETS (fight theme/Elementor overrides inside the widget) ── */
+  /* h1–h6: Elementor or themes often set color:white, display:none, or zero margin on headings */
+  .vsl-spring h1,
+  .vsl-spring h2,
+  .vsl-spring h3,
+  .vsl-spring h4,
+  .vsl-spring h5,
+  .vsl-spring h6 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  /* hr: Elementor/themes commonly set border:0 or display:none on hr */
+  .vsl-spring hr {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: 0 !important;
+    border-top: none !important;
+    background: rgba(16,24,43,0.1) !important;
+  }
+  /* Card name specifically — ensure color is not overridden to white/invisible */
+  .vsl-spring .vsl-spring-card__name {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: var(--navy) !important;
+    font-family: var(--font-display) !important;
+    font-size: var(--text-bundle-name) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  /* Card divider rule */
+  .vsl-spring .vsl-spring-card__rule {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: 1px !important;
+    min-height: 1px !important;
+    background: rgba(16,24,43,0.1) !important;
+    border: 0 !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+  }
+  /* p tags — Elementor sometimes adds bottom margin that breaks flex gap */
+  .vsl-spring .vsl-spring-card__body p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  /* ul/li inside cards */
+  .vsl-spring .vsl-spring-card__list {
+    display: block !important;
+    visibility: visible !important;
+    list-style-type: disc !important;
+  }
+  .vsl-spring .vsl-spring-card__list li {
+    display: list-item !important;
+    visibility: visible !important;
+  }
+
+  /* ── HERO: editorial gradient with angled accent stripe ── */
+  .vsl-spring-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* clip horizontal bleed only — overflow-y visible avoids a hard GPU clip line at the bottom edge */
+    overflow-x: hidden;
+    overflow-y: visible;
+    isolation: isolate;
+    width: 100%;
+    /* Always fill at least the visible viewport so the following section never peeks through */
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    background:
+      linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 48%, #0d1322 100%);
+    color: var(--circuit-white);
+  }
+  /* Softer base + lighter overlay when Vimeo is behind — avoids a harsh navy “bar” at the top */
+  .vsl-spring-hero--hero-bg-vimeo {
+    background: linear-gradient(
+      180deg,
+      #0c1020 0%,
+      var(--navy) 38%,
+      #0d1322 100%
+    );
+  }
+  .vsl-spring-hero--hero-bg-vimeo::before {
+    opacity: 0.72;
+  }
+  .vsl-spring-hero__video,
+  .vsl-spring-hero__banner-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+    pointer-events: none;
+    display: none;
+    filter: brightness(0.72) contrast(1.05);
+  }
+  .vsl-spring-hero--has-video .vsl-spring-hero__video {
+    display: block;
+  }
+  .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-image .vsl-spring-hero__video {
+    display: none;
+  }
+  .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-image .vsl-spring-hero__banner-img {
+    display: block;
+  }
+  .vsl-spring-hero__vimeo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    display: none;
+    filter: brightness(0.72) contrast(1.05);
+  }
+  .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-vimeo .vsl-spring-hero__vimeo {
+    display: block;
+  }
+  .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-vimeo .vsl-spring-hero__video,
+  .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-vimeo .vsl-spring-hero__banner-img {
+    display: none !important;
+  }
+  .vsl-spring-hero__vimeo iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-width: 177.78vh;
+    min-height: 100%;
+    border: 0;
+    /* Slight zoom crops typical Vimeo letterboxing so navy/letterbox bands read smaller */
+    transform: translate(-50%, -50%) scale(1.09);
+    transform-origin: center center;
+  }
+  .vsl-spring-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%);
+  }
+  /* Keep skewed wash above the finish strip — avoids subpixel seams / fringing at the checker edge */
+  .vsl-spring-hero::after {
+    content: '';
+    position: absolute;
+    bottom: var(--vsl-hero-finish-h);
+    left: -10%;
+    width: 120%;
+    height: 42%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(8deg, rgba(238,38,95,0.09) 0%, transparent 58%);
+    transform: skewY(-2deg);
+    transform-origin: bottom left;
+  }
+  /* Large oval “circuit” rings — read as track energy behind copy (stays subtle on video + solid hero) */
+  .vsl-spring-hero__rings {
+    position: absolute;
+    inset: -5% -25% 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .vsl-spring-hero__rings span {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 234, 234, 0.07);
+    transform: translate(-50%, -50%) rotate(-14deg);
+    aspect-ratio: 2.35 / 1;
+  }
+  .vsl-spring-hero__rings span:nth-child(1) {
+    width: min(118vw, 920px);
+    opacity: 1;
+    box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.04);
+  }
+  .vsl-spring-hero__rings span:nth-child(2) {
+    width: min(138vw, 1080px);
+    opacity: 0.85;
+    border-color: rgba(41, 56, 147, 0.12);
+  }
+  .vsl-spring-hero__rings span:nth-child(3) {
+    width: min(162vw, 1280px);
+    opacity: 0.55;
+    border-color: rgba(253, 199, 12, 0.08);
+  }
+  .vsl-spring-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(56px, 14vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 8vw, 56px);
+    max-width: 52rem;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 0;
+  }
+  .vsl-spring-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 24px;
+    padding: 10px 28px;
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 0.7rem + 1.2vw, 1.25rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+    border: none;
+    border-radius: 0;
+    position: relative;
+  }
+  .vsl-spring-hero__title {
+    margin: 0 0 0.55em;
+    padding: 10px 12px;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 1.2rem + 6vw, 4.2rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1.02;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-align: center;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-spring-hero__title-accent {
+    color: var(--magenta);
+  }
+  .vsl-spring-hero__sub-panel {
+    position: relative;
+    margin: 0 0 2rem;
+    padding: 0.5rem 0.75rem;
+    max-width: 48ch;
+    border-radius: 8px;
+    background: rgba(4, 7, 18, 0.68);
+    border: none;
+  }
+  .vsl-spring-hero__sub {
+    margin: 0;
+    font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.2rem);
+    font-weight: 400;
+    line-height: 1.62;
+    letter-spacing: 0.01em;
+    color: rgba(234, 234, 234, 0.92);
+  }
+  .vsl-spring-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 28px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition:
+      color 0.22s ease, background-color 0.22s ease,
+      border-color 0.22s ease, box-shadow 0.22s ease,
+      transform 0.14s ease, filter 0.14s ease;
+  }
+  .vsl-spring-btn:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background-color: #d41e52;
+    border-color: #d41e52;
+    box-shadow: 0 8px 28px rgba(238,38,95,0.35);
+  }
+  .vsl-spring-btn:active {
+    filter: brightness(0.9);
+    transform: scale(0.98);
+    box-shadow: 0 3px 14px rgba(238,38,95,0.2);
+  }
+  .vsl-spring-btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-spring-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    box-sizing: border-box;
+    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* ── SECTION GRID ── */
+  .vsl-spring-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+
+  /* Content sections grow with their content — no forced viewport height */
+  .vsl-spring-bundles,
+  .vsl-spring-twoseater,
+  .vsl-spring-cta {
+    display: block;
+    box-sizing: border-box;
+  }
+
+  /* ── BUNDLES SECTION (deep-indigo band; white cards pop) ── */
+  .vsl-spring-bundles {
+    background: var(--deep-indigo);
+    padding: clamp(48px, 7vh, 88px) 0 clamp(80px, 10vh, 128px);
+    position: relative;
+    color: var(--circuit-white);
+  }
+  /* Minimal overlap — large negative margin would paint over the checkers */
+  .vsl-spring-hero + .vsl-spring-bundles {
+    margin-top: -1px;
+    padding-top: calc(clamp(40px, 7vh, 88px) + 1px);
+  }
+  .vsl-spring-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .vsl-spring-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: 42ch;
+  }
+  .vsl-spring-bundles .vsl-spring-section-title {
+    color: var(--circuit-white);
+  }
+  .vsl-spring-bundles .vsl-spring-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-spring-bundles .vsl-spring-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+
+  /* ── CARD GRID ── */
+  .vsl-spring-card-grid {
+    display: grid;
+    gap: var(--gutter);
+    /* start: card height follows content — stretch + flex list was creating huge gaps in Elementor */
+    align-items: start;
+  }
+  .vsl-spring-card-grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .vsl-spring-card-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(1040px, 100%);
+    margin-inline: auto;
+  }
+
+  /* ── BUNDLE CARD ── */
+  .vsl-spring-card {
+    --card-mx: 0.5;
+    --card-my: 0.5;
+    --card-glow: 0;
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(16,24,43,0.1);
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 12px 36px rgba(0,0,0,0.32),
+      0 4px 12px rgba(0,0,0,0.18),
+      0 1px 0 rgba(255,255,255,0.9) inset;
+    transition: box-shadow 0.45s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    /* Ensure Elementor cannot collapse or hide the card */
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .vsl-spring-card__flow {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    border-radius: 18px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      circle min(340px, 85vw) at
+        calc(var(--card-mx) * 100%) calc(var(--card-my) * 100%),
+      rgba(238,38,95,0.18) 0%,
+      rgba(41,56,147,0.12) 35%,
+      rgba(253,199,12,0.06) 60%,
+      transparent 80%
+    );
+    mix-blend-mode: multiply;
+  }
+  .vsl-spring-card__flow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: radial-gradient(
+      circle min(200px, 50vw) at
+        calc(var(--card-mx) * 100%) calc(var(--card-my) * 100%),
+      rgba(255,255,255,0.4) 0%,
+      transparent 70%
+    );
+    mix-blend-mode: overlay;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-spring-card:hover {
+      z-index: 3;
+      box-shadow:
+        0 24px 56px rgba(0,0,0,0.42),
+        0 8px 20px rgba(0,0,0,0.24),
+        0 1px 0 rgba(255,255,255,0.9) inset;
+    }
+    .vsl-spring-card:hover .vsl-spring-card__flow {
+      opacity: 1;
+    }
+  }
+  .vsl-spring-card--touch-active {
+    z-index: 3;
+    box-shadow:
+      0 24px 56px rgba(0,0,0,0.42),
+      0 8px 20px rgba(0,0,0,0.24),
+      0 1px 0 rgba(255,255,255,0.9) inset;
+  }
+  .vsl-spring-card--touch-active .vsl-spring-card__flow {
+    opacity: 1;
+  }
+  @media (pointer: coarse) {
+    .vsl-spring-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .vsl-spring-card--touch-active {
+      transform: scale(1.03) !important;
+    }
+  }
+  .vsl-spring-card__accent {
+    height: 7px;
+    flex-shrink: 0;
+  }
+  .vsl-spring-card:nth-child(1) .vsl-spring-card__accent { background: var(--blue); }
+  .vsl-spring-card:nth-child(2) .vsl-spring-card__accent { background: var(--magenta); }
+  .vsl-spring-card:nth-child(3) .vsl-spring-card__accent { background: var(--yellow); }
+  .vsl-spring-card:nth-child(4) .vsl-spring-card__accent { background: var(--red); }
+
+  .vsl-spring-card figure.vsl-spring-card__media {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .vsl-spring-card__media {
+    margin: 0;
+    flex-shrink: 0;
+    aspect-ratio: 16 / 9;
+    line-height: 0;
+    background: rgba(16,24,43,0.06);
+    overflow: hidden;
+  }
+  .vsl-spring-card__media img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .vsl-spring-card__body {
+    padding: clamp(18px, 2vw, 26px) clamp(20px, 2.6vw, 32px) clamp(22px, 2.5vw, 30px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.65rem;
+    min-height: 0;
+  }
+  .vsl-spring-card__body > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .vsl-spring-card__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-bundle-name);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: var(--navy);
+    text-align: center;
+  }
+  .vsl-spring-card__pricing {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+  }
+  .vsl-spring-card__price {
+    margin: 0;
+    font-size: var(--text-bundle-price);
+    font-weight: 700;
+    color: var(--magenta);
+    line-height: 1.15;
+  }
+  .vsl-spring-card__price-from {
+    font-size: 0.48em;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    vertical-align: 0.15em;
+  }
+  .vsl-spring-card__price-unit {
+    font-size: 0.48em;
+    font-weight: 600;
+    color: var(--slate-violet);
+  }
+  .vsl-spring-card__was {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--mist);
+  }
+  .vsl-spring-card__was s { text-decoration: line-through; }
+  .vsl-spring-card__save {
+    display: inline-block;
+    margin: 10px auto 0;
+    padding: 4px 12px;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--blue);
+    border-radius: 4px;
+    text-align: center;
+  }
+  .vsl-spring-card__rule {
+    display: block;
+    flex-shrink: 0;
+    height: 1px;
+    background: rgba(16,24,43,0.1);
+    margin: 0;
+    border: 0;
+  }
+  .vsl-spring-card__list {
+    margin: 0;
+    padding: 0 0 0 1.15em;
+    flex: 0 1 auto;
+    font-size: clamp(0.98rem, 0.9rem + 0.35vw, 1.08rem);
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--slate-violet);
+    list-style-type: disc;
+  }
+  .vsl-spring-card__list li { margin-bottom: 0.5em; }
+  .vsl-spring-card__list li::marker { color: var(--blue); }
+  .vsl-spring-card__cta {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 20px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: transparent;
+    box-shadow: none;
+    cursor: pointer;
+    transition:
+      color 0.22s ease, background-color 0.22s ease,
+      border-color 0.22s ease, box-shadow 0.22s ease,
+      transform 0.14s ease, filter 0.14s ease;
+  }
+  .vsl-spring-card__cta:hover {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background-color: var(--magenta);
+    border-color: var(--magenta);
+    box-shadow: 0 6px 22px rgba(238,38,95,0.26);
+  }
+  .vsl-spring-card__cta:active {
+    filter: brightness(0.93);
+    transform: scale(0.99);
+    box-shadow: 0 3px 14px rgba(238,38,95,0.2);
+  }
+  .vsl-spring-card__cta:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+
+  /* ── 2-SEATER SECTION (dark) ── */
+  .vsl-spring-twoseater {
+    background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(64px, 10vh, 120px) 0 clamp(120px, 18vh, 220px);
+    position: relative;
+    overflow: visible;
+    isolation: isolate;
+    color: var(--circuit-white);
+  }
+  /* Deliverables/Dark Map Assets/SVG/Map Motifs - DarkAsset 140.svg — rounder / more circular track; scaled ~1.3× so edges bleed past viewport */
+  .vsl-spring-twoseater__motif {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 1;
+  }
+  .vsl-spring-twoseater__motif svg {
+    width: min(169vw, 2210px);
+    max-width: none;
+    height: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 28px rgba(234, 234, 234, 0.06));
+  }
+  .vsl-spring-twoseater > .vsl-spring-grid {
+    position: relative;
+    z-index: 2;
+  }
+  .vsl-spring-twoseater .vsl-spring-section-title {
+    color: var(--yellow);
+  }
+  .vsl-spring-twoseater .vsl-spring-section-title em {
+    font-style: italic;
+    color: var(--circuit-white);
+  }
+  .vsl-spring-twoseater .vsl-spring-section-sub {
+    color: var(--circuit-white);
+  }
+  .vsl-spring-twoseater .vsl-spring-card {
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.9) inset;
+  }
+  .vsl-spring-twoseater .vsl-spring-card:nth-child(1) .vsl-spring-card__accent { background: var(--yellow); }
+  .vsl-spring-twoseater .vsl-spring-card:nth-child(2) .vsl-spring-card__accent { background: var(--magenta); }
+
+  /* ── CTA SECTION (navy band; white panel pops) ── */
+  .vsl-spring-cta {
+    background: var(--navy);
+    padding: clamp(48px, 8vh, 96px) 0 clamp(48px, 8vh, 96px);
+    color: var(--circuit-white);
+  }
+  .vsl-spring-cta__panel {
+    max-width: min(1100px, 100%);
+    margin: 0 auto;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 3px solid var(--magenta);
+    border-radius: 22px;
+    background: #fff;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9) inset,
+      0 28px 64px rgba(0, 0, 0, 0.36),
+      0 10px 24px rgba(0, 0, 0, 0.22);
+    padding: clamp(48px, 8vh, 96px) clamp(36px, 7vw, 88px);
+    text-align: center;
+  }
+  .vsl-spring-cta__panel h2 {
+    margin: 0 0 clamp(16px, 2.5vh, 22px);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(1.85rem, 1.15rem + 2.4vw, 3rem);
+    text-transform: uppercase;
+    letter-spacing: 0.045em;
+    line-height: 1.08;
+    color: var(--blue);
+    text-wrap: balance;
+  }
+  .vsl-spring-cta__panel p {
+    margin: 0 auto clamp(28px, 4vh, 40px);
+    color: var(--slate-violet);
+    line-height: 1.65;
+    font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.3rem);
+    font-weight: 400;
+    max-width: 44ch;
+  }
+  .vsl-spring-cta__buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .vsl-spring-cta__panel .vsl-spring-btn {
+    min-height: 52px;
+    padding: 14px 40px;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    border-radius: 10px;
+    box-shadow: 0 6px 24px rgba(238, 38, 95, 0.22);
+  }
+  .vsl-spring-cta__panel .vsl-spring-btn:hover {
+    box-shadow: 0 10px 32px rgba(238, 38, 95, 0.32);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .vsl-spring-card-grid--4,
+    .vsl-spring-card-grid--2 {
+      grid-template-columns: 1fr;
+      max-width: min(480px, 100%);
+      margin-inline: auto;
+    }
+    .vsl-spring-card__media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  @media (max-width: 639px) {
+    .vsl-spring-hero__title { line-height: 1.08; }
+    .vsl-spring-section-title { line-height: 1.2; }
+    .vsl-spring-bundles { padding: 36px 0 64px; }
+    .vsl-spring-hero + .vsl-spring-bundles { padding-top: calc(36px + 1px); }
+    /* Extra bottom space so theme CTAs / footers below the widget don’t overlap the last card */
+    .vsl-spring-twoseater { padding: 48px 0 96px; }
+    .vsl-spring-cta { padding: 40px 0 48px; }
+    .vsl-spring-cta__panel {
+      padding: clamp(36px, 9vw, 56px) clamp(22px, 6vw, 32px);
+      border-radius: 18px;
+    }
+    .vsl-spring-cta__panel .vsl-spring-btn {
+      min-height: 48px;
+      padding: 12px 32px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .vsl-spring-card__media {
+      aspect-ratio: 3 / 2;
+    }
+    .vsl-spring-card__body { padding: 18px 20px 22px; }
+    .vsl-spring-card__name {
+      font-size: clamp(1.2rem, 3.8vw + 0.75rem, 1.4rem);
+    }
+    .vsl-spring-hero__inner {
+      padding: clamp(44px, 12vw, 80px) clamp(16px, 5vw, var(--page-margin)) clamp(24px, 6vw, 40px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-spring-btn, .vsl-spring-card__cta {
+      transition: color 0.22s ease, background-color 0.22s ease,
+        border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease;
+    }
+    .vsl-spring-btn:active, .vsl-spring-card__cta:active { transform: none; }
+    .vsl-spring-card { transition: none; }
+    .vsl-spring-card:hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+</style>
+
+<div class="vsl-spring" data-vsl-config='{"links":{"quickRacer":"https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==","doubleRacer":"https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==","sprint":"https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9","endurance":"https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==","bookNow":"https://velocitysimlounge.com/book-now/"},"images":{"quickRacer":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp","doubleRacer":"https://velocitysimlounge.com/wp-content/uploads/2026/04/DSC01771.webp","sprint":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T.webp","endurance":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_T.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","twoseaterMotif":""},"heroVideo":"https://vimeo.com/1179078361","elementorColumnOutdentPx":0}'>
+  <main>
+
+    <!-- ▸ Hero -->
+    <section class="vsl-spring-hero" id="spring-hero" aria-labelledby="spring-hero-title">
+      <div class="vsl-spring-hero__vimeo" data-vsl-spring-vimeo hidden aria-hidden="true"></div>
+      <video class="vsl-spring-hero__video" data-vsl-spring-video autoplay muted loop playsinline aria-hidden="true"></video>
+      <img class="vsl-spring-hero__banner-img" data-vsl-spring-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      <div class="vsl-spring-hero__rings" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="vsl-spring-hero__inner">
+        <span class="vsl-spring-hero__eyebrow">Spring Special</span>
+        <h1 class="vsl-spring-hero__title" id="spring-hero-title">
+          Eat &amp; Race <span class="vsl-spring-hero__title-accent">Bundles</span>
+        </h1>
+        <div class="vsl-spring-hero__sub-panel">
+          <p class="vsl-spring-hero__sub">
+            Eat + Race packages that pair the best sim racing with great food. Enjoy special pricing for the month of April.
+          </p>
+        </div>
+        <a class="vsl-spring-btn" href="#spring-bundles">View packages</a>
+      </div>
+      <div class="vsl-spring-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ Two Driver Bundles -->
+    <section class="vsl-spring-bundles" id="spring-bundles" aria-labelledby="bundles-heading">
+      <div class="vsl-spring-grid">
+        <h2 class="vsl-spring-section-title" id="bundles-heading">
+          Two Driver <em>Bundles</em>
+        </h2>
+        <p class="vsl-spring-section-sub">Limited time offer &bull; April 2026</p>
+
+        <div class="vsl-spring-card-grid vsl-spring-card-grid--2">
+
+          <!-- Quick Race -->
+          <article class="vsl-spring-card">
+            <div class="vsl-spring-card__accent"></div>
+            <figure class="vsl-spring-card__media">
+              <img data-vsl-spring="quickRacer" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp" alt="Quick Race bundle, Velocity Sim Lounge" width="2400" height="1600" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-spring-card__body">
+              <h3 class="vsl-spring-card__name">Quick Race</h3>
+              <div class="vsl-spring-card__pricing">
+                <p class="vsl-spring-card__price"><span class="vsl-spring-card__price-from">From</span> $85</p>
+
+              </div>
+
+              <hr class="vsl-spring-card__rule">
+              <ul class="vsl-spring-card__list">
+                <li>2 Simulators (~30 min experience)</li>
+                <li>2 Food tickets</li>
+                <li>Regularly $105</li>
+              </ul>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="quickRacer" href="https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==" target="_blank" rel="noopener noreferrer">Select package</a>
+            </div>
+          </article>
+
+          <!-- Double Race -->
+          <article class="vsl-spring-card">
+            <div class="vsl-spring-card__accent"></div>
+            <figure class="vsl-spring-card__media">
+              <img data-vsl-spring="doubleRacer" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/DSC01771.webp" alt="Double Race bundle, Velocity Sim Lounge" width="2400" height="1600" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-spring-card__body">
+              <h3 class="vsl-spring-card__name">Double Race</h3>
+              <div class="vsl-spring-card__pricing">
+                <p class="vsl-spring-card__price"><span class="vsl-spring-card__price-from">From</span> $115</p>
+
+              </div>
+
+              <hr class="vsl-spring-card__rule">
+              <ul class="vsl-spring-card__list">
+                <li>2 Simulators (~60 min experience)</li>
+                <li>2 Food tickets</li>
+                <li>2 Races, twice the fun!</li>
+              </ul>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="doubleRacer" href="https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==" target="_blank" rel="noopener noreferrer">Select package</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Two Seater Bundles -->
+    <section class="vsl-spring-twoseater" id="spring-2seater" aria-labelledby="twoseater-heading">
+      <div class="vsl-spring-twoseater__motif" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150.13 87.77" focusable="false" aria-hidden="true">
+          <g fill="#EAEAEA" fill-opacity="0.33">
+            <path d="m149.81,1.79c-.52-1.09-1.63-1.79-2.81-1.79-.36,0-.72.06-1.1.2-43.92,14.86-79.76,17.79-89.7,18.33-1.13.06-2.14.74-2.64,1.75-.5,1.02-.41,2.23.24,3.16l7.97,11.47s.03.04,0,.09c-.02.04-.04.04-.08.04h-3.16c-.56,0-1.28-.29-1.89-2.51l-.04-.17c-.29-1-2.79-5.88-6.08-6.39-.91-.14-2.02-.25-3.31-.3-1.08-.05-2.09.53-2.6,1.48-.49.92-.43,2.02.15,2.88,2.84,4.2,4.94,8.16,6.42,12.11,1.93,5.14-4.31,8.5-5.03,8.86-.76.39-2.14.62-3.67.62-3.1,0-5.86-.9-6.87-2.26-2.38-3.19-6.98-9.4-9.32-12.53-.88-1.19-2.29-1.89-3.77-1.89-.63,0-1.25.12-1.84.37L1.93,43.25c-1.04.44-1.75,1.38-1.9,2.5-.15,1.12.3,2.21,1.19,2.9l23.01,17.96.41-.53L1.63,48.12c-.7-.55-1.05-1.4-.94-2.29.12-.88.68-1.62,1.5-1.97l18.77-7.93c.5-.21,1.03-.32,1.57-.32,1.27,0,2.48.61,3.24,1.63,2.33,3.13,6.94,9.33,9.32,12.53,1.12,1.51,4.1,2.53,7.4,2.53,1.64,0,3.12-.26,3.98-.69.78-.4,7.49-4.01,5.35-9.69-1.5-3.99-3.62-8-6.49-12.24-.44-.66-.49-1.5-.11-2.2.38-.73,1.15-1.17,1.97-1.13,1.27.06,2.35.16,3.24.29,2.92.46,5.32,5.13,5.54,5.91l.05.17c.38,1.4,1.02,3,2.53,3h3.16c.29,0,.53-.15.67-.41.13-.25.12-.54-.05-.78l-7.97-11.47c-.51-.73-.58-1.68-.19-2.48.39-.8,1.19-1.33,2.08-1.38,9.96-.55,45.87-3.49,89.87-18.37,0,0,.04-.02.04-.02.27-.1.56-.15.84-.15.93,0,1.79.55,2.21,1.41.41.85.3,1.85-.29,2.6l-17.39,22.06c-1.3,1.65-3.15,2.81-5.21,3.26l-10.92,2.37c-.31.07-.63.1-.95.1-1.3,0-2.53-.57-3.38-1.56l-1.48-1.73c-.5-.58-1.23-.92-1.99-.92-.72,0-1.39.28-1.89.8-1.26,1.31-2.19,2.25-2.76,2.81l-.48.48c-1.67,1.67-3.75,3.74-5.87,3.74-1.01,0-2.39-.66-4.57-1.75-2.05-1.02-4.61-2.29-6.14-2.29-2.79,0-5.98,1.74-6.95,3.8-.43.91-.7,2.16-.96,3.37-.43,1.97-.83,3.84-2.01,4.76-.74.58-1.76,1.07-2.74,1.55-1.13.54-2.4,1.16-3,1.82-.37.42-.75,1.48-1.2,2.81-.66,1.95-1.34,3.96-2.67,4.89-1.33.94-6.19,4.11-14.45,9.43-3.11,2.01-1.5,9.87,0,13.45.49,1.17,1.39,3.06,2.66,5.63.38.76.34,1.64-.1,2.35-.45.73-1.25,1.18-2.09,1.18-.54,0-1.06-.18-1.5-.53l-20.25-15.8.22-.28.19-.24.53.41h0s19.72,15.39,19.72,15.39c.35.27.72.38,1.07.38.43,0,.83-.16,1.13-.41.54-.45.9-1.28.47-2.16-1.28-2.59-2.18-4.49-2.68-5.67-1.47-3.48-3.44-11.89.25-14.27,8.26-5.33,13.11-8.5,14.42-9.41,1.15-.81,1.8-2.72,2.42-4.56.43-1.28.84-2.49,1.34-3.04.68-.75,1.97-1.38,3.2-1.97.99-.48,1.93-.94,2.62-1.47.99-.77,1.37-2.53,1.77-4.39.27-1.24.55-2.53,1.01-3.51,1.09-2.3,4.48-4.18,7.56-4.18,1.68,0,4.21,1.26,6.44,2.36,1.81.9,3.37,1.68,4.27,1.68,1.84,0,3.81-1.97,5.4-3.55.16-.16.33-.32.48-.48.57-.56,1.5-1.51,2.75-2.8.64-.66,1.55-1.04,2.46-1,.93.03,1.8.45,2.4,1.15l1.48,1.73c.9,1.06,2.31,1.53,3.67,1.23l10.92-2.38c1.91-.41,3.62-1.49,4.83-3.02l17.38-22.06c.51-.65.53-1.5.05-2.17-.48-.67-1.29-.92-2.06-.65l-.05.02c-44.08,14.91-80.07,17.86-90.05,18.4-.66.04-1.23.41-1.52,1-.29.59-.24,1.27.14,1.81l7.97,11.47c.31.44.34.99.09,1.47s-.72.76-1.26.76h-3.16c-1.99,0-2.77-1.99-3.18-3.49l-.04-.16c-.2-.69-2.43-5.04-5-5.44-.86-.13-1.93-.23-3.16-.29-.57-.03-1.07.26-1.34.74-.28.49-.25,1.07.06,1.54,2.9,4.29,5.04,8.34,6.56,12.39,2.34,6.22-4.85,10.1-5.67,10.52-2.79,1.42-10.01.94-12.23-2.03-2.38-3.19-6.98-9.4-9.32-12.53-.93-1.25-2.58-1.7-4.01-1.09l-18.77,7.93c-.6.26-1.01.79-1.1,1.44-.08.65.17,1.27.69,1.68l19.11,14.91.41-.53L2.45,47.07c-.33-.26-.49-.66-.44-1.07.06-.41.32-.75.7-.91l18.77-7.93c1.15-.49,2.47-.13,3.21.87,2.33,3.13,6.94,9.33,9.32,12.53,2.58,3.46,10.34,3.62,13.06,2.23.88-.45,8.54-4.59,6-11.35-1.54-4.09-3.71-8.19-6.64-12.53-.17-.25-.18-.57-.04-.83.15-.27.43-.42.73-.41,1.21.06,2.25.15,3.09.28,2.08.33,4.25,4.24,4.46,4.97l.04.15c.27.99,1.09,3.99,3.82,3.99h3.16c.78,0,1.49-.43,1.85-1.12.36-.69.31-1.52-.13-2.16l-7.97-11.47c-.24-.34-.27-.76-.08-1.13.18-.37.53-.61.95-.63,10-.55,46.07-3.5,90.23-18.44l.06-.02c.59-.21,1.06.08,1.3.41s.36.86-.03,1.36l-17.38,22.06c-1.11,1.41-2.69,2.4-4.45,2.78l-10.92,2.38c-1.12.25-2.28-.14-3.02-1.02l-1.48-1.73c-.72-.85-1.78-1.35-2.89-1.39-1.11-.02-2.19.41-2.97,1.21-1.25,1.29-2.17,2.23-2.74,2.79-.16.16-.32.32-.49.48-1.5,1.49-3.37,3.35-4.93,3.35-.74,0-2.31-.78-3.97-1.6-2.3-1.14-4.9-2.43-6.74-2.43-3.31,0-6.97,2.05-8.16,4.56-.5,1.05-.78,2.38-1.06,3.66-.38,1.73-.73,3.37-1.53,4-.62.49-1.53.93-2.5,1.4-1.3.63-2.64,1.27-3.41,2.13-.59.66-1.03,1.93-1.48,3.27-.56,1.66-1.2,3.55-2.17,4.23-1.31.91-6.16,4.08-14.41,9.4-4.48,2.89-1.53,12.64-.49,15.09.5,1.19,1.41,3.1,2.69,5.7.29.58.02,1.09-.29,1.34-.32.26-.86.41-1.37.02l-20.25-15.8.41-.52h0s-.53-.41-.53-.41l-.41.53.52.41-.28.36-.13.16-.53-.41-.41.53.53.41-.14.18-.27.34h0s.52.41.52.41h0s19.72,15.39,19.72,15.39c.56.44,1.22.67,1.91.67,1.07,0,2.09-.57,2.66-1.49.57-.91.62-2.03.13-3-1.26-2.55-2.15-4.44-2.64-5.59-1.48-3.51-2.88-10.94-.27-12.62,8.26-5.33,13.13-8.51,14.47-9.45,1.51-1.06,2.22-3.18,2.92-5.23.3-.89.75-2.22,1.07-2.57.5-.56,1.72-1.15,2.79-1.67,1.01-.49,2.06-1,2.86-1.62,1.37-1.07,1.8-3.05,2.26-5.15.25-1.17.51-2.38.91-3.22.87-1.85,3.78-3.41,6.34-3.41,1.37,0,3.85,1.23,5.84,2.22,2.26,1.12,3.71,1.81,4.86,1.81,2.39,0,4.58-2.18,6.34-3.94l.48-.47c.58-.56,1.51-1.52,2.78-2.83.37-.38.87-.59,1.4-.59.57,0,1.11.25,1.48.68l1.48,1.73c.97,1.14,2.39,1.79,3.89,1.79.37,0,.73-.04,1.09-.12l10.92-2.38c2.21-.48,4.19-1.73,5.59-3.5l17.39-22.06c.75-.95.89-2.22.36-3.3Z"/>
+            <path d="m32.42,69.6l19.72,15.39c.09.07.17.1.26.1h0c.14,0,.3-.1.38-.23.04-.07.1-.21,0-.41-1.29-2.6-2.2-4.53-2.71-5.74-1.67-3.96-3.69-13.06.75-15.92,10.26-6.61,13.48-8.75,14.38-9.38.79-.55,1.39-2.33,1.92-3.9.58-1.71.98-2.79,1.61-3.5.86-.95,2.26-1.63,3.63-2.29.88-.43,1.8-.87,2.37-1.31.56-.44.89-1.77,1.28-3.61.29-1.32.58-2.68,1.11-3.8,1.31-2.78,5.16-4.95,8.76-4.95,1.85,0,4.08,1.04,7.04,2.51,1.68.83,3.11,1.52,3.66,1.53,1.19,0,2.78-1.49,4.45-3.16l.49-.49c.56-.55,1.48-1.49,2.72-2.78.88-.91,2.06-1.41,3.33-1.41,1.36,0,2.64.59,3.52,1.62l1.48,1.73c.58.68,1.51.99,2.38.8l10.92-2.38c1.6-.35,3.05-1.25,4.07-2.54l17.39-22.06c.12-.15.13-.32.06-.48-.08-.16-.24-.27-.41-.28-.07,0-.13.02-.2.04h-.04c-44.24,14.98-80.38,17.94-90.4,18.48-.16,0-.31.11-.39.26-.07.15-.05.33.04.46l7.97,11.47c.59.85.66,1.94.18,2.85-.47.92-1.41,1.48-2.45,1.48h-3.16c-2.15,0-3.66-1.5-4.47-4.47l-.04-.15c-.42-1.19-2.44-4.26-3.92-4.49-.72-.11-1.59-.2-2.6-.25-.13,0-.25.06-.31.17-.06.11-.06.25.01.35,2.84,4.26,4.96,8.29,6.48,12.32,2.09,5.55-2.1,10.03-6.32,12.19-1.56.79-3.73.91-4.89.91-3.16,0-7.19-.87-9.01-3.33-2.38-3.2-6.99-9.4-9.32-12.53-.54-.73-1.57-1.02-2.42-.66l-18.77,7.93c-.17.07-.27.21-.29.38-.02.18.04.33.18.45l17.17,13.4.41-.53L3.52,46.2l18.48-7.81c.57-.25,1.26-.05,1.62.44,2.33,3.13,6.94,9.33,9.32,12.53,1.98,2.66,6.24,3.61,9.55,3.61,1.22,0,3.51-.12,5.19-.99,4.47-2.27,8.88-7.05,6.64-13.02-1.47-3.9-3.49-7.8-6.18-11.9.71.05,1.33.12,1.87.21,1.07.16,2.98,2.89,3.39,4.03l.04.13c.9,3.29,2.62,4.96,5.11,4.96h3.16c1.28,0,2.45-.7,3.04-1.85.6-1.13.51-2.49-.22-3.54l-7.75-11.16c10.51-.6,46.11-3.65,89.62-18.29l-16.96,21.52c-.92,1.17-2.23,1.98-3.68,2.3l-10.92,2.38c-.63.14-1.31-.09-1.73-.58l-1.48-1.73c-1.01-1.18-2.47-1.85-4.02-1.85-1.45,0-2.8.57-3.81,1.61-1.24,1.28-2.15,2.22-2.71,2.76l-.49.49c-1.11,1.11-2.97,2.96-3.97,2.96-.45,0-2.42-.99-3.38-1.46-3.03-1.51-5.34-2.58-7.33-2.58-3.84,0-7.96,2.34-9.37,5.33-.56,1.19-.86,2.59-1.16,3.94-.23,1.09-.62,2.9-1.04,3.23-.51.4-1.39.83-2.26,1.25-1.41.68-2.88,1.39-3.82,2.43-.73.81-1.15,1.95-1.75,3.74-.45,1.32-1.06,3.13-1.68,3.56-.9.63-4.11,2.76-14.36,9.37-4.79,3.09-2.75,12.61-1,16.74.45,1.07,1.21,2.7,2.27,4.85l-19.43-15.16.41-.53h0s-.53-.41-.53-.41l-.41.53.52.41-.41.53h0s0,0,0,0l.53.41h0Z"/>
+            <rect x="29.44" y="71.02" width=".67" height=".67" transform="translate(-44.74 50.71) rotate(-51.87)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="vsl-spring-grid">
+        <h2 class="vsl-spring-section-title" id="twoseater-heading">
+          2-Seater <em>Bundles</em>
+        </h2>
+        <p class="vsl-spring-section-sub">Share the only 2-seater motion sim experience in Texas.</p>
+
+        <div class="vsl-spring-card-grid vsl-spring-card-grid--2">
+
+          <!-- The Sprint -->
+          <article class="vsl-spring-card">
+            <div class="vsl-spring-card__accent"></div>
+            <figure class="vsl-spring-card__media">
+              <img data-vsl-spring="sprint" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T.webp" alt="Sprint Bundle, 2-seater at Velocity Sim Lounge" width="2400" height="1600" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-spring-card__body">
+              <h3 class="vsl-spring-card__name">Sprint Bundle</h3>
+              <div class="vsl-spring-card__pricing">
+                <p class="vsl-spring-card__price"><span class="vsl-spring-card__price-from">From</span> $65</p>
+
+              </div>
+
+              <hr class="vsl-spring-card__rule">
+              <ul class="vsl-spring-card__list">
+                <li>1 shared race (~25 min)</li>
+                <li>The only motion 2-seater in Texas</li>
+                <li>2 Food tickets</li>
+              </ul>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="sprint" href="https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9" target="_blank" rel="noopener noreferrer">Select package</a>
+            </div>
+          </article>
+
+          <!-- The Endurance -->
+          <article class="vsl-spring-card">
+            <div class="vsl-spring-card__accent"></div>
+            <figure class="vsl-spring-card__media">
+              <img data-vsl-spring="endurance" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_T.webp" alt="Double Race Bundle, 2-seater at Velocity Sim Lounge" width="1920" height="1080" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-spring-card__body">
+              <h3 class="vsl-spring-card__name">Double Race Bundle</h3>
+              <div class="vsl-spring-card__pricing">
+                <p class="vsl-spring-card__price"><span class="vsl-spring-card__price-from">From</span> $89</p>
+
+              </div>
+
+              <hr class="vsl-spring-card__rule">
+              <ul class="vsl-spring-card__list">
+                <li>2 races, 1 shared simulator (~55 min total)</li>
+                <li>Pick your tracks from our full lineup</li>
+                <li>2 Food tickets</li>
+              </ul>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="endurance" href="https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==" target="_blank" rel="noopener noreferrer">Select package</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+</div>
+
+<script>
+(function(){
+  function vslSpringInit() {
+    var root = document.querySelector('.vsl-spring');
+    if (!root || root._vslInitDone) return;
+    root._vslInitDone = true;
+
+    var cfg;
+    try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
+    window.VSL_SPRING_CONFIG = cfg;
+
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+    var images = cfg.images || {};
+    var links = cfg.links || {};
+
+    if (images.heroFinishLine) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+    }
+    if (images.twoseaterMotif) {
+      var motifEl = root.querySelector('.vsl-spring-twoseater__motif');
+      if (motifEl) {
+        var motifSvg = motifEl.querySelector('svg');
+        if (motifSvg) motifSvg.style.display = 'none';
+        motifEl.style.backgroundImage = 'url("' + images.twoseaterMotif + '")';
+        motifEl.style.backgroundRepeat = 'no-repeat';
+        motifEl.style.backgroundPosition = '50% 45%';
+        motifEl.style.backgroundSize = 'min(169vw, 2210px) auto';
+      }
+    }
+
+    var heroVideo = cfg.heroVideo || '';
+    if (heroVideo) {
+      var video = root.querySelector('video[data-vsl-spring-video]');
+      var bannerImg = root.querySelector('[data-vsl-spring-hero-banner]');
+      var vimeoWrap = root.querySelector('[data-vsl-spring-vimeo]');
+      var hero = root.querySelector('.vsl-spring-hero');
+      if (hero) {
+        var path = heroVideo.split('?')[0].split('#')[0];
+        var vimeoMatch = heroVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        var isVideoFile = /\.(mp4|webm|ogg|mov|m4v)$/i.test(path);
+        hero.classList.remove('vsl-spring-hero--hero-bg-image', 'vsl-spring-hero--hero-bg-vimeo');
+        if (vimeoMatch && vimeoWrap) {
+          var vid = vimeoMatch[1];
+          var vimeoSrc =
+            'https://player.vimeo.com/video/' + vid +
+            '?autoplay=1&muted=1&loop=1&background=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&api=1';
+          vimeoWrap.innerHTML =
+            '<iframe id="vsl-spring-vimeo-iframe" src="' +
+            vimeoSrc.replace(/"/g, '&quot;') +
+            '" style="position:absolute;top:50%;left:50%;width:110%;height:110%;transform:translate(-50%,-50%) scale(1.09);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+          vimeoWrap.removeAttribute('hidden');
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-spring-hero--has-video', 'vsl-spring-hero--hero-bg-vimeo');
+          (function(iframeEl) {
+            if (!iframeEl) return;
+            function bindLoop() {
+              try {
+                if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+                var pl = new Vimeo.Player(iframeEl);
+                pl.on('ended', function(){ pl.setCurrentTime(0).then(function(){ return pl.play(); }).catch(function(){}); });
+              } catch(e){}
+            }
+            var sid = 'vsl-spring-vimeo-player-api';
+            if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindLoop(); }
+            else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindLoop); }
+            else {
+              var sc = document.createElement('script');
+              sc.id = sid;
+              sc.src = 'https://player.vimeo.com/api/player.js';
+              sc.async = true;
+              sc.onload = bindLoop;
+              document.head.appendChild(sc);
+            }
+          })(vimeoWrap.querySelector('iframe'));
+        } else if (isVideoFile && video) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          video.src = heroVideo;
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          hero.classList.add('vsl-spring-hero--has-video');
+        } else if (bannerImg) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          bannerImg.src = heroVideo;
+          bannerImg.removeAttribute('hidden');
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-spring-hero--has-video', 'vsl-spring-hero--hero-bg-image');
+        }
+      }
+    }
+
+    root.querySelectorAll('img[data-vsl-spring]').forEach(function(img) {
+      var key = img.getAttribute('data-vsl-spring');
+      if (key && images[key]) img.src = images[key];
+    });
+
+    root.querySelectorAll('a[data-vsl-spring-link]').forEach(function(a) {
+      var key = a.getAttribute('data-vsl-spring-link');
+      if (key && links[key]) {
+        var href = links[key];
+        a.setAttribute('href', href);
+        if (/^https?:\/\//i.test(href)) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
+    });
+
+    /* ── 3D tilt + fluid flow on cards ── */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduceMotion.matches) return;
+
+    var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+
+    root.querySelectorAll('.vsl-spring-card').forEach(function(card) {
+      if (card._vslTiltBound) return;
+      card._vslTiltBound = true;
+
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return;
+        var cta = card.querySelector('.vsl-spring-card__cta');
+        if (cta) cta.click();
+      });
+
+      if (isCoarse) return;
+
+      var TILT = 12, SCALE_UP = 1.035, LERP_POS = 0.09, LERP_SCALE = 0.1;
+      var raf = null;
+      var target = { mx:0.5, my:0.5, scale:1 };
+      var current = { mx:0.5, my:0.5, scale:1 };
+      var active = false;
+      function lerp(a,b,t){ return a+(b-a)*t; }
+      function tick() {
+        current.mx = lerp(current.mx, target.mx, LERP_POS);
+        current.my = lerp(current.my, target.my, LERP_POS);
+        current.scale = lerp(current.scale, target.scale, LERP_SCALE);
+        var rx = (current.my-0.5)*-TILT;
+        var ry = (current.mx-0.5)*TILT;
+        var lift = (current.scale-1)*-115;
+        card.style.setProperty('--card-mx', current.mx.toFixed(3));
+        card.style.setProperty('--card-my', current.my.toFixed(3));
+        card.style.transform =
+          'perspective(800px) rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg) scale('+current.scale.toFixed(4)+') translateY('+lift.toFixed(1)+'px)';
+        var settled = Math.abs(current.mx-target.mx)<0.0005 && Math.abs(current.my-target.my)<0.0005 && Math.abs(current.scale-target.scale)<0.0005;
+        if (!settled) { raf = requestAnimationFrame(tick); }
+        else { if (!active) card.style.transform = ''; raf = null; }
+      }
+      function engage(){ active=true; target.scale=SCALE_UP; if(!raf) raf=requestAnimationFrame(tick); }
+      function move(cx,cy){
+        var rect=card.getBoundingClientRect();
+        target.mx=Math.max(0,Math.min(1,(cx-rect.left)/rect.width));
+        target.my=Math.max(0,Math.min(1,(cy-rect.top)/rect.height));
+        if(!raf) raf=requestAnimationFrame(tick);
+      }
+      function release(){ active=false; target.mx=0.5; target.my=0.5; target.scale=1; if(!raf) raf=requestAnimationFrame(tick); }
+      card.addEventListener('mouseenter', engage);
+      card.addEventListener('mousemove', function(e){ move(e.clientX,e.clientY); });
+      card.addEventListener('mouseleave', release);
+    });
+  }
+
+  function tryInit() { try { vslSpringInit(); } catch(e) { console.error('[VSL Spring] init error:', e); } }
+
+  if (document.readyState !== 'loading') { tryInit(); } else { document.addEventListener('DOMContentLoaded', tryInit); }
+
+  if (window.elementorFrontend && window.elementorFrontend.hooks) {
+    window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+  } else {
+    window.addEventListener('elementor/frontend/init', function() {
+      if (window.elementorFrontend && window.elementorFrontend.hooks) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+      }
+    });
+  }
+
+  window.addEventListener('load', tryInit);
+
+  /* Polling fallback — if nothing else triggered init within 2s, keep retrying */
+  var attempts = 0;
+  var poller = setInterval(function() {
+    attempts++;
+    var r = document.querySelector('.vsl-spring');
+    if (r && r._vslInitDone) { clearInterval(poller); return; }
+    tryInit();
+    if (attempts >= 20) clearInterval(poller);
+  }, 300);
+})();
+</script>

@@ -1,0 +1,247 @@
+{
+  "page": "buyout",
+  "label": "Full Venue Buyout",
+  "sections": {
+    "hero": {
+      "label": "Hero",
+      "fields": {
+        "eyebrow": {
+          "type": "text",
+          "label": "Eyebrow Text"
+        },
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "heroImage": {
+          "type": "image",
+          "label": "Hero Image",
+          "perLocation": true
+        },
+        "ctaText": {
+          "type": "text",
+          "label": "CTA Button Text"
+        },
+        "ctaLink": {
+          "type": "url",
+          "label": "CTA Link (Inquiry)",
+          "perLocation": true
+        }
+      }
+    },
+    "venue": {
+      "label": "Venue Overview",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy",
+          "perLocation": true
+        },
+        "image": {
+          "type": "image",
+          "label": "Venue Image",
+          "perLocation": true
+        },
+        "stats": {
+          "type": "repeater",
+          "label": "Stats",
+          "fields": {
+            "number": {
+              "type": "text",
+              "label": "Number",
+              "perLocation": true
+            },
+            "label": {
+              "type": "text",
+              "label": "Label"
+            }
+          }
+        },
+        "bullets": {
+          "type": "textarea",
+          "label": "Feature Bullets (one per line)"
+        }
+      }
+    },
+    "included": {
+      "label": "What's Included",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Included Items",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "image": {
+              "type": "image",
+              "label": "Image"
+            }
+          }
+        }
+      }
+    },
+    "perfectFor": {
+      "label": "Perfect For",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "Use Cases",
+          "fields": {
+            "label": {
+              "type": "text",
+              "label": "Label"
+            }
+          }
+        }
+      }
+    },
+    "enhancements": {
+      "label": "Enhancements",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "cards": {
+          "type": "repeater",
+          "label": "Enhancement Cards",
+          "fields": {
+            "title": {
+              "type": "text",
+              "label": "Title"
+            },
+            "description": {
+              "type": "textarea",
+              "label": "Description"
+            }
+          }
+        }
+      }
+    },
+    "gallery": {
+      "label": "Gallery",
+      "fields": {
+        "images": {
+          "type": "repeater",
+          "label": "Gallery Images",
+          "fields": {
+            "image": {
+              "type": "image",
+              "label": "Image"
+            },
+            "alt": {
+              "type": "text",
+              "label": "Alt Text"
+            }
+          }
+        }
+      }
+    },
+    "faq": {
+      "label": "FAQ",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "items": {
+          "type": "repeater",
+          "label": "FAQ Items",
+          "fields": {
+            "question": {
+              "type": "text",
+              "label": "Question"
+            },
+            "answer": {
+              "type": "textarea",
+              "label": "Answer"
+            }
+          }
+        }
+      }
+    },
+    "cta": {
+      "label": "Bottom CTA",
+      "fields": {
+        "heading": {
+          "type": "text",
+          "label": "Heading"
+        },
+        "subcopy": {
+          "type": "textarea",
+          "label": "Subcopy"
+        },
+        "primaryText": {
+          "type": "text",
+          "label": "Primary Button"
+        },
+        "primaryLink": {
+          "type": "url",
+          "label": "Primary Link",
+          "perLocation": true
+        },
+        "secondaryText": {
+          "type": "text",
+          "label": "Secondary Button"
+        },
+        "secondaryLink": {
+          "type": "url",
+          "label": "Secondary Link",
+          "perLocation": true
+        }
+      }
+    }
+  },
+  "seo": {
+    "title": {
+      "type": "text",
+      "label": "Page Title"
+    },
+    "description": {
+      "type": "textarea",
+      "label": "Meta Description"
+    },
+    "ogImage": {
+      "type": "image",
+      "label": "Social Share Image"
+    },
+    "ogTitle": {
+      "type": "text",
+      "label": "Social Share Title"
+    },
+    "noIndex": {
+      "type": "boolean",
+      "label": "Hide from Search Engines"
+    }
+  }
+}

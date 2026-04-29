@@ -1,0 +1,80 @@
+{
+  "id": "corporate-inquiry",
+  "title": "Corporate Event Inquiry",
+  "fields": [
+    {
+      "name": "company",
+      "type": "text",
+      "label": "Company Name",
+      "required": true,
+      "placeholder": "Acme Corp"
+    },
+    {
+      "name": "contactName",
+      "type": "text",
+      "label": "Contact Name",
+      "required": true,
+      "placeholder": "Jane Smith"
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "label": "Email",
+      "required": true,
+      "placeholder": "jane@acme.com"
+    },
+    {
+      "name": "phone",
+      "type": "tel",
+      "label": "Phone",
+      "required": true,
+      "placeholder": "(555) 555-5555"
+    },
+    {
+      "name": "guests",
+      "type": "number",
+      "label": "Number of Guests",
+      "required": true,
+      "min": 5,
+      "placeholder": "20"
+    },
+    {
+      "name": "date",
+      "type": "date",
+      "label": "Preferred Date",
+      "required": false
+    },
+    {
+      "name": "location",
+      "type": "select",
+      "label": "Location",
+      "required": true,
+      "options": [
+        "Houston",
+        "Dallas",
+        "Either"
+      ]
+    },
+    {
+      "name": "budget",
+      "type": "select",
+      "label": "Budget Range",
+      "required": false,
+      "options": [
+        "Under $1,000",
+        "$1,000-$2,500",
+        "$2,500-$5,000",
+        "$5,000+"
+      ]
+    },
+    {
+      "name": "details",
+      "type": "textarea",
+      "label": "Event Details",
+      "required": false,
+      "placeholder": "Tell us about your event goals, any special requests, etc."
+    }
+  ],
+  "successMessage": "Thanks for your interest in hosting a corporate event! Our events team will reach out within 48 hours.",
+  "submitTo": ""
+}

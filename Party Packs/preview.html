@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Party Packs — Velocity Sim Racing Lounge (Preview)</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: #10182B;
+      min-height: 100vh;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Simulates the Elementor widget wrapper -->
+<div class="elementor-widget-html">
+  <div class="elementor-widget-container">
+
+    <script>
+      fetch('velocity-party-packs-elementor.html')
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('vsl-mount').innerHTML = html;
+          document.querySelectorAll('#vsl-mount link[rel="preconnect"]').forEach(l => document.head.appendChild(l.cloneNode(true)));
+          document.querySelectorAll('#vsl-mount link[href*="fonts.googleapis"]').forEach(l => document.head.appendChild(l.cloneNode(true)));
+          var styles = document.querySelectorAll('#vsl-mount style');
+          styles.forEach(function(s) { document.head.appendChild(s.cloneNode(true)); });
+          var scripts = document.querySelectorAll('#vsl-mount script');
+          scripts.forEach(function(s) {
+            var ns = document.createElement('script');
+            ns.textContent = s.textContent;
+            document.body.appendChild(ns);
+          });
+        })
+        .catch(function() {
+          document.getElementById('vsl-mount').innerHTML =
+            '<p style="padding:40px;color:#eaeaea;font-family:system-ui;">Failed to load velocity-party-packs-elementor.html &mdash; make sure the file is in the same folder and you are serving via a local server (not file://).</p>';
+        });
+    </script>
+    <div id="vsl-mount"></div>
+
+  </div>
+</div>
+
+</body>
+</html>

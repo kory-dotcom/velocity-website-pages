@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velocity Book Now — Preview</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { background: #000; }
+    body { background: #000; min-height: 100vh; overflow-x: hidden; }
+  </style>
+</head>
+<body>
+  <div id="elementor-mock" style="max-width:100%;margin:0 auto;padding:0;">
+    <!-- Velocity Book Now Elementor Widget -->
+    <script>
+      fetch('velocity-book-now-elementor.html')
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('elementor-mock').innerHTML = html;
+          var scripts = document.getElementById('elementor-mock').querySelectorAll('script');
+          scripts.forEach(function(s) {
+            var ns = document.createElement('script');
+            if (s.src) { ns.src = s.src; }
+            else { ns.textContent = s.textContent; }
+            document.body.appendChild(ns);
+          });
+        });
+    </script>
+  </div>
+</body>
+</html>
