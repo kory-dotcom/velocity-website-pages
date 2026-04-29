@@ -1,4 +1,4 @@
-/* Velocity Local Replica Router */
+/* Velocity Staging Site router */
 (function () {
   var REPLICA_PAGES = {
     home: { title: "Home", modulePath: "../Home/velocity-home-elementor.html" },
@@ -44,7 +44,7 @@
     "/promotions/": "index.html?p=promotions",
     "/promotions": "index.html?p=promotions",
     "/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
-    "/Local Replica/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
+    "/VelocityStagingSite/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
     "/buyout/": "index.html?p=buyout",
     "/buyout": "index.html?p=buyout",
     "/dallas/": "index.html?p=contact&loc=dallas",
@@ -214,15 +214,15 @@
       return null;
     }
 
-    // Already local replica URLs.
-    if (parsed.origin === window.location.origin && parsed.pathname.indexOf("/Local Replica/") !== -1) {
-      var tailPath = "/" + parsed.pathname.split("/Local Replica/")[1];
+    // Already staging-site URLs (path includes /VelocityStagingSite/).
+    if (parsed.origin === window.location.origin && parsed.pathname.indexOf("/VelocityStagingSite/") !== -1) {
+      var tailPath = "/" + parsed.pathname.split("/VelocityStagingSite/")[1];
       var mappedTail = NAV_PATH_MAP[tailPath] || NAV_PATH_MAP[normalizePath(tailPath)] || NAV_PATH_MAP[parsed.pathname];
       if (mappedTail) {
         if (parsed.hash) mappedTail += parsed.hash;
         return mappedTail;
       }
-      return parsed.pathname.split("/Local Replica/")[1] + parsed.search + parsed.hash;
+      return parsed.pathname.split("/VelocityStagingSite/")[1] + parsed.search + parsed.hash;
     }
 
     // Known external booking/event hosts should stay inside local mock.
@@ -283,8 +283,8 @@
     return (
       '<section class="vsl-local-home">' +
       '<div class="vsl-local-home__inner">' +
-      "<h1>Velocity Local Replica</h1>" +
-      "<p>This local build mirrors your current modules and navbar for review/testing.</p>" +
+      "<h1>Velocity Staging Site</h1>" +
+      "<p>This staging build mirrors your current modules and navbar for review/testing.</p>" +
       '<ul class="vsl-local-grid">' +
       '<li><a href="index.html?p=book-now">Book Now</a></li>' +
       '<li><a href="index.html?p=about">About / How It Works</a></li>' +

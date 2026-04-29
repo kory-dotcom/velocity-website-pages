@@ -1,6 +1,6 @@
 # Velocity website pages
 
-Static HTML modules and the **Local Replica** router used for review and testing.
+Static HTML modules and the **Velocity Staging Site** router (`VelocityStagingSite/`) used for review and testing.
 
 ## GitHub Pages
 
@@ -12,11 +12,13 @@ Static HTML modules and the **Local Replica** router used for review and testing
 
    **https://kory-dotcom.github.io/velocity-website-pages/**
 
-6. Open the replica at:
+6. Open the staging app at:
 
-   **https://kory-dotcom.github.io/velocity-website-pages/Local%20Replica/index.html**
+   **https://kory-dotcom.github.io/velocity-website-pages/VelocityStagingSite/**
 
-   Or open the repo root; `index.html` redirects into Local Replica.
+   Or open the repo root; `index.html` redirects into `VelocityStagingSite/`.
+
+   Custom domain (if configured): **https://staging.velocitytx.com/VelocityStagingSite/**
 
 Repository: **https://github.com/kory-dotcom/velocity-website-pages**
 
