@@ -10,13 +10,15 @@ Static HTML modules and the **Local Replica** router used for review and testing
 4. Choose branch **main** and folder **/ (root)**.
 5. Save. After a minute, the site will be at:
 
-   `https://<your-username>.github.io/<repository-name>/`
+   **https://kory-dotcom.github.io/velocity-website-pages/**
 
 6. Open the replica at:
 
-   `https://<your-username>.github.io/<repository-name>/Local%20Replica/index.html`
+   **https://kory-dotcom.github.io/velocity-website-pages/Local%20Replica/index.html**
 
-   Or use the repo root URL; `index.html` redirects into Local Replica.
+   Or open the repo root; `index.html` redirects into Local Replica.
+
+Repository: **https://github.com/kory-dotcom/velocity-website-pages**
 
 **Notes**
 
