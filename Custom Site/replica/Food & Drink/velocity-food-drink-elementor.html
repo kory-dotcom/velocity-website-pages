@@ -3,7 +3,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
-    html, html.no-smooth-scroll { scroll-behavior: auto !important; }
+    html { scroll-behavior: smooth; }
+    html.no-smooth-scroll { scroll-behavior: auto !important; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+    }
     .vsl-fooddrink {
       --navy: #10182B;
       --deep-indigo: #191B4D;
@@ -26,10 +30,14 @@
       --vsl-hero-bleed-top: -12px;
       --vsl-hero-bleed-bottom: -12px;
       --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-      --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
-      --vsl-hero-photo: url("https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w1920-h1280-no");
+      --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+      --vsl-hero-photo: url("https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp");
       --vsl-vh: 1vh;
       --vsl-hero-offset: 0px;
+      /* Clear fixed `.vsl-navbar__sticky` (matches velocity-navbar: height 60px×scale + small gap) */
+      --vsl-site-header-offset: calc(60px * 1.15 + 14px);
+      /* Sticky `.vsl-fooddrink-menu-nav` (padding + 1–2 rows of pills); keeps section titles visible under it */
+      --vsl-menu-pill-offset: clamp(3.75rem, 2.85rem + 4vw, 6.75rem);
 
       font-family: var(--font-body);
       color: var(--navy);
@@ -79,7 +87,40 @@
     #food-hero,
     #full-menu,
     #food-cta {
-      scroll-margin-top: 5rem;
+      scroll-margin-top: max(5rem, var(--vsl-site-header-offset));
+    }
+    #entrees,
+    #appetizers,
+    #sweet,
+    #cocktails,
+    #classics,
+    #beer-wine,
+    #flights {
+      scroll-margin-top: max(
+        5rem,
+        calc(var(--vsl-site-header-offset) + var(--vsl-menu-pill-offset))
+      );
+    }
+
+    @media (max-width: 900px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(60px + 14px);
+      }
+    }
+    @media (max-width: 600px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(54px + 14px);
+      }
+    }
+    @media (max-width: 420px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(50px + 12px);
+      }
+    }
+    @media (max-width: 720px) {
+      .vsl-fooddrink {
+        --vsl-menu-pill-offset: clamp(4.5rem, 3.5rem + 5vw, 8.25rem);
+      }
     }
 
     .vsl-fooddrink-hero {
@@ -131,16 +172,19 @@
     }
     .vsl-fooddrink-hero__title {
       margin: 0 0 0.35em;
-      padding: 10px 12px;
+      padding: 18px 36px;
       font-family: var(--font-display);
-      font-size: clamp(1.65rem, 0.95rem + 3.2vw, 2.65rem);
-      font-weight: 600;
-      font-style: normal;
-      line-height: 1.12;
-      letter-spacing: 0.06em;
+      font-size: clamp(2.2rem, 1.2rem + 5vw, 4rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       text-wrap: balance;
+      background: linear-gradient(135deg, rgba(16, 24, 43, 0.82) 0%, rgba(25, 27, 77, 0.78) 100%);
+      border-radius: 14px;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       background: rgba(4, 7, 18, 0.72);
       border-radius: 10px;
@@ -431,18 +475,21 @@
     }
     .vsl-fooddrink-menu-nav {
       position: sticky;
-      top: 0.75rem;
-      z-index: 4;
+      /* Sit below global fixed navbar, not underneath it */
+      top: calc(var(--vsl-site-header-offset) + 0.35rem);
+      z-index: 40;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 8px;
       padding: 0.55rem;
-      margin: 0 0 1.25rem;
+      margin: 0 auto 1.25rem;
+      max-width: max-content;
       border-radius: 10px;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(16, 24, 43, 0.85);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(16, 24, 43, 0.08);
+      border: 1px solid rgba(234, 234, 234, 0.12);
     }
     .vsl-fooddrink-menu-nav a {
       flex: 0 0 auto;
@@ -452,22 +499,22 @@
       min-height: 34px;
       padding: 0 12px;
       border-radius: 999px;
-      border: 1px solid rgba(41, 56, 147, 0.2);
-      background: #fff;
+      border: 1px solid rgba(234, 234, 234, 0.2);
+      background: rgba(255, 255, 255, 0.08);
       text-decoration: none;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--blue) !important;
-      -webkit-text-fill-color: var(--blue) !important;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
       white-space: nowrap;
     }
     .vsl-fooddrink-menu-nav a:hover {
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
-      background: var(--blue);
-      border-color: var(--blue);
+      background: var(--magenta);
+      border-color: var(--magenta);
     }
     .vsl-fooddrink-menu-block {
       margin: 1.5rem 0 2rem;
@@ -498,6 +545,66 @@
       letter-spacing: 0.05em;
       color: var(--circuit-white) !important;
       -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-fooddrink-sweet-hero {
+      margin: 2rem 0 2.75rem;
+    }
+    .vsl-fooddrink-sweet-hero__panel {
+      padding: clamp(1.75rem, 4.5vw, 2.75rem) clamp(1.25rem, 3vw, 2rem);
+      border-radius: 14px;
+      background: linear-gradient(155deg, rgba(25, 27, 77, 0.55) 0%, rgba(16, 24, 43, 0.88) 45%, rgba(238, 38, 95, 0.14) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.14);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+    .vsl-fooddrink-sweet-hero__head {
+      text-align: center;
+      margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+    }
+    .vsl-fooddrink-sweet-hero__eyebrow {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      opacity: 0.95;
+    }
+    .vsl-fooddrink-sweet-hero .vsl-fooddrink-menu-block__title {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      font-size: clamp(1.5rem, 1.05rem + 2vw, 2.125rem);
+      text-align: center;
+    }
+    .vsl-fooddrink-sweet-hero__card {
+      max-width: 56rem;
+      margin: 0 auto;
+    }
+    /* Landscape-forward strip (source art is wide) */
+    .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media {
+      aspect-ratio: 2.1 / 1;
+    }
+    @media (min-width: 900px) {
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(1rem, 2.5vw, 1.5rem);
+      }
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media {
+        flex: 1 1 58%;
+        min-width: 0;
+        max-width: 62%;
+        aspect-ratio: 2.25 / 1;
+        max-height: min(34vw, 300px);
+      }
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__body {
+        flex: 1 1 38%;
+        min-width: 0;
+        max-width: 42%;
+        padding: clamp(1rem, 2vw, 1.35rem) clamp(1.1rem, 2.2vw, 1.5rem);
+        justify-content: center;
+      }
     }
     .vsl-fooddrink-card__row {
       display: flex;
@@ -741,13 +848,43 @@
         transform: none;
       }
     }
+    /* Beer / Flights feature photos (WordPress URLs applied when asset-links filled) */
+    .vsl-fooddrink-feature {
+      margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+      border-radius: var(--soft);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .vsl-fooddrink-feature__img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      background: #1a2238;
+    }
+    .vsl-fooddrink-feature--split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .vsl-fooddrink-feature--split .vsl-fooddrink-feature__img {
+      aspect-ratio: 16 / 10;
+      min-height: 160px;
+    }
+    @media (max-width: 768px) {
+      .vsl-fooddrink-feature--split {
+        grid-template-columns: 1fr;
+      }
+    }
 </style>
-<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w1920-h1280-no"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
       <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
       <div class="vsl-fooddrink-hero__inner">
-        <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our Menu</h1>
+        <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our <span style="color:var(--magenta);-webkit-text-fill-color:var(--magenta);">Menu</span></h1>
         <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
         <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
       </div>
@@ -756,61 +893,69 @@
     <section class="vsl-fooddrink-fullmenu" id="full-menu" aria-labelledby="full-menu-heading">
       <div class="vsl-fooddrink-fullmenu__inner">
         <h2 class="vsl-fooddrink-section__title" id="full-menu-heading">Full Menu</h2>
-        <p class="vsl-fooddrink-fullmenu__intro">Interactive 2025 menu with photos and details. All menu text is in-page (SEO-friendly) with semantic headings and static HTML content.</p>
         <nav class="vsl-fooddrink-menu-nav" aria-label="Full menu sections">
-          <a href="#entrees">Entrees</a>
           <a href="#appetizers">Appetizers</a>
+          <a href="#entrees">Entrees</a>
           <a href="#sweet">Sweet</a>
           <a href="#cocktails">Cocktails</a>
           <a href="#classics">Classics</a>
-          <a href="#zero-proof">Zero Proof</a>
-          <a href="#beer-wine">Beer + Wine</a>
+          <a href="#classics">Zero Proof</a>
+          <a href="#beer-wine">Beer + Other</a>
           <a href="#flights">Flights</a>
         </nav>
+
+        <section class="vsl-fooddrink-menu-block" id="appetizers" aria-labelledby="appetizers-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="appetizers-heading">Appetizers</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-16-triple-crown"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter.webp" aria-label="Open larger photo: Triple Crown Platter"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1024x640.webp" alt="Triple Crown Platter" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Triple Crown Platter</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Chips &amp; queso, chicken diavolo taquitos, and cheesy sliders.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-17-charcuterie"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2.webp" aria-label="Open larger photo: Charcuterie Board"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1024x640.webp" alt="Charcuterie Board" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Charcuterie Board</h4><p class="vsl-fooddrink-card__price">$22</p></div><p class="vsl-fooddrink-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block vsl-fooddrink-sweet-hero" id="sweet" aria-labelledby="sweet-heading">
+          <div class="vsl-fooddrink-sweet-hero__panel">
+            <header class="vsl-fooddrink-sweet-hero__head">
+              <p class="vsl-fooddrink-sweet-hero__eyebrow">Finish on a high note</p>
+              <h3 class="vsl-fooddrink-menu-block__title" id="sweet-heading">Sweet</h3>
+            </header>
+            <div class="vsl-fooddrink-sweet-hero__card">
+              <article class="vsl-fooddrink-card" data-asset-key="menu-skillet-cookie"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo.webp" aria-label="Open larger photo: Skillet Chocolate Cookie and Ice Cream"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1024x640.webp" alt="Skillet Chocolate Cookie and Ice Cream" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 899px) 92vw, min(720px, 58vw)" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Skillet Chocolate Cookie &amp; Ice Cream</h4><p class="vsl-fooddrink-card__price">$8</p></div><p class="vsl-fooddrink-card__desc">Chocolate chip cookie, topped with a scoop of Cosmic vanilla bean ice cream and drizzled with chocolate and caramel.</p></div></article>
+            </div>
+          </div>
+        </section>
 
         <section class="vsl-fooddrink-menu-block" id="entrees" aria-labelledby="entrees-heading">
           <h3 class="vsl-fooddrink-menu-block__title" id="entrees-heading">Entrees</h3>
           <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
             <article class="vsl-fooddrink-card">
-              <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczNrQ96xPEajhmKVKk4bbV5qS7TYqO751SSW3VTRCIZggcWuM9i277IieCjCStnyr6fk8MGNuXUADc9kQPYVLliCgbRRiFXiTi_LvS6iR8B4qtyuwJ4=w1600-h1200-no" aria-label="Open larger photo: Chicken Diavolo Taquitos">
-                <img src="https://lh3.googleusercontent.com/pw/AP1GczNrQ96xPEajhmKVKk4bbV5qS7TYqO751SSW3VTRCIZggcWuM9i277IieCjCStnyr6fk8MGNuXUADc9kQPYVLliCgbRRiFXiTi_LvS6iR8B4qtyuwJ4=w900-h600-no" alt="Chicken Diavolo Taquitos" width="900" height="600" loading="lazy" decoding="async">
+              <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Chicken_Diavolo_Taquitos.webp" aria-label="Open larger photo: Chicken Diavolo Taquitos">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Chicken_Diavolo_Taquitos.webp" alt="Chicken Diavolo Taquitos" width="900" height="600" loading="lazy" decoding="async">
               </button>
               <div class="vsl-fooddrink-card__body">
                 <div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Chicken Diavolo Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div>
                 <p class="vsl-fooddrink-card__desc">Spicy baked chicken taquitos filled with shredded chicken, cream cheese, sour cream, cheddar jack, with a chipotle sauce.</p>
               </div>
             </article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOAkyKROSkz04hzXt1e6dV2fqLdrUvJix6ez8e65zvu2S3ZqCY5q2yakaBUckCYebhfCMh4YFcP1dP065WlBFygCtXAIan6lsNPlY0Ytmu7dajrkvg=w1600-h1200-no" aria-label="Open larger photo: Beef Taquitos"><img src="https://lh3.googleusercontent.com/pw/AP1GczOAkyKROSkz04hzXt1e6dV2fqLdrUvJix6ez8e65zvu2S3ZqCY5q2yakaBUckCYebhfCMh4YFcP1dP065WlBFygCtXAIan6lsNPlY0Ytmu7dajrkvg=w900-h600-no" alt="Beef Taquitos" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Beef Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Ground beef taquitos smothered in queso and sour cream.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w1600-h1200-no" aria-label="Open larger photo: Cheesy Sliders"><img src="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w900-h600-no" alt="Cheesy Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Cheesy Sliders</h4><p class="vsl-fooddrink-card__price">$14</p></div><p class="vsl-fooddrink-card__desc">Beef sliders with caramelized onions, dill relish, and cheese.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beef_Taquitos.webp" aria-label="Open larger photo: Beef Taquitos"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beef_Taquitos.webp" alt="Beef Taquitos" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Beef Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Ground beef taquitos smothered in queso and sour cream.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" aria-label="Open larger photo: Cheesy Sliders"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" alt="Cheesy Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Cheesy Sliders</h4><p class="vsl-fooddrink-card__price">$14</p></div><p class="vsl-fooddrink-card__desc">Beef sliders with caramelized onions, dill relish, and cheese.</p></div></article>
             <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" aria-label="Open larger photo: Bacon Cheeseburger"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" alt="Bacon Cheeseburger" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Bacon Cheeseburger</h4><p class="vsl-fooddrink-card__price">$10</p></div><p class="vsl-fooddrink-card__desc">Beef burger with caramelized onions and cheese. Add chips +$2.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w1600-h1200-no" aria-label="Open larger photo: Wagyu Sliders"><img src="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w900-h600-no" alt="Wagyu Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Wagyu Sliders</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Wagyu sliders with caramelized onions, garlic mustard aioli, and cheese, with a side of fries.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPGxvJU0CDnyUrX-1KTYsUMwzhBZQPlpRsIUrRBJJPPdYwSmBbYiMiqHmtMuvUUyqccF4mcNlZr_Hd7D8cZThuFb9xKkl3oxZShGOAY0I-8GBRLlV4=w1600-h1200-no" aria-label="Open larger photo: Margherita Flatbread"><img src="https://lh3.googleusercontent.com/pw/AP1GczPGxvJU0CDnyUrX-1KTYsUMwzhBZQPlpRsIUrRBJJPPdYwSmBbYiMiqHmtMuvUUyqccF4mcNlZr_Hd7D8cZThuFb9xKkl3oxZShGOAY0I-8GBRLlV4=w900-h600-no" alt="Margherita Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Margherita Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Tomatoes, fresh mozzarella, and fresh basil flatbread.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMGfB2glz3dcHL3tVoCG9wZqyWDskYZSm8KiZLXu_dsUnXUF6e_TjxXLCnlCWlsOfbNB0virmO8x6TMT_CLGT0ZgPyonvoTgL2rfwxMBUyU1X9Y6h8=w1600-h1200-no" aria-label="Open larger photo: BBQ Cheese Flatbread"><img src="https://lh3.googleusercontent.com/pw/AP1GczMGfB2glz3dcHL3tVoCG9wZqyWDskYZSm8KiZLXu_dsUnXUF6e_TjxXLCnlCWlsOfbNB0virmO8x6TMT_CLGT0ZgPyonvoTgL2rfwxMBUyU1X9Y6h8=w900-h600-no" alt="BBQ Cheese Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">BBQ Cheese Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Gochujang BBQ sauce, mozzarella, cheddar, and sliced red onions.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczNwwcIfeneBZu2FGelt1SL6sMhrG5nxDKPhzlDelDo40p9ZN-wGA2520p5hzvPS1JwWfuSvkjlE2FdqU1r9bKjKyOKFvSb-jn174ZWdN8pcuVnFC2I=w1600-h1200-no" aria-label="Open larger photo: Tsukune Meatballs"><img src="https://lh3.googleusercontent.com/pw/AP1GczNwwcIfeneBZu2FGelt1SL6sMhrG5nxDKPhzlDelDo40p9ZN-wGA2520p5hzvPS1JwWfuSvkjlE2FdqU1r9bKjKyOKFvSb-jn174ZWdN8pcuVnFC2I=w900-h600-no" alt="Tsukune Meatballs" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Tsukune Meatballs</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Japanese-style teriyaki chicken meatballs on creamy, mashed garlic sweet potatoes.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMD-OXo9sttSdhLyFB1BhfFfHQwOSsuGBmKKAd6SM2uPIwwANtFiCrtDM7XhI3bNy8HMYrFNjQTFyYjdPSPgDGqMmsHtM4e5vv2lCWK26G9xgrAt6w=w1600-h1200-no" aria-label="Open larger photo: Flatbread Lineup"><img src="https://lh3.googleusercontent.com/pw/AP1GczMD-OXo9sttSdhLyFB1BhfFfHQwOSsuGBmKKAd6SM2uPIwwANtFiCrtDM7XhI3bNy8HMYrFNjQTFyYjdPSPgDGqMmsHtM4e5vv2lCWK26G9xgrAt6w=w900-h600-no" alt="All five flatbreads" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Flatbread Lineup</h4><p class="vsl-fooddrink-card__desc">All five flatbreads in one shot.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" aria-label="Open larger photo: Wagyu Sliders"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" alt="Wagyu Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Wagyu Sliders</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Wagyu sliders with caramelized onions, garlic mustard aioli, and cheese, with a side of fries.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Margherita_Flatbread.webp" aria-label="Open larger photo: Margherita Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Margherita_Flatbread.webp" alt="Margherita Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Margherita Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Tomatoes, fresh mozzarella, and fresh basil flatbread.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-pepperoni-flatbread"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item-.webp" aria-label="Open larger photo: Pepperoni Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x640.webp" alt="Pepperoni Flatbread" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Pepperoni Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">House marinara, mozzarella, pepperoni, and fresh basil.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/BBQ_Cheese_Flatbread.webp" aria-label="Open larger photo: BBQ Cheese Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/BBQ_Cheese_Flatbread.webp" alt="BBQ Cheese Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">BBQ Cheese Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Gochujang BBQ sauce, mozzarella, cheddar, and sliced red onions.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Tsukune_Meatballs.webp" aria-label="Open larger photo: Tsukune Meatballs"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Tsukune_Meatballs.webp" alt="Tsukune Meatballs" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Tsukune Meatballs</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Japanese-style teriyaki chicken meatballs on creamy, mashed garlic sweet potatoes.</p></div></article>
             <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" aria-label="Open larger photo: Pork Belly Lettuce Wraps"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" alt="Pork Belly Lettuce Wraps" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Pork Belly Lettuce Wraps</h4><p class="vsl-fooddrink-card__price">$16</p></div><p class="vsl-fooddrink-card__desc">Pineapple marinated pork belly, pickled carrots, bean sprouts, lettuce, with gochujang sauce.</p></div></article>
-          </div>
-        </section>
-
-        <section class="vsl-fooddrink-menu-block" id="appetizers" aria-labelledby="appetizers-heading">
-          <h3 class="vsl-fooddrink-menu-block__title" id="appetizers-heading">Appetizers + Sweet</h3>
-          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOwiFwP_cfup5CmxaPcwyhsKWuHZ7rBOJdMJvHh_MNUvdqTYx_HuD8dnXDJ6rR6ukoye0ayNjYTwhi1phdJq-7PituACQzZEruc8uZCOjhNEj2XWSI=w1600-h1200-no" aria-label="Open larger photo: Triple Crown Platter"><img src="https://lh3.googleusercontent.com/pw/AP1GczOwiFwP_cfup5CmxaPcwyhsKWuHZ7rBOJdMJvHh_MNUvdqTYx_HuD8dnXDJ6rR6ukoye0ayNjYTwhi1phdJq-7PituACQzZEruc8uZCOjhNEj2XWSI=w900-h600-no" alt="Triple Crown Platter" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Triple Crown Platter</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Chips &amp; queso, chicken diavolo taquitos, and cheesy sliders.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczM_bO5OYNlpvphVbJtscWzO6Tp2y65-1mi1NDvM311XFGlhkxGt_AytYnzlM_7ARy4-vKsEMxeq5q40B11K5vlJrfJnZ0yaHxeamzalRQUPDQKWqN0=w1600-h1200-no" aria-label="Open larger photo: Charcuterie Board"><img src="https://lh3.googleusercontent.com/pw/AP1GczM_bO5OYNlpvphVbJtscWzO6Tp2y65-1mi1NDvM311XFGlhkxGt_AytYnzlM_7ARy4-vKsEMxeq5q40B11K5vlJrfJnZ0yaHxeamzalRQUPDQKWqN0=w900-h600-no" alt="Charcuterie Board" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Charcuterie Board</h4><p class="vsl-fooddrink-card__price">$22</p></div><p class="vsl-fooddrink-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczOOqmGoehf18JbGd0Ald_iX3KZo_SIpXtz6PpKPo60q-1cJtqiQATxVhZH65tFpd3wQMpGYBm5-D4FrayGzy8PamMgQUQFOz8AzmI36OfKppiCLphI=w1600-h1200-no" aria-label="Open larger photo: Hummus and Pita"><img src="https://lh3.googleusercontent.com/pw/AP1GczOOqmGoehf18JbGd0Ald_iX3KZo_SIpXtz6PpKPo60q-1cJtqiQATxVhZH65tFpd3wQMpGYBm5-D4FrayGzy8PamMgQUQFOz8AzmI36OfKppiCLphI=w900-h600-no" alt="Hummus and pita" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Hummus &amp; Pita</h4><p class="vsl-fooddrink-card__price">Photo</p></div><p class="vsl-fooddrink-card__desc">Photo reference provided for menu visuals.</p></div></article>
-            <article class="vsl-fooddrink-card"><div class="vsl-fooddrink-card__media vsl-fooddrink-card__media--placeholder"><span>S</span></div><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Salmon Dip</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Smoked salmon, onions, dill, scallions, capers, lemon juice, kettle-cooked chips.</p></div></article>
           </div>
         </section>
 
         <section class="vsl-fooddrink-menu-block" id="cocktails" aria-labelledby="cocktails-full-heading">
           <h3 class="vsl-fooddrink-menu-block__title" id="cocktails-full-heading">Signature Cocktails</h3>
           <div class="vsl-fooddrink-grid vsl-fooddrink-grid--three">
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Suzuka Old Fashioned"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Suzuka Old Fashioned" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Suzuka Old Fashioned</h4><p class="vsl-fooddrink-card__desc">Suntory whiskey, simple, bitters, orange, cherry.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w1600-h1200-no" aria-label="Open larger photo: Rain Master Caipirinha"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Rain Master Caipirinha" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Rain Master Caipirinha</h4><p class="vsl-fooddrink-card__desc">Cachaça, lime, orange, mint.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Cafe Racer Carajillo"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Cafe Racer Carajillo" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Cafe Racer Carajillo</h4><p class="vsl-fooddrink-card__desc">Cold brew, liqueur 43, topped with cinnamon.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w1600-h1200-no" aria-label="Open larger photo: Le Mans 75"><img src="https://lh3.googleusercontent.com/pw/AP1GczP026c7a5kiakgl2y7gmhZ6-yxRkvbxTUzbByNBnvo89jyRNnincoInkecki3JXgV0oc5mrAFZw9vlxYIRQNL1K8ButhgjJUu7WbxT2_emE46gbXBA=w900-h600-no" alt="Le Mans 75 cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Le Mans 75</h4><p class="vsl-fooddrink-card__desc">Gin, prosecco, elderflower, chambord, lemon.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w1600-h1200-no" aria-label="Open larger photo: Pace Car"><img src="https://lh3.googleusercontent.com/pw/AP1GczPNMXOFZMJc5NfK49jqeOOKIpzvQ_9Er35vwMzqAQF8hCHhPU40DnZTTN-_Qa62tj5zBur6tDbWSO4lBvaFPTGZ3KlOy8LD4MwT475lnKuW5xhR2Dk=w900-h600-no" alt="Pace Car cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Pace Car</h4><p class="vsl-fooddrink-card__desc">Remy Martin VSOP, cointreau, lemon, orange.</p></div></article>
-            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w1600-h1200-no" aria-label="Open larger photo: The Green Hell"><img src="https://lh3.googleusercontent.com/pw/AP1GczMZLgA4zWKGswn01i0crufmDQMrhU4hQD9KW1dJ_aQwkPV4ncB7RXt7mS8U_n3DlOIBg0dLzoO38RMQaxlkOta-hQYdRLNjAVyewoWCj0cPjAzVpq8=w900-h600-no" alt="The Green Hell cocktail" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">The Green Hell</h4><p class="vsl-fooddrink-card__desc">Absinthe, elderflower, melon liqueur, lime, pineapple, midori with a digestif chaser.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-21-suzuka"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo.webp" aria-label="Open larger photo: Suzuka Old Fashioned"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1024x640.webp" alt="Suzuka Old Fashioned" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Suzuka Old Fashioned</h4><p class="vsl-fooddrink-card__desc">Suntory whiskey, simple, bitters, orange, cherry.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-22-rainmaster"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo.webp" aria-label="Open larger photo: Rain Master Caipirinha"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1024x640.webp" alt="Rain Master Caipirinha" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Rain Master Caipirinha</h4><p class="vsl-fooddrink-card__desc">Cachaça, lime, orange, mint.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-23-carajillo"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo.webp" aria-label="Open larger photo: Cafe Racer Carajillo"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1024x640.webp" alt="Cafe Racer Carajillo" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Cafe Racer Carajillo</h4><p class="vsl-fooddrink-card__desc">Cold brew, liqueur 43, topped with cinnamon.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-24-le-mans-75"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo.webp" aria-label="Open larger photo: Le Mans 75"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1024x640.webp" alt="Le Mans 75 cocktail" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Le Mans 75</h4><p class="vsl-fooddrink-card__desc">Gin, prosecco, elderflower, chambord, lemon.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-25-pace-car"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo.webp" aria-label="Open larger photo: Pace Car"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1024x640.webp" alt="Pace Car cocktail" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Pace Car</h4><p class="vsl-fooddrink-card__desc">Remy Martin VSOP, cointreau, lemon, orange.</p></div></article>
           </div>
         </section>
 
@@ -822,8 +967,11 @@
           </div>
         </section>
 
-        <section class="vsl-fooddrink-menu-block" id="zero-proof" aria-labelledby="beer-wine-heading">
-          <h3 class="vsl-fooddrink-menu-block__title" id="beer-wine-heading">Beer + Wine + Soft Drinks</h3>
+        <section class="vsl-fooddrink-menu-block" id="beer-wine" aria-labelledby="beer-wine-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="beer-wine-heading">Beer + Wine + Other</h3>
+          <div class="vsl-fooddrink-feature" data-asset-key="menu-beer-feature">
+            <img class="vsl-fooddrink-feature__img" data-asset-key="menu-photo-28-beer-feature" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1200x400.webp" alt="Beer and wine selection at Velocity" width="1200" height="400" loading="lazy" decoding="async" sizes="(max-width: 768px) calc(100vw - 32px), min(1120px, calc(100vw - 48px))" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-600x200.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-768x256.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1024x342.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1200x400.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1536x512.webp 1536w">
+          </div>
           <div class="vsl-fooddrink-listgrid">
             <p class="vsl-fooddrink-listcard"><strong>Domestic</strong>: Austin East Cider, Coors Light, Michelob Ultra, Miller Lite, Pacifico, Saint Arnold Citrus Shandy, Saint Arnold Seasonal, White Claw<br><strong>Draft</strong>: Blue Moon, Karbach Love Street, Modelo Especial, Mini Boss, Seasonal, Shiner Bock<br><strong>Import</strong>: Corona, Dos Equis, Guinness, Stella Artois, Heineken 0.0</p>
             <p class="vsl-fooddrink-listcard"><strong>Wine by glass/bottle</strong>: Chardonnay, Sauvignon Blanc, Spanish White, Riesling, Chianti, Pinot Noir, Spanish Red, Prosecco<br><strong>Soda/Tea/Coffee</strong>: Coke, Coke Zero, Diet Coke, Dr Pepper, Ginger Ale, Sprite, Iced Coffee, Iced Tea, Red Bull, Saint Arnold Root Beer, Topo Chico</p>
@@ -832,79 +980,15 @@
 
         <section class="vsl-fooddrink-menu-block" id="flights" aria-labelledby="flights-heading">
           <h3 class="vsl-fooddrink-menu-block__title" id="flights-heading">Flights</h3>
+          <div class="vsl-fooddrink-feature vsl-fooddrink-feature--split" data-asset-key="menu-flights-photos">
+            <img class="vsl-fooddrink-feature__img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-1024x640.webp" alt="Whiskey flight at Velocity" width="1024" height="640" loading="lazy" decoding="async" data-asset-key="menu-flights-left" sizes="(max-width: 768px) calc(100vw - 32px), 46vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-1536x960.webp 1536w">
+            <img class="vsl-fooddrink-feature__img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1024x640.webp" alt="Cocktail flights at Velocity" width="1024" height="640" loading="lazy" decoding="async" data-asset-key="menu-flights-right" sizes="(max-width: 768px) calc(100vw - 32px), 46vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1536x960.webp 1536w">
+          </div>
           <div class="vsl-fooddrink-listgrid">
             <p class="vsl-fooddrink-listcard"><strong>Race Around the World</strong>: Still Austin, Glenfiddich 14 Blue Swift, Yamazaki<br><strong>Smooth is Fast</strong>: Buffalo Trace, Basil Hayden, Eagle Rare, Angel&rsquo;s Envy<br><strong>Tourist Trophy</strong>: Tullamore DEW, Laphroaig 10, Glenlivet 12, Glenfiddich 14</p>
             <p class="vsl-fooddrink-listcard"><strong>The JWM</strong>: Toki Suntory, Yamazaki, Nikka Coffey Grain, Matsui Mizunara<br><strong>Texas Track Meet</strong>: Yellow Rose, TX Whiskey, Garrison Brothers, Still Austin<br><strong>Sparkle GT Mimosas</strong>: cucumber basil, jalapeno lime, strawberry lemonade, mint mango</p>
           </div>
         </section>
-      </div>
-    </section>
-
-    <section class="vsl-fooddrink-section--light" id="food" aria-labelledby="shareables-heading">
-      <div class="vsl-fooddrink-section__inner">
-        <h2 class="vsl-fooddrink-section__title" id="shareables-heading">Featured Photo Cards</h2>
-        <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczP-elxqw9dVSwOGyF-522RHhz0HsW3aRaVVsnd7bJQoH8j5hn_YwQeXebVYvWLFwhWOQdY4STKsMEgOEU2yC9UUmeHG1UsCVQhdw09626UOjyehdKc=w1600-h1200-no" aria-label="Open larger photo: Charcuterie Board">
-              <img src="https://lh3.googleusercontent.com/pw/AP1GczP-elxqw9dVSwOGyF-522RHhz0HsW3aRaVVsnd7bJQoH8j5hn_YwQeXebVYvWLFwhWOQdY4STKsMEgOEU2yC9UUmeHG1UsCVQhdw09626UOjyehdKc=w900-h600-no" alt="Charcuterie Board" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Charcuterie Board</h3>
-              <p class="vsl-fooddrink-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers</p>
-            </div>
-          </article>
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczNbUCFmSjanuoYm1LqK_BxGN677NKHVTIvojnE9UutlX_B8iPDnRDSzI9fPPJ82DcJOqp1nDXRXWX1HXkp3w7OJ8_Enrp-Gau-HUGpbvP_ywOV3HDM=w1600-h1200-no" aria-label="Open larger photo: Chicken Taquitos">
-              <img src="https://lh3.googleusercontent.com/pw/AP1GczNbUCFmSjanuoYm1LqK_BxGN677NKHVTIvojnE9UutlX_B8iPDnRDSzI9fPPJ82DcJOqp1nDXRXWX1HXkp3w7OJ8_Enrp-Gau-HUGpbvP_ywOV3HDM=w900-h600-no" alt="Chicken Taquitos" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Chicken Taquitos</h3>
-              <p class="vsl-fooddrink-card__desc">Spicy pan fried chicken taquitos with a chipotle sauce</p>
-            </div>
-          </article>
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczPJKU6Yyhsey8ZLvm8-HmG6IYBi1-zMADyaxBvAWm7w_CX_2oEfWVTqlXdb0QXYLKxXCvDRbBUVylKkAAkDDBun-IiJiQkWWTLrL5kSDBhrQVnHTwY=w1600-h1200-no" aria-label="Open larger photo: Tsukune Meatballs">
-              <img src="https://lh3.googleusercontent.com/pw/AP1GczPJKU6Yyhsey8ZLvm8-HmG6IYBi1-zMADyaxBvAWm7w_CX_2oEfWVTqlXdb0QXYLKxXCvDRbBUVylKkAAkDDBun-IiJiQkWWTLrL5kSDBhrQVnHTwY=w900-h600-no" alt="Tsukune Meatballs" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Tsukune Meatballs</h3>
-              <p class="vsl-fooddrink-card__desc">Japanese-style teriyaki chicken meatballs on creamy, mashed garlic sweet potatoes</p>
-            </div>
-          </article>
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w1600-h1200-no" aria-label="Open larger photo: Cheesy Sliders">
-              <img src="https://lh3.googleusercontent.com/pw/AP1GczMNoyv5RVRJeQL7B-knEHvzwBWgoFh73zDjmMxkY0yOgyv0uw1iguso-hw0GuH8v1OAbGGpl3PsGrSfw2QLiuc7hSYuOHddS4W6BKyukemKqyCdITg=w900-h600-no" alt="Cheesy Sliders" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Cheesy Sliders</h3>
-              <p class="vsl-fooddrink-card__desc">Beef sliders with caramelized onions and cheese, vegan alternative available</p>
-            </div>
-          </article>
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w1600-h1200-no" aria-label="Open larger photo: Margherita Flatbread">
-              <img src="https://lh3.googleusercontent.com/pw/AP1GczO0EDOii6qddYfpgG-GnxV5cHfNsJav7hoxL5K5WOZeMRgCS1E9PWrrH5tc78kb2OgeXo7ABwtm8aXKeQfGtZwo_SDa524wyinT7o7pMRCWOvFwa64=w900-h600-no" alt="Margherita Flatbread" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Margherita Flatbread</h3>
-              <p class="vsl-fooddrink-card__desc">Delicious flatbread with marzano pomodoro, fresh mozzarella, basil</p>
-            </div>
-          </article>
-          <article class="vsl-fooddrink-card">
-            <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" aria-label="Open larger photo: Pork Belly Lettuce Wraps">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" alt="Pork Belly Lettuce Wraps" width="900" height="600" loading="lazy" decoding="async">
-              <span class="vsl-fooddrink-card__media-hint">Tap to enlarge</span>
-            </button>
-            <div class="vsl-fooddrink-card__body">
-              <h3 class="vsl-fooddrink-card__name">Pork Belly Lettuce Wraps</h3>
-              <p class="vsl-fooddrink-card__desc">Slow cooked pork belly in a sweet glaze, served with pickled carrots and daikon</p>
-            </div>
-          </article>
-        </div>
       </div>
     </section>
 
@@ -944,7 +1028,6 @@
       }
     }
     setRealViewportHeight();
-    window.addEventListener('load', function () { setRealViewportHeight(); }, { once: true });
     var cfg = {};
     try {
       var raw = root.getAttribute('data-vsl-config');
@@ -966,6 +1049,39 @@
       var k = a.getAttribute('data-vsl-link');
       if (k && links[k]) a.setAttribute('href', links[k]);
     });
+
+    /* Deep links (#entrees, #cocktails, etc.): native scroll often fails inside Elementor / sticky UI */
+    var menuSectionIds = { entrees: 1, appetizers: 1, sweet: 1, cocktails: 1, classics: 1, 'beer-wine': 1, flights: 1, 'full-menu': 1, 'food-hero': 1, 'food-cta': 1 };
+    function scrollToMenuHash() {
+      var raw = (window.location.hash || '').replace(/^#/, '');
+      if (!raw || !menuSectionIds.hasOwnProperty(raw)) return;
+      var target = root.querySelector('#' + raw);
+      if (!target) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var noSmooth = document.documentElement.classList.contains('no-smooth-scroll');
+      var behavior = reduce || noSmooth ? 'auto' : 'smooth';
+      function run() {
+        try {
+          target.scrollIntoView({ block: 'start', behavior: behavior });
+        } catch (e) {
+          target.scrollIntoView(true);
+        }
+      }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(run);
+      });
+    }
+    scrollToMenuHash();
+    window.addEventListener('hashchange', scrollToMenuHash);
+    window.addEventListener('load', function () {
+      setRealViewportHeight();
+      scrollToMenuHash();
+      var reduceM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var noSmoothHtml = document.documentElement.classList.contains('no-smooth-scroll');
+      if (!reduceM && !noSmoothHtml) {
+        setTimeout(scrollToMenuHash, 280);
+      }
+    }, { once: true });
 
     var lb = root.querySelector('#vsl-fooddrink-lightbox');
     if (!lb) return;
@@ -1021,15 +1137,6 @@
       }
     });
 
-    /* Google Photos hotlink fix: suppress Referer so their CDN doesn't block the embed */
-    root.querySelectorAll('img[src*="lh3.googleusercontent.com"]').forEach(function (img) {
-      img.setAttribute('referrerpolicy', 'no-referrer');
-      if (img.complete && img.naturalWidth === 0) {
-        var s = img.src;
-        img.src = '';
-        img.src = s;
-      }
-    });
   })();
 </script>
 <script type="application/ld+json">
@@ -1041,11 +1148,27 @@
   "hasMenuSection": [
     {
       "@type": "MenuSection",
+      "name": "Appetizers",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Triple Crown Platter", "offers": { "@type": "Offer", "price": "18", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Charcuterie Board", "offers": { "@type": "Offer", "price": "22", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
       "name": "Entrees",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Chicken Diavolo Taquitos", "offers": { "@type": "Offer", "price": "12", "priceCurrency": "USD" } },
         { "@type": "MenuItem", "name": "Cheesy Sliders", "offers": { "@type": "Offer", "price": "14", "priceCurrency": "USD" } },
-        { "@type": "MenuItem", "name": "Margherita Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } }
+        { "@type": "MenuItem", "name": "Margherita Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Pepperoni Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Sweet",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Skillet Chocolate Cookie & Ice Cream", "offers": { "@type": "Offer", "price": "8", "priceCurrency": "USD" } }
       ]
     },
     {
@@ -1053,8 +1176,7 @@
       "name": "Signature Cocktails",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Le Mans 75" },
-        { "@type": "MenuItem", "name": "Pace Car" },
-        { "@type": "MenuItem", "name": "The Green Hell" }
+        { "@type": "MenuItem", "name": "Pace Car" }
       ]
     },
     {
