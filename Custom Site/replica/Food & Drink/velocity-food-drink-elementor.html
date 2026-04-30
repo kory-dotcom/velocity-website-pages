@@ -641,13 +641,13 @@
       position: fixed;
       inset: 0;
       z-index: 100000;
-      display: flex;
+      display: none !important;
       align-items: center;
       justify-content: center;
       padding: clamp(12px, 4vw, 28px);
     }
-    .vsl-fooddrink-lightbox[hidden] {
-      display: none !important;
+    .vsl-fooddrink-lightbox.is-open {
+      display: flex !important;
     }
     .vsl-fooddrink-lightbox__backdrop {
       position: absolute;
@@ -908,7 +908,7 @@
     </section>
   </main>
 
-  <div class="vsl-fooddrink-lightbox" id="vsl-fooddrink-lightbox" hidden aria-modal="true" role="dialog" aria-label="Enlarged menu photo">
+  <div class="vsl-fooddrink-lightbox" id="vsl-fooddrink-lightbox" aria-modal="true" role="dialog" aria-label="Enlarged menu photo" aria-hidden="true">
     <button type="button" class="vsl-fooddrink-lightbox__backdrop" aria-label="Close enlarged photo"></button>
     <div class="vsl-fooddrink-lightbox__panel">
       <button type="button" class="vsl-fooddrink-lightbox__close" aria-label="Close">&times;</button>
@@ -968,13 +968,15 @@
       lbImg.src = fullUrl;
       lbImg.alt = alt || '';
       lbCap.textContent = caption || '';
-      lb.hidden = false;
+      lb.classList.add('is-open');
+      lb.removeAttribute('aria-hidden');
       document.documentElement.style.overflow = 'hidden';
       if (lbClose) lbClose.focus();
     }
 
     function closeLightbox() {
-      lb.hidden = true;
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
       lbImg.removeAttribute('src');
       lbImg.alt = '';
       lbCap.textContent = '';
