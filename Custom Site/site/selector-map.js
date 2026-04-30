@@ -30,8 +30,8 @@ window.CMS_SELECTOR_MAP = {
         container: "#home-how-it-works .vsl-home-how__steps",
         item: ".vsl-home-step",
         fields: {
-          "number":  ".vsl-home-step__num",
-          "title":   ".vsl-home-step__title",
+          "number":  ".vsl-home-step__badge-num, .vsl-home-step__num",
+          "title":   ".vsl-home-step__title-label, .vsl-home-step__title",
           "description": ".vsl-home-step__text"
         }
       },
@@ -53,7 +53,6 @@ window.CMS_SELECTOR_MAP = {
     "intro.body":               "#how-intro .vsl-how-intro__copy .vsl-how-copy",
     "intro.asideTitle":         "#how-intro aside h3",
     "intro.asideBody":          "#how-intro aside p",
-    "video.heading":            "#how-video h3",
     "racing.heading":           "#racing h2",
     "racing.subcopy":           "#racing > .vsl-how-grid > p.vsl-how-copy",
     "simulators.heading":       "#our_simulators h2",

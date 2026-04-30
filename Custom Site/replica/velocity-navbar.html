@@ -325,6 +325,7 @@
   outline: none;
   border-radius: 0 calc(6px * var(--vsl-ui-scale)) calc(6px * var(--vsl-ui-scale)) 0;
   cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   transition: box-shadow 0.22s ease, filter 0.22s ease;
   white-space: nowrap;
   line-height: 1;
@@ -342,7 +343,9 @@
 }
 .vsl-navbar__cta:active {
   filter: brightness(0.97);
-  box-shadow: inset 0 calc(2px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) rgba(0,0,0,0.22);
+  box-shadow:
+    inset 0 calc(2px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 /* Location Detail Panel */
@@ -1093,32 +1096,71 @@
   fill: currentColor;
 }
 /* ── Race mega-menu ── */
+/* Explore: white pill when closed; same inset bezel as Book Now; open = solid CTA + same glow stack */
 .vsl-navbar__race-trigger {
-  border: 1px solid var(--vsl-race-border);
-  border-radius: calc(6px * var(--vsl-ui-scale));
-  background: var(--vsl-race-bg);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: calc(6px * var(--vsl-ui-scale));
   margin-left: calc(4px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(22px * var(--vsl-ui-scale));
+  border: none;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  background: #fff !important;
+  color: #101828 !important;
+  -webkit-text-fill-color: #101828 !important;
+  text-shadow: none !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: box-shadow 0.22s ease, filter 0.22s ease, background-color 0.22s ease, color 0.22s ease, -webkit-text-fill-color 0.22s ease;
 }
-.vsl-navbar__race-trigger:hover,
-.vsl-navbar__race-trigger.is-open {
-  border-color: rgba(255,163,196,0.9);
-  background: rgba(238,38,95,0.32);
-  text-shadow: 0 0 8px rgba(238,38,95,0.3);
+.vsl-navbar__race-trigger:hover:not(.is-open) {
+  background: #fff !important;
+  color: #101828 !important;
+  -webkit-text-fill-color: #101828 !important;
+  filter: brightness(1.04);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 calc(14px * var(--vsl-ui-scale)) rgba(255, 255, 255, 0.2),
+    0 1px 4px rgba(0, 0, 0, 0.28);
+}
+.vsl-navbar__race-trigger:active:not(.is-open) {
+  filter: brightness(0.98);
+  box-shadow:
+    inset 0 calc(2px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.vsl-navbar__race-trigger.is-open,
+.vsl-navbar__race-trigger.is-open:hover {
+  background: var(--red) !important;
   color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-shadow: none !important;
+  filter: brightness(1.08) saturate(1.05);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 calc(20px * var(--vsl-ui-scale)) rgba(255, 80, 140, 0.35),
+    0 0 calc(36px * var(--vsl-ui-scale)) rgba(210, 32, 38, 0.4);
 }
-/* Focus alone (after click-close) must not keep the “open” pink — Elementor/themes often style button:focus */
+.vsl-navbar__race-trigger.is-open:active {
+  filter: brightness(0.97);
+  box-shadow:
+    inset 0 calc(2px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
 .vsl-navbar__race-trigger:focus-visible {
   outline: 2px solid rgba(222, 230, 255, 0.92);
   outline-offset: 2px;
 }
 .vsl-navbar__race-trigger:focus:not(:hover):not(.is-open),
 .vsl-navbar__race-trigger:focus-visible:not(:hover):not(.is-open) {
-  border-color: var(--vsl-race-border) !important;
-  background: var(--vsl-race-bg) !important;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08) !important;
+  background: #fff !important;
+  color: #101828 !important;
+  -webkit-text-fill-color: #101828 !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.22) !important;
   text-shadow: none !important;
-  color: var(--vsl-link-color) !important;
 }
 .vsl-navbar__race-trigger::after { display: none; }
 .vsl-navbar__race-trigger .vsl-navbar__arrow {

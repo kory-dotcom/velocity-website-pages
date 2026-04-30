@@ -2,6 +2,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<!-- Racers step card photos + “Our simulators” tier cards: early preload; low priority so hero LCP stays first -->
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" fetchpriority="low">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="low">
 <style>
   /* ═══════════════════════════════════════════════
      Velocity Home Page — VSM 1.0.0
@@ -11,6 +19,8 @@
     --deep-indigo: #191B4D;
     --magenta: #EE265F;
     --blue: #293893;
+    /* Brighter blue for small UI accents (step cards, etc.); brand navy remains --blue */
+    --electric-blue: #4A6CF7;
     --yellow: #FDC70C;
     --red: #D22026;
     --circuit-white: #EAEAEA;
@@ -214,6 +224,15 @@
       transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
       box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
+  }
+  /* Race column links to Book Now (whole tile clickable) */
+  a.vsl-home-edr__col {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    cursor: pointer;
   }
   .vsl-home-edr__media {
     position: relative;
@@ -971,7 +990,7 @@
     margin: 0;
     font-size: var(--text-section-sub);
     color: var(--circuit-white);
-    opacity: 0.85;
+    opacity: 0.94;
     max-width: 36em;
     margin-inline: auto;
     line-height: 1.55;
@@ -987,6 +1006,7 @@
   @media (max-width: 560px) {
     .vsl-home-how__steps { grid-template-columns: 1fr; }
   }
+  /* “Racers, Start Your Engines” — stacked cards: photo + overlays, badge, icon; dark body */
   .vsl-home-step {
     --vsl-step-accent: var(--magenta);
     position: relative;
@@ -996,7 +1016,7 @@
     padding: 0;
     border-radius: 16px;
     overflow: hidden;
-    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 60%, #0a0f1f 100%);
+    background: #060a14;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow:
       0 14px 40px rgba(0, 0, 0, 0.5),
@@ -1009,15 +1029,17 @@
   }
   .vsl-home-step:nth-child(1) { --vsl-step-accent: var(--red); }
   .vsl-home-step:nth-child(2) { --vsl-step-accent: var(--yellow); }
-  .vsl-home-step:nth-child(3) { --vsl-step-accent: #4A6CF7; }
+  .vsl-home-step:nth-child(3) { --vsl-step-accent: var(--electric-blue); }
   .vsl-home-step:nth-child(4) { --vsl-step-accent: var(--magenta); }
   .vsl-home-step::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
     background: var(--vsl-step-accent);
-    z-index: 5;
+    z-index: 6;
     pointer-events: none;
   }
   @media (hover: hover) and (pointer: fine) {
@@ -1027,26 +1049,20 @@
         0 28px 64px rgba(0, 0, 0, 0.6),
         0 10px 24px rgba(0, 0, 0, 0.36),
         0 0 60px color-mix(in srgb, var(--vsl-step-accent) 18%, transparent);
-      transform: scale(1.05) translateY(-8px);
+      transform: scale(1.03) translateY(-6px);
     }
-    .vsl-home-step:nth-child(1):hover { transform: scale(1.05) translateY(-8px) rotate(-1.2deg); }
-    .vsl-home-step:nth-child(2):hover { transform: scale(1.05) translateY(-8px) rotate(0.8deg); }
-    .vsl-home-step:nth-child(3):hover { transform: scale(1.05) translateY(-8px) rotate(-0.9deg); }
-    .vsl-home-step:nth-child(4):hover { transform: scale(1.05) translateY(-8px) rotate(1.1deg); }
-    .vsl-home-step:hover .vsl-home-step__media-img,
-    .vsl-home-step:hover .vsl-home-step__icon {
-      transform: scale(1.06);
+    .vsl-home-step:hover .vsl-home-step__media-img {
+      transform: scale(1.04);
     }
   }
   .vsl-home-step__media {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
+    min-height: 148px;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 70%),
-      repeating-linear-gradient(-32deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 16px),
-      linear-gradient(150deg, color-mix(in srgb, var(--vsl-step-accent) 18%, var(--deep-indigo)) 0%, var(--navy) 55%, #0a0f1f 100%);
+    background: #121a2e;
+    isolation: isolate;
   }
   .vsl-home-step__media-img {
     position: absolute;
@@ -1059,58 +1075,85 @@
     transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1;
   }
-  .vsl-home-step__media::after {
-    content: '';
+  .vsl-home-step__media-stripes {
     position: absolute;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 65% at 50% 35%, transparent 0%, rgba(8, 12, 28, 0.18) 60%, rgba(8, 12, 28, 0.7) 100%),
-      linear-gradient(to bottom, transparent 55%, rgba(8, 12, 28, 0.85) 100%);
+    background: repeating-linear-gradient(
+      -40deg,
+      transparent 0,
+      transparent 7px,
+      rgba(255, 255, 255, 0.028) 7px,
+      rgba(255, 255, 255, 0.028) 8px
+    );
+    mix-blend-mode: soft-light;
+    opacity: 0.95;
   }
   .vsl-home-step__badge {
     position: absolute;
-    top: 14px;
-    right: 14px;
-    z-index: 4;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: clamp(10px, 1.8vw, 14px);
+    right: clamp(10px, 1.8vw, 14px);
+    z-index: 5;
+    width: clamp(2.45rem, 2rem + 1.4vw, 2.95rem);
+    height: clamp(2.45rem, 2rem + 1.4vw, 2.95rem);
     border-radius: 50%;
-    background: var(--vsl-step-accent);
-    color: #fff;
+    display: grid;
+    place-items: center;
+    background: rgba(5, 9, 18, 0.78);
+    border: 2px solid var(--vsl-step-accent);
+    box-shadow:
+      0 4px 18px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    pointer-events: none;
+  }
+  .vsl-home-step__badge-num {
     font-family: var(--font-display);
     font-weight: 800;
-    font-style: italic;
-    font-size: 1.15rem;
+    font-size: clamp(1rem, 0.88rem + 0.42vw, 1.18rem);
+    font-style: normal;
     line-height: 1;
-    border: 2px solid rgba(255, 255, 255, 0.18);
-    box-shadow:
-      0 6px 18px rgba(0, 0, 0, 0.45),
-      0 0 0 1px rgba(0, 0, 0, 0.25);
+    color: #fff;
   }
-  .vsl-home-step:nth-child(2) .vsl-home-step__badge { color: var(--navy); }
-  .vsl-home-step__icon {
+  .vsl-home-step__media-icon {
     position: absolute;
-    bottom: 14px;
-    left: 14px;
-    z-index: 3;
-    width: 30px; height: 30px;
-    fill: var(--vsl-step-accent);
-    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    left: clamp(10px, 1.8vw, 14px);
+    bottom: clamp(10px, 1.8vw, 14px);
+    z-index: 4;
+    color: rgba(255, 255, 255, 0.92);
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+    pointer-events: none;
+  }
+  .vsl-home-step__media-icon svg {
+    display: block;
+    width: clamp(26px, 22px + 1.1vw, 32px);
+    height: auto;
+    fill: currentColor;
   }
   .vsl-home-step__body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: clamp(18px, 2.4vw, 26px) clamp(18px, 2.2vw, 26px) clamp(20px, 2.6vw, 28px);
+    justify-content: flex-start;
+    padding: clamp(18px, 2.4vw, 24px) clamp(18px, 2.2vw, 22px) clamp(20px, 2.6vw, 26px);
+    background: linear-gradient(180deg, #050810 0%, #0a101f 55%, #080d18 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+  }
+  .vsl-home-step__body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--vsl-step-accent);
+    opacity: 0.75;
+    pointer-events: none;
   }
   .vsl-home-step__title {
     margin: 0 0 0.5em;
+    padding-inline-start: 0.35rem;
     font-family: var(--font-display);
     font-size: var(--text-step-title);
     font-weight: 700;
@@ -1120,14 +1163,22 @@
     color: #fff;
     line-height: 1.15;
   }
+  .vsl-home-step__title-label {
+    font-style: italic;
+  }
   .vsl-home-step__text {
     margin: 0;
-    font-size: 0.9rem;
-    color: rgba(234, 234, 234, 0.78);
-    line-height: 1.55;
+    padding-inline-start: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.58;
   }
   @media (max-width: 560px) {
-    .vsl-home-step__media { aspect-ratio: 16 / 10; }
+    .vsl-home-step__media {
+      min-height: 132px;
+      aspect-ratio: 5 / 3;
+    }
   }
 
   /* ── BUILT FOR SECTION: Feature callouts ── */
@@ -1275,10 +1326,13 @@
   }
   .vsl-home-sim-card {
     position: relative;
+    display: block;
     border-radius: 14px;
     overflow: clip;
     aspect-ratio: 16/10;
     cursor: pointer;
+    color: inherit;
+    text-decoration: none;
     group: sim;
   }
   .vsl-home-sim-card img {
@@ -1522,7 +1576,7 @@
     <section class="vsl-home-edr" id="home-hero" aria-labelledby="vsl-home-edr-eyebrow">
       <p class="vsl-home-edr__eyebrow" id="vsl-home-edr-eyebrow"><span class="vsl-home-edr__eyebrow-white"><span class="vsl-home-edr__eyebrow-city" data-vsl-city-name>Houston</span>'s Premier</span> <span class="vsl-home-edr__eyebrow-accent">Sim Racing Lounge</span></p>
       <div class="vsl-home-edr__row">
-        <figure class="vsl-home-edr__col">
+        <a href="https://velocitysimlounge.com/food-and-drink/#entrees" class="vsl-home-edr__col" aria-label="Eat — View food menu (entrees)">
           <div class="vsl-home-edr__media">
             <img
               data-edr-img="eat"
@@ -1546,9 +1600,9 @@
               fetchpriority="high"
             >
           </div>
-          <figcaption class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Eat</span><span class="vsl-home-edr__dot">.</span></figcaption>
-        </figure>
-        <figure class="vsl-home-edr__col">
+          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Eat</span><span class="vsl-home-edr__dot">.</span></div>
+        </a>
+        <a href="https://velocitysimlounge.com/food-and-drink/#cocktails" class="vsl-home-edr__col" aria-label="Drink — View cocktails and bar menu">
           <div class="vsl-home-edr__media">
             <img
               data-edr-img="drink"
@@ -1572,9 +1626,9 @@
               fetchpriority="low"
             >
           </div>
-          <figcaption class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></figcaption>
-        </figure>
-        <figure class="vsl-home-edr__col">
+          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></div>
+        </a>
+        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-edr__col" aria-label="Race — Book now at Velocity">
           <div class="vsl-home-edr__media">
             <img
               data-edr-img="race"
@@ -1598,12 +1652,12 @@
               fetchpriority="low"
             >
           </div>
-          <figcaption class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></figcaption>
-        </figure>
+          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></div>
+        </a>
       </div>
       <div class="vsl-home-edr__ctas">
-        <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary" data-vsl-cta-key="events">Book a Private Event</a>
         <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary vsl-home-edr__cta-events" data-vsl-cta-key="book">Book Now</a>
+        <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary" data-vsl-cta-key="events">Book a Private Event</a>
       </div>
       <div class="vsl-home-hero__finish" aria-hidden="true"></div>
     </section>
@@ -1621,48 +1675,60 @@
 
           <div class="vsl-home-step">
             <div class="vsl-home-step__media">
-              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
-              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
-              <div class="vsl-home-step__badge" aria-hidden="true">1</div>
+              <img class="vsl-home-step__media-img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-1024x640.webp" alt="Book online at Velocity" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-book-online" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-1536x960.webp 1536w">
+              <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
+              <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">1</span></div>
+              <div class="vsl-home-step__media-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+              </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title">Book Online</h3>
+              <h3 class="vsl-home-step__title" aria-label="Step 1: Book Online"><span class="vsl-home-step__title-label">Book Online</span></h3>
               <p class="vsl-home-step__text">Reserve a simulator for you and your crew. Walk-ins welcome, but online booking is the fastest way to lock in your seat.</p>
             </div>
           </div>
 
           <div class="vsl-home-step">
             <div class="vsl-home-step__media">
-              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
-              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
-              <div class="vsl-home-step__badge" aria-hidden="true">2</div>
+              <img class="vsl-home-step__media-img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp" alt="Eat and drink at Velocity" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-eat-drink" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1536x960.webp 1536w">
+              <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
+              <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">2</span></div>
+              <div class="vsl-home-step__media-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+              </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title">Eat &amp; Drink</h3>
+              <h3 class="vsl-home-step__title" aria-label="Step 2: Eat &amp; Drink"><span class="vsl-home-step__title-label">Eat &amp; Drink</span></h3>
               <p class="vsl-home-step__text">From wagyu sliders to craft cocktails, fuel up about an hour before your session so you're ready when the green flag drops.</p>
             </div>
           </div>
 
           <div class="vsl-home-step">
             <div class="vsl-home-step__media">
-              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
-              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
-              <div class="vsl-home-step__badge" aria-hidden="true">3</div>
+              <img class="vsl-home-step__media-img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1024x640.webp" alt="Choose your ride at Velocity" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-choose-ride" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1536x960.webp 1536w">
+              <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
+              <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">3</span></div>
+              <div class="vsl-home-step__media-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+              </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title">Choose Your Ride</h3>
+              <h3 class="vsl-home-step__title" aria-label="Step 3: Choose Your Ride"><span class="vsl-home-step__title-label">Choose Your Ride</span></h3>
               <p class="vsl-home-step__text">Pick from a selection of cars, tracks, and experiences — including a <span data-vsl-city-variant data-houston="virtual Houston 610 loop" data-dallas="virtual Dallas circuit">virtual Houston 610 loop</span>. Race solo or go head-to-head.</p>
             </div>
           </div>
 
           <div class="vsl-home-step">
             <div class="vsl-home-step__media">
-              <!-- TODO: replace with real image once available: <img class="vsl-home-step__media-img" src="..." alt=""> -->
-              <svg class="vsl-home-step__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
-              <div class="vsl-home-step__badge" aria-hidden="true">4</div>
+              <img class="vsl-home-step__media-img" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp" alt="Race and win at Velocity" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-race-win" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x960.webp 1536w">
+              <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
+              <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">4</span></div>
+              <div class="vsl-home-step__media-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="28" height="28" focusable="false"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title">Race &amp; Win</h3>
+              <h3 class="vsl-home-step__title" aria-label="Step 4: Race &amp; Win"><span class="vsl-home-step__title-label">Race &amp; Win</span></h3>
               <p class="vsl-home-step__text">Hit the track and compete. Join monthly leaderboard challenges for bragging rights, prizes, and the top spot on our boards.</p>
             </div>
           </div>
@@ -1707,9 +1773,9 @@
           <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--primary" data-vsl-cta-key="events">Plan Your Event</a>
         </div>
         <div class="vsl-home-built__visual">
-          <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
+          <img data-asset-key="home-photo-5-built-racers" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-1024x640.webp"
                alt="A group of friends celebrating at Velocity Sim Racing Lounge"
-               loading="lazy" width="600" height="450">
+               loading="lazy" width="1024" height="640" sizes="(max-width: 768px) 92vw, min(560px, 48vw)" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-17-1536x960.webp 1536w" decoding="async">
         </div>
       </div>
     </section>
@@ -1722,33 +1788,33 @@
           Professional-grade rigs designed for realism, comfort, and competition. From motion platforms to triple-screen setups, we've got the most immersive sim racing experience in <span data-vsl-city-name>Houston</span>.
         </p>
         <div class="vsl-home-sims__grid">
-          <div class="vsl-home-sim-card">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2025/12/Velocity_VitolEvent_QUITNGUYEN_DSCF5852.jpg"
+          <a class="vsl-home-sim-card" href="https://velocitysimlounge.com/about/#our_simulators" aria-label="Racer rigs — learn more about our simulators on How it works">
+            <img data-asset-key="home-photo-6-racer-rigs" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp"
                  alt="Velocity Racer simulator cockpit with ultrawide display"
-                 loading="lazy" width="500" height="312">
+                 loading="lazy" width="1024" height="640" sizes="(max-width: 768px) 92vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1536x960.webp 1536w" decoding="async">
             <div class="vsl-home-sim-card__overlay">
-              <h3 class="vsl-home-sim-card__name">Standard Rigs</h3>
-              <p class="vsl-home-sim-card__tag">Triple Screen Setup</p>
+              <h3 class="vsl-home-sim-card__name">Racer Rigs</h3>
+              <p class="vsl-home-sim-card__tag">Beginner friendly motion rig</p>
             </div>
-          </div>
-          <div class="vsl-home-sim-card">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Untitled-design-1.webp"
+          </a>
+          <a class="vsl-home-sim-card" href="https://velocitysimlounge.com/about/#our_simulators" aria-label="Pro rigs — learn more about our simulators on How it works">
+            <img data-asset-key="home-photo-7-pro-rigs" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp"
                  alt="Velocity Pro simulator with panoramic triple-screen setup"
-                 loading="lazy" width="500" height="312">
+                 loading="lazy" width="1024" height="640" sizes="(max-width: 768px) 92vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1536x960.webp 1536w" decoding="async">
             <div class="vsl-home-sim-card__overlay">
               <h3 class="vsl-home-sim-card__name">Pro Rigs</h3>
-              <p class="vsl-home-sim-card__tag">Direct Drive Force Feedback</p>
+              <p class="vsl-home-sim-card__tag">Advanced motion system + triple screen</p>
             </div>
-          </div>
-          <div class="vsl-home-sim-card">
+          </a>
+          <a class="vsl-home-sim-card" href="https://velocitysimlounge.com/about/#our_simulators" aria-label="Ultimate rig — learn more about our simulators on How it works">
             <img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg"
                  alt="Velocity Ultimate simulator with advanced motion platform and premium displays"
                  loading="lazy" width="500" height="312">
             <div class="vsl-home-sim-card__overlay">
-              <h3 class="vsl-home-sim-card__name">Ultimate Motion Rig</h3>
-              <p class="vsl-home-sim-card__tag">Full Motion Platform</p>
+              <h3 class="vsl-home-sim-card__name">Ultimate Rig</h3>
+              <p class="vsl-home-sim-card__tag">The most immersive driving experience</p>
             </div>
-          </div>
+          </a>
         </div>
         <a href="https://velocitysimlounge.com/about/#our_simulators" class="vsl-home-btn vsl-home-btn--secondary" style="margin-top: 2.5rem;">
           Learn More About Our Sims

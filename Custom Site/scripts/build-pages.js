@@ -46,8 +46,8 @@ const PAGES = {
         container: '#home-how-it-works .vsl-home-how__steps',
         item: '.vsl-home-step',
         fields: {
-          'number': '.vsl-home-step__num',
-          'title': '.vsl-home-step__title',
+          'number': '.vsl-home-step__badge-num, .vsl-home-step__num',
+          'title': '.vsl-home-step__title-label, .vsl-home-step__title',
           'description': '.vsl-home-step__text'
         }
       }},
@@ -100,7 +100,6 @@ const PAGES = {
       { selector: '#how-intro .vsl-how-intro__copy .vsl-how-copy', attr: 'data-cms', value: 'intro.body' },
       { selector: '#how-intro aside h3', attr: 'data-cms', value: 'intro.asideTitle' },
       { selector: '#how-intro aside p', attr: 'data-cms', value: 'intro.asideBody' },
-      { selector: '#how-video h3', attr: 'data-cms', value: 'video.heading' },
       { selector: '#racing h2', attr: 'data-cms-html', value: 'racing.heading' },
       { repeater: {
         path: 'racing.steps',
