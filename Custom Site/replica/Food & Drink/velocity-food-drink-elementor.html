@@ -202,6 +202,35 @@
       background: rgba(4, 7, 18, 0.68);
       border-radius: 8px;
     }
+    .vsl-fooddrink-hero__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+    .vsl-fooddrink-hero__pdf-link {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.92) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.92) !important;
+      text-decoration: underline;
+      text-underline-offset: 0.22em;
+      text-decoration-color: rgba(238, 38, 95, 0.7);
+    }
+    .vsl-fooddrink-hero__pdf-link:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-decoration-color: var(--magenta);
+    }
+    .vsl-fooddrink-hero__pdf-link:focus-visible {
+      outline: 2px solid var(--yellow);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
     .vsl-fooddrink-hero__btn {
       display: inline-flex;
       align-items: center;
@@ -945,14 +974,17 @@
       }
     }
 </style>
-<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/","menuPdf":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Food-Drink-Menu.pdf"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
       <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
       <div class="vsl-fooddrink-hero__inner">
         <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our <span style="color:var(--magenta);-webkit-text-fill-color:var(--magenta);">Menu</span></h1>
         <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
-        <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
+        <div class="vsl-fooddrink-hero__actions">
+          <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
+          <a class="vsl-fooddrink-hero__pdf-link" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Food-Drink-Menu.pdf" data-vsl-link="menuPdf" target="_blank" rel="noopener noreferrer">Download PDF menu</a>
+        </div>
       </div>
     </section>
 
