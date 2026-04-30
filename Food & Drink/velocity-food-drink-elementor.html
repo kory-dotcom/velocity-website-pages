@@ -1106,9 +1106,12 @@
         spyRaf = 0;
         if (!menuBlocks.length || !spyLinks.length) return;
         var navBottom = menuNav.getBoundingClientRect().bottom + 8;
+        /* Larger threshold = highlight switches a bit before the section reaches the sticky bar */
+        var spyLeadPx = Math.min(130, Math.max(56, Math.round(window.innerHeight * 0.09)));
+        var threshold = navBottom + spyLeadPx;
         var activeId = '';
         for (var si = 0; si < menuBlocks.length; si++) {
-          if (menuBlocks[si].getBoundingClientRect().top <= navBottom + 2) {
+          if (menuBlocks[si].getBoundingClientRect().top <= threshold) {
             activeId = menuBlocks[si].id;
           }
         }
