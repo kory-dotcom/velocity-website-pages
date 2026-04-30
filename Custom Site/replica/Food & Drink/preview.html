@@ -535,31 +535,37 @@
     }
 
     .vsl-fooddrink-cta {
-      padding: 72px clamp(20px, 5vw, var(--page-margin)) clamp(96px, 14vw, 120px);
-      background-color: #fafafa;
+      padding: clamp(48px, 7vw, 88px) clamp(20px, 5vw, var(--page-margin)) clamp(72px, 11vw, 112px);
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     .vsl-fooddrink-cta__card {
-      max-width: 640px;
+      max-width: min(700px, 100%);
       margin: 0 auto;
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid rgba(16, 24, 43, 0.1);
-      border-top: 4px solid var(--magenta);
-      box-shadow: 0 8px 36px rgba(16, 24, 43, 0.08);
-      padding: clamp(28px, 5vw, 40px) clamp(22px, 4vw, 36px);
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(16, 24, 43, 0.78) 0%, rgba(25, 27, 77, 0.68) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.16);
+      border-top: 3px solid var(--yellow);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(238, 38, 95, 0.1);
+      padding: clamp(36px, 6vh, 64px) clamp(24px, 4vw, 48px);
       text-align: center;
     }
     .vsl-fooddrink-cta__title {
-      margin: 0 0 1.25rem;
+      margin: 0 0 1.35rem;
       font-family: var(--font-display);
-      font-size: var(--vsl-text-section);
+      font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.85rem);
       font-weight: 700;
       font-style: italic;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--blue) !important;
-      -webkit-text-fill-color: var(--blue) !important;
-      line-height: 1.15;
+      letter-spacing: 0.045em;
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+      line-height: 1.08;
+      text-wrap: balance;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
     }
     .vsl-fooddrink-cta__actions {
       display: flex;
@@ -595,11 +601,15 @@
       -webkit-text-fill-color: #fff !important;
       background-color: var(--magenta);
       border: 2px solid var(--magenta);
-      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.22);
+      box-shadow:
+        0 6px 24px rgba(238, 38, 95, 0.35),
+        0 0 36px rgba(238, 38, 95, 0.2);
     }
     .vsl-fooddrink-cta__btn--primary:hover {
       filter: brightness(1.06);
-      box-shadow: 0 8px 28px rgba(238, 38, 95, 0.3);
+      box-shadow:
+        0 8px 32px rgba(238, 38, 95, 0.42),
+        0 0 44px rgba(238, 38, 95, 0.28);
     }
     .vsl-fooddrink-cta__btn--outline {
       color: var(--magenta) !important;
@@ -796,7 +806,7 @@
         </section>
 
         <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading">
-          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Race Classics + Zero Proof</h3>
+          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Classics + Zero Proof</h3>
           <div class="vsl-fooddrink-listgrid">
             <p class="vsl-fooddrink-listcard"><strong>Margarita</strong>: blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong>: pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong>: irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong>: tequila, cointreau, lime, topo chico</p>
             <p class="vsl-fooddrink-listcard"><strong>Agua de Jamaica</strong>: hibiscus, lime, sugar, water<br><strong>The Quattro</strong>: lemon, mint &amp; white peach syrup, topo chico<br><strong>Virgin Mojito</strong>: lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong>: spicy ginger, mint lavender, strawberry</p>

@@ -582,7 +582,8 @@
   }
   .vsl-bn-card.vsl-entering {
     opacity: 0;
-    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Delay via custom property so it survives the animation shorthand (inline animation-delay can lose to the class rule in some engines). */
+    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) var(--vsl-enter-delay, 0ms) forwards;
   }
 
   .vsl-bn-card-grid {
@@ -2726,11 +2727,17 @@
 
     function staggerCards(panel) {
       if (reduceMotionForTabs) return;
-      var cards = panel.querySelectorAll('.vsl-bn-card');
-      cards.forEach(function(card, i) {
+      var sel = panel.querySelectorAll('.vsl-bn-card-grid > .vsl-bn-card, .vsl-bn-spring-grid > .vsl-bn-card');
+      var cards = sel.length ? Array.prototype.slice.call(sel) : Array.prototype.slice.call(panel.querySelectorAll('.vsl-bn-card'));
+      cards.forEach(function(card) {
         card.classList.remove('vsl-entering');
-        void card.offsetWidth;
-        card.style.animationDelay = (i * STAGGER_MS) + 'ms';
+        card.style.removeProperty('--vsl-enter-delay');
+        card.style.setProperty('animation', 'none');
+      });
+      void panel.offsetWidth;
+      cards.forEach(function(card, i) {
+        card.style.removeProperty('animation');
+        card.style.setProperty('--vsl-enter-delay', (i * STAGGER_MS) + 'ms');
         card.classList.add('vsl-entering');
       });
     }
@@ -2818,7 +2825,11 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        staggerCards(panel);
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            staggerCards(panel);
+          });
+        });
       }
     }
 

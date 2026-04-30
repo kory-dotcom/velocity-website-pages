@@ -1,5 +1,6 @@
 /* Velocity Local Replica Router */
 (function () {
+  window.__VSL_SITE_REPLICA__ = true;
   var REPLICA_PAGES = {
     home: { title: "Home", modulePath: "../Home/velocity-home-elementor.html" },
     about: { title: "About", modulePath: "../About : How it Works Page_files/velocity-about-how-it-works-elementor.html" },
@@ -51,7 +52,9 @@
     "/dallas": "index.html?p=contact&loc=dallas"
   };
   var EXTERNAL_LOCAL_MAP = {
-    "book.velocitysimlounge.com": "index.html?p=book-now",
+    /* book.velocitysimlounge.com (Roverd) must keep real https URLs — the Book Now page
+       sets modal iframe src from link href; rewriting to index.html?p=book-now loads the
+       replica inside the iframe and breaks in-flow booking. */
     "velocitysimracinglounge.tripleseat.com": "index.html?p=parties-events"
   };
 
@@ -216,6 +219,12 @@
       return null;
     }
 
+    // Roverd booking: never rewrite to replica routes — modals/iframes and CTAs
+    // depend on the real https://book… URLs.
+    if (parsed.hostname === "book.velocitysimlounge.com") {
+      return null;
+    }
+
     // Already local replica URLs.
     if (parsed.origin === window.location.origin && parsed.pathname.indexOf("/Local Replica/") !== -1) {
       var tailPath = "/" + parsed.pathname.split("/Local Replica/")[1];
@@ -251,6 +260,13 @@
       if (!mapped) return;
       a.setAttribute("href", mapped);
     });
+  }
+
+  /** Lets page modules re-apply Roverd / external URLs from data-vsl-config after link rewriting. */
+  function notifyReplicaAfterLocalLinks(scope) {
+    try {
+      window.dispatchEvent(new CustomEvent("vslReplicaAfterLocalLinks", { detail: { scope: scope } }));
+    } catch (e) {}
   }
 
   function localizeNavbarLinks() {
@@ -309,11 +325,19 @@
     );
   }
 
+  /** Party Packs + Book Now may portal booking modals to body; strip orphans before swapping modules. */
+  function removeReplicaPortalModals() {
+    document.querySelectorAll("body > #vsl-pp-book-modal, body > #vsl-bn-modal").forEach(function (m) {
+      m.remove();
+    });
+  }
+
   function loadModulePage() {
     var page = REPLICA_PAGES[pageKey];
     document.title = page.title + " | Velocity Local Replica";
 
     if (!page.modulePath) {
+      removeReplicaPortalModals();
       pageRoot.innerHTML = makeHomeMarkup();
       applySectionReveals(pageRoot);
       return Promise.resolve();
@@ -325,14 +349,22 @@
         return res.text();
       })
       .then(function (html) {
+        removeReplicaPortalModals();
         pageRoot.innerHTML = html;
         executeInlineScripts(pageRoot);
         applyLocalLinks(pageRoot);
+        notifyReplicaAfterLocalLinks(pageRoot);
         applySectionReveals(pageRoot);
-        // CMS hydration: inject dynamic content after page module loads
+        var afterCms = Promise.resolve();
         if (window.VelocityCMS && window.VelocityCMS.hydratePage) {
-          window.VelocityCMS.hydratePage(pageKey);
+          afterCms = Promise.resolve(window.VelocityCMS.hydratePage(pageKey));
         }
+        return afterCms
+          .catch(function () {})
+          .then(function () {
+            applyLocalLinks(pageRoot);
+            notifyReplicaAfterLocalLinks(pageRoot);
+          });
       })
       .catch(function (err) {
         pageRoot.innerHTML =

@@ -384,7 +384,7 @@ contact: {
       { name: "Pace Car", description: "Remy Martin VSOP, cointreau, lemon, orange.", price: "", image: "" },
       { name: "The Green Hell", description: "Absinthe, elderflower, melon liqueur, lime, pineapple, midori with a digestif chaser.", price: "", image: "" }
     ]},
-    { name: "Race Classics", description: "Classic cocktails", menuItems: [
+    { name: "Classics", description: "Classic cocktails", menuItems: [
       { name: "Margarita", description: "Blanco tequila, lime, agave.", price: "", image: "" },
       { name: "Pimm\u2019s Cup", description: "Pimm\u2019s #1, gin, lemon, cucumber, ginger ale.", price: "", image: "" },
       { name: "Irish Mule", description: "Irish whiskey, lime, ginger beer.", price: "", image: "" },
@@ -406,7 +406,7 @@ contact: {
     { name: "Entrees", description: "Main courses", menuItems: "" },
     { name: "Appetizers", description: "Starters", menuItems: "" },
     { name: "Signature Cocktails", description: "Craft cocktails", menuItems: "" },
-    { name: "Race Classics", description: "Classic cocktails", menuItems: "" },
+    { name: "Classics", description: "Classic cocktails", menuItems: "" },
     { name: "Zero Proof", description: "Non-alcoholic", menuItems: "" },
     { name: "Beer + Wine", description: "Domestic, import, draft, wine", menuItems: "" },
     { name: "Flights", description: "Whiskey and cocktail flights", menuItems: "" }

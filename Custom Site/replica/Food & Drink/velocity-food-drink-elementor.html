@@ -209,28 +209,6 @@
       gap: 1rem;
       width: 100%;
     }
-    .vsl-fooddrink-hero__pdf-link {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.92) !important;
-      -webkit-text-fill-color: rgba(255, 255, 255, 0.92) !important;
-      text-decoration: underline;
-      text-underline-offset: 0.22em;
-      text-decoration-color: rgba(238, 38, 95, 0.7);
-    }
-    .vsl-fooddrink-hero__pdf-link:hover {
-      color: #fff !important;
-      -webkit-text-fill-color: #fff !important;
-      text-decoration-color: var(--magenta);
-    }
-    .vsl-fooddrink-hero__pdf-link:focus-visible {
-      outline: 2px solid var(--yellow);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
     .vsl-fooddrink-hero__btn {
       display: inline-flex;
       align-items: center;
@@ -502,6 +480,80 @@
       font-size: 0.98rem;
       line-height: 1.5;
     }
+    .vsl-fooddrink-dallas-soon {
+      text-align: center;
+      padding: clamp(2.5rem, 7vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+      margin: 0 auto 1.5rem;
+      max-width: 44rem;
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(16, 24, 43, 0.75) 0%, rgba(25, 27, 77, 0.65) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.18);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(238, 38, 95, 0.12);
+    }
+    .vsl-fooddrink-dallas-soon__eyebrow {
+      margin: 0 0 0.65rem;
+      font-size: clamp(0.8rem, 0.7rem + 0.45vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+    }
+    .vsl-fooddrink-dallas-soon__title {
+      margin: 0 0 1rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 1.15rem + 2.8vw, 2.85rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.12;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+      text-wrap: balance;
+    }
+    .vsl-fooddrink-dallas-soon__text {
+      margin: 0 auto;
+      max-width: 38ch;
+      font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.28rem);
+      line-height: 1.5;
+      font-weight: 500;
+      color: rgba(234, 234, 234, 0.96) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.96) !important;
+    }
+    .vsl-fooddrink-fullmenu__pdf {
+      text-align: center;
+      margin: -0.35rem auto 1.15rem;
+    }
+    .vsl-fooddrink-fullmenu__pdf-link {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(234, 234, 234, 0.95) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.95) !important;
+      text-decoration: underline;
+      text-underline-offset: 0.22em;
+      text-decoration-color: rgba(238, 38, 95, 0.75);
+    }
+    .vsl-fooddrink-fullmenu__pdf-link:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-decoration-color: var(--magenta);
+    }
+    .vsl-fooddrink-fullmenu__pdf-link:focus-visible {
+      outline: 2px solid var(--yellow);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    .vsl-fooddrink-menu-houston {
+      display: block;
+    }
+    .vsl-fooddrink--dallas .vsl-fooddrink-menu-houston {
+      display: none;
+    }
     .vsl-fooddrink-menu-nav {
       position: sticky;
       top: calc(var(--vsl-site-header-offset) + 0.35rem);
@@ -755,32 +807,37 @@
     }
 
     .vsl-fooddrink-cta {
-      padding: 72px clamp(20px, 5vw, var(--page-margin)) clamp(96px, 14vw, 120px);
+      padding: clamp(48px, 7vw, 88px) clamp(20px, 5vw, var(--page-margin)) clamp(72px, 11vw, 112px);
       background: var(--deep-indigo);
       color: var(--circuit-white);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
     .vsl-fooddrink-cta__card {
-      max-width: 640px;
+      max-width: min(700px, 100%);
       margin: 0 auto;
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid rgba(16, 24, 43, 0.1);
-      border-top: 4px solid var(--magenta);
-      box-shadow: 0 28px 64px rgba(0, 0, 0, 0.36), 0 10px 24px rgba(0, 0, 0, 0.22);
-      padding: clamp(28px, 5vw, 40px) clamp(22px, 4vw, 36px);
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(16, 24, 43, 0.78) 0%, rgba(25, 27, 77, 0.68) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.16);
+      border-top: 3px solid var(--yellow);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(238, 38, 95, 0.1);
+      padding: clamp(36px, 6vh, 64px) clamp(24px, 4vw, 48px);
       text-align: center;
     }
     .vsl-fooddrink-cta__title {
-      margin: 0 0 1.25rem;
+      margin: 0 0 1.35rem;
       font-family: var(--font-display);
-      font-size: var(--vsl-text-section);
+      font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.85rem);
       font-weight: 700;
       font-style: italic;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--blue) !important;
-      -webkit-text-fill-color: var(--blue) !important;
-      line-height: 1.15;
+      letter-spacing: 0.045em;
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+      line-height: 1.08;
+      text-wrap: balance;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
     }
     .vsl-fooddrink-cta__actions {
       display: flex;
@@ -816,11 +873,15 @@
       -webkit-text-fill-color: #fff !important;
       background-color: var(--magenta);
       border: 2px solid var(--magenta);
-      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.22);
+      box-shadow:
+        0 6px 24px rgba(238, 38, 95, 0.35),
+        0 0 36px rgba(238, 38, 95, 0.2);
     }
     .vsl-fooddrink-cta__btn--primary:hover {
       filter: brightness(1.06);
-      box-shadow: 0 8px 28px rgba(238, 38, 95, 0.3);
+      box-shadow:
+        0 8px 32px rgba(238, 38, 95, 0.42),
+        0 0 44px rgba(238, 38, 95, 0.28);
     }
     .vsl-fooddrink-cta__btn--outline {
       color: var(--magenta) !important;
@@ -974,7 +1035,7 @@
       }
     }
 </style>
-<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/","menuPdf":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Food-Drink-Menu.pdf"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/","menuPdf":"https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
       <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
@@ -983,7 +1044,6 @@
         <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
         <div class="vsl-fooddrink-hero__actions">
           <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
-          <a class="vsl-fooddrink-hero__pdf-link" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Food-Drink-Menu.pdf" data-vsl-link="menuPdf" target="_blank" rel="noopener noreferrer">Download PDF menu</a>
         </div>
       </div>
     </section>
@@ -991,6 +1051,15 @@
     <section class="vsl-fooddrink-fullmenu" id="full-menu" aria-labelledby="full-menu-heading">
       <div class="vsl-fooddrink-fullmenu__inner">
         <h2 class="vsl-fooddrink-section__title" id="full-menu-heading">Full Menu</h2>
+        <div class="vsl-fooddrink-dallas-soon" id="dallas-menu-soon" role="status" aria-live="polite" hidden>
+          <p class="vsl-fooddrink-dallas-soon__eyebrow">Dallas</p>
+          <p class="vsl-fooddrink-dallas-soon__title">Food &amp; drink menu coming soon</p>
+          <p class="vsl-fooddrink-dallas-soon__text">We&rsquo;re finishing the opening menu for our Dallas lounge. Check back shortly&mdash;or switch to Houston to browse the full menu online.</p>
+        </div>
+        <div class="vsl-fooddrink-menu-houston">
+        <p class="vsl-fooddrink-fullmenu__pdf">
+          <a class="vsl-fooddrink-fullmenu__pdf-link" href="https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view" data-vsl-link="menuPdf" target="_blank" rel="noopener noreferrer">Download PDF menu</a>
+        </p>
         <nav class="vsl-fooddrink-menu-nav" aria-label="Full menu sections">
           <a href="#appetizers">Appetizers</a>
           <a href="#entrees">Entrees</a>
@@ -1092,6 +1161,7 @@
             <p class="vsl-fooddrink-listcard"><strong>The JWM</strong>: Toki Suntory, Yamazaki, Nikka Coffey Grain, Matsui Mizunara<br><strong>Texas Track Meet</strong>: Yellow Rose, TX Whiskey, Garrison Brothers, Still Austin<br><strong>Sparkle GT Mimosas</strong>: cucumber basil, jalapeno lime, strawberry lemonade, mint mango</p>
           </div>
         </section>
+        </div>
       </div>
     </section>
 
@@ -1153,11 +1223,38 @@
       if (k && links[k]) a.setAttribute('href', links[k]);
     });
 
+    var VSL_LOC_KEY = 'vslPreferredLocation';
+    var houstonMenuSectionHash = /^(appetizers|entrees|sweet|cocktails|classics|beer-wine|flights)$/;
+    function normalizeVslLocation(key) {
+      return key === 'dallas' ? 'dallas' : 'houston';
+    }
+    function readPersistedVslLocation() {
+      try {
+        return normalizeVslLocation(localStorage.getItem(VSL_LOC_KEY));
+      } catch (e) {
+        return 'houston';
+      }
+    }
+    var dallasSoonEl = root.querySelector('.vsl-fooddrink-dallas-soon');
+    var houstonWrapEl = root.querySelector('.vsl-fooddrink-menu-houston');
+    var requestMenuSpyRefresh = function () {};
+
+    function applyFoodDrinkLocationMode(loc) {
+      var isDallas = loc === 'dallas';
+      root.classList.toggle('vsl-fooddrink--dallas', isDallas);
+      if (houstonWrapEl) houstonWrapEl.setAttribute('aria-hidden', isDallas ? 'true' : 'false');
+      if (dallasSoonEl) dallasSoonEl.hidden = !isDallas;
+      requestMenuSpyRefresh();
+    }
+
     /* Deep links (#entrees, #cocktails, etc.): native scroll often fails inside Elementor / sticky UI */
     var menuSectionIds = { entrees: 1, appetizers: 1, sweet: 1, cocktails: 1, classics: 1, 'beer-wine': 1, flights: 1, 'full-menu': 1, 'food-hero': 1, 'food-cta': 1 };
     function scrollToMenuHash() {
       var raw = (window.location.hash || '').replace(/^#/, '');
       if (!raw || !menuSectionIds.hasOwnProperty(raw)) return;
+      if (root.classList.contains('vsl-fooddrink--dallas') && houstonMenuSectionHash.test(raw)) {
+        raw = 'full-menu';
+      }
       var target = root.querySelector('#' + raw);
       if (!target) return;
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1174,6 +1271,7 @@
         requestAnimationFrame(run);
       });
     }
+    applyFoodDrinkLocationMode(readPersistedVslLocation());
     scrollToMenuHash();
     window.addEventListener('hashchange', scrollToMenuHash);
     window.addEventListener('load', function () {
@@ -1215,6 +1313,13 @@
 
       function updateMenuScrollSpy() {
         spyRaf = 0;
+        if (root.classList.contains('vsl-fooddrink--dallas')) {
+          spyLinks.forEach(function (a) {
+            a.classList.remove('is-active');
+            a.removeAttribute('aria-current');
+          });
+          return;
+        }
         if (!menuBlocks.length || !spyLinks.length) return;
         var navBottom = menuNav.getBoundingClientRect().bottom + 8;
         var spyLeadPx = Math.min(200, Math.max(88, Math.round(window.innerHeight * 0.16)));
@@ -1239,6 +1344,7 @@
         if (spyRaf) return;
         spyRaf = requestAnimationFrame(updateMenuScrollSpy);
       }
+      requestMenuSpyRefresh = requestMenuSpy;
 
       menuNav.addEventListener('click', function (e) {
         var t = e.target && e.target.closest && e.target.closest('a[href^="#"]');
@@ -1255,6 +1361,13 @@
       requestMenuSpy();
       window.addEventListener('load', requestMenuSpy, { once: true });
     }
+
+    window.addEventListener('_vslLocationChanged', function (ev) {
+      var loc = ev.detail && ev.detail.location;
+      if (!loc) return;
+      applyFoodDrinkLocationMode(normalizeVslLocation(loc));
+      scrollToMenuHash();
+    });
 
     var lb = root.querySelector('#vsl-fooddrink-lightbox');
     if (!lb) return;

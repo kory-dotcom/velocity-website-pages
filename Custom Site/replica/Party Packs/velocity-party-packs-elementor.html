@@ -1080,6 +1080,158 @@
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
   }
+
+  /* ── Local Replica: Roverd booking modal (Book Now parity) ── */
+  .vsl-pp-book-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 3vw, 40px);
+    font-family: var(--font-body);
+  }
+  .vsl-pp-book-modal[aria-hidden="false"] {
+    display: flex;
+  }
+  .vsl-pp-book-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 24, 43, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: vsl-pp-modal-fadeIn 0.25s ease;
+    cursor: pointer;
+  }
+  .vsl-pp-book-modal__window {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    height: min(88vh, 720px);
+    min-height: 0;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    animation: vsl-pp-modal-slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .vsl-pp-book-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: var(--deep-indigo);
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .vsl-pp-book-modal__title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .vsl-pp-book-modal__close {
+    appearance: none;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 12px;
+    transition: background 0.18s ease, transform 0.14s ease;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
+    font-family: Arial, sans-serif;
+  }
+  .vsl-pp-book-modal__close:hover {
+    background: var(--magenta);
+    border-color: var(--magenta);
+    transform: scale(1.08);
+  }
+  .vsl-pp-book-modal__close:active {
+    transform: scale(0.95);
+  }
+  .vsl-pp-book-modal__close:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+  .vsl-pp-book-modal__body {
+    flex: 1;
+    position: relative;
+    background: #f5f5f5;
+    min-height: 0;
+  }
+  .vsl-pp-book-modal__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .vsl-pp-book-modal__loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  .vsl-pp-book-modal__loader[data-loaded="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .vsl-pp-book-modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(16, 24, 43, 0.1);
+    border-top-color: var(--magenta);
+    border-radius: 50%;
+    animation: vsl-pp-modal-spin 0.7s linear infinite;
+  }
+  @keyframes vsl-pp-modal-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes vsl-pp-modal-slideUp {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes vsl-pp-modal-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 639px) {
+    .vsl-pp-book-modal {
+      padding: 0;
+    }
+    .vsl-pp-book-modal__window {
+      max-width: 100%;
+      height: 100%;
+      border-radius: 0;
+      max-height: 100vh;
+    }
+  }
 </style>
 
 <div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","elementorColumnOutdentPx":0}'>
@@ -1287,6 +1439,23 @@
       </div>
     </section>
 
+    <!-- Local Replica: in-flow Roverd booking (iframe modal, matches Book Now) -->
+    <div class="vsl-pp-book-modal" id="vsl-pp-book-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Book party pack">
+      <div class="vsl-pp-book-modal__backdrop" data-vsl-pp-bm-close></div>
+      <div class="vsl-pp-book-modal__window">
+        <div class="vsl-pp-book-modal__header">
+          <span class="vsl-pp-book-modal__title" id="vsl-pp-book-modal-title">Book Now</span>
+          <button type="button" class="vsl-pp-book-modal__close" data-vsl-pp-bm-close aria-label="Close booking window">&times;</button>
+        </div>
+        <div class="vsl-pp-book-modal__body">
+          <div class="vsl-pp-book-modal__loader" id="vsl-pp-book-modal-loader">
+            <div class="vsl-pp-book-modal__spinner"></div>
+          </div>
+          <iframe class="vsl-pp-book-modal__iframe" id="vsl-pp-book-modal-iframe" title="Booking page"></iframe>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -1306,6 +1475,149 @@
     }
   }
 
+  function vslPPInReplicaShell() {
+    return !!(window.__VSL_SITE_REPLICA__ || document.getElementById('replica-page-root'));
+  }
+
+  function vslPPIsRoverdBookingUrl(href) {
+    if (!href || href.charAt(0) === '#') return false;
+    try {
+      var u = new URL(href, window.location.href);
+      return u.hostname === 'book.velocitysimlounge.com';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function vslPPApplyAnchorLinks(root) {
+    if (!root) return;
+    var cfg;
+    try {
+      cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}');
+    } catch (e) {
+      cfg = {};
+    }
+    var links = cfg.links || {};
+    var inReplica = vslPPInReplicaShell();
+    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function (a) {
+      var key = a.getAttribute('data-vsl-pp-link');
+      if (key && links[key]) {
+        var href = links[key];
+        a.setAttribute('href', href);
+        if (inReplica && vslPPIsRoverdBookingUrl(href)) {
+          a.removeAttribute('target');
+          a.removeAttribute('rel');
+        } else if (/^https?:\/\//i.test(href)) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
+    });
+  }
+
+  function vslPPResolveCtaHref(cta, root) {
+    if (!cta || !root) return cta ? cta.getAttribute('href') : null;
+    var key = cta.getAttribute('data-vsl-pp-link');
+    if (!key) return cta.getAttribute('href');
+    try {
+      var cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}');
+      var lk = (cfg.links || {})[key];
+      if (lk) return lk;
+    } catch (e) {}
+    return cta.getAttribute('href');
+  }
+
+  var vslPPLastBookingFocus = null;
+
+  function openPPBookModal(url, title) {
+    if (!vslPPInReplicaShell()) return;
+    var modal = document.getElementById('vsl-pp-book-modal');
+    var iframe = document.getElementById('vsl-pp-book-modal-iframe');
+    var loader = document.getElementById('vsl-pp-book-modal-loader');
+    var titleEl = document.getElementById('vsl-pp-book-modal-title');
+    if (!modal || !iframe) return;
+    if (modal.parentNode !== document.body) {
+      document.body.appendChild(modal);
+    }
+    vslPPLastBookingFocus = document.activeElement;
+    if (titleEl) titleEl.textContent = title || 'Book Now';
+    if (loader) loader.removeAttribute('data-loaded');
+    iframe.src = url;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    iframe.onload = function () {
+      if (loader) loader.setAttribute('data-loaded', 'true');
+    };
+    setTimeout(function () {
+      var btn = modal.querySelector('.vsl-pp-book-modal__close');
+      if (btn) btn.focus();
+    }, 80);
+  }
+
+  function closePPBookModal() {
+    var modal = document.getElementById('vsl-pp-book-modal');
+    var iframe = document.getElementById('vsl-pp-book-modal-iframe');
+    if (!modal || !iframe) return;
+    modal.setAttribute('aria-hidden', 'true');
+    iframe.src = 'about:blank';
+    document.body.style.overflow = '';
+    if (vslPPLastBookingFocus) {
+      try {
+        vslPPLastBookingFocus.focus();
+      } catch (e1) {}
+    }
+  }
+
+  function vslPPBindReplicaBookingCaptureOnce() {
+    if (window.__vslPPBookingReplicaBound) return;
+    window.__vslPPBookingReplicaBound = true;
+
+    document.addEventListener(
+      'click',
+      function vslPPBookingLinkCapture(e) {
+        if (!vslPPInReplicaShell()) return;
+        if (e.button !== 0) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var a = e.target && e.target.closest ? e.target.closest('a[data-vsl-pp-link]') : null;
+        if (!a) return;
+        var pack = document.querySelector('.vsl-partypack');
+        if (!pack || !pack.contains(a)) return;
+        var href = vslPPResolveCtaHref(a, pack);
+        if (!vslPPIsRoverdBookingUrl(href)) return;
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        var t = (a.textContent || '').trim() || 'Book Now';
+        openPPBookModal(href, t);
+      },
+      true
+    );
+
+    document.addEventListener('click', function vslPPBookingCloseDelegated(e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      var closeEl = t.closest('[data-vsl-pp-bm-close]');
+      if (!closeEl) return;
+      var modal = document.getElementById('vsl-pp-book-modal');
+      if (!modal || !modal.contains(closeEl)) return;
+      closePPBookModal();
+    });
+
+    document.addEventListener('keydown', function vslPPBookingEscGlobal(e) {
+      if (e.key !== 'Escape') return;
+      var modal = document.getElementById('vsl-pp-book-modal');
+      if (!modal || modal.getAttribute('aria-hidden') !== 'false') return;
+      closePPBookModal();
+    });
+  }
+
+  window.addEventListener('vslReplicaAfterLocalLinks', function (ev) {
+    var scope = ev.detail && ev.detail.scope;
+    var root = scope && scope.querySelector ? scope.querySelector('.vsl-partypack') : null;
+    if (!root) root = document.querySelector('.vsl-partypack');
+    vslPPApplyAnchorLinks(root);
+  });
+
   function vslPPInit() {
     var root = document.querySelector('.vsl-partypack');
     if (!root) return;
@@ -1321,7 +1633,6 @@
     if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
     var images = cfg.images || {};
-    var links = cfg.links || {};
 
     if (images.heroFinishLine) {
       root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
@@ -1392,16 +1703,29 @@
       if (key && images[key]) img.src = images[key];
     });
 
-    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function(a) {
-      var key = a.getAttribute('data-vsl-pp-link');
-      if (key && links[key]) {
-        var href = links[key];
-        a.setAttribute('href', href);
-        if (/^https?:\/\//i.test(href)) {
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
+    vslPPApplyAnchorLinks(root);
+
+    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function (a) {
+      if (vslPPInReplicaShell()) a.setAttribute('data-elementor-open-lightbox', 'no');
+    });
+
+    root.querySelectorAll('.vsl-pp-pack-card').forEach(function (card) {
+      if (card._vslPPClickBound) return;
+      card._vslPPClickBound = true;
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        var cta = card.querySelector('.vsl-pp-pack-card__cta');
+        if (!cta) return;
+        var href = vslPPResolveCtaHref(cta, root);
+        if (!href) return;
+        if (vslPPInReplicaShell() && vslPPIsRoverdBookingUrl(href)) {
+          var nameEl = card.querySelector('.vsl-pp-pack-card__name');
+          openPPBookModal(href, nameEl ? nameEl.textContent.trim() : 'Book Now');
+        } else {
+          window.open(href, cta.getAttribute('target') || '_self');
         }
-      }
+      });
     });
 
     /* ── 3D tilt + fluid flow on pack cards ── */
@@ -1410,21 +1734,9 @@
 
     var isCoarse = window.matchMedia('(pointer: coarse)').matches;
 
-    root.querySelectorAll('.vsl-pp-pack-card').forEach(function(card) {
+    root.querySelectorAll('.vsl-pp-pack-card').forEach(function (card) {
       if (card._vslTiltBound) return;
       card._vslTiltBound = true;
-
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function(e) {
-        if (e.target.closest('a')) return;
-        var cta = card.querySelector('.vsl-pp-pack-card__cta');
-        if (cta) {
-          var href = cta.getAttribute('href');
-          if (href) {
-            window.open(href, cta.getAttribute('target') || '_self');
-          }
-        }
-      });
 
       if (isCoarse) {
         card.addEventListener('touchstart', function(){ card.classList.add('vsl-pp-pack-card--touch-active'); }, {passive:true});
@@ -1484,6 +1796,8 @@
   }
 
   window.addEventListener('load', tryInit);
+
+  vslPPBindReplicaBookingCaptureOnce();
 
   var attempts = 0;
   var poller = setInterval(function() {

@@ -580,7 +580,8 @@
   }
   .vsl-bn-card.vsl-entering {
     opacity: 0;
-    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Delay via custom property so it survives the animation shorthand (inline animation-delay can lose to the class rule in some engines). */
+    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) var(--vsl-enter-delay, 0ms) forwards;
   }
 
   .vsl-bn-card-grid {
@@ -1682,6 +1683,7 @@
     width: 100%;
     max-width: 860px;
     height: min(88vh, 720px);
+    min-height: 0;
     background: #fff;
     border-radius: 18px;
     overflow: hidden;
@@ -1751,6 +1753,7 @@
     flex: 1;
     position: relative;
     background: #f5f5f5;
+    min-height: 0;
   }
   .vsl-bn-modal__iframe {
     width: 100%;
@@ -2695,11 +2698,17 @@
 
     function staggerCards(panel) {
       if (reduceMotionForTabs) return;
-      var cards = panel.querySelectorAll('.vsl-bn-card');
-      cards.forEach(function(card, i) {
+      var sel = panel.querySelectorAll('.vsl-bn-card-grid > .vsl-bn-card, .vsl-bn-spring-grid > .vsl-bn-card');
+      var cards = sel.length ? Array.prototype.slice.call(sel) : Array.prototype.slice.call(panel.querySelectorAll('.vsl-bn-card'));
+      cards.forEach(function(card) {
         card.classList.remove('vsl-entering');
-        void card.offsetWidth;
-        card.style.animationDelay = (i * STAGGER_MS) + 'ms';
+        card.style.removeProperty('--vsl-enter-delay');
+        card.style.setProperty('animation', 'none');
+      });
+      void panel.offsetWidth;
+      cards.forEach(function(card, i) {
+        card.style.removeProperty('animation');
+        card.style.setProperty('--vsl-enter-delay', (i * STAGGER_MS) + 'ms');
         card.classList.add('vsl-entering');
       });
     }
@@ -2783,7 +2792,11 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        staggerCards(panel);
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            staggerCards(panel);
+          });
+        });
       }
     }
 
@@ -2835,15 +2848,23 @@
     });
 
     var initialPanel = root.querySelector('.vsl-bn-panel[aria-hidden="false"]');
-    if (initialPanel) staggerCards(initialPanel);
 
-    requestAnimationFrame(function() { equalizeCardHeights(); });
+    requestAnimationFrame(function() {
+      equalizeCardHeights();
+      requestAnimationFrame(function() {
+        if (initialPanel) staggerCards(initialPanel);
+      });
+    });
 
     var modal = root.querySelector('#vsl-bn-modal');
     var modalIframe = root.querySelector('#vsl-bn-modal-iframe');
     var modalLoader = root.querySelector('#vsl-bn-modal-loader');
     var modalTitle = root.querySelector('#vsl-bn-modal-title');
     var lastFocused = null;
+
+    if ((window.__VSL_SITE_REPLICA__ || document.getElementById('replica-page-root')) && modal && modal.parentNode !== document.body) {
+      document.body.appendChild(modal);
+    }
 
     function openModal(url, title) {
       if (!modal || !modalIframe) return;
@@ -2891,7 +2912,8 @@
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        var href = card.getAttribute('href');
+        var key = card.getAttribute('data-l');
+        var href = key && links[key] ? links[key] : card.getAttribute('href');
         if (!href || href.charAt(0) === '#') return;
         var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
         var title = nameEl ? nameEl.textContent.trim() : 'Book Now';

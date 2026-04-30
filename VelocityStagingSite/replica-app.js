@@ -1,5 +1,6 @@
 /* Velocity Staging Site router */
 (function () {
+  window.__VSL_SITE_REPLICA__ = true;
   var REPLICA_PAGES = {
     home: { title: "Home", modulePath: "../Home/velocity-home-elementor.html" },
     about: { title: "About", modulePath: "../About : How it Works Page_files/velocity-about-how-it-works-elementor.html" },
@@ -51,9 +52,11 @@
     "/dallas": "index.html?p=contact&loc=dallas"
   };
   var EXTERNAL_LOCAL_MAP = {
-    "book.velocitysimlounge.com": "index.html?p=book-now"
-    // Inquiry forms on Tripleseat must reach the real form, not loop back
-    // to the local replica. Do NOT add velocitysimracinglounge.tripleseat.com here.
+    /* book.velocitysimlounge.com (Roverd) must keep real https URLs — the Book Now page
+       sets modal iframe src from link href; rewriting to index.html?p=book-now loads the
+       replica inside the iframe and breaks in-flow booking. */
+    // Inquiry forms on Tripleseat: keep mapped to local Group Events for replica UX
+    // "velocitysimracinglounge.tripleseat.com" intentionally omitted if staging differs
   };
 
   /** Browser tab: 'Page name' : Velocity Staging Site */
@@ -214,6 +217,12 @@
       return null;
     }
 
+    // Roverd booking: never rewrite to replica routes — modals/iframes and CTAs
+    // depend on the real https://book… URLs.
+    if (parsed.hostname === "book.velocitysimlounge.com") {
+      return null;
+    }
+
     // Already staging-site URLs (path includes /VelocityStagingSite/).
     if (parsed.origin === window.location.origin && parsed.pathname.indexOf("/VelocityStagingSite/") !== -1) {
       var tailPath = "/" + parsed.pathname.split("/VelocityStagingSite/")[1];
@@ -249,6 +258,12 @@
       if (!mapped) return;
       a.setAttribute("href", mapped);
     });
+  }
+
+  function notifyReplicaAfterLocalLinks(scope) {
+    try {
+      window.dispatchEvent(new CustomEvent("vslReplicaAfterLocalLinks", { detail: { scope: scope } }));
+    } catch (e) {}
   }
 
   function localizeNavbarLinks() {
@@ -325,6 +340,7 @@
         pageRoot.innerHTML = html;
         executeInlineScripts(pageRoot);
         applyLocalLinks(pageRoot);
+        notifyReplicaAfterLocalLinks(pageRoot);
         applySectionReveals(pageRoot);
         document.title = replicaDocumentTitle(page.title);
       })

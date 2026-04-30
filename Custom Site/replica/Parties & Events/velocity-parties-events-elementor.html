@@ -1864,7 +1864,13 @@
       card.addEventListener('click', function(e) {
         if (e.target.closest('a')) return;
         var cta = card.querySelector('.vsl-events-card__cta');
-        if (cta) cta.click();
+        if (cta) {
+          var ek = cta.getAttribute('data-vsl-events-link');
+          var ehref = ek && links[ek] ? links[ek] : cta.getAttribute('href');
+          if (ehref) {
+            window.open(ehref, cta.getAttribute('target') || '_self');
+          }
+        }
       });
 
       if (isCoarse) {

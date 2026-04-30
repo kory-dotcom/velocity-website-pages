@@ -1216,7 +1216,13 @@
       card.addEventListener('click', function(e) {
         if (e.target.closest('a')) return;
         var cta = card.querySelector('.vsl-spring-card__cta');
-        if (cta) cta.click();
+        if (cta) {
+          var sk = cta.getAttribute('data-vsl-spring-link');
+          var shref = sk && links[sk] ? links[sk] : cta.getAttribute('href');
+          if (shref) {
+            window.open(shref, cta.getAttribute('target') || '_self');
+          }
+        }
       });
 
       if (isCoarse) return;
