@@ -520,14 +520,52 @@
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
     }
-    .vsl-fooddrink-menu-nav a.is-active {
+    .vsl-fooddrink-menu-nav > a.is-active {
       background: var(--magenta);
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
     }
-    .vsl-fooddrink-menu-nav a.is-active:hover {
+    .vsl-fooddrink-menu-nav > a.is-active:hover {
       background: var(--magenta);
       filter: brightness(1.08);
+    }
+    /* Classics + Zero Proof share one magenta pill */
+    .vsl-fooddrink-menu-nav__twin {
+      display: inline-flex;
+      align-items: stretch;
+      border-radius: 999px;
+      margin: 0;
+    }
+    .vsl-fooddrink-menu-nav__twin a {
+      border-radius: 0 !important;
+    }
+    .vsl-fooddrink-menu-nav__twin a:first-of-type {
+      border-radius: 999px 0 0 999px !important;
+      padding-left: 14px;
+    }
+    .vsl-fooddrink-menu-nav__twin a:last-of-type {
+      border-radius: 0 999px 999px 0 !important;
+      padding-right: 14px;
+    }
+    .vsl-fooddrink-menu-nav__twin:not(:has(a.is-active)):hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .vsl-fooddrink-menu-nav__twin:not(:has(a.is-active)) a:hover {
+      background: none !important;
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) {
+      background: var(--magenta);
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) a {
+      background: none !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active):hover {
+      filter: brightness(1.08);
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) a:hover {
+      filter: none;
     }
     .vsl-fooddrink-menu-block {
       margin: 1.5rem 0 2rem;
@@ -594,9 +632,9 @@
       max-width: 56rem;
       margin: 0 auto;
     }
-    /* Landscape-forward strip (source art is wide) */
+    /* Slightly taller than other menu cards (was very landscape-forward) */
     .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media {
-      aspect-ratio: 2.1 / 1;
+      aspect-ratio: 1.85 / 1;
     }
     @media (min-width: 900px) {
       .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card {
@@ -608,8 +646,8 @@
         flex: 1 1 58%;
         min-width: 0;
         max-width: 62%;
-        aspect-ratio: 2.25 / 1;
-        max-height: min(34vw, 300px);
+        aspect-ratio: 2 / 1;
+        max-height: min(40vw, 340px);
       }
       .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__body {
         flex: 1 1 38%;
@@ -911,8 +949,10 @@
           <a href="#sweet">Sweet</a>
           <a href="#entrees">Entrees</a>
           <a href="#cocktails">Cocktails</a>
-          <a href="#classics">Classics</a>
-          <a href="#classics">Zero Proof</a>
+          <span class="vsl-fooddrink-menu-nav__twin" role="group" aria-label="Classics and Zero Proof">
+            <a href="#classics">Classics</a>
+            <a href="#classics">Zero Proof</a>
+          </span>
           <a href="#beer-wine">Beer + Other</a>
           <a href="#flights">Flights</a>
         </nav>
@@ -973,7 +1013,7 @@
         </section>
 
         <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading">
-          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Race Classics + Zero Proof</h3>
+          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Classics + Zero Proof</h3>
           <div class="vsl-fooddrink-listgrid">
             <p class="vsl-fooddrink-listcard"><strong>Margarita</strong>: blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong>: pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong>: irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong>: tequila, cointreau, lime, topo chico</p>
             <p class="vsl-fooddrink-listcard"><strong>Agua de Jamaica</strong>: hibiscus, lime, sugar, water<br><strong>The Quattro</strong>: lemon, mint &amp; white peach syrup, topo chico<br><strong>Virgin Mojito</strong>: lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong>: spicy ginger, mint lavender, strawberry</p>
@@ -1102,16 +1142,36 @@
       var menuBlocks = root.querySelectorAll('.vsl-fooddrink-menu-block[id]');
       var spyLinks = menuNav.querySelectorAll('a[href^="#"]');
       var spyRaf = 0;
+
+      function menuBlockSpyTop(block) {
+        var title = block.querySelector('.vsl-fooddrink-menu-block__title');
+        var el = title || block;
+        return el.getBoundingClientRect().top;
+      }
+
+      function setActiveNavFromId(id) {
+        spyLinks.forEach(function (a) {
+          a.classList.remove('is-active');
+          a.removeAttribute('aria-current');
+        });
+        if (!id) return;
+        spyLinks.forEach(function (a) {
+          var h = (a.getAttribute('href') || '').replace(/^#/, '');
+          if (h === id) a.classList.add('is-active');
+        });
+        var firstOn = menuNav.querySelector('a.is-active');
+        if (firstOn) firstOn.setAttribute('aria-current', 'location');
+      }
+
       function updateMenuScrollSpy() {
         spyRaf = 0;
         if (!menuBlocks.length || !spyLinks.length) return;
         var navBottom = menuNav.getBoundingClientRect().bottom + 8;
-        /* Larger threshold = highlight switches a bit before the section reaches the sticky bar */
-        var spyLeadPx = Math.min(130, Math.max(56, Math.round(window.innerHeight * 0.09)));
+        var spyLeadPx = Math.min(200, Math.max(88, Math.round(window.innerHeight * 0.16)));
         var threshold = navBottom + spyLeadPx;
         var activeId = '';
         for (var si = 0; si < menuBlocks.length; si++) {
-          if (menuBlocks[si].getBoundingClientRect().top <= threshold) {
+          if (menuBlockSpyTop(menuBlocks[si]) <= threshold) {
             activeId = menuBlocks[si].id;
           }
         }
@@ -1122,25 +1182,26 @@
             activeId = menuBlocks[0].id;
           }
         }
-        spyLinks.forEach(function (a) {
-          a.classList.remove('is-active');
-          a.removeAttribute('aria-current');
-        });
-        if (activeId) {
-          spyLinks.forEach(function (a) {
-            var h = (a.getAttribute('href') || '').replace(/^#/, '');
-            if (h === activeId) a.classList.add('is-active');
-          });
-          var firstOn = menuNav.querySelector('a.is-active');
-          if (firstOn) firstOn.setAttribute('aria-current', 'location');
-        }
+        setActiveNavFromId(activeId || '');
       }
+
       function requestMenuSpy() {
         if (spyRaf) return;
         spyRaf = requestAnimationFrame(updateMenuScrollSpy);
       }
+
+      menuNav.addEventListener('click', function (e) {
+        var t = e.target && e.target.closest && e.target.closest('a[href^="#"]');
+        if (!t || !menuNav.contains(t)) return;
+        var hid = (t.getAttribute('href') || '').replace(/^#/, '');
+        if (hid) setActiveNavFromId(hid);
+      });
+
       window.addEventListener('scroll', requestMenuSpy, { passive: true });
       window.addEventListener('resize', requestMenuSpy, { passive: true });
+      if ('onscrollend' in window) {
+        window.addEventListener('scrollend', requestMenuSpy, { passive: true });
+      }
       requestMenuSpy();
       window.addEventListener('load', requestMenuSpy, { once: true });
     }
