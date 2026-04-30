@@ -1122,6 +1122,16 @@
         closeLightbox();
       }
     });
+
+    /* Google Photos hotlink fix: suppress Referer so their CDN doesn't block the embed */
+    root.querySelectorAll('img[src*="lh3.googleusercontent.com"]').forEach(function (img) {
+      img.setAttribute('referrerpolicy', 'no-referrer');
+      if (img.complete && img.naturalWidth === 0) {
+        var s = img.src;
+        img.src = '';
+        img.src = s;
+      }
+    });
   })();
 </script>
 <script type="application/ld+json">
