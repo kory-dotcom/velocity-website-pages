@@ -139,6 +139,13 @@
       margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
       scroll-margin-top: calc(var(--nav-h) + 56px);
     }
+    .vm-anchor {
+      display: block;
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      scroll-margin-top: calc(var(--nav-h) + 56px);
+    }
     .vm-section__head {
       display: flex;
       flex-wrap: wrap;
@@ -372,6 +379,7 @@
   </nav>
 
   <main class="vm-main">
+    <span id="food" class="vm-anchor" aria-hidden="true"></span>
     <section class="vm-section" id="entrees" aria-labelledby="h-entrees">
       <div class="vm-section__head">
         <h2 id="h-entrees">Entrées</h2>
@@ -577,6 +585,7 @@
       </div>
     </section>
 
+    <span id="drinks" class="vm-anchor" aria-hidden="true"></span>
     <section class="vm-section" id="cocktails" aria-labelledby="h-sig">
       <div class="vm-section__head">
         <h2 id="h-sig">Signature Cocktails</h2>
