@@ -520,6 +520,15 @@
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
     }
+    .vsl-fooddrink-menu-nav a.is-active {
+      background: var(--magenta);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .vsl-fooddrink-menu-nav a.is-active:hover {
+      background: var(--magenta);
+      filter: brightness(1.08);
+    }
     .vsl-fooddrink-menu-block {
       margin: 1.5rem 0 2rem;
       display: block !important;
@@ -1086,6 +1095,52 @@
         setTimeout(scrollToMenuHash, 280);
       }
     }, { once: true });
+
+    /* Scroll spy: highlight nav pill for the section currently under the sticky bar */
+    var menuNav = root.querySelector('.vsl-fooddrink-menu-nav');
+    if (menuNav) {
+      var menuBlocks = root.querySelectorAll('.vsl-fooddrink-menu-block[id]');
+      var spyLinks = menuNav.querySelectorAll('a[href^="#"]');
+      var spyRaf = 0;
+      function updateMenuScrollSpy() {
+        spyRaf = 0;
+        if (!menuBlocks.length || !spyLinks.length) return;
+        var navBottom = menuNav.getBoundingClientRect().bottom + 8;
+        var activeId = '';
+        for (var si = 0; si < menuBlocks.length; si++) {
+          if (menuBlocks[si].getBoundingClientRect().top <= navBottom + 2) {
+            activeId = menuBlocks[si].id;
+          }
+        }
+        var fullMenuEl = root.querySelector('#full-menu');
+        if (!activeId && fullMenuEl && menuBlocks.length) {
+          var fmr = fullMenuEl.getBoundingClientRect();
+          if (fmr.top < window.innerHeight * 0.92 && fmr.bottom > 120) {
+            activeId = menuBlocks[0].id;
+          }
+        }
+        spyLinks.forEach(function (a) {
+          a.classList.remove('is-active');
+          a.removeAttribute('aria-current');
+        });
+        if (activeId) {
+          spyLinks.forEach(function (a) {
+            var h = (a.getAttribute('href') || '').replace(/^#/, '');
+            if (h === activeId) a.classList.add('is-active');
+          });
+          var firstOn = menuNav.querySelector('a.is-active');
+          if (firstOn) firstOn.setAttribute('aria-current', 'location');
+        }
+      }
+      function requestMenuSpy() {
+        if (spyRaf) return;
+        spyRaf = requestAnimationFrame(updateMenuScrollSpy);
+      }
+      window.addEventListener('scroll', requestMenuSpy, { passive: true });
+      window.addEventListener('resize', requestMenuSpy, { passive: true });
+      requestMenuSpy();
+      window.addEventListener('load', requestMenuSpy, { once: true });
+    }
 
     var lb = root.querySelector('#vsl-fooddrink-lightbox');
     if (!lb) return;
