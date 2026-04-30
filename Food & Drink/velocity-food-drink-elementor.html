@@ -597,6 +597,24 @@
       color: var(--circuit-white) !important;
       -webkit-text-fill-color: var(--circuit-white) !important;
     }
+    .vsl-fooddrink-classics__titles {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.35rem 14px;
+      margin: 0 0 1rem;
+    }
+    .vsl-fooddrink-classics__titles .vsl-fooddrink-menu-block__title {
+      margin: 0;
+    }
+    @media (min-width: 760px) {
+      .vsl-fooddrink-classics__titles {
+        grid-template-columns: repeat(2, 1fr);
+        align-items: end;
+      }
+      .vsl-fooddrink-classics__titles .vsl-fooddrink-menu-block__title--col-right {
+        text-align: right;
+      }
+    }
     .vsl-fooddrink-sweet-hero {
       margin: 2rem 0 2.75rem;
     }
@@ -1012,8 +1030,11 @@
           </div>
         </section>
 
-        <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading">
-          <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Classics + Zero Proof</h3>
+        <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading zero-proof-heading">
+          <div class="vsl-fooddrink-classics__titles">
+            <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Classics</h3>
+            <h3 class="vsl-fooddrink-menu-block__title vsl-fooddrink-menu-block__title--col-right" id="zero-proof-heading">Zero Proof</h3>
+          </div>
           <div class="vsl-fooddrink-listgrid">
             <p class="vsl-fooddrink-listcard"><strong>Margarita</strong>: blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong>: pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong>: irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong>: tequila, cointreau, lime, topo chico</p>
             <p class="vsl-fooddrink-listcard"><strong>Agua de Jamaica</strong>: hibiscus, lime, sugar, water<br><strong>The Quattro</strong>: lemon, mint &amp; white peach syrup, topo chico<br><strong>Virgin Mojito</strong>: lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong>: spicy ginger, mint lavender, strawberry</p>
