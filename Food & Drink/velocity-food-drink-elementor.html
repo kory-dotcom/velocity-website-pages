@@ -284,7 +284,7 @@
     }
 
     .vsl-fooddrink-grid {
-      display: grid;
+      display: grid !important;
       grid-template-columns: 1fr;
       gap: var(--gutter);
     }
@@ -308,8 +308,10 @@
       overflow: hidden;
       border: 1px solid rgba(16, 24, 43, 0.08);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
-      display: flex;
+      display: flex !important;
       flex-direction: column;
+      visibility: visible !important;
+      opacity: 1 !important;
       transition: box-shadow 0.28s ease, transform 0.28s ease;
     }
     @media (hover: hover) and (pointer: fine) {
@@ -320,8 +322,10 @@
     }
     .vsl-fooddrink-card__media {
       position: relative;
-      display: block;
+      display: block !important;
+      visibility: visible !important;
       width: 100%;
+      min-height: 120px;
       margin: 0;
       padding: 0;
       border: none;
@@ -448,10 +452,17 @@
       background: var(--deep-indigo);
       color: var(--circuit-white);
       padding: 56px clamp(16px, 5vw, var(--page-margin)) 70px;
+      display: block !important;
+      visibility: visible !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
     }
     .vsl-fooddrink-fullmenu__inner {
       max-width: 1120px;
       margin: 0 auto;
+      display: block !important;
+      visibility: visible !important;
     }
     .vsl-fooddrink-fullmenu__intro {
       margin: 0 auto 1rem;
@@ -507,6 +518,8 @@
     }
     .vsl-fooddrink-menu-block {
       margin: 1.5rem 0 2rem;
+      display: block !important;
+      visibility: visible !important;
     }
     .vsl-fooddrink-menu-block__title {
       margin: 0 0 1rem;
