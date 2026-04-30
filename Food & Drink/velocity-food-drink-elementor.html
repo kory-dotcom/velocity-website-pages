@@ -521,6 +521,18 @@
       display: block !important;
       visibility: visible !important;
     }
+
+    /* Neutralise site-wide scroll-reveal animations inside this widget.
+       The global JS adds .vsl-reveal / .vsl-reveal--* classes and sets opacity:0 +
+       transform before the Intersection Observer fires. On mobile the observer can
+       silently fail, leaving every section permanently invisible. */
+    .vsl-fooddrink [class*="vsl-reveal"] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+      transition: none !important;
+      animation: none !important;
+    }
     .vsl-fooddrink-menu-block__title {
       margin: 0 0 1rem;
       padding-bottom: 0.45rem;
