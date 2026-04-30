@@ -515,8 +515,8 @@
     gap: var(--gutter);
   }
   .vsl-pp-included-card {
-    background: #fff;
-    border: 1px solid rgba(16,24,43,0.08);
+    background: linear-gradient(168deg, rgba(28, 34, 58, 0.96) 0%, rgba(14, 18, 36, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 18px;
     padding: clamp(28px, 3.5vw, 44px) clamp(20px, 2.5vw, 28px);
     display: flex;
@@ -524,13 +524,14 @@
     align-items: center;
     gap: 1rem;
     text-align: center;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
-    transition: box-shadow 0.35s ease, transform 0.25s ease;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.28), 0 2px 0 rgba(255, 255, 255, 0.04) inset;
+    transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease;
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-pp-included-card:hover {
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.46), 0 8px 18px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55), 0 8px 18px rgba(0, 0, 0, 0.32), 0 2px 0 rgba(255, 255, 255, 0.06) inset;
       transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.18);
     }
   }
   .vsl-pp-included-card__accent {
@@ -544,25 +545,18 @@
   .vsl-pp-included-card:nth-child(3) .vsl-pp-included-card__accent { background: var(--yellow); }
   .vsl-pp-included-card:nth-child(4) .vsl-pp-included-card__accent { background: var(--red); }
   .vsl-pp-included-card__icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: clamp(88px, 13vw, 112px);
+    height: clamp(88px, 13vw, 112px);
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    padding: clamp(10px, 1.5vw, 16px);
     flex-shrink: 0;
-  }
-  .vsl-pp-included-card:nth-child(1) .vsl-pp-included-card__icon {
-    background: linear-gradient(135deg, rgba(238,38,95,0.12) 0%, rgba(238,38,95,0.06) 100%);
-  }
-  .vsl-pp-included-card:nth-child(2) .vsl-pp-included-card__icon {
-    background: linear-gradient(135deg, rgba(41,56,147,0.12) 0%, rgba(41,56,147,0.06) 100%);
-  }
-  .vsl-pp-included-card:nth-child(3) .vsl-pp-included-card__icon {
-    background: linear-gradient(135deg, rgba(253,199,12,0.14) 0%, rgba(253,199,12,0.06) 100%);
-  }
-  .vsl-pp-included-card:nth-child(4) .vsl-pp-included-card__icon {
-    background: linear-gradient(135deg, rgba(210,32,38,0.12) 0%, rgba(210,32,38,0.06) 100%);
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(234, 234, 234, 0.95);
+    transition: transform 0.3s ease;
   }
   .vsl-pp-included-card__icon svg {
     width: 30px;
@@ -571,11 +565,8 @@
     stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
+    stroke: currentColor;
   }
-  .vsl-pp-included-card:nth-child(1) .vsl-pp-included-card__icon svg { stroke: var(--magenta); }
-  .vsl-pp-included-card:nth-child(2) .vsl-pp-included-card__icon svg { stroke: var(--blue); }
-  .vsl-pp-included-card:nth-child(3) .vsl-pp-included-card__icon svg { stroke: #c9a000; }
-  .vsl-pp-included-card:nth-child(4) .vsl-pp-included-card__icon svg { stroke: var(--red); }
   .vsl-pp-included-card__name {
     font-family: var(--font-display);
     font-size: clamp(1.05rem, 0.8rem + 0.9vw, 1.25rem);
@@ -583,14 +574,16 @@
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--navy);
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
     line-height: 1.25;
   }
   .vsl-pp-included-card__desc {
     font-size: clamp(0.88rem, 0.82rem + 0.3vw, 0.98rem);
     font-weight: 400;
     line-height: 1.55;
-    color: var(--slate-violet);
+    color: rgba(234, 234, 234, 0.82) !important;
+    -webkit-text-fill-color: rgba(234, 234, 234, 0.82) !important;
   }
 
   /* ── CHOOSE YOUR PACK — BOOKING CARDS (dark) ── */
@@ -877,15 +870,15 @@
   }
   .vsl-pp-occasion {
     position: relative;
-    background: #fff;
-    border: 1px solid rgba(16,24,43,0.06);
+    background: linear-gradient(168deg, rgba(28, 34, 58, 0.96) 0%, rgba(14, 18, 36, 0.94) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: clamp(28px, 3vw, 40px) clamp(22px, 2.5vw, 30px);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.85rem;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.28), 0 2px 0 rgba(255, 255, 255, 0.04) inset;
     transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease;
     overflow: hidden;
   }
@@ -900,16 +893,15 @@
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-pp-occasion:hover {
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.46), 0 8px 18px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(238,38,95,0.28);
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55), 0 8px 18px rgba(0, 0, 0, 0.32), 0 2px 0 rgba(255, 255, 255, 0.06) inset;
       transform: translateY(-6px);
-      border-color: rgba(238,38,95,0.32);
+      border-color: rgba(255, 255, 255, 0.18);
     }
     .vsl-pp-occasion:hover::before {
       opacity: 1;
     }
     .vsl-pp-occasion:hover .vsl-pp-occasion__icon {
       transform: scale(1.08);
-      box-shadow: 0 4px 16px rgba(238,38,95,0.18);
     }
   }
   .vsl-pp-occasion__icon {
@@ -919,10 +911,10 @@
     align-items: center;
     justify-content: center;
     border-radius: 14px;
-    background: linear-gradient(135deg, rgba(238,38,95,0.1) 0%, rgba(41,56,147,0.1) 100%);
-    border: 1px solid rgba(16,24,43,0.06);
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     flex-shrink: 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease;
   }
   .vsl-pp-occasion__icon svg {
     width: 24px;
@@ -940,14 +932,16 @@
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--navy);
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
     line-height: 1.25;
   }
   .vsl-pp-occasion__desc {
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.55;
-    color: var(--slate-violet);
+    color: rgba(234, 234, 234, 0.82) !important;
+    -webkit-text-fill-color: rgba(234, 234, 234, 0.82) !important;
   }
 
   /* ── CTA SECTION ── */
