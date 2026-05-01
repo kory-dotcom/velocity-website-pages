@@ -42,6 +42,35 @@
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR-1024x640.jpg" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/2-seater-1024x576.webp" fetchpriority="low">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   html, html.no-smooth-scroll { scroll-behavior: auto !important; }
   html, body {
     margin: 0;
@@ -213,6 +242,7 @@
     display: block;
     margin: 0;
     padding: 0;
+    overflow: visible;
   }
   .vsl-how-it-works [id] {
     scroll-margin-top: 5rem;
@@ -797,6 +827,8 @@
   .vsl-how-simulators {
     background: var(--deep-indigo);
     color: var(--circuit-white);
+    /* 3D flip cards extend past their layout box during rotateY — never clip them. */
+    overflow: visible;
   }
   .vsl-how-simulators::after {
     background-image: none;
@@ -808,27 +840,59 @@
   .vsl-how-simulators .vsl-how-heading {
     color: var(--circuit-white);
   }
+  .vsl-how-simulators .vsl-how-grid {
+    overflow: visible;
+  }
   .vsl-how-tier-grid {
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--gutter);
     align-items: stretch;
+    overflow: visible;
+  }
+  .vsl-how-tier-grid > .vsl-how-tier {
+    min-width: 0;
   }
   .vsl-how-tier {
     display: flex;
     flex-direction: column;
     position: relative;
     z-index: 1;
-    perspective: 900px;
-    transform-style: preserve-3d;
     cursor: pointer;
+    /* Never clip the flipper mid-rotation (rotateY projects outside the box on X). */
+    overflow: visible;
+  }
+  /* Perspective is on this inner wrapper — not the flex <article> — so 3D isn’t intersected with
+     the article’s flex formatting context (fixes half-card “slice” mid-flip in all browsers). */
+  .vsl-how-tier__scene {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+    perspective: 2200px;
+    -webkit-perspective: 2200px;
+    perspective-origin: 50% 50%;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  /* Mid-flip the card paints wider than its grid cell; pop above siblings so nothing stacks on top
+     of the rotating faces (fixes a vertical “slice” where the neighbor column occludes half the card). */
+  .vsl-how-tier.is-flipped {
+    z-index: 25;
+  }
+  .vsl-how-tier--flipping {
+    z-index: 40;
   }
   .vsl-how-tier__media {
     margin: 0;
     aspect-ratio: 4 / 3;
     line-height: 0;
     background: var(--obsidian);
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
   }
   .vsl-how-tier__media img {
     width: 100%;
@@ -990,13 +1054,17 @@
     display: flex;
     flex-direction: column;
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Nudge the card toward the viewer so rotateY never crosses behind the perspective eye point
+       (otherwise the near half disappears as a vertical cut at ~90° in every major engine). */
+    transform: translateZ(32px);
   }
   .vsl-how-tier.is-flipped .vsl-how-tier__flipper {
-    transform: rotateY(180deg);
+    transform: translateZ(32px) rotateY(180deg);
   }
   .vsl-how-tier--wide.is-flipped .vsl-how-tier__flipper {
-    transform: rotateX(-180deg);
+    transform: translateZ(32px) rotateX(-180deg);
   }
   .vsl-how-tier__front,
   .vsl-how-tier__back {
@@ -1013,7 +1081,9 @@
     box-shadow:
       0 12px 36px rgba(0, 0, 0, 0.32),
       0 4px 12px rgba(0, 0, 0, 0.18);
-    overflow: hidden;
+    /* overflow visible: overflow:hidden on this face flattens/breaks preserve-3d in WebKit and clips
+       the sibling back face mid rotateY. Image clipping lives on .vsl-how-tier__media instead. */
+    overflow: visible;
     color: var(--obsidian);
     transition: box-shadow 0.3s ease;
     /* Slight Z lift keeps front/back planes apart during rotateY (reduces edge tearing). */
@@ -2067,6 +2137,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
         </p>
         <div class="vsl-how-tier-grid">
           <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__scene">
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
@@ -2091,8 +2162,10 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
                 <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
               </div>
             </div>
+            </div>
           </article>
           <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__scene">
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
@@ -2116,8 +2189,10 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
                 <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
               </div>
             </div>
+            </div>
           </article>
           <article class="vsl-how-tier" data-vsl-tier>
+            <div class="vsl-how-tier__scene">
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
@@ -2142,8 +2217,10 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
                 <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
               </div>
             </div>
+            </div>
           </article>
           <article class="vsl-how-tier vsl-how-tier--wide" data-vsl-tier>
+            <div class="vsl-how-tier__scene">
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
@@ -2167,6 +2244,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
                 </ul>
                 <span class="vsl-how-tier__flip-hint" aria-hidden="true">Tap to flip back</span>
               </div>
+            </div>
             </div>
           </article>
         </div>
@@ -2597,62 +2675,18 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
     root.querySelectorAll("[data-vsl-tier]").forEach(function (tier) {
       tier.addEventListener("click", function () {
+        /* Clear any legacy tilt transform — putting transform on the same element that
+           establishes perspective flattens preserve-3d children and breaks the flip animation. */
+        tier.style.removeProperty("transform");
+        tier.classList.add("vsl-how-tier--flipping");
+        window.clearTimeout(tier._vslFlipElevateTimer);
+        tier._vslFlipElevateTimer = window.setTimeout(function () {
+          tier._vslFlipElevateTimer = null;
+          tier.classList.remove("vsl-how-tier--flipping");
+        }, 700);
         tier.classList.toggle("is-flipped");
       });
     });
-
-    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var isCoarse = window.matchMedia("(pointer: coarse)").matches;
-    if (!reduceMotion.matches && !isCoarse) {
-      root.querySelectorAll(".vsl-how-tier").forEach(function (card) {
-        if (card._vslTiltBound) return;
-        card._vslTiltBound = true;
-
-        var TILT = 4;
-        var raf = null;
-        var targetRx = 0, targetRy = 0, targetScale = 1;
-        var currentRx = 0, currentRy = 0, currentScale = 1;
-        var LERP = 0.1;
-
-        function animate() {
-          currentRx += (targetRx - currentRx) * LERP;
-          currentRy += (targetRy - currentRy) * LERP;
-          currentScale += (targetScale - currentScale) * LERP;
-          card.style.setProperty("transform",
-            "perspective(900px) rotateX(" + currentRx.toFixed(2) + "deg) rotateY(" + currentRy.toFixed(2) + "deg) scale(" + currentScale.toFixed(4) + ")", "important");
-          if (Math.abs(targetRx - currentRx) > 0.01 || Math.abs(targetRy - currentRy) > 0.01 || Math.abs(targetScale - currentScale) > 0.0001) {
-            raf = requestAnimationFrame(animate);
-          } else {
-            raf = null;
-          }
-        }
-
-        function startAnim() {
-          if (!raf) raf = requestAnimationFrame(animate);
-        }
-
-        card.addEventListener("mouseenter", function () {
-          targetScale = 1.025;
-          startAnim();
-        });
-
-        card.addEventListener("mousemove", function (e) {
-          var rect = card.getBoundingClientRect();
-          var mx = (e.clientX - rect.left) / rect.width;
-          var my = (e.clientY - rect.top) / rect.height;
-          targetRx = (my - 0.5) * -TILT;
-          targetRy = (mx - 0.5) * TILT;
-          startAnim();
-        });
-
-        card.addEventListener("mouseleave", function () {
-          targetRx = 0;
-          targetRy = 0;
-          targetScale = 1;
-          startAnim();
-        });
-      });
-    }
 
     var faqRoot = root.querySelector("[data-vsl-faq]");
     if (faqRoot) {

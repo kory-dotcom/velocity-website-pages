@@ -4,6 +4,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   .vsl-booknow {
     --c0: #10182B;
     --c1: #191B4D;
@@ -241,13 +270,17 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   }
   .vsl-booknow .vsl-bn-spring-label {
-    color: var(--c6) !important;
-    -webkit-text-fill-color: var(--c6) !important;
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
     font-family: 'Archivo Narrow', var(--f1) !important;
     text-transform: none !important;
     font-style: normal !important;
   }
   .vsl-booknow .vsl-bn-spring-label strong {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-spring-label a {
     color: var(--c2) !important;
     -webkit-text-fill-color: var(--c2) !important;
   }
@@ -631,11 +664,20 @@
     letter-spacing: 0.01em;
     text-align: center;
     line-height: 1.4;
-    color: var(--c6);
+    color: var(--c0);
   }
   .vsl-bn-spring-label strong {
     color: var(--c2);
     -webkit-text-fill-color: var(--c2);
+  }
+  .vsl-bn-spring-label a {
+    color: var(--c2);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+  }
+  .vsl-bn-spring-label a:hover {
+    color: var(--c3);
   }
 
   .vsl-bn-card {
@@ -2139,10 +2181,8 @@
     "leaderboard":    "https://book.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1",
     "twoSeaterQuick": "https://book.velocitysimlounge.com/book/2-seater-quick-race/22",
     "twoSeaterDouble":"https://book.velocitysimlounge.com/book/2-seater-double-race/23",
-    "springQuick":    "https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==",
-    "springDouble":   "https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==",
-    "springSprint":   "https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9",
-    "springEndurance":"https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==",
+    "partyRacer":     "https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19",
+    "partyPro":       "https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24",
     "bookNow":        "https://velocitysimlounge.com/book-now/"
   },
   "images": {
@@ -2152,10 +2192,8 @@
     "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard.webp",
     "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
     "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
-    "springQuick":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp",
-    "springDouble":   "https://velocitysimlounge.com/wp-content/uploads/2026/04/DSC01771-1024x683.webp",
-    "springSprint":   "https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp",
-    "springEndurance":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_T-1024x576.webp",
+    "partyRacer":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp",
+    "partyPro":       "https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp",
     "heroFinishLine": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png",
     "featureHeight":  "https://velocitysimlounge.com/wp-content/uploads/2026/01/3.png",
     "featureFriends": "https://velocitysimlounge.com/wp-content/uploads/2026/01/Icons.png",
@@ -2177,7 +2215,7 @@
         <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
           <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true">Main Experiences</button>
           <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false">2-Seater Experiences</button>
-          <button class="vsl-bn-tab" role="tab" id="tab-spring" aria-controls="panel-spring" aria-selected="false">Eat &amp; Race Bundles</button>
+          <button class="vsl-bn-tab" role="tab" id="tab-party" aria-controls="panel-party" aria-selected="false">Party Packs</button>
         </div>
 
         <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
@@ -2301,90 +2339,49 @@
           </div>
         </div>
 
-        <div class="vsl-bn-panel" id="panel-spring" role="tabpanel" aria-labelledby="tab-spring" aria-hidden="true">
+        <div class="vsl-bn-panel" id="panel-party" role="tabpanel" aria-labelledby="tab-party" aria-hidden="true">
 
-          <p class="vsl-bn-spring-label">Limited time, 2 driver bundles offer unbeatable value. Eat &amp; Race <strong>TOGETHER.</strong></p>
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--2">
 
-          <div class="vsl-bn-card-grid vsl-bn-card-grid--4">
-
-            <a class="vsl-bn-card" data-l="springQuick" href="https://book.velocitysimlounge.com/book/eat-drink-race-1-race-bundle-racer-or-pro-rig/25/eyJpdiI6IlN0N0hyeFMwUXV0MUN0a0g1b3ozcXc9PSIsInZhbHVlIjoiNGRQSU9IR0M3WThlcElcLzNxZHQ4R3c9PSIsIm1hYyI6ImM2ZWU0OTczMDZkNjRmY2MwODQ1NjFhODZmOTg2ZjE1MjQyZWUzZGY0MmVlZjY1NDhiMzI1Y2QyOTE0MmNkZTUifQ==" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="partyRacer" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="springQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjMxMDUud2VicA==" alt="Spring Quick Race bundle at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
-                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
-                <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
+                <img data-i="partyRacer" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcmFjZXJfY2FyZC0xMDI0eDY4My53ZWJw" alt="Racer Party Pack at Velocity Sim Lounge" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Racer Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
                 <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $85</span>
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $499</span>
                 </div>
                 <ul class="vsl-bn-card__features">
-                  <li>Eat &amp; Race bundle for 2 drivers</li>
-                  <li>Each driver gets their own sim</li>
-                  <li>2 food tickets included</li>
-                  <li>Approx. 25 minute experience</li>
+                  <li>Great for groups of 5&ndash;10 drivers</li>
+                  <li>5 racer rigs for 2 hours of racing</li>
+                  <li>2 &times; Triple Crown Platters</li>
+                  <li>Reserved seating</li>
+                  <li>Dedicated event captain</li>
+                  <li>Upgrades available</li>
                 </ul>
-                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
             </a>
 
-            <a class="vsl-bn-card" data-l="springDouble" href="https://book.velocitysimlounge.com/book/eat-drink-race-2-race-bundle-racer-or-pro-rig/26/eyJpdiI6InRNMnJCS1wvQndEankxTE40K1EwSVJRPT0iLCJ2YWx1ZSI6ImhlOXNhYURyVndudjJ4MWl1NExSanc9PSIsIm1hYyI6IjcyNzFiMDUzN2NmYjhkNmI1YmM3NzhiZDhmNjgwZmRlZmJmMjFhY2M4MDZhZmE3OGUyODQ0ZTEzNTlhMjY3MTkifQ==" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="partyPro" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="springDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRFNDMDE3NzEud2VicA==" alt="Spring Double Race bundle at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
-                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
-                <h3 class="vsl-bn-card__overlay-name">Double Race</h3>
+                <img data-i="partyPro" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvVW50aXRsZWRfZGVzaWduLTIyLTEwMjR4NjgzLndlYnA=" alt="Pro Party Pack at Velocity Sim Lounge" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Pro Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
                 <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $115</span>
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $725</span>
                 </div>
                 <ul class="vsl-bn-card__features">
-                  <li>Double the races, double the fun</li>
-                  <li>Save over 20% with this bundle</li>
-                  <li>Choose 2 different cars &amp; tracks to race together</li>
-                  <li>Includes 2 food tickets for entree of your choice</li>
+                  <li>6 Pro rigs for groups of 6&ndash;18</li>
+                  <li>2 hours of racing</li>
+                  <li>3 &times; Triple Crown Platters</li>
+                  <li>Reserved seating</li>
+                  <li>Dedicated event captain</li>
+                  <li>Upgrades available</li>
                 </ul>
-                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-              </div>
-            </a>
-
-            <a class="vsl-bn-card vsl-bn-card--tagged" data-l="springSprint" href="https://book.velocitysimlounge.com/book/the-speed-date-2-seater/20/eyJpdiI6InZXbnRyV0NzdmtIYVdnZ1BUUndEQUE9PSIsInZhbHVlIjoibytvU0hTSUwxUCtyYmFmNXJhTWVhQT09IiwibWFjIjoiMTlkMWU1NWJjYTc4YTE1Njg0ZGZhNDhkZmE4ODQyN2E4YzlhY2U1NzU2ZmZkOTdmNWMzZjc4YTFjMGViNzlhZCJ9" target="_blank" rel="noopener noreferrer">
-              <span class="vsl-bn-card__tag">2-Seater</span>
-              <div class="vsl-bn-card__media">
-                <img data-i="springSprint" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvVmVsb2NpdHlfM19ULndlYnA=" alt="Sprint Bundle 2-seater at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
-                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
-                <h3 class="vsl-bn-card__overlay-name">Eat &amp; Race, 1 Race</h3>
-              </div>
-              <div class="vsl-bn-card__body">
-                <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $65</span>
-                </div>
-                <ul class="vsl-bn-card__features">
-                  <li>Eat &amp; Race bundle for 2</li>
-                  <li>Approx. 25 minute experience</li>
-                  <li>Includes 2 food tickets for entree of your choice</li>
-                </ul>
-                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-              </div>
-            </a>
-
-            <a class="vsl-bn-card vsl-bn-card--tagged" data-l="springEndurance" href="https://book.velocitysimlounge.com/book/the-double-race-date-2-seater/21/eyJpdiI6IkZCTWI5RFhTbFlhNld3blQwUE5XNVE9PSIsInZhbHVlIjoiWTZpMmxFTml4Q0cxYmNLc0kzK1wvQWc9PSIsIm1hYyI6IjRkYWQzNjdiYmVlNDI1OGU2YjFkYWVjNGJhMzU5ZjllNjVmZDlhZDY3ZTc1YzlkMTQ3YWI0MmVlMGZmMGRjYTQifQ==" target="_blank" rel="noopener noreferrer">
-              <span class="vsl-bn-card__tag">2-Seater</span>
-              <div class="vsl-bn-card__media">
-                <img data-i="springEndurance" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvVmVsb2NpdHlfVC53ZWJw" alt="Double Race Bundle 2-seater at Velocity" width="2400" height="1600" loading="lazy" decoding="async">
-                <span class="vsl-bn-card__badge vsl-bn-card__badge--value">Best Value</span>
-                <span class="vsl-bn-card__ticket">2 Food Tickets<br>Included</span>
-                <h3 class="vsl-bn-card__overlay-name">Eat &amp; Race, 2 Races</h3>
-              </div>
-              <div class="vsl-bn-card__body">
-                <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $89</span>
-                </div>
-                <ul class="vsl-bn-card__features">
-                  <li>Double the drive time, approx. 55 minute experience</li>
-                  <li>2 food tickets</li>
-                  <li>Choose from a variety of driving options</li>
-                </ul>
-                <span class="vsl-bn-card__cta-hint">Book Now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
             </a>
 
@@ -2553,7 +2550,7 @@
               <span class="vsl-bn-faq__chev" aria-hidden="true"></span>
             </button>
             <div class="vsl-bn-faq__panel" id="bn-faq-panel-9" role="region" aria-labelledby="bn-faq-btn-9" hidden>
-              <p class="vsl-bn-faq__answer">We offer students, service members, and teachers discounts (20% off) available in store only. We also have Eat &amp; Race bundles for 2 drivers (simply purchase additional bundles for larger groups). Lastly, we also offer event packages, to learn more about hosting a large group or event at Velocity, visit our <a href="https://velocitysimlounge.com/group-events/" target="_blank" rel="noopener noreferrer">Group Events page</a>.</p>
+              <p class="vsl-bn-faq__answer">We offer students, service members, and teachers discounts (20% off) available in store only. For larger groups we offer Party Packs (see the Party Packs tab) and custom event packages. To learn more about hosting a large group or event at Velocity, visit our <a href="https://velocitysimlounge.com/group-events/" target="_blank" rel="noopener noreferrer">Group Events page</a>.</p>
             </div>
           </li>
         </ul>
@@ -2737,7 +2734,7 @@
     var reduceMotionForTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function panelTabCards(panel) {
-      var nl = panel.querySelectorAll('.vsl-bn-card-grid .vsl-bn-card, .vsl-bn-spring-grid .vsl-bn-card');
+      var nl = panel.querySelectorAll('.vsl-bn-card-grid .vsl-bn-card');
       return nl.length ? Array.prototype.slice.call(nl) : Array.prototype.slice.call(panel.querySelectorAll('.vsl-bn-card'));
     }
 
@@ -2784,7 +2781,7 @@
           p.style.pointerEvents = 'none';
         }
       });
-      var grids = root.querySelectorAll('.vsl-bn-card-grid, .vsl-bn-spring-grid');
+      var grids = root.querySelectorAll('.vsl-bn-card-grid');
       grids.forEach(function(grid) {
         var cards = grid.querySelectorAll('.vsl-bn-card');
         var maxH = 0;
