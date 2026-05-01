@@ -25,6 +25,35 @@
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/menu-1024x683.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/event_staff-1024x683.webp" fetchpriority="low">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   .vsl-semiprivate {
     --red:      #D22026;
     --magenta:  #EE265F;

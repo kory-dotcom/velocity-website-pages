@@ -3,6 +3,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   /* ═══════════════════════════════════════════════
      Velocity Promotions — VSM 1.0.0
      ═══════════════════════════════════════════════ */
@@ -29,9 +58,9 @@
     --vsl-bleed-top: 0px;
     --vsl-bleed-bottom: 0px;
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
     /* Hero <img> framing: horizontal %, vertical % (object-position; tweak here to pan) */
-    --vsl-hero-photo-position: 48% 52%;
+    --vsl-hero-photo-position: 48% 60%;
 
     font-family: var(--font-body);
     color: var(--navy);
@@ -145,8 +174,8 @@
     overflow: clip;
     isolation: isolate;
     width: 100%;
-    min-height: 70vh;
-    min-height: 70svh;
+    min-height: 70vh !important;
+    min-height: 70svh !important;
     background-color: var(--navy);
     color: var(--circuit-white);
   }
@@ -163,11 +192,13 @@
     display: block;
     width: 100%;
     height: 100%;
+    min-height: 100% !important;
     object-fit: cover;
     object-position: var(--vsl-hero-photo-position) !important;
     pointer-events: none;
     transform: scale(1.1);
-    transform-origin: center center;
+    /* Pin zoom slightly above center so faces read closer to replica framing */
+    transform-origin: 48% 42%;
   }
   .vsl-promo-hero::before {
     content: '';
@@ -562,7 +593,12 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
     line-height: 1.2;
-    color: var(--navy);
+    /* Elementor often sets h3 to white / gradient text — force legible on white cards */
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
+    background: none !important;
+    background-clip: border-box !important;
+    -webkit-background-clip: border-box !important;
     flex-shrink: 0;
     min-height: 2.5em;
     display: flex;
@@ -577,7 +613,8 @@
     font-size: clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
     font-weight: 400;
     line-height: 1.6;
-    color: var(--slate-violet);
+    color: #5F5782 !important;
+    -webkit-text-fill-color: #5F5782 !important;
     flex: 0 0 auto;
     min-height: min-content;
   }
@@ -690,7 +727,10 @@
     flex: 0 1 clamp(340px, 52vw, 640px);
     width: 100%;
     max-width: min(640px, 100%);
-    position: relative;
+    position: relative !important;
+    display: grid !important;
+    grid-template: 1fr / 1fr;
+    place-items: stretch stretch;
     border-radius: 16px;
     overflow: clip;
     border: 2px solid rgba(255, 255, 255, 0.38);
@@ -719,13 +759,19 @@
     }
   }
   .vsl-promo-ladies__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    /* Grid cell fill — resists Elementor/img defaults that leave a band under the photo */
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-self: stretch !important;
+    justify-self: stretch !important;
+    object-fit: cover !important;
     object-position: center 38%;
-    display: block;
+    vertical-align: top;
     transition: transform 0.45s ease;
     transform-origin: center center;
   }
@@ -1197,7 +1243,11 @@
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: var(--navy);
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
+    background: none !important;
+    background-clip: border-box !important;
+    -webkit-background-clip: border-box !important;
     line-height: 1.2;
     flex: 1;
     min-width: 0;
@@ -1210,7 +1260,8 @@
     border-top: 1px solid rgba(16, 24, 43, 0.07);
     font-size: clamp(0.95rem, 0.88rem + 0.28vw, 1.05rem);
     line-height: 1.62;
-    color: var(--slate-violet);
+    color: #5F5782 !important;
+    -webkit-text-fill-color: #5F5782 !important;
   }
 
   /* ── EXPLORE / CROSS-LINKS SECTION (deep-indigo band) ── */
@@ -1237,12 +1288,15 @@
     align-items: start;
   }
   .vsl-promo-crosslink {
-    position: relative;
+    position: relative !important;
+    isolation: isolate;
     border-radius: 18px;
     overflow: clip;
     aspect-ratio: 4 / 3;
-    display: flex;
-    align-items: flex-end;
+    /* Grid stacks image + overlay + copy in one cell — avoids flex + only-in-flow-body quirks w/ Elementor */
+    display: grid !important;
+    grid-template: 1fr / 1fr;
+    place-items: stretch;
     text-decoration: none;
     color: #fff;
     box-shadow: 0 12px 36px rgba(0,0,0,0.32), 0 4px 12px rgba(0,0,0,0.18);
@@ -1258,21 +1312,32 @@
     }
   }
   .vsl-promo-crosslink__img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    grid-area: 1 / 1;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-self: stretch !important;
+    justify-self: stretch !important;
+    object-fit: cover !important;
+    object-position: center center;
+    display: block !important;
     transition: transform 0.45s ease;
+    z-index: 0;
   }
   .vsl-promo-crosslink__overlay {
-    position: absolute;
-    inset: 0;
+    grid-area: 1 / 1;
+    align-self: stretch;
+    justify-self: stretch;
     background: linear-gradient(180deg, transparent 30%, rgba(16,24,43,0.85) 100%);
     z-index: 1;
+    pointer-events: none;
   }
   .vsl-promo-crosslink__body {
+    grid-area: 1 / 1;
+    align-self: end;
+    justify-self: stretch;
     position: relative;
     z-index: 2;
     padding: clamp(20px, 3vw, 32px);
@@ -1290,7 +1355,21 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     line-height: 1.15;
-    color: #fff;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: none !important;
+    text-shadow:
+      0 0 22px rgba(238, 38, 95, 0.45),
+      0 2px 14px rgba(0, 0, 0, 0.45);
+  }
+  .vsl-promo-crosslink__name::after {
+    content: '';
+    display: block;
+    width: 2.75rem;
+    height: 3px;
+    margin-top: 0.4rem;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #EE265F 0%, rgba(238, 38, 95, 0.15) 100%);
   }
   .vsl-promo-crosslink__tag {
     font-size: 0.82rem;
@@ -1299,10 +1378,11 @@
     letter-spacing: 0.02em;
   }
   .vsl-promo-crosslink__arrow {
-    position: absolute;
-    top: clamp(16px, 2.5vw, 24px);
-    right: clamp(16px, 2.5vw, 24px);
+    grid-area: 1 / 1;
+    align-self: start;
+    justify-self: end;
     z-index: 2;
+    margin: clamp(16px, 2.5vw, 24px);
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -1312,6 +1392,7 @@
     align-items: center;
     justify-content: center;
     transition: background 0.2s ease;
+    pointer-events: none;
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-promo-crosslink:hover .vsl-promo-crosslink__arrow {
@@ -1472,7 +1553,7 @@
   }
 </style>
 
-<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 52%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkBundles":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
+<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 60%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkBundles":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
   <main>
 
     <!-- ▸ Hero -->

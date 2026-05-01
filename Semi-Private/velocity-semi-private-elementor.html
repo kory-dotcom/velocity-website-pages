@@ -22,6 +22,53 @@
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/menu-1024x683.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/event_staff-1024x683.webp" fetchpriority="low">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="btn"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="-card"],
+  .elementor-widget-container a.vsl-sp-btn,
+  .elementor-widget-container a.vsl-sp-usecase {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-container a.vsl-sp-btn:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-container a.vsl-sp-usecase:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  /* What's Included: Elementor / Kit globals often set h3 { color: inherit !important } on dark pages.
+     Section uses light text; cards are white — inherited white on white made titles invisible. */
+  .elementor .vsl-sp-included .vsl-sp-card__label,
+  .elementor-widget-html .vsl-sp-included .vsl-sp-card__label {
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
+  }
+
   .vsl-semiprivate {
     --red:      #D22026;
     --magenta:  #EE265F;
@@ -110,17 +157,6 @@
     object-position: center 70%;
     display: block;
   }
-  .vsl-sp-hero__bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(16, 24, 40, 0.52) 0%,
-      rgba(16, 24, 40, 0.78) 55%,
-      rgba(16, 24, 40, 0.94) 100%
-    );
-  }
   .vsl-sp-hero__inner {
     position: relative;
     z-index: 2;
@@ -183,7 +219,8 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-align: center;
-    text-decoration: none;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
     cursor: pointer;
     border-radius: 8px;
     transition:
@@ -209,6 +246,17 @@
     filter: brightness(0.93);
     transform: scale(0.98);
     box-shadow: 0 3px 14px rgba(238, 38, 95, 0.25);
+  }
+  /* WP / Elementor themes often force link underlines — beat them on every state */
+  .vsl-semiprivate a.vsl-sp-btn,
+  .vsl-semiprivate a.vsl-sp-btn:link,
+  .vsl-semiprivate a.vsl-sp-btn:visited,
+  .vsl-semiprivate a.vsl-sp-btn:hover,
+  .vsl-semiprivate a.vsl-sp-btn:focus,
+  .vsl-semiprivate a.vsl-sp-btn:focus-visible,
+  .vsl-semiprivate a.vsl-sp-btn:active {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
   }
   .vsl-sp-btn--outline {
     color: var(--magenta) !important;
@@ -415,7 +463,8 @@
     overflow: hidden;
     isolation: isolate;
     text-align: left;
-    text-decoration: none;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
     color: inherit;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
@@ -427,6 +476,16 @@
   .vsl-sp-usecase:focus-visible {
     outline: 2px solid var(--yellow);
     outline-offset: 4px;
+  }
+  .vsl-semiprivate a.vsl-sp-usecase,
+  .vsl-semiprivate a.vsl-sp-usecase:link,
+  .vsl-semiprivate a.vsl-sp-usecase:visited,
+  .vsl-semiprivate a.vsl-sp-usecase:hover,
+  .vsl-semiprivate a.vsl-sp-usecase:focus,
+  .vsl-semiprivate a.vsl-sp-usecase:focus-visible,
+  .vsl-semiprivate a.vsl-sp-usecase:active {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
   }
   /* Top accent bar — slides in on hover */
   .vsl-sp-usecase::before {
@@ -607,7 +666,11 @@
     transform: translate3d(0, 0, 0);
     will-change: transform;
     backface-visibility: hidden;
-    contain: layout paint;
+    /* Inherit light text from .vsl-sp-included — WP/Elementor often forces h3 { color: inherit !important }
+       which makes labels white-on-white. Reset card chrome to dark body text. */
+    color: var(--navy);
+    isolation: isolate;
+    contain: layout;
   }
   /* Hover shadow lives on a pseudo-element and animates opacity only.
      Avoids costly box-shadow blur animation that caused paint lag. */
@@ -615,6 +678,7 @@
     content: '';
     position: absolute;
     inset: 0;
+    z-index: 0;
     border-radius: inherit;
     box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48), 0 8px 18px rgba(0, 0, 0, 0.26);
     opacity: 0;
@@ -634,6 +698,7 @@
   }
   .vsl-sp-card__media {
     position: relative;
+    z-index: 1;
     overflow: hidden;
     margin: 0;
     border-radius: 16px 16px 0 0;
@@ -654,6 +719,8 @@
     object-position: 68% 50%;
   }
   .vsl-sp-card__accent {
+    position: relative;
+    z-index: 1;
     height: 5px;
     width: 100%;
   }
@@ -662,6 +729,8 @@
   .vsl-sp-included__grid .vsl-sp-card:nth-child(3) .vsl-sp-card__accent { background: var(--yellow); }
   .vsl-sp-included__grid .vsl-sp-card:nth-child(4) .vsl-sp-card__accent { background: var(--magenta); }
   .vsl-sp-card__body {
+    position: relative;
+    z-index: 1;
     padding: 23px 23px 29px;
   }
   .vsl-sp-card__label {
@@ -673,7 +742,11 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     line-height: 1.25;
-    color: var(--navy);
+    /* Beat Elementor global heading / inherit rules — was invisible (white on white) on WP */
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   @media (max-width: 900px) {

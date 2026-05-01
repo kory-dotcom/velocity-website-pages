@@ -21,6 +21,55 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  /* Inner spans (Elementor sometimes wraps label text) */
+  .elementor-widget-html a[class*="vsl-"][class*="btn"] span,
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"] span {
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+
     .vsl-buyout {
       --red:      #D22026;
       --magenta:  #EE265F;
@@ -184,7 +233,10 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-align: center;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       cursor: pointer;
@@ -463,6 +515,7 @@
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
       text-align: left;
+      color: var(--navy);
     }
     @media (hover: hover) and (pointer: fine) {
       .vsl-bo-included-card:hover {
@@ -494,6 +547,7 @@
     .vsl-bo-included__grid .vsl-bo-included-card:nth-child(4) .vsl-bo-included-card__accent { background: var(--magenta); }
     .vsl-bo-included-card__body {
       padding: 18px 18px 22px;
+      color: var(--navy);
     }
     .vsl-bo-included-card__label {
       margin: 0;
@@ -504,7 +558,8 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       line-height: 1.25;
-      color: var(--navy);
+      color: var(--navy) !important;
+      -webkit-text-fill-color: var(--navy) !important;
     }
     @media (max-width: 900px) {
       .vsl-bo-included__grid { grid-template-columns: repeat(2, 1fr); }
@@ -724,7 +779,10 @@
       font-style: italic;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       cursor: pointer;
@@ -758,7 +816,10 @@
       font-style: italic;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: var(--circuit-white) !important;
       -webkit-text-fill-color: var(--circuit-white) !important;
       cursor: pointer;
@@ -805,6 +866,36 @@
 
     @media (prefers-reduced-motion: no-preference) {
       .vsl-buyout { scroll-behavior: smooth; }
+    }
+
+    /* Elementor / theme link styles often underline <a>; force CTAs clean */
+    .vsl-buyout a[data-vsl-link],
+    .vsl-buyout a.vsl-bo-hero__cta,
+    .vsl-buyout a.vsl-bo-btn--primary,
+    .vsl-buyout a.vsl-bo-btn--secondary {
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      text-underline-offset: 0 !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+    }
+    .vsl-buyout a[data-vsl-link]:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-hero__cta:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-btn--primary:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-btn--secondary:is(:hover, :focus, :focus-visible, :visited, :active) {
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+    }
+    .vsl-buyout a[data-vsl-link] span,
+    .vsl-buyout a.vsl-bo-hero__cta span,
+    .vsl-buyout a.vsl-bo-btn--primary span,
+    .vsl-buyout a.vsl-bo-btn--secondary span {
+      text-decoration: none !important;
+      border-bottom: none !important;
     }
 </style>
 

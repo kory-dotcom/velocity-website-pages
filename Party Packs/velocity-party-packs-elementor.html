@@ -3,6 +3,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   /* ═══════════════════════════════════════════════
      Velocity Party Packs Landing — VSM 2.0.0
      Scoped to .vsl-partypack
@@ -86,6 +115,7 @@
   .elementor-column-wrap:has(.vsl-partypack),
   .elementor-widget-wrap:has(.vsl-partypack),
   .elementor-widget:has(.vsl-partypack) {
+    flex-shrink: 0 !important;
     padding: 0 !important;
     padding-top: 0 !important;
     padding-left: 0 !important;
@@ -104,6 +134,7 @@
   .e-con-inner:has(.vsl-partypack),
   .e-con-inner > .elementor-widget:has(.vsl-partypack),
   .elementor-element:has(> .elementor-widget-container > .vsl-partypack) {
+    flex-shrink: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
     padding-top: 0 !important;
@@ -248,15 +279,17 @@
     box-shadow: 0 6px 22px rgba(238,38,95,0.26);
   }
 
-  /* ── HERO ── */
+  /* ── HERO (background wrapper pattern from Parties & Events: decouples bg media
+       from the hero's flex context so it always fills the rendered box, even
+       when sibling Elementor sections reflow at breakpoints) ── */
   .vsl-pp-hero {
     position: relative;
     display: flex;
     flex-direction: column;
-    overflow-x: clip;
-    overflow-y: visible;
+    overflow: hidden;
     isolation: isolate;
     width: 100%;
+    box-sizing: border-box;
     min-height: max(420px, 58vh);
     min-height: max(420px, 58svh);
     background:
@@ -267,35 +300,38 @@
     background: linear-gradient(180deg, #0c1020 0%, var(--navy) 38%, #0d1322 100%);
   }
   .vsl-pp-hero--hero-bg-vimeo::before { opacity: 0.72; }
-  .vsl-pp-hero__video,
-  .vsl-pp-hero__banner-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 65%;
-    z-index: 0;
-    pointer-events: none;
-    display: none;
-    filter: brightness(0.72) contrast(1.05);
-  }
-  .vsl-pp-hero--has-video .vsl-pp-hero__video { display: block; }
-  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__video { display: none; }
-  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__banner-img { display: block; }
-  .vsl-pp-hero__vimeo {
+  .vsl-pp-hero__bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
+  }
+  .vsl-pp-hero__bg .vsl-pp-hero__video,
+  .vsl-pp-hero__bg .vsl-pp-hero__banner-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
     display: none;
     filter: brightness(0.72) contrast(1.05);
   }
-  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__vimeo { display: block; }
-  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__video,
-  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__banner-img { display: none !important; }
-  .vsl-pp-hero__vimeo iframe {
+  .vsl-pp-hero--has-video .vsl-pp-hero__bg .vsl-pp-hero__video { display: block; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__bg .vsl-pp-hero__video { display: none; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-image .vsl-pp-hero__bg .vsl-pp-hero__banner-img { display: block; }
+  .vsl-pp-hero__bg .vsl-pp-hero__vimeo {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    display: none;
+    filter: brightness(0.72) contrast(1.05);
+  }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__bg .vsl-pp-hero__vimeo { display: block; }
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__bg .vsl-pp-hero__video,
+  .vsl-pp-hero--has-video.vsl-pp-hero--hero-bg-vimeo .vsl-pp-hero__bg .vsl-pp-hero__banner-img { display: none !important; }
+  .vsl-pp-hero__bg .vsl-pp-hero__vimeo iframe {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -366,14 +402,15 @@
   .vsl-pp-hero__inner {
     position: relative;
     z-index: 3;
-    flex: 1 0 auto;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: safe center;
+    justify-content: center;
     text-align: center;
-    min-height: min-content;
-    padding: clamp(24px, 4vh, 48px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 6vh, 64px);
+    min-height: 0;
+    box-sizing: border-box;
+    padding: clamp(48px, 10vw, 96px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
     max-width: 52rem;
     margin: 0 auto;
     width: 100%;
@@ -1081,7 +1118,7 @@
       max-width: 320px;
     }
     .vsl-pp-hero__inner {
-      padding: clamp(44px, 12vw, 80px) clamp(16px, 5vw, var(--page-margin)) clamp(24px, 6vw, 40px);
+      padding: clamp(56px, 14vw, 112px) clamp(16px, 5vw, var(--page-margin)) clamp(20px, 5vw, 32px);
     }
     .vsl-pp-occasions-grid {
       grid-template-columns: 1fr;
@@ -1103,6 +1140,182 @@
     .vsl-pp-pack-card__body { padding: 18px 20px 22px; }
     .vsl-pp-pack-card__name {
       font-size: clamp(1.2rem, 3.8vw + 0.75rem, 1.4rem);
+    }
+  }
+
+  /* ── Roverd booking modal (iframe) — tokens on #id so styles work when modal is moved to <body> ── */
+  #vsl-pp-book-modal.vsl-pp-book-modal {
+    --bn-c0: #10182B;
+    --bn-c2: #EE265F;
+    --bn-c4: #FDC70C;
+    --bn-f0: 'Khand', system-ui, sans-serif;
+    --bn-f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 3vw, 40px);
+    font-family: var(--bn-f1);
+    box-sizing: border-box;
+  }
+  #vsl-pp-book-modal.vsl-pp-book-modal[aria-hidden="false"] {
+    display: flex;
+    isolation: isolate;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(16, 24, 43, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: vsl-pp-modal-fadeIn 0.25s ease;
+    cursor: pointer;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__window {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    width: 100%;
+    max-width: 860px;
+    height: min(88vh, 720px);
+    min-height: 0;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    animation: vsl-pp-modal-slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--bn-c0);
+    color: #fff;
+    flex-shrink: 0;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__title {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--bn-f0);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 0;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.14s ease;
+    font-size: 22px !important;
+    font-weight: 300;
+    line-height: 1;
+    font-family: Arial, sans-serif;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:hover {
+    background: var(--bn-c2) !important;
+    border-color: var(--bn-c2) !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    transform: scale(1.08);
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:active {
+    transform: scale(0.95);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:focus-visible {
+    outline: 3px solid var(--bn-c4);
+    outline-offset: 2px;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__body {
+    flex: 1;
+    position: relative;
+    background: #f5f5f5;
+    min-height: 0;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__loader[data-loaded="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(16, 24, 43, 0.1);
+    border-top-color: var(--bn-c2);
+    border-radius: 50%;
+    animation: vsl-pp-modal-spin 0.7s linear infinite;
+  }
+  @keyframes vsl-pp-modal-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes vsl-pp-modal-slideUp {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes vsl-pp-modal-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 639px) {
+    #vsl-pp-book-modal.vsl-pp-book-modal {
+      padding: 0;
+    }
+    #vsl-pp-book-modal .vsl-pp-book-modal__window {
+      max-width: 100%;
+      height: 100%;
+      border-radius: 0;
+      max-height: 100vh;
     }
   }
 
@@ -1130,9 +1343,11 @@
 
     <!-- ▸ Hero -->
     <section class="vsl-pp-hero" id="pp-hero" aria-labelledby="pp-hero-title">
-      <div class="vsl-pp-hero__vimeo" data-vsl-pp-vimeo hidden aria-hidden="true"></div>
-      <video class="vsl-pp-hero__video" data-vsl-pp-video autoplay muted loop playsinline aria-hidden="true"></video>
-      <img class="vsl-pp-hero__banner-img" data-vsl-pp-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      <div class="vsl-pp-hero__bg" aria-hidden="true">
+        <div class="vsl-pp-hero__vimeo" data-vsl-pp-vimeo hidden aria-hidden="true"></div>
+        <video class="vsl-pp-hero__video" data-vsl-pp-video autoplay muted loop playsinline aria-hidden="true"></video>
+        <img class="vsl-pp-hero__banner-img" data-vsl-pp-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      </div>
       <div class="vsl-pp-hero__rings" aria-hidden="true">
         <span></span><span></span><span></span>
       </div>
@@ -1230,7 +1445,7 @@
                 <li>Dedicated Event Captain</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19" target="_blank" rel="noopener noreferrer">Book Now</a>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19">Book Now</a>
             </div>
           </article>
 
@@ -1254,7 +1469,7 @@
                 <li>Dedicated Event Captain</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24" target="_blank" rel="noopener noreferrer">Book Now</a>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24">Book Now</a>
             </div>
           </article>
 
@@ -1329,11 +1544,48 @@
       </div>
     </section>
 
+    <!-- Roverd booking (iframe modal) -->
+    <div class="vsl-pp-book-modal" id="vsl-pp-book-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vsl-pp-book-modal-title">
+      <div class="vsl-pp-book-modal__backdrop" data-vsl-pp-bm-close></div>
+      <div class="vsl-pp-book-modal__window">
+        <div class="vsl-pp-book-modal__header">
+          <span class="vsl-pp-book-modal__title" id="vsl-pp-book-modal-title">Book Now</span>
+          <button type="button" class="vsl-pp-book-modal__close" data-vsl-pp-bm-close aria-label="Close booking window">&times;</button>
+        </div>
+        <div class="vsl-pp-book-modal__body">
+          <div class="vsl-pp-book-modal__loader" id="vsl-pp-book-modal-loader">
+            <div class="vsl-pp-book-modal__spinner"></div>
+          </div>
+          <iframe class="vsl-pp-book-modal__iframe" id="vsl-pp-book-modal-iframe" title="Booking page"></iframe>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
 <script>
 (function(){
+  /* Close booking modal first (capture on window) so theme/Elementor handlers can't swallow the interaction */
+  window.addEventListener(
+    'pointerdown',
+    function vslPPBookModalCloseWinCapture(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      var m = document.getElementById('vsl-pp-book-modal');
+      if (!m || m.getAttribute('aria-hidden') !== 'false') return;
+      var t = e.target;
+      if (t && t.nodeType === 3) t = t.parentElement;
+      if (!t || typeof t.closest !== 'function') return;
+      var hit = t.closest('[data-vsl-pp-bm-close]');
+      if (!hit || !m.contains(hit)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      closePPBookModal();
+    },
+    true
+  );
+
   function fixAncestorScrollTraps(root) {
     var el = root.parentElement;
     while (el && el !== document.documentElement) {
@@ -1346,6 +1598,102 @@
       }
       el = el.parentElement;
     }
+  }
+
+  function vslPPIsRoverdBookingUrl(href) {
+    if (!href || href.charAt(0) === '#') return false;
+    try {
+      var u = new URL(href, window.location.href);
+      return u.hostname === 'book.velocitysimlounge.com';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function vslPPResolveCtaHref(cta, root) {
+    if (!cta || !root) return cta ? cta.getAttribute('href') : null;
+    var key = cta.getAttribute('data-vsl-pp-link');
+    if (!key) return cta.getAttribute('href');
+    try {
+      var cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}');
+      var lk = (cfg.links || {})[key];
+      if (lk) return lk;
+    } catch (e) {}
+    return cta.getAttribute('href');
+  }
+
+  var vslPPLastBookingFocus = null;
+
+  function openPPBookModal(url, title) {
+    var modal = document.getElementById('vsl-pp-book-modal');
+    var iframe = document.getElementById('vsl-pp-book-modal-iframe');
+    var loader = document.getElementById('vsl-pp-book-modal-loader');
+    var titleEl = document.getElementById('vsl-pp-book-modal-title');
+    if (!modal || !iframe) return;
+    if (modal.parentNode !== document.body) {
+      document.body.appendChild(modal);
+    }
+    vslPPLastBookingFocus = document.activeElement;
+    if (titleEl) titleEl.textContent = title || 'Book Now';
+    if (loader) loader.removeAttribute('data-loaded');
+    iframe.src = url;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    iframe.onload = function () {
+      if (loader) loader.setAttribute('data-loaded', 'true');
+    };
+    setTimeout(function () {
+      var btn = modal.querySelector('.vsl-pp-book-modal__close');
+      if (btn) btn.focus();
+    }, 80);
+  }
+
+  function closePPBookModal() {
+    var modal = document.getElementById('vsl-pp-book-modal');
+    var iframe = document.getElementById('vsl-pp-book-modal-iframe');
+    if (!modal || !iframe) return;
+    modal.setAttribute('aria-hidden', 'true');
+    iframe.src = 'about:blank';
+    document.body.style.overflow = '';
+    if (vslPPLastBookingFocus) {
+      try { vslPPLastBookingFocus.focus(); } catch (e1) {}
+    }
+  }
+
+  function vslPPBookingModalTitle(a) {
+    if (!a) return 'Book Now';
+    var card = a.closest ? a.closest('.vsl-pp-pack-card') : null;
+    var nameEl = card && card.querySelector ? card.querySelector('.vsl-pp-pack-card__name') : null;
+    if (nameEl && nameEl.textContent.trim()) return nameEl.textContent.trim();
+    var key = a.getAttribute('data-vsl-pp-link');
+    var map = { racerPack: 'Racer Pack', proPack: 'Pro Pack' };
+    if (key && map[key]) return map[key];
+    return (a.textContent || '').trim() || 'Book Now';
+  }
+
+  if (!window.__vslPPBookingModalBound) {
+    window.__vslPPBookingModalBound = true;
+    document.addEventListener('click', function vslPPBookingLinkCapture(e) {
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target && e.target.closest ? e.target.closest('a[data-vsl-pp-link]') : null;
+      if (!a) return;
+      var pack = document.querySelector('.vsl-partypack');
+      if (!pack || !pack.contains(a)) return;
+      var href = vslPPResolveCtaHref(a, pack);
+      if (!vslPPIsRoverdBookingUrl(href)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openPPBookModal(href, vslPPBookingModalTitle(a));
+    }, true);
+
+    document.addEventListener('keydown', function vslPPBookingEscGlobal(e) {
+      if (e.key !== 'Escape') return;
+      var modal = document.getElementById('vsl-pp-book-modal');
+      if (!modal || modal.getAttribute('aria-hidden') !== 'false') return;
+      closePPBookModal();
+    });
   }
 
   function vslPPInit() {
@@ -1452,7 +1800,11 @@
       if (key && links[key]) {
         var href = links[key];
         a.setAttribute('href', href);
-        if (/^https?:\/\//i.test(href)) {
+        if (vslPPIsRoverdBookingUrl(href)) {
+          a.removeAttribute('target');
+          a.removeAttribute('rel');
+          a.setAttribute('data-elementor-open-lightbox', 'no');
+        } else if (/^https?:\/\//i.test(href)) {
           a.setAttribute('target', '_blank');
           a.setAttribute('rel', 'noopener noreferrer');
         }
@@ -1473,11 +1825,14 @@
       card.addEventListener('click', function(e) {
         if (e.target.closest('a')) return;
         var cta = card.querySelector('.vsl-pp-pack-card__cta');
-        if (cta) {
-          var href = cta.getAttribute('href');
-          if (href) {
-            window.open(href, cta.getAttribute('target') || '_self');
-          }
+        if (!cta) return;
+        var href = vslPPResolveCtaHref(cta, root);
+        if (!href) return;
+        if (vslPPIsRoverdBookingUrl(href)) {
+          var nameEl = card.querySelector('.vsl-pp-pack-card__name');
+          openPPBookModal(href, nameEl ? nameEl.textContent.trim() : 'Book Now');
+        } else {
+          window.open(href, cta.getAttribute('target') || '_self');
         }
       });
 

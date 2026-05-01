@@ -21,6 +21,55 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-thickness: 0 !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  /* Inner spans (Elementor sometimes wraps label text) */
+  .elementor-widget-html a[class*="vsl-"][class*="btn"] span,
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"] span {
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+
     .vsl-buyout {
       --red:      #D22026;
       --magenta:  #EE265F;
@@ -43,12 +92,11 @@
       --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
       --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
       --vsl-text-card-label: clamp(1.0625rem, 0.88rem + 1.05vw, 1.25rem);
-      --vsl-text-faq-label: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
       --vsl-outdent: 0px;
       --vsl-hero-bleed-top: -12px;
       --vsl-hero-bleed-bottom: -12px;
       --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-      --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+      --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
 
       font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
       color: var(--navy);
@@ -185,13 +233,16 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-align: center;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background: var(--magenta);
+      background: linear-gradient(135deg, var(--red), var(--magenta));
       box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
       transition:
         box-shadow 0.22s ease,
@@ -464,6 +515,7 @@
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
       text-align: left;
+      color: var(--navy);
     }
     @media (hover: hover) and (pointer: fine) {
       .vsl-bo-included-card:hover {
@@ -495,6 +547,7 @@
     .vsl-bo-included__grid .vsl-bo-included-card:nth-child(4) .vsl-bo-included-card__accent { background: var(--magenta); }
     .vsl-bo-included-card__body {
       padding: 18px 18px 22px;
+      color: var(--navy);
     }
     .vsl-bo-included-card__label {
       margin: 0;
@@ -505,7 +558,8 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       line-height: 1.25;
-      color: var(--navy);
+      color: var(--navy) !important;
+      -webkit-text-fill-color: var(--navy) !important;
     }
     @media (max-width: 900px) {
       .vsl-bo-included__grid { grid-template-columns: repeat(2, 1fr); }
@@ -590,26 +644,17 @@
       width: clamp(64px, 9vw, 84px);
       height: clamp(64px, 9vw, 84px);
       box-sizing: border-box;
+      flex-shrink: 0;
       display: grid;
       place-items: center;
       padding: clamp(6px, 1vw, 10px);
-      line-height: 0;
       border-radius: 14px;
       background: rgba(0, 0, 0, 0.32);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      flex-shrink: 0;
+      color: rgba(234, 234, 234, 0.95);
     }
-    .vsl-bo-enhance-card__icon img {
-      display: block;
-      width: auto;
-      height: auto;
-      max-width: 82%;
-      max-height: 82%;
-      margin: 0;
-      object-fit: contain;
-      object-position: center center;
-      filter: brightness(0) invert(1);
-      opacity: 0.92;
+    .vsl-bo-enhance-card__icon [stroke] {
+      stroke: currentColor;
     }
     .vsl-bo-enhance-card h3 {
       margin: 0;
@@ -635,125 +680,59 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /* FAQ (Group Events style: navy band + white accordion panel)        */
+    /* FAQ                                                                */
     /* ------------------------------------------------------------------ */
-    .vsl-bo-faq.vsl-bo-section--dark {
-      padding-top: clamp(64px, 10vh, 112px);
-      padding-bottom: clamp(64px, 10vh, 112px);
-    }
-    .vsl-bo-faq__title {
-      margin: 0 auto clamp(1.5rem, 3vh, 2.5rem);
-      font-family: var(--font-display);
-      font-size: var(--vsl-text-section);
-      font-weight: 700;
-      font-style: italic;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      line-height: 1.15;
-      text-align: center;
-      text-wrap: balance;
-      color: var(--circuit-white);
-    }
-    .vsl-bo-faq__title em {
-      font-style: italic;
-      color: var(--magenta);
-    }
     .vsl-bo-faq__list {
-      margin: 0 auto;
-      padding: 0;
-      list-style: none;
-      max-width: min(860px, 100%);
-      border-radius: clamp(16px, 2vw, 22px);
-      overflow: clip;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: #fff;
-      box-shadow:
-        0 12px 36px rgba(0, 0, 0, 0.32),
-        0 4px 12px rgba(0, 0, 0, 0.18);
-      text-align: left;
+      max-width: 720px;
+      margin: 2rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .vsl-bo-faq__item {
-      border-bottom: 1px solid rgba(16, 24, 43, 0.1);
-      background: #fff;
-    }
-    .vsl-bo-faq__item:last-child {
-      border-bottom: none;
+      border-bottom: 1px solid rgba(234, 234, 234, 0.12);
     }
     .vsl-bo-faq__trigger {
       width: 100%;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 16px;
-      padding: 20px 24px;
-      border: none;
-      background: #fff;
-      cursor: pointer;
-      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      padding: 20px 0;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-card-label);
+      font-weight: 600;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--circuit-white);
       text-align: left;
-      color: var(--navy);
-      -webkit-text-fill-color: var(--navy);
-      transition: background-color 0.22s ease;
+      line-height: 1.25;
+      background: none;
+      border: none;
+      cursor: pointer;
       -webkit-appearance: none;
     }
-    .vsl-bo-faq__trigger:hover {
-      background-color: rgba(16, 24, 43, 0.04);
-    }
     .vsl-bo-faq__trigger:focus-visible {
-      outline: 3px solid var(--blue);
+      outline: 2px solid var(--yellow);
       outline-offset: 2px;
+      border-radius: 4px;
     }
-    .vsl-buyout .vsl-bo-faq__trigger {
-      background: #fff !important;
-      background-color: #fff !important;
-      box-shadow: none !important;
-    }
-    .vsl-buyout .vsl-bo-faq__trigger:hover,
-    .vsl-buyout .vsl-bo-faq__trigger:focus {
-      background: rgba(16, 24, 43, 0.04) !important;
-      background-color: rgba(16, 24, 43, 0.04) !important;
-      background-image: none !important;
-    }
-    .vsl-bo-faq__label {
-      flex: 1;
-      min-width: 0;
-      font-size: var(--vsl-text-faq-label);
-      font-weight: 600;
-      font-style: normal;
-      text-transform: none;
-      letter-spacing: 0;
-      line-height: 1.45;
-      color: var(--navy);
-      -webkit-text-fill-color: currentColor !important;
-    }
-    .vsl-bo-faq__chev {
+    .vsl-bo-faq__chevron {
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
-      width: 1.25rem;
-      height: 1.25rem;
-      stroke: var(--slate-violet);
-      stroke-width: 2;
-      fill: none;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.25s ease;
     }
-    .vsl-bo-faq__item.is-open .vsl-bo-faq__chev {
+    .vsl-bo-faq__item[open] .vsl-bo-faq__chevron {
       transform: rotate(180deg);
     }
-    .vsl-bo-faq__panel {
-      padding: 4px 24px 24px;
-      font-size: 1rem;
-      line-height: 1.65;
-      color: var(--slate-violet);
-      background: #fff;
-    }
-    .vsl-bo-faq__panel[hidden] {
-      display: none;
-    }
-    .vsl-bo-faq__item.is-open .vsl-bo-faq__panel {
-      display: block;
-    }
     .vsl-bo-faq__answer {
-      margin: 0;
-      padding-top: 2px;
-      max-width: 65ch;
+      padding: 0 0 20px;
+      font-size: var(--vsl-text-body);
+      line-height: 1.55;
+      color: var(--mist);
+      max-width: 60ch;
     }
 
     /* ------------------------------------------------------------------ */
@@ -800,13 +779,16 @@
       font-style: italic;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background: var(--magenta);
+      background: linear-gradient(135deg, var(--red), var(--magenta));
       box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
       transition: box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease;
     }
@@ -834,7 +816,10 @@
       font-style: italic;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
       color: var(--circuit-white) !important;
       -webkit-text-fill-color: var(--circuit-white) !important;
       cursor: pointer;
@@ -861,8 +846,6 @@
       .vsl-bo-btn--primary:hover,
       .vsl-bo-btn--primary:active { transform: none; }
       .vsl-bo-btn--secondary { transition: border-color 0.22s ease, background 0.22s ease; }
-      .vsl-bo-faq__chev { transition: none; }
-      .vsl-bo-faq__trigger { transition: none; }
     }
 
     /* ------------------------------------------------------------------ */
@@ -883,6 +866,36 @@
 
     @media (prefers-reduced-motion: no-preference) {
       .vsl-buyout { scroll-behavior: smooth; }
+    }
+
+    /* Elementor / theme link styles often underline <a>; force CTAs clean */
+    .vsl-buyout a[data-vsl-link],
+    .vsl-buyout a.vsl-bo-hero__cta,
+    .vsl-buyout a.vsl-bo-btn--primary,
+    .vsl-buyout a.vsl-bo-btn--secondary {
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      text-underline-offset: 0 !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+    }
+    .vsl-buyout a[data-vsl-link]:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-hero__cta:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-btn--primary:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-buyout a.vsl-bo-btn--secondary:is(:hover, :focus, :focus-visible, :visited, :active) {
+      text-decoration: none !important;
+      text-decoration-line: none !important;
+      text-decoration-thickness: 0 !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+    }
+    .vsl-buyout a[data-vsl-link] span,
+    .vsl-buyout a.vsl-bo-hero__cta span,
+    .vsl-buyout a.vsl-bo-btn--primary span,
+    .vsl-buyout a.vsl-bo-btn--secondary span {
+      text-decoration: none !important;
+      border-bottom: none !important;
     }
 </style>
 
@@ -1062,23 +1075,28 @@
         <p class="vsl-bo-section__sub vsl-bo-section__sub--light vsl-bo-section__sub--center">Customize every detail to match your vision and brand.</p>
         <div class="vsl-bo-enhance__grid">
           <div class="vsl-bo-enhance-card">
-            <div class="vsl-bo-enhance-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/unique-upgrades.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="buyout-enhance-branding">
-            </div>
+            <svg class="vsl-bo-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="36" height="36" rx="6" stroke="#293893" stroke-width="2"/>
+              <path d="M14 22h16M22 14v16" stroke="#293893" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="22" cy="22" r="5" stroke="#EE265F" stroke-width="1.5" fill="none"/>
+            </svg>
             <h3>Custom Branding</h3>
             <p>Your logo on the racetrack, on screens, and throughout the venue for a fully branded experience.</p>
           </div>
           <div class="vsl-bo-enhance-card">
-            <div class="vsl-bo-enhance-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/chef-crafted-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="buyout-enhance-food">
-            </div>
+            <svg class="vsl-bo-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <path d="M14 34V18a8 8 0 0116 0v16" stroke="#FDC70C" stroke-width="2" stroke-linecap="round"/>
+              <ellipse cx="22" cy="34" rx="8" ry="3" stroke="#293893" stroke-width="1.5" fill="none"/>
+              <circle cx="22" cy="14" r="3" stroke="#EE265F" stroke-width="1.5" fill="none"/>
+            </svg>
             <h3>Custom Food &amp; Drink</h3>
             <p>Tailored menus, signature cocktails, and premium catering packages designed for your event.</p>
           </div>
           <div class="vsl-bo-enhance-card">
-            <div class="vsl-bo-enhance-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/fun-for-all-skill-levels.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="buyout-enhance-podium">
-            </div>
+            <svg class="vsl-bo-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+              <path d="M22 6l4 8h10l-7 6 3 10-10-6-10 6 3-10-7-6h10l4-8z" stroke="#EE265F" stroke-width="2" stroke-linejoin="round" fill="none"/>
+              <rect x="16" y="32" width="12" height="6" rx="2" stroke="#293893" stroke-width="1.5" fill="none"/>
+            </svg>
             <h3>Trophies &amp; Podium</h3>
             <p>Custom branded trophies and a full podium ceremony to crown your event champions.</p>
           </div>
@@ -1092,56 +1110,52 @@
     <!-- ============================================================== -->
     <!-- FAQ                                                            -->
     <!-- ============================================================== -->
-    <section class="vsl-bo-faq vsl-bo-section--dark" id="buyout-faq" aria-labelledby="bo-faq-heading">
+    <section class="vsl-bo-section--dark" id="buyout-faq" aria-labelledby="bo-faq-heading">
       <div class="vsl-bo-section__inner">
-        <h2 class="vsl-bo-faq__title" id="bo-faq-heading">Frequently Asked <em>Questions</em></h2>
-        <ul class="vsl-bo-faq__list">
-          <li class="vsl-bo-faq__item">
-            <button type="button" class="vsl-bo-faq__trigger" id="vsl-bfaq-btn-1" aria-expanded="false" aria-controls="vsl-bfaq-panel-1">
-              <span class="vsl-bo-faq__label">How many guests can a full buyout accommodate?</span>
-              <svg class="vsl-bo-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="vsl-bo-faq__panel" id="vsl-bfaq-panel-1" role="region" aria-labelledby="vsl-bfaq-btn-1" hidden>
-              <p class="vsl-bo-faq__answer">Our venue accommodates up to 214 guests indoors plus an additional 60 on the outdoor patio, for a total capacity of over 270 guests.</p>
-            </div>
-          </li>
-          <li class="vsl-bo-faq__item">
-            <button type="button" class="vsl-bo-faq__trigger" id="vsl-bfaq-btn-2" aria-expanded="false" aria-controls="vsl-bfaq-panel-2">
-              <span class="vsl-bo-faq__label">How far in advance should I book?</span>
-              <svg class="vsl-bo-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="vsl-bo-faq__panel" id="vsl-bfaq-panel-2" role="region" aria-labelledby="vsl-bfaq-btn-2" hidden>
-              <p class="vsl-bo-faq__answer">We recommend booking at least 4&ndash;6 weeks in advance for full venue buyouts. Popular dates during holidays and weekends fill up quickly, so earlier is always better.</p>
-            </div>
-          </li>
-          <li class="vsl-bo-faq__item">
-            <button type="button" class="vsl-bo-faq__trigger" id="vsl-bfaq-btn-3" aria-expanded="false" aria-controls="vsl-bfaq-panel-3">
-              <span class="vsl-bo-faq__label">Can I bring my own catering or vendors?</span>
-              <svg class="vsl-bo-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="vsl-bo-faq__panel" id="vsl-bfaq-panel-3" role="region" aria-labelledby="vsl-bfaq-btn-3" hidden>
-              <p class="vsl-bo-faq__answer">We handle all food and beverage in-house with our craft kitchen and bar. However, we&rsquo;re happy to work with you on custom menus and can accommodate special dietary requirements. Outside vendors for entertainment or decor can be discussed with your event manager.</p>
-            </div>
-          </li>
-          <li class="vsl-bo-faq__item">
-            <button type="button" class="vsl-bo-faq__trigger" id="vsl-bfaq-btn-4" aria-expanded="false" aria-controls="vsl-bfaq-panel-4">
-              <span class="vsl-bo-faq__label">What&rsquo;s the difference between a buyout and a semi-private event?</span>
-              <svg class="vsl-bo-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="vsl-bo-faq__panel" id="vsl-bfaq-panel-4" role="region" aria-labelledby="vsl-bfaq-btn-4" hidden>
-              <p class="vsl-bo-faq__answer">A full buyout gives you exclusive access to the entire venue &mdash; no other guests will be present. Semi-private events reserve a dedicated section of the venue while other guests may be in different areas.</p>
-            </div>
-          </li>
-          <li class="vsl-bo-faq__item">
-            <button type="button" class="vsl-bo-faq__trigger" id="vsl-bfaq-btn-5" aria-expanded="false" aria-controls="vsl-bfaq-panel-5">
-              <span class="vsl-bo-faq__label">Do you offer AV equipment and presentation capabilities?</span>
-              <svg class="vsl-bo-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="vsl-bo-faq__panel" id="vsl-bfaq-panel-5" role="region" aria-labelledby="vsl-bfaq-btn-5" hidden>
-              <p class="vsl-bo-faq__answer">Yes. Our venue features comprehensive audio and video systems including large-format displays and sound throughout. Your event manager can help coordinate any additional AV requirements.</p>
-            </div>
-          </li>
-        </ul>
+        <h2 class="vsl-bo-section__title vsl-bo-section__title--yellow vsl-bo-section__title--center" id="bo-faq-heading">Frequently Asked Questions</h2>
+        <div class="vsl-bo-faq__list">
+
+          <details class="vsl-bo-faq__item">
+            <summary class="vsl-bo-faq__trigger">
+              How many guests can a full buyout accommodate?
+              <svg class="vsl-bo-faq__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="vsl-bo-faq__answer">Our venue accommodates up to 214 guests indoors plus an additional 60 on the outdoor patio, for a total capacity of over 270 guests.</div>
+          </details>
+
+          <details class="vsl-bo-faq__item">
+            <summary class="vsl-bo-faq__trigger">
+              How far in advance should I book?
+              <svg class="vsl-bo-faq__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="vsl-bo-faq__answer">We recommend booking at least 4&ndash;6 weeks in advance for full venue buyouts. Popular dates during holidays and weekends fill up quickly, so earlier is always better.</div>
+          </details>
+
+          <details class="vsl-bo-faq__item">
+            <summary class="vsl-bo-faq__trigger">
+              Can I bring my own catering or vendors?
+              <svg class="vsl-bo-faq__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="vsl-bo-faq__answer">We handle all food and beverage in-house with our craft kitchen and bar. However, we&rsquo;re happy to work with you on custom menus and can accommodate special dietary requirements. Outside vendors for entertainment or decor can be discussed with your event manager.</div>
+          </details>
+
+          <details class="vsl-bo-faq__item">
+            <summary class="vsl-bo-faq__trigger">
+              What&rsquo;s the difference between a buyout and a semi-private event?
+              <svg class="vsl-bo-faq__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="vsl-bo-faq__answer">A full buyout gives you exclusive access to the entire venue &mdash; no other guests will be present. Semi-private events reserve a dedicated section of the venue while other guests may be in different areas.</div>
+          </details>
+
+          <details class="vsl-bo-faq__item">
+            <summary class="vsl-bo-faq__trigger">
+              Do you offer AV equipment and presentation capabilities?
+              <svg class="vsl-bo-faq__chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
+            <div class="vsl-bo-faq__answer">Yes. Our venue features comprehensive audio and video systems including large-format displays and sound throughout. Your event manager can help coordinate any additional AV requirements.</div>
+          </details>
+
+        </div>
       </div>
     </section>
 
@@ -1185,35 +1199,6 @@
     root.querySelectorAll('img[data-vsl-img]').forEach(function (img) {
       var key = img.getAttribute('data-vsl-img');
       if (key && imgMap[key]) img.src = imgMap[key];
-    });
-
-    /* FAQ accordion (same interaction pattern as Group Events FAQ) */
-    root.querySelectorAll('.vsl-bo-faq__item').forEach(function (item) {
-      var btn = item.querySelector('.vsl-bo-faq__trigger');
-      var panel = item.querySelector('.vsl-bo-faq__panel');
-      if (!btn || !panel) return;
-      btn.addEventListener('click', function () {
-        var willClose = item.classList.contains('is-open');
-        root.querySelectorAll('.vsl-bo-faq__item').forEach(function (other) {
-          if (other === item) return;
-          other.classList.remove('is-open');
-          var ob = other.querySelector('.vsl-bo-faq__trigger');
-          var op = other.querySelector('.vsl-bo-faq__panel');
-          if (ob && op) {
-            ob.setAttribute('aria-expanded', 'false');
-            op.setAttribute('hidden', '');
-          }
-        });
-        if (willClose) {
-          item.classList.remove('is-open');
-          btn.setAttribute('aria-expanded', 'false');
-          panel.setAttribute('hidden', '');
-        } else {
-          item.classList.add('is-open');
-          btn.setAttribute('aria-expanded', 'true');
-          panel.removeAttribute('hidden');
-        }
-      });
     });
   })();
 </script>

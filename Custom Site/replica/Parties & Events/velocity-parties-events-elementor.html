@@ -3,6 +3,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   /* ═══════════════════════════════════════════════
      Velocity Group Events Hub — VSM 1.1.3
      ═══════════════════════════════════════════════ */
@@ -159,56 +188,52 @@
     margin-bottom: 0 !important;
   }
 
-  /* ── HERO ── */
+  /* ── HERO (aligned with Corporate Events hero shell — full-bleed, flex column + finish strip) ── */
   .vsl-events-hero {
     position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    /* Grow with content at any zoom; avoid overflow:clip which hid overflowing text */
-    overflow: visible;
+    background: var(--navy);
+    color: var(--circuit-white);
+    overflow: hidden;
     isolation: isolate;
     width: 100%;
     box-sizing: border-box;
     min-height: max(420px, 58vh);
     min-height: max(420px, 58svh);
-    padding-bottom: var(--vsl-hero-finish-h);
-    background:
-      linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 48%, #0d1322 100%);
-    color: var(--circuit-white);
   }
   .vsl-events-hero--hero-bg-vimeo {
-    background: linear-gradient(180deg, #0c1020 0%, var(--navy) 38%, #0d1322 100%);
+    background: var(--navy);
   }
-  .vsl-events-hero--hero-bg-vimeo::before { opacity: 0.72; }
-  .vsl-events-hero__video,
-  .vsl-events-hero__banner-img {
+
+  .vsl-events-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .vsl-events-hero__bg .vsl-events-hero__video,
+  .vsl-events-hero__bg .vsl-events-hero__banner-img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 65%;
-    z-index: 0;
-    pointer-events: none;
+    object-position: center center;
     display: none;
-    filter: brightness(0.72) contrast(1.05);
+    opacity: 0.85;
   }
-  .vsl-events-hero--has-video .vsl-events-hero__video { display: block; }
-  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__video { display: none; }
-  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__banner-img { display: block; }
-  .vsl-events-hero__vimeo {
+  .vsl-events-hero__bg .vsl-events-hero__vimeo {
     position: absolute;
     inset: 0;
     z-index: 0;
     overflow: clip;
-    pointer-events: none;
     display: none;
-    filter: brightness(0.72) contrast(1.05);
+    opacity: 0.85;
   }
-  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__vimeo { display: block; }
-  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__video,
-  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__banner-img { display: none !important; }
-  .vsl-events-hero__vimeo iframe {
+  .vsl-events-hero__bg .vsl-events-hero__vimeo iframe {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -220,76 +245,36 @@
     transform: translate(-50%, -50%) scale(1.09);
     transform-origin: center center;
   }
-  .vsl-events-hero::before {
+  .vsl-events-hero__bg::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
-      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
-      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%);
+    background: linear-gradient(180deg, rgba(16, 24, 40, 0.2) 0%, rgba(25, 24, 64, 0.5) 100%);
   }
-  .vsl-events-hero::after {
-    content: '';
-    position: absolute;
-    bottom: var(--vsl-hero-finish-h);
-    left: -10%;
-    width: 120%;
-    height: 42%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(8deg, rgba(238,38,95,0.09) 0%, transparent 58%);
-    transform: skewY(-2deg);
-    transform-origin: bottom left;
-  }
-  .vsl-events-hero__rings {
-    position: absolute;
-    inset: -5% -25% 0;
-    z-index: 2;
-    pointer-events: none;
-    overflow: clip;
-  }
-  .vsl-events-hero__rings span {
-    position: absolute;
-    left: 50%;
-    top: 58%;
-    border-radius: 50%;
-    border: 1px solid rgba(234, 234, 234, 0.07);
-    transform: translate(-50%, -50%) rotate(-14deg);
-    aspect-ratio: 2.35 / 1;
-  }
-  .vsl-events-hero__rings span:nth-child(1) {
-    width: min(118vw, 920px);
-    opacity: 1;
-    box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.04);
-  }
-  .vsl-events-hero__rings span:nth-child(2) {
-    width: min(138vw, 1080px);
-    opacity: 0.85;
-    border-color: rgba(41, 56, 147, 0.12);
-  }
-  .vsl-events-hero__rings span:nth-child(3) {
-    width: min(162vw, 1280px);
-    opacity: 0.55;
-    border-color: rgba(253, 199, 12, 0.08);
-  }
+  .vsl-events-hero--has-video .vsl-events-hero__bg .vsl-events-hero__video { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__bg .vsl-events-hero__video { display: none; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__bg .vsl-events-hero__banner-img { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__vimeo { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__video,
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__banner-img { display: none !important; }
+
   .vsl-events-hero__inner {
     position: relative;
-    z-index: 3;
-    flex: 0 0 auto;
+    z-index: 2;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: safe center;
+    justify-content: center;
     text-align: center;
-    min-height: min-content;
-    padding: clamp(24px, 4vh, 48px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 6vh, 64px);
-    max-width: 52rem;
+    padding: clamp(56px, 14vw, 112px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    max-width: 56rem;
     margin: 0 auto;
     width: 100%;
+    box-sizing: border-box;
+    min-height: 0;
   }
   .vsl-events-hero__inner > * {
     position: relative;
@@ -310,44 +295,62 @@
     border: none;
     border-radius: 0;
   }
-  .vsl-events-hero__title {
-    position: relative;
-    display: inline-block;
-    margin: 0 0 0.4em;
-    padding: clamp(8px, 1.2vw, 14px) clamp(10px, 1.4vw, 16px);
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 1rem + 5vw, 3.4rem);
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    line-height: 1.05;
-    letter-spacing: 0.03em;
-    color: #fff;
-    text-align: center;
-    text-wrap: balance;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    -webkit-text-stroke: 0.6px rgba(16, 24, 43, 0.35);
-    background: rgba(4, 7, 18, 0.72);
-    border-radius: 10px;
+  /* Hero type: chip containers + weights — scoped !important beats Elementor / theme resets */
+  .vsl-events-hero .vsl-events-hero__title {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    margin: 0 0 0.65em !important;
+    padding: clamp(12px, 2vw, 18px) clamp(14px, 2.2vw, 22px) !important;
+    box-sizing: border-box !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.75rem, 0.85rem + 4.8vw, 3rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0.04em !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: rgba(4, 7, 18, 0.72) !important;
+    border-radius: 12px !important;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
-  .vsl-events-hero__title-highlight {
-    color: var(--magenta);
+  .vsl-events-hero .vsl-events-hero__title .vsl-events-hero__title-highlight {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
   }
   .vsl-events-hero__title-accent {
     display: block;
     margin-top: 0.08em;
   }
-  .vsl-events-hero__tagline {
-    margin: 0 0 0.75rem;
-    padding: 6px 12px;
-    font-size: clamp(0.95rem, 0.88rem + 0.4vw, 1.125rem);
-    font-weight: 400;
-    line-height: 1.5;
-    color: rgba(234, 234, 234, 0.95);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-    max-width: 42ch;
-    background: rgba(4, 7, 18, 0.68);
-    border-radius: 8px;
+  .vsl-events-hero .vsl-events-hero__tagline {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 42ch !important;
+    margin: 0 auto 1.75rem !important;
+    padding: clamp(10px, 1.8vw, 14px) clamp(14px, 2vw, 20px) !important;
+    box-sizing: border-box !important;
+    font-family: var(--font-body) !important;
+    font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem) !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0.015em !important;
+    text-align: center !important;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    background: rgba(4, 7, 18, 0.68) !important;
+    border-radius: 10px !important;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
   .vsl-events-hero__quote {
     position: relative;
@@ -437,20 +440,55 @@
       background-color: var(--magenta);
     }
   }
+  /* Corporate hero CTA — primary button shape / shadow inside hero only */
+  .vsl-events-hero .vsl-events-btn {
+    padding: 14px 36px;
+    font-family: var(--font-display) !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background-color: var(--magenta) !important;
+    box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
+    transition:
+      box-shadow 0.22s ease,
+      transform 0.14s ease,
+      filter 0.14s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-hero .vsl-events-btn:hover {
+      box-shadow: 0 10px 36px rgba(238, 38, 95, 0.45);
+      transform: translateY(-2px);
+    }
+  }
+  .vsl-events-hero .vsl-events-btn:active {
+    filter: brightness(0.93);
+    transform: scale(0.99);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-events-hero .vsl-events-btn { transition: box-shadow 0.22s ease, filter 0.14s ease; }
+    .vsl-events-hero .vsl-events-btn:hover { transform: none; }
+    .vsl-events-hero .vsl-events-btn:active { transform: none; }
+  }
   .vsl-events-hero__finish {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 4;
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    display: block;
     width: 100%;
     height: var(--vsl-hero-finish-h);
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
     background-color: var(--navy);
     background-image: var(--vsl-hero-finish);
     background-repeat: repeat-x;
-    background-position: center bottom;
+    background-position: center center;
     background-size: auto 100%;
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -1231,8 +1269,6 @@
       min-height: max(320px, 52vh);
       min-height: max(320px, 52svh);
     }
-    .vsl-events-hero__title { font-size: clamp(1.6rem, 1rem + 4vw, 2.4rem); line-height: 1.08; }
-    .vsl-events-hero__tagline { font-size: 0.85rem; margin-bottom: 0.65rem; }
     .vsl-events-hero__quote p { font-size: 0.75rem; }
     .vsl-events-card-grid--4 {
       grid-template-columns: 1fr;
@@ -1294,18 +1330,31 @@
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
   }
+
+  /* Elementor / theme link styles often underline <a>; force CTAs clean */
+  .vsl-events a.vsl-events-btn,
+  .vsl-events a.vsl-events-card__cta,
+  .vsl-events a.vsl-events-cta-buyout__btn {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .vsl-events a.vsl-events-btn:is(:hover, :focus, :focus-visible, :visited, :active),
+  .vsl-events a.vsl-events-card__cta:is(:hover, :focus, :focus-visible, :visited, :active),
+  .vsl-events a.vsl-events-cta-buyout__btn:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
 </style>
 
-<div class="vsl-events" data-vsl-config='{"links":{"corporatePage":"https://velocitysimlounge.com/corporate-events/","corporate":"https://velocitysimracinglounge.tripleseat.com/party_request/45556?_gl=1*hey115*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTUzMzMkajYwJGwwJGgw","corporateInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*uz9f85*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTU2ODQkajYwJGwwJGgw","semiPrivate":"https://velocitysimlounge.com/semi-private/","semiPrivateInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45556?_gl=1*187g161*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5ODk5JGo2MCRsMCRoMA..","partyPacks":"https://velocitysimlounge.com/party-packs/","partyPacksInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45723","buyoutPage":"https://velocitysimlounge.com/buyout/","fullBuyoutInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*7bczdq*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5OTI4JGozMSRsMCRoMA..","partyPackRacer":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","partyPackPro":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","bookNow":"https://velocitysimlounge.com/book-now/","inquire":"https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*uz9f85*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTU2ODQkajYwJGwwJGgw"},"images":{"corporate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp","semiPrivate":"https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg","fullBuyout":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout.jpg","partyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/IMG_8519-2.jpg","elementorColumnOutdentPx":0}'>
+<div class="vsl-events" data-vsl-config='{"links":{"corporatePage":"https://velocitysimlounge.com/corporate-events/","corporate":"https://velocitysimracinglounge.tripleseat.com/party_request/49933?_gl=1*hey115*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTUzMzMkajYwJGwwJGgw","corporateInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/49933?_gl=1*uz9f85*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTU2ODQkajYwJGwwJGgw","semiPrivate":"https://velocitysimlounge.com/semi-private/","semiPrivateInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45556?_gl=1*187g161*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5ODk5JGo2MCRsMCRoMA..","partyPacks":"https://velocitysimlounge.com/party-packs/","partyPacksInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45723","buyoutPage":"https://velocitysimlounge.com/buyout/","fullBuyoutInquiry":"https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*7bczdq*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5OTI4JGozMSRsMCRoMA..","partyPackRacer":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","partyPackPro":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","bookNow":"https://velocitysimlounge.com/book-now/","inquire":"https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*uz9f85*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzU1OTQyNDYkbzUkZzEkdDE3NzU1OTU2ODQkajYwJGwwJGgw"},"images":{"corporate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp","semiPrivate":"https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg","fullBuyout":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout.jpg","partyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/IMG_8519-2.jpg","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
     <section class="vsl-events-hero" id="events-hero" aria-labelledby="events-hero-title">
-      <div class="vsl-events-hero__vimeo" data-vsl-events-vimeo hidden aria-hidden="true"></div>
-      <video class="vsl-events-hero__video" data-vsl-events-video autoplay muted loop playsinline aria-hidden="true"></video>
-      <img class="vsl-events-hero__banner-img" data-vsl-events-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
-      <div class="vsl-events-hero__rings" aria-hidden="true">
-        <span></span><span></span><span></span>
+      <div class="vsl-events-hero__bg" aria-hidden="true">
+        <div class="vsl-events-hero__vimeo" data-vsl-events-vimeo hidden aria-hidden="true"></div>
+        <video class="vsl-events-hero__video" data-vsl-events-video autoplay muted loop playsinline aria-hidden="true"></video>
+        <img class="vsl-events-hero__banner-img" data-vsl-events-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
       </div>
       <div class="vsl-events-hero__inner">
         <h1 class="vsl-events-hero__title" id="events-hero-title">
@@ -1347,7 +1396,7 @@
               <p class="vsl-events-card__meta">Custom packages &bull; A/V available</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="corporate" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556" target="_blank" rel="noopener noreferrer">Inquire</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="corporate" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933">Inquire</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="corporatePage" href="https://velocitysimlounge.com/corporate-events/">Learn more</a>
               </div>
             </div>
@@ -1365,7 +1414,7 @@
               <p class="vsl-events-card__meta">10&ndash;40 guests</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="semiPrivateInquiry" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556?_gl=1*187g161*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5ODk5JGo2MCRsMCRoMA.." target="_blank" rel="noopener noreferrer">Inquire</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="semiPrivateInquiry" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556?_gl=1*187g161*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5ODk5JGo2MCRsMCRoMA..">Inquire</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="semiPrivate" href="https://velocitysimlounge.com/semi-private/">Learn more</a>
               </div>
             </div>
@@ -1383,7 +1432,7 @@
               <p class="vsl-events-card__meta">Up to 274 guests</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="fullBuyoutInquiry" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*7bczdq*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5OTI4JGozMSRsMCRoMA.." target="_blank" rel="noopener noreferrer">Inquire</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="fullBuyoutInquiry" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152?_gl=1*7bczdq*_ga*NTIwMTQ3OTQwLjE3NjE4OTAyNDM.*_ga_JFV914KSEZ*czE3NzYwOTk4MTEkbzE3JGcxJHQxNzc2MDk5OTI4JGozMSRsMCRoMA..">Inquire</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="buyoutPage" href="https://velocitysimlounge.com/buyout/">Learn more</a>
               </div>
             </div>
@@ -1401,7 +1450,7 @@
               <p class="vsl-events-card__meta">Groups of 5&ndash;16</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="partyPackRacer" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19" target="_blank" rel="noopener noreferrer">Book now</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="partyPackRacer" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19">Book now</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="partyPacks" href="https://velocitysimlounge.com/party-packs/">Learn more</a>
               </div>
             </div>
@@ -1541,7 +1590,7 @@
               <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="vsl-events-faq__panel" id="vsl-efaq-panel-5" role="region" aria-labelledby="vsl-efaq-btn-5" hidden>
-              <p class="vsl-events-faq__answer">Yes &mdash; we offer a mobile simulator experience. We transport and set up a full-motion racing simulator at your event with dedicated staff, a live leaderboard, and optional custom branding. <a href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" target="_blank" rel="noopener noreferrer" style="color:var(--blue);text-decoration:underline;">Inquire about mobile sim events</a>.</p>
+              <p class="vsl-events-faq__answer">Yes &mdash; we offer a mobile simulator experience. We transport and set up a full-motion racing simulator at your event with dedicated staff, a live leaderboard, and optional custom branding. <a href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" style="color:var(--blue);text-decoration:underline;">Inquire about mobile sim events</a>.</p>
             </div>
           </li>
         </ul>
@@ -1556,7 +1605,7 @@
           <p>From corporate groups to families, dates, watch parties, and everything in between &mdash; Velocity is the group events <span data-vsl-events-city>Houston</span> destination where everyone can eat, drink, race, and create memories that last.</p>
           <div class="vsl-events-cta__buttons">
             <a class="vsl-events-btn" data-vsl-events-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book now</a>
-            <a class="vsl-events-btn vsl-events-btn--outline" data-vsl-events-link="inquire" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" target="_blank" rel="noopener noreferrer">Inquire today</a>
+            <a class="vsl-events-btn vsl-events-btn--outline" data-vsl-events-link="inquire" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152">Inquire today</a>
           </div>
         </div>
       </div>
@@ -1775,10 +1824,8 @@
       if (key && links[key]) {
         var href = links[key];
         a.setAttribute('href', href);
-        if (/^https?:\/\//i.test(href)) {
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
-        }
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
       }
     });
 
@@ -1913,43 +1960,6 @@
       card.addEventListener('mouseleave', release);
     });
 
-    root.querySelectorAll('.vsl-events-includes-item__icon').forEach(function(icon) {
-      if (icon._vslTiltBound) return;
-      icon._vslTiltBound = true;
-      var ICON_TILT = 8;
-      var iRaf = null;
-      var iTrx = 0, iTry = 0, iTsc = 1;
-      var iCrx = 0, iCry = 0, iCsc = 1;
-      var ILERP = 0.12;
-      function iconAnimate() {
-        iCrx += (iTrx - iCrx) * ILERP;
-        iCry += (iTry - iCry) * ILERP;
-        iCsc += (iTsc - iCsc) * ILERP;
-        icon.style.transform = 'perspective(600px) rotateX(' + iCrx.toFixed(2) + 'deg) rotateY(' + iCry.toFixed(2) + 'deg) scale(' + iCsc.toFixed(4) + ')';
-        if (Math.abs(iTrx - iCrx) > 0.01 || Math.abs(iTry - iCry) > 0.01 || Math.abs(iTsc - iCsc) > 0.0001) {
-          iRaf = requestAnimationFrame(iconAnimate);
-        } else { iRaf = null; }
-      }
-      function iconStart() { if (!iRaf) iRaf = requestAnimationFrame(iconAnimate); }
-      icon.addEventListener('mouseenter', function() {
-        iTsc = 1.06;
-        icon.style.boxShadow = '0 14px 36px rgba(16,24,43,0.18), 0 4px 10px rgba(16,24,43,0.10)';
-        iconStart();
-      });
-      icon.addEventListener('mousemove', function(e) {
-        var rect = icon.getBoundingClientRect();
-        var mx = (e.clientX - rect.left) / rect.width;
-        var my = (e.clientY - rect.top) / rect.height;
-        iTrx = (my - 0.5) * -ICON_TILT;
-        iTry = (mx - 0.5) * ICON_TILT;
-        iconStart();
-      });
-      icon.addEventListener('mouseleave', function() {
-        iTrx = 0; iTry = 0; iTsc = 1;
-        icon.style.boxShadow = '0 6px 24px rgba(16,24,43,0.12), 0 2px 6px rgba(16,24,43,0.06)';
-        iconStart();
-      });
-    });
   }
 
   function tryInit() { try { vslEventsInit(); } catch(e) { console.error('[VSL Events] init error:', e); } }

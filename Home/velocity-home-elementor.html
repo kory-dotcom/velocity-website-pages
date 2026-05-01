@@ -11,6 +11,35 @@
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="low">
 <style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
   /* ═══════════════════════════════════════════════
      Velocity Home Page — VSM 1.0.0
      ═══════════════════════════════════════════════ */
@@ -986,6 +1015,21 @@
     color: var(--circuit-white);
     line-height: 1.1;
   }
+  /* Same red→magenta gradient fill as promo / hero accent words */
+  .vsl-home-how__title em {
+    font-style: italic;
+    display: inline-block;
+    padding: 0 0.04em;
+    margin: 0 -0.02em;
+    color: transparent;
+    background: linear-gradient(90deg, var(--red), var(--magenta));
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
   .vsl-home-how__sub {
     margin: 0;
     font-size: var(--text-section-sub);
@@ -1006,7 +1050,26 @@
   @media (max-width: 560px) {
     .vsl-home-how__steps { grid-template-columns: 1fr; }
   }
-  /* “Racers, Start Your Engines” — stacked cards: photo + overlays, badge, icon; dark body */
+  .vsl-home-how__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(28px, 4.5vw, 56px);
+  }
+  .vsl-home-how__cta .vsl-home-btn {
+    padding: 1em 2.6em;
+    font-size: clamp(0.95rem, 0.85rem + 0.5vw, 1.2rem);
+  }
+  @media (max-width: 560px) {
+    .vsl-home-how__cta {
+      margin-top: clamp(22px, 6vw, 32px);
+    }
+    .vsl-home-how__cta .vsl-home-btn {
+      width: 100%;
+      max-width: 360px;
+      justify-content: center;
+    }
+  }
+  /* “Drivers, Start Your Engines” — stacked cards: photo + overlays, badge, icon; dark body */
   .vsl-home-step {
     --vsl-step-accent: var(--magenta);
     position: relative;
@@ -1505,10 +1568,15 @@
   /* ── FINAL CTA ── */
   .vsl-home-cta {
     position: relative;
+    z-index: 1;
+    margin-bottom: -14px;
     background: linear-gradient(135deg, var(--deep-indigo) 0%, var(--navy) 100%);
     padding: clamp(64px, 10vw, 120px) clamp(20px, 5vw, var(--page-margin));
     text-align: center;
     overflow: clip;
+    /* Kill subpixel/fringe seams where body default white leaks between CTA & footer */
+    box-shadow: 0 1px 0 0 rgba(22, 30, 55, 0.95);
+    border-bottom: 1px solid var(--deep-indigo);
   }
   .vsl-home-cta::before {
     content: '';
@@ -1674,7 +1742,7 @@
     <section class="vsl-home-how" id="home-how-it-works">
       <div class="vsl-home-how__inner">
         <div class="vsl-home-how__header">
-          <h2 class="vsl-home-how__title">Racers, Start Your Engines</h2>
+          <h2 class="vsl-home-how__title"><em>Drivers</em>, Start Your Engines</h2>
           <p class="vsl-home-how__sub">New to sim racing or a seasoned pro — here's how to get on track in four easy steps.</p>
         </div>
         <div class="vsl-home-how__steps">
@@ -1739,6 +1807,9 @@
             </div>
           </div>
 
+        </div>
+        <div class="vsl-home-how__cta">
+          <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary" data-vsl-cta-key="book">Book Now</a>
         </div>
       </div>
     </section>
