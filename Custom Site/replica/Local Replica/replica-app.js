@@ -60,6 +60,7 @@
 
   var navbarRoot = document.getElementById("replica-navbar-root");
   var pageRoot = document.getElementById("replica-page-root");
+  var footerRoot = document.getElementById("replica-footer-root");
   var params = new URLSearchParams(window.location.search);
   var pageKey = params.get("p") || "home";
   var forcedLoc = params.get("loc");
@@ -375,6 +376,24 @@
       });
   }
 
+  function loadFooter() {
+    if (!footerRoot) return Promise.resolve();
+    return fetch("../velocity-footer.html", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to load footer");
+        return res.text();
+      })
+      .then(function (html) {
+        footerRoot.innerHTML = html;
+        executeInlineScripts(footerRoot);
+        applyLocalLinks(footerRoot);
+        notifyReplicaAfterLocalLinks(footerRoot);
+      })
+      .catch(function (err) {
+        if (window.console && console.warn) console.warn("[Replica] Footer load failed:", err.message);
+      });
+  }
+
   fetch("../velocity-navbar.html", { cache: "no-store" })
     .then(function (res) { return res.text(); })
     .then(function (html) {
@@ -385,6 +404,7 @@
       setLocationFromQuery();
       return loadModulePage();
     })
+    .then(loadFooter)
     .catch(function (err) {
       navbarRoot.innerHTML = "";
       pageRoot.innerHTML =
