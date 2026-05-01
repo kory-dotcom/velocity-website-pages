@@ -58,6 +58,7 @@
     --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
     --text-pack-price: clamp(1.7rem, 1rem + 2.85vw, 2.65rem);
     --text-pack-name: clamp(1.15rem, 0.72rem + 1.45vw, 1.5rem);
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
     --vsl-outdent: 0px;
     --vsl-bleed-top: 0px;
     --vsl-bleed-bottom: 0px;
@@ -217,10 +218,14 @@
     display: block !important;
     visibility: visible !important;
     list-style-type: disc !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--vsl-card-body) !important;
   }
   .vsl-partypack .vsl-pp-pack-card__list li {
     display: list-item !important;
     visibility: visible !important;
+    font-family: var(--font-body) !important;
+    font-size: var(--vsl-card-body) !important;
   }
 
   /* ── BUTTONS ── */
@@ -314,7 +319,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
+    /* Slightly below center so faces aren’t pinned under the nav / top edge */
+    object-position: center 55%;
     display: none;
     filter: brightness(0.72) contrast(1.05);
   }
@@ -811,7 +817,8 @@
     margin: 0;
     padding: 0 0 0 1.15em;
     flex: 0 1 auto;
-    font-size: clamp(0.98rem, 0.9rem + 0.35vw, 1.08rem);
+    font-family: var(--font-body);
+    font-size: var(--vsl-card-body);
     font-weight: 400;
     line-height: 1.35;
     color: var(--slate-violet);
@@ -1271,7 +1278,7 @@
   }
 </style>
 
-<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->

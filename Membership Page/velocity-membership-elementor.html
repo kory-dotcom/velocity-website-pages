@@ -69,6 +69,7 @@
       --font-display: 'Khand', system-ui, sans-serif;
       --vsl-text-xs: 0.75rem;
       --vsl-text-body: 1rem;
+      --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
       --vsl-text-body-lg: 1.333rem;
       /* Fluid type: rem floor/ceiling + vw for smooth phone → tablet → desktop */
       --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
@@ -683,7 +684,8 @@
     }
     .vsl-tier__tag {
       margin: 0 0 10px;
-      font-size: var(--vsl-text-section-sub);
+      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      font-size: var(--vsl-card-body);
       font-weight: 500;
       line-height: 1.4;
       letter-spacing: 0.01em;
@@ -704,7 +706,8 @@
       margin: 0 0 22px;
       padding: 2px 0 0 1.1em;
       flex: 1;
-      font-size: var(--vsl-text-body);
+      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      font-size: var(--vsl-card-body);
       font-weight: 400;
       line-height: 1.25;
       color: var(--slate-violet);

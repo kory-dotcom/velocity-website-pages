@@ -1,3 +1,5 @@
+<link rel="preconnect" href="https://velocitysimlounge.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -46,7 +48,8 @@
     --page-margin: 64px;
     --soft: 8px;
     --f0: 'Khand', system-ui, sans-serif;
-    --f1: 'Inter', system-ui, sans-serif;
+    --f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
     --text-section: clamp(2.2rem, 1rem + 5.5vw, 3.8rem);
     --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
     --text-card-price: clamp(1.7rem, 1.05rem + 2.6vw, 2.5rem);
@@ -55,7 +58,7 @@
     --vsl-bleed-top: 0px;
     --vsl-bleed-bottom: 0px;
     --vsl-hero-finish: none;
-    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
 
     font-family: var(--f1);
     color: var(--c0);
@@ -213,6 +216,8 @@
   .vsl-booknow .vsl-bn-card__features li {
     color: var(--c9) !important;
     -webkit-text-fill-color: var(--c9) !important;
+    font-family: var(--f1) !important;
+    font-size: var(--vsl-card-body) !important;
   }
   .vsl-booknow .vsl-bn-card__cta-hint {
     color: #fff !important;
@@ -575,7 +580,7 @@
     border-color: transparent !important;
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
-    background: linear-gradient(135deg, var(--c2) 0%, #d41e52 50%, var(--c5) 100%) !important;
+    background: var(--c2) !important;
     background-size: 200% 200% !important;
     box-shadow: 0 6px 24px rgba(238,38,95,0.3), 0 0 0 1px rgba(238,38,95,0.1) !important;
     transform: translateY(-1px);
@@ -623,7 +628,7 @@
   .vsl-bn-card-grid {
     display: grid;
     gap: var(--gutter);
-    align-items: stretch;
+    align-items: start;
     transform: scale(0.95);
     transform-origin: top center;
     margin-bottom: -2.5%;
@@ -642,7 +647,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--gutter);
-    align-items: stretch;
+    align-items: start;
   }
   .vsl-bn-spring-grid .vsl-bn-card__media {
     aspect-ratio: 4 / 3;
@@ -713,6 +718,13 @@
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+  .vsl-bn-card__media img[data-i="quickRace"] {
+    object-position: center 42%;
+  }
+  .vsl-bn-card__media img[data-i="partyRacer"],
+  .vsl-bn-card__media img[data-i="partyPro"] {
+    object-position: center 48%;
   }
   .vsl-bn-card__media::after {
     content: '';
@@ -932,23 +944,24 @@
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 9px;
   }
   .vsl-bn-card__features li {
     display: flex !important;
     align-items: flex-start;
-    gap: 8px;
-    font-size: clamp(0.82rem, 0.76rem + 0.25vw, 0.92rem);
+    gap: 10px;
+    font-family: var(--f1);
+    font-size: var(--vsl-card-body);
     font-weight: 400;
-    line-height: 1.4;
+    line-height: 1.45;
     color: var(--c9);
   }
   .vsl-bn-card__features li::before {
     content: '';
     flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    margin-top: 2px;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
     background-color: var(--c3);
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
     -webkit-mask-size: contain;
@@ -1568,9 +1581,9 @@
     cursor: pointer;
     border: none;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--c2) 0%, #d41e52 40%, var(--c5) 100%);
-    background-size: 200% 200%;
-    animation: vsl-btn-gradient 4s ease infinite;
+    background: var(--c2);
+    background-size: auto;
+    animation: none;
     box-shadow:
       0 6px 24px rgba(238,38,95,0.28),
       0 0 0 0 rgba(238,38,95,0);
@@ -1622,12 +1635,40 @@
     50% { background-position: 100% 50%; }
   }
 
+  @media (max-width: 1280px) {
+    .vsl-bn-card__media {
+      aspect-ratio: 16 / 11;
+    }
+    .vsl-bn-spring-grid .vsl-bn-card__media {
+      aspect-ratio: 16 / 11;
+    }
+    .vsl-bn-card__body {
+      padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 24px) clamp(18px, 2.2vw, 26px);
+      gap: 0.6rem;
+    }
+    .vsl-bn-spring-grid .vsl-bn-card__body {
+      padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 24px) clamp(18px, 2.2vw, 26px);
+      gap: 0.6rem;
+    }
+    .vsl-bn-card__features li {
+      font-size: 0.92rem;
+      line-height: 1.4;
+    }
+    .vsl-bn-card__features li::before {
+      width: 16px;
+      height: 16px;
+    }
+  }
   @media (max-width: 1100px) {
     .vsl-bn-card-grid--4 {
       grid-template-columns: repeat(2, 1fr);
     }
     .vsl-bn-spring-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+    .vsl-bn-card__media,
+    .vsl-bn-spring-grid .vsl-bn-card__media {
+      aspect-ratio: 4 / 3;
     }
   }
   @media (max-width: 900px) {
@@ -1729,7 +1770,6 @@
     width: 100%;
     max-width: 860px;
     height: min(88vh, 720px);
-    min-height: 0;
     background: #fff;
     border-radius: 18px;
     overflow: hidden;
@@ -1799,7 +1839,6 @@
     flex: 1;
     position: relative;
     background: #f5f5f5;
-    min-height: 0;
   }
   .vsl-bn-modal__iframe {
     width: 100%;
@@ -2143,6 +2182,7 @@
     .vsl-bn-mem-modal { padding: 0; }
   }
 </style>
+<script>(function(){var o=new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(function(n){if(n.querySelectorAll){n.querySelectorAll('img[data-s]').forEach(function(i){try{i.src=atob(i.getAttribute('data-s'));}catch(e){}});}});});});o.observe(document,{childList:true,subtree:true});})();</script>
 
 <div class="vsl-booknow" data-cfg='{
   "links": {
@@ -2157,10 +2197,10 @@
     "bookNow":        "https://velocitysimlounge.com/book-now/"
   },
   "images": {
-    "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2025/02/Website_step4_driveandrace.webp",
-    "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_driveyourdreamcar.webp",
+    "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
+    "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
     "sixTen":         "https://velocitysimlounge.com/wp-content/uploads/2026/01/610-challenge-cover.jpeg",
-    "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2025/02/website_home_leaderboardchallenge_booknow.jpg",
+    "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard.webp",
     "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
     "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
     "partyRacer":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp",
@@ -2194,7 +2234,7 @@
 
             <a class="vsl-bn-card" data-l="quickRace" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjUvMDIvV2Vic2l0ZV9zdGVwNF9kcml2ZWFuZHJhY2Uud2VicA==" alt="Quick Race experience at Velocity Sim Lounge" width="2400" height="1600" loading="eager" decoding="sync" fetchpriority="high">
+                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcXVpY2tfcmFjZS53ZWJw" alt="Quick Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="sync" fetchpriority="high">
                 <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2212,7 +2252,7 @@
 
             <a class="vsl-bn-card vsl-bn-card--badged" data-l="doubleRace" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjUvMDIvaG93aXR3b3Jrc19kcml2ZXlvdXJkcmVhbWNhci53ZWJw" alt="Double Race experience at Velocity Sim Lounge" width="2400" height="1600" loading="eager" decoding="async">
+                <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvZG91YmxlX3JhY2Uud2VicA==" alt="Double Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high">
                 <span class="vsl-bn-card__badge vsl-bn-card__badge--popular">Most Popular</span>
                 <h3 class="vsl-bn-card__overlay-name">Double Race</h3>
               </div>
@@ -2231,7 +2271,7 @@
 
             <a class="vsl-bn-card" data-l="sixTen" href="https://book.velocitysimlounge.com/book/610-challenge/15" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="sixTen" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="610 Challenge virtual Houston loop at Velocity" width="2080" height="2048" loading="lazy" decoding="async">
+                <img data-i="sixTen" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="610 Challenge virtual Houston loop at Velocity" width="1024" height="1008" loading="eager" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">610 Challenge</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2249,7 +2289,7 @@
 
             <a class="vsl-bn-card" data-l="leaderboard" href="https://book.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjUvMDIvd2Vic2l0ZV9ob21lX2xlYWRlcmJvYXJkY2hhbGxlbmdlX2Jvb2tub3cuanBn" alt="Leaderboard Challenge competitive time-attack at Velocity" width="3194" height="2211" loading="lazy" decoding="async">
+                <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvbGVhZGVyYm9hcmQud2VicA==" alt="Leaderboard Challenge competitive time-attack at Velocity" width="1200" height="800" loading="eager" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">Leaderboard Challenge</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2273,7 +2313,7 @@
 
             <a class="vsl-bn-card" data-l="twoSeaterQuick" href="https://book.velocitysimlounge.com/book/2-seater-quick-race/22" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="twoSeaterQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjUuMjAtUE0ucG5n" alt="2-Seater Quick Race side-by-side simulator" width="4068" height="2198" loading="lazy" decoding="async">
+                <img data-i="twoSeaterQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjUuMjAtUE0ucG5n" alt="2-Seater Quick Race side-by-side simulator" width="1200" height="649" loading="lazy" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">2-Seater Quick Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2291,7 +2331,7 @@
 
             <a class="vsl-bn-card" data-l="twoSeaterDouble" href="https://book.velocitysimlounge.com/book/2-seater-double-race/23" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="twoSeaterDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjcuMzMtUE0ucG5n" alt="2-Seater Double Race on famous tracks" width="3614" height="2160" loading="lazy" decoding="async">
+                <img data-i="twoSeaterDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjcuMzMtUE0ucG5n" alt="2-Seater Double Race on famous tracks" width="1200" height="717" loading="lazy" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">2-Seater Double Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2398,9 +2438,9 @@
       <div class="vsl-bn-grid">
         <div class="vsl-bn-membership__inner">
           <div class="vsl-bn-membership__media">
-            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvRFNDMDI5NTYud2VicA==" alt="Members racing at Velocity Sim Lounge" width="1200" height="800" loading="lazy" decoding="async">
+            <img data-asset-key="booknow-photo-10-members-large-left" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLWxhcmdlLWxlZnQtcGhvdG8ud2VicA==" alt="Members racing at Velocity Sim Lounge" width="1200" height="800" loading="lazy" decoding="async">
             <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjI3NTUud2VicA==" alt="Velocity member event" width="1200" height="800" loading="lazy" decoding="async">
-            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRFNDRjcyMzEud2VicA==" alt="Members enjoying food and racing" width="1200" height="800" loading="lazy" decoding="async">
+            <img data-asset-key="booknow-photo-11-members-flatbreads" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLXBob3RvLWJvdHRvbS1yaWdodC1zbWFsbC1waG90by53ZWJw" alt="Members enjoying food and racing" width="1200" height="800" loading="lazy" decoding="async">
           </div>
           <div class="vsl-bn-membership__content">
             <span class="vsl-bn-membership__eyebrow">Members Club</span>
@@ -2889,10 +2929,6 @@
     var modalTitle = root.querySelector('#vsl-bn-modal-title');
     var lastFocused = null;
 
-    if ((window.__VSL_SITE_REPLICA__ || document.getElementById('replica-page-root')) && modal && modal.parentNode !== document.body) {
-      document.body.appendChild(modal);
-    }
-
     function openModal(url, title) {
       if (!modal || !modalIframe) return;
       lastFocused = document.activeElement;
@@ -2939,8 +2975,7 @@
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
-        var key = card.getAttribute('data-l');
-        var href = key && links[key] ? links[key] : card.getAttribute('href');
+        var href = card.getAttribute('href');
         if (!href || href.charAt(0) === '#') return;
         var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
         var title = nameEl ? nameEl.textContent.trim() : 'Book Now';

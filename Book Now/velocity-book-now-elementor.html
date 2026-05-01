@@ -49,6 +49,7 @@
     --soft: 8px;
     --f0: 'Khand', system-ui, sans-serif;
     --f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
     --text-section: clamp(2.2rem, 1rem + 5.5vw, 3.8rem);
     --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
     --text-card-price: clamp(1.7rem, 1.05rem + 2.6vw, 2.5rem);
@@ -215,6 +216,8 @@
   .vsl-booknow .vsl-bn-card__features li {
     color: var(--c9) !important;
     -webkit-text-fill-color: var(--c9) !important;
+    font-family: var(--f1) !important;
+    font-size: var(--vsl-card-body) !important;
   }
   .vsl-booknow .vsl-bn-card__cta-hint {
     color: #fff !important;
@@ -716,6 +719,13 @@
     object-fit: cover;
     display: block;
   }
+  .vsl-bn-card__media img[data-i="quickRace"] {
+    object-position: center 42%;
+  }
+  .vsl-bn-card__media img[data-i="partyRacer"],
+  .vsl-bn-card__media img[data-i="partyPro"] {
+    object-position: center 48%;
+  }
   .vsl-bn-card__media::after {
     content: '';
     position: absolute;
@@ -940,7 +950,8 @@
     display: flex !important;
     align-items: flex-start;
     gap: 10px;
-    font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+    font-family: var(--f1);
+    font-size: var(--vsl-card-body);
     font-weight: 400;
     line-height: 1.45;
     color: var(--c9);

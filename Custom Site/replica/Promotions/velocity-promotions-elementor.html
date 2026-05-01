@@ -60,7 +60,8 @@
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
     /* Hero <img> framing: horizontal %, vertical % (object-position; tweak here to pan) */
-    --vsl-hero-photo-position: 48% 52%;
+    --vsl-hero-photo-position: 48% 60%;
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
 
     font-family: var(--font-body);
     color: var(--navy);
@@ -174,8 +175,8 @@
     overflow: clip;
     isolation: isolate;
     width: 100%;
-    min-height: 70vh;
-    min-height: 70svh;
+    min-height: 70vh !important;
+    min-height: 70svh !important;
     background-color: var(--navy);
     color: var(--circuit-white);
   }
@@ -192,11 +193,13 @@
     display: block;
     width: 100%;
     height: 100%;
+    min-height: 100% !important;
     object-fit: cover;
     object-position: var(--vsl-hero-photo-position) !important;
     pointer-events: none;
     transform: scale(1.1);
-    transform-origin: center center;
+    /* Pin zoom slightly above center so faces read closer to replica framing */
+    transform-origin: 48% 42%;
   }
   .vsl-promo-hero::before {
     content: '';
@@ -206,10 +209,8 @@
     pointer-events: none;
     background:
       radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
-      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
-      radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%),
-      linear-gradient(162deg, rgba(25, 27, 77, 0.78) 0%, rgba(16, 24, 43, 0.86) 48%, rgba(13, 19, 34, 0.92) 100%);
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.12) 0%, transparent 68%);
     background-size: cover;
     background-repeat: no-repeat;
   }
@@ -478,10 +479,16 @@
     grid-template-columns: repeat(3, 1fr);
     align-items: stretch;
   }
+  /* Per-card accent token — drives accent bar, hover glow, icon glow */
   .vsl-promo-discount-card {
+    --accent: 41, 56, 147; /* default = blue, overridden per nth-child */
+    /* Smooth-glow easing tokens */
+    --glow-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --glow-dur: 0.75s;
+    --lift-dur: 0.55s;
     position: relative;
     background: #fff;
-    border: 1px solid rgba(16,24,43,0.08);
+    border: 1px solid rgba(16,24,43,0.06);
     border-radius: 18px;
     overflow: hidden;
     display: flex;
@@ -489,37 +496,60 @@
     align-items: center;
     text-align: center;
     min-height: 0;
+    /* Stronger ambient shadow so white cards lift off dark section background */
     box-shadow:
       0 12px 36px rgba(0,0,0,0.32),
       0 4px 12px rgba(0,0,0,0.18),
+      0 0 0 1px rgba(var(--accent), 0.04),
+      0 8px 22px rgba(var(--accent), 0.04),
       0 1px 0 rgba(255,255,255,0.9) inset;
-    transition: box-shadow 0.35s ease, transform 0.25s ease;
+    transition:
+      box-shadow var(--glow-dur) var(--glow-ease),
+      transform var(--lift-dur) var(--glow-ease),
+      border-color var(--glow-dur) var(--glow-ease);
+    will-change: transform, box-shadow;
   }
+  .vsl-promo-discount-card:nth-child(1) { --accent: 41, 56, 147; }   /* blue */
+  .vsl-promo-discount-card:nth-child(2) { --accent: 238, 38, 95; }   /* magenta */
+  .vsl-promo-discount-card:nth-child(3) { --accent: 253, 199, 12; }  /* yellow */
   @media (hover: hover) and (pointer: fine) {
     .vsl-promo-discount-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(var(--accent), 0.2);
+      /* Layered glow: soft halo → mid bloom → close shadow → accent ring → inner highlight */
       box-shadow:
-        0 24px 56px rgba(0,0,0,0.42),
-        0 8px 20px rgba(0,0,0,0.24),
+        0 36px 80px rgba(var(--accent), 0.12),
+        0 22px 56px rgba(var(--accent), 0.16),
+        0 14px 34px rgba(16,24,43,0.10),
+        0 0 0 1px rgba(var(--accent), 0.12),
         0 1px 0 rgba(255,255,255,0.9) inset;
-      transform: translateY(-4px);
+    }
+    .vsl-promo-discount-card:hover .vsl-promo-discount-card__accent {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+    .vsl-promo-discount-card:hover .vsl-promo-discount-card__icon {
+      transform: scale(1.08);
+      box-shadow:
+        0 14px 32px rgba(var(--accent), 0.22),
+        0 4px 12px rgba(var(--accent), 0.16);
+      background: rgba(var(--accent), 0.14);
+      border-color: rgba(var(--accent), 0.22);
     }
   }
+  /* Accent bar: draws from the left on hover (matches Party Packs ::before vibe) */
   .vsl-promo-discount-card__accent {
     height: 5px;
     width: 100%;
     flex-shrink: 0;
-  }
-  .vsl-promo-discount-card:nth-child(1) .vsl-promo-discount-card__accent {
-    background: var(--blue);
-    box-shadow: 0 4px 20px rgba(41,56,147,0.25);
-  }
-  .vsl-promo-discount-card:nth-child(2) .vsl-promo-discount-card__accent {
-    background: var(--magenta);
-    box-shadow: 0 4px 20px rgba(238,38,95,0.25);
-  }
-  .vsl-promo-discount-card:nth-child(3) .vsl-promo-discount-card__accent {
-    background: var(--yellow);
-    box-shadow: 0 4px 20px rgba(253,199,12,0.3);
+    background: rgb(var(--accent));
+    box-shadow: 0 4px 20px rgba(var(--accent), 0.25);
+    transform-origin: left center;
+    transform: scaleX(0.6);
+    opacity: 0.92;
+    transition:
+      transform 0.7s var(--glow-ease),
+      opacity var(--glow-dur) var(--glow-ease);
   }
   .vsl-promo-discount-card__icon {
     display: flex;
@@ -530,10 +560,15 @@
     margin: clamp(22px, 3vw, 32px) 0 10px;
     border-radius: 50%;
     flex-shrink: 0;
+    background: rgba(var(--accent), 0.09);
+    border: 1px solid rgba(var(--accent), 0.12);
+    box-shadow: 0 0 0 0 rgba(var(--accent), 0); /* establish baseline so transition is smooth */
+    transition:
+      transform var(--lift-dur) var(--glow-ease),
+      box-shadow var(--glow-dur) var(--glow-ease),
+      background-color var(--glow-dur) var(--glow-ease),
+      border-color var(--glow-dur) var(--glow-ease);
   }
-  .vsl-promo-discount-card:nth-child(1) .vsl-promo-discount-card__icon { background: rgba(41,56,147,0.08); }
-  .vsl-promo-discount-card:nth-child(2) .vsl-promo-discount-card__icon { background: rgba(238,38,95,0.08); }
-  .vsl-promo-discount-card:nth-child(3) .vsl-promo-discount-card__icon { background: rgba(253,199,12,0.1); }
   .vsl-promo-discount-card__icon svg {
     width: 30px;
     height: 30px;
@@ -1066,23 +1101,39 @@
     align-items: stretch;
     margin-top: clamp(8px, 1.5vh, 16px);
   }
+  /* Per-card accent token (matches Discount cards’ smooth-glow pattern) */
   .vsl-promo-spotlight-card {
+    --accent: 41, 56, 147; /* default = blue, overridden per nth-child */
+    --glow-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --glow-dur: 0.75s;
+    --lift-dur: 0.55s;
     position: relative;
     background: #fff;
-    border: 1px solid rgba(16, 24, 43, 0.08);
+    border: 1px solid rgba(16, 24, 43, 0.06);
     border-radius: 20px;
     padding: clamp(26px, 3.2vw, 38px) clamp(22px, 2.8vw, 32px) clamp(28px, 3.5vw, 40px);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     text-align: left;
+    /* Stronger ambient shadow so white cards lift off dark section background */
     box-shadow:
       0 12px 36px rgba(0, 0, 0, 0.32),
       0 4px 12px rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba(var(--accent), 0.04),
+      0 8px 22px rgba(var(--accent), 0.04),
       0 1px 0 rgba(255, 255, 255, 0.95) inset;
     overflow: clip;
-    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.25s ease;
+    transition:
+      transform var(--lift-dur) var(--glow-ease),
+      box-shadow var(--glow-dur) var(--glow-ease),
+      border-color var(--glow-dur) var(--glow-ease);
+    will-change: transform, box-shadow;
   }
+  .vsl-promo-spotlight-card:nth-child(1) { --accent: 41, 56, 147; }   /* blue */
+  .vsl-promo-spotlight-card:nth-child(2) { --accent: 238, 38, 95; }   /* magenta */
+  .vsl-promo-spotlight-card:nth-child(3) { --accent: 253, 199, 12; }  /* yellow */
+  /* Accent bar — draws in from the left on hover */
   .vsl-promo-spotlight-card::before {
     content: '';
     position: absolute;
@@ -1092,16 +1143,16 @@
     height: 5px;
     z-index: 1;
     border-radius: 20px 20px 0 0;
+    background: linear-gradient(90deg, rgb(var(--accent)) 0%, rgba(var(--accent), 0.78) 100%);
+    box-shadow: 0 4px 20px rgba(var(--accent), 0.22);
+    transform-origin: left center;
+    transform: scaleX(0.6);
+    opacity: 0.92;
+    transition:
+      transform 0.7s var(--glow-ease),
+      opacity var(--glow-dur) var(--glow-ease);
   }
-  .vsl-promo-spotlight-card:nth-child(1)::before {
-    background: linear-gradient(90deg, var(--blue) 0%, #3d4ba3 100%);
-  }
-  .vsl-promo-spotlight-card:nth-child(2)::before {
-    background: linear-gradient(90deg, var(--magenta) 0%, #d91e5a 100%);
-  }
-  .vsl-promo-spotlight-card:nth-child(3)::before {
-    background: linear-gradient(90deg, var(--yellow) 0%, #e5b30a 100%);
-  }
+  /* Soft accent wash inside the card — fades in on hover */
   .vsl-promo-spotlight-card::after {
     content: '';
     position: absolute;
@@ -1109,34 +1160,34 @@
     z-index: 0;
     pointer-events: none;
     opacity: 0;
-    background: linear-gradient(145deg, rgba(238, 38, 95, 0.04) 0%, transparent 45%);
-    transition: opacity 0.35s ease;
+    background: linear-gradient(145deg, rgba(var(--accent), 0.05) 0%, transparent 50%);
+    transition: opacity var(--glow-dur) var(--glow-ease);
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-promo-spotlight-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(16, 24, 43, 0.12);
+      border-color: rgba(var(--accent), 0.2);
+      /* Layered glow: outer halo → mid bloom → close shadow → accent ring → inner highlight */
       box-shadow:
-        0 24px 48px rgba(16, 24, 43, 0.12),
+        0 36px 80px rgba(var(--accent), 0.12),
+        0 22px 56px rgba(var(--accent), 0.18),
+        0 14px 34px rgba(16, 24, 43, 0.10),
+        0 0 0 1px rgba(var(--accent), 0.12),
         0 1px 0 rgba(255, 255, 255, 0.95) inset;
     }
-    .vsl-promo-spotlight-card:nth-child(1):hover {
-      box-shadow:
-        0 24px 48px rgba(41, 56, 147, 0.18),
-        0 1px 0 rgba(255, 255, 255, 0.95) inset;
-    }
-    .vsl-promo-spotlight-card:nth-child(2):hover {
-      box-shadow:
-        0 24px 48px rgba(238, 38, 95, 0.16),
-        0 1px 0 rgba(255, 255, 255, 0.95) inset;
-    }
-    .vsl-promo-spotlight-card:nth-child(3):hover {
-      box-shadow:
-        0 24px 48px rgba(253, 199, 12, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.95) inset;
+    .vsl-promo-spotlight-card:hover::before {
+      transform: scaleX(1);
+      opacity: 1;
     }
     .vsl-promo-spotlight-card:hover::after {
       opacity: 1;
+    }
+    .vsl-promo-spotlight-card:hover .vsl-promo-spotlight-card__icon {
+      transform: scale(1.08);
+      box-shadow:
+        0 14px 32px rgba(var(--accent), 0.22),
+        0 4px 12px rgba(var(--accent), 0.16);
+      border-color: rgba(var(--accent), 0.28);
     }
   }
   .vsl-promo-spotlight-card__index {
@@ -1170,19 +1221,14 @@
     height: 58px;
     border-radius: 14px;
     flex-shrink: 0;
+    background: linear-gradient(145deg, rgba(var(--accent), 0.12) 0%, rgba(var(--accent), 0.07) 100%);
+    border: 1px solid rgba(var(--accent), 0.14);
     box-shadow: 0 4px 16px rgba(16, 24, 43, 0.08);
-  }
-  .vsl-promo-spotlight-card:nth-child(1) .vsl-promo-spotlight-card__icon {
-    background: linear-gradient(145deg, rgba(41, 56, 147, 0.12) 0%, rgba(41, 56, 147, 0.07) 100%);
-    border: 1px solid rgba(41, 56, 147, 0.12);
-  }
-  .vsl-promo-spotlight-card:nth-child(2) .vsl-promo-spotlight-card__icon {
-    background: linear-gradient(145deg, rgba(238, 38, 95, 0.12) 0%, rgba(238, 38, 95, 0.06) 100%);
-    border: 1px solid rgba(238, 38, 95, 0.15);
-  }
-  .vsl-promo-spotlight-card:nth-child(3) .vsl-promo-spotlight-card__icon {
-    background: linear-gradient(145deg, rgba(253, 199, 12, 0.14) 0%, rgba(253, 199, 12, 0.07) 100%);
-    border: 1px solid rgba(253, 199, 12, 0.2);
+    transition:
+      transform var(--lift-dur) var(--glow-ease),
+      box-shadow var(--glow-dur) var(--glow-ease),
+      background-color var(--glow-dur) var(--glow-ease),
+      border-color var(--glow-dur) var(--glow-ease);
   }
   .vsl-promo-spotlight-card__icon svg {
     width: 26px;
@@ -1327,7 +1373,8 @@
     background: linear-gradient(90deg, #EE265F 0%, rgba(238, 38, 95, 0.15) 100%);
   }
   .vsl-promo-crosslink__tag {
-    font-size: 0.82rem;
+    font-family: var(--font-body);
+    font-size: var(--vsl-card-body);
     font-weight: 500;
     color: rgba(234,234,234,0.8);
     letter-spacing: 0.02em;
@@ -1483,9 +1530,21 @@
         border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease;
     }
     .vsl-promo-btn:active { transform: none; }
-    .vsl-promo-discount-card, .vsl-promo-crosslink { transition: none; }
-    .vsl-promo-discount-card:hover, .vsl-promo-crosslink:hover { transform: none; }
-    .vsl-promo-spotlight-card:hover { transform: none; }
+    .vsl-promo-discount-card,
+    .vsl-promo-discount-card__icon,
+    .vsl-promo-discount-card__accent,
+    .vsl-promo-spotlight-card,
+    .vsl-promo-spotlight-card__icon,
+    .vsl-promo-spotlight-card::before,
+    .vsl-promo-spotlight-card::after,
+    .vsl-promo-crosslink { transition: none; }
+    .vsl-promo-discount-card:hover,
+    .vsl-promo-spotlight-card:hover,
+    .vsl-promo-crosslink:hover { transform: none; }
+    .vsl-promo-discount-card:hover .vsl-promo-discount-card__icon { transform: none; }
+    .vsl-promo-discount-card:hover .vsl-promo-discount-card__accent { transform: scaleX(1); }
+    .vsl-promo-spotlight-card:hover .vsl-promo-spotlight-card__icon { transform: none; }
+    .vsl-promo-spotlight-card::before { transform: scaleX(1); opacity: 1; }
     .vsl-promo-spotlight-card::after { opacity: 0 !important; }
     .vsl-promo-crosslink__img { transition: none; }
     .vsl-promo-ladies__media:hover { transform: none; }
@@ -1496,7 +1555,7 @@
   }
 </style>
 
-<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF1936.jpg","heroPhotoPosition":"48% 52%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkBundles":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809.webp"}}'>
+<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 60%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkBundles":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1505,10 +1564,13 @@
         <img
           class="vsl-promo-hero__photo-img"
           data-vsl-promo="heroPhoto"
-          src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF1936.jpg"
+          data-asset-key="promo-photo-41-hero-bg"
+          src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp"
+          srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-768x432.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1024x576.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1536x864.webp 1536w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp 1920w"
+          sizes="100vw"
           alt=""
           width="1920"
-          height="1280"
+          height="1080"
           decoding="async"
           fetchpriority="high"
         >
@@ -1517,7 +1579,7 @@
         <span></span><span></span><span></span>
       </div>
       <div class="vsl-promo-hero__inner">
-        <span class="vsl-promo-hero__eyebrow">Save More, Race More</span>
+        <span class="vsl-promo-hero__eyebrow">Race More, Save More</span>
         <h1 class="vsl-promo-hero__title" id="promo-hero-title">
           Deals &amp; <span class="vsl-promo-hero__title-accent">Promotions</span>
         </h1>
@@ -1628,7 +1690,7 @@
       <div class="vsl-promo-grid">
         <div class="vsl-promo-ladies__inner">
           <figure class="vsl-promo-ladies__media">
-            <img class="vsl-promo-ladies__img" data-vsl-promo="ladiesNight" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809.webp" alt="Friends toasting with cocktails and food at Velocity Sim Racing Lounge" width="1024" height="682" loading="lazy" decoding="async">
+            <img class="vsl-promo-ladies__img" data-vsl-promo="ladiesNight" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1536x1024.webp 1536w" sizes="(max-width: 900px) 100vw, min(720px, 50vw)" alt="Friends toasting with cocktails and food at Velocity Sim Racing Lounge" width="1024" height="682" loading="lazy" decoding="async">
           </figure>
           <div class="vsl-promo-ladies__content">
             <div class="vsl-promo-ladies__schedule">
@@ -1656,7 +1718,7 @@
       </div>
     </section>
 
-    <!-- ▸ Calendar spotlight (white) -->
+    <!-- HIDDEN per Viet 2026-04 — re-enable near holidays: On the Calendar + Seasonal Promotions
     <section class="vsl-promo-spotlight" id="promo-spotlight" aria-labelledby="spotlight-heading">
       <div class="vsl-promo-spotlight__bg" aria-hidden="true"></div>
       <div class="vsl-promo-grid">
@@ -1730,7 +1792,6 @@
       </div>
     </section>
 
-    <!-- ▸ Seasonal Promotions -->
     <section class="vsl-promo-seasonal" id="promo-seasonal" aria-labelledby="seasonal-heading">
       <div class="vsl-promo-seasonal__motif" aria-hidden="true"></div>
       <div class="vsl-promo-grid">
@@ -1741,7 +1802,6 @@
           Our biggest windows of the year &mdash; when they drop, simulators go fast. Start with the headline event below.
         </p>
 
-        <!-- Black Friday Featured Card -->
         <div class="vsl-promo-seasonal-featured">
           <div class="vsl-promo-seasonal-featured__inner">
             <div class="vsl-promo-seasonal-featured__content">
@@ -1758,12 +1818,13 @@
               </div>
             </div>
             <div class="vsl-promo-seasonal-featured__media">
-              <img data-vsl-promo="blackFriday" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp" alt="Black Friday at Velocity Sim Racing Lounge, packed venue" width="1920" height="1280" loading="lazy" decoding="async">
+              <img data-vsl-promo="blackFriday" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp" alt="Black Friday at Velocity Sim Racing Lounge, packed venue" width="1200" height="800" loading="lazy" decoding="async">
             </div>
           </div>
         </div>
       </div>
     </section>
+    -->
 
     <!-- ▸ Explore More (Cross-Links) -->
     <section class="vsl-promo-explore" id="promo-explore" aria-labelledby="explore-heading">
@@ -1778,7 +1839,7 @@
         <div class="vsl-promo-crosslink-grid">
 
           <a class="vsl-promo-crosslink" data-vsl-promo-link="springBundles" href="https://velocitysimlounge.com/spring-bundles/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkBundles" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp" alt="Eat and Race Bundles at Velocity" width="1920" height="1280" loading="lazy" decoding="async">
+            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkBundles" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Eat and Race Bundles at Velocity" width="1024" height="683" loading="lazy" decoding="async">
             <div class="vsl-promo-crosslink__overlay"></div>
             <div class="vsl-promo-crosslink__body">
               <h3 class="vsl-promo-crosslink__name">Bundles</h3>
@@ -1790,7 +1851,7 @@
           </a>
 
           <a class="vsl-promo-crosslink" data-vsl-promo-link="partyPacks" href="https://velocitysimlounge.com/party-packs/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkPartyPacks" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T.webp" alt="Party Packs at Velocity" width="1920" height="1280" loading="lazy" decoding="async">
+            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkPartyPacks" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Party Packs at Velocity" width="1024" height="683" loading="lazy" decoding="async">
             <div class="vsl-promo-crosslink__overlay"></div>
             <div class="vsl-promo-crosslink__body">
               <h3 class="vsl-promo-crosslink__name">Party Packs</h3>
@@ -1802,7 +1863,7 @@
           </a>
 
           <a class="vsl-promo-crosslink" data-vsl-promo-link="events" href="https://velocitysimlounge.com/group-events/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkEvents" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp" alt="Group Events at Velocity" width="1920" height="1280" loading="lazy" decoding="async">
+            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkEvents" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Group Events at Velocity" width="1024" height="683" loading="lazy" decoding="async">
             <div class="vsl-promo-crosslink__overlay"></div>
             <div class="vsl-promo-crosslink__body">
               <h3 class="vsl-promo-crosslink__name">Events</h3>

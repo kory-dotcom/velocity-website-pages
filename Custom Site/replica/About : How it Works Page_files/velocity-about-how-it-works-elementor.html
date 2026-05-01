@@ -5,11 +5,8 @@
       compare: "#our_simulators",
       process: "#racing"
     },
-    video: {
-      heroBackground: "https://velocitysimlounge.com/wp-content/uploads/2026/04/Fast-Onboard-3_5_2026-10_44-PM-1.mp4"
-    },
     images: {
-      hero: "https://velocitysimlounge.com/wp-content/uploads/2025/02/website_howitworks_racerrig-1.webp",
+      hero: "https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works.webp",
       flow: "https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp",
       racer: "https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp",
       pro: "https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp",
@@ -86,6 +83,9 @@
     background-color: #101828 !important;
   }
   .vsl-how-it-works {
+    /* Must stay visible horizontally: 3D flip on simulator cards extends past their layout box
+       during rotateY(); overflow-x: clip (or hidden) clips the card edges mid-animation. */
+    overflow-x: visible;
     --obsidian: #101828;
     --navy: #101828;
     --obsidian-dark: #101828;
@@ -114,6 +114,7 @@
     --text-xs: 0.75rem;
     --text-sm: 0.844rem;
     --text-body: 1rem;
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
     --text-lg: 1.333rem;
     --text-xl: 1.777rem;
     --text-xxl: 2.369rem;
@@ -129,9 +130,6 @@
        no flash of white/grey before sections render. */
     background: var(--navy);
     box-sizing: border-box;
-    /* Must stay visible horizontally: 3D flip on simulator cards extends past their layout box
-       during rotateY(); overflow-x: clip clips the card edges mid-animation. */
-    overflow-x: visible;
     position: relative;
     /* Full-bleed to viewport edges. Using 100vw + a margin equal to (100% - 100vw) / 2 means the
        widget always extends to the actual screen edges no matter how much padding the parent
@@ -179,11 +177,11 @@
     transition: none !important;
   }
   /* Force every common WordPress / Elementor / theme / local-replica page wrapper to the EXACT same
-     navy as the widget's --navy (#101828). The boundary you've been seeing between the navbar and
-     the hero is the replica shell's body bg (#0f1533, slightly purplish navy) showing through
-     where the navbar widget ends and our widget begins — different navy ⇒ visible seam. Forcing
-     every wrapper to #101828 (matching the widget's hero/intro/walkthrough/racing backgrounds)
-     makes the seam invisible regardless of which wrapper is in play. */
+     navy as the widget's --navy (#101828). The boundary between the navbar and the hero is almost
+     always a wrapper element with a different navy (or default white) showing through where the
+     navbar widget ends and our widget begins — different colors ⇒ visible seam. Forcing every
+     wrapper to #101828 (matching the widget's hero/intro/walkthrough/racing backgrounds) makes
+     the seam invisible regardless of which wrapper is in play. */
   html,
   body,
   body.elementor-page,
@@ -311,13 +309,14 @@
     margin-inline: auto;
   }
 
-  /* Hero — completely rebuilt with the simplest possible grid stacking layout. The previous
-     setup (flex column + flex:1 child + position:absolute video with negative inset + scale 1.2)
-     had subtle interactions where the video element wasn't actually filling the section, leaving
-     huge bands above and below where the page background showed through. This version uses
-     position:absolute inset:0 on every child so the video, scrim, and overlay copy all literally
-     fill the hero section's box, no exceptions. !important on the dimensions guards against any
-     theme/Elementor/replica style trying to constrain the video's natural <video> aspect ratio. */
+  /* Hero — completely rebuilt with the simplest possible absolute-fill layout. The previous
+     setup (flex column hero + flex:1 child + grid-area stack on the media) had a subtle issue
+     where the .vsl-how-hero__inner's intrinsic content height ended up driving the grid cell
+     row size to less than 100% of the section, leaving white bands above and below where the
+     video didn't reach. This version uses position:absolute inset:0 on every child so the video,
+     scrim, and overlay copy all literally fill the hero section's box, no exceptions. !important
+     on the dimensions guards against any theme/Elementor/replica style trying to constrain the
+     video's natural <video> aspect ratio. */
   .vsl-how-section.vsl-how-hero {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
@@ -465,7 +464,7 @@
     color: #fff;
     cursor: pointer;
     position: relative;
-    background: linear-gradient(135deg, var(--red, #D22026), var(--digital-magenta));
+    background: var(--digital-magenta);
     box-shadow: 0 4px 16px rgba(238, 38, 95, 0.25);
     transition:
       color 0.22s ease,
@@ -478,7 +477,7 @@
   .vsl-how-btn--primary {
     border-color: var(--digital-magenta);
     color: #fff;
-    background: linear-gradient(135deg, var(--red, #D22026), var(--digital-magenta));
+    background: var(--digital-magenta);
   }
   .vsl-how-btn--secondary {
     background: var(--secondary-blue);
@@ -931,6 +930,8 @@
   }
   .vsl-how-tier__copy {
     margin: 0 0 12px;
+    font-family: var(--font-body);
+    font-size: var(--vsl-card-body);
     color: var(--slate-violet);
     line-height: 1.52;
   }
@@ -1088,6 +1089,7 @@
     overflow: visible;
     color: var(--obsidian);
     transition: box-shadow 0.3s ease;
+    /* Slight Z lift keeps front/back planes apart during rotateY (reduces edge tearing). */
     transform: translateZ(1px);
   }
   .vsl-how-tier:hover .vsl-how-tier__front {
@@ -1387,7 +1389,8 @@
     overflow: hidden;
     border: 1px solid rgba(16, 24, 43, 0.1);
     box-shadow: 0 6px 22px rgba(16, 24, 43, 0.12);
-    background: rgba(16, 24, 43, 0.06);
+    /* Dark fallback so any seam during loads/transitions reads as a black photo edge, never white */
+    background: var(--navy);
   }
   .vsl-how-showcase-card__carousel-img {
     position: absolute;
@@ -1397,13 +1400,21 @@
     object-fit: cover;
     object-position: center;
     display: block;
-    opacity: 0;
-    transition: opacity 0.55s ease;
+    /* Default opaque so the previous image stays visible UNDER the incoming fade — no background bleed */
+    opacity: 1;
     z-index: 1;
   }
   .vsl-how-showcase-card__carousel-img.is-active {
     opacity: 1;
     z-index: 2;
+    /* Fade only fires when an incoming image is transitioned in via .is-entering → .is-active */
+    transition: opacity 0.55s ease;
+  }
+  .vsl-how-showcase-card__carousel-img.is-entering {
+    /* Stacked above the outgoing image, starting invisible — fades up to opacity 1 with .is-active */
+    opacity: 0;
+    z-index: 2;
+    transition: none;
   }
   .vsl-how-showcase-card__carousel-btn {
     position: absolute;
@@ -1652,7 +1663,7 @@
   .vsl-how-faq__label {
     flex: 1;
     min-width: 0;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'Archivo Narrow', Inter, system-ui, sans-serif;
     font-size: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
     font-weight: 600;
     font-style: normal;
@@ -1927,7 +1938,7 @@
       transition: transform 0.01s;
     }
     .vsl-how-hero__video {
-      display: none;
+      /* Video element handles its own playback; nothing to disable here */
       transform: none;
     }
     .vsl-how-showcase-card__carousel-img {
@@ -1991,7 +2002,15 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
   <main id="how-primary-content">
     <section class="vsl-how-section vsl-how-dark vsl-how-hero" id="how-hero" aria-labelledby="how-hero-title">
       <div class="vsl-how-hero__media">
-        <video class="vsl-how-hero__video" data-vsl-hero-video autoplay muted loop playsinline aria-hidden="true"
+        <video
+          class="vsl-how-hero__video"
+          data-vsl-hero-video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true"
           poster="https://velocitysimlounge.com/wp-content/uploads/2025/02/website_howitworks_racerrig-1.webp">
           <source src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Fast-Onboard-3_5_2026-10_44-PM-1.mp4" type="video/mp4">
         </video>
@@ -2125,7 +2144,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
-                  <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp" alt="Velocity Racer simulator cockpit with ultrawide display" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" sizes="(max-width: 900px) 92vw, (max-width: 1200px) 31vw, 360px" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1536x960.webp 1536w">
+                  <img data-asset-key="how-photo-12-racer-tier" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp" alt="Velocity Racer simulator cockpit with ultrawide display" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" sizes="(max-width: 900px) 92vw, (max-width: 1200px) 31vw, 360px" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1536x960.webp 1536w">
                 </figure>
                 <div class="vsl-how-tier__body">
                   <h3>Racer</h3>
@@ -2153,7 +2172,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
             <div class="vsl-how-tier__flipper">
               <div class="vsl-how-tier__front">
                 <figure class="vsl-how-tier__media">
-                  <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" alt="Velocity Pro simulator with panoramic triple-screen setup" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" sizes="(max-width: 900px) 92vw, (max-width: 1200px) 31vw, 360px" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1536x960.webp 1536w">
+                  <img data-asset-key="how-photo-13-pro-tier" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" alt="Velocity Pro simulator with panoramic triple-screen setup" width="1024" height="640" loading="eager" fetchpriority="low" decoding="async" sizes="(max-width: 900px) 92vw, (max-width: 1200px) 31vw, 360px" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1536x960.webp 1536w">
                 </figure>
                 <div class="vsl-how-tier__body">
                   <h3>Pro</h3>
@@ -2480,9 +2499,20 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
     var hero = root.querySelector(".vsl-how-hero");
     var heroVideo = root.querySelector("[data-vsl-hero-video]");
-    if (heroVideo && video.heroBackground) {
-      heroVideo.src = video.heroBackground;
-      if (images.hero) heroVideo.poster = images.hero;
+    if (heroVideo) {
+      /* If a config-driven source URL is provided, prefer it over the inline <source> */
+      if (video && video.heroBackground) {
+        var src = heroVideo.querySelector("source");
+        if (src) src.src = video.heroBackground;
+        try { heroVideo.load(); } catch (err) { /* ignore */ }
+      }
+      if (images.hero && !heroVideo.getAttribute("poster")) {
+        heroVideo.setAttribute("poster", images.hero);
+      }
+      var playPromise = heroVideo.play && heroVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () { /* autoplay blocked — poster will show */ });
+      }
     } else if (hero && images.hero) {
       var mediaEl = hero.querySelector(".vsl-how-hero__media");
       var bg =
@@ -2561,8 +2591,16 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
           settled = true;
           inEl.onload = null;
           inEl.onerror = null;
-          inEl.classList.add("is-active");
+
+          /* Stack incoming on top at opacity 0 (no transition) */
+          inEl.classList.add("is-entering");
+          /* Force a reflow so the next class flip actually animates instead of jumping straight to opacity 1 */
+          void inEl.offsetWidth;
+          /* Drop outgoing's z-index but keep it opaque underneath, then fade incoming up */
           outEl.classList.remove("is-active");
+          inEl.classList.remove("is-entering");
+          inEl.classList.add("is-active");
+
           frontIsA = !frontIsA;
           activeIdx = nextIdx;
         }
@@ -2640,6 +2678,8 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
     root.querySelectorAll("[data-vsl-tier]").forEach(function (tier) {
       tier.addEventListener("click", function () {
+        /* Clear any legacy tilt transform — putting transform on the same element that
+           establishes perspective flattens preserve-3d children and breaks the flip animation. */
         tier.style.removeProperty("transform");
         tier.classList.add("vsl-how-tier--flipping");
         window.clearTimeout(tier._vslFlipElevateTimer);
@@ -2676,17 +2716,48 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
       });
     }
 
+    function prefersReducedMotionScroll() {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+
     function scrollToHash() {
       var hash = window.location.hash;
       if (!hash) return;
       var target = document.querySelector(hash);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (!target) return;
+      var behavior = prefersReducedMotionScroll() ? "auto" : "smooth";
+      target.scrollIntoView({ behavior: behavior, block: "start" });
     }
     window.addEventListener("hashchange", scrollToHash);
     if (window.location.hash) setTimeout(scrollToHash, 300);
-  })();
-</script>
 
+    /* html uses scroll-behavior: auto — intercept in-page hash links so mobile still gets smooth scroll */
+    root.addEventListener(
+      "click",
+      function (e) {
+        var link = e.target.closest("a[href]");
+        if (!link || !root.contains(link)) return;
+        var href = link.getAttribute("href");
+        if (!href || href.charAt(0) !== "#" || href.length < 2) return;
+        var target;
+        try {
+          target = document.querySelector(href);
+        } catch (err) {
+          return;
+        }
+        if (!target) return;
+        e.preventDefault();
+        var behavior = prefersReducedMotionScroll() ? "auto" : "smooth";
+        target.scrollIntoView({ behavior: behavior, block: "start" });
+        if (history.pushState) {
+          history.pushState(null, "", window.location.pathname + window.location.search + href);
+        } else {
+          window.location.hash = href.slice(1);
+        }
+      },
+      true
+    );
+  })();
 </script>
 
 

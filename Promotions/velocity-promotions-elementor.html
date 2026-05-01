@@ -61,6 +61,7 @@
     --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
     /* Hero <img> framing: horizontal %, vertical % (object-position; tweak here to pan) */
     --vsl-hero-photo-position: 48% 60%;
+    --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
 
     font-family: var(--font-body);
     color: var(--navy);
@@ -1372,7 +1373,8 @@
     background: linear-gradient(90deg, #EE265F 0%, rgba(238, 38, 95, 0.15) 100%);
   }
   .vsl-promo-crosslink__tag {
-    font-size: 0.82rem;
+    font-family: var(--font-body);
+    font-size: var(--vsl-card-body);
     font-weight: 500;
     color: rgba(234,234,234,0.8);
     letter-spacing: 0.02em;

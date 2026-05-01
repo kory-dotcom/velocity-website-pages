@@ -28,6 +28,25 @@ Repository: **https://github.com/kory-dotcom/velocity-website-pages**
 - **Free** GitHub Pages applies to **public** repositories. Private repo Pages may require a paid plan; check current GitHub pricing.
 - Paths are relative; they work on both `localhost` and `https://user.github.io/repo/…`.
 
+## WordPress / Elementor — source files (clickable on GitHub)
+
+Use these **blob** links when you need a stable URL (spaces and `&` are encoded). Replace `main` with your branch if needed.
+
+| # | Page | Source on GitHub |
+|---|------|-------------------|
+| 1 | Home | [Home/velocity-home-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Home/velocity-home-elementor.html) |
+| 2 | Food & Drink / Menu | [Food & Drink/velocity-food-drink-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Food%20%26%20Drink/velocity-food-drink-elementor.html) |
+| 3 | Group events | [Parties & Events/velocity-parties-events-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Parties%20%26%20Events/velocity-parties-events-elementor.html) |
+| 4 | Book Now | [Book Now/velocity-book-now-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Book%20Now/velocity-book-now-elementor.html) |
+| 5 | Membership | [Membership Page/velocity-membership-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Membership%20Page/velocity-membership-elementor.html) |
+| 6 | Party Packs | [Party Packs/velocity-party-packs-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Party%20Packs/velocity-party-packs-elementor.html) |
+| 7 | Promotions | [Promotions/velocity-promotions-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Promotions/velocity-promotions-elementor.html) |
+| 8 | About / How it works | [About : How it Works Page_files/velocity-about-how-it-works-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/About%20%3A%20How%20it%20Works%20Page_files/velocity-about-how-it-works-elementor.html) |
+| 9 | Site-wide navbar | [velocity-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/velocity-navbar.html) |
+| 10 | *(optional)* Preview navbar | [preview-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/preview-navbar.html) |
+
+In **Cursor / VS Code**, open files with spaces from the terminal using quotes, e.g. `open "Food & Drink/velocity-food-drink-elementor.html"`.
+
 ## First-time push
 
 ```bash
