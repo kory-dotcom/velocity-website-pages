@@ -564,7 +564,7 @@
     overflow: hidden;
   }
   .vsl-sp-included__inner {
-    max-width: 1120px;
+    max-width: min(1456px, 100%);
     margin: 0 auto;
     text-align: center;
   }
@@ -594,13 +594,13 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--gutter);
-    max-width: 1120px;
+    max-width: min(1456px, 100%);
     margin: 0 auto;
   }
   .vsl-sp-card {
     position: relative;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
     transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1);
     text-align: left;
@@ -633,14 +633,20 @@
     .vsl-sp-card:hover { transform: translate3d(0, 0, 0); }
   }
   .vsl-sp-card__media {
+    position: relative;
     overflow: hidden;
     margin: 0;
-    border-radius: 12px 12px 0 0;
-  }
-  .vsl-sp-card__media img {
+    border-radius: 16px 16px 0 0;
     width: 100%;
     aspect-ratio: 3 / 2;
+  }
+  .vsl-sp-card__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    object-position: center center;
     display: block;
   }
   /* Reserved Area — crop biased slightly right of center */
@@ -648,7 +654,7 @@
     object-position: 68% 50%;
   }
   .vsl-sp-card__accent {
-    height: 4px;
+    height: 5px;
     width: 100%;
   }
   .vsl-sp-included__grid .vsl-sp-card:nth-child(1) .vsl-sp-card__accent { background: var(--red); }
@@ -656,12 +662,12 @@
   .vsl-sp-included__grid .vsl-sp-card:nth-child(3) .vsl-sp-card__accent { background: var(--yellow); }
   .vsl-sp-included__grid .vsl-sp-card:nth-child(4) .vsl-sp-card__accent { background: var(--magenta); }
   .vsl-sp-card__body {
-    padding: 18px 18px 22px;
+    padding: 23px 23px 29px;
   }
   .vsl-sp-card__label {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--vsl-text-card-label);
+    font-size: clamp(1.38125rem, 1.144rem + 1.365vw, 1.625rem);
     font-weight: 600;
     font-style: italic;
     text-transform: uppercase;
@@ -674,7 +680,7 @@
     .vsl-sp-included__grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 480px) {
-    .vsl-sp-included__grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
+    .vsl-sp-included__grid { grid-template-columns: 1fr; max-width: min(468px, 100%); margin: 0 auto; }
   }
 
 

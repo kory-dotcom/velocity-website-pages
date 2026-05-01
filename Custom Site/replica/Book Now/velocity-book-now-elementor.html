@@ -580,8 +580,11 @@
   }
   .vsl-bn-card.vsl-entering {
     opacity: 0;
-    /* Delay via custom property so it survives the animation shorthand (inline animation-delay can lose to the class rule in some engines). */
-    animation: vsl-card-enter 0.45s cubic-bezier(0.16, 1, 0.3, 1) var(--vsl-enter-delay, 0ms) forwards;
+    animation-name: vsl-card-enter;
+    animation-duration: 0.45s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-delay: var(--vsl-enter-delay, 0ms);
+    animation-fill-mode: forwards;
   }
 
   .vsl-bn-card-grid {
@@ -1062,6 +1065,7 @@
   }
   .vsl-bn-membership__media img:first-child {
     grid-row: 1 / -1;
+    object-position: 46% 50%;
   }
   .vsl-bn-membership__media img:nth-child(2) {
     animation-delay: 1.5s;
@@ -2152,7 +2156,7 @@
 
             <a class="vsl-bn-card" data-l="quickRace" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjUvMDIvV2Vic2l0ZV9zdGVwNF9kcml2ZWFuZHJhY2Uud2VicA==" alt="Quick Race experience at Velocity Sim Lounge" width="2400" height="1600" loading="eager" decoding="async">
+                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjUvMDIvV2Vic2l0ZV9zdGVwNF9kcml2ZWFuZHJhY2Uud2VicA==" alt="Quick Race experience at Velocity Sim Lounge" width="2400" height="1600" loading="eager" decoding="sync" fetchpriority="high">
                 <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2658,7 +2662,14 @@
     setTimeout(forceParentHeight, 3000);
     window.addEventListener('resize', function() { setTimeout(forceParentHeight, 50); });
     if (typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(forceParentHeight).observe(root);
+      var vslRoT;
+      new ResizeObserver(function() {
+        clearTimeout(vslRoT);
+        vslRoT = setTimeout(function() {
+          vslRoT = null;
+          forceParentHeight();
+        }, 100);
+      }).observe(root);
     }
 
     root.querySelectorAll('img[data-s]').forEach(function(img) {
@@ -2696,20 +2707,36 @@
     var STAGGER_MS = 80;
     var reduceMotionForTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    function panelTabCards(panel) {
+      var nl = panel.querySelectorAll('.vsl-bn-card-grid .vsl-bn-card, .vsl-bn-spring-grid .vsl-bn-card');
+      return nl.length ? Array.prototype.slice.call(nl) : Array.prototype.slice.call(panel.querySelectorAll('.vsl-bn-card'));
+    }
+
+    function clearCardEntrance(panel) {
+      panelTabCards(panel).forEach(function(card) {
+        card.classList.remove('vsl-entering');
+        card.style.removeProperty('--vsl-enter-delay');
+        card.style.removeProperty('animation');
+      });
+    }
+
     function staggerCards(panel) {
-      if (reduceMotionForTabs) return;
-      var sel = panel.querySelectorAll('.vsl-bn-card-grid > .vsl-bn-card, .vsl-bn-spring-grid > .vsl-bn-card');
-      var cards = sel.length ? Array.prototype.slice.call(sel) : Array.prototype.slice.call(panel.querySelectorAll('.vsl-bn-card'));
+      if (reduceMotionForTabs) {
+        clearCardEntrance(panel);
+        return;
+      }
+      var cards = panelTabCards(panel);
       cards.forEach(function(card) {
         card.classList.remove('vsl-entering');
         card.style.removeProperty('--vsl-enter-delay');
-        card.style.setProperty('animation', 'none');
+        card.style.removeProperty('animation');
       });
       void panel.offsetWidth;
-      cards.forEach(function(card, i) {
-        card.style.removeProperty('animation');
-        card.style.setProperty('--vsl-enter-delay', (i * STAGGER_MS) + 'ms');
-        card.classList.add('vsl-entering');
+      requestAnimationFrame(function() {
+        cards.forEach(function(card, i) {
+          card.style.setProperty('--vsl-enter-delay', (i * STAGGER_MS) + 'ms');
+          card.classList.add('vsl-entering');
+        });
       });
     }
 
@@ -2784,6 +2811,7 @@
     }
 
     function activateTab(tab) {
+      if (tab.getAttribute('aria-selected') === 'true') return;
       tabs.forEach(function(t) { t.setAttribute('aria-selected', 'false'); });
       panels.forEach(function(p) { p.setAttribute('aria-hidden', 'true'); });
       tab.setAttribute('aria-selected', 'true');
@@ -2792,11 +2820,7 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            staggerCards(panel);
-          });
-        });
+        staggerCards(panel);
       }
     }
 
@@ -2852,7 +2876,9 @@
     requestAnimationFrame(function() {
       equalizeCardHeights();
       requestAnimationFrame(function() {
-        if (initialPanel) staggerCards(initialPanel);
+        if (initialPanel) {
+          staggerCards(initialPanel);
+        }
       });
     });
 
