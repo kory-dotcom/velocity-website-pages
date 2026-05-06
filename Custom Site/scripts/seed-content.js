@@ -748,30 +748,18 @@ writeJSON(path.join(CONTENT_DIR, 'schemas', 'spring-bundles.json'), {
   page: "spring-bundles", label: "Spring Bundles",
   sections: {
     hero: { label: "Hero", fields: {
-      eyebrow: { type: "text", label: "Eyebrow (e.g. Spring Special)" },
+      eyebrowWeek: { type: "text", label: "Promo eyebrow — line 1 (e.g. Father's Day week)" },
+      eyebrowDates: { type: "text", label: "Promo eyebrow — line 2 (dates)" },
       heading: { type: "text", label: "Heading" },
-      subcopy: { type: "textarea", label: "Subcopy" },
       heroVideo: { type: "url", label: "Hero Video URL", ...PL },
       heroImage: { type: "image", label: "Fallback Hero Image", ...PL }
     }},
-    twoDriver: { label: "Two-Driver Bundles", fields: {
+    twoDriver: { label: "Father's Day Bundles", fields: {
       heading: { type: "text", label: "Section Heading" },
       subcopy: { type: "textarea", label: "Subcopy" },
       packages: { type: "repeater", label: "Packages", fields: {
         title: { type: "text", label: "Package Name" },
         price: { type: "text", label: "Price Display (e.g. From $65)" },
-        image: { type: "image", label: "Package Image" },
-        bullets: { type: "textarea", label: "Features (one per line)" },
-        bookingLink: { type: "url", label: "Booking Link", ...PL },
-        ctaText: { type: "text", label: "Button Text" }
-      }}
-    }},
-    twoSeater: { label: "2-Seater Bundles", fields: {
-      heading: { type: "text", label: "Section Heading" },
-      subcopy: { type: "textarea", label: "Subcopy" },
-      packages: { type: "repeater", label: "Packages", fields: {
-        title: { type: "text", label: "Package Name" },
-        price: { type: "text", label: "Price Display" },
         image: { type: "image", label: "Package Image" },
         bullets: { type: "textarea", label: "Features (one per line)" },
         bookingLink: { type: "url", label: "Booking Link", ...PL },
@@ -1198,14 +1186,10 @@ const semiPrivateContent = {
 };
 
 const springBundlesContent = {
-  hero: { eyebrow: "Spring Special", heading: "Spring Bundles", subcopy: "Limited-time race + food combos. Grab a friend and enjoy the best value of the season.", heroVideo: "", heroImage: "" },
+  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "", heroImage: "" },
   twoDriver: { heading: "Two-Driver Bundles", subcopy: "Race together, eat together. Limited time only.", packages: [
     { title: "Quick Racer Bundle", price: "From {{price:partyPack.basic}}", image: "", bullets: "Quick race for 2\nFood for 2 included\nRacer-tier simulators", bookingLink: "", ctaText: "Book Now" },
     { title: "Double Pro Bundle", price: "From $99", image: "", bullets: "Double race for 2\nFood for 2 included\nPro-tier simulators", bookingLink: "", ctaText: "Book Now" }
-  ]},
-  twoSeater: { heading: "2-Seater Bundles", subcopy: "Side-by-side racing with food included.", packages: [
-    { title: "Sprint Bundle", price: "From $85", image: "", bullets: "15-min 2-seater session\nFood for 2\nGreat for dates", bookingLink: "", ctaText: "Book Now" },
-    { title: "Endurance Bundle", price: "From {{price:partyPack.premium}}", image: "", bullets: "30-min 2-seater session\nFood for 2\nThe ultimate experience", bookingLink: "", ctaText: "Book Now" }
   ]},
   _seo: { title: "Spring Bundles | Velocity Sim Racing Lounge", description: "Limited-time spring bundle deals at Velocity. Race + food combos starting at $65. Grab a friend and save.", ogImage: "", ogTitle: "Velocity Spring Bundles", noIndex: false }
 };

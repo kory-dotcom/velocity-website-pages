@@ -296,16 +296,12 @@ about: {
 },
 
 "spring-bundles": {
-  hero: { eyebrow: "Spring Special", heading: "Eat & Race *Bundles*", subcopy: "Eat + Race packages that pair the best sim racing with great food. Enjoy special pricing for the month of April.", heroVideo: "", heroImage: "" },
-  twoDriver: { heading: "Two Driver *Bundles*", subcopy: "Limited time offer \u2022 April 2026", packages: [
+  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "", heroImage: "" },
+  twoDriver: { heading: "Father's Day *Bundles*", subcopy: "Eat & Race at Velocity • Father's Day week (June 15–21, 2026)", packages: [
     { title: "Quick Race", price: "From {{price:springQuick}}", image: "", bullets: "2 Simulators (~30 min experience)\n2 Food tickets\nRegularly $105", bookingLink: "", ctaText: "Select package" },
     { title: "Double Race", price: "From {{price:springDouble}}", image: "", bullets: "2 Simulators (~60 min experience)\n2 Food tickets\n2 Races, twice the fun!", bookingLink: "", ctaText: "Select package" }
   ]},
-  twoSeater: { heading: "2-Seater *Bundles*", subcopy: "Share the only 2-seater motion sim experience in Texas.", packages: [
-    { title: "Sprint Bundle", price: "From {{price:springSprint}}", image: "", bullets: "1 shared race (~25 min)\nThe only motion 2-seater in Texas\n2 Food tickets", bookingLink: "", ctaText: "Select package" },
-    { title: "Double Race Bundle", price: "From {{price:springEndurance}}", image: "", bullets: "2 races, 1 shared simulator (~55 min total)\nPick your tracks from our full lineup\n2 Food tickets", bookingLink: "", ctaText: "Select package" }
-  ]},
-  _seo: { title: "Eat & Race Bundles | Velocity Sim Racing Lounge", description: "Limited-time Eat & Race bundles. Two-driver packages from $85, 2-seater bundles from $65. April 2026 only.", ogImage: "", ogTitle: "Velocity Eat & Race Bundles", noIndex: false }
+  _seo: { title: "Eat & Race Bundles | Velocity Sim Racing Lounge", description: "Father\u2019s Day week Eat & Race bundles at Velocity. June 15\u201321, 2026.", ogImage: "", ogTitle: "Velocity Eat & Race Bundles", noIndex: false }
 },
 
 contact: {

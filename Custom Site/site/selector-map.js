@@ -282,13 +282,11 @@ window.CMS_SELECTOR_MAP = {
   },
 
   "spring-bundles": {
-    "hero.eyebrow":       "#spring-hero .vsl-spring-hero__eyebrow",
+    "hero.eyebrowWeek":  "#spring-hero .vsl-spring-hero__eyebrow-line:first-of-type",
+    "hero.eyebrowDates": "#spring-hero .vsl-spring-hero__eyebrow-line--date",
     "hero.heading":       "#spring-hero h1",
-    "hero.subcopy":       "#spring-hero .vsl-spring-hero__sub",
     "twoDriver.heading":  "#spring-bundles h2",
-    "twoDriver.subcopy":  "#spring-bundles .vsl-spring-section__sub",
-    "twoSeater.heading":  "#spring-2seater h2",
-    "twoSeater.subcopy":  "#spring-2seater .vsl-spring-section__sub"
+    "twoDriver.subcopy":  "#spring-bundles .vsl-spring-section-sub"
   },
 
   "book-now": {

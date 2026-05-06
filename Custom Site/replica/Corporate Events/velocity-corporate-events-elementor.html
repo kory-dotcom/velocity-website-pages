@@ -5,10 +5,9 @@
       allEvents: 'https://velocitysimlounge.com/group-events/'
     },
     images: {
-      hero: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp',
-      corporate: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
+      hero: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp',
+      corporate: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp',
       atmosphere: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp',
-      racing: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp',
       group: 'https://velocitysimlounge.com/wp-content/uploads/2025/09/Velocity_610Launch_QUITNGUYEN_DSCF3026-1.webp',
       finishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png'
     },
@@ -74,7 +73,7 @@
       --vsl-hero-bleed-top: -12px;
       --vsl-hero-bleed-bottom: -12px;
       --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-      --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+      --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
 
       font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
       color: var(--navy);
@@ -132,13 +131,13 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      opacity: 0.35;
+      opacity: 0.85;
     }
     .vsl-corp-hero__bg::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(16, 24, 40, 0.45) 0%, rgba(25, 24, 64, 0.82) 100%);
+      background: linear-gradient(180deg, rgba(16, 24, 40, 0.2) 0%, rgba(25, 24, 64, 0.5) 100%);
     }
     .vsl-corp-hero__inner {
       position: relative;
@@ -194,7 +193,7 @@
       min-height: 44px;
       padding: 14px 36px;
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       font-style: italic;
       letter-spacing: 0.1em;
@@ -206,7 +205,7 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(135deg, var(--red), var(--magenta));
+      background: var(--magenta);
       box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
       transition:
         box-shadow 0.22s ease,
@@ -255,6 +254,9 @@
       background-color: var(--deep-indigo);
       color: var(--circuit-white);
       padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin));
+    }
+    .vsl-corporate #corporate-included {
+      background-color: var(--navy);
     }
     .vsl-corp-section--dark {
       background: var(--navy);
@@ -358,35 +360,44 @@
       margin-bottom: 0.6em;
     }
     .vsl-corp-venue__capacity {
-      display: inline-flex;
-      gap: 24px;
-      flex-wrap: wrap;
+      display: flex;
+      flex-wrap: nowrap;
+      gap: clamp(8px, 1.2vw, 16px);
       margin-bottom: 24px;
+      width: 100%;
+    }
+    .vsl-corp-venue__cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
     }
     .vsl-corp-venue__stat {
+      flex: 1 1 0;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      padding: 14px 20px;
+      padding: clamp(10px, 1.2vw, 14px) clamp(12px, 1.4vw, 18px);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      min-width: 140px;
     }
     .vsl-corp-venue__stat-num {
       font-family: var(--font-display);
-      font-size: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+      font-size: clamp(1.35rem, 0.9rem + 1.6vw, 2rem);
       font-weight: 700;
       font-style: italic;
       color: var(--magenta);
       line-height: 1;
     }
     .vsl-corp-venue__stat-label {
-      font-size: var(--vsl-text-xs);
+      font-size: clamp(0.65rem, 0.58rem + 0.25vw, 0.75rem);
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       color: rgba(234, 234, 234, 0.78);
-      margin-top: 4px;
+      margin-top: 6px;
+      line-height: 1.25;
     }
     @media (max-width: 800px) {
       .vsl-corp-venue {
@@ -398,202 +409,464 @@
     }
 
     /* ------------------------------------------------------------------ */
-    /* "PERFECT FOR" PILLS                                                */
+    /* "PERFECT FOR" — EVENT EXPERIENCE CARDS                             */
     /* ------------------------------------------------------------------ */
-    .vsl-corp-pills {
+    .vsl-corp-section--perfect {
+      background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 60%, #0d1322 100%);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .vsl-corp-section--perfect::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 82% 82%, rgba(41, 56, 147, 0.32) 0%, transparent 62%),
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(253, 199, 12, 0.06) 0%, transparent 55%);
+    }
+    .vsl-corp-section--perfect .vsl-corp-section__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .vsl-corp-perfect__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(18px, 2.2vw, 26px);
+      margin-top: clamp(2.5rem, 5vh, 3.5rem);
+    }
+    .vsl-corp-perfect-card {
+      position: relative;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 2rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(14px, 1.8vw, 18px);
+      padding: clamp(26px, 3vw, 36px) clamp(22px, 2.6vw, 30px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.1);
+      border-radius: 18px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     }
-    .vsl-corp-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 40px;
-      border: 1px solid rgba(234, 234, 234, 0.18);
-      background: rgba(234, 234, 234, 0.06);
-      font-family: var(--font-display);
-      font-size: clamp(0.9rem, 0.82rem + 0.4vw, 1.05rem);
-      font-weight: 600;
-      font-style: italic;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--circuit-white);
-      transition: border-color 0.22s ease, background 0.22s ease;
+    .vsl-corp-perfect-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--magenta);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.45s ease;
     }
-    .vsl-corp-pill:hover {
-      border-color: var(--magenta);
-      background: rgba(238, 38, 95, 0.08);
-    }
-    .vsl-corp-pill__icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
+    .vsl-corp-perfect-card:nth-child(1)::before { background: var(--magenta); }
+    .vsl-corp-perfect-card:nth-child(2)::before { background: var(--yellow); }
+    .vsl-corp-perfect-card:nth-child(3)::before { background: var(--blue); }
+    .vsl-corp-perfect-card:nth-child(4)::before { background: var(--magenta); }
+    .vsl-corp-perfect-card:nth-child(5)::before { background: var(--yellow); }
+    .vsl-corp-perfect-card:nth-child(6)::before { background: var(--blue); }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-corp-perfect-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(238, 38, 95, 0.32);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(238, 38, 95, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+      .vsl-corp-perfect-card:hover::before {
+        transform: scaleX(1);
+      }
+      .vsl-corp-perfect-card:hover .vsl-corp-perfect-card__icon {
+        transform: scale(1.06) rotate(-3deg);
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      .vsl-corp-pill { transition: none; }
+      .vsl-corp-perfect-card,
+      .vsl-corp-perfect-card::before,
+      .vsl-corp-perfect-card__icon { transition: none; }
+      .vsl-corp-perfect-card:hover { transform: none; }
+      .vsl-corp-perfect-card:hover .vsl-corp-perfect-card__icon { transform: none; }
+    }
+    .vsl-corp-perfect-card__icon {
+      width: clamp(56px, 6vw, 64px);
+      height: clamp(56px, 6vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--magenta) 0%, var(--blue) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 10px 28px rgba(238, 38, 95, 0.28);
+      flex-shrink: 0;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .vsl-corp-perfect-card:nth-child(2) .vsl-corp-perfect-card__icon {
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--magenta) 100%);
+      box-shadow: 0 10px 28px rgba(253, 199, 12, 0.28);
+    }
+    .vsl-corp-perfect-card:nth-child(3) .vsl-corp-perfect-card__icon {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--deep-indigo) 100%);
+      box-shadow: 0 10px 28px rgba(41, 56, 147, 0.36);
+    }
+    .vsl-corp-perfect-card:nth-child(4) .vsl-corp-perfect-card__icon {
+      background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+      box-shadow: 0 10px 28px rgba(210, 32, 38, 0.28);
+    }
+    .vsl-corp-perfect-card:nth-child(5) .vsl-corp-perfect-card__icon {
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--blue) 100%);
+      box-shadow: 0 10px 28px rgba(253, 199, 12, 0.24);
+    }
+    .vsl-corp-perfect-card:nth-child(6) .vsl-corp-perfect-card__icon {
+      background: linear-gradient(135deg, var(--magenta) 0%, var(--deep-indigo) 100%);
+      box-shadow: 0 10px 28px rgba(238, 38, 95, 0.28);
+    }
+    .vsl-corp-perfect-card__icon svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .vsl-corp-perfect-card__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 0.9rem + 0.85vw, 1.35rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.18;
+      color: #fff;
+    }
+    .vsl-corp-perfect-card:has(.vsl-corp-perfect-card__title a) { cursor: pointer; }
+    .vsl-corp-perfect-card__title a {
+      color: inherit;
+      text-decoration: none;
+      background: none;
+      outline: none;
+    }
+    .vsl-corp-perfect-card__title a::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      border-radius: inherit;
+    }
+    .vsl-corp-perfect-card__title a:focus-visible::after {
+      outline: 3px solid var(--yellow);
+      outline-offset: -3px;
+      border-radius: 18px;
+    }
+    .vsl-corp-perfect-card__desc {
+      margin: 0;
+      font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+      font-weight: 400;
+      line-height: 1.55;
+      color: rgba(234, 234, 234, 0.82);
+    }
+    @media (max-width: 1024px) {
+      .vsl-corp-perfect__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .vsl-corp-perfect__grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
     }
 
     /* ------------------------------------------------------------------ */
-    /* ENHANCEMENTS CARDS                                                 */
+    /* MAKE IT YOURS (enhanced numbered showcase)                         */
     /* ------------------------------------------------------------------ */
+    .vsl-corp-section--makeyours {
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+      padding: clamp(64px, 10vw, 96px) clamp(20px, 5vw, var(--page-margin));
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .vsl-corp-section--makeyours::before {
+      content: '';
+      position: absolute;
+      top: -35%;
+      left: 50%;
+      width: min(900px, 120vw);
+      height: min(900px, 120vw);
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(86, 104, 212, 0.16) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vsl-corp-section--makeyours .vsl-corp-section__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .vsl-corp-makeyours-cta {
+      display: flex;
+      justify-content: center;
+      margin-top: clamp(0.5rem, 1.5vh, 1rem);
+    }
     .vsl-corp-enhance__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--gutter);
-      margin-top: 2.5rem;
+      gap: clamp(20px, 2.5vw, 28px);
+      margin-top: clamp(3rem, 5vh, 4rem);
     }
     .vsl-corp-enhance-card {
+      position: relative;
       background: #fff;
-      border-radius: 12px;
-      padding: 28px 24px 24px;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.34), 0 4px 12px rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(16, 24, 43, 0.06);
+      border-radius: 20px;
+      padding: clamp(32px, 3.5vw, 44px) clamp(26px, 3vw, 36px);
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      border-top: 4px solid var(--blue);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      align-items: flex-start;
+      gap: clamp(16px, 2vw, 20px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.34), 0 4px 12px rgba(0, 0, 0, 0.18);
+      transition: box-shadow 0.4s ease, transform 0.3s ease, border-color 0.4s ease;
+      overflow: hidden;
+      isolation: isolate;
     }
-    .vsl-corp-enhance-card:nth-child(2) { border-top-color: var(--magenta); }
-    .vsl-corp-enhance-card:nth-child(3) { border-top-color: var(--yellow); }
-    .vsl-corp-enhance-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.46), 0 8px 18px rgba(0, 0, 0, 0.22);
+    .vsl-corp-enhance-card__num {
+      position: absolute;
+      top: clamp(12px, 1.5vw, 18px);
+      right: clamp(18px, 2.2vw, 26px);
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 1.8rem + 3vw, 4.25rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1;
+      color: var(--magenta);
+      opacity: 0.1;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      user-select: none;
+    }
+    .vsl-corp-enhance-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--magenta), var(--yellow), var(--blue));
+      transform: translateX(-101%);
+      transition: transform 0.5s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-corp-enhance-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 28px 64px rgba(0, 0, 0, 0.46), 0 8px 18px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(238, 38, 95, 0.28);
+        border-color: rgba(238, 38, 95, 0.32);
+      }
+      .vsl-corp-enhance-card:hover::after {
+        transform: translateX(0);
+      }
+      .vsl-corp-enhance-card:hover .vsl-corp-enhance-card__num {
+        opacity: 0.2;
+        transform: translateY(-2px) scale(1.05);
+      }
+      .vsl-corp-enhance-card:hover .vsl-corp-enhance-card__icon {
+        transform: scale(1.06) rotate(-2deg);
+        box-shadow: 0 14px 34px rgba(238, 38, 95, 0.32);
+      }
     }
     @media (prefers-reduced-motion: reduce) {
-      .vsl-corp-enhance-card { transition: none; }
+      .vsl-corp-enhance-card,
+      .vsl-corp-enhance-card__icon,
+      .vsl-corp-enhance-card__num,
+      .vsl-corp-enhance-card::after { transition: none; }
       .vsl-corp-enhance-card:hover { transform: none; }
+      .vsl-corp-enhance-card:hover .vsl-corp-enhance-card__icon { transform: none; }
     }
     .vsl-corp-enhance-card__icon {
-      width: 44px;
-      height: 44px;
+      width: clamp(72px, 10vw, 92px);
+      height: clamp(72px, 10vw, 92px);
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      padding: clamp(8px, 1.2vw, 12px);
+      line-height: 0;
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(236, 240, 252, 0.96));
+      border: 1px solid rgba(16, 24, 43, 0.1);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.95) inset,
+        0 6px 18px rgba(16, 24, 43, 0.1);
       flex-shrink: 0;
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .vsl-corp-enhance-card__icon img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 82%;
+      max-height: 82%;
+      margin: 0;
+      object-fit: contain;
+      object-position: center center;
     }
     .vsl-corp-enhance-card h3 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: var(--vsl-text-card-label);
+      font-size: clamp(1.15rem, 0.9rem + 1vw, 1.4rem);
       font-weight: 700;
       font-style: italic;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--navy);
       line-height: 1.2;
+      padding-right: 44px;
     }
     .vsl-corp-enhance-card p {
       margin: 0;
-      font-size: var(--vsl-text-body);
-      line-height: 1.45;
+      font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+      font-weight: 400;
+      line-height: 1.6;
       color: var(--slate-violet);
     }
-    @media (max-width: 800px) {
-      .vsl-corp-enhance__grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    @media (max-width: 1024px) {
+      .vsl-corp-enhance__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .vsl-corp-enhance__grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
     }
 
     /* ------------------------------------------------------------------ */
-    /* MOBILE SIMULATOR (split layout, reversed)                          */
+    /* EVERYTHING YOU NEED, INCLUDED                                      */
     /* ------------------------------------------------------------------ */
-    .vsl-corp-mobile {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(32px, 5vw, 64px);
-      align-items: center;
+    .vsl-corp-included {
+      position: relative;
     }
-    .vsl-corp-mobile__media {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-    }
-    .vsl-corp-mobile__media img {
+    .vsl-corp-included__eyebrow {
       display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-    }
-    .vsl-corp-mobile__body {
-      display: flex;
-      flex-direction: column;
-    }
-    .vsl-corp-mobile__list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .vsl-corp-mobile__list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: var(--vsl-text-body);
-      line-height: 1.45;
-      color: var(--mist);
-    }
-    .vsl-corp-mobile__list-icon {
-      flex-shrink: 0;
-      width: 22px;
-      height: 22px;
-      margin-top: 2px;
-    }
-    @media (max-width: 800px) {
-      .vsl-corp-mobile {
-        grid-template-columns: 1fr;
-      }
-      .vsl-corp-mobile__media { order: -1; }
-    }
-
-    /* ------------------------------------------------------------------ */
-    /* WHAT'S INCLUDED ICON GRID                                          */
-    /* ------------------------------------------------------------------ */
-    .vsl-corp-included__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--gutter);
-      margin-top: 2.5rem;
-    }
-    .vsl-corp-included-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 14px;
-      padding: 28px 16px;
-    }
-    .vsl-corp-included-item__icon {
-      width: 56px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow:
-        0 1px 0 rgba(255, 255, 255, 0.95) inset,
-        0 6px 18px rgba(0, 0, 0, 0.32),
-        0 12px 28px rgba(0, 0, 0, 0.22);
-    }
-    .vsl-corp-included-item__icon svg {
-      width: 28px;
-      height: 28px;
-    }
-    .vsl-corp-included-item h3 {
-      margin: 0;
+      margin: 0 auto 0.6em;
       font-family: var(--font-display);
-      font-size: var(--vsl-text-card-label);
+      font-size: clamp(0.75rem, 0.65rem + 0.3vw, 0.85rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      text-align: center;
+    }
+    .vsl-corp-included__title {
+      margin: 0 0 0.4em;
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 0.95rem + 1.4vw, 1.75rem);
       font-weight: 700;
       font-style: italic;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--circuit-white);
       line-height: 1.2;
+      text-align: center;
     }
-    @media (max-width: 800px) {
+    .vsl-corp-included__sub {
+      margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+      text-align: center;
+      font-size: var(--vsl-text-section-sub);
+      font-weight: 500;
+      line-height: 1.5;
+      max-width: 52ch;
+      color: var(--circuit-white);
+      opacity: 0.85;
+    }
+    .vsl-corp-included__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gutter);
+    }
+    .vsl-corp-included-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      padding: clamp(24px, 2.8vw, 32px) clamp(20px, 2.2vw, 26px);
+      background: #fff;
+      border: 1px solid rgba(16, 24, 43, 0.06);
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease;
+      overflow: hidden;
+    }
+    .vsl-corp-included-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--magenta));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-corp-included-item:hover {
+        box-shadow: 0 22px 56px rgba(0, 0, 0, 0.42), 0 8px 18px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(86, 104, 212, 0.32);
+        transform: translateY(-4px);
+        border-color: rgba(86, 104, 212, 0.36);
+      }
+      .vsl-corp-included-item:hover::before {
+        opacity: 1;
+      }
+      .vsl-corp-included-item:hover .vsl-corp-included-item__icon {
+        transform: scale(1.08);
+        box-shadow: 0 4px 16px rgba(41, 56, 147, 0.18);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-corp-included-item,
+      .vsl-corp-included-item__icon { transition: none; }
+      .vsl-corp-included-item:hover { transform: none; }
+      .vsl-corp-included-item:hover .vsl-corp-included-item__icon { transform: none; }
+    }
+    .vsl-corp-included-item__icon {
+      width: clamp(72px, 10vw, 96px);
+      height: clamp(72px, 10vw, 96px);
+      box-sizing: border-box;
+      display: grid;
+      place-items: center;
+      padding: clamp(6px, 1vw, 10px);
+      line-height: 0;
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(236, 240, 252, 0.96));
+      border: 1px solid rgba(16, 24, 43, 0.1);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.95) inset,
+        0 4px 14px rgba(16, 24, 43, 0.08);
+      flex-shrink: 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .vsl-corp-included-item__icon img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: 82%;
+      max-height: 82%;
+      margin: 0;
+      object-fit: contain;
+      object-position: center center;
+    }
+    .vsl-corp-included-item h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 0.82rem + 0.5vw, 1.1rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+    .vsl-corp-included-item p {
+      margin: 0;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      color: var(--slate-violet);
+    }
+    @media (max-width: 1024px) {
       .vsl-corp-included__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 480px) {
@@ -639,7 +912,7 @@
       min-height: 44px;
       padding: 14px 36px;
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       font-style: italic;
       letter-spacing: 0.1em;
@@ -650,7 +923,7 @@
       cursor: pointer;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(135deg, var(--red), var(--magenta));
+      background: var(--magenta);
       box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
       transition: box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease;
     }
@@ -746,10 +1019,9 @@
      data-vsl-config='{
        "inquireUrl": "https://velocitysimracinglounge.tripleseat.com/party_request/49933",
        "allEventsUrl": "https://velocitysimlounge.com/group-events/",
-       "heroImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp",
-       "corporateImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp",
+       "heroImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp",
+       "corporateImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp",
        "atmosphereImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp",
-       "racingImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp",
        "groupImage": "https://velocitysimlounge.com/wp-content/uploads/2025/09/Velocity_610Launch_QUITNGUYEN_DSCF3026-1.webp",
        "finishLineImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"
      }'>
@@ -760,34 +1032,34 @@
     <!-- ============================================================== -->
     <section class="vsl-corp-hero" id="corporate-hero" aria-labelledby="corp-hero-heading">
       <div class="vsl-corp-hero__bg">
-        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp"
+        <img data-vsl-img="hero" data-asset-key="corp-photo-35-hero" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp"
              alt="Panoramic view of the Velocity Sim Racing Lounge venue set up for a corporate event"
              width="1600" height="900"
              fetchpriority="high" decoding="async">
       </div>
       <div class="vsl-corp-hero__inner">
         <h1 class="vsl-corp-hero__title" id="corp-hero-heading">Corporate Events<br><span class="vsl-corp-hero__accent">at Velocity</span></h1>
-        <p class="vsl-corp-hero__sub">From team building to product launches &mdash; Velocity delivers a high-adrenaline, fully custom event experience your team will never forget.</p>
-        <a class="vsl-corp-hero__cta" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Today</a>
+        <p class="vsl-corp-hero__sub">From team building to customer appreciation events &mdash; Velocity delivers a high-adrenaline, fully custom event experience your team will never forget.</p>
+        <a class="vsl-corp-hero__cta" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
       </div>
       <div class="vsl-corp-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- FULL VENUE BUYOUT                                              -->
+    <!-- UNIQUE & ENGAGING EXPERIENCE                                   -->
     <!-- ============================================================== -->
     <section class="vsl-corp-section--light" id="corporate-venue" aria-labelledby="venue-heading">
       <div class="vsl-corp-section__inner">
         <div class="vsl-corp-venue">
           <div class="vsl-corp-venue__media">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
+            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp"
                  alt="Guests enjoying a private corporate event at Velocity with sim racing stations"
                  data-vsl-img="corporate"
                  width="800" height="600" loading="lazy" decoding="async">
           </div>
           <div class="vsl-corp-venue__body">
-            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="venue-heading">Your Private Racetrack</h2>
-            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Full venue buyout for a completely private experience. From planning to execution, our event staff handles every detail.</p>
+            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="venue-heading">A Unique and Engaging Experience</h2>
+            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Host an event your team won&rsquo;t forget. From planning to execution, our event staff handles every detail.</p>
             <div class="vsl-corp-venue__capacity">
               <div class="vsl-corp-venue__stat">
                 <span class="vsl-corp-venue__stat-num">214</span>
@@ -797,13 +1069,14 @@
                 <span class="vsl-corp-venue__stat-num">60</span>
                 <span class="vsl-corp-venue__stat-label">Outdoor Patio</span>
               </div>
+              <div class="vsl-corp-venue__stat">
+                <span class="vsl-corp-venue__stat-num">16+</span>
+                <span class="vsl-corp-venue__stat-label">Racing Simulators</span>
+              </div>
             </div>
-            <ul class="vsl-corp-venue__list">
-              <li>Custom branded racetracks and cars</li>
-              <li>Specialty cocktails and mocktails</li>
-              <li>Curated food menus</li>
-              <li>Fully dedicated event team and manager</li>
-            </ul>
+            <div class="vsl-corp-venue__cta">
+              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+            </div>
           </div>
         </div>
       </div>
@@ -812,162 +1085,150 @@
     <!-- ============================================================== -->
     <!-- PERFECT FOR                                                    -->
     <!-- ============================================================== -->
-    <section class="vsl-corp-section--dark" id="corporate-perfect-for" aria-labelledby="perfect-for-heading">
+    <section class="vsl-corp-section--dark vsl-corp-section--perfect" id="corporate-perfect-for" aria-labelledby="perfect-for-heading">
       <div class="vsl-corp-section__inner">
-        <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="perfect-for-heading">Perfect For</h2>
-        <p class="vsl-corp-section__sub vsl-corp-section__sub--dark vsl-corp-section__sub--center">Whatever the occasion, Velocity creates an unforgettable experience.</p>
-        <div class="vsl-corp-pills">
-          <span class="vsl-corp-pill">
-            <svg class="vsl-corp-pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-            Corporate Celebrations
-          </span>
-          <span class="vsl-corp-pill">
-            <svg class="vsl-corp-pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Holiday Parties
-          </span>
-          <span class="vsl-corp-pill">
-            <svg class="vsl-corp-pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Product Launches
-          </span>
-          <span class="vsl-corp-pill">
-            <svg class="vsl-corp-pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.6"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Team Building Events
-          </span>
-          <span class="vsl-corp-pill">
-            <svg class="vsl-corp-pill__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Large Social Events
-          </span>
+        <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="perfect-for-heading">Built For Every Occasion</h2>
+        <p class="vsl-corp-section__sub vsl-corp-section__sub--dark vsl-corp-section__sub--center">From boardroom kickoffs to end-of-year blowouts &mdash; Velocity turns any corporate event into the one your team won&rsquo;t stop talking about.</p>
+
+        <div class="vsl-corp-perfect__grid">
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 3v6a7 7 0 0 0 14 0V3"/><path d="M5 3h14"/><path d="M9 21h6"/><path d="M12 16v5"/><path d="M5 5H3a3 3 0 0 0 3 3"/><path d="M19 5h2a3 3 0 0 1-3 3"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Holiday and Year-End Parties at Velocity">Holiday &amp; Year-End Parties</a></h3>
+            <p class="vsl-corp-perfect-card__desc">End the year with a roar. Open bar, full venue buyouts, and your team trading wins on the track instead of small talk.</p>
+          </article>
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Team Building and Offsites at Velocity">Team Building &amp; Offsites</a></h3>
+            <p class="vsl-corp-perfect-card__desc">Trade trust falls for trash talk. Live leaderboards, mixed-skill teams, and bragging rights that last well past Monday.</p>
+          </article>
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Product Launches and Activations at Velocity">Product Launches &amp; Activations</a></h3>
+            <p class="vsl-corp-perfect-card__desc">Brand the racetrack, wrap the cars, and put your product in the fast lane. A launch your customers will actually post about.</p>
+          </article>
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Client Entertaining at Velocity">Client Entertaining</a></h3>
+            <p class="vsl-corp-perfect-card__desc">Skip the steakhouse. Treat your top clients to wheel-to-wheel racing, craft cocktails, and conversations that actually close deals.</p>
+          </article>
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Sales Kickoffs and Conferences at Velocity">Sales Kickoffs &amp; Conferences</a></h3>
+            <p class="vsl-corp-perfect-card__desc">Get the team fired up. A/V-ready space for the keynote, then trophies on the podium when the racing starts.</p>
+          </article>
+
+          <article class="vsl-corp-perfect-card">
+            <div class="vsl-corp-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <h3 class="vsl-corp-perfect-card__title"><a href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer" aria-label="Inquire about Milestones and Celebrations at Velocity">Milestones &amp; Celebrations</a></h3>
+            <p class="vsl-corp-perfect-card__desc">Anniversaries, IPOs, big wins &mdash; mark the moment with signature cocktails, custom trophies, and a real championship podium.</p>
+          </article>
+
         </div>
       </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- UNIQUE ENHANCEMENTS                                            -->
-    <!-- ============================================================== -->
-    <section class="vsl-corp-section--light" id="corporate-enhancements" aria-labelledby="enhancements-heading">
-      <div class="vsl-corp-section__inner">
-        <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="enhancements-heading">Unique Enhancements</h2>
-        <p class="vsl-corp-section__sub vsl-corp-section__sub--light vsl-corp-section__sub--center">Elevate your event with personalized touches only Velocity can deliver.</p>
-        <div class="vsl-corp-enhance__grid">
-          <div class="vsl-corp-enhance-card">
-            <svg class="vsl-corp-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <rect x="4" y="4" width="36" height="36" rx="6" stroke="#293893" stroke-width="2"/>
-              <path d="M14 22h16M22 14v16" stroke="#293893" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="22" cy="22" r="5" stroke="#EE265F" stroke-width="1.5" fill="none"/>
-            </svg>
-            <h3>Custom Racetrack Branding</h3>
-            <p>Feature your company logo or message directly on the in-sim racetrack for a fully branded racing experience.</p>
-          </div>
-          <div class="vsl-corp-enhance-card">
-            <svg class="vsl-corp-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <path d="M22 6l4 8h10l-7 6 3 10-10-6-10 6 3-10-7-6h10l4-8z" stroke="#EE265F" stroke-width="2" stroke-linejoin="round" fill="none"/>
-              <rect x="16" y="32" width="12" height="6" rx="2" stroke="#293893" stroke-width="1.5" fill="none"/>
-            </svg>
-            <h3>Custom Branded Trophies</h3>
-            <p>Celebrate your top performers with custom branded trophies and a full podium ceremony for an authentic racing finish.</p>
-          </div>
-          <div class="vsl-corp-enhance-card">
-            <svg class="vsl-corp-enhance-card__icon" viewBox="0 0 44 44" fill="none" aria-hidden="true">
-              <path d="M14 34V18a8 8 0 0116 0v16" stroke="#FDC70C" stroke-width="2" stroke-linecap="round"/>
-              <ellipse cx="22" cy="34" rx="8" ry="3" stroke="#293893" stroke-width="1.5" fill="none"/>
-              <circle cx="22" cy="14" r="3" stroke="#EE265F" stroke-width="1.5" fill="none"/>
-            </svg>
-            <h3>Specialty Event Drinks</h3>
-            <p>Our in-house mixologists craft a custom specialty drink tailored to your event, from signature cocktails to branded mocktails.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FINISH LINE DIVIDER -->
-    <div class="vsl-corp-finish-divider vsl-corp-finish-divider--dark" role="presentation" aria-hidden="true"></div>
-
-    <!-- ============================================================== -->
-    <!-- MOBILE SIMULATOR                                               -->
-    <!-- ============================================================== -->
-    <section class="vsl-corp-section--dark" id="corporate-mobile-sim" aria-labelledby="mobile-sim-heading">
-      <div class="vsl-corp-section__inner">
-        <div class="vsl-corp-mobile">
-          <div class="vsl-corp-mobile__body">
-            <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow" id="mobile-sim-heading">We Bring Racing to You</h2>
-            <p class="vsl-corp-section__sub vsl-corp-section__sub--dark">Transport and set up a full motion racing simulator at your event, anywhere.</p>
-            <ul class="vsl-corp-mobile__list">
-              <li>
-                <svg class="vsl-corp-mobile__list-icon" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M9 11l2 2 4-4" stroke="#FDC70C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="9" stroke="#FDC70C" stroke-width="1.5"/></svg>
-                Dedicated staff on-site to assist your guests
-              </li>
-              <li>
-                <svg class="vsl-corp-mobile__list-icon" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M9 11l2 2 4-4" stroke="#FDC70C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="9" stroke="#FDC70C" stroke-width="1.5"/></svg>
-                Live leaderboard tracking the best lap times
-              </li>
-              <li>
-                <svg class="vsl-corp-mobile__list-icon" viewBox="0 0 22 22" fill="none" aria-hidden="true"><path d="M9 11l2 2 4-4" stroke="#FDC70C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="9" stroke="#FDC70C" stroke-width="1.5"/></svg>
-                Customization options including branding and messaging
-              </li>
-            </ul>
-          </div>
-          <div class="vsl-corp-mobile__media">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105.webp"
-                 alt="Velocity mobile racing simulator set up at an off-site corporate event"
-                 data-vsl-img="racing"
-                 width="800" height="600" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- WHAT'S INCLUDED                                                -->
+    <!-- EVERYTHING YOU NEED, INCLUDED                                  -->
     <!-- ============================================================== -->
     <section class="vsl-corp-section--light" id="corporate-included" aria-labelledby="included-heading">
       <div class="vsl-corp-section__inner">
-        <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="included-heading">What&rsquo;s Included</h2>
-        <p class="vsl-corp-section__sub vsl-corp-section__sub--light vsl-corp-section__sub--center">Every corporate event at Velocity comes with everything you need.</p>
-        <div class="vsl-corp-included__grid">
+        <div class="vsl-corp-included">
+          <span class="vsl-corp-included__eyebrow">What&rsquo;s Included</span>
+          <h2 class="vsl-corp-included__title" id="included-heading">Everything You Need, Included</h2>
+          <p class="vsl-corp-included__sub">Every corporate event at Velocity comes standard with the essentials &mdash; so you can focus on your guests.</p>
+          <div class="vsl-corp-included__grid">
 
-          <div class="vsl-corp-included-item">
-            <div class="vsl-corp-included-item__icon">
-              <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <circle cx="14" cy="10" r="5" stroke="#293893" stroke-width="1.8"/>
-                <rect x="6" y="18" width="16" height="6" rx="3" stroke="#293893" stroke-width="1.8"/>
-                <path d="M14 5v-2M10 7l-1.5-1.5M18 7l1.5-1.5" stroke="#EE265F" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-sims">
+              </div>
+              <h3>Dedicated Racing Simulators</h3>
+              <p>Private racing simulators reserved exclusively for your group from start to finish.</p>
             </div>
-            <h3>Dedicated Racing Simulators</h3>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-seating">
+              </div>
+              <h3>Reserved Area &amp; Seating</h3>
+              <p>Your own dedicated space within the venue, set up and ready for your party.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-menu">
+              </div>
+              <h3>Choice of Menu</h3>
+              <p>Curated catering packages and craft bar service designed around your event.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-staff">
+              </div>
+              <h3>Event Manager &amp; Staff</h3>
+              <p>A dedicated event manager and on-site team guiding the night end to end.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MAKE IT YOURS                                                  -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--makeyours" id="corporate-make-it-yours" aria-labelledby="makeyours-heading">
+      <div class="vsl-corp-section__inner">
+        <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="makeyours-heading">Make It Yours</h2>
+        <p class="vsl-corp-section__sub vsl-corp-section__sub--light vsl-corp-section__sub--center">Custom touches only Velocity can deliver &mdash; turn your event into a signature experience your team will remember. Inquire today to host your own unique event.</p>
+        <div class="vsl-corp-makeyours-cta">
+          <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+        </div>
+        <div class="vsl-corp-enhance__grid">
+
+          <div class="vsl-corp-enhance-card">
+            <span class="vsl-corp-enhance-card__num" aria-hidden="true">01</span>
+            <div class="vsl-corp-enhance-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/unique-upgrades.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-enhance-branding">
+            </div>
+            <h3>Custom Racetrack Branding</h3>
+            <p>Feature your company logo or message directly on the in-sim racetrack and cars for a fully branded racing experience.</p>
           </div>
 
-          <div class="vsl-corp-included-item">
-            <div class="vsl-corp-included-item__icon">
-              <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <rect x="3" y="8" width="22" height="14" rx="3" stroke="#293893" stroke-width="1.8"/>
-                <path d="M7 14h4M17 14h4" stroke="#293893" stroke-width="1.6" stroke-linecap="round"/>
-                <circle cx="14" cy="14" r="2" fill="#EE265F"/>
-              </svg>
+          <div class="vsl-corp-enhance-card">
+            <span class="vsl-corp-enhance-card__num" aria-hidden="true">02</span>
+            <div class="vsl-corp-enhance-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/fun-for-all-skill-levels.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-enhance-trophies">
             </div>
-            <h3>Reserved Area &amp; Seating</h3>
+            <h3>Custom Branded Trophies</h3>
+            <p>Celebrate your top performers with custom branded trophies and a full podium ceremony for an authentic racing finish.</p>
           </div>
 
-          <div class="vsl-corp-included-item">
-            <div class="vsl-corp-included-item__icon">
-              <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <path d="M6 22V10a2 2 0 012-2h12a2 2 0 012 2v12" stroke="#293893" stroke-width="1.8" stroke-linecap="round"/>
-                <path d="M10 22v-6h8v6" stroke="#293893" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="14" cy="12" r="2" fill="#EE265F"/>
-              </svg>
+          <div class="vsl-corp-enhance-card">
+            <span class="vsl-corp-enhance-card__num" aria-hidden="true">03</span>
+            <div class="vsl-corp-enhance-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/chef-crafted-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-enhance-drinks">
             </div>
-            <h3>Choice of Menu</h3>
-          </div>
-
-          <div class="vsl-corp-included-item">
-            <div class="vsl-corp-included-item__icon">
-              <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
-                <circle cx="10" cy="10" r="4" stroke="#293893" stroke-width="1.8"/>
-                <path d="M4 24v-2a6 6 0 0112 0v2" stroke="#293893" stroke-width="1.8" stroke-linecap="round"/>
-                <circle cx="20" cy="10" r="3" stroke="#EE265F" stroke-width="1.5"/>
-                <path d="M16 24v-1a5 5 0 018 0v1" stroke="#EE265F" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Event Manager &amp; Staff</h3>
+            <h3>Specialty Event Drinks</h3>
+            <p>Our in-house mixologists craft a custom specialty drink tailored to your event, from signature cocktails to branded mocktails.</p>
           </div>
 
         </div>
@@ -982,8 +1243,7 @@
         <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="book-heading">Book Your Corporate Event</h2>
         <p class="vsl-corp-section__sub vsl-corp-section__sub--dark vsl-corp-section__sub--center">Ready to create an unforgettable experience? Our team is standing by to make it happen.</p>
         <div class="vsl-corp-bottom-cta__actions">
-          <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Today</a>
-          <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/group-events/" data-vsl-link="allEvents">Back to All Events</a>
+          <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
         </div>
       </div>
     </section>
@@ -993,28 +1253,93 @@
 
 <script>
   (function () {
-    var root = document.querySelector('.vsl-corporate');
-    if (!root) return;
+    function getRoot() { return document.querySelector('.vsl-corporate'); }
+    function getCfg() { return window.VSL_CORPORATE_CONFIG || {}; }
 
-    var cfg = window.VSL_CORPORATE_CONFIG || {};
-    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
-    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+    function syncLinksAndImages() {
+      var root = getRoot();
+      if (!root) return;
 
-    var imgMap = cfg.images || {};
-    if (imgMap.finishLine) {
-      root.style.setProperty('--vsl-hero-finish', 'url("' + imgMap.finishLine + '")');
+      var cfg = getCfg();
+      var imgMap = cfg.images || {};
+      var linkMap = cfg.links || {};
+
+      var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+      if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+      if (imgMap.finishLine) {
+        root.style.setProperty('--vsl-hero-finish', 'url("' + imgMap.finishLine + '")');
+      }
+
+      root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
+        var key = a.getAttribute('data-vsl-link');
+        if (key && linkMap[key]) a.setAttribute('href', linkMap[key]);
+      });
+
+      root.querySelectorAll('img[data-vsl-img]').forEach(function (img) {
+        var key = img.getAttribute('data-vsl-img');
+        if (key && imgMap[key]) img.src = imgMap[key];
+      });
     }
 
-    var linkMap = cfg.links || {};
-    root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
-      var key = a.getAttribute('data-vsl-link');
-      if (key && linkMap[key]) a.setAttribute('href', linkMap[key]);
-    });
+    /* Defensive click handler:
+       Even if something else (Elementor, theme, plugin) rewrites the href
+       between page load and click, this guarantees clicks on
+       data-vsl-link anchors always go to the configured URL. */
+    function bindClickInterceptor() {
+      var root = getRoot();
+      if (!root || root._vslClickBound) return;
+      root._vslClickBound = true;
 
-    root.querySelectorAll('img[data-vsl-img]').forEach(function (img) {
-      var key = img.getAttribute('data-vsl-img');
-      if (key && imgMap[key]) img.src = imgMap[key];
-    });
+      root.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[data-vsl-link]');
+        if (!a || !root.contains(a)) return;
+        var key = a.getAttribute('data-vsl-link');
+        var cfg = getCfg();
+        var linkMap = cfg.links || {};
+        var url = linkMap[key];
+        if (!url) return;
+
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        var target = a.getAttribute('target') || '_blank';
+        if (target === '_self' || target === '_top' || target === '_parent') {
+          window.open(url, target);
+        } else {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        }
+      }, true);
+    }
+
+    function init() {
+      if (!getRoot()) return;
+      syncLinksAndImages();
+      bindClickInterceptor();
+    }
+
+    if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }
+
+    /* Re-sync after Elementor frontend mounts so late-rendered widgets get correct hrefs */
+    if (window.elementorFrontend && window.elementorFrontend.hooks) {
+      window.elementorFrontend.hooks.addAction('frontend/element_ready/global', init);
+    } else {
+      window.addEventListener('elementor/frontend/init', function () {
+        if (window.elementorFrontend && window.elementorFrontend.hooks) {
+          window.elementorFrontend.hooks.addAction('frontend/element_ready/global', init);
+        }
+      });
+    }
+
+    window.addEventListener('load', init);
+
+    /* Short polling fallback for stubborn embed environments */
+    var attempts = 0;
+    var poller = setInterval(function () {
+      attempts++;
+      init();
+      if (attempts >= 20) clearInterval(poller);
+    }, 300);
   })();
 </script>
 
@@ -1034,7 +1359,7 @@
 
   Open Graph:
     og:title       = Corporate Events at Velocity Sim Racing Lounge
-    og:description = From team building to product launches — Velocity delivers a high-adrenaline, fully custom event experience your team will never forget.
+    og:description = From team building to customer appreciation events — Velocity delivers a high-adrenaline, fully custom event experience your team will never forget.
     og:image       = https://velocitysimlounge.com/wp-content/uploads/2025/07/DSC00918.webp
     og:type        = website
 

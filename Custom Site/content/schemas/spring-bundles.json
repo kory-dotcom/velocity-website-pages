@@ -5,17 +5,17 @@
     "hero": {
       "label": "Hero",
       "fields": {
-        "eyebrow": {
+        "eyebrowWeek": {
           "type": "text",
-          "label": "Eyebrow (e.g. Spring Special)"
+          "label": "Promo eyebrow — line 1 (e.g. Father's Day week)"
+        },
+        "eyebrowDates": {
+          "type": "text",
+          "label": "Promo eyebrow — line 2 (dates)"
         },
         "heading": {
           "type": "text",
           "label": "Heading"
-        },
-        "subcopy": {
-          "type": "textarea",
-          "label": "Subcopy"
         },
         "heroVideo": {
           "type": "url",
@@ -30,7 +30,7 @@
       }
     },
     "twoDriver": {
-      "label": "Two-Driver Bundles",
+      "label": "Father's Day Bundles",
       "fields": {
         "heading": {
           "type": "text",
@@ -51,50 +51,6 @@
             "price": {
               "type": "text",
               "label": "Price Display (e.g. From $65)"
-            },
-            "image": {
-              "type": "image",
-              "label": "Package Image"
-            },
-            "bullets": {
-              "type": "textarea",
-              "label": "Features (one per line)"
-            },
-            "bookingLink": {
-              "type": "url",
-              "label": "Booking Link",
-              "perLocation": true
-            },
-            "ctaText": {
-              "type": "text",
-              "label": "Button Text"
-            }
-          }
-        }
-      }
-    },
-    "twoSeater": {
-      "label": "2-Seater Bundles",
-      "fields": {
-        "heading": {
-          "type": "text",
-          "label": "Section Heading"
-        },
-        "subcopy": {
-          "type": "textarea",
-          "label": "Subcopy"
-        },
-        "packages": {
-          "type": "repeater",
-          "label": "Packages",
-          "fields": {
-            "title": {
-              "type": "text",
-              "label": "Package Name"
-            },
-            "price": {
-              "type": "text",
-              "label": "Price Display"
             },
             "image": {
               "type": "image",

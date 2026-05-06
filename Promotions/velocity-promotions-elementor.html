@@ -1285,7 +1285,10 @@
   .vsl-promo-crosslink-grid {
     display: grid;
     gap: var(--gutter);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: min(880px, 100%);
+    margin-inline: auto;
+    justify-items: stretch;
     align-items: start;
   }
   .vsl-promo-crosslink {
@@ -1555,7 +1558,7 @@
   }
 </style>
 
-<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 60%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkBundles":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
+<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","springBundles":"https://velocitysimlounge.com/spring-bundles/","partyPacks":"https://velocitysimlounge.com/party-packs/","events":"https://velocitysimlounge.com/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 60%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1833,25 +1836,13 @@
           Explore <em>More</em>
         </h2>
         <p class="vsl-promo-section-sub">
-          Combine your discount with one of our packages for even more value.
+          Combine your discount with party packs or group events for even more value.
         </p>
 
         <div class="vsl-promo-crosslink-grid">
 
-          <a class="vsl-promo-crosslink" data-vsl-promo-link="springBundles" href="https://velocitysimlounge.com/spring-bundles/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkBundles" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3105-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Eat and Race Bundles at Velocity" width="1024" height="683" loading="lazy" decoding="async">
-            <div class="vsl-promo-crosslink__overlay"></div>
-            <div class="vsl-promo-crosslink__body">
-              <h3 class="vsl-promo-crosslink__name">Bundles</h3>
-              <span class="vsl-promo-crosslink__tag">Eat &amp; Race packages from $65</span>
-            </div>
-            <div class="vsl-promo-crosslink__arrow" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-          </a>
-
           <a class="vsl-promo-crosslink" data-vsl-promo-link="partyPacks" href="https://velocitysimlounge.com/party-packs/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkPartyPacks" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Party Packs at Velocity" width="1024" height="683" loading="lazy" decoding="async">
+            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkPartyPacks" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, min(440px, 44vw)" alt="Party Packs at Velocity" width="1024" height="683" loading="lazy" decoding="async">
             <div class="vsl-promo-crosslink__overlay"></div>
             <div class="vsl-promo-crosslink__body">
               <h3 class="vsl-promo-crosslink__name">Party Packs</h3>
@@ -1863,7 +1854,7 @@
           </a>
 
           <a class="vsl-promo-crosslink" data-vsl-promo-link="events" href="https://velocitysimlounge.com/group-events/">
-            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkEvents" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, 32vw" alt="Group Events at Velocity" width="1024" height="683" loading="lazy" decoding="async">
+            <img class="vsl-promo-crosslink__img" data-vsl-promo="crosslinkEvents" src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, min(440px, 44vw)" alt="Group Events at Velocity" width="1024" height="683" loading="lazy" decoding="async">
             <div class="vsl-promo-crosslink__overlay"></div>
             <div class="vsl-promo-crosslink__body">
               <h3 class="vsl-promo-crosslink__name">Events</h3>

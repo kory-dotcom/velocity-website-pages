@@ -4,22 +4,19 @@
     allEventsLink: 'https://velocitysimlounge.com/group-events/',
     images: {
       hero: 'https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg',
-      corporate: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
-      racer: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp',
-      atmosphere: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp',
-      venue: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
-      finishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png',
+      features: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
       dedicatedSims: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Dedicated_Sims-1024x683.webp',
       reservedArea: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp',
       menu: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/menu-1024x683.webp',
-      eventStaff: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/event_staff-1024x683.webp'
+      eventStaff: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/event_staff-1024x683.webp',
+      finishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png'
     },
     elementorColumnOutdentPx: 12
   };
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Dedicated_Sims-1024x683.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/menu-1024x683.webp" fetchpriority="low">
@@ -42,16 +39,34 @@
   .elementor-widget-html a[class*="vsl-"][class*="btn"],
   .elementor-widget-html a[class*="vsl-"][class*="__cta"],
   .elementor-widget-html a[class*="vsl-"][class*="-card"],
-  .elementor-widget-html a[class*="mem-tier"] {
+  .elementor-widget-html a[class*="mem-tier"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="btn"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-shortcode a[class*="vsl-"][class*="-card"],
+  .elementor-widget-container a.vsl-sp-btn,
+  .elementor-widget-container a.vsl-sp-usecase {
     text-decoration: none !important;
     text-decoration-line: none !important;
   }
   .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
   .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
   .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
-  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-shortcode a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-container a.vsl-sp-btn:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-container a.vsl-sp-usecase:is(:hover, :focus, :focus-visible, :visited, :active) {
     text-decoration: none !important;
     text-decoration-line: none !important;
+  }
+
+  /* What's Included: Elementor / Kit globals often set h3 { color: inherit !important } on dark pages.
+     Section uses light text; cards are white — inherited white on white made titles invisible. */
+  .elementor .vsl-sp-included .vsl-sp-card__label,
+  .elementor-widget-html .vsl-sp-included .vsl-sp-card__label {
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
   }
 
   .vsl-semiprivate {
@@ -81,7 +96,7 @@
     --vsl-outdent: 0px;
     --vsl-hero-bleed-top: -12px;
     --vsl-hero-bleed-bottom: -12px;
-    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
 
     font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
     color: var(--navy);
@@ -139,19 +154,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 30%;
+    object-position: center 70%;
     display: block;
-  }
-  .vsl-sp-hero__bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(16, 24, 40, 0.52) 0%,
-      rgba(16, 24, 40, 0.78) 55%,
-      rgba(16, 24, 40, 0.94) 100%
-    );
   }
   .vsl-sp-hero__inner {
     position: relative;
@@ -190,7 +194,7 @@
   .vsl-sp-hero__sub {
     margin: 0 0 1.75rem;
     padding: 6px 12px;
-    font-size: clamp(1rem, 0.88rem + 0.55vw, 1.1875rem);
+    font-size: clamp(1.1875rem, 1rem + 0.8vw, 1.5rem);
     font-weight: 400;
     line-height: 1.55;
     color: var(--circuit-white) !important;
@@ -208,13 +212,15 @@
     min-height: 44px;
     padding: 12px 32px;
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 700;
     font-style: italic;
+    line-height: 1;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     text-align: center;
-    text-decoration: none;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
     cursor: pointer;
     border-radius: 8px;
     transition:
@@ -228,7 +234,7 @@
   .vsl-sp-btn--primary {
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
-    background: linear-gradient(135deg, var(--red), var(--magenta));
+    background: var(--magenta);
     border: 2px solid transparent;
     box-shadow: 0 4px 18px rgba(210, 32, 38, 0.3);
   }
@@ -240,6 +246,17 @@
     filter: brightness(0.93);
     transform: scale(0.98);
     box-shadow: 0 3px 14px rgba(238, 38, 95, 0.25);
+  }
+  /* WP / Elementor themes often force link underlines — beat them on every state */
+  .vsl-semiprivate a.vsl-sp-btn,
+  .vsl-semiprivate a.vsl-sp-btn:link,
+  .vsl-semiprivate a.vsl-sp-btn:visited,
+  .vsl-semiprivate a.vsl-sp-btn:hover,
+  .vsl-semiprivate a.vsl-sp-btn:focus,
+  .vsl-semiprivate a.vsl-sp-btn:focus-visible,
+  .vsl-semiprivate a.vsl-sp-btn:active {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
   }
   .vsl-sp-btn--outline {
     color: var(--magenta) !important;
@@ -326,28 +343,34 @@
     text-wrap: balance;
   }
   .vsl-sp-features__list {
-    margin: 0 0 0.5rem;
-    padding: 0 0 0 1.25em;
+    margin: 0 0 1.5rem;
+    padding: 0 0 0 1em;
     list-style: none;
   }
   .vsl-sp-features__list li {
     position: relative;
-    margin-bottom: 0.85em;
+    margin-bottom: 0.35em;
     font-size: var(--vsl-text-body-lg);
     font-weight: 400;
     line-height: 1.45;
     color: rgba(234, 234, 234, 0.88);
-    padding-left: 0.3em;
+    padding-left: 0;
+  }
+  .vsl-sp-features__list li:last-child {
+    margin-bottom: 0;
   }
   .vsl-sp-features__list li::before {
     content: '';
     position: absolute;
-    left: -1.25em;
-    top: 0.45em;
-    width: 8px;
-    height: 8px;
+    left: -1em;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: var(--magenta);
+  }
+  .vsl-sp-features__cta {
+    margin-top: 1.5rem;
   }
   .vsl-sp-features__media {
     position: relative;
@@ -385,12 +408,15 @@
 
   .vsl-sp-usecases {
     position: relative;
-    background: linear-gradient(160deg, var(--navy) 0%, var(--deep-indigo) 100%);
-    padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin));
+    background: linear-gradient(168deg, var(--deep-indigo) 0%, var(--navy) 60%, #0d1322 100%);
+    padding: clamp(56px, 10vw, 96px) clamp(20px, 5vw, var(--page-margin));
     overflow: hidden;
+    isolation: isolate;
     color: var(--circuit-white);
   }
   .vsl-sp-usecases__inner {
+    position: relative;
+    z-index: 1;
     max-width: 1120px;
     margin: 0 auto;
     text-align: center;
@@ -415,66 +441,174 @@
     color: var(--circuit-white) !important;
     -webkit-text-fill-color: var(--circuit-white) !important;
     line-height: 1.4;
-    max-width: 42ch;
+    max-width: 48ch;
   }
   .vsl-sp-usecases__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--gutter);
-    max-width: 960px;
-    margin: 0 auto;
+    gap: clamp(18px, 2.2vw, 26px);
+    margin-top: clamp(2.5rem, 5vh, 3.5rem);
   }
   .vsl-sp-usecase {
-    background: rgba(234, 234, 234, 0.04);
-    border: 1px solid rgba(234, 234, 234, 0.08);
-    border-radius: 12px;
-    padding: clamp(24px, 4vw, 36px) clamp(16px, 3vw, 24px);
-    text-align: center;
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(14px, 1.8vw, 18px);
+    padding: clamp(26px, 3vw, 36px) clamp(22px, 2.6vw, 30px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(234, 234, 234, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    isolation: isolate;
+    text-align: left;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    contain: layout paint;
+    transition: transform 0.28s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.28s ease, background 0.28s ease;
   }
+  .vsl-sp-usecase:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-semiprivate a.vsl-sp-usecase,
+  .vsl-semiprivate a.vsl-sp-usecase:link,
+  .vsl-semiprivate a.vsl-sp-usecase:visited,
+  .vsl-semiprivate a.vsl-sp-usecase:hover,
+  .vsl-semiprivate a.vsl-sp-usecase:focus,
+  .vsl-semiprivate a.vsl-sp-usecase:focus-visible,
+  .vsl-semiprivate a.vsl-sp-usecase:active {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  /* Top accent bar — slides in on hover */
+  .vsl-sp-usecase::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--magenta);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+  /* Heavy hover shadow lives on a layer that toggles via opacity (no blur repaint). */
+  .vsl-sp-usecase::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(238, 38, 95, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: opacity 0.22s linear;
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: opacity;
+    z-index: 0;
+  }
+  .vsl-sp-usecase:nth-child(1)::before { background: var(--magenta); }
+  .vsl-sp-usecase:nth-child(2)::before { background: var(--yellow); }
+  .vsl-sp-usecase:nth-child(3)::before { background: var(--blue); }
+  .vsl-sp-usecase:nth-child(4)::before { background: var(--red); }
   @media (hover: hover) and (pointer: fine) {
-    .vsl-sp-usecase:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+    .vsl-sp-usecase:hover,
+    .vsl-sp-usecase:focus-visible {
+      transform: translate3d(0, -6px, 0);
+      border-color: rgba(238, 38, 95, 0.32);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+    }
+    .vsl-sp-usecase:hover::before,
+    .vsl-sp-usecase:focus-visible::before { transform: scaleX(1); }
+    .vsl-sp-usecase:hover::after,
+    .vsl-sp-usecase:focus-visible::after  { opacity: 1; }
+    .vsl-sp-usecase:hover .vsl-sp-usecase__icon,
+    .vsl-sp-usecase:focus-visible .vsl-sp-usecase__icon {
+      transform: scale(1.06) rotate(-3deg);
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .vsl-sp-usecase { transition: none; }
-    .vsl-sp-usecase:hover { transform: none; }
+    .vsl-sp-usecase,
+    .vsl-sp-usecase::before,
+    .vsl-sp-usecase::after,
+    .vsl-sp-usecase__icon { transition: none; }
+    .vsl-sp-usecase:hover { transform: translate3d(0, 0, 0); }
+    .vsl-sp-usecase:hover .vsl-sp-usecase__icon { transform: none; }
   }
+  .vsl-sp-usecase > * { position: relative; z-index: 1; }
   .vsl-sp-usecase__icon {
-    width: 48px;
-    height: 48px;
-    margin: 0 auto 14px;
+    width: clamp(56px, 6vw, 64px);
+    height: clamp(56px, 6vw, 64px);
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--magenta) 0%, var(--blue) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 28px rgba(238, 38, 95, 0.28);
+    flex-shrink: 0;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+  }
+  .vsl-sp-usecase:nth-child(2) .vsl-sp-usecase__icon {
+    background: linear-gradient(135deg, var(--yellow) 0%, var(--magenta) 100%);
+    box-shadow: 0 10px 28px rgba(253, 199, 12, 0.28);
+  }
+  .vsl-sp-usecase:nth-child(3) .vsl-sp-usecase__icon {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--deep-indigo) 100%);
+    box-shadow: 0 10px 28px rgba(41, 56, 147, 0.36);
+  }
+  .vsl-sp-usecase:nth-child(4) .vsl-sp-usecase__icon {
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+    box-shadow: 0 10px 28px rgba(210, 32, 38, 0.28);
   }
   .vsl-sp-usecase__icon svg {
-    width: 100%;
-    height: 100%;
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
-  .vsl-sp-usecase__label {
+  .vsl-sp-usecase__title {
     margin: 0;
     font-family: var(--font-display);
-    font-size: var(--vsl-text-card-label);
-    font-weight: 600;
+    font-size: clamp(1.1rem, 0.9rem + 0.85vw, 1.35rem);
+    font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    line-height: 1.25;
-    color: var(--circuit-white);
+    line-height: 1.18;
+    color: #fff;
+  }
+  .vsl-sp-usecase__desc {
+    margin: 0;
+    font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1rem);
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(234, 234, 234, 0.82);
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 1024px) {
     .vsl-sp-usecases__grid {
       grid-template-columns: repeat(2, 1fr);
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
-  @media (max-width: 420px) {
+  @media (max-width: 600px) {
     .vsl-sp-usecases__grid {
       grid-template-columns: 1fr;
-      max-width: 280px;
+      max-width: 480px;
     }
   }
 
@@ -526,23 +660,45 @@
     position: relative;
     background: #fff;
     border-radius: 16px;
-    overflow: hidden;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+    transition: transform 0.18s cubic-bezier(0.2, 0, 0.2, 1);
     text-align: left;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+    /* Inherit light text from .vsl-sp-included — WP/Elementor often forces h3 { color: inherit !important }
+       which makes labels white-on-white. Reset card chrome to dark body text. */
+    color: var(--navy);
+    isolation: isolate;
+    contain: layout;
+  }
+  /* Hover shadow lives on a pseudo-element and animates opacity only.
+     Avoids costly box-shadow blur animation that caused paint lag. */
+  .vsl-sp-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48), 0 8px 18px rgba(0, 0, 0, 0.26);
+    opacity: 0;
+    transition: opacity 0.18s linear;
+    pointer-events: none;
+    will-change: opacity;
+    transform: translateZ(0);
   }
   @media (hover: hover) and (pointer: fine) {
-    .vsl-sp-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.48), 0 8px 18px rgba(0, 0, 0, 0.26);
-    }
+    .vsl-sp-card:hover { transform: translate3d(0, -4px, 0); }
+    .vsl-sp-card:hover::after { opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .vsl-sp-card { transition: none; }
-    .vsl-sp-card:hover { transform: none; }
+    .vsl-sp-card,
+    .vsl-sp-card::after { transition: none; }
+    .vsl-sp-card:hover { transform: translate3d(0, 0, 0); }
   }
   .vsl-sp-card__media {
     position: relative;
+    z-index: 1;
     overflow: hidden;
     margin: 0;
     border-radius: 16px 16px 0 0;
@@ -558,10 +714,13 @@
     object-position: center center;
     display: block;
   }
+  /* Reserved Area — crop biased slightly right of center */
   .vsl-sp-card__media--focus-right img {
     object-position: 68% 50%;
   }
   .vsl-sp-card__accent {
+    position: relative;
+    z-index: 1;
     height: 5px;
     width: 100%;
   }
@@ -570,6 +729,8 @@
   .vsl-sp-included__grid .vsl-sp-card:nth-child(3) .vsl-sp-card__accent { background: var(--yellow); }
   .vsl-sp-included__grid .vsl-sp-card:nth-child(4) .vsl-sp-card__accent { background: var(--magenta); }
   .vsl-sp-card__body {
+    position: relative;
+    z-index: 1;
     padding: 23px 23px 29px;
   }
   .vsl-sp-card__label {
@@ -581,7 +742,11 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     line-height: 1.25;
-    color: var(--navy);
+    /* Beat Elementor global heading / inherit rules — was invisible (white on white) on WP */
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   @media (max-width: 900px) {
@@ -653,40 +818,6 @@
   }
 
 
-  /* ── GALLERY STRIP ───────────────────────────────────── */
-
-  .vsl-sp-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-  }
-  .vsl-sp-gallery__item {
-    overflow: hidden;
-    margin: 0;
-  }
-  .vsl-sp-gallery__item img {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-sp-gallery__item img:hover {
-      transform: scale(1.04);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .vsl-sp-gallery__item img { transition: none; }
-    .vsl-sp-gallery__item img:hover { transform: none; }
-  }
-  @media (max-width: 639px) {
-    .vsl-sp-gallery {
-      grid-template-columns: 1fr;
-    }
-  }
-
-
   /* ── RESPONSIVE HERO ─────────────────────────────────── */
 
   @media (max-width: 639px) {
@@ -732,7 +863,7 @@
           Semi-Private <span class="vsl-sp-hero__accent">Group Events</span>
         </h1>
         <p class="vsl-sp-hero__sub">Host a fun and memorable event at Velocity. Dedicated space, premium experience, and nonstop energy&nbsp;&mdash; perfect for groups who want more than the ordinary.</p>
-        <a class="vsl-sp-btn vsl-sp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556" data-vsl-sp-link="inquiry" target="_blank" rel="noopener noreferrer">Inquire Today</a>
+        <a class="vsl-sp-btn vsl-sp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556" data-vsl-sp-link="inquiry" target="_blank" rel="noopener noreferrer">Inquire Now</a>
       </div>
       <div class="vsl-sp-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
@@ -750,10 +881,16 @@
             <li>Comprehensive audio and video solutions for workshops and group presentations</li>
             <li>Ideal for groups of 10&ndash;40</li>
           </ul>
+          <div class="vsl-sp-features__cta">
+            <a class="vsl-sp-btn vsl-sp-btn--primary"
+               href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+               data-vsl-sp-link="inquiry"
+               target="_blank" rel="noopener noreferrer">Inquire Now</a>
+          </div>
         </div>
         <figure class="vsl-sp-features__media">
           <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp"
-               data-vsl-sp-img="corporate"
+               data-vsl-sp-img="features"
                alt="Corporate team building event at Velocity Sim Racing Lounge"
                width="800" height="600" loading="lazy" decoding="async">
         </figure>
@@ -765,75 +902,60 @@
     <section class="vsl-sp-usecases" id="sp-usecases" aria-labelledby="sp-usecases-heading">
       <div class="vsl-sp-usecases__inner">
         <h2 class="vsl-sp-usecases__title" id="sp-usecases-heading">Perfect For</h2>
-        <p class="vsl-sp-usecases__sub">Whatever the occasion, we&rsquo;ll make it unforgettable.</p>
+        <p class="vsl-sp-usecases__sub">From quarterly offsites to milestone celebrations &mdash; we'll make any occasion unforgettable.</p>
         <div class="vsl-sp-usecases__grid">
 
-          <div class="vsl-sp-usecase">
-            <div class="vsl-sp-usecase__icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="6" y="10" width="36" height="28" rx="3" stroke="#FDC70C" stroke-width="2.5"/>
-                <path d="M6 18h36" stroke="#FDC70C" stroke-width="2.5"/>
-                <circle cx="24" cy="30" r="5" stroke="#FDC70C" stroke-width="2.5"/>
-                <path d="M17 10V6M31 10V6" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
+          <a class="vsl-sp-usecase"
+             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             data-vsl-sp-link="inquiry"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Inquire about a Corporate Team Building event">
+            <div class="vsl-sp-usecase__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <h3 class="vsl-sp-usecase__label">Corporate Team Building</h3>
-          </div>
+            <h3 class="vsl-sp-usecase__title">Corporate Team Building</h3>
+            <p class="vsl-sp-usecase__desc">Mixed-skill teams, live leaderboards, and bragging rights that outlast any trust fall.</p>
+          </a>
 
-          <div class="vsl-sp-usecase">
-            <div class="vsl-sp-usecase__icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M24 6l3 9h9l-7.5 5.5 3 9L24 24l-7.5 5.5 3-9L12 15h9l3-9z" stroke="#FDC70C" stroke-width="2.5" stroke-linejoin="round"/>
-                <path d="M8 38c0-4 6-6 16-6s16 2 16 6v4H8v-4z" stroke="#FDC70C" stroke-width="2.5"/>
-              </svg>
+          <a class="vsl-sp-usecase"
+             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             data-vsl-sp-link="inquiry"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Inquire about a Holiday Celebration event">
+            <div class="vsl-sp-usecase__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </div>
-            <h3 class="vsl-sp-usecase__label">Holiday Celebrations</h3>
-          </div>
+            <h3 class="vsl-sp-usecase__title">Holiday Celebrations</h3>
+            <p class="vsl-sp-usecase__desc">Trade the punch bowl for podium finishes &mdash; festive food, craft cocktails, and wheel-to-wheel racing.</p>
+          </a>
 
-          <div class="vsl-sp-usecase">
-            <div class="vsl-sp-usecase__icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="8" y="6" width="32" height="36" rx="3" stroke="#FDC70C" stroke-width="2.5"/>
-                <path d="M16 16h16M16 24h12M16 32h8" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
+          <a class="vsl-sp-usecase"
+             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             data-vsl-sp-link="inquiry"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Inquire about a Workshop or Sales Meeting event">
+            <div class="vsl-sp-usecase__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="M7 21l5-5 5 5"/><line x1="12" y1="16" x2="12" y2="21"/></svg>
             </div>
-            <h3 class="vsl-sp-usecase__label">Workshops &amp; Sales Meetings</h3>
-          </div>
+            <h3 class="vsl-sp-usecase__title">Workshops &amp; Sales Meetings</h3>
+            <p class="vsl-sp-usecase__desc">A/V-ready space for the agenda, then race time when business wraps. Productive by day, unforgettable by night.</p>
+          </a>
 
-          <div class="vsl-sp-usecase">
-            <div class="vsl-sp-usecase__icon">
-              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="16" cy="16" r="6" stroke="#FDC70C" stroke-width="2.5"/>
-                <circle cx="32" cy="16" r="6" stroke="#FDC70C" stroke-width="2.5"/>
-                <path d="M4 38c0-5 5-8 12-8 2.5 0 4.8.4 6.7 1.2M32 30c7 0 12 3 12 8v4H26v-4c0-2 .8-3.8 2.3-5.3" stroke="#FDC70C" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
+          <a class="vsl-sp-usecase"
+             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             data-vsl-sp-link="inquiry"
+             target="_blank" rel="noopener noreferrer"
+             aria-label="Inquire about a Networking Mixer event">
+            <div class="vsl-sp-usecase__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
             </div>
-            <h3 class="vsl-sp-usecase__label">Networking Mixers</h3>
-          </div>
+            <h3 class="vsl-sp-usecase__title">Networking Mixers</h3>
+            <p class="vsl-sp-usecase__desc">Skip the awkward small talk. Shared finish-line moments turn strangers into your top contacts.</p>
+          </a>
 
         </div>
       </div>
     </section>
-
-
-    <!-- GALLERY STRIP -->
-    <div class="vsl-sp-gallery" role="presentation" aria-hidden="true">
-      <figure class="vsl-sp-gallery__item">
-        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp"
-             data-vsl-sp-img="racer"
-             alt="Racer in a professional sim racing rig at Velocity" width="800" height="450" loading="lazy" decoding="async">
-      </figure>
-      <figure class="vsl-sp-gallery__item">
-        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp"
-             data-vsl-sp-img="atmosphere"
-             alt="Lively event atmosphere at Velocity Sim Racing Lounge" width="800" height="450" loading="lazy" decoding="async">
-      </figure>
-      <figure class="vsl-sp-gallery__item">
-        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp"
-             data-vsl-sp-img="venue"
-             alt="Velocity Sim Racing Lounge venue interior" width="800" height="450" loading="lazy" decoding="async">
-      </figure>
-    </div>
 
 
     <!-- WHAT'S INCLUDED -->
@@ -921,7 +1043,7 @@
           <a class="vsl-sp-btn vsl-sp-btn--primary"
              href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
              data-vsl-sp-link="inquiry"
-             target="_blank" rel="noopener noreferrer">Inquire Today</a>
+             target="_blank" rel="noopener noreferrer">Inquire Now</a>
           <a class="vsl-sp-btn vsl-sp-btn--outline"
              href="https://velocitysimlounge.com/group-events/"
              data-vsl-sp-link="allEvents">Back to All Events</a>
@@ -979,5 +1101,22 @@
         }
       } catch (e) { /* ignore parse errors */ }
     }
+
+    /* Defensive click handling — guarantees inquire/allEvents links open
+       even if a parent (Elementor / theme JS) intercepts the default action.
+       Respects modifier keys, middle/right-click, and contextmenu. */
+    root.querySelectorAll('a[data-vsl-sp-link]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (e.defaultPrevented) return;
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (typeof e.button === 'number' && e.button !== 0) return;
+        var url = a.getAttribute('href');
+        if (!url || url.charAt(0) === '#') return;
+        e.preventDefault();
+        e.stopPropagation();
+        var opened = window.open(url, '_blank', 'noopener,noreferrer');
+        if (!opened) window.location.href = url;
+      });
+    });
   })();
 </script>

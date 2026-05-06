@@ -322,22 +322,13 @@ const PAGES = {
 
   'spring-bundles': {
     source: 'Spring Bundles/velocity-spring-bundles-elementor.html',
-    title: 'Eat & Race Bundles | Velocity Sim Racing Lounge',
+    title: "Father's Day Bundles | Velocity Sim Racing Lounge",
     cms: [
-      { selector: '#spring-hero .vsl-spring-hero__eyebrow', attr: 'data-cms', value: 'hero.eyebrow' },
+      { selector: '#spring-hero .vsl-spring-hero__eyebrow-line:first-of-type', attr: 'data-cms', value: 'hero.eyebrowWeek' },
+      { selector: '#spring-hero .vsl-spring-hero__eyebrow-line--date', attr: 'data-cms', value: 'hero.eyebrowDates' },
       { selector: '#spring-hero h1', attr: 'data-cms-html', value: 'hero.heading' },
-      { selector: '#spring-hero .vsl-spring-hero__sub', attr: 'data-cms', value: 'hero.subcopy' },
       { selector: '#spring-bundles h2', attr: 'data-cms-html', value: 'twoDriver.heading' },
-      { repeater: {
-        path: 'twoDriver.packages',
-        container: '#spring-bundles .vsl-spring-grid',
-        item: '.vsl-spring-card',
-        fields: {
-          'title': '.vsl-spring-card__name',
-          'price': '.vsl-spring-card__price'
-        }
-      }},
-      { selector: '#spring-2seater h2', attr: 'data-cms-html', value: 'twoSeater.heading' }
+      { selector: '#spring-bundles .vsl-spring-section-sub', attr: 'data-cms', value: 'twoDriver.subcopy' }
     ]
   },
 
