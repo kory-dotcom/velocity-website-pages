@@ -474,8 +474,13 @@
     position: relative;
     z-index: 4;
     flex-shrink: 0;
+    display: block;
     width: 100%;
-    height: var(--vsl-hero-finish-h);
+    height: clamp(16px, 2.8vw + 9px, 39px) !important;
+    max-height: 39px !important;
+    min-height: 16px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     border-bottom: none;
     background-color: var(--navy);
@@ -538,7 +543,7 @@
     z-index: 0;
   }
   .vsl-pp-included > .vsl-pp-grid { position: relative; z-index: 1; }
-  .vsl-pp-hero + .vsl-pp-included {
+  .vsl-pp-hero + .vsl-pp-packs {
     margin-top: 0;
   }
   .vsl-pp-included .vsl-pp-section-title {
@@ -600,9 +605,6 @@
     .vsl-pp-included-card:hover::before {
       opacity: 1;
     }
-    .vsl-pp-included-card:hover .vsl-pp-included-card__icon {
-      transform: scale(1.08);
-    }
   }
   .vsl-pp-included-card__accent {
     height: 5px;
@@ -626,7 +628,6 @@
     background: rgba(0, 0, 0, 0.32);
     border: 1px solid rgba(255, 255, 255, 0.12);
     flex-shrink: 0;
-    transition: transform 0.3s ease;
   }
   .vsl-pp-included-card__icon img {
     display: block;
@@ -637,8 +638,16 @@
     margin: 0;
     object-fit: contain;
     object-position: center center;
-    filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
     opacity: 0.92;
+    transition: none;
+    transform: none;
+  }
+  .vsl-pp-included-card:hover .vsl-pp-included-card__icon img {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    opacity: 0.92 !important;
   }
   .vsl-pp-included-card__name {
     font-family: var(--font-display);
@@ -1110,7 +1119,7 @@
     .vsl-pp-hero__title { line-height: 1.08; }
     .vsl-pp-section-title { line-height: 1.2; }
     .vsl-pp-included { padding: 48px 0; }
-    .vsl-pp-hero + .vsl-pp-included { padding-top: calc(48px + 1px); }
+    .vsl-pp-hero + .vsl-pp-packs { padding-top: calc(48px + 1px); }
     .vsl-pp-packs { padding: 48px 0; }
     .vsl-pp-perfect { padding: 48px 0; }
     .vsl-pp-cta-section { padding: 40px 0 48px; }
@@ -1372,56 +1381,6 @@
       <div class="vsl-pp-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
 
-    <!-- ▸ What's Included — Icon Grid -->
-    <section class="vsl-pp-included" id="pp-included" aria-labelledby="pp-included-heading">
-      <div class="vsl-pp-grid">
-        <h2 class="vsl-pp-section-title" id="pp-included-heading">
-          What's <em>Included</em>
-        </h2>
-        <p class="vsl-pp-section-sub">Every Party Pack comes loaded with everything your group needs for a world-class celebration.</p>
-
-        <div class="vsl-pp-included-grid">
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-sims">
-            </div>
-            <h3 class="vsl-pp-included-card__name">Dedicated Racing Simulators</h3>
-            <p class="vsl-pp-included-card__desc">Professional-grade simulators reserved exclusively for your group throughout the event.</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-seating">
-            </div>
-            <h3 class="vsl-pp-included-card__name">Reserved Area &amp; Seating</h3>
-            <p class="vsl-pp-included-card__desc">Your own section of the lounge &mdash; a private space to gather, eat, and celebrate between races.</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-menu">
-            </div>
-            <h3 class="vsl-pp-included-card__name">Choice of Menu</h3>
-            <p class="vsl-pp-included-card__desc">Every Party Pack includes our best selling Triple Crown Platter to get the party started the right way!</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-staff">
-            </div>
-            <h3 class="vsl-pp-included-card__name">Event Manager &amp; Staff</h3>
-            <p class="vsl-pp-included-card__desc">A dedicated event coordinator and support team to handle every detail from start to finish.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- ▸ Choose Your Party Pack — Booking Cards -->
     <section class="vsl-pp-packs" id="pp-packs" aria-labelledby="pp-packs-heading">
       <div class="vsl-pp-grid">
@@ -1479,6 +1438,56 @@
               <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24">Book Now</a>
             </div>
           </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ What's Included — Icon Grid -->
+    <section class="vsl-pp-included" id="pp-included" aria-labelledby="pp-included-heading">
+      <div class="vsl-pp-grid">
+        <h2 class="vsl-pp-section-title" id="pp-included-heading">
+          What's <em>Included</em>
+        </h2>
+        <p class="vsl-pp-section-sub">Every Party Pack comes loaded with everything your group needs for a world-class celebration.</p>
+
+        <div class="vsl-pp-included-grid">
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-sims">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Dedicated Racing Simulators</h3>
+            <p class="vsl-pp-included-card__desc">Professional-grade simulators reserved exclusively for your group throughout the event.</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-seating">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Reserved Area &amp; Seating</h3>
+            <p class="vsl-pp-included-card__desc">Your own section of the lounge &mdash; a private space to gather, eat, and celebrate between races.</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-menu">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Choice of Menu</h3>
+            <p class="vsl-pp-included-card__desc">Every Party Pack includes our best selling Triple Crown Platter to get the party started the right way!</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-staff">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Event Manager &amp; Staff</h3>
+            <p class="vsl-pp-included-card__desc">A dedicated event coordinator and support team to handle every detail from start to finish.</p>
+          </div>
 
         </div>
       </div>
@@ -1722,6 +1731,7 @@
 
     if (images.heroFinishLine) {
       root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+      root.style.setProperty('--vsl-hero-finish-h', 'clamp(16px, 2.8vw + 9px, 39px)');
     }
 
     var heroVideo = cfg.heroVideo || '';
