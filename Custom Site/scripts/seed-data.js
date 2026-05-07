@@ -254,8 +254,8 @@ about: {
   hero: { eyebrow: "Group Events", heading: "Party Packs", subcopy: "Big thrills for social celebrations. Dedicated simulators, reserved seating, and the full Velocity dinner-and-drinks experience \u2014 all in one unbeatable package.", heroVideo: "", heroImage: "", ctaText: "Book Your Party Pack" },
   overview: { heading: "Choose Your Party Pack", subcopy: "Select the pack that fits your group and book instantly.", bullets: "", image: "", ctaText: "", ctaLink: "" },
   packs: [
-    { title: "Racer Pack", price: "from {{price:partyPack.racer}}", image: "", bullets: "Great for groups of 5-10 drivers\n5 racer rigs for 2 hours of racing\n2 x Triple Crown Platters\nReserved Seating\nDedicated Event Captain\nUpgrades available", bookingLink: "", ctaText: "Book Now" },
-    { title: "Pro Pack", price: "from {{price:partyPack.pro}}", image: "", bullets: "Take it to the next level with 6 Pro rigs, for groups of 6-18\n2 hours of racing\n3 x Triple Crown Platters\nReserved Seating\nDedicated Event Captain\nUpgrades available", bookingLink: "", ctaText: "Book Now" }
+    { title: "Racer Pack", price: "from {{price:partyPack.racer}}", image: "", bullets: "Great for groups of 5-10 drivers\n5 racer rigs for 2 hours of racing\n2 x Triple Crown Platters\nReserved Seating\nDedicated Pit Crew\nUpgrades available", bookingLink: "", ctaText: "Book Now" },
+    { title: "Pro Pack", price: "from {{price:partyPack.pro}}", image: "", bullets: "Take it to the next level with 6 Pro rigs, for groups of 6-18\n2 hours of racing\n3 x Triple Crown Platters\nReserved Seating\nDedicated Pit Crew\nUpgrades available", bookingLink: "", ctaText: "Book Now" }
   ],
   included: { heading: "What\u2019s Included", cards: [
     { title: "Dedicated Racing Simulators", description: "Professional-grade simulators reserved exclusively for your group throughout the event." },

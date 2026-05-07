@@ -63,7 +63,7 @@
     --vsl-bleed-top: 0px;
     --vsl-bleed-bottom: 0px;
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
 
     font-family: var(--font-body);
     color: var(--navy);
@@ -320,7 +320,7 @@
     height: 100%;
     object-fit: cover;
     /* Slightly below center so faces aren’t pinned under the nav / top edge */
-    object-position: center 55%;
+    object-position: center 62%;
     display: none;
     filter: brightness(0.72) contrast(1.05);
   }
@@ -440,12 +440,12 @@
     margin: 0 0 0.55em;
     padding: 10px 12px;
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 1.4rem + 7vw, 5rem);
+    font-size: clamp(1.75rem, 0.85rem + 4.8vw, 3rem);
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
-    line-height: 1.02;
-    letter-spacing: 0.03em;
+    line-height: 1.12;
+    letter-spacing: 0.04em;
     color: #fff;
     text-align: center;
     text-wrap: balance;
@@ -474,14 +474,19 @@
     position: relative;
     z-index: 4;
     flex-shrink: 0;
+    display: block;
     width: 100%;
-    height: var(--vsl-hero-finish-h);
+    height: clamp(16px, 2.8vw + 9px, 39px) !important;
+    max-height: 39px !important;
+    min-height: 16px;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
+    border-bottom: none;
     background-color: var(--navy);
     background-image: var(--vsl-hero-finish);
     background-repeat: repeat-x;
-    background-position: center bottom;
+    background-position: center center;
     background-size: auto 100%;
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -520,6 +525,7 @@
     color: var(--circuit-white);
     padding: clamp(64px, 10vh, 120px) 0;
     position: relative;
+    z-index: 1;
     isolation: isolate;
     overflow: clip;
   }
@@ -537,9 +543,8 @@
     z-index: 0;
   }
   .vsl-pp-included > .vsl-pp-grid { position: relative; z-index: 1; }
-  .vsl-pp-hero + .vsl-pp-included {
-    margin-top: -1px;
-    padding-top: calc(clamp(56px, 10vh, 120px) + 1px);
+  .vsl-pp-hero + .vsl-pp-packs {
+    margin-top: 0;
   }
   .vsl-pp-included .vsl-pp-section-title {
     color: var(--circuit-white);
@@ -556,8 +561,10 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--gutter);
+    margin-top: clamp(3.5rem, 7vh, 5.5rem);
   }
   .vsl-pp-included-card {
+    position: relative;
     background: linear-gradient(168deg, rgba(28, 34, 58, 0.96) 0%, rgba(14, 18, 36, 0.94) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 18px;
@@ -569,12 +576,34 @@
     text-align: center;
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.28), 0 2px 0 rgba(255, 255, 255, 0.04) inset;
     transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease;
+    overflow: hidden;
+  }
+  .vsl-pp-included-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--magenta), var(--blue));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .vsl-pp-included-card:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--blue), var(--magenta));
+  }
+  .vsl-pp-included-card:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--yellow), var(--magenta));
+  }
+  .vsl-pp-included-card:nth-child(4)::before {
+    background: linear-gradient(90deg, var(--red), var(--blue));
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-pp-included-card:hover {
       box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55), 0 8px 18px rgba(0, 0, 0, 0.32), 0 2px 0 rgba(255, 255, 255, 0.06) inset;
-      transform: translateY(-4px);
+      transform: translateY(-6px);
       border-color: rgba(255, 255, 255, 0.18);
+    }
+    .vsl-pp-included-card:hover::before {
+      opacity: 1;
     }
   }
   .vsl-pp-included-card__accent {
@@ -595,20 +624,30 @@
     display: grid;
     place-items: center;
     padding: clamp(10px, 1.5vw, 16px);
-    flex-shrink: 0;
+    line-height: 0;
     background: rgba(0, 0, 0, 0.32);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(234, 234, 234, 0.95);
-    transition: transform 0.3s ease;
+    flex-shrink: 0;
   }
-  .vsl-pp-included-card__icon svg {
-    width: 30px;
-    height: 30px;
-    fill: none;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke: currentColor;
+  .vsl-pp-included-card__icon img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 82%;
+    max-height: 82%;
+    margin: 0;
+    object-fit: contain;
+    object-position: center center;
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    opacity: 0.92;
+    transition: none;
+    transform: none;
+  }
+  .vsl-pp-included-card:hover .vsl-pp-included-card__icon img {
+    filter: brightness(0) invert(1) !important;
+    -webkit-filter: brightness(0) invert(1) !important;
+    opacity: 0.92 !important;
   }
   .vsl-pp-included-card__name {
     font-family: var(--font-display);
@@ -905,13 +944,17 @@
   .vsl-pp-perfect .vsl-pp-section-sub {
     color: var(--circuit-white);
     opacity: 0.85;
-    margin: 0 auto clamp(4rem, 8vh, 6rem);
   }
   .vsl-pp-occasions-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: var(--gutter);
+    margin-top: clamp(3.5rem, 7vh, 5.5rem);
   }
+  .vsl-pp-occasions-grid > .vsl-pp-occasion { grid-column: span 2; }
+  .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(2):nth-child(3n+1) { grid-column: 2 / span 2; }
+  .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(1):nth-child(3n+2) { grid-column: 4 / span 2; }
+  .vsl-pp-occasions-grid > .vsl-pp-occasion:last-child:nth-child(3n+1) { grid-column: 3 / span 2; }
   .vsl-pp-occasion {
     position: relative;
     background: linear-gradient(168deg, rgba(28, 34, 58, 0.96) 0%, rgba(14, 18, 36, 0.94) 100%);
@@ -1031,6 +1074,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
+    margin-top: clamp(1.5rem, 3vh, 2.5rem);
   }
   .vsl-pp-cta__panel .vsl-pp-btn {
     min-height: 52px;
@@ -1047,8 +1091,12 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .vsl-pp-occasions-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
+    .vsl-pp-occasions-grid > .vsl-pp-occasion { grid-column: span 2; }
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(2):nth-child(3n+1),
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(1):nth-child(3n+2) { grid-column: span 2; }
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:last-child:nth-child(odd) { grid-column: 2 / span 2; }
     .vsl-pp-included-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -1071,7 +1119,7 @@
     .vsl-pp-hero__title { line-height: 1.08; }
     .vsl-pp-section-title { line-height: 1.2; }
     .vsl-pp-included { padding: 48px 0; }
-    .vsl-pp-hero + .vsl-pp-included { padding-top: calc(48px + 1px); }
+    .vsl-pp-hero + .vsl-pp-packs { padding-top: calc(48px + 1px); }
     .vsl-pp-packs { padding: 48px 0; }
     .vsl-pp-perfect { padding: 48px 0; }
     .vsl-pp-cta-section { padding: 40px 0 48px; }
@@ -1093,6 +1141,10 @@
       max-width: min(480px, 100%);
       margin-inline: auto;
     }
+    .vsl-pp-occasions-grid > .vsl-pp-occasion,
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(2):nth-child(3n+1),
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:nth-last-child(1):nth-child(3n+2),
+    .vsl-pp-occasions-grid > .vsl-pp-occasion:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .vsl-pp-included-grid {
       grid-template-columns: 1fr;
       max-width: min(380px, 100%);
@@ -1104,6 +1156,182 @@
     .vsl-pp-pack-card__body { padding: 18px 20px 22px; }
     .vsl-pp-pack-card__name {
       font-size: clamp(1.2rem, 3.8vw + 0.75rem, 1.4rem);
+    }
+  }
+
+  /* ── Roverd booking modal (iframe) — tokens on #id so styles work when modal is moved to <body> ── */
+  #vsl-pp-book-modal.vsl-pp-book-modal {
+    --bn-c0: #10182B;
+    --bn-c2: #EE265F;
+    --bn-c4: #FDC70C;
+    --bn-f0: 'Khand', system-ui, sans-serif;
+    --bn-f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 3vw, 40px);
+    font-family: var(--bn-f1);
+    box-sizing: border-box;
+  }
+  #vsl-pp-book-modal.vsl-pp-book-modal[aria-hidden="false"] {
+    display: flex;
+    isolation: isolate;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: rgba(16, 24, 43, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: vsl-pp-modal-fadeIn 0.25s ease;
+    cursor: pointer;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__window {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    width: 100%;
+    max-width: 860px;
+    height: min(88vh, 720px);
+    min-height: 0;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    animation: vsl-pp-modal-slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--bn-c0);
+    color: #fff;
+    flex-shrink: 0;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__title {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--bn-f0);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close {
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    z-index: 3;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 0;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.14s ease;
+    font-size: 22px !important;
+    font-weight: 300;
+    line-height: 1;
+    font-family: Arial, sans-serif;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:hover {
+    background: var(--bn-c2) !important;
+    border-color: var(--bn-c2) !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    transform: scale(1.08);
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:active {
+    transform: scale(0.95);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__close:focus-visible {
+    outline: 3px solid var(--bn-c4);
+    outline-offset: 2px;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__body {
+    flex: 1;
+    position: relative;
+    background: #f5f5f5;
+    min-height: 0;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__loader[data-loaded="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+  #vsl-pp-book-modal .vsl-pp-book-modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(16, 24, 43, 0.1);
+    border-top-color: var(--bn-c2);
+    border-radius: 50%;
+    animation: vsl-pp-modal-spin 0.7s linear infinite;
+  }
+  @keyframes vsl-pp-modal-fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes vsl-pp-modal-slideUp {
+    from { opacity: 0; transform: translateY(24px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes vsl-pp-modal-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (max-width: 639px) {
+    #vsl-pp-book-modal.vsl-pp-book-modal {
+      padding: 0;
+    }
+    #vsl-pp-book-modal .vsl-pp-book-modal__window {
+      max-width: 100%;
+      height: 100%;
+      border-radius: 0;
+      max-height: 100vh;
     }
   }
 
@@ -1124,161 +1352,9 @@
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
   }
-
-  /* ── Local Replica: Roverd booking modal (Book Now parity) ── */
-  .vsl-pp-book-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(16px, 3vw, 40px);
-    font-family: var(--font-body);
-  }
-  .vsl-pp-book-modal[aria-hidden="false"] {
-    display: flex;
-  }
-  .vsl-pp-book-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(16, 24, 43, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    animation: vsl-pp-modal-fadeIn 0.25s ease;
-    cursor: pointer;
-  }
-  .vsl-pp-book-modal__window {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 860px;
-    height: min(88vh, 720px);
-    min-height: 0;
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow:
-      0 24px 80px rgba(0, 0, 0, 0.35),
-      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-    animation: vsl-pp-modal-slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    display: flex;
-    flex-direction: column;
-  }
-  .vsl-pp-book-modal__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 20px;
-    background: var(--deep-indigo);
-    color: #fff;
-    flex-shrink: 0;
-  }
-  .vsl-pp-book-modal__title {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .vsl-pp-book-modal__close {
-    appearance: none;
-    -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    flex-shrink: 0;
-    margin-left: 12px;
-    transition: background 0.18s ease, transform 0.14s ease;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1;
-    font-family: Arial, sans-serif;
-  }
-  .vsl-pp-book-modal__close:hover {
-    background: var(--magenta);
-    border-color: var(--magenta);
-    transform: scale(1.08);
-  }
-  .vsl-pp-book-modal__close:active {
-    transform: scale(0.95);
-  }
-  .vsl-pp-book-modal__close:focus-visible {
-    outline: 3px solid var(--yellow);
-    outline-offset: 2px;
-  }
-  .vsl-pp-book-modal__body {
-    flex: 1;
-    position: relative;
-    background: #f5f5f5;
-    min-height: 0;
-  }
-  .vsl-pp-book-modal__iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
-  .vsl-pp-book-modal__loader {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f5f5;
-    z-index: 2;
-    transition: opacity 0.3s ease;
-  }
-  .vsl-pp-book-modal__loader[data-loaded="true"] {
-    opacity: 0;
-    pointer-events: none;
-  }
-  .vsl-pp-book-modal__spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(16, 24, 43, 0.1);
-    border-top-color: var(--magenta);
-    border-radius: 50%;
-    animation: vsl-pp-modal-spin 0.7s linear infinite;
-  }
-  @keyframes vsl-pp-modal-fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes vsl-pp-modal-slideUp {
-    from { opacity: 0; transform: translateY(24px) scale(0.96); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @keyframes vsl-pp-modal-spin {
-    to { transform: rotate(360deg); }
-  }
-  @media (max-width: 639px) {
-    .vsl-pp-book-modal {
-      padding: 0;
-    }
-    .vsl-pp-book-modal__window {
-      max-width: 100%;
-      height: 100%;
-      border-radius: 0;
-      max-height: 100vh;
-    }
-  }
 </style>
 
-<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1292,68 +1368,17 @@
         <span></span><span></span><span></span>
       </div>
       <div class="vsl-pp-hero__inner">
-        <span class="vsl-pp-hero__eyebrow">Group Events</span>
         <h1 class="vsl-pp-hero__title" id="pp-hero-title">
           Party <span class="vsl-pp-hero__title-accent">Packs</span>
         </h1>
         <div class="vsl-pp-hero__sub-panel">
           <p class="vsl-pp-hero__sub">
-            Big thrills for social celebrations. Dedicated simulators, reserved seating, and the full Velocity dinner-and-drinks experience &mdash; all in one unbeatable package.
+            The best place to celebrate &mdash; Velocity's got it all. Great food, great drinks, and the best sim racing experience for your group celebration!
           </p>
         </div>
         <a class="vsl-pp-btn" href="#pp-packs">Book Your Party Pack</a>
       </div>
       <div class="vsl-pp-hero__finish" role="presentation" aria-hidden="true"></div>
-    </section>
-
-    <!-- ▸ What's Included — Icon Grid -->
-    <section class="vsl-pp-included" id="pp-included" aria-labelledby="pp-included-heading">
-      <div class="vsl-pp-grid">
-        <h2 class="vsl-pp-section-title" id="pp-included-heading">
-          What's <em>Included</em>
-        </h2>
-        <p class="vsl-pp-section-sub">Every Party Pack comes loaded with everything your group needs for a world-class celebration.</p>
-
-        <div class="vsl-pp-included-grid">
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-            </div>
-            <h3 class="vsl-pp-included-card__name">Dedicated Racing Simulators</h3>
-            <p class="vsl-pp-included-card__desc">Professional-grade simulators reserved exclusively for your group throughout the event.</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            </div>
-            <h3 class="vsl-pp-included-card__name">Reserved Area &amp; Seating</h3>
-            <p class="vsl-pp-included-card__desc">Your own section of the lounge &mdash; a private space to gather, eat, and celebrate between races.</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><line x1="2" y1="17" x2="22" y2="17"/><path d="M4 17c0-6 3.6-10 8-10s8 4 8 10"/><line x1="12" y1="5" x2="12" y2="7"/><circle cx="12" cy="4" r="1"/></svg>
-            </div>
-            <h3 class="vsl-pp-included-card__name">Choice of Menu</h3>
-            <p class="vsl-pp-included-card__desc">Every Party Pack includes our best selling Triple Crown Platter to get the party started the right way!</p>
-          </div>
-
-          <div class="vsl-pp-included-card">
-            <div class="vsl-pp-included-card__accent"></div>
-            <div class="vsl-pp-included-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
-            </div>
-            <h3 class="vsl-pp-included-card__name">Event Manager &amp; Staff</h3>
-            <p class="vsl-pp-included-card__desc">A dedicated event coordinator and support team to handle every detail from start to finish.</p>
-          </div>
-
-        </div>
-      </div>
     </section>
 
     <!-- ▸ Choose Your Party Pack — Booking Cards -->
@@ -1370,7 +1395,7 @@
           <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
-              <img data-vsl-pp-img="racerPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp" alt="Racer Party Pack at Velocity Sim Racing Lounge" width="2400" height="1600" loading="eager" fetchpriority="high" decoding="async">
+              <img data-vsl-pp-img="racerPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="Racer Party Pack at Velocity Sim Racing Lounge" width="1024" height="683" loading="lazy" decoding="async" style="transform: scale(1.15); transform-origin: center;">
             </figure>
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Racer Pack</h3>
@@ -1383,10 +1408,10 @@
                 <li>5 racer rigs for 2 hours of racing</li>
                 <li>2 x Triple Crown Platters</li>
                 <li>Reserved Seating</li>
-                <li>Dedicated Event Captain</li>
+                <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19" target="_blank" rel="noopener noreferrer">Book Now</a>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/19">Book Now</a>
             </div>
           </article>
 
@@ -1394,7 +1419,7 @@
           <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
-              <img data-vsl-pp-img="proPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Party_Packs.webp" alt="Pro Party Pack at Velocity Sim Racing Lounge" width="2400" height="1600" loading="eager" fetchpriority="high" decoding="async">
+              <img data-vsl-pp-img="proPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, 45vw" alt="Pro Party Pack at Velocity Sim Racing Lounge" width="1024" height="683" loading="lazy" decoding="async">
             </figure>
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Pro Pack</h3>
@@ -1407,10 +1432,10 @@
                 <li>2 hours of racing</li>
                 <li>3 x Triple Crown Platters</li>
                 <li>Reserved Seating</li>
-                <li>Dedicated Event Captain</li>
+                <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24" target="_blank" rel="noopener noreferrer">Book Now</a>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24">Book Now</a>
             </div>
           </article>
 
@@ -1418,11 +1443,61 @@
       </div>
     </section>
 
-    <!-- ▸ Perfect For -->
+    <!-- ▸ What's Included — Icon Grid -->
+    <section class="vsl-pp-included" id="pp-included" aria-labelledby="pp-included-heading">
+      <div class="vsl-pp-grid">
+        <h2 class="vsl-pp-section-title" id="pp-included-heading">
+          What's <em>Included</em>
+        </h2>
+        <p class="vsl-pp-section-sub">Every Party Pack comes loaded with everything your group needs for a world-class celebration.</p>
+
+        <div class="vsl-pp-included-grid">
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-sims">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Dedicated Racing Simulators</h3>
+            <p class="vsl-pp-included-card__desc">Professional-grade simulators reserved exclusively for your group throughout the event.</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-seating">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Reserved Area &amp; Seating</h3>
+            <p class="vsl-pp-included-card__desc">Your own section of the lounge &mdash; a private space to gather, eat, and celebrate between races.</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-menu">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Choice of Menu</h3>
+            <p class="vsl-pp-included-card__desc">Every Party Pack includes our best selling Triple Crown Platter to get the party started the right way!</p>
+          </div>
+
+          <div class="vsl-pp-included-card">
+            <div class="vsl-pp-included-card__accent"></div>
+            <div class="vsl-pp-included-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-staff">
+            </div>
+            <h3 class="vsl-pp-included-card__name">Dedicated Pit Crew</h3>
+            <p class="vsl-pp-included-card__desc">Your dedicated Pit Crew keeps the celebration on track from the first lap to the last bite.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Occasions (was "Perfect For") -->
     <section class="vsl-pp-perfect" id="pp-perfect-for" aria-labelledby="pp-perfect-heading">
       <div class="vsl-pp-grid">
         <h2 class="vsl-pp-section-title" id="pp-perfect-heading">
-          Perfect <em>For</em>
+          Plan an unforgettable <em>event!</em>
         </h2>
         <p class="vsl-pp-section-sub">Party Packs are designed for groups ready to celebrate. Whatever the occasion, Velocity makes it unforgettable.</p>
 
@@ -1485,8 +1560,8 @@
       </div>
     </section>
 
-    <!-- Local Replica: in-flow Roverd booking (iframe modal, matches Book Now) -->
-    <div class="vsl-pp-book-modal" id="vsl-pp-book-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Book party pack">
+    <!-- Roverd booking (iframe modal) -->
+    <div class="vsl-pp-book-modal" id="vsl-pp-book-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="vsl-pp-book-modal-title">
       <div class="vsl-pp-book-modal__backdrop" data-vsl-pp-bm-close></div>
       <div class="vsl-pp-book-modal__window">
         <div class="vsl-pp-book-modal__header">
@@ -1507,6 +1582,26 @@
 
 <script>
 (function(){
+  /* Close booking modal first (capture on window) so theme/Elementor handlers can't swallow the interaction */
+  window.addEventListener(
+    'pointerdown',
+    function vslPPBookModalCloseWinCapture(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      var m = document.getElementById('vsl-pp-book-modal');
+      if (!m || m.getAttribute('aria-hidden') !== 'false') return;
+      var t = e.target;
+      if (t && t.nodeType === 3) t = t.parentElement;
+      if (!t || typeof t.closest !== 'function') return;
+      var hit = t.closest('[data-vsl-pp-bm-close]');
+      if (!hit || !m.contains(hit)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      closePPBookModal();
+    },
+    true
+  );
+
   function fixAncestorScrollTraps(root) {
     var el = root.parentElement;
     while (el && el !== document.documentElement) {
@@ -1521,10 +1616,6 @@
     }
   }
 
-  function vslPPInReplicaShell() {
-    return !!(window.__VSL_SITE_REPLICA__ || document.getElementById('replica-page-root'));
-  }
-
   function vslPPIsRoverdBookingUrl(href) {
     if (!href || href.charAt(0) === '#') return false;
     try {
@@ -1533,32 +1624,6 @@
     } catch (e) {
       return false;
     }
-  }
-
-  function vslPPApplyAnchorLinks(root) {
-    if (!root) return;
-    var cfg;
-    try {
-      cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}');
-    } catch (e) {
-      cfg = {};
-    }
-    var links = cfg.links || {};
-    var inReplica = vslPPInReplicaShell();
-    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function (a) {
-      var key = a.getAttribute('data-vsl-pp-link');
-      if (key && links[key]) {
-        var href = links[key];
-        a.setAttribute('href', href);
-        if (inReplica && vslPPIsRoverdBookingUrl(href)) {
-          a.removeAttribute('target');
-          a.removeAttribute('rel');
-        } else if (/^https?:\/\//i.test(href)) {
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
-        }
-      }
-    });
   }
 
   function vslPPResolveCtaHref(cta, root) {
@@ -1576,7 +1641,6 @@
   var vslPPLastBookingFocus = null;
 
   function openPPBookModal(url, title) {
-    if (!vslPPInReplicaShell()) return;
     var modal = document.getElementById('vsl-pp-book-modal');
     var iframe = document.getElementById('vsl-pp-book-modal-iframe');
     var loader = document.getElementById('vsl-pp-book-modal-loader');
@@ -1608,46 +1672,37 @@
     iframe.src = 'about:blank';
     document.body.style.overflow = '';
     if (vslPPLastBookingFocus) {
-      try {
-        vslPPLastBookingFocus.focus();
-      } catch (e1) {}
+      try { vslPPLastBookingFocus.focus(); } catch (e1) {}
     }
   }
 
-  function vslPPBindReplicaBookingCaptureOnce() {
-    if (window.__vslPPBookingReplicaBound) return;
-    window.__vslPPBookingReplicaBound = true;
+  function vslPPBookingModalTitle(a) {
+    if (!a) return 'Book Now';
+    var card = a.closest ? a.closest('.vsl-pp-pack-card') : null;
+    var nameEl = card && card.querySelector ? card.querySelector('.vsl-pp-pack-card__name') : null;
+    if (nameEl && nameEl.textContent.trim()) return nameEl.textContent.trim();
+    var key = a.getAttribute('data-vsl-pp-link');
+    var map = { racerPack: 'Racer Pack', proPack: 'Pro Pack' };
+    if (key && map[key]) return map[key];
+    return (a.textContent || '').trim() || 'Book Now';
+  }
 
-    document.addEventListener(
-      'click',
-      function vslPPBookingLinkCapture(e) {
-        if (!vslPPInReplicaShell()) return;
-        if (e.button !== 0) return;
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        var a = e.target && e.target.closest ? e.target.closest('a[data-vsl-pp-link]') : null;
-        if (!a) return;
-        var pack = document.querySelector('.vsl-partypack');
-        if (!pack || !pack.contains(a)) return;
-        var href = vslPPResolveCtaHref(a, pack);
-        if (!vslPPIsRoverdBookingUrl(href)) return;
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        var t = (a.textContent || '').trim() || 'Book Now';
-        openPPBookModal(href, t);
-      },
-      true
-    );
-
-    document.addEventListener('click', function vslPPBookingCloseDelegated(e) {
-      var t = e.target;
-      if (!t || !t.closest) return;
-      var closeEl = t.closest('[data-vsl-pp-bm-close]');
-      if (!closeEl) return;
-      var modal = document.getElementById('vsl-pp-book-modal');
-      if (!modal || !modal.contains(closeEl)) return;
-      closePPBookModal();
-    });
+  if (!window.__vslPPBookingModalBound) {
+    window.__vslPPBookingModalBound = true;
+    document.addEventListener('click', function vslPPBookingLinkCapture(e) {
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target && e.target.closest ? e.target.closest('a[data-vsl-pp-link]') : null;
+      if (!a) return;
+      var pack = document.querySelector('.vsl-partypack');
+      if (!pack || !pack.contains(a)) return;
+      var href = vslPPResolveCtaHref(a, pack);
+      if (!vslPPIsRoverdBookingUrl(href)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openPPBookModal(href, vslPPBookingModalTitle(a));
+    }, true);
 
     document.addEventListener('keydown', function vslPPBookingEscGlobal(e) {
       if (e.key !== 'Escape') return;
@@ -1656,13 +1711,6 @@
       closePPBookModal();
     });
   }
-
-  window.addEventListener('vslReplicaAfterLocalLinks', function (ev) {
-    var scope = ev.detail && ev.detail.scope;
-    var root = scope && scope.querySelector ? scope.querySelector('.vsl-partypack') : null;
-    if (!root) root = document.querySelector('.vsl-partypack');
-    vslPPApplyAnchorLinks(root);
-  });
 
   function vslPPInit() {
     var root = document.querySelector('.vsl-partypack');
@@ -1679,9 +1727,11 @@
     if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
     var images = cfg.images || {};
+    var links = cfg.links || {};
 
     if (images.heroFinishLine) {
       root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+      root.style.setProperty('--vsl-hero-finish-h', 'clamp(16px, 2.8vw + 9px, 39px)');
     }
 
     var heroVideo = cfg.heroVideo || '';
@@ -1737,6 +1787,19 @@
         } else if (bannerImg) {
           if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
           bannerImg.src = heroVideo;
+          /* Auto-generate responsive srcset from a WP-style "-1920x1080.webp" URL */
+          var sizeMatch = heroVideo.match(/^(.*?)-\d+x\d+(\.\w+)$/);
+          if (sizeMatch) {
+            var base = sizeMatch[1];
+            var ext = sizeMatch[2];
+            bannerImg.srcset = [
+              base + '-768x432' + ext + ' 768w',
+              base + '-1024x576' + ext + ' 1024w',
+              base + '-1536x864' + ext + ' 1536w',
+              base + '-1920x1080' + ext + ' 1920w'
+            ].join(', ');
+            bannerImg.sizes = '100vw';
+          }
           bannerImg.removeAttribute('hidden');
           if (video) { video.removeAttribute('src'); video.load(); }
           hero.classList.add('vsl-pp-hero--has-video', 'vsl-pp-hero--hero-bg-image');
@@ -1749,29 +1812,20 @@
       if (key && images[key]) img.src = images[key];
     });
 
-    vslPPApplyAnchorLinks(root);
-
-    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function (a) {
-      if (vslPPInReplicaShell()) a.setAttribute('data-elementor-open-lightbox', 'no');
-    });
-
-    root.querySelectorAll('.vsl-pp-pack-card').forEach(function (card) {
-      if (card._vslPPClickBound) return;
-      card._vslPPClickBound = true;
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function (e) {
-        if (e.target.closest('a')) return;
-        var cta = card.querySelector('.vsl-pp-pack-card__cta');
-        if (!cta) return;
-        var href = vslPPResolveCtaHref(cta, root);
-        if (!href) return;
-        if (vslPPInReplicaShell() && vslPPIsRoverdBookingUrl(href)) {
-          var nameEl = card.querySelector('.vsl-pp-pack-card__name');
-          openPPBookModal(href, nameEl ? nameEl.textContent.trim() : 'Book Now');
-        } else {
-          window.open(href, cta.getAttribute('target') || '_self');
+    root.querySelectorAll('a[data-vsl-pp-link]').forEach(function(a) {
+      var key = a.getAttribute('data-vsl-pp-link');
+      if (key && links[key]) {
+        var href = links[key];
+        a.setAttribute('href', href);
+        if (vslPPIsRoverdBookingUrl(href)) {
+          a.removeAttribute('target');
+          a.removeAttribute('rel');
+          a.setAttribute('data-elementor-open-lightbox', 'no');
+        } else if (/^https?:\/\//i.test(href)) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
         }
-      });
+      }
     });
 
     /* ── 3D tilt + fluid flow on pack cards ── */
@@ -1780,9 +1834,24 @@
 
     var isCoarse = window.matchMedia('(pointer: coarse)').matches;
 
-    root.querySelectorAll('.vsl-pp-pack-card').forEach(function (card) {
+    root.querySelectorAll('.vsl-pp-pack-card').forEach(function(card) {
       if (card._vslTiltBound) return;
       card._vslTiltBound = true;
+
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return;
+        var cta = card.querySelector('.vsl-pp-pack-card__cta');
+        if (!cta) return;
+        var href = vslPPResolveCtaHref(cta, root);
+        if (!href) return;
+        if (vslPPIsRoverdBookingUrl(href)) {
+          var nameEl = card.querySelector('.vsl-pp-pack-card__name');
+          openPPBookModal(href, nameEl ? nameEl.textContent.trim() : 'Book Now');
+        } else {
+          window.open(href, cta.getAttribute('target') || '_self');
+        }
+      });
 
       if (isCoarse) {
         card.addEventListener('touchstart', function(){ card.classList.add('vsl-pp-pack-card--touch-active'); }, {passive:true});
@@ -1829,7 +1898,25 @@
 
   function tryInit() { try { vslPPInit(); } catch(e) { console.error('[VSL Party Pack] init error:', e); } }
 
-  if (document.readyState !== 'loading') { tryInit(); } else { document.addEventListener('DOMContentLoaded', tryInit); }
+  function scrollToHash() {
+    var hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+    var id = hash.slice(1);
+    if (!/^[\w-]+$/.test(id)) return;
+    var target = document.getElementById(id);
+    if (!target) return;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function deferredHashScroll() {
+    setTimeout(scrollToHash, 50);
+    setTimeout(scrollToHash, 350);
+    setTimeout(scrollToHash, 900);
+  }
+
+  if (document.readyState !== 'loading') { tryInit(); deferredHashScroll(); } else { document.addEventListener('DOMContentLoaded', function(){ tryInit(); deferredHashScroll(); }); }
+  window.addEventListener('load', deferredHashScroll);
 
   if (window.elementorFrontend && window.elementorFrontend.hooks) {
     window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
@@ -1842,8 +1929,6 @@
   }
 
   window.addEventListener('load', tryInit);
-
-  vslPPBindReplicaBookingCaptureOnce();
 
   var attempts = 0;
   var poller = setInterval(function() {
