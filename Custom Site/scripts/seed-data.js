@@ -312,7 +312,7 @@ contact: {
       address: "2110 Edwards St\nHouston, TX 77007",
       phone: "832-627-4981",
       email: "info@velocitysimlounge.com",
-      hours: "Mon \u2014 2PM \u2013 11PM\nTue \u2014 Private events only\nWed\u2013Thu \u2014 2PM \u2013 11PM\nFri \u2014 12PM \u2013 12AM\nSat\u2013Sun \u2014 11AM \u2013 12AM",
+      hours: "Mon \u2014 2PM \u2013 11PM\nTue \u2014 Private events only\nWed\u2013Thu \u2014 2PM \u2013 11PM\nFri \u2014 12PM \u2013 12AM\nSat \u2014 11AM \u2013 12AM\nSun \u2014 11AM \u2013 10PM",
       mapEmbed: ""
     },
     {

@@ -46,7 +46,7 @@ writeJSON(path.join(CONTENT_DIR, 'banners.json'), [
   },
   {
     id: "houston-hours",
-    text: "Houston: Extended hours this weekend -- open until midnight!",
+    text: "Houston: Saturday open until midnight; Sunday we close at 10pm.",
     type: "promo",
     locations: ["houston"],
     startDate: null,
@@ -960,7 +960,7 @@ const contactContent = {
         address: "123 Racing Blvd\nHouston, TX 77001",
         phone: "(713) 555-RACE",
         email: "houston@velocitysimlounge.com",
-        hours: "Mon-Thu: 12pm-10pm\nFri: 12pm-12am\nSat: 10am-12am\nSun: 10am-8pm",
+        hours: "Mon-Thu: 12pm-10pm\nFri: 12pm-12am\nSat: 10am-12am\nSun: 10am-10pm",
         mapEmbed: ""
       },
       {
