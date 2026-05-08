@@ -2,11 +2,14 @@
   window.VSL_CORPORATE_CONFIG = {
     links: {
       inquire: 'https://velocitysimracinglounge.tripleseat.com/party_request/49933',
-      allEvents: 'https://velocitysimlounge.com/group-events/'
+      allEvents: 'https://velocitysimlounge.com/group-events/',
+      semiPrivate: 'https://velocitysimlounge.com/semi-private/',
+      buyout: 'https://velocitysimlounge.com/buyout/'
     },
     images: {
       hero: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp',
       corporate: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp',
+      semiPrivate: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp',
       atmosphere: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp',
       group: 'https://velocitysimlounge.com/wp-content/uploads/2025/09/Velocity_610Launch_QUITNGUYEN_DSCF3026-1.webp',
       finishLine: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png'
@@ -255,9 +258,6 @@
       color: var(--circuit-white);
       padding: clamp(56px, 10vw, 88px) clamp(20px, 5vw, var(--page-margin));
     }
-    .vsl-corporate #corporate-included {
-      background-color: var(--navy);
-    }
     .vsl-corp-section--dark {
       background: var(--navy);
       color: var(--circuit-white);
@@ -369,8 +369,12 @@
     .vsl-corp-venue__cta {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: 12px;
       margin-top: 8px;
+    }
+    .vsl-corp-venue__cta .vsl-corp-btn--secondary {
+      padding: 10px 22px;
     }
     .vsl-corp-venue__stat {
       flex: 1 1 0;
@@ -406,6 +410,79 @@
       .vsl-corp-venue__media {
         order: -1;
       }
+    }
+    /* Mirrored split: image on the right, body on the left */
+    .vsl-corp-venue--reverse .vsl-corp-venue__media { order: 2; }
+    .vsl-corp-venue--reverse .vsl-corp-venue__body { order: 1; }
+    @media (max-width: 800px) {
+      .vsl-corp-venue--reverse .vsl-corp-venue__media { order: -1; }
+    }
+    /* "Ideal for groups of 10–40" pill */
+    .vsl-corp-venue__highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      margin: 0 0 1rem;
+      padding: 6px 14px;
+      font-family: var(--font-display);
+      font-size: clamp(0.78rem, 0.72rem + 0.25vw, 0.9rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--magenta);
+      background: rgba(238, 38, 95, 0.12);
+      border: 1px solid rgba(238, 38, 95, 0.32);
+      border-radius: 999px;
+    }
+    /* Sub-list of inclusions inside the venue body */
+    .vsl-corp-venue__includes-title {
+      margin: 0.75rem 0 0.6rem;
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yellow);
+    }
+    .vsl-corp-venue__includes {
+      margin: 0 0 1.25rem;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+    .vsl-corp-venue__includes li {
+      position: relative;
+      padding-left: 30px;
+      font-size: var(--vsl-text-section-sub);
+      line-height: 1.5;
+      color: rgba(234, 234, 234, 0.92);
+    }
+    .vsl-corp-venue__includes li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.32em;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background-color: var(--magenta);
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 12px 12px;
+    }
+    /* Italic closing pitch under the includes list */
+    .vsl-corp-venue__closing {
+      margin: 0.25rem 0 1rem;
+      font-size: var(--vsl-text-section-sub);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: rgba(234, 234, 234, 0.85);
     }
 
     /* ------------------------------------------------------------------ */
@@ -755,14 +832,15 @@
     .vsl-corp-included__title {
       margin: 0 0 0.4em;
       font-family: var(--font-display);
-      font-size: clamp(1.25rem, 0.95rem + 1.4vw, 1.75rem);
+      font-size: var(--vsl-text-section);
       font-weight: 700;
       font-style: italic;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       color: var(--circuit-white);
-      line-height: 1.2;
+      line-height: 1.15;
       text-align: center;
+      text-wrap: balance;
     }
     .vsl-corp-included__sub {
       margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
@@ -776,7 +854,7 @@
     }
     .vsl-corp-included__grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: var(--gutter);
     }
     .vsl-corp-included-item {
@@ -849,6 +927,11 @@
       object-fit: contain;
       object-position: center center;
     }
+    .vsl-corp-included-item__icon svg {
+      display: block;
+      width: 60%;
+      height: 60%;
+    }
     .vsl-corp-included-item h3 {
       margin: 0;
       font-family: var(--font-display);
@@ -866,12 +949,52 @@
       line-height: 1.55;
       color: var(--slate-violet);
     }
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
+      .vsl-corp-included__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 720px) {
       .vsl-corp-included__grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 480px) {
       .vsl-corp-included__grid { grid-template-columns: 1fr; }
     }
+
+    /* ------------------------------------------------------------------ */
+    /* NARRATIVE SECTIONS (Team Building, The Experience)                 */
+    /* ------------------------------------------------------------------ */
+    .vsl-corp-narrative {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .vsl-corp-narrative__eyebrow {
+      display: block;
+      margin: 0 auto 0.6em;
+      font-family: var(--font-display);
+      font-size: clamp(0.75rem, 0.65rem + 0.3vw, 0.85rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--magenta);
+    }
+    .vsl-corp-narrative__lead {
+      margin: 0 0 1.5em;
+      font-size: clamp(1.05rem, 0.95rem + 0.55vw, 1.25rem);
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.55;
+      color: var(--circuit-white);
+      text-wrap: balance;
+    }
+    .vsl-corp-narrative__body {
+      margin: 0 0 1.25em;
+      font-size: var(--vsl-text-section-sub);
+      font-weight: 400;
+      line-height: 1.7;
+      color: rgba(234, 234, 234, 0.88);
+    }
+    .vsl-corp-narrative__body:last-child { margin-bottom: 0; }
 
     /* ------------------------------------------------------------------ */
     /* FINISH LINE DIVIDER                                                */
@@ -1019,8 +1142,11 @@
      data-vsl-config='{
        "inquireUrl": "https://velocitysimracinglounge.tripleseat.com/party_request/49933",
        "allEventsUrl": "https://velocitysimlounge.com/group-events/",
+       "semiPrivateUrl": "https://velocitysimlounge.com/semi-private/",
+       "buyoutUrl": "https://velocitysimlounge.com/buyout/",
        "heroImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp",
        "corporateImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp",
+       "semiPrivateImage": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp",
        "atmosphereImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF6115.webp",
        "groupImage": "https://velocitysimlounge.com/wp-content/uploads/2025/09/Velocity_610Launch_QUITNGUYEN_DSCF3026-1.webp",
        "finishLineImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"
@@ -1046,20 +1172,109 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- UNIQUE & ENGAGING EXPERIENCE                                   -->
+    <!-- WHAT EVERY CORPORATE EVENT INCLUDES                            -->
     <!-- ============================================================== -->
-    <section class="vsl-corp-section--light" id="corporate-venue" aria-labelledby="venue-heading">
+    <section class="vsl-corp-section--light" id="corporate-included" aria-labelledby="included-heading">
+      <div class="vsl-corp-section__inner">
+        <div class="vsl-corp-included">
+          <span class="vsl-corp-included__eyebrow">Standard with every event</span>
+          <h2 class="vsl-corp-included__title" id="included-heading">What Every Corporate Event Includes</h2>
+          <p class="vsl-corp-included__sub">Every corporate event at Velocity is designed to be seamless, supported, and high-impact &mdash; from setup to wrap-up, we handle it all. It&rsquo;s why companies choose Velocity over traditional restaurants for corporate events.</p>
+          <div class="vsl-corp-included__grid">
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-sims">
+              </div>
+              <h3>Dedicated Racing Simulators</h3>
+              <p>Private racing simulators reserved exclusively for your group from start to finish.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-seating">
+              </div>
+              <h3>Reserved Seating &amp; Lounge</h3>
+              <p>Reserved seating and lounge space dedicated to your group throughout the event.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-menu">
+              </div>
+              <h3>Food &amp; Beverage Options</h3>
+              <p>Curated catering packages and craft bar service designed around your event.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M4 22V4" fill="none" stroke="#293893" stroke-width="1.8" stroke-linecap="round"/>
+                  <path d="M4 4h16v8H4z" fill="none" stroke="#293893" stroke-width="1.8" stroke-linejoin="round"/>
+                  <rect x="4" y="4" width="4" height="4" fill="#293893"/>
+                  <rect x="12" y="4" width="4" height="4" fill="#293893"/>
+                  <rect x="8" y="8" width="4" height="4" fill="#293893"/>
+                  <rect x="16" y="8" width="4" height="4" fill="#293893"/>
+                </svg>
+              </div>
+              <h3>Race Formats &amp; Free Driving</h3>
+              <p>Structured race formats with leaderboards, or open free-driving sessions &mdash; whatever fits your event.</p>
+            </div>
+
+            <div class="vsl-corp-included-item">
+              <div class="vsl-corp-included-item__icon" aria-hidden="true">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-staff">
+              </div>
+              <h3>Full Event Staff &amp; Coordination</h3>
+              <p>A dedicated event manager and on-site team handling flow, timing, and every detail.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- SEMI-PRIVATE CORPORATE EVENTS                                  -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--dark" id="corporate-semi-private" aria-labelledby="semi-private-heading">
+      <div class="vsl-corp-section__inner">
+        <div class="vsl-corp-venue vsl-corp-venue--reverse">
+          <div class="vsl-corp-venue__media">
+            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp"
+                 alt="Velocity's semi-private corporate event area with reserved lounge seating and racing simulators"
+                 data-vsl-img="semiPrivate"
+                 width="800" height="600" loading="lazy" decoding="async">
+          </div>
+          <div class="vsl-corp-venue__body">
+            <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow" id="semi-private-heading">Semi-Private Corporate Events</h2>
+            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Host a dynamic and engaging corporate event with dedicated space and a premium experience. Semi-private events strike the perfect balance between energy and exclusivity &mdash; giving your group room to connect while still enjoying the atmosphere of Velocity.</p>
+            <span class="vsl-corp-venue__highlight">Ideal for groups of 10&ndash;40</span>
+            <p class="vsl-corp-venue__closing">This is where work meets play &mdash; start with a meeting, transition into racing, and end with food, drinks, and real connection.</p>
+            <div class="vsl-corp-venue__cta">
+              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/semi-private/" data-vsl-link="semiPrivate" target="_self">Explore Semi-Private</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- FULL BUYOUT: YOUR PRIVATE CORPORATE RACETRACK                  -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--light" id="corporate-buyout" aria-labelledby="buyout-heading">
       <div class="vsl-corp-section__inner">
         <div class="vsl-corp-venue">
           <div class="vsl-corp-venue__media">
             <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp"
-                 alt="Guests enjoying a private corporate event at Velocity with sim racing stations"
+                 alt="Velocity Sim Racing Lounge set up for a full venue buyout corporate event"
                  data-vsl-img="corporate"
                  width="800" height="600" loading="lazy" decoding="async">
           </div>
           <div class="vsl-corp-venue__body">
-            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="venue-heading">A Unique and Engaging Experience</h2>
-            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Host an event your team won&rsquo;t forget. From planning to execution, our event staff handles every detail.</p>
+            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="buyout-heading">Full Buyout: Your Private Corporate Racetrack</h2>
+            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Ready to go all-in? A full venue buyout transforms Velocity into your company&rsquo;s private playground. From the moment your event begins, our dedicated event team manages every detail &mdash; flow, timing, racing formats, food, drinks, and guest experience &mdash; so everything runs seamlessly.</p>
             <div class="vsl-corp-venue__capacity">
               <div class="vsl-corp-venue__stat">
                 <span class="vsl-corp-venue__stat-num">214</span>
@@ -1074,8 +1289,18 @@
                 <span class="vsl-corp-venue__stat-label">Racing Simulators</span>
               </div>
             </div>
+            <p class="vsl-corp-venue__includes-title">Full Buyout Experiences Can Include</p>
+            <ul class="vsl-corp-venue__includes">
+              <li>Fully private access to the entire venue</li>
+              <li>Custom race formats and competitions</li>
+              <li>Branded racing experiences (logos, messaging, custom liveries)</li>
+              <li>Curated food and beverage menus</li>
+              <li>Dedicated event manager and full staff support</li>
+            </ul>
+            <p class="vsl-corp-venue__closing">Perfect for corporate celebrations, holiday parties, product launches, and large-scale team events that need to impress.</p>
             <div class="vsl-corp-venue__cta">
               <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/buyout/" data-vsl-link="buyout" target="_self">Explore Full Buyout</a>
             </div>
           </div>
         </div>
@@ -1145,60 +1370,41 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- EVERYTHING YOU NEED, INCLUDED                                  -->
+    <!-- TEAM BUILDING THAT ACTUALLY WORKS                              -->
     <!-- ============================================================== -->
-    <section class="vsl-corp-section--light" id="corporate-included" aria-labelledby="included-heading">
+    <section class="vsl-corp-section--light" id="corporate-team-building" aria-labelledby="team-building-heading">
       <div class="vsl-corp-section__inner">
-        <div class="vsl-corp-included">
-          <span class="vsl-corp-included__eyebrow">What&rsquo;s Included</span>
-          <h2 class="vsl-corp-included__title" id="included-heading">Everything You Need, Included</h2>
-          <p class="vsl-corp-included__sub">Every corporate event at Velocity comes standard with the essentials &mdash; so you can focus on your guests.</p>
-          <div class="vsl-corp-included__grid">
-
-            <div class="vsl-corp-included-item">
-              <div class="vsl-corp-included-item__icon" aria-hidden="true">
-                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-sims">
-              </div>
-              <h3>Dedicated Racing Simulators</h3>
-              <p>Private racing simulators reserved exclusively for your group from start to finish.</p>
-            </div>
-
-            <div class="vsl-corp-included-item">
-              <div class="vsl-corp-included-item__icon" aria-hidden="true">
-                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-seating">
-              </div>
-              <h3>Reserved Area &amp; Seating</h3>
-              <p>Your own dedicated space within the venue, set up and ready for your party.</p>
-            </div>
-
-            <div class="vsl-corp-included-item">
-              <div class="vsl-corp-included-item__icon" aria-hidden="true">
-                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-menu">
-              </div>
-              <h3>Choice of Menu</h3>
-              <p>Curated catering packages and craft bar service designed around your event.</p>
-            </div>
-
-            <div class="vsl-corp-included-item">
-              <div class="vsl-corp-included-item__icon" aria-hidden="true">
-                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-icon-included-staff">
-              </div>
-              <h3>Event Manager &amp; Staff</h3>
-              <p>A dedicated event manager and on-site team guiding the night end to end.</p>
-            </div>
-
-          </div>
+        <div class="vsl-corp-narrative">
+          <span class="vsl-corp-narrative__eyebrow">Real engagement, no awkward icebreakers</span>
+          <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="team-building-heading">Corporate Team Building That Actually Works</h2>
+          <p class="vsl-corp-narrative__lead">Forget awkward icebreakers. Sim racing creates instant engagement, making it one of the most effective and fun team building activities in Houston.</p>
+          <p class="vsl-corp-narrative__body">Your team will collaborate, compete, and cheer each other on in an environment that naturally builds energy and connection. Some will be chasing the fastest lap. Others will be celebrating from the sidelines. Everyone is part of the experience.</p>
+          <p class="vsl-corp-narrative__body">And no experience is required. We guide every guest through the racing experience so everyone feels confident getting behind the wheel.</p>
         </div>
       </div>
     </section>
 
     <!-- ============================================================== -->
-    <!-- MAKE IT YOURS                                                  -->
+    <!-- THE EXPERIENCE: IMMERSIVE. COMPETITIVE. UNFORGETTABLE.         -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--dark" id="corporate-experience" aria-labelledby="experience-heading">
+      <div class="vsl-corp-section__inner">
+        <div class="vsl-corp-narrative">
+          <span class="vsl-corp-narrative__eyebrow">Immersive. Competitive. Unforgettable.</span>
+          <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="experience-heading">The Experience</h2>
+          <p class="vsl-corp-narrative__lead">Feel every turn, every braking zone, and every straightaway as your team races together in a fully immersive environment. The realism pulls people in immediately, and the competition keeps the energy high throughout the event.</p>
+          <p class="vsl-corp-narrative__body">And because Velocity is more than just a corporate events space in Houston with food and drinks, it&rsquo;ll be a team building experience no one will forget. Velocity is built as a social space, so your event flows naturally between racing, dining, and connecting. It&rsquo;s not just racing &mdash; it&rsquo;s a shared experience your entire group can be part of.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MAKE YOUR EVENT STAND OUT                                      -->
     <!-- ============================================================== -->
     <section class="vsl-corp-section--makeyours" id="corporate-make-it-yours" aria-labelledby="makeyours-heading">
       <div class="vsl-corp-section__inner">
-        <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="makeyours-heading">Make It Yours</h2>
-        <p class="vsl-corp-section__sub vsl-corp-section__sub--light vsl-corp-section__sub--center">Custom touches only Velocity can deliver &mdash; turn your event into a signature experience your team will remember. Inquire today to host your own unique event.</p>
+        <h2 class="vsl-corp-section__title vsl-corp-section__title--blue vsl-corp-section__title--center" id="makeyours-heading">Make Your Event Stand Out</h2>
+        <p class="vsl-corp-section__sub vsl-corp-section__sub--light vsl-corp-section__sub--center">Take your event to the next level with custom enhancements. These details turn a great event into a memorable experience your team will talk about long after it ends.</p>
         <div class="vsl-corp-makeyours-cta">
           <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
         </div>
@@ -1209,8 +1415,8 @@
             <div class="vsl-corp-enhance-card__icon" aria-hidden="true">
               <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/unique-upgrades.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-enhance-branding">
             </div>
-            <h3>Custom Racetrack Branding</h3>
-            <p>Feature your company logo or message directly on the in-sim racetrack and cars for a fully branded racing experience.</p>
+            <h3>Branded Racing Experiences</h3>
+            <p>Feature your company logo or messaging on the in-sim racetrack and cars for a fully branded racing experience.</p>
           </div>
 
           <div class="vsl-corp-enhance-card">
@@ -1218,7 +1424,7 @@
             <div class="vsl-corp-enhance-card__icon" aria-hidden="true">
               <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/fun-for-all-skill-levels.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="corp-enhance-trophies">
             </div>
-            <h3>Custom Branded Trophies</h3>
+            <h3>Podium Ceremonies &amp; Custom Trophies</h3>
             <p>Celebrate your top performers with custom branded trophies and a full podium ceremony for an authentic racing finish.</p>
           </div>
 
@@ -1236,12 +1442,12 @@
     </section>
 
     <!-- ============================================================== -->
-    <!-- BOTTOM CTA                                                     -->
+    <!-- PLAN YOUR FUN CORPORATE EVENT IN HOUSTON                       -->
     <!-- ============================================================== -->
     <section class="vsl-corp-section--dark" id="corporate-book" aria-labelledby="book-heading">
       <div class="vsl-corp-section__inner vsl-corp-bottom-cta">
-        <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="book-heading">Book Your Corporate Event</h2>
-        <p class="vsl-corp-section__sub vsl-corp-section__sub--dark vsl-corp-section__sub--center">Ready to create an unforgettable experience? Our team is standing by to make it happen.</p>
+        <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow vsl-corp-section__title--center" id="book-heading">Plan Your Fun Corporate Event in Houston</h2>
+        <p class="vsl-corp-section__sub vsl-corp-section__sub--dark vsl-corp-section__sub--center">Ready to book the most unique corporate events in Houston? Let&rsquo;s create something your team will actually be excited about. Our team is ready to help you plan every detail and deliver an experience that exceeds expectations.</p>
         <div class="vsl-corp-bottom-cta__actions">
           <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
         </div>
