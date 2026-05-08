@@ -71,7 +71,8 @@
     --vsl-hero-bleed-top: -12px;
     --vsl-hero-bleed-bottom: -12px;
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
-    --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
+    /* Thin finish-line strip (new default across the rest of the site) */
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
     /* Same fixed block height for every location (Dallas hides CTAs; without this, Houston is taller). */
     --vsl-loc-hero-h: clamp(420px, 72svh, 900px);
 
@@ -510,15 +511,15 @@
     min-width: 0;
   }
   .vsl-info-card__label {
-    margin: 0 0 4px;
+    margin: 0 0 6px;
     font-family: var(--font-display);
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    line-height: 1.2;
-    color: var(--mist);
+    letter-spacing: 0.09em;
+    line-height: 1.15;
+    color: var(--circuit-white);
   }
   .vsl-info-card__value {
     margin: 0;
@@ -545,16 +546,54 @@
     font-size: 0.92rem;
     line-height: 1.45;
     color: var(--circuit-white);
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: start;
+    row-gap: 2px;
   }
   .vsl-info-card__hours li {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 2px 0;
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    column-gap: 14px;
+    align-items: baseline;
+    padding: 4px 10px;
+    margin: 0 -10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
   }
-  .vsl-info-card__hours .vsl-day { font-weight: 600; white-space: nowrap; }
-  .vsl-info-card__hours .vsl-time { text-align: right; color: var(--mist); }
-  .vsl-info-card__hours .vsl-time--closed { color: var(--magenta); font-style: italic; font-size: 0.86rem; }
+  .vsl-info-card__hours .vsl-day {
+    font-family: var(--font-head, inherit);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--yellow);
+    white-space: nowrap;
+  }
+  .vsl-info-card__hours .vsl-time { color: var(--circuit-white); font-weight: 600; }
+  .vsl-info-card__hours .vsl-time--closed {
+    color: var(--mist);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .vsl-info-card__hours li.is-today {
+    background: linear-gradient(90deg, rgba(238, 38, 95, 0.32), rgba(238, 38, 95, 0.14));
+    box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.45);
+  }
+  .vsl-info-card__hours li.is-today .vsl-day { color: #fff; }
+  .vsl-info-card__hours li.is-today .vsl-time {
+    color: #fff;
+    font-weight: 700;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
+  }
+  .vsl-info-card__hours li.is-today .vsl-time--closed {
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: none;
+    font-style: italic;
+  }
   @media (max-width: 900px) {
     .vsl-loc-info__grid { flex-wrap: wrap; }
     .vsl-info-card { flex: 0 0 calc(50% - 20px); }
@@ -852,13 +891,13 @@
             </div>
             <div class="vsl-info-card__body">
               <div class="vsl-info-card__label">Hours</div>
-              <ul class="vsl-info-card__hours" data-vsl-loc-hours>
-                <li><span class="vsl-day">Mon</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
-                <li><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
-                <li><span class="vsl-day">Wed &ndash; Thu</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
-                <li><span class="vsl-day">Fri</span><span class="vsl-time">12PM &ndash; 12AM</span></li>
-                <li><span class="vsl-day">Sat</span><span class="vsl-time">11AM &ndash; 12AM</span></li>
-                <li><span class="vsl-day">Sun</span><span class="vsl-time">11AM &ndash; 10PM</span></li>
+              <ul class="vsl-info-card__hours" data-vsl-loc-hours aria-label="Hours">
+                <li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
+                <li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
+                <li data-day="Wed,Thu"><span class="vsl-day">Wed &ndash; Thu</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
+                <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM &ndash; 12AM</span></li>
+                <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM &ndash; 12AM</span></li>
+                <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM &ndash; 10PM</span></li>
               </ul>
             </div>
           </div>
@@ -1095,12 +1134,12 @@
       planEvent: 'https://velocitysimlounge.com/group-events/',
       menu: 'https://velocitysimlounge.com/food-and-drink/',
       hoursSummary: 'Mon\u2013Thu 2PM\u201311PM \u00b7 Fri 12PM\u201312AM \u00b7 Sat 11AM\u201312AM \u00b7 Sun 11AM\u201310PM',
-      hoursHtml: '<li><span class="vsl-day">Mon</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
-        + '<li><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>'
-        + '<li><span class="vsl-day">Wed \u2013 Thu</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
-        + '<li><span class="vsl-day">Fri</span><span class="vsl-time">12PM \u2013 12AM</span></li>'
-        + '<li><span class="vsl-day">Sat</span><span class="vsl-time">11AM \u2013 12AM</span></li>'
-        + '<li><span class="vsl-day">Sun</span><span class="vsl-time">11AM \u2013 10PM</span></li>',
+      hoursHtml: '<li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
+        + '<li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>'
+        + '<li data-day="Wed,Thu"><span class="vsl-day">Wed \u2013 Thu</span><span class="vsl-time">2PM \u2013 11PM</span></li>'
+        + '<li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM \u2013 12AM</span></li>'
+        + '<li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM \u2013 12AM</span></li>'
+        + '<li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM \u2013 10PM</span></li>',
       aboutText: "Welcome to Velocity Sim Racing Lounge in Houston \u2014 the city\u2019s premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you\u2019re a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 16 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 5,000 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.",
       heroImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg',
       venueImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg',
@@ -1169,9 +1208,33 @@
     if (hoursEl && loc.hoursHtml) {
       hoursEl.innerHTML = loc.hoursHtml;
     }
+    highlightTodayHours();
 
     document.title = 'Velocity Sim Racing Lounge ' + loc.cityName + ' | Sim Racing, Events & Bar';
   }
+
+  function highlightTodayHours() {
+    var today;
+    try {
+      today = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short' })
+        .format(new Date());
+    } catch (e) {
+      today = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date().getDay()];
+    }
+    root.querySelectorAll('.vsl-info-card__hours li[data-day]').forEach(function (li) {
+      var days = (li.getAttribute('data-day') || '').split(',').map(function (s) { return s.trim(); });
+      li.classList.toggle('is-today', days.indexOf(today) !== -1);
+    });
+  }
+  (function scheduleMidnightRefresh() {
+    var now = new Date();
+    var next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5, 0);
+    var ms = Math.max(60 * 1000, next - now);
+    setTimeout(function tick() {
+      highlightTodayHours();
+      setTimeout(tick, 24 * 60 * 60 * 1000);
+    }, ms);
+  })();
 
   applyLocation(readLocation());
 

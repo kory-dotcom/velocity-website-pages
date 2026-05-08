@@ -399,6 +399,68 @@
   letter-spacing: 0.06em;
   color: #fff;
 }
+.vsl-navbar__loc-detail-hours-list {
+  list-style: none;
+  margin: 0 0 calc(10px * var(--vsl-ui-scale));
+  padding: calc(8px * var(--vsl-ui-scale)) 0 calc(2px * var(--vsl-ui-scale));
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: start;
+  row-gap: calc(2px * var(--vsl-ui-scale));
+  border-top: 1px solid rgba(234,234,234,0.06);
+}
+.vsl-navbar__loc-detail-hours-list li {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  column-gap: calc(12px * var(--vsl-ui-scale));
+  align-items: baseline;
+  padding: calc(4px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale));
+  margin: 0 calc(-8px * var(--vsl-ui-scale));
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: calc(11px * var(--vsl-ui-scale));
+  color: rgba(234,234,234,0.85);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.vsl-navbar__loc-detail-hours-list .vsl-day {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(11px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--yellow);
+}
+.vsl-navbar__loc-detail-hours-list .vsl-time {
+  font-weight: 600;
+  color: #fff;
+}
+.vsl-navbar__loc-detail-hours-list .vsl-time--closed {
+  color: rgba(234,234,234,0.55);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.vsl-navbar__loc-detail-hours-list li.is-today {
+  background: linear-gradient(90deg, rgba(238, 38, 95, 0.32), rgba(238, 38, 95, 0.14));
+  box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.45);
+}
+.vsl-navbar__loc-detail-hours-list li.is-today .vsl-day {
+  color: #fff;
+}
+.vsl-navbar__loc-detail-hours-list li.is-today .vsl-time {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.18);
+}
+.vsl-navbar__loc-detail-hours-list li.is-today .vsl-time--closed {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: none;
+  font-style: italic;
+}
 .vsl-navbar__loc-detail-hours {
   font-family: var(--font-body);
   font-size: calc(11px * var(--vsl-ui-scale));
@@ -406,6 +468,17 @@
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;
+}
+a.vsl-navbar__loc-detail-address {
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+a.vsl-navbar__loc-detail-address:hover,
+a.vsl-navbar__loc-detail-address:focus-visible {
+  color: #fff;
+  border-bottom-color: var(--magenta);
 }
 .vsl-navbar__loc-detail-address {
   font-family: var(--font-body);
@@ -1727,9 +1800,16 @@
         <div class="vsl-navbar__loc-detail is-active" data-loc-detail="houston">
           <div class="vsl-navbar__loc-detail-header">
             <span class="vsl-navbar__loc-detail-name">Houston</span>
-            <span class="vsl-navbar__loc-detail-hours" data-loc-hours>Mon–Thu 2PM–11PM · Sat 11AM–12AM · Sun 11AM–10PM</span>
           </div>
-          <div class="vsl-navbar__loc-detail-address">2110 Edwards St<br>Houston, TX 77007</div>
+          <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Houston hours">
+            <li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM – 11PM</span></li>
+            <li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
+            <li data-day="Wed,Thu"><span class="vsl-day">Wed – Thu</span><span class="vsl-time">2PM – 11PM</span></li>
+            <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
+            <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
+            <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
+          </ul>
+          <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 2110 Edwards St, Houston in Google Maps">2110 Edwards St<br>Houston, TX 77007</a>
           <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
           <div class="vsl-navbar__loc-detail-links">
             <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
@@ -2276,7 +2356,32 @@
     closeMega();
     ctaWrap.classList.add('vsl-navbar__cta-wrap--open');
     if (ctaLocBtn) ctaLocBtn.setAttribute('aria-expanded', 'true');
+    highlightTodayHours();
   }
+
+  function highlightTodayHours() {
+    var today;
+    try {
+      today = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short' })
+        .format(new Date());
+    } catch (_) {
+      today = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date().getDay()];
+    }
+    navbar.querySelectorAll('.vsl-navbar__loc-detail-hours-list li[data-day]').forEach(function(li) {
+      var days = (li.getAttribute('data-day') || '').split(',').map(function(s) { return s.trim(); });
+      li.classList.toggle('is-today', days.indexOf(today) !== -1);
+    });
+  }
+  highlightTodayHours();
+  (function scheduleMidnightRefresh() {
+    var now = new Date();
+    var next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5, 0);
+    var ms = Math.max(60 * 1000, next - now);
+    setTimeout(function tick() {
+      highlightTodayHours();
+      setTimeout(tick, 24 * 60 * 60 * 1000);
+    }, ms);
+  })();
 
   if (raceToggle) {
     raceToggle.addEventListener('click', function(e) {
