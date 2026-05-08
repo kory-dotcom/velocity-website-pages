@@ -494,21 +494,32 @@
   text-shadow: none;
   font-style: italic;
 }
+/* Address + phone share one row to better use the popover width.
+   Wraps gracefully on narrow screens (phone drops below address). */
+.vsl-navbar__loc-detail-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: calc(6px * var(--vsl-ui-scale)) calc(16px * var(--vsl-ui-scale));
+  margin-bottom: calc(12px * var(--vsl-ui-scale));
+}
 .vsl-navbar__loc-detail-address {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: calc(12px * var(--vsl-ui-scale));
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-bottom: calc(8px * var(--vsl-ui-scale));
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(14px * var(--vsl-ui-scale));
+  line-height: 1.4;
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--magenta);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-skip-ink: none;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 a.vsl-navbar__loc-detail-address:hover,
 a.vsl-navbar__loc-detail-address:focus-visible {
-  color: #fff;
-  border-bottom-color: var(--magenta);
+  color: var(--magenta);
 }
 .vsl-navbar__loc-detail-phone {
   display: inline-block;
@@ -519,7 +530,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   text-decoration: none;
   border-bottom: 2px solid var(--magenta);
   padding-bottom: 1px;
-  margin-bottom: calc(12px * var(--vsl-ui-scale));
   transition: color 0.2s ease;
 }
 .vsl-navbar__loc-detail-phone:hover { color: var(--magenta); }
@@ -1977,8 +1987,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
             <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
             <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
           </ul>
-          <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 2110 Edwards St, Houston in Google Maps">2110 Edwards St<br>Houston, TX 77007</a>
-          <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
+          <div class="vsl-navbar__loc-detail-contact">
+            <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 2110 Edwards St, Houston in Google Maps">2110 Edwards St<br>Houston, TX 77007</a>
+            <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
+          </div>
           <div class="vsl-navbar__loc-detail-links">
             <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
               <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
