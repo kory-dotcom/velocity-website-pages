@@ -864,11 +864,16 @@
       align-items: flex-start;
       gap: 14px;
       padding: clamp(24px, 2.8vw, 32px) clamp(20px, 2.2vw, 26px);
-      background: #fff;
-      border: 1px solid rgba(16, 24, 43, 0.06);
+      background:
+        linear-gradient(180deg, rgba(86, 104, 212, 0.18) 0%, rgba(41, 56, 147, 0.10) 100%),
+        rgba(16, 24, 43, 0.55);
+      border: 1px solid rgba(234, 234, 234, 0.22);
       border-radius: 16px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
-      transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease;
+      box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      transition: box-shadow 0.35s ease, transform 0.25s ease, border-color 0.35s ease, background 0.35s ease;
       overflow: hidden;
     }
     .vsl-corp-included-item::before {
@@ -882,16 +887,24 @@
     }
     @media (hover: hover) and (pointer: fine) {
       .vsl-corp-included-item:hover {
-        box-shadow: 0 22px 56px rgba(0, 0, 0, 0.42), 0 8px 18px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(86, 104, 212, 0.32);
+        background:
+          linear-gradient(180deg, rgba(86, 104, 212, 0.26) 0%, rgba(41, 56, 147, 0.16) 100%),
+          rgba(16, 24, 43, 0.55);
+        border-color: rgba(238, 38, 95, 0.42);
+        box-shadow:
+          0 28px 64px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(238, 38, 95, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.18);
         transform: translateY(-4px);
-        border-color: rgba(86, 104, 212, 0.36);
       }
       .vsl-corp-included-item:hover::before {
         opacity: 1;
       }
       .vsl-corp-included-item:hover .vsl-corp-included-item__icon {
         transform: scale(1.08);
-        box-shadow: 0 4px 16px rgba(41, 56, 147, 0.18);
+        box-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.95) inset,
+          0 6px 18px rgba(238, 38, 95, 0.22);
       }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -940,14 +953,14 @@
       font-style: italic;
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      color: var(--navy);
+      color: var(--circuit-white);
       line-height: 1.25;
     }
     .vsl-corp-included-item p {
       margin: 0;
       font-size: 0.875rem;
       line-height: 1.55;
-      color: var(--slate-violet);
+      color: rgba(234, 234, 234, 0.78);
     }
     @media (max-width: 1100px) {
       .vsl-corp-included__grid { grid-template-columns: repeat(3, 1fr); }
@@ -1172,6 +1185,79 @@
     </section>
 
     <!-- ============================================================== -->
+    <!-- SEMI-PRIVATE CORPORATE EVENTS                                  -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--light" id="corporate-semi-private" aria-labelledby="semi-private-heading">
+      <div class="vsl-corp-section__inner">
+        <div class="vsl-corp-venue vsl-corp-venue--reverse">
+          <div class="vsl-corp-venue__media">
+            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp"
+                 alt="Velocity's semi-private corporate event area with reserved lounge seating and racing simulators"
+                 data-vsl-img="semiPrivate"
+                 width="800" height="600" loading="lazy" decoding="async">
+          </div>
+          <div class="vsl-corp-venue__body">
+            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="semi-private-heading">Semi-Private Corporate Events</h2>
+            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Host a dynamic and engaging corporate event with dedicated space and a premium experience. Semi-private events strike the perfect balance between energy and exclusivity &mdash; giving your group room to connect while still enjoying the atmosphere of Velocity.</p>
+            <span class="vsl-corp-venue__highlight">Ideal for groups of 10&ndash;40</span>
+            <p class="vsl-corp-venue__closing">This is where work meets play &mdash; start with a meeting, transition into racing, and end with food, drinks, and real connection.</p>
+            <div class="vsl-corp-venue__cta">
+              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/semi-private/" data-vsl-link="semiPrivate" target="_self">Explore Semi-Private</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- FULL BUYOUT: YOUR PRIVATE CORPORATE RACETRACK                  -->
+    <!-- ============================================================== -->
+    <section class="vsl-corp-section--dark" id="corporate-buyout" aria-labelledby="buyout-heading">
+      <div class="vsl-corp-section__inner">
+        <div class="vsl-corp-venue">
+          <div class="vsl-corp-venue__media">
+            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp"
+                 alt="Velocity Sim Racing Lounge set up for a full venue buyout corporate event"
+                 data-vsl-img="corporate"
+                 width="800" height="600" loading="lazy" decoding="async">
+          </div>
+          <div class="vsl-corp-venue__body">
+            <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow" id="buyout-heading">Full Buyout: Your Private Corporate Racetrack</h2>
+            <p class="vsl-corp-section__sub vsl-corp-section__sub--dark">Ready to go all-in? A full venue buyout transforms Velocity into your company&rsquo;s private playground. From the moment your event begins, our dedicated event team manages every detail &mdash; flow, timing, racing formats, food, drinks, and guest experience &mdash; so everything runs seamlessly.</p>
+            <div class="vsl-corp-venue__capacity">
+              <div class="vsl-corp-venue__stat">
+                <span class="vsl-corp-venue__stat-num">214</span>
+                <span class="vsl-corp-venue__stat-label">Guests Indoors</span>
+              </div>
+              <div class="vsl-corp-venue__stat">
+                <span class="vsl-corp-venue__stat-num">60</span>
+                <span class="vsl-corp-venue__stat-label">Outdoor Patio</span>
+              </div>
+              <div class="vsl-corp-venue__stat">
+                <span class="vsl-corp-venue__stat-num">16+</span>
+                <span class="vsl-corp-venue__stat-label">Racing Simulators</span>
+              </div>
+            </div>
+            <p class="vsl-corp-venue__includes-title">Full Buyout Experiences Can Include</p>
+            <ul class="vsl-corp-venue__includes">
+              <li>Fully private access to the entire venue</li>
+              <li>Custom race formats and competitions</li>
+              <li>Branded racing experiences (logos, messaging, custom liveries)</li>
+              <li>Curated food and beverage menus</li>
+              <li>Dedicated event manager and full staff support</li>
+            </ul>
+            <p class="vsl-corp-venue__closing">Perfect for corporate celebrations, holiday parties, product launches, and large-scale team events that need to impress.</p>
+            <div class="vsl-corp-venue__cta">
+              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/buyout/" data-vsl-link="buyout" target="_self">Explore Full Buyout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
     <!-- WHAT EVERY CORPORATE EVENT INCLUDES                            -->
     <!-- ============================================================== -->
     <section class="vsl-corp-section--light" id="corporate-included" aria-labelledby="included-heading">
@@ -1229,79 +1315,6 @@
               <p>A dedicated event manager and on-site team handling flow, timing, and every detail.</p>
             </div>
 
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- SEMI-PRIVATE CORPORATE EVENTS                                  -->
-    <!-- ============================================================== -->
-    <section class="vsl-corp-section--dark" id="corporate-semi-private" aria-labelledby="semi-private-heading">
-      <div class="vsl-corp-section__inner">
-        <div class="vsl-corp-venue vsl-corp-venue--reverse">
-          <div class="vsl-corp-venue__media">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-area-1024x683.webp"
-                 alt="Velocity's semi-private corporate event area with reserved lounge seating and racing simulators"
-                 data-vsl-img="semiPrivate"
-                 width="800" height="600" loading="lazy" decoding="async">
-          </div>
-          <div class="vsl-corp-venue__body">
-            <h2 class="vsl-corp-section__title vsl-corp-section__title--yellow" id="semi-private-heading">Semi-Private Corporate Events</h2>
-            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Host a dynamic and engaging corporate event with dedicated space and a premium experience. Semi-private events strike the perfect balance between energy and exclusivity &mdash; giving your group room to connect while still enjoying the atmosphere of Velocity.</p>
-            <span class="vsl-corp-venue__highlight">Ideal for groups of 10&ndash;40</span>
-            <p class="vsl-corp-venue__closing">This is where work meets play &mdash; start with a meeting, transition into racing, and end with food, drinks, and real connection.</p>
-            <div class="vsl-corp-venue__cta">
-              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
-              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/semi-private/" data-vsl-link="semiPrivate" target="_self">Explore Semi-Private</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================== -->
-    <!-- FULL BUYOUT: YOUR PRIVATE CORPORATE RACETRACK                  -->
-    <!-- ============================================================== -->
-    <section class="vsl-corp-section--light" id="corporate-buyout" aria-labelledby="buyout-heading">
-      <div class="vsl-corp-section__inner">
-        <div class="vsl-corp-venue">
-          <div class="vsl-corp-venue__media">
-            <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/corporate_page.webp"
-                 alt="Velocity Sim Racing Lounge set up for a full venue buyout corporate event"
-                 data-vsl-img="corporate"
-                 width="800" height="600" loading="lazy" decoding="async">
-          </div>
-          <div class="vsl-corp-venue__body">
-            <h2 class="vsl-corp-section__title vsl-corp-section__title--blue" id="buyout-heading">Full Buyout: Your Private Corporate Racetrack</h2>
-            <p class="vsl-corp-section__sub vsl-corp-section__sub--light">Ready to go all-in? A full venue buyout transforms Velocity into your company&rsquo;s private playground. From the moment your event begins, our dedicated event team manages every detail &mdash; flow, timing, racing formats, food, drinks, and guest experience &mdash; so everything runs seamlessly.</p>
-            <div class="vsl-corp-venue__capacity">
-              <div class="vsl-corp-venue__stat">
-                <span class="vsl-corp-venue__stat-num">214</span>
-                <span class="vsl-corp-venue__stat-label">Guests Indoors</span>
-              </div>
-              <div class="vsl-corp-venue__stat">
-                <span class="vsl-corp-venue__stat-num">60</span>
-                <span class="vsl-corp-venue__stat-label">Outdoor Patio</span>
-              </div>
-              <div class="vsl-corp-venue__stat">
-                <span class="vsl-corp-venue__stat-num">16+</span>
-                <span class="vsl-corp-venue__stat-label">Racing Simulators</span>
-              </div>
-            </div>
-            <p class="vsl-corp-venue__includes-title">Full Buyout Experiences Can Include</p>
-            <ul class="vsl-corp-venue__includes">
-              <li>Fully private access to the entire venue</li>
-              <li>Custom race formats and competitions</li>
-              <li>Branded racing experiences (logos, messaging, custom liveries)</li>
-              <li>Curated food and beverage menus</li>
-              <li>Dedicated event manager and full staff support</li>
-            </ul>
-            <p class="vsl-corp-venue__closing">Perfect for corporate celebrations, holiday parties, product launches, and large-scale team events that need to impress.</p>
-            <div class="vsl-corp-venue__cta">
-              <a class="vsl-corp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/49933" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
-              <a class="vsl-corp-btn--secondary" href="https://velocitysimlounge.com/buyout/" data-vsl-link="buyout" target="_self">Explore Full Buyout</a>
-            </div>
           </div>
         </div>
       </div>
