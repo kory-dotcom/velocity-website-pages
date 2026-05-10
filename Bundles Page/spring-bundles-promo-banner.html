@@ -78,7 +78,6 @@
 		color: var(--sb-yellow);
 		margin-bottom: 14px;
 		filter: drop-shadow(0 6px 14px rgba(253, 199, 12, 0.35));
-		animation: sb-cap-jump 3s linear infinite;
 		transform-origin: 50% 80%;
 		cursor: pointer;
 		-webkit-tap-highlight-color: transparent;
@@ -243,35 +242,6 @@
 		70% { box-shadow: 0 0 0 15px rgba(238, 38, 95, 0); }
 		100% { box-shadow: 0 0 0 0 rgba(238, 38, 95, 0); }
 	}
-	@keyframes sb-cap-jump {
-		0%, 20% {
-			transform: translateY(0) rotate(0deg);
-			animation-timing-function: cubic-bezier(0.5, 0, 0.7, 0.4);
-		}
-		28% {
-			transform: translateY(4px) rotate(0deg);
-			animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
-		}
-		38% {
-			transform: translateY(-22px) rotate(-7deg);
-			animation-timing-function: ease-in-out;
-		}
-		48% {
-			transform: translateY(-26px) rotate(7deg);
-			animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.3);
-		}
-		58% {
-			transform: translateY(0) rotate(0deg);
-			animation-timing-function: ease-out;
-		}
-		64% {
-			transform: translateY(-5px) rotate(0deg);
-			animation-timing-function: ease-in;
-		}
-		70%, 100% {
-			transform: translateY(0) rotate(0deg);
-		}
-	}
 	@keyframes sb-cap-throw {
 		0% {
 			transform: translateY(0) rotate(0deg);
@@ -327,7 +297,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-grad-v4";
+	var version = "sb-grad-v5";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -339,22 +309,8 @@
 	var card = document.getElementById("sb-promo-card");
 	var mini = document.getElementById("sb-promo-minimized");
 	var btnMin = document.getElementById("sb-btn-minimize");
-
-	function showCard() {
-		if (card) card.style.display = "block";
-		if (mini) mini.style.display = "none";
-		sessionStorage.setItem('sbCardMin', 'false');
-	}
-	function hideCard() {
-		if (card) card.style.display = "none";
-		if (mini) mini.style.display = "block";
-		sessionStorage.setItem('sbCardMin', 'true');
-	}
-
-	sessionStorage.getItem('sbCardMin') === 'true' ? hideCard() : showCard();
-
-	if (btnMin) btnMin.addEventListener('click', hideCard);
-	if (mini) mini.addEventListener('click', showCard);
+	var capEl = document.querySelector('.sb-cap-icon');
+	var autoThrowId = null;
 
 	function throwCap(capEl, hostCard) {
 		if (!capEl || capEl.classList.contains('sb-cap-throwing')) return;
@@ -368,7 +324,43 @@
 		// Fallback in case animationend never fires (e.g. reduced-motion)
 		setTimeout(cleanup, 1400);
 	}
-	var capEl = document.querySelector('.sb-cap-icon');
+
+	function startCapAutoThrow() {
+		if (!capEl) return;
+		try {
+			if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		} catch (e) {}
+		stopCapAutoThrow();
+		autoThrowId = setInterval(function() {
+			if (card && card.style.display !== 'none') throwCap(capEl, card);
+		}, 5000);
+	}
+
+	function stopCapAutoThrow() {
+		if (autoThrowId) {
+			clearInterval(autoThrowId);
+			autoThrowId = null;
+		}
+	}
+
+	function showCard() {
+		if (card) card.style.display = "block";
+		if (mini) mini.style.display = "none";
+		sessionStorage.setItem('sbCardMin', 'false');
+		startCapAutoThrow();
+	}
+	function hideCard() {
+		stopCapAutoThrow();
+		if (card) card.style.display = "none";
+		if (mini) mini.style.display = "block";
+		sessionStorage.setItem('sbCardMin', 'true');
+	}
+
+	sessionStorage.getItem('sbCardMin') === 'true' ? hideCard() : showCard();
+
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (mini) mini.addEventListener('click', showCard);
+
 	if (capEl) {
 		capEl.addEventListener('mouseenter', function() { throwCap(capEl, card); });
 		capEl.addEventListener('click', function() { throwCap(capEl, card); });
