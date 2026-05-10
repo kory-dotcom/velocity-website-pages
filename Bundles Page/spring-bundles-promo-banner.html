@@ -297,7 +297,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-grad-v5";
+	var version = "sb-grad-v6";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -331,14 +331,19 @@
 			if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 		} catch (e) {}
 		stopCapAutoThrow();
-		autoThrowId = setInterval(function() {
-			if (card && card.style.display !== 'none') throwCap(capEl, card);
-		}, 5000);
+		function scheduleNext(delayMs) {
+			autoThrowId = setTimeout(function() {
+				autoThrowId = null;
+				if (card && card.style.display !== 'none') throwCap(capEl, card);
+				scheduleNext(5000);
+			}, delayMs);
+		}
+		scheduleNext(1000);
 	}
 
 	function stopCapAutoThrow() {
 		if (autoThrowId) {
-			clearInterval(autoThrowId);
+			clearTimeout(autoThrowId);
 			autoThrowId = null;
 		}
 	}
