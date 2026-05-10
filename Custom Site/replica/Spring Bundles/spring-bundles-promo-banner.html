@@ -1,4 +1,4 @@
-<!-- CSS for the Spring Bundles Floating Banner (Desktop) & Sticky Bar (Mobile) -->
+<!-- CSS for the Graduation Season Floating Banner (Desktop) & Sticky Bar (Mobile) -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&display=swap');
 
@@ -309,47 +309,47 @@
 	</div>
 
 	<div class="sb-card-header">
-		<div class="sb-eyebrow">Spring Special</div>
-		<div class="sb-headline">Eat & Race <span>Bundles</span></div>
+		<div class="sb-eyebrow">Grad Season</div>
+		<div class="sb-headline">Race Into <span>Graduation</span></div>
 	</div>
 
 	<div class="sb-card-body">
-		<div class="sb-subtitle">Sim Racing + Food Packages</div>
-		<div class="sb-date-text">SPECIAL PRICING &bull; APRIL 2026 ONLY</div>
+		<div class="sb-subtitle">Plan An Unforgettable Celebration</div>
+		<div class="sb-date-text">BOOK YOUR PARTY &bull; MAY-JUNE 2026</div>
 
 		<div id="sb-card-timer">Loading...</div>
 
-		<a href="https://velocitysimlounge.com/spring-bundles/" target="_blank" class="sb-card-btn">
-			View Bundles
+		<a href="https://velocitysimlounge.com/group-events/" target="_blank" class="sb-card-btn">
+			Plan Your Party
 		</a>
 	</div>
 </div>
 
 <!-- SHARED: MINIMIZED TAB -->
 <div id="sb-promo-minimized">
-	Eat & Race Bundles
+	Plan Your Grad Party
 </div>
 
 <!-- MOBILE: STICKY TOP BAR -->
 <div id="sb-mobile-bar" style="display:none;">
 	<div id="sb-mobile-close">&#10005;</div>
 
-	<div class="sb-mobile-eyebrow">Spring Special</div>
-	<div class="sb-mobile-headline">Eat & Race <span>Bundles</span></div>
-	<div class="sb-mobile-subtitle">Sim Racing + Food Packages</div>
-	<div class="sb-mobile-timer-label">OFFER ENDS IN</div>
+	<div class="sb-mobile-eyebrow">Grad Season</div>
+	<div class="sb-mobile-headline">Race Into <span>Graduation</span></div>
+	<div class="sb-mobile-subtitle">Plan An Unforgettable Celebration</div>
+	<div class="sb-mobile-timer-label">GRAD SEASON ENDS IN</div>
 	<div id="sb-mobile-timer">Loading...</div>
 
-	<a href="https://velocitysimlounge.com/spring-bundles/" target="_blank" class="sb-mobile-btn">
-		View Bundles
+	<a href="https://velocitysimlounge.com/group-events/" target="_blank" class="sb-mobile-btn">
+		Plan Your Party
 	</a>
 </div>
 
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var endDate = "Apr 30, 2026 23:59:59";
-	var version = "sb-spring-v1";
+	var endDate = "Jun 30, 2026 23:59:59";
+	var version = "sb-grad-v1";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -409,8 +409,8 @@
 		var now = new Date().getTime();
 		var dist = target - now;
 		if (dist <= 0) {
-			if (timerD) timerD.innerHTML = "OFFER ENDED";
-			if (timerM) timerM.innerHTML = "OFFER ENDED";
+			if (timerD) timerD.innerHTML = "SEASON ENDED";
+			if (timerM) timerM.innerHTML = "SEASON ENDED";
 			return;
 		}
 		var d = Math.floor(dist / 86400000);
