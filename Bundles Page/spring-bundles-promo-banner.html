@@ -1,6 +1,6 @@
 <!-- CSS for the Graduation Season Floating Banner (Desktop) & Sticky Bar (Mobile) -->
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
 	:root {
 		--sb-navy: #10182B;
@@ -64,7 +64,11 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		border-radius: 28px 28px 0 0;
 	}
+
+	/* Allow the cap to fly above the card during the celebration toss. */
+	#sb-promo-card.sb-card-throw-active { overflow: visible; }
 
 	.sb-cap-icon {
 		width: 64px;
@@ -74,6 +78,8 @@
 		filter: drop-shadow(0 6px 14px rgba(253, 199, 12, 0.35));
 		animation: sb-cap-toss 3s ease-in-out infinite;
 		transform-origin: 50% 80%;
+		cursor: pointer;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	.sb-eyebrow {
@@ -123,28 +129,6 @@
 		margin: 0;
 		line-height: 1.25;
 		letter-spacing: 0.02em;
-	}
-
-	.sb-date-text {
-		font-family: 'Archivo Narrow', 'Inter', Arial, sans-serif;
-		font-size: 14px;
-		font-weight: 600;
-		color: var(--sb-navy);
-		opacity: 0.6;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	#sb-card-timer {
-		font-size: 34px;
-		color: var(--sb-navy);
-		font-weight: 700;
-		font-style: italic;
-		letter-spacing: 0.5px;
-		margin: 8px 0;
-		padding: 5px 20px;
-		border-top: 1px solid #eee;
-		width: 100%;
 	}
 
 	.sb-card-btn {
@@ -217,6 +201,8 @@
 			filter: drop-shadow(0 4px 8px rgba(253, 199, 12, 0.35));
 			animation: sb-cap-toss 3s ease-in-out infinite;
 			transform-origin: 50% 80%;
+			cursor: pointer;
+			-webkit-tap-highlight-color: transparent;
 		}
 
 		.sb-mobile-eyebrow {
@@ -257,26 +243,6 @@
 			margin-bottom: 6px;
 			letter-spacing: 0.04em;
 			opacity: 0.85;
-		}
-
-		.sb-mobile-timer-label {
-			font-family: 'Archivo Narrow', 'Inter', Arial, sans-serif;
-			font-size: 10px;
-			text-transform: uppercase;
-			color: rgba(255,255,255,0.6);
-			font-weight: 700;
-			letter-spacing: 0.08em;
-			margin-bottom: 2px;
-		}
-
-		#sb-mobile-timer {
-			font-family: 'Khand', system-ui, sans-serif;
-			color: white;
-			font-size: 26px;
-			font-weight: 700;
-			font-style: italic;
-			margin-bottom: 10px;
-			letter-spacing: 0.5px;
 		}
 
 		.sb-mobile-btn {
@@ -324,8 +290,26 @@
 		0%, 100% { transform: rotate(-5deg) translateY(0); }
 		50% { transform: rotate(5deg) translateY(-4px); }
 	}
+	@keyframes sb-cap-throw {
+		0% {
+			transform: translateY(0) rotate(0deg);
+			animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+		}
+		50% {
+			transform: translateY(-130px) rotate(360deg);
+			animation-timing-function: cubic-bezier(0.6, 0, 0.8, 0.3);
+		}
+		100% {
+			transform: translateY(0) rotate(720deg);
+		}
+	}
+	.sb-cap-icon.sb-cap-throwing,
+	.sb-mobile-cap-icon.sb-cap-throwing {
+		animation: sb-cap-throw 1.1s linear forwards;
+	}
 	@media (prefers-reduced-motion: reduce) {
-		.sb-cap-icon, .sb-mobile-cap-icon { animation: none; }
+		.sb-cap-icon, .sb-mobile-cap-icon,
+		.sb-cap-icon.sb-cap-throwing, .sb-mobile-cap-icon.sb-cap-throwing { animation: none; }
 	}
 </style>
 
@@ -348,9 +332,6 @@
 
 	<div class="sb-card-body">
 		<div class="sb-subtitle">Plan An Unforgettable Celebration</div>
-		<div class="sb-date-text">BOOK YOUR PARTY &bull; MAY 2026 ONLY</div>
-
-		<div id="sb-card-timer">Loading...</div>
 
 		<a href="https://velocitysimlounge.com/group-events/" target="_blank" class="sb-card-btn">
 			Plan Your Party
@@ -376,8 +357,6 @@
 	<div class="sb-mobile-eyebrow">Grad Season</div>
 	<div class="sb-mobile-headline">Race Into <span>Graduation</span></div>
 	<div class="sb-mobile-subtitle">Plan An Unforgettable Celebration</div>
-	<div class="sb-mobile-timer-label">GRAD SEASON ENDS IN</div>
-	<div id="sb-mobile-timer">Loading...</div>
 
 	<a href="https://velocitysimlounge.com/group-events/" target="_blank" class="sb-mobile-btn">
 		Plan Your Party
@@ -387,8 +366,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var endDate = "May 31, 2026 23:59:59";
-	var version = "sb-grad-v2";
+	var version = "sb-grad-v3";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -401,8 +379,6 @@
 	var bar = document.getElementById("sb-mobile-bar");
 	var btnMin = document.getElementById("sb-btn-minimize");
 	var btnMobClose = document.getElementById("sb-mobile-close");
-	var timerD = document.getElementById("sb-card-timer");
-	var timerM = document.getElementById("sb-mobile-timer");
 
 	function isMobile() { return window.innerWidth <= 768; }
 
@@ -443,22 +419,26 @@
 	if (btnMobClose) btnMobClose.addEventListener('click', closeBar);
 	if (mini) mini.addEventListener('click', function() { isMobile() ? openBar() : showCard(); });
 
-	var target = new Date(endDate).getTime();
-	setInterval(function() {
-		var now = new Date().getTime();
-		var dist = target - now;
-		if (dist <= 0) {
-			if (timerD) timerD.innerHTML = "SEASON ENDED";
-			if (timerM) timerM.innerHTML = "SEASON ENDED";
-			return;
-		}
-		var d = Math.floor(dist / 86400000);
-		var h = Math.floor((dist % 86400000) / 3600000);
-		var m = Math.floor((dist % 3600000) / 60000);
-		var s = Math.floor((dist % 60000) / 1000);
-		var str = d + "d " + h + "h " + m + "m " + s + "s";
-		if (timerD) timerD.innerHTML = str;
-		if (timerM) timerM.innerHTML = str;
-	}, 1000);
+	function throwCap(capEl, hostCard) {
+		if (!capEl || capEl.classList.contains('sb-cap-throwing')) return;
+		if (hostCard) hostCard.classList.add('sb-card-throw-active');
+		capEl.classList.add('sb-cap-throwing');
+		var cleanup = function() {
+			capEl.classList.remove('sb-cap-throwing');
+			if (hostCard) hostCard.classList.remove('sb-card-throw-active');
+		};
+		capEl.addEventListener('animationend', cleanup, { once: true });
+		// Fallback in case animationend never fires (e.g. reduced-motion)
+		setTimeout(cleanup, 1400);
+	}
+	var capDesktop = document.querySelector('.sb-cap-icon');
+	var capMobile = document.querySelector('.sb-mobile-cap-icon');
+	if (capDesktop) {
+		capDesktop.addEventListener('mouseenter', function() { throwCap(capDesktop, card); });
+		capDesktop.addEventListener('click', function() { throwCap(capDesktop, card); });
+	}
+	if (capMobile) {
+		capMobile.addEventListener('click', function() { throwCap(capMobile, null); });
+	}
 })();
 </script>
