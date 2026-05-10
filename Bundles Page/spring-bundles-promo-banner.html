@@ -66,6 +66,16 @@
 		justify-content: center;
 	}
 
+	.sb-cap-icon {
+		width: 64px;
+		height: auto;
+		color: var(--sb-yellow);
+		margin-bottom: 14px;
+		filter: drop-shadow(0 6px 14px rgba(253, 199, 12, 0.35));
+		animation: sb-cap-toss 3s ease-in-out infinite;
+		transform-origin: 50% 80%;
+	}
+
 	.sb-eyebrow {
 		display: inline-block;
 		padding: 6px 20px;
@@ -199,6 +209,16 @@
 			border-bottom: 5px solid var(--sb-magenta);
 		}
 
+		.sb-mobile-cap-icon {
+			width: 38px;
+			height: auto;
+			color: var(--sb-yellow);
+			margin-bottom: 8px;
+			filter: drop-shadow(0 4px 8px rgba(253, 199, 12, 0.35));
+			animation: sb-cap-toss 3s ease-in-out infinite;
+			transform-origin: 50% 80%;
+		}
+
 		.sb-mobile-eyebrow {
 			font-family: 'Khand', system-ui, sans-serif;
 			display: inline-block;
@@ -300,6 +320,13 @@
 		70% { box-shadow: 0 0 0 15px rgba(238, 38, 95, 0); }
 		100% { box-shadow: 0 0 0 0 rgba(238, 38, 95, 0); }
 	}
+	@keyframes sb-cap-toss {
+		0%, 100% { transform: rotate(-5deg) translateY(0); }
+		50% { transform: rotate(5deg) translateY(-4px); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.sb-cap-icon, .sb-mobile-cap-icon { animation: none; }
+	}
 </style>
 
 <!-- DESKTOP: MAIN CARD -->
@@ -309,13 +336,19 @@
 	</div>
 
 	<div class="sb-card-header">
+		<svg class="sb-cap-icon" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<path d="M40 4 L76 22 L40 40 L4 22 Z" fill="currentColor"/>
+			<path d="M16 28 V42 C16 49 26 54 40 54 C54 54 64 49 64 42 V28 L40 40 L16 28 Z" fill="currentColor"/>
+			<path d="M73 23 V46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+			<circle cx="73" cy="50" r="4" fill="currentColor"/>
+		</svg>
 		<div class="sb-eyebrow">Grad Season</div>
 		<div class="sb-headline">Race Into <span>Graduation</span></div>
 	</div>
 
 	<div class="sb-card-body">
 		<div class="sb-subtitle">Plan An Unforgettable Celebration</div>
-		<div class="sb-date-text">BOOK YOUR PARTY &bull; MAY-JUNE 2026</div>
+		<div class="sb-date-text">BOOK YOUR PARTY &bull; MAY 2026 ONLY</div>
 
 		<div id="sb-card-timer">Loading...</div>
 
@@ -334,6 +367,12 @@
 <div id="sb-mobile-bar" style="display:none;">
 	<div id="sb-mobile-close">&#10005;</div>
 
+	<svg class="sb-mobile-cap-icon" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+		<path d="M40 4 L76 22 L40 40 L4 22 Z" fill="currentColor"/>
+		<path d="M16 28 V42 C16 49 26 54 40 54 C54 54 64 49 64 42 V28 L40 40 L16 28 Z" fill="currentColor"/>
+		<path d="M73 23 V46" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+		<circle cx="73" cy="50" r="4" fill="currentColor"/>
+	</svg>
 	<div class="sb-mobile-eyebrow">Grad Season</div>
 	<div class="sb-mobile-headline">Race Into <span>Graduation</span></div>
 	<div class="sb-mobile-subtitle">Plan An Unforgettable Celebration</div>
@@ -348,8 +387,8 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var endDate = "Jun 30, 2026 23:59:59";
-	var version = "sb-grad-v1";
+	var endDate = "May 31, 2026 23:59:59";
+	var version = "sb-grad-v2";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
