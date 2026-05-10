@@ -150,6 +150,16 @@
 		transition: all 0.3s ease;
 		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
 		animation: sb-btn-pulse 2s infinite;
+		border: none;
+		cursor: pointer;
+		text-align: center;
+		-webkit-appearance: none;
+		appearance: none;
+	}
+
+	button.sb-card-btn::-moz-focus-inner {
+		border: 0;
+		padding: 0;
 	}
 
 	.sb-card-btn:hover {
@@ -284,9 +294,9 @@
 	<div class="sb-card-body">
 		<div class="sb-subtitle">Plan An Unforgettable Celebration</div>
 
-		<a href="https://velocitysimlounge.com/party-packs/" class="sb-card-btn" target="_self">
+		<button type="button" id="sb-card-cta" class="sb-card-btn" data-sb-url="https://velocitysimlounge.com/party-packs/">
 			Plan Your Party
-		</a>
+		</button>
 	</div>
 </div>
 
@@ -298,7 +308,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-grad-v10";
+	var version = "sb-grad-v11";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -324,22 +334,41 @@
 	}
 	sbAttachPromoToBody();
 
-	var ctaBtn = card ? card.querySelector('a.sb-card-btn') : null;
+	var ctaBtn = card ? card.querySelector('#sb-card-cta') : null;
 	if (ctaBtn) {
-		ctaBtn.setAttribute('target', '_self');
-		/* WP/Elementor often forces external URLs to target=_blank on tap; navigate in-page instead. */
-		ctaBtn.addEventListener(
-			'click',
-			function(e) {
-				if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-				if (typeof e.button === 'number' && e.button !== 0) return;
-				var url = ctaBtn.href;
-				if (!url) return;
+		function sbCtaUrl() {
+			return ctaBtn.getAttribute('data-sb-url') || '';
+		}
+		function sbGoCtaSameTab(e) {
+			if (ctaBtn.getAttribute('data-sb-nav-pending') === '1') {
+				if (e && e.preventDefault) e.preventDefault();
+				return;
+			}
+			var url = sbCtaUrl();
+			if (!url) return;
+			if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) {
+				window.open(url, '_blank', 'noopener,noreferrer');
+				if (e.preventDefault) e.preventDefault();
+				return;
+			}
+			if (e && typeof e.button === 'number' && e.button !== 0) return;
+			ctaBtn.setAttribute('data-sb-nav-pending', '1');
+			if (e && e.preventDefault) {
 				e.preventDefault();
 				e.stopPropagation();
-				window.location.assign(url);
+				e.stopImmediatePropagation();
+			}
+			window.location.assign(url);
+		}
+		/* Button (not <a>) avoids WP “external links → new tab” mutations; touch handler beats late scripts on phones. */
+		ctaBtn.addEventListener('click', sbGoCtaSameTab, true);
+		ctaBtn.addEventListener(
+			'touchend',
+			function(e) {
+				if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+				sbGoCtaSameTab(e);
 			},
-			true
+			{ passive: false, capture: true }
 		);
 	}
 
