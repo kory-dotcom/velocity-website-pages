@@ -51,6 +51,7 @@
   }
 
     .vsl-corporate {
+      overflow-x: clip;
       --red:      #D22026;
       --magenta:  #EE265F;
       --yellow:   #FDC70C;
@@ -108,6 +109,17 @@
     .vsl-corporate *,
     .vsl-corporate *::before,
     .vsl-corporate *::after { box-sizing: border-box; }
+
+    /* On mobile, Elementor's column padding shrinks below the outdent and
+       causes the wrapper to overflow horizontally. Force the outdent off. */
+    @media (max-width: 800px) {
+      .vsl-corporate {
+        --vsl-outdent: 0px !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
 
     /* ------------------------------------------------------------------ */
     /* HERO                                                               */
