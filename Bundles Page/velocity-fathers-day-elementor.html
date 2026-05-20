@@ -3,6 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://velocitysimlounge.com">
 <link rel="preconnect" href="https://velocitysimlounge.com" crossorigin>
+<link rel="preconnect" href="https://i.vimeocdn.com" crossorigin>
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp" fetchpriority="high">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -152,6 +153,8 @@
     pointer-events: auto !important;
   }
   #spring-hero, #spring-bundles, #spring-cta { scroll-margin-top: 5rem; }
+  /* Do not inherit theme vertical scroll snapping on full-height hero / sections */
+  .vsl-spring > main > section { scroll-snap-align: none !important; }
 
   /* ── ELEMENTOR GLOBAL RESETS (fight theme/Elementor overrides inside the widget) ── */
   /* h1–h6: Elementor or themes often set color:white, display:none, or zero margin on headings */
@@ -207,9 +210,13 @@
     flex-shrink: 0 !important;
   }
   /* p tags — Elementor sometimes adds bottom margin that breaks flex gap */
-  .vsl-spring .vsl-spring-card__body p {
+  .vsl-spring .vsl-spring-card__body p:not(.vsl-spring-card__blurb) {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+  }
+  .vsl-spring .vsl-spring-card__body .vsl-spring-card__blurb {
+    margin-top: 0 !important;
+    margin-bottom: 0.75rem !important;
   }
   /* ul/li inside cards */
   .vsl-spring .vsl-spring-card__list {
@@ -301,9 +308,42 @@
     min-width: 177.78%;
     min-height: 100%;
     border: 0;
+    z-index: 0;
     /* ~20% zoom crops letterboxing — pair with iframe inline width/height in bind script */
     transform: translate(-50%, -50%) scale(1.2);
     transform-origin: center center;
+  }
+  /* Vimeo’s oEmbed thumbnail (≈first frame); hides when iframe starts playing.
+     Match iframe sizing: 120×120 % box + centered scale(1.2) (see iframe inline style). */
+  .vsl-spring-hero__vimeo-poster {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: rgba(13,19,34,1);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translate(-50%, -50%) scale(1.2);
+    transform-origin: center center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0s linear 0s;
+  }
+  .vsl-spring-hero__vimeo-poster.is-dismissed {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.55s ease, visibility 0s linear 0.56s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-spring-hero__vimeo-poster,
+    .vsl-spring-hero__vimeo-poster.is-dismissed {
+      transition: none;
+    }
   }
   .vsl-spring-hero::before {
     content: '';
@@ -573,6 +613,11 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: min(1040px, 100%);
     margin-inline: auto;
+    /* Stretch both cards so extra copy (Pro blurb) does not shorten the sibling row — CTA aligns via flex */
+    align-items: stretch;
+  }
+  .vsl-spring-card-grid--2 > .vsl-spring-card {
+    height: 100%;
   }
 
   /* ── BUNDLE CARD ── */
@@ -758,6 +803,15 @@
     margin: 0;
     border: 0;
   }
+  .vsl-spring-card__blurb {
+    margin: 0 0 0.75rem !important;
+    font-size: clamp(0.98rem, 0.9rem + 0.35vw, 1.08rem);
+    font-weight: 400;
+    line-height: 1.42;
+    color: var(--slate-violet);
+    text-align: left;
+    padding-right: 0.25em;
+  }
   .vsl-spring-card__list {
     margin: 0;
     padding: 0 0 0 1.15em;
@@ -772,6 +826,7 @@
   .vsl-spring-card__list li::marker { color: var(--blue); }
   .vsl-spring-card__cta {
     flex-shrink: 0;
+    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1108,7 +1163,7 @@
             Father's Day <span class="vsl-spring-hero__title-accent">Eat &amp; Race</span>
           </h1>
         </div>
-        <a class="vsl-spring-btn" href="#spring-bundles">View packages</a>
+        <a class="vsl-spring-btn" data-vsl-soft-scroll href="#spring-bundles">View bundles</a>
       </div>
       <div class="vsl-spring-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
@@ -1136,13 +1191,17 @@
               </div>
 
               <hr class="vsl-spring-card__rule">
+              <p class="vsl-spring-card__blurb">
+                Families that race together, stay together! Share the fun of sim racing with dad this Father&rsquo;s Day.
+              </p>
               <ul class="vsl-spring-card__list">
-                <li>4 Racers for your group</li>
-                <li>Approx. 55 minute experience</li>
-                <li>1 Triple Crown platter</li>
+                <li>4 Racer rigs for a family of 4</li>
+                <li>Approx. 55 minutes of racing for the whole family</li>
+                <li>1 x Triple Crown Platter (cheesy sliders, chicken taquitos, and chips &amp; queso)</li>
                 <li>Reserved seating</li>
+                <li>Upgrades available</li>
               </ul>
-              <a class="vsl-spring-card__cta" data-vsl-spring-link="racerFamily4" href="https://velocitysimlounge.com/book-now/">Select package</a>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="racerFamily4" href="https://velocitysimlounge.com/book-now/">Select bundle</a>
             </div>
           </article>
 
@@ -1159,13 +1218,17 @@
               </div>
 
               <hr class="vsl-spring-card__rule">
+              <p class="vsl-spring-card__blurb">
+                Take it up a notch with our PRO rig bundle - more advanced and immersive motion rigs
+              </p>
               <ul class="vsl-spring-card__list">
-                <li>4 Pros for your group</li>
-                <li>Approx. 55 minute experience</li>
-                <li>1 Triple Crown platter</li>
+                <li>4 Pro rigs for a family of 4</li>
+                <li>Approx. 55 minutes of racing for the whole family</li>
+                <li>1 x Triple Crown Platter (cheesy sliders, chicken taquitos, and chips &amp; queso)</li>
                 <li>Reserved seating</li>
+                <li>Upgrades available</li>
               </ul>
-              <a class="vsl-spring-card__cta" data-vsl-spring-link="proFamily4" href="https://velocitysimlounge.com/book-now/">Select package</a>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="proFamily4" href="https://velocitysimlounge.com/book-now/">Select bundle</a>
             </div>
           </article>
 
@@ -1363,32 +1426,70 @@
           var vimeoSrc =
             'https://player.vimeo.com/video/' + vid +
             '?autoplay=1&muted=1&loop=1&background=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&api=1';
+          var posterEl = null;
           vimeoWrap.innerHTML =
+            '<div class="vsl-spring-hero__vimeo-poster" data-vsl-spring-vimeo-poster aria-hidden="true"></div>' +
             '<iframe id="vsl-spring-vimeo-iframe" src="' +
             vimeoSrc.replace(/"/g, '&quot;') +
             '" style="position:absolute;top:50%;left:50%;width:120%;height:120%;transform:translate(-50%,-50%) scale(1.2);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+          posterEl = vimeoWrap.querySelector('[data-vsl-spring-vimeo-poster]');
+          function applyVimeoPosterThumb(url) {
+            if (!posterEl || !url) return;
+            var preload = new Image();
+            preload.decoding = 'async';
+            if ('fetchPriority' in preload) preload.fetchPriority = 'high';
+            preload.onload = function () {
+              posterEl.style.backgroundImage = 'url("' + String(url).split('"').join('\\"') + '")';
+            };
+            preload.src = url;
+          }
+          var cfgPoster = typeof cfg.heroVideoPoster === 'string' ? cfg.heroVideoPoster.trim() : '';
+          if (cfgPoster) {
+            applyVimeoPosterThumb(cfgPoster);
+          } else {
+            fetch('https://vimeo.com/api/oembed.json?url=' + encodeURIComponent('https://vimeo.com/' + vid), {
+              credentials: 'omit'
+            }).then(function (r) {
+              return r.ok ? r.json() : {};
+            }).then(function (data) {
+              if (data && data.thumbnail_url) applyVimeoPosterThumb(data.thumbnail_url);
+            }).catch(function () {});
+          }
           vimeoWrap.removeAttribute('hidden');
           if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
           if (video) { video.removeAttribute('src'); video.load(); }
           hero.classList.add('vsl-spring-hero--has-video', 'vsl-spring-hero--hero-bg-vimeo');
           (function(iframeEl) {
             if (!iframeEl) return;
-            function bindLoop() {
+            function bindPosterAndLoop() {
               try {
                 if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
                 var pl = new Vimeo.Player(iframeEl);
                 pl.on('ended', function(){ pl.setCurrentTime(0).then(function(){ return pl.play(); }).catch(function(){}); });
+                /* Hide oEmbed thumbnail once real video frames are advancing */
+                var posterDismissed = false;
+                var posterDismissTimer = null;
+                function dismissVimeoPoster() {
+                  var el = posterEl || vimeoWrap.querySelector('[data-vsl-spring-vimeo-poster]');
+                  if (posterDismissed || !el) return;
+                  posterDismissed = true;
+                  if (posterDismissTimer) clearTimeout(posterDismissTimer);
+                  el.classList.add('is-dismissed');
+                }
+                pl.on('playing', dismissVimeoPoster);
+                pl.on('play', dismissVimeoPoster);
+                posterDismissTimer = window.setTimeout(dismissVimeoPoster, 12000);
               } catch(e){}
             }
             var sid = 'vsl-spring-vimeo-player-api';
-            if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindLoop(); }
-            else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindLoop); }
+            if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindPosterAndLoop(); }
+            else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindPosterAndLoop); }
             else {
               var sc = document.createElement('script');
               sc.id = sid;
               sc.src = 'https://player.vimeo.com/api/player.js';
               sc.async = true;
-              sc.onload = bindLoop;
+              sc.onload = bindPosterAndLoop;
               document.head.appendChild(sc);
             }
           })(vimeoWrap.querySelector('iframe'));

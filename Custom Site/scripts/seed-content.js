@@ -757,13 +757,13 @@ writeJSON(path.join(CONTENT_DIR, 'schemas', 'fathers-day.json'), {
     twoDriver: { label: "Father's Day Bundles", fields: {
       heading: { type: "text", label: "Section Heading" },
       subcopy: { type: "textarea", label: "Subcopy" },
-      packages: { type: "repeater", label: "Packages", fields: {
-        title: { type: "text", label: "Package Name" },
+      packages: { type: "repeater", label: "Bundles", fields: {
+        title: { type: "text", label: "Bundle name" },
         price: { type: "text", label: "Price Display (e.g. From $65)" },
-        image: { type: "image", label: "Package Image" },
+        image: { type: "image", label: "Bundle image" },
         bullets: { type: "textarea", label: "Features (one per line)" },
         bookingLink: { type: "url", label: "Booking Link", ...PL },
-        ctaText: { type: "text", label: "Button Text" }
+        ctaText: { type: "text", label: "Button text (e.g. Select bundle)" }
       }}
     }}
   },

@@ -2726,6 +2726,10 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
       if (!hash) return;
       var target = document.querySelector(hash);
       if (!target) return;
+      if (typeof window.vslScrollToTargetPastStickyNav === 'function') {
+        window.vslScrollToTargetPastStickyNav(target, { updateUrl: false });
+        return;
+      }
       var behavior = prefersReducedMotionScroll() ? "auto" : "smooth";
       target.scrollIntoView({ behavior: behavior, block: "start" });
     }
@@ -2749,7 +2753,11 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
         if (!target) return;
         e.preventDefault();
         var behavior = prefersReducedMotionScroll() ? "auto" : "smooth";
-        target.scrollIntoView({ behavior: behavior, block: "start" });
+        if (typeof window.vslScrollToTargetPastStickyNav === "function") {
+          window.vslScrollToTargetPastStickyNav(target, { updateUrl: false });
+        } else {
+          target.scrollIntoView({ behavior: behavior, block: "start" });
+        }
         if (history.pushState) {
           history.pushState(null, "", window.location.pathname + window.location.search + href);
         } else {

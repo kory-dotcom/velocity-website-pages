@@ -298,8 +298,8 @@ about: {
 "fathers-day": {
   hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "https://vimeo.com/1194083193", heroImage: "" },
   twoDriver: { heading: "Father's Day *Bundles*", subcopy: "Eat & Race at Velocity • Father's Day week (June 15–21, 2026)", packages: [
-    { title: "Quick Race", price: "From {{price:springQuick}}", image: "", bullets: "2 Simulators (~30 min experience)\n2 Food tickets\nRegularly $105", bookingLink: "", ctaText: "Select package" },
-    { title: "Double Race", price: "From {{price:springDouble}}", image: "", bullets: "2 Simulators (~60 min experience)\n2 Food tickets\n2 Races, twice the fun!", bookingLink: "", ctaText: "Select package" }
+    { title: "Eat & Race, Racer Bundle", price: "From $225", image: "", bullets: "Families that race together, stay together! Share the fun of sim racing with dad this Father\u2019s Day.\n4 Racer rigs for a family of 4\nApprox. 55 minutes of racing for the whole family\n1 x Triple Crown Platter (cheesy sliders, chicken taquitos, and chips & queso)\nReserved seating\nUpgrades available", bookingLink: "", ctaText: "Select bundle" },
+    { title: "Eat & Race, Pro Bundle", price: "From $255", image: "", bullets: "Take it up a notch with our PRO rig bundle - more advanced and immersive motion rigs\n4 Pro rigs for a family of 4\nApprox. 55 minutes of racing for the whole family\n1 x Triple Crown Platter (cheesy sliders, chicken taquitos, and chips & queso)\nReserved seating\nUpgrades available", bookingLink: "", ctaText: "Select bundle" }
   ]},
   _seo: { title: "Eat & Race Bundles | Velocity Sim Racing Lounge", description: "Father\u2019s Day week Eat & Race bundles at Velocity. June 15\u201321, 2026.", ogImage: "", ogTitle: "Velocity Eat & Race Bundles", noIndex: false }
 },

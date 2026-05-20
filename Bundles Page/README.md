@@ -43,6 +43,10 @@ Edit the `<script>` block at the top of the file:
 - **Hero:** Fluid clamp sizing for title and subcopy.
 - **`prefers-reduced-motion`:** Disables card hover lift and button scale transforms.
 
+## In-page scroll (hero → bundles)
+
+Hero **View bundles** uses `data-vsl-soft-scroll href="#spring-bundles"` so the site header’s shared script (`velocity-navbar.html`) scrolls with `window.scrollTo` under the sticky nav—avoiding theme **scroll snap** jumps from raw `#` navigation. Add the same attribute to any Velocity hero CTA whose `href` is an in-page hash.
+
 ## Elementor notes
 
 - If Elementor strips `<script>`, use a "Custom Code" plugin or allow scripts for the widget.

@@ -1109,7 +1109,7 @@
         <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our <span style="color:var(--magenta);-webkit-text-fill-color:var(--magenta);">Menu</span></h1>
         <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
         <div class="vsl-fooddrink-hero__actions">
-          <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" href="#full-menu">View the menu</a>
+          <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" data-vsl-soft-scroll href="#full-menu">View the menu</a>
         </div>
       </div>
     </section>
@@ -1337,7 +1337,11 @@
       var behavior = reduce || noSmooth ? 'auto' : 'smooth';
       function run() {
         try {
-          target.scrollIntoView({ block: 'start', behavior: behavior });
+          if (typeof window.vslScrollToTargetPastStickyNav === 'function') {
+            window.vslScrollToTargetPastStickyNav(target, { updateUrl: false });
+          } else {
+            target.scrollIntoView({ block: 'start', behavior: behavior });
+          }
         } catch (e) {
           target.scrollIntoView(true);
         }

@@ -1997,6 +1997,71 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 </nav>
 
 <script>
+(function vslStickyNavSmoothScrollBootstrap() {
+  if (window.__vslStickyNavSmoothScrollBootstrap) return;
+  window.__vslStickyNavSmoothScrollBootstrap = true;
+
+  function vslStickyNavPadPx() {
+    var navEl = document.querySelector('.vsl-navbar') || document.querySelector('[class*="preview-bar"]');
+    var h = navEl ? navEl.getBoundingClientRect().height : 0;
+    return Math.max(0, Math.round(h) + 12);
+  }
+
+  function vslScrollReducedMotionOrNoSmooth() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+    } catch (_) {}
+    return !!(document.documentElement && document.documentElement.classList.contains('no-smooth-scroll'));
+  }
+
+  window.vslScrollToTargetPastStickyNav = function (targetEl, options) {
+    if (!targetEl || typeof targetEl.getBoundingClientRect !== 'function') return;
+    options = options || {};
+    var docEl = document.documentElement || document.body;
+    var pageTop =
+      typeof window.pageYOffset === 'number' ? window.pageYOffset : docEl.scrollTop || 0;
+    var dest = Math.max(
+      0,
+      Math.round(targetEl.getBoundingClientRect().top + pageTop - vslStickyNavPadPx())
+    );
+    var behavior = vslScrollReducedMotionOrNoSmooth() ? 'auto' : 'smooth';
+    window.scrollTo({ top: dest, behavior: behavior });
+    if (options.updateUrl !== false && targetEl.id && history && history.replaceState) {
+      try {
+        history.replaceState(
+          null,
+          '',
+          window.location.pathname + window.location.search + '#' + targetEl.id
+        );
+      } catch (_) {}
+    }
+  };
+
+  document.addEventListener(
+    'click',
+    function (e) {
+      if (e.button !== 0) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var node = e.target;
+      if (node && node.nodeType === 3 && node.parentElement) node = node.parentElement;
+      if (!node || typeof node.closest !== 'function') return;
+      var a = node.closest('a[data-vsl-soft-scroll][href^="#"]');
+      if (!a) return;
+      var rawId = String(a.getAttribute('href') || '')
+        .trim()
+        .replace(/^#/, '');
+      if (!rawId) return;
+      var safeId = /^[A-Za-z0-9\-_]+$/.test(rawId) ? rawId : null;
+      if (!safeId) return;
+      var target = document.getElementById(safeId);
+      if (!target) return;
+      e.preventDefault();
+      window.vslScrollToTargetPastStickyNav(target, { updateUrl: true });
+    },
+    false
+  );
+})();
+
 (function() {
   var navbar = document.querySelector('.vsl-navbar');
   if (!navbar) return;

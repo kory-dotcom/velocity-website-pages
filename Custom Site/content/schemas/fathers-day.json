@@ -42,11 +42,11 @@
         },
         "packages": {
           "type": "repeater",
-          "label": "Packages",
+          "label": "Bundles",
           "fields": {
             "title": {
               "type": "text",
-              "label": "Package Name"
+              "label": "Bundle name"
             },
             "price": {
               "type": "text",
@@ -54,7 +54,7 @@
             },
             "image": {
               "type": "image",
-              "label": "Package Image"
+              "label": "Bundle image"
             },
             "bullets": {
               "type": "textarea",
@@ -67,7 +67,7 @@
             },
             "ctaText": {
               "type": "text",
-              "label": "Button Text"
+              "label": "Button text (e.g. Select bundle)"
             }
           }
         }
