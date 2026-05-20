@@ -20,11 +20,15 @@ Elementor HTML widget for the **Eat & Race** Father's Day bundles landing page. 
 
 ## Configuration (`VSL_SPRING_CONFIG`)
 
-Edit the `<script>` block at the top of the file:
+Edit `data-vsl-config` JSON on `.vsl-spring`:
 
-- **`links`** — `quickRacer`, `quickPro`, `doubleRacer`, `doublePro`, `sprint`, `endurance`: checkout URLs for each Select Package button. `bookNow`: closing CTA link.
-- **`images`** — `quickRacer`, `quickPro`, `doubleRacer`, `doublePro`, `sprint`, `endurance`: card hero images (full `https://…` URLs from Media Library). `heroFinishLine`: checkered finish-line strip image.
-- **`elementorColumnOutdentPx`** — Widen slightly to compensate for Elementor column padding (try 12–18).
+- **`links`** — `racerFamily4` / `proFamily4`: Roverd **`book.velocitysimlounge.com`** URLs (query params such as **`selectedMonth=6`** may be included; **`#`** / **`#rvrd-1`** as needed for the iframe widget).
+- **`images`** — `racerFamily4`, `proFamily4`: card images; **`heroFinishLine`**: checker strip asset.
+- **`elementorColumnOutdentPx`** — Compensates for Elementor column padding (try 12–18).
+
+Card CTAs should use **`book.velocitysimlounge.com`** (not embedding `/book-now/`): the iframe modal is often blocked on staging when pointing at WordPress.
+
+When Father's Day listings exist as their own Roverd products, swap only the **`/book/.../id`** paths in **`links`**.
 
 ## Bundle pricing
 

@@ -7,8 +7,11 @@
 		--sb-magenta: #EE265F;
 		--sb-blue: #293893;
 		--sb-yellow: #FDC70C;
-		/* Stacks above typical Elementor sections/widgets. Override in Customizer/CSS if your mobile menu should sit above the banner (e.g. --sb-banner-z: 9000). */
-		--sb-banner-z: 999999;
+		/* Sits above page content but BELOW the Velocity navbar (--z-navbar: 9999),
+		   its Explore mega menu (9998), and the mobile menu overlay (10000) so the
+		   nav always remains usable when this card is on screen. Raise via Customizer
+		   if you want the card to overlap the nav again. */
+		--sb-banner-z: 9000;
 	}
 
 	/* =========================================
