@@ -13,7 +13,7 @@
     "parties-events": { title: "Group Events", modulePath: "../Parties & Events/velocity-parties-events-elementor.html" },
     "party-packs": { title: "Party Packs", modulePath: "../Party Packs/velocity-party-packs-elementor.html" },
     "semi-private": { title: "Semi-Private", modulePath: "../Semi-Private/velocity-semi-private-elementor.html" },
-    "spring-bundles": { title: "Spring Bundles", modulePath: "../Spring Bundles/velocity-spring-bundles-elementor.html" },
+    "fathers-day": { title: "Father's Day Bundles", modulePath: "../Bundles Page/velocity-fathers-day-elementor.html" },
     "promotions": { title: "Promotions", modulePath: "../Promotions/velocity-promotions-elementor.html" },
     "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" }
   };
@@ -40,8 +40,10 @@
     "/party-packs": "index.html?p=party-packs",
     "/semi-private/": "index.html?p=semi-private",
     "/semi-private": "index.html?p=semi-private",
-    "/spring-bundles/": "index.html?p=spring-bundles",
-    "/spring-bundles": "index.html?p=spring-bundles",
+    "/fathers-day/": "index.html?p=fathers-day",
+    "/fathers-day": "index.html?p=fathers-day",
+    "/spring-bundles/": "index.html?p=fathers-day",
+    "/spring-bundles": "index.html?p=fathers-day",
     "/promotions/": "index.html?p=promotions",
     "/promotions": "index.html?p=promotions",
     "/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
@@ -69,6 +71,7 @@
   var footerRoot = document.getElementById("replica-footer-root");
   var params = new URLSearchParams(window.location.search);
   var pageKey = params.get("p") || "home";
+  if (pageKey === "spring-bundles") pageKey = "fathers-day";
   var forcedLoc = params.get("loc");
   var revealObserver = null;
 
@@ -311,7 +314,7 @@
       '<li><a href="index.html?p=semi-private">Semi-Private</a></li>' +
       '<li><a href="index.html?p=party-packs">Party Packs</a></li>' +
       '<li><a href="index.html?p=membership">Membership</a></li>' +
-      '<li><a href="index.html?p=spring-bundles">Spring Bundles</a></li>' +
+      '<li><a href="index.html?p=fathers-day">Father\'s Day Bundles</a></li>' +
       '<li><a href="index.html?p=promotions">Promotions</a></li>' +
       '<li><a href="index.html?p=buyout">Full Venue Buyout</a></li>' +
       '<li><a href="index.html?p=contact">Contact (Houston)</a></li>' +
@@ -380,7 +383,7 @@
       promoRoot.innerHTML = "";
       return Promise.resolve();
     }
-    return fetch("../Bundles Page/spring-bundles-promo-banner.html", { cache: "no-store" })
+    return fetch("../Bundles Page/fathers-day-promo-banner.html", { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Failed to load promo banner");
         return res.text();

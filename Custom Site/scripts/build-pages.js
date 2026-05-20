@@ -320,8 +320,8 @@ const PAGES = {
     ]
   },
 
-  'spring-bundles': {
-    source: 'Spring Bundles/velocity-spring-bundles-elementor.html',
+  'fathers-day': {
+    source: 'Fathers Day/velocity-fathers-day-elementor.html',
     title: "Father's Day Bundles | Velocity Sim Racing Lounge",
     cms: [
       { selector: '#spring-hero .vsl-spring-hero__eyebrow-line:first-of-type', attr: 'data-cms', value: 'hero.eyebrowWeek' },
@@ -396,7 +396,8 @@ function processNavbar(navbarHtml) {
     'https://velocitysimlounge.com/corporate-events/': '/corporate-events',
     'https://velocitysimlounge.com/party-packs/': '/party-packs',
     'https://velocitysimlounge.com/semi-private/': '/semi-private',
-    'https://velocitysimlounge.com/spring-bundles/': '/spring-bundles',
+    'https://velocitysimlounge.com/spring-bundles/': '/fathers-day',
+    'https://velocitysimlounge.com/fathers-day/': '/fathers-day',
     'https://velocitysimlounge.com/promotions/': '/promotions',
     'https://velocitysimlounge.com/contact/': '/contact'
   };
@@ -491,7 +492,8 @@ function buildPage(key, config) {
     'https://velocitysimlounge.com/corporate-events/': '/corporate-events',
     'https://velocitysimlounge.com/party-packs/': '/party-packs',
     'https://velocitysimlounge.com/semi-private/': '/semi-private',
-    'https://velocitysimlounge.com/spring-bundles/': '/spring-bundles',
+    'https://velocitysimlounge.com/spring-bundles/': '/fathers-day',
+    'https://velocitysimlounge.com/fathers-day/': '/fathers-day',
     'https://velocitysimlounge.com/promotions/': '/promotions',
     'https://velocitysimlounge.com/contact/': '/contact'
   };

@@ -743,9 +743,9 @@ writeJSON(path.join(CONTENT_DIR, 'schemas', 'semi-private.json'), {
   seo: seoFields
 });
 
-// -- Spring Bundles --
-writeJSON(path.join(CONTENT_DIR, 'schemas', 'spring-bundles.json'), {
-  page: "spring-bundles", label: "Spring Bundles",
+// -- Father's Day bundles page --
+writeJSON(path.join(CONTENT_DIR, 'schemas', 'fathers-day.json'), {
+  page: "fathers-day", label: "Father's Day Bundles",
   sections: {
     hero: { label: "Hero", fields: {
       eyebrowWeek: { type: "text", label: "Promo eyebrow — line 1 (e.g. Father's Day week)" },
@@ -806,7 +806,7 @@ const corporateEventsContent = seedData['corporate-events'];
 const partiesEventsContent = seedData['parties-events'];
 const partyPacksContent = seedData['party-packs'];
 const semiPrivateContent = seedData['semi-private'];
-const springBundlesContent = seedData['spring-bundles'];
+const springBundlesContent = seedData['fathers-day'];
 const menu2025Content = seedData['menu-2025'];
 
 // Legacy block kept for reference — actual data now in seed-data.js
@@ -997,11 +997,11 @@ const promotionsContent = {
   ]},
   seasonal: { heading: "Seasonal Specials", subcopy: "Limited-time offers and holiday events.", title: "Spring Bundle", description: "Race + food combo starting at {{price:partyPack.basic}}. Perfect for groups. Available March through May.", highlight: "Includes food for two!", image: "", startDate: "2026-03-01T00:00:00", endDate: "2026-05-31T23:59:59" },
   explore: { heading: "Explore More", subcopy: "Check out our other offerings.", cards: [
-    { title: "Spring Bundles", tag: "from {{price:partyPack.basic}}", image: "", link: "/spring-bundles" },
+    { title: "Father's Day Bundles", tag: "from {{price:partyPack.basic}}", image: "", link: "/fathers-day" },
     { title: "Party Packs", tag: "from {{price:partyPack.basic}}", image: "", link: "/party-packs" },
     { title: "Group Events", tag: "from {{price:groupEvent.perPerson}}/person", image: "", link: "/group-events" }
   ]},
-  cta: { heading: "Ready to Race?", subcopy: "Book your simulator session and take advantage of our latest deals.", primaryText: "Book Now", primaryLink: "/book-now", secondaryText: "View Bundles", secondaryLink: "/spring-bundles" },
+  cta: { heading: "Ready to Race?", subcopy: "Book your simulator session and take advantage of our latest deals.", primaryText: "Book Now", primaryLink: "/book-now", secondaryText: "View Bundles", secondaryLink: "/fathers-day" },
   _seo: { title: "Promotions & Deals | Velocity Sim Racing Lounge", description: "Check out our latest deals, everyday discounts, and seasonal promotions.", ogImage: "", ogTitle: "Velocity Promotions", noIndex: false }
 };
 
@@ -1186,7 +1186,7 @@ const semiPrivateContent = {
 };
 
 const springBundlesContent = {
-  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "", heroImage: "" },
+  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "https://vimeo.com/1194083193", heroImage: "" },
   twoDriver: { heading: "Two-Driver Bundles", subcopy: "Race together, eat together. Limited time only.", packages: [
     { title: "Quick Racer Bundle", price: "From {{price:partyPack.basic}}", image: "", bullets: "Quick race for 2\nFood for 2 included\nRacer-tier simulators", bookingLink: "", ctaText: "Book Now" },
     { title: "Double Pro Bundle", price: "From $99", image: "", bullets: "Double race for 2\nFood for 2 included\nPro-tier simulators", bookingLink: "", ctaText: "Book Now" }
@@ -1223,7 +1223,7 @@ const allContent = {
   'parties-events': partiesEventsContent,
   'party-packs': partyPacksContent,
   'semi-private': semiPrivateContent,
-  'spring-bundles': springBundlesContent,
+  'fathers-day': springBundlesContent,
   'menu-2025': menu2025Content
 };
 

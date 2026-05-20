@@ -281,7 +281,7 @@ window.CMS_SELECTOR_MAP = {
     "cta.subcopy":        "#sp-cta .vsl-sp-cta__sub"
   },
 
-  "spring-bundles": {
+  "fathers-day": {
     "hero.eyebrowWeek":  "#spring-hero .vsl-spring-hero__eyebrow-line:first-of-type",
     "hero.eyebrowDates": "#spring-hero .vsl-spring-hero__eyebrow-line--date",
     "hero.heading":       "#spring-hero h1",

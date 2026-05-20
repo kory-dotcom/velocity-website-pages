@@ -873,6 +873,10 @@ const REPLICA_ROOT = path.join(__dirname, 'replica');
 app.use('/navbar-assets', express.static(path.join(REPLICA_ROOT, 'navbar-assets')));
 app.use(express.static(REPLICA_ROOT));
 
+// Legacy slug → Father's Day page
+app.get('/spring-bundles', (_req, res) => res.redirect(301, '/fathers-day'));
+app.get('/spring-bundles/', (_req, res) => res.redirect(301, '/fathers-day'));
+
 // Page routes: /page-name -> pages/page-name.html
 getSchemaPageIds().forEach(key => {
   app.get(`/${key}`, (_req, res) => {

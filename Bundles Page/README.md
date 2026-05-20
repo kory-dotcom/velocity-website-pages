@@ -1,20 +1,21 @@
-# Velocity Spring Bundles (April 2026)
+# Velocity Father's Day Bundles
 
-Elementor HTML widget for the **Eat, Drink, & Race** spring bundles landing page. Aligned with **VSM 1.0.0** brand identity.
+Elementor HTML widget for the **Eat & Race** Father's Day bundles landing page. Aligned with **VSM 1.0.0** brand identity.
 
 ## File
 
 | File | Use |
 |------|-----|
-| **[velocity-spring-bundles-elementor.html](velocity-spring-bundles-elementor.html)** | Paste into one Elementor **HTML widget** in a full-width section (column padding 0). Contains config script, Google Fonts, styles, markup, and binding JS. |
+| **[velocity-fathers-day-elementor.html](velocity-fathers-day-elementor.html)** | Paste into one Elementor **HTML widget** in a full-width section (column padding 0). Contains config script, Google Fonts, styles, markup, and binding JS. |
+| **[fathers-day-promo-banner.html](fathers-day-promo-banner.html)** | Optional slim promo strip / banner markup (used by Velocity Staging preview). |
 
 ## Sections
 
 | ID | Section |
 |----|---------|
 | `#spring-hero` | Hero with eyebrow, headline, CTA, and finish-line strip |
-| `#spring-bundles` | Eat, Drink & Race bundles — 2×2 card grid (Quick Race Racer/Pro + Double Race Racer/Pro) |
-| `#spring-2seater` | 2-Seater Spring bundles — 2-card row (The Sprint / The Endurance) |
+| `#spring-bundles` | Eat, Drink & Race bundles — card grid |
+| `#spring-2seater` | 2-Seater bundles — 2-card row (when present in markup) |
 | `#spring-cta` | Closing CTA panel with Book Now button |
 
 ## Configuration (`VSL_SPRING_CONFIG`)

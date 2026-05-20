@@ -17,6 +17,27 @@ Static HTML modules and the **Velocity Staging Site** router (`VelocityStagingSi
 
 Repository: **[https://github.com/kory-dotcom/velocity-website-pages](https://github.com/kory-dotcom/velocity-website-pages)**
 
+## Local preview (normal / Elementor staging — port **8000**)
+
+This repo’s **staging router** (`VelocityStagingSite/`) loads the same HTML you paste into WordPress. It **does not** use the **`Custom Site/` CMS** (`npm run dev` on port 3000). Use one of:
+
+```bash
+cd "/path/to/Velocity Website Pages"
+python3 -m http.server 8000
+```
+
+Open **[http://localhost:8000/](http://localhost:8000/)** (root redirects into `VelocityStagingSite/`).
+
+Or, from the repo root:
+
+```bash
+npm run preview
+```
+
+That serves the repo on **8000** with `serve`. Edit files under **`Bundles Page/`**, **`Home/`**, etc., and reload the browser.
+
+Note: **`Custom Site/`** is a separate Express app for JSON-driven content and **`npm run build`**; use it only when you need that workflow.
+
 **Notes**
 
 - `.nojekyll` is included so GitHub does not run Jekyll on these files.
@@ -37,9 +58,10 @@ Use these **blob** links when you need a stable URL (spaces and `&` are encoded)
 | 5   | Membership                  | [Membership Page/velocity-membership-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Membership%20Page/velocity-membership-elementor.html)                                                           |
 | 6   | Party Packs                 | [Party Packs/velocity-party-packs-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Party%20Packs/velocity-party-packs-elementor.html)                                                                 |
 | 7   | Promotions                  | [Promotions/velocity-promotions-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Promotions/velocity-promotions-elementor.html)                                                                       |
-| 8   | About / How it works        | [About : How it Works Page_files/velocity-about-how-it-works-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/About%20%3A%20How%20it%20Works%20Page_files/velocity-about-how-it-works-elementor.html) |
-| 9   | Site-wide navbar            | [velocity-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/velocity-navbar.html)                                                                                                                         |
-| 10  | *(optional)* Preview navbar | [preview-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/preview-navbar.html)                                                                                                                           |
+| 8   | Father's Day bundles        | [Bundles Page/velocity-fathers-day-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/Bundles%20Page/velocity-fathers-day-elementor.html)                                                              |
+| 9   | About / How it works        | [About : How it Works Page_files/velocity-about-how-it-works-elementor.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/About%20%3A%20How%20it%20Works%20Page_files/velocity-about-how-it-works-elementor.html) |
+| 10  | Site-wide navbar            | [velocity-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/velocity-navbar.html)                                                                                                                         |
+| 11  | *(optional)* Preview navbar | [preview-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/preview-navbar.html)                                                                                                                           |
 
 
 In **Cursor / VS Code**, open files with spaces from the terminal using quotes, e.g. `open "Food & Drink/velocity-food-drink-elementor.html"`.

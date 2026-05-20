@@ -1,0 +1,8 @@
+{
+  "name": "velocity-website-pages",
+  "private": true,
+  "description": "Static Elementor modules and VelocityStagingSite preview (not Custom Site CMS).",
+  "scripts": {
+    "preview": "npx --yes serve -l 8000 ."
+  }
+}

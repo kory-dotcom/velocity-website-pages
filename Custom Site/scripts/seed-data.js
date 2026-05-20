@@ -18,7 +18,7 @@ home: {
       { image: "", badge: "Mon\u2013Thu", title: "Happy Hour", description: "Half-off sim racing Monday through Thursday when you book online. No codes, no coupons \u2014 just straight-up savings.", ctaText: "Book Now", ctaLink: "/book-now/", recurringDays: ["monday","tuesday","wednesday","thursday"], active: true },
       { image: "", badge: "", title: "Group Events", description: "Birthdays, bachelor parties, corporate team-building, and celebrations. Book online for up to 24 guests quickly and easily.", ctaText: "Book Now", ctaLink: "/group-events/", active: true },
       { image: "", badge: "Wednesdays", title: "Ladies Night", description: "Every Wednesday night \u2014 special pricing on drinks and sim sessions. Bring your crew for a race night that\u2019s anything but ordinary.", ctaText: "Learn More", ctaLink: "/book-now/", recurringDays: ["wednesday"], active: true },
-      { image: "", badge: "Limited Time", title: "Eat & Race Bundles", description: "Sim racing + food packages at special pricing. Grab your crew and fuel up before you race \u2014 April 2026 only.", ctaText: "View Bundles", ctaLink: "/spring-bundles/", startDate: "2026-04-01T00:00:00", endDate: "2026-04-30T23:59:59", active: true }
+      { image: "", badge: "Limited Time", title: "Eat & Race Bundles", description: "Sim racing + food packages at special pricing. Grab your crew and fuel up before you race \u2014 April 2026 only.", ctaText: "View Bundles", ctaLink: "/fathers-day/", startDate: "2026-04-01T00:00:00", endDate: "2026-04-30T23:59:59", active: true }
     ]
   },
   howItWorks: {
@@ -91,11 +91,11 @@ promotions: {
   ]},
   seasonal: { heading: "Seasonal *Promotions*", subcopy: "Our biggest windows of the year \u2014 when they drop, simulators go fast. Start with the headline event below.", title: "Black Friday", description: "Our most-anticipated sale of the year. Last year we sold out from 10 AM to midnight \u2014 every simulator was booked solid. Don\u2019t sleep on early access.", highlight: "Sold out 10 AM \u2013 12 AM last year", image: "" },
   explore: { heading: "Explore *More*", subcopy: "Combine your discount with one of our packages for even more value.", cards: [
-    { title: "Bundles", tag: "Eat & Race packages from {{price:springSprint}}", image: "", link: "/spring-bundles/" },
+    { title: "Bundles", tag: "Eat & Race packages from {{price:springSprint}}", image: "", link: "/fathers-day/" },
     { title: "Party Packs", tag: "Birthdays, celebrations & group fun", image: "", link: "/party-packs/" },
     { title: "Events", tag: "Corporate, private & semi-private", image: "", link: "/group-events/" }
   ]},
-  cta: { heading: "Ready to Race?", subcopy: "Book your experience today and bring a valid ID to unlock your discount at check-in. Seasonal deals are first come, first served.", primaryText: "Book now", primaryLink: "/book-now/", secondaryText: "View bundles", secondaryLink: "/spring-bundles/" },
+  cta: { heading: "Ready to Race?", subcopy: "Book your experience today and bring a valid ID to unlock your discount at check-in. Seasonal deals are first come, first served.", primaryText: "Book now", primaryLink: "/book-now/", secondaryText: "View bundles", secondaryLink: "/fathers-day/" },
   _seo: { title: "Deals & Promotions | Velocity Sim Racing Lounge", description: "Exclusive discounts for service members, students, and teachers. Plus seasonal deals and Ladies Night every Wednesday.", ogImage: "", ogTitle: "Velocity Promotions", noIndex: false }
 },
 
@@ -295,8 +295,8 @@ about: {
   _seo: { title: "Semi-Private Events | Velocity Sim Racing Lounge", description: "Reserve dedicated space at Velocity for groups of 10-40. Racing, dining, bar service, and full event support.", ogImage: "", ogTitle: "Velocity Semi-Private Events", noIndex: false }
 },
 
-"spring-bundles": {
-  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "", heroImage: "" },
+"fathers-day": {
+  hero: { eyebrowWeek: "Father's Day week", eyebrowDates: "June 15–21, 2026", heading: "Father's Day *Eat & Race*", heroVideo: "https://vimeo.com/1194083193", heroImage: "" },
   twoDriver: { heading: "Father's Day *Bundles*", subcopy: "Eat & Race at Velocity • Father's Day week (June 15–21, 2026)", packages: [
     { title: "Quick Race", price: "From {{price:springQuick}}", image: "", bullets: "2 Simulators (~30 min experience)\n2 Food tickets\nRegularly $105", bookingLink: "", ctaText: "Select package" },
     { title: "Double Race", price: "From {{price:springDouble}}", image: "", bullets: "2 Simulators (~60 min experience)\n2 Food tickets\n2 Races, twice the fun!", bookingLink: "", ctaText: "Select package" }
