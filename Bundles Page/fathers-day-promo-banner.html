@@ -72,14 +72,6 @@
 		border-radius: 28px 28px 0 0;
 	}
 
-	.sb-promo-icon {
-		width: 64px;
-		height: auto;
-		color: var(--sb-yellow);
-		margin-bottom: 14px;
-		filter: drop-shadow(0 6px 14px rgba(253, 199, 12, 0.35));
-	}
-
 	.sb-eyebrow {
 		display: inline-block;
 		padding: 6px 20px;
@@ -199,10 +191,6 @@
 			padding: 22px 24px 30px;
 			border-radius: 0 0 22px 22px;
 		}
-		.sb-promo-icon {
-			width: 50px;
-			margin-bottom: 10px;
-		}
 		.sb-eyebrow {
 			padding: 5px 16px;
 			font-size: 11px;
@@ -258,15 +246,6 @@
 	</div>
 
 	<div class="sb-card-header">
-		<svg class="sb-promo-icon" viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-			<!-- Gift outline (Father&apos;s Day) — stroke matches prior star promo weight -->
-			<path d="M26 44V22c0-4 4-8 14-8s14 4 14 8v22" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M18 58V36h44v22c0 5-10 11-22 11S18 63 18 58z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-			<path d="M18 42h44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-			<circle cx="30" cy="18" r="6" stroke="currentColor" stroke-width="3"/>
-			<circle cx="48" cy="18" r="6" stroke="currentColor" stroke-width="3"/>
-			<path d="M40 12v54" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".45"/>
-		</svg>
 		<div class="sb-eyebrow">Father&apos;s Day</div>
 		<div class="sb-headline">Surprise Dad With<br><span>Eat &amp; Race Bundles</span></div>
 	</div>
@@ -288,7 +267,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-fathers-day-promo-v2026";
+	var version = "sb-fathers-day-promo-v2026d";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -316,9 +295,46 @@
 
 	var ctaBtn = card ? card.querySelector('#sb-card-cta') : null;
 	if (ctaBtn) {
+		function sbIsReplicaShellPage() {
+			try {
+				if (window.__VSL_SITE_REPLICA__ === true) return true;
+				if (
+					document.getElementById('replica-page-root') &&
+					document.getElementById('replica-navbar-root')
+				) {
+					return true;
+				}
+			} catch (e) {}
+			return false;
+		}
+
+		/** Same-origin shell URL with ?p=fathers-day (matches replica-app.js path + query normalization). */
+		function sbShellHrefForFathersDay() {
+			try {
+				var u = new URL(window.location.href);
+				u.pathname = u.pathname.replace(/\/index\.html$/i, '/');
+				if (!u.pathname.endsWith('/')) u.pathname += '/';
+				var cur = new URLSearchParams(window.location.search);
+				var next = new URLSearchParams();
+				next.set('p', 'fathers-day');
+				var env = cur.get('env');
+				if (env) next.set('env', env);
+				u.search = next.toString();
+				u.hash = '';
+				return u.pathname + (u.search ? '?' + u.search : '');
+			} catch (e2) {
+				return '';
+			}
+		}
+
 		function sbCtaUrl() {
+			if (sbIsReplicaShellPage()) {
+				var shell = sbShellHrefForFathersDay();
+				if (shell) return shell;
+			}
 			return ctaBtn.getAttribute('data-sb-url') || '';
 		}
+
 		function sbGoCtaSameTab(e) {
 			if (ctaBtn.getAttribute('data-sb-nav-pending') === '1') {
 				if (e && e.preventDefault) e.preventDefault();
