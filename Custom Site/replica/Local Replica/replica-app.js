@@ -2,20 +2,20 @@
 (function () {
   window.__VSL_SITE_REPLICA__ = true;
   var REPLICA_PAGES = {
-    home: { title: "Home", modulePath: "../Home/velocity-home-elementor.html" },
-    about: { title: "About", modulePath: "../About : How it Works Page_files/velocity-about-how-it-works-elementor.html" },
-    "book-now": { title: "Book Now", modulePath: "../Book Now/velocity-book-now-elementor.html" },
-    contact: { title: "Contact", modulePath: "../Contact/velocity-contact-elementor.html" },
-    "corporate-events": { title: "Corporate Events", modulePath: "../Corporate Events/velocity-corporate-events-elementor.html" },
-    "food-drink": { title: "Food & Drink", modulePath: "../Food & Drink/velocity-food-drink-elementor.html" },
-    "menu-2025": { title: "Menu 2025", modulePath: "../Food & Drink/velocity-menu-2025.html" },
-    membership: { title: "Membership", modulePath: "../Membership Page/velocity-membership-elementor.html" },
-    "parties-events": { title: "Group Events", modulePath: "../Parties & Events/velocity-parties-events-elementor.html" },
-    "party-packs": { title: "Party Packs", modulePath: "../Party Packs/velocity-party-packs-elementor.html" },
-    "semi-private": { title: "Semi-Private", modulePath: "../Semi-Private/velocity-semi-private-elementor.html" },
-    "fathers-day": { title: "Father's Day Bundles", modulePath: "../Fathers Day/velocity-fathers-day-elementor.html" },
-    "promotions": { title: "Promotions", modulePath: "../Promotions/velocity-promotions-elementor.html" },
-    "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" }
+    home: { title: "Home", modulePath: "Home/velocity-home-elementor.html" },
+    about: { title: "About", modulePath: "About : How it Works Page_files/velocity-about-how-it-works-elementor.html" },
+    "book-now": { title: "Book Now", modulePath: "Book Now/velocity-book-now-elementor.html" },
+    contact: { title: "Contact", modulePath: "Contact/velocity-contact-elementor.html" },
+    "corporate-events": { title: "Corporate Events", modulePath: "Corporate Events/velocity-corporate-events-elementor.html" },
+    "food-drink": { title: "Food & Drink", modulePath: "Food & Drink/velocity-food-drink-elementor.html" },
+    "menu-2025": { title: "Menu 2025", modulePath: "Food & Drink/velocity-menu-2025.html" },
+    membership: { title: "Membership", modulePath: "Membership Page/velocity-membership-elementor.html" },
+    "parties-events": { title: "Group Events", modulePath: "Parties & Events/velocity-parties-events-elementor.html" },
+    "party-packs": { title: "Party Packs", modulePath: "Party Packs/velocity-party-packs-elementor.html" },
+    "semi-private": { title: "Semi-Private", modulePath: "Semi-Private/velocity-semi-private-elementor.html" },
+    "fathers-day": { title: "Father's Day Bundles", modulePath: "Fathers Day/velocity-fathers-day-elementor.html" },
+    promotions: { title: "Promotions", modulePath: "Promotions/velocity-promotions-elementor.html" },
+    buyout: { title: "Full Venue Buyout", modulePath: "Buyout/velocity-buyout-elementor.html" }
   };
 
   var NAV_PATH_MAP = {
@@ -70,11 +70,55 @@
   var envParam = params.get("env");
   var revealObserver = null;
 
-  // Preserve env=staging across navigation
+  /** Directory URL for the replica root (parent of `Local Replica/`). Resolved from replica-app.js `src`. */
+  var MODULE_BASE = (function resolveModuleBase() {
+    var scripts = document.getElementsByTagName("script");
+    for (var i = scripts.length - 1; i >= 0; i--) {
+      var raw = scripts[i] && scripts[i].getAttribute("src");
+      if (!raw || raw.indexOf("replica-app") === -1) continue;
+      try {
+        var u = new URL(raw, window.location.href);
+        var parts = u.pathname.split("/").filter(Boolean);
+        for (var j = 0; j < parts.length; j++) {
+          var decoded = decodeURIComponent(parts[j]).replace(/\s+/g, " ");
+          if (decoded.toLowerCase() === "local replica" && parts[j + 1] === "replica-app.js") {
+            var prefix = parts.slice(0, j).join("/");
+            var basePath = (prefix ? "/" + prefix + "/" : "/");
+            return new URL(basePath, u.origin).href;
+          }
+        }
+      } catch (e) {}
+      break;
+    }
+    var fallback = window.location.href.replace(/(?:Local(?:%20|[\s])Replica\/)?replica-app\.js.*$/i, "");
+    try {
+      return new URL("./", fallback).href;
+    } catch (e2) {
+      return new URL("./", window.location.href).href;
+    }
+  })();
+
+  function replicaAssetUrl(relPath) {
+    return new URL(String(relPath).replace(/^\//, ""), MODULE_BASE).href;
+  }
+
+  /** Same document path semantics as staging: `/VelocityStagingSite/?p=…` (not `index.html?p=…`). */
+  function hrefToReplicaShell(href) {
+    var parsed = new URL(href, window.location.href);
+    var shell = new URL(window.location.href);
+    shell.pathname = shell.pathname.replace(/\/index\.html$/i, "/");
+    if (!shell.pathname.endsWith("/")) shell.pathname += "/";
+    var merge = new URLSearchParams(parsed.search);
+    if (envParam) merge.set("env", envParam);
+    else merge.delete("env");
+    shell.search = merge.toString();
+    shell.hash = parsed.hash;
+    return shell.pathname + (shell.search ? "?" + shell.search : "") + shell.hash;
+  }
+
+  // Preserve env=staging across navigation (and shell-style URLs)
   function appendEnv(href) {
-    if (!envParam) return href;
-    var sep = href.indexOf("?") === -1 ? "?" : "&";
-    return href + sep + "env=" + envParam;
+    return hrefToReplicaShell(href);
   }
 
   if (!REPLICA_PAGES[pageKey]) pageKey = "home";
@@ -205,6 +249,12 @@
     } catch (e) {}
   }
 
+  function normalizeReplicaShellPathname(pathname) {
+    var p = pathname.replace(/\/index\.html$/i, "/");
+    if (!p.endsWith("/")) p += "/";
+    return p;
+  }
+
   function normalizePath(pathname) {
     if (!pathname) return "/";
     if (pathname.length > 1 && pathname.charAt(pathname.length - 1) !== "/") return pathname + "/";
@@ -223,21 +273,34 @@
       return null;
     }
 
+    // Same replica shell URL (staging: /VelocityStagingSite/?p=…)
+    if (
+      parsed.origin === window.location.origin &&
+      normalizeReplicaShellPathname(parsed.pathname) === normalizeReplicaShellPathname(window.location.pathname)
+    ) {
+      return hrefToReplicaShell("index.html" + parsed.search + parsed.hash);
+    }
+
     // Roverd booking: never rewrite to replica routes — modals/iframes and CTAs
     // depend on the real https://book… URLs.
     if (parsed.hostname === "book.velocitysimlounge.com") {
       return null;
     }
 
-    // Already local replica URLs.
-    if (parsed.origin === window.location.origin && parsed.pathname.indexOf("/Local Replica/") !== -1) {
-      var tailPath = "/" + parsed.pathname.split("/Local Replica/")[1];
-      var mappedTail = NAV_PATH_MAP[tailPath] || NAV_PATH_MAP[normalizePath(tailPath)] || NAV_PATH_MAP[parsed.pathname];
-      if (mappedTail) {
-        if (parsed.hash) mappedTail += parsed.hash;
-        return appendEnv(mappedTail);
+    // Already local replica URLs (decoded path matches …/Local Replica/… file tree).
+    if (parsed.origin === window.location.origin) {
+      var decPath = decodeURIComponent(parsed.pathname);
+      var lr = decPath.match(/^(.*)\/Local Replica\/([\s\S]+)$/i);
+      if (lr) {
+        var tailPath = "/" + lr[2].replace(/^\/+/, "");
+        var mappedTail =
+          NAV_PATH_MAP[tailPath] || NAV_PATH_MAP[normalizePath(tailPath)] || NAV_PATH_MAP[parsed.pathname];
+        if (mappedTail) {
+          if (parsed.hash) mappedTail += parsed.hash;
+          return appendEnv(mappedTail);
+        }
+        return appendEnv(tailPath + parsed.search + parsed.hash);
       }
-      return appendEnv(parsed.pathname.split("/Local Replica/")[1] + parsed.search + parsed.hash);
     }
 
     // Known external booking/event hosts should stay inside local mock.
@@ -277,10 +340,12 @@
     if (!navbarRoot) return;
 
     var logo = navbarRoot.querySelector('.vsl-navbar__logo[href="https://velocitysimlounge.com/"]');
-    if (logo) logo.setAttribute("href", "index.html?p=home");
+    if (logo) logo.setAttribute("href", appendEnv("index.html?p=home"));
 
     navbarRoot.querySelectorAll("img[src^='navbar-assets/']").forEach(function (img) {
-      img.src = "../" + img.getAttribute("src");
+      var rel = img.getAttribute("src");
+      if (!rel) return;
+      img.src = replicaAssetUrl(rel);
     });
 
     navbarRoot.querySelectorAll("a[href]").forEach(function (a) {
@@ -291,7 +356,7 @@
       if (href === "#") {
         var mobileLoc = a.getAttribute("data-mobile-location");
         if (mobileLoc === "dallas" || mobileLoc === "houston") {
-          a.setAttribute("href", "index.html?p=contact&loc=" + mobileLoc);
+          a.setAttribute("href", appendEnv("index.html?p=contact&loc=" + mobileLoc));
         }
         return;
       }
@@ -302,27 +367,29 @@
   }
 
   function makeHomeMarkup() {
-    var e = envParam ? "&env=" + envParam : "";
+    function h(query) {
+      return hrefToReplicaShell("index.html" + query);
+    }
     return (
       '<section class="vsl-local-home">' +
       '<div class="vsl-local-home__inner">' +
       "<h1>Velocity Local Replica</h1>" +
       "<p>This local build mirrors your current modules and navbar for review/testing.</p>" +
       '<ul class="vsl-local-grid">' +
-      '<li><a href="index.html?p=book-now' + e + '">Book Now</a></li>' +
-      '<li><a href="index.html?p=about' + e + '">About / How It Works</a></li>' +
-      '<li><a href="index.html?p=food-drink' + e + '">Food &amp; Drink</a></li>' +
-      '<li><a href="index.html?p=menu-2025' + e + '">Menu 2025</a></li>' +
-      '<li><a href="index.html?p=parties-events' + e + '">Group Events</a></li>' +
-      '<li><a href="index.html?p=corporate-events' + e + '">Corporate Events</a></li>' +
-      '<li><a href="index.html?p=semi-private' + e + '">Semi-Private</a></li>' +
-      '<li><a href="index.html?p=party-packs' + e + '">Party Packs</a></li>' +
-      '<li><a href="index.html?p=membership' + e + '">Membership</a></li>' +
-      '<li><a href="index.html?p=fathers-day' + e + '">Father\'s Day Bundles</a></li>' +
-      '<li><a href="index.html?p=promotions' + e + '">Promotions</a></li>' +
-      '<li><a href="index.html?p=buyout' + e + '">Full Venue Buyout</a></li>' +
-      '<li><a href="index.html?p=contact' + e + '">Contact (Houston)</a></li>' +
-      '<li><a href="index.html?p=contact&loc=dallas' + e + '">Contact (Dallas state)</a></li>' +
+      '<li><a href="' + h("?p=book-now") + '">Book Now</a></li>' +
+      '<li><a href="' + h("?p=about") + '">About / How It Works</a></li>' +
+      '<li><a href="' + h("?p=food-drink") + '">Food &amp; Drink</a></li>' +
+      '<li><a href="' + h("?p=menu-2025") + '">Menu 2025</a></li>' +
+      '<li><a href="' + h("?p=parties-events") + '">Group Events</a></li>' +
+      '<li><a href="' + h("?p=corporate-events") + '">Corporate Events</a></li>' +
+      '<li><a href="' + h("?p=semi-private") + '">Semi-Private</a></li>' +
+      '<li><a href="' + h("?p=party-packs") + '">Party Packs</a></li>' +
+      '<li><a href="' + h("?p=membership") + '">Membership</a></li>' +
+      '<li><a href="' + h("?p=fathers-day") + '">Father\'s Day Bundles</a></li>' +
+      '<li><a href="' + h("?p=promotions") + '">Promotions</a></li>' +
+      '<li><a href="' + h("?p=buyout") + '">Full Venue Buyout</a></li>' +
+      '<li><a href="' + h("?p=contact") + '">Contact (Houston)</a></li>' +
+      '<li><a href="' + h("?p=contact&loc=dallas") + '">Contact (Dallas state)</a></li>' +
       "</ul>" +
       "</div>" +
       "</section>"
@@ -347,7 +414,7 @@
       return Promise.resolve();
     }
 
-    return fetch(page.modulePath, { cache: "no-store" })
+    return fetch(replicaAssetUrl(page.modulePath), { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Failed to load module: " + page.modulePath);
         return res.text();
@@ -381,7 +448,7 @@
 
   function loadFooter() {
     if (!footerRoot) return Promise.resolve();
-    return fetch("../velocity-footer.html", { cache: "no-store" })
+    return fetch(replicaAssetUrl("velocity-footer.html"), { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Failed to load footer");
         return res.text();
@@ -397,7 +464,7 @@
       });
   }
 
-  fetch("../velocity-navbar.html", { cache: "no-store" })
+  fetch(replicaAssetUrl("velocity-navbar.html"), { cache: "no-store" })
     .then(function (res) { return res.text(); })
     .then(function (html) {
       navbarRoot.innerHTML = html;

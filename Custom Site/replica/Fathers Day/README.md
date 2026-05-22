@@ -4,6 +4,6 @@ Synced copy of **`Bundles Page/velocity-fathers-day-elementor.html`** used by **
 
 Main module: **`velocity-fathers-day-elementor.html`**
 
-Optional banner snippet: **`fathers-day-promo-banner.html`**
+Home floating promo snippet (Father’s Day): **`fathers-day-promo-banner.html`**
 
 See **[Bundles Page/README.md](../../../Bundles Page/README.md)** for section IDs (`#spring-*` anchors), pricing table, Elementor paste notes, and `VSL_SPRING_CONFIG`.

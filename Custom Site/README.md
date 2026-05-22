@@ -35,6 +35,8 @@ python3 -m http.server 8890
 
 Example: **`http://localhost:8890/Local%20Replica/index.html?p=home`** (add **`?env=staging`** to mirror staging chrome in the replica shell).
 
+When the static host exposes the **`replica/`** folder root (mirrors Velocity staging **`/VelocityStagingSite/`**): open **`http://localhost:8890/?p=fathers-day`** — the shell is **`replica/index.html`** and the router script resolves **`MODULE_BASE`** from its own URL so navbar, footer, and HTML modules load from the sibling folders (e.g. **`Home/`**, **`Fathers Day/`**).
+
 ## Environment variables
 
 | Variable | Purpose |

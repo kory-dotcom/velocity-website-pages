@@ -1,4 +1,4 @@
-<!-- CSS for the Party Pack cross-sell floating popup (Desktop + Mobile) -->
+<!-- CSS for the Father's Day promotion floating popup (Desktop + Mobile) -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -259,31 +259,36 @@
 
 	<div class="sb-card-header">
 		<svg class="sb-promo-icon" viewBox="0 0 80 72" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-			<path d="M40 8l6 14h14l-11 10 4 17-13-10-13 10 4-17L16 22h14L40 8z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" fill="none"/>
-			<path d="M18 62c8-12 34-12 42 0" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+			<!-- Gift outline (Father&apos;s Day) — stroke matches prior star promo weight -->
+			<path d="M26 44V22c0-4 4-8 14-8s14 4 14 8v22" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M18 58V36h44v22c0 5-10 11-22 11S18 63 18 58z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+			<path d="M18 42h44" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+			<circle cx="30" cy="18" r="6" stroke="currentColor" stroke-width="3"/>
+			<circle cx="48" cy="18" r="6" stroke="currentColor" stroke-width="3"/>
+			<path d="M40 12v54" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".45"/>
 		</svg>
-		<div class="sb-eyebrow">Large groups</div>
-		<div class="sb-headline">Planning Something<br><span>Even Bigger?</span></div>
+		<div class="sb-eyebrow">Father&apos;s Day</div>
+		<div class="sb-headline">Surprise Dad With<br><span>Eat &amp; Race Bundles</span></div>
 	</div>
 
 	<div class="sb-card-body">
-		<p class="sb-promo-copy">Book a Party Pack for large groups and more racing!</p>
+		<p class="sb-promo-copy">Celebrate with great food plus full-motion sim racing &mdash; bundles built for gifting or making memories with the crew.</p>
 
-		<button type="button" id="sb-card-cta" class="sb-card-btn" data-sb-url="https://velocitysimlounge.com/party-packs/">
-			View party packs
+		<button type="button" id="sb-card-cta" class="sb-card-btn" data-sb-url="https://velocitysimlounge.com/fathers-day/">
+			View Father&apos;s Day bundles
 		</button>
 	</div>
 </div>
 
 <!-- SHARED: MINIMIZED TAB -->
 <div id="sb-promo-minimized">
-	Party packs
+	Father&apos;s Day
 </div>
 
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-party-pack-promo-v1";
+	var version = "sb-fathers-day-promo-v2026";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');

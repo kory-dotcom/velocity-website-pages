@@ -7,7 +7,7 @@ Elementor HTML widget for the **Eat & Race** Father's Day bundles landing page. 
 | File | Use |
 |------|-----|
 | **[velocity-fathers-day-elementor.html](velocity-fathers-day-elementor.html)** | Paste into one Elementor **HTML widget** in a full-width section (column padding 0). Contains config script, Google Fonts, styles, markup, and binding JS. |
-| **[fathers-day-promo-banner.html](fathers-day-promo-banner.html)** | Optional slim promo strip / banner markup (used by Velocity Staging preview). |
+| **[fathers-day-promo-banner.html](fathers-day-promo-banner.html)** | Home-page floating promo modal (Father’s Day bundles CTA); used by Velocity Staging preview. |
 
 ## Sections
 
