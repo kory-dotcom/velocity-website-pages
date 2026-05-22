@@ -265,7 +265,7 @@
 <!-- JavaScript Logic -->
 <script>
 (function() {
-	var version = "sb-fathers-day-promo-v2026d";
+	var version = "sb-fathers-day-promo-v2026e";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');
@@ -319,7 +319,7 @@
 				if (env) next.set('env', env);
 				u.search = next.toString();
 				u.hash = '';
-				return u.pathname + (u.search ? '?' + u.search : '');
+				return u.pathname + u.search + u.hash;
 			} catch (e2) {
 				return '';
 			}

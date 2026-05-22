@@ -113,7 +113,7 @@
     else merge.delete("env");
     shell.search = merge.toString();
     shell.hash = parsed.hash;
-    return shell.pathname + (shell.search ? "?" + shell.search : "") + shell.hash;
+    return shell.pathname + shell.search + shell.hash;
   }
 
   // Preserve env=staging across navigation (and shell-style URLs)
