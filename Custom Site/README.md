@@ -24,6 +24,17 @@ npm run dev           # http://localhost:3000 — admin at /admin
 
 By default `DEPLOY_ENV` is `development`: **Save** in the CMS writes to staging and **publishes** to the local `content/production/` folder so the public site updates immediately.
 
+### Local Replica only (no Express CMS)
+
+From `Custom Site/replica`, the **`cms`** symlink points at **`site/`**, so **`/cms/selector-map.js`** loads while you use plain static hosting:
+
+```bash
+cd "Custom Site/replica"
+python3 -m http.server 8890
+```
+
+Example: **`http://localhost:8890/Local%20Replica/index.html?p=home`** (add **`?env=staging`** to mirror staging chrome in the replica shell).
+
 ## Environment variables
 
 | Variable | Purpose |

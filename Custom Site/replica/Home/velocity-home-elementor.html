@@ -254,7 +254,7 @@
       box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
   }
-  /* Race column links to Book Now (whole tile clickable) */
+  /* Third Eat / Drink hero column points to Father's Day Eat & Race bundles */
   a.vsl-home-edr__col {
     text-decoration: none;
     color: inherit;
@@ -374,6 +374,9 @@
     -webkit-text-fill-color: #fff;
     transition: color 0.45s ease, -webkit-text-fill-color 0.45s ease;
   }
+  .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
+    font-size: clamp(1.35rem, 0.82rem + 3.8vw, 4.75rem);
+  }
   .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(1) .vsl-home-edr__media {
     clip-path: inset(0 0 0 0);
     transition-delay: 0.25s;
@@ -465,7 +468,10 @@
       font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem);
       padding-bottom: clamp(8%, 5vh, 18%);
     }
-    /* Mobile: third card ("RACE.") gets the digital magenta brand color by default */
+    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
+      font-size: clamp(1.2rem, 0.82rem + 4.8vw, 2.65rem);
+    }
+    /* Mobile: third card ("Eat & Race.") gets the digital magenta brand color by default */
     .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
     .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
       color: var(--magenta) !important;
@@ -502,7 +508,7 @@
       color: var(--magenta) !important;
       -webkit-text-fill-color: var(--magenta) !important;
     }
-    /* RACE flips to brand gold when it's the tapped tile, with a matching gold glow */
+    /* Eat & Race column flips to brand gold when it's the tapped tile, with a matching gold glow */
     .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__word-text,
     .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__dot {
       color: var(--yellow) !important;
@@ -1725,31 +1731,21 @@
           </div>
           <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></div>
         </a>
-        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-edr__col" aria-label="Race — Book now at Velocity">
+        <a href="https://velocitysimlounge.com/fathers-day/" class="vsl-home-edr__col" aria-label="Father's Day Eat and Race bundles">
           <div class="vsl-home-edr__media">
             <img
-              data-edr-img="race"
-              src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2048x2560.webp"
-              srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-480x600.webp 480w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x750.webp 600w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x960.webp 768w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-800x1000.webp 800w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x1280.webp 1024w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x1500.webp 1200w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1920.webp 1536w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2048x2560.webp 2048w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2400x3000.webp 2400w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2560x3200.webp 2560w"
+              data-edr-img="fathers-day"
+              src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp"
               sizes="(max-width: 640px) 92vw, 33vw"
-              alt="Sim racing at Velocity Sim Racing Lounge"
-              width="2048"
-              height="2560"
+              alt="Father's Day Eat &amp; Race bundles at Velocity Sim Racing Lounge"
+              width="1024"
+              height="683"
               loading="eager"
               decoding="async"
               fetchpriority="low"
             >
           </div>
-          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></div>
+          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Eat &amp; Race</span><span class="vsl-home-edr__dot">.</span></div>
         </a>
       </div>
       <div class="vsl-home-edr__ctas">
