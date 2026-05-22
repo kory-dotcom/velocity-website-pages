@@ -153,6 +153,7 @@
     pointer-events: auto !important;
   }
   #spring-hero, #spring-bundles, #spring-cta { scroll-margin-top: 5rem; }
+  /* Do not inherit theme vertical scroll snapping on full-height hero / sections */
   .vsl-spring > main > section { scroll-snap-align: none !important; }
 
   /* ── ELEMENTOR GLOBAL RESETS (fight theme/Elementor overrides inside the widget) ── */
@@ -298,28 +299,22 @@
   .vsl-spring-hero--has-video.vsl-spring-hero--hero-bg-vimeo .vsl-spring-hero__banner-img {
     display: none !important;
   }
+  /* Vimeo: exact 16∶9 px “cover” + extra scale set in JS (skinny widths crop player letterboxing). */
   .vsl-spring-hero__vimeo iframe {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100%;
-    height: 100%;
-    min-width: 177.78%;
-    min-height: 100%;
     border: 0;
     z-index: 0;
-    /* ~20% zoom crops letterboxing — pair with iframe inline width/height in bind script */
-    transform: translate(-50%, -50%) scale(1.2);
+    pointer-events: none;
+    box-sizing: border-box;
+    max-width: none;
+    aspect-ratio: 16 / 9;
     transform-origin: center center;
   }
-  /* Vimeo’s oEmbed thumbnail (≈first frame); hides when iframe starts playing.
-     Match iframe sizing: 120×120 % box + centered scale(1.2) (see iframe inline style). */
   .vsl-spring-hero__vimeo-poster {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
+    inset: 0;
     z-index: 1;
     overflow: hidden;
     pointer-events: none;
@@ -327,8 +322,6 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    transform: translate(-50%, -50%) scale(1.2);
-    transform-origin: center center;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.5s ease, visibility 0s linear 0s;
@@ -612,6 +605,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: min(1040px, 100%);
     margin-inline: auto;
+    /* Stretch both cards so extra copy (Pro blurb) does not shorten the sibling row — CTA aligns via flex */
     align-items: stretch;
   }
   .vsl-spring-card-grid--2 > .vsl-spring-card {
@@ -1140,7 +1134,7 @@
   }
 </style>
 
-<div class="vsl-spring" data-vsl-config='{"links":{"racerFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/27?selectedMonth=6#","proFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/28?selectedMonth=6#","bookNow":"https://velocitysimlounge.com/book-now/"},"images":{"racerFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp","proFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://vimeo.com/1194083193","elementorColumnOutdentPx":0}'>
+<div class="vsl-spring" data-vsl-config='{"links":{"racerFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/27?selectedMonth=6#","proFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/28?selectedMonth=6#","bookNow":"https://velocitysimlounge.com/book-now/","partyPacks":"https://velocitysimlounge.com/party-packs/"},"images":{"racerFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp","proFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://vimeo.com/1194083193","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1238,10 +1232,10 @@
     <section class="vsl-spring-cta" id="spring-cta" aria-labelledby="spring-cta-heading">
       <div class="vsl-spring-grid">
         <div class="vsl-spring-cta__panel">
-          <h2 id="spring-cta-heading">Book Father's Day week</h2>
-          <p>Father's Day Eat &amp; Race bundles run June 15–21, 2026. Reserve your lane and seating early.</p>
+          <h2 id="spring-cta-heading">Planning Something even bigger?</h2>
+          <p>Book a Party Pack for large groups and more racing!</p>
           <div class="vsl-spring-cta__buttons">
-            <a class="vsl-spring-btn" data-vsl-spring-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book now</a>
+            <a class="vsl-spring-btn" data-vsl-spring-link="partyPacks" href="https://velocitysimlounge.com/party-packs/">View party packs</a>
           </div>
         </div>
       </div>
@@ -1325,7 +1319,7 @@
     var nameEl = card && card.querySelector ? card.querySelector('.vsl-spring-card__name') : null;
     if (nameEl && nameEl.textContent.trim()) return nameEl.textContent.trim();
     var key = a.getAttribute('data-vsl-spring-link');
-    var map = { racerFamily4: 'Racer bundle', proFamily4: 'Pro bundle', bookNow: 'Book Now' };
+    var map = { racerFamily4: 'Racer bundle', proFamily4: 'Pro bundle', bookNow: 'Book Now', partyPacks: 'Party packs' };
     if (key && map[key]) return map[key];
     return (a.textContent || '').trim() || 'Book Now';
   }
@@ -1398,12 +1392,16 @@
     }
 
     var hero = root.querySelector('.vsl-spring-hero');
+    var vimeoHeroCoverReflow = null;
     function vslSpringMeasureHeroFold() {
       if (!hero) return;
       /* Match homepage: fixed `.vsl-navbar` (or preview bar) consumes top of viewport — shorten hero fold so checker sits above first paint. Omit visualViewport: URL bar hides fire resize and steal scroll momentum. */
       var navEl = document.querySelector('.vsl-navbar') || document.querySelector('[class*="preview-bar"]');
       var navH = navEl ? Math.round(navEl.getBoundingClientRect().height) : 0;
       hero.style.setProperty('--vsl-nav-offset', navH + 'px');
+      if (typeof vimeoHeroCoverReflow === 'function') {
+        window.requestAnimationFrame(vimeoHeroCoverReflow);
+      }
     }
     vslSpringMeasureHeroFold();
     window.addEventListener('resize', vslSpringMeasureHeroFold);
@@ -1429,8 +1427,52 @@
             '<div class="vsl-spring-hero__vimeo-poster" data-vsl-spring-vimeo-poster aria-hidden="true"></div>' +
             '<iframe id="vsl-spring-vimeo-iframe" src="' +
             vimeoSrc.replace(/"/g, '&quot;') +
-            '" style="position:absolute;top:50%;left:50%;width:120%;height:120%;transform:translate(-50%,-50%) scale(1.2);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+            '" style="border:0;position:absolute;top:50%;left:50%;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
           posterEl = vimeoWrap.querySelector('[data-vsl-spring-vimeo-poster]');
+          function vslSpringApplyVimeoCover() {
+            var iframeInner = vimeoWrap.querySelector('iframe');
+            if (!iframeInner) return;
+            var wBox = Math.max(1, vimeoWrap.clientWidth);
+            var hBox = Math.max(1, vimeoWrap.clientHeight);
+            var ar = 16 / 9;
+            var cw = wBox;
+            var ch = cw / ar;
+            if (ch < hBox) {
+              ch = hBox;
+              cw = ch * ar;
+            }
+            var vpW = 0;
+            try {
+              vpW =
+                window.visualViewport && window.visualViewport.width
+                  ? window.visualViewport.width
+                  : window.innerWidth;
+            } catch (eW) {
+              vpW = window.innerWidth || 390;
+            }
+            var crop = 1.1;
+            if (vpW <= 380) crop = 1.24;
+            else if (vpW <= 430) crop = 1.2;
+            else if (vpW <= 520) crop = 1.16;
+            else if (vpW <= 640) crop = 1.12;
+            iframeInner.style.boxSizing = 'border-box';
+            iframeInner.style.width = Math.ceil(cw) + 'px';
+            iframeInner.style.height = Math.ceil(ch) + 'px';
+            iframeInner.style.transform = 'translate(-50%, -50%) scale(' + crop + ')';
+          }
+          vslSpringApplyVimeoCover();
+          requestAnimationFrame(vslSpringApplyVimeoCover);
+          if (typeof ResizeObserver !== 'undefined') {
+            var vimeoCovRO = new ResizeObserver(function () {
+              vslSpringApplyVimeoCover();
+            });
+            vimeoCovRO.observe(vimeoWrap);
+          }
+          window.addEventListener('resize', vslSpringApplyVimeoCover);
+          try {
+            if (window.visualViewport) window.visualViewport.addEventListener('resize', vslSpringApplyVimeoCover);
+          } catch (eVp) {}
+          vimeoHeroCoverReflow = vslSpringApplyVimeoCover;
           function applyVimeoPosterThumb(url) {
             if (!posterEl || !url) return;
             var preload = new Image();

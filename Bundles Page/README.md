@@ -16,13 +16,13 @@ Elementor HTML widget for the **Eat & Race** Father's Day bundles landing page. 
 | `#spring-hero` | Hero with eyebrow, headline, CTA, and finish-line strip |
 | `#spring-bundles` | Eat, Drink & Race bundles — card grid |
 | `#spring-2seater` | 2-Seater bundles — 2-card row (when present in markup) |
-| `#spring-cta` | Closing CTA panel with Book Now button |
+| `#spring-cta` | Closing CTA promoting Party Packs (link **`partyPacks`**) |
 
 ## Configuration (`VSL_SPRING_CONFIG`)
 
 Edit `data-vsl-config` JSON on `.vsl-spring`:
 
-- **`links`** — `racerFamily4` / `proFamily4`: Roverd **`book.velocitysimlounge.com`** URLs (query params such as **`selectedMonth=6`** may be included; **`#`** / **`#rvrd-1`** as needed for the iframe widget).
+- **`links`** — `racerFamily4` / `proFamily4`: Roverd **`book.velocitysimlounge.com`** URLs (query params such as **`selectedMonth=6`** may be included; **`#`** / **`#rvrd-1`** as needed for the iframe widget). **`partyPacks`**: Velocity Party Packs page (`/party-packs/`). **`bookNow`**: still used where you link to the WP book modal.
 - **`images`** — `racerFamily4`, `proFamily4`: card images; **`heroFinishLine`**: checker strip asset.
 - **`elementorColumnOutdentPx`** — Compensates for Elementor column padding (try 12–18).
 
@@ -45,6 +45,7 @@ When Father's Day listings exist as their own Roverd products, swap only the **`
 
 - **Cards:** 2 columns ≥ 900px, 1 column below.
 - **Hero:** Fluid clamp sizing for title and subcopy.
+- **Vimeo hero:** The embed is resized with **`ResizeObserver`** so the iframe stays **`object-fit: cover`** inside the hero; extra scale crops built-in letterboxing so narrow phones don’t show hard top/side chrome around the cockpit.
 - **`prefers-reduced-motion`:** Disables card hover lift and button scale transforms.
 
 ## In-page scroll (hero → bundles)
