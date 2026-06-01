@@ -166,7 +166,7 @@ about: {
     { title: "Leaderboard Challenge", price: "From {{price:leaderboard}}", badge: "", image: "", bullets: "Competitive time-attack mode\nMonthly prizes for Top 3 drivers\n30-minute qualifying session", bookingLink: "" }
   ]},
   twoSeater: { cards: [
-    { title: "2-Seater Quick Race", price: "From {{price:twoSeaterQuick}}", image: "", bullets: "The only motion 2-seater in America\nApprox. 25 minute experience\nShare the experience and swap drivers at any time", bookingLink: "" },
+    { title: "2-Seater Quick Race", price: "From {{price:twoSeaterQuick}}", image: "", bullets: "Share the experience and swap drivers at any time\nApprox. 25 minute experience\nThe only motion 2-seater in America", bookingLink: "" },
     { title: "2-Seater Double Race", price: "From {{price:twoSeaterDouble}}", image: "", bullets: "Save over 30%\nApprox. 55 minute experience\nDrive and race on famous tracks together", bookingLink: "" }
   ]},
   springBundles: { intro: "Limited time, 2 driver bundles offer unbeatable value. Eat & Race TOGETHER.", cards: [
