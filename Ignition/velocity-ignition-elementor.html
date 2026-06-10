@@ -65,7 +65,6 @@
     --vsl-outdent: 0px;
     --vsl-hero-bleed-top: -12px;
     --vsl-hero-bleed-bottom: -12px;
-    --vsl-triangle-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24' viewBox='0 0 120 24'%3E%3Cpath fill='%23EAEAEA' d='M0 0h15v15H0zm30 0h15v15H30zm30 0h15v15H60zm30 0h15v15H90z'/%3E%3Cpath fill='%23120A0E' d='M15 0h15v15H15zm30 0h15v15H45zm30 0h15v15H75z'/%3E%3Cpath fill='none' stroke='%23EE265F' stroke-opacity='.35' d='M0 15h120'/%3E%3C/svg%3E");
     font-family: var(--font-body);
     color: var(--white);
     background: var(--oxblood);
@@ -125,15 +124,6 @@
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
-  }
-
-  /* Triangle divider strip */
-  .vsl-ig-divider {
-    height: clamp(14px, 2.2vw + 8px, 28px);
-    background: var(--vsl-triangle-divider) center / auto 100% repeat-x;
-    opacity: 0.85;
-    border: none;
-    margin: 0;
   }
 
   /* Arch frame (shared) */
@@ -1517,8 +1507,6 @@
       </div>
     </section>
 
-    <hr class="vsl-ig-divider" aria-hidden="true">
-
     <!-- ═══════ STORY — scrollytelling ═══════ -->
     <section class="vsl-ig-story" id="ig-story" aria-labelledby="ig-story-heading" data-vsl-story>
       <div class="vsl-ig-story__shell">
@@ -1578,8 +1566,6 @@
       </div>
     </section>
 
-    <hr class="vsl-ig-divider" aria-hidden="true">
-
     <!-- ═══════ GALLERY — horizontal film strip ═══════ -->
     <section class="vsl-ig-gallery" id="ig-gallery" aria-labelledby="ig-gallery-heading" data-vsl-gallery>
       <div class="vsl-ig-gallery__head">
@@ -1622,8 +1608,6 @@
         </figure>
       </div>
     </section>
-
-    <hr class="vsl-ig-divider" aria-hidden="true">
 
     <!-- ═══════ MENU ═══════ -->
     <section class="vsl-ig-menu" id="ig-menu" aria-labelledby="ig-menu-heading">
@@ -1716,8 +1700,6 @@
       </div>
     </section>
 
-    <hr class="vsl-ig-divider" aria-hidden="true">
-
     <!-- ═══════ PLAN YOUR VISIT ═══════ -->
     <section class="vsl-ig-visit" id="ig-visit" aria-labelledby="ig-visit-heading">
       <div class="vsl-ig-visit__inner">
@@ -1775,8 +1757,6 @@
         </div>
       </div>
     </section>
-
-    <hr class="vsl-ig-divider" aria-hidden="true">
 
     <!-- ═══════ CTA — closing arch ═══════ -->
     <section class="vsl-ig-cta" id="ig-cta" aria-labelledby="ig-cta-heading">
