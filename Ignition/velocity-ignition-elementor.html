@@ -231,9 +231,10 @@
     box-shadow:
       0 0 24px rgba(238, 38, 95, 0.08),
       inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.15s ease;
     cursor: pointer;
   }
+  .vsl-ig-btn:active { transform: translateY(1px) scale(0.98); }
   .vsl-ig-btn:hover {
     color: var(--amber) !important;
     background: rgba(58, 22, 32, 0.65);
@@ -1445,8 +1446,207 @@
     .vsl-ig-menu__item-leader { display: none; }
   }
 
+  /* ═══ One-page experience — floating UI (appended to <body>) ═══ */
+  .vsl-ig-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .vsl-ig-progress.is-active { opacity: 1; }
+  .vsl-ig-progress__bar {
+    height: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, #E8B45A 0%, #EE265F 100%);
+    box-shadow: 0 0 12px rgba(238, 38, 95, 0.45);
+  }
+
+  .vsl-ig-dotnav {
+    position: fixed;
+    right: clamp(14px, 2vw, 30px);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+  .vsl-ig-dotnav.is-active { opacity: 1; visibility: visible; }
+  .vsl-ig-dotnav a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    text-decoration: none;
+    outline-offset: 4px;
+  }
+  .vsl-ig-dotnav__label {
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #B2AEBF;
+    background: rgba(18, 10, 14, 0.88);
+    border: 1px solid rgba(238, 38, 95, 0.28);
+    border-radius: 999px;
+    padding: 4px 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  .vsl-ig-dotnav a:hover .vsl-ig-dotnav__label,
+  .vsl-ig-dotnav a:focus-visible .vsl-ig-dotnav__label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .vsl-ig-dotnav__dot {
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    border: 1px solid rgba(234, 234, 234, 0.4);
+    background: transparent;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .vsl-ig-dotnav a:hover .vsl-ig-dotnav__dot { border-color: rgba(238, 38, 95, 0.7); }
+  .vsl-ig-dotnav a.is-active .vsl-ig-dotnav__dot {
+    background: #EE265F;
+    border-color: #EE265F;
+    box-shadow: 0 0 12px rgba(238, 38, 95, 0.6);
+    transform: scale(1.25);
+  }
+  @media (max-width: 1023px) {
+    .vsl-ig-dotnav { display: none; }
+  }
+
+  .vsl-ig-fab {
+    position: fixed;
+    right: clamp(16px, 3vw, 32px);
+    bottom: clamp(16px, 3vh, 30px);
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #120A0E !important;
+    background: linear-gradient(135deg, #E8B45A 0%, #d4a04a 100%);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 30px rgba(232, 180, 90, 0.22);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px);
+    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s, box-shadow 0.25s ease;
+  }
+  .vsl-ig-fab.is-active { opacity: 1; visibility: visible; transform: translateY(0); }
+  .vsl-ig-fab:hover { box-shadow: 0 10px 34px rgba(0, 0, 0, 0.55), 0 0 40px rgba(232, 180, 90, 0.4); }
+  .vsl-ig-fab:active { transform: translateY(1px) scale(0.97); }
+  .vsl-ig-fab__pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #120A0E;
+    animation: vslIgFabPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes vslIgFabPulse {
+    0%, 100% { opacity: 0.45; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  /* ═══ Live open-status chip ═══ */
+  .vsl-ig-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 1.1rem auto 0;
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(95, 87, 130, 0.35);
+    background: rgba(18, 10, 14, 0.55);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .vsl-ig-status__dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #5F5782;
+  }
+  .vsl-ig-status.is-open { border-color: rgba(101, 211, 138, 0.35); }
+  .vsl-ig-status.is-open .vsl-ig-status__dot {
+    background: #65D38A;
+    animation: vslIgStatusPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes vslIgStatusPulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(101, 211, 138, 0.4); }
+    50% { box-shadow: 0 0 13px rgba(101, 211, 138, 0.85); }
+  }
+  .vsl-ig-visit__step .vsl-ig-status { margin: 0.85rem 0 0; }
+
+  /* ═══ Marquee strip ═══ */
+  .vsl-ig-marquee {
+    overflow: hidden;
+    padding: clamp(18px, 3vw, 30px) 0;
+    border-top: 1px solid rgba(238, 38, 95, 0.16);
+    border-bottom: 1px solid rgba(238, 38, 95, 0.16);
+    background: var(--oxblood);
+  }
+  .vsl-ig-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: vslIgMarquee 32s linear infinite;
+  }
+  .vsl-ig-marquee:hover .vsl-ig-marquee__track { animation-play-state: paused; }
+  .vsl-ig-marquee__group {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .vsl-ig-marquee__group span {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 0.8rem + 1vw, 1.5rem);
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--amber-dim);
+    padding: 0 clamp(20px, 3vw, 40px);
+  }
+  .vsl-ig-marquee__group .vsl-ig-marquee__sep {
+    font-style: normal;
+    font-size: 0.8em;
+    color: rgba(238, 38, 95, 0.55);
+    padding: 0;
+  }
+  @keyframes vslIgMarquee {
+    to { transform: translateX(-50%); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .vsl-ig-portal__media img { animation: none; }
+    .vsl-ig-marquee__track { animation: none; }
+    .vsl-ig-fab__pulse { animation: none; }
+    .vsl-ig-status.is-open .vsl-ig-status__dot { animation: none; }
     .vsl-ig-portal__arch-glow { animation: none; }
     .vsl-ig-portal__orb { animation: none; }
     .vsl-ig-story__beat { transition: none; opacity: 1; transform: none; }
@@ -1502,6 +1702,7 @@
               <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Sim</a>
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
             </div>
+            <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
           </div>
         </div>
       </div>
@@ -1719,6 +1920,7 @@
                 <li><span>Sat</span><span>11AM &ndash; 12AM</span></li>
                 <li><span>Sun</span><span>11AM &ndash; 10PM</span></li>
               </ul>
+              <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
               <p class="vsl-ig-visit__step-note">Same as Velocity main lounge. <!-- PLACEHOLDER: adjust if Ignition hours differ --></p>
             </div>
             <div class="vsl-ig-visit__step-node" aria-hidden="true">I</div>
@@ -1757,6 +1959,24 @@
         </div>
       </div>
     </section>
+
+    <!-- ═══════ MARQUEE ═══════ -->
+    <div class="vsl-ig-marquee" aria-hidden="true">
+      <div class="vsl-ig-marquee__track">
+        <div class="vsl-ig-marquee__group">
+          <span>Hidden in plain sight</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Nine rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Pours with intention</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Ignition</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+        </div>
+        <div class="vsl-ig-marquee__group">
+          <span>Hidden in plain sight</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Nine rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Pours with intention</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Ignition</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══════ CTA — closing arch ═══════ -->
     <section class="vsl-ig-cta" id="ig-cta" aria-labelledby="ig-cta-heading">
@@ -1914,6 +2134,138 @@
           });
         }, { threshold: 0.35, rootMargin: '-20% 0px -55% 0px' });
         menuBlocks.forEach(function(block) { menuIo.observe(block); });
+      }
+    }
+
+    /* Live open status — America/Chicago */
+    var statusChips = root.querySelectorAll('[data-vsl-status]');
+    if (statusChips.length) {
+      var IG_HOURS = [
+        [660, 1320],  /* Sun 11AM–10PM */
+        [840, 1380],  /* Mon 2PM–11PM */
+        [840, 1380],
+        [840, 1380],
+        [840, 1380],
+        [720, 1440],  /* Fri 12PM–12AM */
+        [660, 1440]   /* Sat 11AM–12AM */
+      ];
+      var fmtClock = function(mins) {
+        var h = Math.floor(mins / 60) % 24;
+        var m = mins % 60;
+        var ap = h >= 12 ? 'PM' : 'AM';
+        var hh = h % 12 || 12;
+        return hh + (m ? ':' + (m < 10 ? '0' : '') + m : '') + ap;
+      };
+      var updateStatus = function() {
+        var now;
+        try { now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })); }
+        catch (e) { now = new Date(); }
+        var span = IG_HOURS[now.getDay()];
+        var mins = now.getHours() * 60 + now.getMinutes();
+        var isOpen = mins >= span[0] && mins < span[1];
+        var text;
+        if (isOpen) text = 'Open now \u00b7 till ' + fmtClock(span[1]);
+        else if (mins < span[0]) text = 'Opens today at ' + fmtClock(span[0]);
+        else text = 'Opens tomorrow at ' + fmtClock(IG_HOURS[(now.getDay() + 1) % 7][0]);
+        statusChips.forEach(function(chip) {
+          chip.classList.toggle('is-open', isOpen);
+          var t = chip.querySelector('[data-vsl-status-text]');
+          if (t) t.textContent = text;
+          chip.hidden = false;
+        });
+      };
+      updateStatus();
+      setInterval(updateStatus, 60000);
+    }
+
+    /* One-page floating UI — progress bar, section dot nav, booking FAB */
+    if (!document.querySelector('.vsl-ig-progress')) {
+      var navSections = [
+        { id: 'ig-hero', label: 'Enter' },
+        { id: 'ig-story', label: 'The Story' },
+        { id: 'ig-gallery', label: 'The Space' },
+        { id: 'ig-menu', label: 'The Pour' },
+        { id: 'ig-visit', label: 'Visit' },
+        { id: 'ig-cta', label: 'Book' }
+      ].filter(function(s) { return document.getElementById(s.id); });
+
+      var progressEl = document.createElement('div');
+      progressEl.className = 'vsl-ig-progress';
+      progressEl.setAttribute('aria-hidden', 'true');
+      var progressBar = document.createElement('div');
+      progressBar.className = 'vsl-ig-progress__bar';
+      progressEl.appendChild(progressBar);
+      document.body.appendChild(progressEl);
+
+      var dotNav = document.createElement('nav');
+      dotNav.className = 'vsl-ig-dotnav';
+      dotNav.setAttribute('aria-label', 'Ignition page sections');
+      var navLinks = {};
+      navSections.forEach(function(s) {
+        var a = document.createElement('a');
+        a.href = '#' + s.id;
+        var label = document.createElement('span');
+        label.className = 'vsl-ig-dotnav__label';
+        label.textContent = s.label;
+        var dot = document.createElement('span');
+        dot.className = 'vsl-ig-dotnav__dot';
+        dot.setAttribute('aria-hidden', 'true');
+        a.appendChild(label);
+        a.appendChild(dot);
+        a.addEventListener('click', function(e) {
+          var target = document.getElementById(s.id);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+        navLinks[s.id] = a;
+        dotNav.appendChild(a);
+      });
+      document.body.appendChild(dotNav);
+
+      var fab = document.createElement('a');
+      fab.className = 'vsl-ig-fab';
+      fab.href = links.bookNow || 'https://velocitysimlounge.com/book-now/';
+      fab.innerHTML = '<span class="vsl-ig-fab__pulse" aria-hidden="true"></span>Book a Sim';
+      document.body.appendChild(fab);
+
+      var heroEl = document.getElementById('ig-hero');
+      var ctaEl = document.getElementById('ig-cta');
+      var uiTicking = false;
+      var updateFloatingUi = function() {
+        uiTicking = false;
+        var rect = root.getBoundingClientRect();
+        var vh = window.innerHeight || 1;
+        var total = rect.height - vh;
+        var p = total > 0 ? Math.max(0, Math.min(1, -rect.top / total)) : 0;
+        progressBar.style.transform = 'scaleX(' + p + ')';
+        var inModule = rect.top < vh * 0.5 && rect.bottom > vh * 0.5;
+        progressEl.classList.toggle('is-active', inModule);
+        dotNav.classList.toggle('is-active', inModule);
+        var pastHero = heroEl ? heroEl.getBoundingClientRect().bottom < vh * 0.35 : p > 0.15;
+        var nearEnd = ctaEl ? ctaEl.getBoundingClientRect().top < vh * 0.85 : false;
+        fab.classList.toggle('is-active', inModule && pastHero && !nearEnd);
+      };
+      var onUiScroll = function() {
+        if (!uiTicking) { uiTicking = true; requestAnimationFrame(updateFloatingUi); }
+      };
+      window.addEventListener('scroll', onUiScroll, { passive: true });
+      window.addEventListener('resize', updateFloatingUi);
+      updateFloatingUi();
+
+      if ('IntersectionObserver' in window) {
+        var sectionIo = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            navSections.forEach(function(s) {
+              var active = s.id === entry.target.id;
+              navLinks[s.id].classList.toggle('is-active', active);
+              if (active) navLinks[s.id].setAttribute('aria-current', 'true');
+              else navLinks[s.id].removeAttribute('aria-current');
+            });
+          });
+        }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+        navSections.forEach(function(s) { sectionIo.observe(document.getElementById(s.id)); });
       }
     }
 
