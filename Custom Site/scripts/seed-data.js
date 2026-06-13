@@ -163,8 +163,8 @@ about: {
     { title: "Quick Race", price: "From {{price:quickRace}}", badge: "", image: "", bullets: "Perfect for first-time drivers\nApprox. 25 minute experience\nRace solo or with friends", bookingLink: "" },
     { title: "Double Race", price: "From {{price:doubleRace}}", badge: "Most Popular", image: "", bullets: "Save over 20%\nApprox. 55 minute experience\nTwo races, double the fun", bookingLink: "" },
     { title: "Dino Rush", price: "From {{price:dinoRush}}", badge: "", image: "", bullets: "A Velocity Exclusive, kid friendly ages 5 and up\nRace a virtual Jurassic track with dinosaurs!\nThe whole family can race together", bookingLink: "" },
-    { title: "Leaderboard Challenge", price: "From {{price:leaderboard}}", badge: "", image: "", bullets: "Competitive time-attack mode\nMonthly prizes for Top 3 drivers\n30-minute qualifying session", bookingLink: "" },
-    { title: "610 Challenge", price: "From {{price:sixTen}}", badge: "", image: "", bullets: "A Velocity Exclusive\nRace a virtual Houston 610 Loop\nNearly 40 miles with AI traffic", bookingLink: "" }
+    { title: "610 Challenge", price: "From {{price:sixTen}}", badge: "", image: "", bullets: "A Velocity Exclusive\nRace a virtual Houston 610 Loop\nNearly 40 miles with AI traffic", bookingLink: "" },
+    { title: "Leaderboard Challenge", price: "From {{price:leaderboard}}", badge: "", image: "", bullets: "Competitive time-attack mode\nMonthly prizes for Top 3 drivers\n30-minute qualifying session", bookingLink: "" }
   ]},
   twoSeater: { cards: [
     { title: "2-Seater Quick Race", price: "From {{price:twoSeaterQuick}}", image: "", bullets: "Share the experience and swap drivers at any time\nApprox. 25 minute experience\nThe only motion 2-seater in America", bookingLink: "" },
