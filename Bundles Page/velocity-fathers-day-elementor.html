@@ -1,4 +1,5 @@
 <!-- Config is embedded as a data attribute on .vsl-spring below for Elementor compatibility -->
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://velocitysimlounge.com">
@@ -1136,6 +1137,7 @@
 
 <div class="vsl-spring" data-vsl-config='{"links":{"racerFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/27?selectedMonth=6#","proFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/28?selectedMonth=6#","dadPlusRacer":"https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/30#rvrd-1","dadPlusPro":"https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/31#rvrd-1","bookNow":"https://velocitysimlounge.com/book-now/","partyPacks":"https://velocitysimlounge.com/party-packs/"},"images":{"racerFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp","proFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp","dadPlusRacer":"https://velocitysimlounge.com/wp-content/uploads/2026/06/DSC05713-1024x683.webp","dadPlusPro":"https://velocitysimlounge.com/wp-content/uploads/2026/06/FOHVelocity-62-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://vimeo.com/1194083193","elementorColumnOutdentPx":0}'>
   <main>
+    <div data-vsl-houston-only>
 
     <!-- ▸ Hero -->
     <section class="vsl-spring-hero" id="spring-hero" aria-labelledby="spring-hero-title">
@@ -1311,7 +1313,8 @@
       </div>
     </div>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
@@ -1430,6 +1433,8 @@
     var root = document.querySelector('.vsl-spring');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Spring bundles in Houston', text: 'These seasonal bundles are available at Velocity Houston. Dallas promotions are coming Summer 2026.' });
+
 
     var cfg;
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }

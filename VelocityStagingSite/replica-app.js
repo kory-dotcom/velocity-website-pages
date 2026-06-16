@@ -197,12 +197,63 @@
     });
   }
 
+  var NAVBAR_LOC_CONFIG = {
+    houston: {
+      label: "Houston",
+      bookingUrl: "https://velocitysimlounge.com/book-now/",
+      ariaBook: "Book now at Houston"
+    },
+    dallas: {
+      label: "Dallas",
+      bookingUrl: "https://velocitysimlounge.com/dallas",
+      ariaBook: "Book now at Dallas"
+    }
+  };
+
+  function syncNavbarLocationDom(loc) {
+    if (loc !== "houston" && loc !== "dallas") return;
+    var config = NAVBAR_LOC_CONFIG[loc];
+    if (!config) return;
+    var root = document.getElementById("replica-navbar-root") || document;
+    root.querySelectorAll("[data-book-now-location]").forEach(function (el) {
+      el.textContent = config.label;
+    });
+    root.querySelectorAll("[data-sticky-location]").forEach(function (el) {
+      el.textContent = config.label;
+    });
+    root.querySelectorAll("[data-book-now-primary]").forEach(function (el) {
+      el.href = config.bookingUrl;
+      el.setAttribute("aria-label", config.ariaBook);
+    });
+    root.querySelectorAll("[data-sticky-book-now]").forEach(function (el) {
+      el.href = config.bookingUrl;
+    });
+    root.querySelectorAll("[data-book-now-mobile-primary]").forEach(function (el) {
+      el.href = config.bookingUrl;
+    });
+    root.querySelectorAll("[data-location-option]").forEach(function (el) {
+      var isCurrent = el.getAttribute("data-location-option") === loc;
+      el.classList.toggle("is-current", isCurrent);
+      if (isCurrent) el.setAttribute("aria-current", "true");
+      else el.removeAttribute("aria-current");
+    });
+    root.querySelectorAll("[data-loc-detail]").forEach(function (el) {
+      el.classList.toggle("is-active", el.getAttribute("data-loc-detail") === loc);
+    });
+  }
+
   function setLocationFromQuery() {
     if (!forcedLoc) return;
-    if (forcedLoc !== "houston" && forcedLoc !== "dallas") return;
+    var loc = String(forcedLoc).toLowerCase();
+    if (loc !== "houston" && loc !== "dallas") return;
     try {
-      localStorage.setItem("vslPreferredLocation", forcedLoc);
-      window.dispatchEvent(new CustomEvent("_vslLocationChanged", { detail: { location: forcedLoc } }));
+      localStorage.setItem("vslPreferredLocation", loc);
+      syncNavbarLocationDom(loc);
+      if (window.VSL_LOCATION && window.VSL_LOCATION.bootstrap) {
+        window.VSL_LOCATION.bootstrap();
+      } else {
+        window.dispatchEvent(new CustomEvent("_vslLocationChanged", { detail: { location: loc } }));
+      }
     } catch (e) {}
   }
 
@@ -404,6 +455,7 @@
     .then(function (res) { return res.text(); })
     .then(function (html) {
       navbarRoot.innerHTML = html;
+      setLocationFromQuery();
       executeInlineScripts(navbarRoot);
       localizeNavbarLinks();
       applyLocalLinks(navbarRoot);

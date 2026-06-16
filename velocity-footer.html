@@ -368,6 +368,14 @@
   }
 
   function readLocation() {
+    if (window.VSL_LOCATION) return normalize(window.VSL_LOCATION.readLocation());
+    try {
+      var fromUrl = new URLSearchParams(window.location.search).get('loc');
+      if (fromUrl === 'dallas' || fromUrl === 'houston') {
+        localStorage.setItem(STORAGE_KEY, fromUrl);
+        return normalize(fromUrl);
+      }
+    } catch (_) {}
     try {
       return normalize(localStorage.getItem(STORAGE_KEY));
     } catch (_) {

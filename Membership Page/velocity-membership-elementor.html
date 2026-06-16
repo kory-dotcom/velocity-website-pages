@@ -1,4 +1,5 @@
 <script>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   window.VSL_CONFIG = {
     joinLinks: {
       racer: 'https://members.velocitysimlounge.com/login?type=subscription&id=45fb8e9b-357c-43fa-31b3-08de7364d6fd&product=prod_U2IhFrfWjxEnaQ',
@@ -958,6 +959,7 @@
 </style>
 <div class="vsl-membership">
     <main id="primary-content">
+    <div data-vsl-houston-only>
     <section class="vsl-membership-hero" id="membership-hero" aria-labelledby="membership-hero-heading">
       <div class="vsl-membership-hero__inner">
         <h1 class="vsl-membership-hero__title" id="membership-hero-heading">Become a <span class="vsl-membership-hero__accent">member</span> and take your Velocity experience to the next level</h1>
@@ -1233,7 +1235,8 @@
         </ul>
       </div>
     </section>
-    </main>
+        </div>
+</main>
   </div>
 
   <script>
@@ -1247,6 +1250,13 @@
       var map = cfg.images || {};
       var joins = cfg.joinLinks || {};
       if (root) {
+        if (window.VSL_LOCATION) {
+          VSL_LOCATION.setupHoustonOnlyPage(root, {
+            onDark: false,
+            title: 'Memberships available in Houston',
+            text: 'Velocity memberships are available at our Houston lounge today. Dallas membership details are coming Summer 2026.'
+          });
+        }
         var heroFinish = map.heroFinishLine;
         if (heroFinish) {
           root.style.setProperty('--vsl-hero-finish', 'url("' + heroFinish + '")');

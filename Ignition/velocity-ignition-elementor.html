@@ -1,4 +1,5 @@
 <!--
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   Velocity Sim Racing Lounge — Ignition
   Elementor Custom HTML module  ·  v1.0.0
 
@@ -1616,6 +1617,7 @@
 
 <div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"assets/ignition-interior-render.png","hero":"assets/ignition-interior-render.png","story":"assets/ignition-interior-construction.png","storyBeat2":"assets/ignition-interior-render.png","storyBeat3":"assets/ignition-interior-construction.png","gallery1":"assets/ignition-interior-render.png","gallery2":"assets/ignition-interior-construction.png","gallery3":"assets/ignition-interior-render.png"},"elementorColumnOutdentPx":12}'>
   <main id="primary-content">
+    <div data-vsl-houston-only>
 
     <!-- ═══════ PORTAL HERO — scroll through the arch ═══════ -->
     <section class="vsl-ig-portal" id="ig-hero" data-vsl-portal aria-labelledby="ig-hero-title">
@@ -1943,7 +1945,8 @@
       <p>Ignition is the hidden cocktail lounge at Velocity Sim Racing Lounge in Houston, Texas. Located at 2110 Edwards St in the Heights/Washington Avenue area, Ignition features nine full-motion racing simulators alongside craft cocktails, intimate atmosphere, and first-come lounge seating. Book simulator time through Velocity&rsquo;s booking system. 21+ with valid ID. Same hours as Velocity Sim Lounge.</p>
     </div>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
@@ -1954,6 +1957,8 @@
     var root = document.querySelector('.vsl-ignition');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Ignition is at Velocity Houston', text: 'Ignition is our hidden cocktail lounge at Velocity Houston (2110 Edwards St). Dallas opening updates are on our Dallas page.' });
+
 
     var cfg = {};
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }

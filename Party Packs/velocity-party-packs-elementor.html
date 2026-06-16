@@ -1,4 +1,5 @@
 <!-- Velocity Party Packs Landing — VSM 2.0.0 -->
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -697,6 +698,44 @@
     margin-inline: auto;
     align-items: stretch;
     margin-top: clamp(3.5rem, 7vh, 5.5rem);
+  }
+  .vsl-pp-dallas-soon {
+    display: none;
+    max-width: min(720px, 100%);
+    margin: clamp(3.5rem, 7vh, 5.5rem) auto 0;
+    padding: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+    border-radius: 18px;
+    border: 1px solid rgba(253, 199, 12, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .vsl-pp-dallas-soon__eyebrow {
+    margin: 0 0 0.65rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .vsl-pp-dallas-soon__title {
+    margin: 0 0 0.85rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 1.2rem + 2vw, 2.35rem);
+    font-weight: 600;
+    color: var(--circuit-white);
+  }
+  .vsl-pp-dallas-soon__text {
+    margin: 0 0 1.5rem;
+    font-size: var(--text-section-sub);
+    line-height: 1.55;
+    color: rgba(234, 234, 234, 0.88);
+  }
+  .vsl-partypack--dallas .vsl-pp-pack-grid {
+    display: none;
+  }
+  .vsl-partypack--dallas .vsl-pp-dallas-soon {
+    display: block;
   }
   .vsl-pp-pack-card {
     --card-mx: 0.5;
@@ -1440,6 +1479,13 @@
           </article>
 
         </div>
+
+        <div class="vsl-pp-dallas-soon" data-vsl-pp-dallas-soon role="status" aria-live="polite" hidden>
+          <p class="vsl-pp-dallas-soon__eyebrow">Dallas</p>
+          <p class="vsl-pp-dallas-soon__title">Party Packs coming to Dallas</p>
+          <p class="vsl-pp-dallas-soon__text">We&rsquo;re opening in Dallas Summer 2026. Get updates on our Dallas page&mdash;or switch to Houston to book a Party Pack today.</p>
+          <a class="vsl-pp-btn" href="https://velocitysimlounge.com/dallas">Dallas &mdash; Coming Summer 2026</a>
+        </div>
       </div>
     </section>
 
@@ -1728,6 +1774,54 @@
 
     var images = cfg.images || {};
     var links = cfg.links || {};
+
+    var VSL_PP_LOC_KEY = 'vslPreferredLocation';
+    function vslPPNormalizeLoc(key) {
+      return key === 'dallas' ? 'dallas' : 'houston';
+    }
+    function vslPPReadLocation() {
+      if (window.VSL_LOCATION) return vslPPNormalizeLoc(window.VSL_LOCATION.readLocation());
+      try {
+        var fromUrl = new URLSearchParams(window.location.search).get('loc');
+        if (fromUrl === 'dallas' || fromUrl === 'houston') {
+          localStorage.setItem(VSL_PP_LOC_KEY, fromUrl);
+          return vslPPNormalizeLoc(fromUrl);
+        }
+      } catch (e) {}
+      try {
+        return vslPPNormalizeLoc(localStorage.getItem(VSL_PP_LOC_KEY));
+      } catch (e) {
+        return 'houston';
+      }
+    }
+    var dallasSoonEl = root.querySelector('[data-vsl-pp-dallas-soon]');
+    function vslPPApplyLocation(loc) {
+      var isDallas = loc === 'dallas';
+      root.classList.toggle('vsl-partypack--dallas', isDallas);
+      if (dallasSoonEl) dallasSoonEl.hidden = !isDallas;
+      var heroCta = root.querySelector('.vsl-pp-hero__inner .vsl-pp-btn[data-vsl-soft-scroll], .vsl-pp-hero__inner .vsl-pp-btn[href="https://velocitysimlounge.com/dallas"]');
+      if (heroCta) {
+        if (isDallas) {
+          heroCta.textContent = 'Dallas \u2014 Coming Summer 2026';
+          heroCta.removeAttribute('data-vsl-soft-scroll');
+          heroCta.setAttribute('href', 'https://velocitysimlounge.com/dallas');
+        } else {
+          heroCta.textContent = 'Book Your Party Pack';
+          heroCta.setAttribute('data-vsl-soft-scroll', '');
+          heroCta.setAttribute('href', '#pp-packs');
+        }
+      }
+    }
+    vslPPApplyLocation(vslPPReadLocation());
+    if (!root._vslPPLocBound) {
+      root._vslPPLocBound = true;
+      window.addEventListener('storage', function (e) {
+        if (e.key === VSL_PP_LOC_KEY && e.newValue) vslPPApplyLocation(e.newValue);
+      });
+      window.addEventListener('_vslLocationChanged', function (e) {
+        if (e.detail && e.detail.location) vslPPApplyLocation(e.detail.location);
+      });
+    }
 
     if (images.heroFinishLine) {
       root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');

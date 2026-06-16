@@ -1,4 +1,5 @@
 <script>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   window.VSL_BUYOUT_CONFIG = {
     links: {
       inquire: 'https://velocitysimracinglounge.tripleseat.com/party_request/45152',
@@ -905,6 +906,7 @@
        "allEventsUrl": "https://velocitysimlounge.com/group-events/"
      }'>
   <main>
+    <div data-vsl-houston-only>
 
     <!-- ============================================================== -->
     <!-- HERO                                                           -->
@@ -1173,13 +1175,16 @@
       </div>
     </section>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
   (function () {
     var root = document.querySelector('.vsl-buyout');
     if (!root) return;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Full venue buyouts in Dallas coming Summer 2026', text: 'Book a full venue buyout in Houston today\u2014or get Dallas opening updates on our Dallas page.' });
+
 
     var cfg = window.VSL_BUYOUT_CONFIG || {};
     var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;

@@ -1,4 +1,5 @@
 <link rel="preconnect" href="https://velocitysimlounge.com" crossorigin>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
 <link rel="dns-prefetch" href="https://velocitysimlounge.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2213,6 +2214,7 @@
   }
 }'>
   <main>
+    <div data-vsl-houston-only>
 
     <section class="vsl-bn-hero" aria-labelledby="bn-hero-title">
     </section>
@@ -2670,7 +2672,8 @@
       </div>
     </div>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
@@ -2679,6 +2682,8 @@
     var root = document.querySelector('.vsl-booknow');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Online booking opens in Dallas Summer 2026', text: 'Book simulators and party packs in Houston today\u2014or follow Dallas opening updates on our Dallas page.' });
+
 
     function forceParentHeight() {
       var el = root.parentElement;

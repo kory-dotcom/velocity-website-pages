@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Velocity Navbar — Preview</title>
+  <script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -2285,6 +2286,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var ctaLocBtn = ctaWrap ? ctaWrap.querySelector('[data-cta-change]') : null;
   var STORAGE_KEY = 'vslPreferredLocation';
   var SESSION_DISMISS_KEY = 'vslLocationPromptDismissed';
+
+  (function primLocationFromUrlParam() {
+    try {
+      var q = (new URLSearchParams(window.location.search).get('loc') || '').toLowerCase();
+      if (q === 'dallas' || q === 'houston') localStorage.setItem(STORAGE_KEY, q);
+    } catch (_) {}
+  })();
+
   var LOCATIONS = {
     houston: {
       key: 'houston',
@@ -2371,6 +2380,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   function readPersistedLocation() {
+    if (window.VSL_LOCATION) return normalizeLocation(window.VSL_LOCATION.readLocation());
+    try {
+      var fromUrl = (new URLSearchParams(window.location.search).get('loc') || '').toLowerCase();
+      if (fromUrl === 'dallas' || fromUrl === 'houston') {
+        localStorage.setItem(STORAGE_KEY, fromUrl);
+        return normalizeLocation(fromUrl);
+      }
+    } catch (_) {}
     try {
       return normalizeLocation(localStorage.getItem(STORAGE_KEY));
     } catch (_) {
@@ -2898,6 +2915,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   applyLocation(readPersistedLocation());
   maybeScrollToFaq();
+
+  window.addEventListener('_vslLocationChanged', function(e) {
+    if (e.detail && e.detail.location) applyLocation(e.detail.location);
+  });
 
   try {
     var hasStoredLocation = !!localStorage.getItem(STORAGE_KEY);

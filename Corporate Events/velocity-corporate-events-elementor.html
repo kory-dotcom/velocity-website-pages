@@ -1,4 +1,5 @@
 <script>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   window.VSL_CORPORATE_CONFIG = {
     links: {
       inquire: 'https://velocitysimracinglounge.tripleseat.com/party_request/49933',
@@ -1164,6 +1165,7 @@
        "finishLineImage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"
      }'>
   <main>
+    <div data-vsl-houston-only>
 
     <!-- ============================================================== -->
     <!-- HERO                                                           -->
@@ -1466,7 +1468,8 @@
       </div>
     </section>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
@@ -1532,6 +1535,8 @@
 
     function init() {
       if (!getRoot()) return;
+      if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(getRoot(), { onDark: true, title: 'Corporate events in Dallas coming Summer 2026', text: 'Plan your next corporate event in Houston today\u2014or get Dallas opening updates on our Dallas page.' });
+
       syncLinksAndImages();
       bindClickInterceptor();
     }

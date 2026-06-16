@@ -1,4 +1,5 @@
 <!--
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   Velocity Sim Racing Lounge — Location Page
   Elementor Custom HTML module  ·  v2.0.0
 
@@ -1181,6 +1182,14 @@
   if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
   function readLocation() {
+    if (window.VSL_LOCATION) return window.VSL_LOCATION.readLocation();
+    try {
+      var fromUrl = new URLSearchParams(window.location.search).get('loc');
+      if (fromUrl === 'dallas' || fromUrl === 'houston') {
+        localStorage.setItem(STORAGE_KEY, fromUrl);
+        return fromUrl;
+      }
+    } catch (e) {}
     try { return localStorage.getItem(STORAGE_KEY) || 'houston'; } catch (e) { return 'houston'; }
   }
 

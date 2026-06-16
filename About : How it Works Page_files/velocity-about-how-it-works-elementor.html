@@ -1,4 +1,5 @@
 <script>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   window.VSL_HOW_CONFIG = {
     links: {
       bookNow: "https://velocitysimlounge.com/book-now/",
@@ -2000,6 +2001,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
 <div class="vsl-how-it-works">
   <main id="how-primary-content">
+    <div data-vsl-houston-only>
     <section class="vsl-how-section vsl-how-dark vsl-how-hero" id="how-hero" aria-labelledby="how-hero-title">
       <div class="vsl-how-hero__media">
         <video
@@ -2486,7 +2488,8 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
         </div>
       </div>
     </section>
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
@@ -2497,6 +2500,8 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
     var root = document.querySelector(".vsl-how-it-works");
     if (!root) return;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: false, title: 'Velocity Dallas coming Summer 2026', text: 'Learn how Velocity works at our Houston lounge today\u2014or follow Dallas opening updates on our Dallas page.' });
+
 
     var hero = root.querySelector(".vsl-how-hero");
     var heroVideo = root.querySelector("[data-vsl-hero-video]");

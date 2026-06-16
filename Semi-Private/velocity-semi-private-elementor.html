@@ -1,4 +1,5 @@
 <script>
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   window.VSL_SP_CONFIG = {
     inquiryLink: 'https://velocitysimracinglounge.tripleseat.com/party_request/45556',
     allEventsLink: 'https://velocitysimlounge.com/group-events/',
@@ -849,6 +850,7 @@
        "allEventsLink": "https://velocitysimlounge.com/group-events/"
      }'>
   <main id="sp-primary-content">
+    <div data-vsl-houston-only>
 
     <!-- HERO -->
     <section class="vsl-sp-hero" id="sp-hero" aria-labelledby="sp-hero-heading">
@@ -1051,13 +1053,16 @@
       </div>
     </section>
 
-  </main>
+      </div>
+</main>
 </div>
 
 <script>
   (function () {
     var root = document.querySelector('.vsl-semiprivate');
     if (!root) return;
+    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: false, title: 'Semi-private events in Dallas coming Summer 2026', text: 'Host semi-private events in Houston today\u2014or follow Dallas opening updates on our Dallas page.' });
+
 
     var cfg = window.VSL_SP_CONFIG || {};
     var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
