@@ -23,7 +23,6 @@ writeJSON(path.join(CONTENT_DIR, 'pricing.json'), {
   "twoSeaterDouble": "$59",
   "leaderboard": "$29",
   "sixTen": "$29",
-  "dinoRush": "$19",
   "springQuick": "$85",
   "springDouble": "$115",
   "springSprint": "$65",
