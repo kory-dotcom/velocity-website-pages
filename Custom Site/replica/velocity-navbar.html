@@ -2463,6 +2463,16 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       if (isOpen) closeMega();
       else openMega();
     });
+    // On intent (hover/focus/touch) decode the card art and guarantee the fade
+    // transition is armed, so the very first open animates smoothly instead of snapping in.
+    ['pointerenter', 'focus', 'touchstart'].forEach(function(evt) {
+      raceToggle.addEventListener(evt, function() {
+        if (megaPanel && !megaPanel.classList.contains('is-preloading')) {
+          megaPanel.classList.add('is-ready');
+        }
+        warmMegaAssets();
+      }, { passive: true });
+    });
   }
 
   items.forEach(function(item) {
