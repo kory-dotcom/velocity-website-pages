@@ -74,7 +74,7 @@
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     /* Thin finish-line strip (new default across the rest of the site) */
     --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
-    /* Same fixed block height for every location (Dallas hides CTAs; without this, Houston is taller). */
+    /* Min hero height shared across locations; grows with content so zoom/wrap never overlaps the finish strip. */
     --vsl-loc-hero-h: clamp(420px, 72svh, 900px);
 
     font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
@@ -123,7 +123,6 @@
     overflow: hidden;
     isolation: isolate;
     min-height: var(--vsl-loc-hero-h);
-    height: var(--vsl-loc-hero-h);
   }
   .vsl-loc-hero__bg {
     position: absolute;
@@ -172,30 +171,32 @@
   .vsl-loc-hero__inner {
     position: relative;
     z-index: 3;
-    flex: 1;
-    min-height: 0;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: clamp(56px, 14vw, 110px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    gap: clamp(16px, 2.5vw, 24px);
+    padding: clamp(56px, 14vw, 110px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 8vw, 64px);
     max-width: 56rem;
     margin: 0 auto;
     width: 100%;
   }
   .vsl-loc-hero__logo {
     display: block;
-    margin: 0 auto 24px;
+    flex-shrink: 0;
+    margin: 0 auto;
     width: clamp(200px, 30vw, 320px);
     height: auto;
     filter: brightness(1.05);
   }
   .vsl-loc-hero__title {
-    margin: 0 0 0.35em;
+    flex-shrink: 0;
+    margin: 0;
     padding: 10px 12px;
     font-family: var(--font-display);
-    font-size: clamp(3.2rem, 2rem + 8vw, 6rem);
+    font-size: clamp(2.75rem, 1.75rem + 5vw, 5.5rem);
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
@@ -208,9 +209,10 @@
     border-radius: 10px;
   }
   .vsl-loc-hero__sub {
-    margin: 0 0 2rem;
+    flex-shrink: 0;
+    margin: 0;
     padding: 6px 12px;
-    font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem);
+    font-size: clamp(1rem, 0.92rem + 0.35vw, 1.2rem);
     font-weight: 400;
     line-height: 1.55;
     color: rgba(234, 234, 234, 0.9);
@@ -219,10 +221,12 @@
     border-radius: 8px;
   }
   .vsl-loc-hero__actions {
+    flex-shrink: 0;
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: clamp(4px, 1vw, 8px);
   }
   .vsl-loc-hero__finish {
     position: relative;
@@ -814,6 +818,15 @@
   .vsl-loc-teaser-only { display: none; }
   .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-open-only { display: none; }
   .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-teaser-only { display: block; }
+  /* Reserve CTA row height when buttons are hidden so Dallas hero matches Houston */
+  .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-hero__inner::after {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 48px;
+    margin-top: clamp(4px, 1vw, 8px);
+  }
 
   /* ═══ Responsive ═══ */
   @media (prefers-reduced-motion: reduce) {
@@ -830,7 +843,7 @@
     html { scroll-behavior: smooth; }
   }
   @media (max-width: 639px) {
-    .vsl-loc-hero__title { line-height: 1.02; }
+    .vsl-loc-hero__title { line-height: 1.02; font-size: clamp(2.25rem, 1.5rem + 6vw, 3.5rem); }
     .vsl-loc-section-title { line-height: 1.2; }
     .vsl-loc-cta__actions { flex-direction: column; }
     .vsl-loc-cta__actions .vsl-loc-btn { width: 100%; max-width: 320px; }
