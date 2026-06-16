@@ -529,13 +529,6 @@
     object-position: left center;
     filter: brightness(1.05);
   }
-  .vsl-ig-portal__tagline {
-    margin: 0 auto 1.25rem;
-    max-width: 30rem;
-    font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.08rem);
-    line-height: 1.7;
-    color: var(--mist);
-  }
   .vsl-ig-portal__actions {
     display: flex;
     flex-wrap: wrap;
@@ -1531,45 +1524,6 @@
     .vsl-ig-dotnav { display: none; }
   }
 
-  .vsl-ig-fab {
-    position: fixed;
-    right: clamp(16px, 3vw, 32px);
-    bottom: clamp(16px, 3vh, 30px);
-    z-index: 9999;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 14px 28px;
-    border-radius: 999px;
-    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: #120A0E !important;
-    background: linear-gradient(135deg, #E8B45A 0%, #d4a04a 100%);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 30px rgba(232, 180, 90, 0.22);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(14px);
-    transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s, box-shadow 0.25s ease;
-  }
-  .vsl-ig-fab.is-active { opacity: 1; visibility: visible; transform: translateY(0); }
-  .vsl-ig-fab:hover { box-shadow: 0 10px 34px rgba(0, 0, 0, 0.55), 0 0 40px rgba(232, 180, 90, 0.4); }
-  .vsl-ig-fab:active { transform: translateY(1px) scale(0.97); }
-  .vsl-ig-fab__pulse {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #120A0E;
-    animation: vslIgFabPulse 2.2s ease-in-out infinite;
-  }
-  @keyframes vslIgFabPulse {
-    0%, 100% { opacity: 0.45; transform: scale(0.85); }
-    50% { opacity: 1; transform: scale(1.15); }
-  }
-
   /* ═══ Live open-status chip ═══ */
   .vsl-ig-status {
     display: inline-flex;
@@ -1645,7 +1599,6 @@
   @media (prefers-reduced-motion: reduce) {
     .vsl-ig-portal__media img { animation: none; }
     .vsl-ig-marquee__track { animation: none; }
-    .vsl-ig-fab__pulse { animation: none; }
     .vsl-ig-status.is-open .vsl-ig-status__dot { animation: none; }
     .vsl-ig-portal__arch-glow { animation: none; }
     .vsl-ig-portal__orb { animation: none; }
@@ -1697,9 +1650,7 @@
               </span>
             </h1>
             <p class="vsl-ig-portal__enter-hint">Scroll to enter</p>
-            <p class="vsl-ig-portal__tagline">Houston&rsquo;s hidden cocktail lounge &mdash; nine sim rigs behind the arch, neon glow all around, and pours with intention.</p>
             <div class="vsl-ig-portal__actions">
-              <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Sim</a>
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
             </div>
             <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
@@ -1954,7 +1905,6 @@
         </div>
 
         <div class="vsl-ig-visit__actions vsl-ig-reveal">
-          <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Sim</a>
           <a class="vsl-ig-btn vsl-ig-btn--ghost" data-vsl-link="contact" href="https://velocitysimlounge.com/contact/">Contact &amp; Directions</a>
         </div>
       </div>
@@ -1983,8 +1933,7 @@
       <div class="vsl-ig-cta__arch vsl-ig-reveal">
         <div class="vsl-ig-cta__inner">
           <h2 class="vsl-ig-cta__title" id="ig-cta-heading">Your rig awaits</h2>
-          <p class="vsl-ig-cta__sub">Nine simulators, one hidden bar. Book a session and step into Houston&rsquo;s cocktail lounge with a starting grid.</p>
-          <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Sim</a>
+          <p class="vsl-ig-cta__sub">Nine simulators, one hidden bar. Step into Houston&rsquo;s cocktail lounge with a starting grid.</p>
         </div>
       </div>
     </section>
@@ -2186,7 +2135,7 @@
         { id: 'ig-gallery', label: 'The Space' },
         { id: 'ig-menu', label: 'The Pour' },
         { id: 'ig-visit', label: 'Visit' },
-        { id: 'ig-cta', label: 'Book' }
+        { id: 'ig-cta', label: 'Finish' }
       ].filter(function(s) { return document.getElementById(s.id); });
 
       var progressEl = document.createElement('div');
@@ -2223,14 +2172,6 @@
       });
       document.body.appendChild(dotNav);
 
-      var fab = document.createElement('a');
-      fab.className = 'vsl-ig-fab';
-      fab.href = links.bookNow || 'https://velocitysimlounge.com/book-now/';
-      fab.innerHTML = '<span class="vsl-ig-fab__pulse" aria-hidden="true"></span>Book a Sim';
-      document.body.appendChild(fab);
-
-      var heroEl = document.getElementById('ig-hero');
-      var ctaEl = document.getElementById('ig-cta');
       var uiTicking = false;
       var updateFloatingUi = function() {
         uiTicking = false;
@@ -2242,9 +2183,6 @@
         var inModule = rect.top < vh * 0.5 && rect.bottom > vh * 0.5;
         progressEl.classList.toggle('is-active', inModule);
         dotNav.classList.toggle('is-active', inModule);
-        var pastHero = heroEl ? heroEl.getBoundingClientRect().bottom < vh * 0.35 : p > 0.15;
-        var nearEnd = ctaEl ? ctaEl.getBoundingClientRect().top < vh * 0.85 : false;
-        fab.classList.toggle('is-active', inModule && pastHero && !nearEnd);
       };
       var onUiScroll = function() {
         if (!uiTicking) { uiTicking = true; requestAnimationFrame(updateFloatingUi); }
