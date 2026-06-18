@@ -1134,7 +1134,7 @@
   }
 </style>
 
-<div class="vsl-spring" data-vsl-config='{"links":{"racerFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/27?selectedMonth=6#","proFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/28?selectedMonth=6#","dadPlusRacer":"https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/30#rvrd-1","dadPlusPro":"https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/31#rvrd-1","bookNow":"https://velocitysimlounge.com/book-now/","partyPacks":"https://velocitysimlounge.com/party-packs/"},"images":{"racerFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp","proFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp","dadPlusRacer":"https://velocitysimlounge.com/wp-content/uploads/2026/06/DSC05713-1024x683.webp","dadPlusPro":"https://velocitysimlounge.com/wp-content/uploads/2026/06/FOHVelocity-62-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://vimeo.com/1194083193","elementorColumnOutdentPx":0}'>
+<div class="vsl-spring" data-vsl-config='{"links":{"racerFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/27?selectedMonth=6#","proFamily4":"https://book.velocitysimlounge.com/book/racer-party-pack-4-rigs/28?selectedMonth=6#","dadPlusRacer":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/30?selectedMonth=6#","dadPlusPro":"https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/31?selectedMonth=6#","bookNow":"https://velocitysimlounge.com/book-now/","partyPacks":"https://velocitysimlounge.com/party-packs/"},"images":{"racerFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp","proFamily4":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Father_s_Pro.webp","dadPlusRacer":"https://velocitysimlounge.com/wp-content/uploads/2026/06/DSC05713-1024x683.webp","dadPlusPro":"https://velocitysimlounge.com/wp-content/uploads/2026/06/FOHVelocity-62-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://vimeo.com/1194083193","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1193,7 +1193,7 @@
                 <li>Includes 1 Triple Crown Platter</li>
                 <li>Upgrades and additional rigs available</li>
               </ul>
-              <a class="vsl-spring-card__cta" data-vsl-spring-link="dadPlusRacer" href="https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/30#rvrd-1">Select bundle</a>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="dadPlusRacer" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/30?selectedMonth=6#">Select bundle</a>
             </div>
           </article>
 
@@ -1219,7 +1219,7 @@
                 <li>Includes 1 Triple Crown Platter</li>
                 <li>Upgrades and additional rigs available</li>
               </ul>
-              <a class="vsl-spring-card__cta" data-vsl-spring-link="dadPlusPro" href="https://velocitysimlounge.roverd.com/book/racer-party-pack-5-rigs/31#rvrd-1">Select bundle</a>
+              <a class="vsl-spring-card__cta" data-vsl-spring-link="dadPlusPro" href="https://book.velocitysimlounge.com/book/racer-party-pack-5-rigs/31?selectedMonth=6#">Select bundle</a>
             </div>
           </article>
 
@@ -1320,8 +1320,10 @@
     if (!href || href.charAt(0) === '#') return false;
     try {
       var u = new URL(href, window.location.href);
+      /* Use the same-site booking host (book.velocitysimlounge.com) so the iframe checkout keeps
+         its session cookies. The raw cross-site Roverd host (velocitysimlounge.roverd.com) had its
+         payment cookies blocked in-frame, kicking guests out at "Continue to pay". */
       if (u.hostname === 'book.velocitysimlounge.com') return true;
-      if (u.hostname === 'velocitysimlounge.roverd.com') return true;
       if (/\/book-now\/?($|[?#])/i.test(u.pathname)) return true;
       return false;
     } catch (e) {
