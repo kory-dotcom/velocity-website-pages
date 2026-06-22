@@ -435,24 +435,10 @@
   }
 
   function loadPromoBanner() {
+    /* Father's Day promo popup removed. Keep the promo root empty. */
     var promoRoot = document.getElementById("replica-promo-root");
-    if (!promoRoot) return Promise.resolve();
-    if (pageKey !== "home") {
-      promoRoot.innerHTML = "";
-      return Promise.resolve();
-    }
-    return fetch("../Bundles Page/fathers-day-promo-banner.html", { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Failed to load promo banner");
-        return res.text();
-      })
-      .then(function (html) {
-        promoRoot.innerHTML = html;
-        executeInlineScripts(promoRoot);
-      })
-      .catch(function (err) {
-        if (window.console && console.warn) console.warn("[Staging] Promo banner load failed:", err.message);
-      });
+    if (promoRoot) promoRoot.innerHTML = "";
+    return Promise.resolve();
   }
 
   fetch("../velocity-navbar.html", { cache: "no-store" })
