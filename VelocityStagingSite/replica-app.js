@@ -200,12 +200,12 @@
   var NAVBAR_LOC_CONFIG = {
     houston: {
       label: "Houston",
-      bookingUrl: "https://velocitysimlounge.com/book-now/",
+      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=houston",
       ariaBook: "Book now at Houston"
     },
     dallas: {
       label: "Dallas",
-      bookingUrl: "https://velocitysimlounge.com/dallas",
+      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=dallas",
       ariaBook: "Book now at Dallas"
     }
   };
@@ -214,6 +214,10 @@
     if (loc !== "houston" && loc !== "dallas") return;
     var config = NAVBAR_LOC_CONFIG[loc];
     if (!config) return;
+    var bookHref = toLocalHref(config.bookingUrl) || config.bookingUrl;
+    if (bookHref.indexOf("p=book-now") !== -1 && bookHref.indexOf("loc=") === -1) {
+      bookHref += (bookHref.indexOf("?") === -1 ? "?" : "&") + "loc=" + loc;
+    }
     var root = document.getElementById("replica-navbar-root") || document;
     root.querySelectorAll("[data-book-now-location]").forEach(function (el) {
       el.textContent = config.label;
@@ -222,14 +226,14 @@
       el.textContent = config.label;
     });
     root.querySelectorAll("[data-book-now-primary]").forEach(function (el) {
-      el.href = config.bookingUrl;
+      el.href = bookHref;
       el.setAttribute("aria-label", config.ariaBook);
     });
     root.querySelectorAll("[data-sticky-book-now]").forEach(function (el) {
-      el.href = config.bookingUrl;
+      el.href = bookHref;
     });
     root.querySelectorAll("[data-book-now-mobile-primary]").forEach(function (el) {
-      el.href = config.bookingUrl;
+      el.href = bookHref;
     });
     root.querySelectorAll("[data-location-option]").forEach(function (el) {
       var isCurrent = el.getAttribute("data-location-option") === loc;

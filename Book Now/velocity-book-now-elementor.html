@@ -42,6 +42,7 @@
     --c4: #FDC70C;
     --c5: #D22026;
     --c6: #EAEAEA;
+    --vsl-dallas-accent: #5A6FDC;
     --c7: #DFDFDE;
     --c8: #B2AEBF;
     --c9: #5F5782;
@@ -531,6 +532,47 @@
     color: var(--c6);
     opacity: 0.85;
   }
+  .vsl-bn-locbadge-row {
+    text-align: center;
+    margin: 0 auto clamp(12px, 2vh, 20px);
+  }
+  .vsl-bn-locbadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 18px 8px 13px;
+    border-radius: 999px;
+    background: var(--c2);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    font-family: var(--f1);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: 0 8px 22px rgba(238,38,95,0.30);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+  .vsl-bn-locbadge__pin {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+  .vsl-bn-locbadge__label {
+    font-weight: 600;
+    opacity: 0.82;
+  }
+  .vsl-bn-locbadge__city {
+    font-weight: 800;
+  }
+  .vsl-loc--dallas .vsl-bn-locbadge {
+    background: var(--vsl-dallas-accent);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    box-shadow: 0 8px 22px rgba(90,111,220,0.38);
+  }
 
   .vsl-bn-tabs {
     display: flex;
@@ -756,6 +798,40 @@
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
   }
 
+  .vsl-bn-card__loc-chip {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px 5px 9px;
+    border-radius: 999px;
+    background: var(--c2);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    font-family: var(--f1);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.32);
+    transition: background 0.3s ease;
+  }
+  .vsl-bn-card__loc-chip svg {
+    width: 11px;
+    height: 11px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+  .vsl-loc--dallas .vsl-bn-card__loc-chip {
+    background: var(--vsl-dallas-accent);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+  }
+
   .vsl-bn-card__ticket {
     position: absolute;
     bottom: 58px;
@@ -840,6 +916,62 @@
   }
   .vsl-bn-card__badge--value::after {
     background: #b8900a;
+  }
+  .vsl-bn-card__badge-stack {
+    position: absolute;
+    top: 12px;
+    left: -10px;
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+    width: max-content;
+  }
+  .vsl-bn-card__badge-stack .vsl-bn-card__badge {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  .vsl-bn-card__badge--coming-soon {
+    display: none;
+    background: linear-gradient(135deg, #10182B 0%, #1a2744 100%);
+    color: #FDC70C;
+  }
+  .vsl-bn-card__badge--coming-soon::after {
+    background: #0a0f1a;
+  }
+  .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__badge--coming-soon {
+    display: block;
+  }
+  .vsl-bn-card--soon {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.82;
+  }
+  .vsl-bn-card--soon:hover .vsl-bn-card__cta-hint {
+    background: var(--c2);
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    transform: none;
+  }
+  .vsl-bn-card--soon:hover .vsl-bn-card__cta-hint svg {
+    transform: none;
+  }
+  .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint {
+    font-size: 0;
+  }
+  .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint svg {
+    display: none;
+  }
+  .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint::after {
+    content: 'Coming Soon';
+    font-size: 0.8rem;
+    color: #fff;
+    -webkit-text-fill-color: #fff;
   }
 
   .vsl-bn-spring-group {
@@ -2197,6 +2329,15 @@
     "partyPro":       "https://book.velocitysimlounge.com/book/pro-party-pack-6-rigs/24",
     "bookNow":        "https://velocitysimlounge.com/book-now/"
   },
+  "linksDallas": {
+    "quickRace":      "https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1",
+    "doubleRace":     "https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1",
+    "leaderboard":    "https://book-dtx.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1",
+    "twoSeaterQuick": "https://book-dtx.velocitysimlounge.com/book/2-seater-quick-race/22",
+    "twoSeaterDouble":"https://book-dtx.velocitysimlounge.com/book/2-seater-double-race/23",
+    "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19",
+    "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24"
+  },
   "images": {
     "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
     "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
@@ -2214,13 +2355,20 @@
   }
 }'>
   <main>
-    <div data-vsl-houston-only>
+    <div>
 
     <section class="vsl-bn-hero" aria-labelledby="bn-hero-title">
     </section>
 
     <section class="vsl-bn-experiences" id="experiences" aria-labelledby="experiences-heading">
       <div class="vsl-bn-grid">
+        <div class="vsl-bn-locbadge-row">
+          <span class="vsl-bn-locbadge" data-bn-locbadge>
+            <svg class="vsl-bn-locbadge__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+            <span class="vsl-bn-locbadge__label">Now booking</span>
+            <span class="vsl-bn-locbadge__city" data-bn-loc-city>Houston</span>
+          </span>
+        </div>
         <h2 class="vsl-bn-section-title" id="experiences-heading">
           Choose Your <em>Experience</em>
         </h2>
@@ -2255,7 +2403,10 @@
             <a class="vsl-bn-card vsl-bn-card--badged" data-l="doubleRace" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
                 <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvZG91YmxlX3JhY2Uud2VicA==" alt="Double Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high">
-                <span class="vsl-bn-card__badge vsl-bn-card__badge--popular">Most Popular</span>
+                <div class="vsl-bn-card__badge-stack">
+                  <span class="vsl-bn-card__badge vsl-bn-card__badge--popular">Most Popular</span>
+                  <span class="vsl-bn-card__badge vsl-bn-card__badge--value">Save Over 20%</span>
+                </div>
                 <h3 class="vsl-bn-card__overlay-name">Double Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2263,7 +2414,7 @@
                   <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $49</span>
                 </div>
                 <ul class="vsl-bn-card__features">
-                  <li>Save over 20%</li>
+                  <li>Drive more save more, great value</li>
                   <li>Approx. 55 minute experience</li>
                   <li>Two races, double the fun</li>
                 </ul>
@@ -2274,6 +2425,7 @@
             <a class="vsl-bn-card" data-l="sixTen" href="https://book.velocitysimlounge.com/book/610-challenge/15" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
                 <img data-i="sixTen" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="610 Challenge virtual Houston loop at Velocity" width="1024" height="1008" loading="eager" decoding="async">
+                <span class="vsl-bn-card__badge vsl-bn-card__badge--coming-soon">Coming Soon</span>
                 <h3 class="vsl-bn-card__overlay-name">610 Challenge</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2682,8 +2834,6 @@
     var root = document.querySelector('.vsl-booknow');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Online booking opens in Dallas Summer 2026', text: 'Book simulators and party packs in Houston today\u2014or follow Dallas opening updates on our Dallas page.' });
-
 
     function forceParentHeight() {
       var el = root.parentElement;
@@ -2721,7 +2871,8 @@
     var cfg;
     try { cfg = JSON.parse(root.getAttribute('data-cfg') || '{}'); } catch(e) { cfg = {}; }
     var images = cfg.images || {};
-    var links = cfg.links || {};
+    var linksHouston = cfg.links || {};
+    var linksDallas = cfg.linksDallas || {};
 
     if (images.heroFinishLine) {
       root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
@@ -2732,16 +2883,85 @@
       if (key && images[key]) img.src = images[key];
     });
 
-    root.querySelectorAll('[data-l]').forEach(function(el) {
-      var key = el.getAttribute('data-l');
-      if (key && links[key]) {
-        el.setAttribute('href', links[key]);
-        if (/^https?:\/\//i.test(links[key])) {
-          el.setAttribute('target', '_blank');
-          el.setAttribute('rel', 'noopener noreferrer');
+    function applyLocationLinks(loc) {
+      var isDallas = loc === 'dallas';
+      root.classList.toggle('vsl-loc--dallas', isDallas);
+      root.classList.toggle('vsl-loc--houston', !isDallas);
+      var city = isDallas ? 'Dallas' : 'Houston';
+      root._vslCity = city;
+      var cityEl = root.querySelector('[data-bn-loc-city]');
+      if (cityEl) cityEl.textContent = city;
+      root.querySelectorAll('.vsl-bn-card').forEach(function(card) {
+        var media = card.querySelector('.vsl-bn-card__media');
+        if (!media) return;
+        var chip = media.querySelector('.vsl-bn-card__loc-chip');
+        if (!chip) {
+          chip = document.createElement('span');
+          chip.className = 'vsl-bn-card__loc-chip';
+          chip.setAttribute('aria-hidden', 'true');
+          chip.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span class="vsl-bn-card__loc-chip-city"></span>';
+          media.appendChild(chip);
+        }
+        var chipCity = chip.querySelector('.vsl-bn-card__loc-chip-city');
+        if (chipCity) chipCity.textContent = city;
+      });
+      var sixTenCard = root.querySelector('[data-l="sixTen"]');
+      if (sixTenCard) {
+        var sixTenName = sixTenCard.querySelector('.vsl-bn-card__overlay-name');
+        var sixTenImg = sixTenCard.querySelector('img[data-i="sixTen"]');
+        var sixTenFeatures = sixTenCard.querySelectorAll('.vsl-bn-card__features li');
+        if (isDallas) {
+          if (sixTenName) sixTenName.textContent = 'Traffic Rush';
+          if (sixTenImg) sixTenImg.setAttribute('alt', 'Traffic Rush Dallas exclusive at Velocity');
+          if (sixTenFeatures[0]) sixTenFeatures[0].textContent = 'A Velocity Dallas Exclusive';
+          if (sixTenFeatures[1]) sixTenFeatures[1].textContent = 'Navigate busy metro traffic scenarios';
+          if (sixTenFeatures[2]) sixTenFeatures[2].textContent = 'Full experience details coming soon';
+        } else {
+          if (sixTenName) sixTenName.textContent = '610 Challenge';
+          if (sixTenImg) sixTenImg.setAttribute('alt', '610 Challenge virtual Houston loop at Velocity');
+          if (sixTenFeatures[0]) sixTenFeatures[0].textContent = 'A Velocity Exclusive';
+          if (sixTenFeatures[1]) sixTenFeatures[1].textContent = 'Race a virtual Houston 610 Loop';
+          if (sixTenFeatures[2]) sixTenFeatures[2].textContent = 'Nearly 40 miles with AI traffic';
         }
       }
-    });
+      var activeLinks = isDallas ? Object.assign({}, linksHouston, linksDallas) : linksHouston;
+
+      root.querySelectorAll('[data-l]').forEach(function(el) {
+        var key = el.getAttribute('data-l');
+        if (!key) return;
+
+        if (isDallas && key === 'sixTen') {
+          el.removeAttribute('href');
+          el.removeAttribute('target');
+          el.removeAttribute('rel');
+          el.setAttribute('aria-disabled', 'true');
+          el.setAttribute('tabindex', '-1');
+          el.classList.add('vsl-bn-card--soon');
+          return;
+        }
+
+        el.classList.remove('vsl-bn-card--soon');
+        el.removeAttribute('aria-disabled');
+        el.removeAttribute('tabindex');
+
+        if (activeLinks[key]) {
+          el.setAttribute('href', activeLinks[key]);
+          if (/^https?:\/\//i.test(activeLinks[key])) {
+            el.setAttribute('target', '_blank');
+            el.setAttribute('rel', 'noopener noreferrer');
+          } else {
+            el.removeAttribute('target');
+            el.removeAttribute('rel');
+          }
+        }
+      });
+    }
+
+    if (window.VSL_LOCATION) {
+      VSL_LOCATION.bindLocationSync(applyLocationLinks);
+    } else {
+      applyLocationLinks('houston');
+    }
 
     var tabs = root.querySelectorAll('.vsl-bn-tab[role="tab"]');
     var panels = root.querySelectorAll('.vsl-bn-panel[role="tabpanel"]');
@@ -2984,7 +3204,8 @@
         if (!href || href.charAt(0) === '#') return;
         var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
         var title = nameEl ? nameEl.textContent.trim() : 'Book Now';
-        openModal(href, title);
+        var city = root._vslCity || (root.classList.contains('vsl-loc--dallas') ? 'Dallas' : 'Houston');
+        openModal(href, title + ' \u2014 ' + city);
         return false;
       }, true);
     });
