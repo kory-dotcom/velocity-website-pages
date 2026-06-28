@@ -300,13 +300,10 @@
     --ig-portal-p: 0;
     --ig-arch-w: min(620px, 86vw);
     --ig-nav-offset: 0px;
-    --ig-hero-gap: clamp(14px, 2.4vh, 36px);
-    --ig-hero-lift: 0px;
-    --ig-hud-stack: calc(var(--text-hero) * 1.2 + 11rem);
-    --ig-eyebrow-stack: 2.25rem;
-    --ig-arch-pref: clamp(260px, 40vh, 520px);
-    --ig-arch-max-fit: calc(100dvh - var(--ig-nav-offset) - var(--ig-hud-stack) - var(--ig-eyebrow-stack) - (2 * var(--ig-hero-gap)) - 2rem);
-    --ig-arch-h: min(var(--ig-arch-pref), max(180px, var(--ig-arch-max-fit)));
+    --ig-hero-gap: clamp(12px, 2vh, 28px);
+    --ig-hero-scale: 1;
+    --ig-arch-pref: clamp(240px, 38vh, 520px);
+    --ig-arch-h: var(--ig-arch-pref);
     position: relative;
     background: var(--oxblood);
   }
@@ -369,10 +366,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(calc(
-      ((var(--ig-eyebrow-stack) - var(--ig-hud-stack)) / 2)
-      - (var(--ig-hero-lift) * (1 - var(--ig-portal-p)))
-    ));
+    padding: clamp(8px, 1.5vh, 16px) var(--page-margin) max(12px, env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+  }
+  .vsl-ig-portal__compose {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ig-hero-gap);
+    width: 100%;
+    max-width: 100%;
+    transform: scale(var(--ig-hero-scale));
+    transform-origin: center center;
+    will-change: transform;
   }
   .vsl-ig-portal__stage {
     position: relative;
@@ -477,27 +484,25 @@
     opacity: calc(1 - var(--ig-portal-p));
   }
   .vsl-ig-portal__hud-top {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 50%;
+    position: relative;
     z-index: 4;
+    flex: 0 0 auto;
+    width: 100%;
     text-align: center;
-    padding: 0 var(--page-margin);
+    padding: 0;
     opacity: calc(1 - min(1, var(--ig-portal-p) * 2.8));
-    transform: translateY(calc(-1 * (var(--ig-arch-h) / 2) - var(--ig-hero-gap) - var(--ig-portal-p) * 20px));
+    transform: translateY(calc(var(--ig-portal-p) * -16px));
     pointer-events: none;
   }
   .vsl-ig-portal__hud-bottom {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
+    position: relative;
     z-index: 4;
+    flex: 0 0 auto;
+    width: 100%;
     text-align: center;
-    padding: 0 var(--page-margin);
+    padding: 0;
     opacity: calc(1 - min(1, var(--ig-portal-p) * 1.5));
-    transform: translateY(calc((var(--ig-arch-h) / 2) + var(--ig-hero-gap) + var(--ig-portal-p) * 30px));
+    transform: translateY(calc(var(--ig-portal-p) * 24px));
     pointer-events: auto;
   }
   .vsl-ig-portal__enter-hint {
@@ -537,8 +542,8 @@
     justify-content: center;
     gap: 0.85em;
     margin-top: -0.02em;
-    padding-bottom: 0.55em;
-    font-size: clamp(11px, 1.55vw, 14px);
+    padding-bottom: 0.35em;
+    font-size: clamp(11px, 1.2vw, 13px);
     line-height: 0;
   }
   .vsl-ig-portal__title-by {
@@ -560,8 +565,9 @@
   }
   .vsl-ig-portal__title-logo {
     display: block;
-    width: 18.5em;
-    height: 3.87em;
+    width: auto;
+    height: clamp(28px, 4.5vw, 40px);
+    max-width: min(220px, 58vw);
     object-fit: contain;
     object-position: left center;
     filter: brightness(1.05);
@@ -589,10 +595,10 @@
     position: relative;
     inset: auto;
     width: 100%;
+    padding: clamp(32px, 6vw, 64px) var(--page-margin) clamp(48px, 8vw, 72px);
+  }
+  .vsl-ig-portal--static .vsl-ig-portal__compose {
     transform: none;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(20px, 3vw, 32px);
   }
   .vsl-ig-portal--static .vsl-ig-portal__window {
     width: var(--ig-arch-w);
@@ -1451,11 +1457,8 @@
   @media (max-width: 640px) {
     .vsl-ig-portal {
       --ig-arch-w: min(84vw, 360px);
-      --ig-arch-pref: clamp(190px, 28vh, 280px);
-      --ig-hero-lift: 0px;
-      --ig-hero-gap: clamp(10px, 1.6vh, 18px);
-      --ig-hud-stack: calc(var(--text-hero) * 1.1 + 8.75rem);
-      --ig-eyebrow-stack: 2rem;
+      --ig-arch-pref: clamp(170px, 26vh, 260px);
+      --ig-hero-gap: clamp(8px, 1.4vh, 14px);
     }
     body:has(.vsl-navbar) .vsl-ig-portal {
       --ig-nav-offset: clamp(48px, 6.5vh, 60px);
@@ -1473,8 +1476,8 @@
       padding-bottom: 0.45em;
     }
     .vsl-ig-portal__title-logo {
-      width: 17.5em;
-      height: 3.65em;
+      height: clamp(24px, 6vw, 34px);
+      max-width: min(200px, 72vw);
     }
     .vsl-ig-portal__track { height: 180vh; height: 180dvh; }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
@@ -1541,9 +1544,8 @@
   @media (max-height: 720px) {
     .vsl-ignition { --text-hero: clamp(2.35rem, 1rem + 3.5vw, 4rem); }
     .vsl-ig-portal {
-      --ig-hero-gap: clamp(8px, 1.2vh, 16px);
-      --ig-hud-stack: calc(var(--text-hero) * 1.08 + 8.5rem);
-      --ig-arch-pref: clamp(180px, 34vh, 360px);
+      --ig-hero-gap: clamp(8px, 1.2vh, 14px);
+      --ig-arch-pref: clamp(160px, 30vh, 280px);
     }
   }
   @media (min-width: 1440px) and (max-height: 900px) {
@@ -1740,6 +1742,7 @@
             <span class="vsl-ig-portal__orb"></span>
           </div>
           <div class="vsl-ig-portal__viewport">
+            <div class="vsl-ig-portal__compose">
             <div class="vsl-ig-portal__hud-top">
               <p class="vsl-ig-eyebrow vsl-ig-eyebrow--lined">Cocktails &amp; sim racing, under one roof</p>
             </div>
@@ -1768,6 +1771,7 @@
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
             </div>
             <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
+          </div>
           </div>
           </div>
         </div>
@@ -2142,7 +2146,73 @@
 
     /* Portal scroll — walk through the arch */
     var portal = root.querySelector('[data-vsl-portal]');
+    var portalFitFrame = null;
+
+    function syncPortalNavOffset() {
+      if (!portal) return;
+      var navBar = document.querySelector('.vsl-navbar__bar');
+      if (navBar) {
+        portal.style.setProperty('--ig-nav-offset', Math.ceil(navBar.getBoundingClientRect().height) + 'px');
+      }
+    }
+
+    function fitPortalHero() {
+      if (!portal) return;
+      var viewport = portal.querySelector('.vsl-ig-portal__viewport');
+      var compose = portal.querySelector('.vsl-ig-portal__compose');
+      if (!viewport || !compose) return;
+
+      var p = parseFloat(getComputedStyle(portal).getPropertyValue('--ig-portal-p')) || 0;
+      if (p > 0.06 || portal.classList.contains('vsl-ig-portal--static')) {
+        portal.style.setProperty('--ig-hero-scale', '1');
+        return;
+      }
+
+      portal.style.setProperty('--ig-hero-scale', '1');
+      portal.style.removeProperty('--ig-arch-h');
+
+      var available = viewport.clientHeight;
+      var stage = portal.querySelector('.vsl-ig-portal__stage');
+      var needed = compose.scrollHeight;
+
+      if (needed > available && available > 80 && stage) {
+        var gaps = parseFloat(getComputedStyle(compose).rowGap || getComputedStyle(compose).gap) || 16;
+        var fixedStack = needed - stage.offsetHeight;
+        var archMax = available - fixedStack - (gaps * 2) - 8;
+        if (archMax > 120) {
+          portal.style.setProperty('--ig-arch-h', Math.floor(archMax) + 'px');
+          needed = compose.scrollHeight;
+        }
+      }
+
+      if (needed > available && available > 80) {
+        portal.style.setProperty('--ig-hero-scale', Math.max(0.5, (available / needed) * 0.98).toFixed(4));
+      }
+    }
+
+    function schedulePortalFit() {
+      if (portalFitFrame) cancelAnimationFrame(portalFitFrame);
+      portalFitFrame = requestAnimationFrame(function() {
+        portalFitFrame = null;
+        syncPortalNavOffset();
+        fitPortalHero();
+      });
+    }
+
     if (portal) {
+      syncPortalNavOffset();
+      schedulePortalFit();
+      window.addEventListener('resize', schedulePortalFit);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(schedulePortalFit);
+      }
+      if (window.ResizeObserver) {
+        var portalRo = new ResizeObserver(schedulePortalFit);
+        var composeEl = portal.querySelector('.vsl-ig-portal__compose');
+        var viewportEl = portal.querySelector('.vsl-ig-portal__viewport');
+        if (composeEl) portalRo.observe(composeEl);
+        if (viewportEl) portalRo.observe(viewportEl);
+      }
       if (reduceMotion) {
         portal.classList.add('vsl-ig-portal--static');
         portal.style.setProperty('--ig-portal-p', '0');
@@ -2156,6 +2226,8 @@
           var p = range > 0 ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / range)) : 0;
           portal.style.setProperty('--ig-portal-p', String(p));
           portal.classList.toggle('is-revealed', p > 0.88);
+          if (p <= 0.06) schedulePortalFit();
+          else portal.style.setProperty('--ig-hero-scale', '1');
         }
         function onPortalScroll() {
           if (!portalTicking) {
@@ -2240,6 +2312,7 @@
           if (t) t.textContent = text;
           chip.hidden = false;
         });
+        if (typeof schedulePortalFit === 'function') schedulePortalFit();
       };
       updateStatus();
       setInterval(updateStatus, 60000);
