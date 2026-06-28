@@ -371,6 +371,7 @@
       calc(var(--page-margin) * (1 - var(--ig-portal-p)))
       calc(max(12px, env(safe-area-inset-bottom, 0px)) * (1 - var(--ig-portal-p)));
     box-sizing: border-box;
+    overflow: hidden;
   }
   .vsl-ig-portal__compose {
     display: flex;
@@ -380,16 +381,19 @@
     gap: calc(var(--ig-hero-gap) * (1 - var(--ig-portal-p)));
     width: 100%;
     max-width: 100%;
-    height: calc(var(--ig-portal-p) * 100%);
-    min-height: calc(var(--ig-portal-p) * 100%);
-    margin-block: calc((1 - var(--ig-portal-p)) * auto);
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
     transform: scale(calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale))));
     transform-origin: center center;
     will-change: transform;
   }
+  .vsl-ig-portal.is-revealed .vsl-ig-portal__compose {
+    justify-content: flex-start;
+  }
   .vsl-ig-portal__stage {
     position: relative;
-    flex: var(--ig-portal-p) 1 auto;
+    flex: calc(var(--ig-portal-p) * 999) 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2169,6 +2173,18 @@
       }
     }
 
+    function measurePortalStack(compose, stage) {
+      var hudTop = compose.querySelector('.vsl-ig-portal__hud-top');
+      var hudBottom = compose.querySelector('.vsl-ig-portal__hud-bottom');
+      var gaps = parseFloat(getComputedStyle(compose).rowGap || getComputedStyle(compose).gap) || 0;
+      var gapCount = (hudTop && stage ? 1 : 0) + (stage && hudBottom ? 1 : 0);
+      var stack = 0;
+      [hudTop, stage, hudBottom].forEach(function(el) {
+        if (el) stack += el.offsetHeight;
+      });
+      return stack + (gaps * gapCount);
+    }
+
     function fitPortalHero() {
       if (!portal) return;
       var viewport = portal.querySelector('.vsl-ig-portal__viewport');
@@ -2186,19 +2202,23 @@
 
       var available = viewport.clientHeight;
       var stage = portal.querySelector('.vsl-ig-portal__stage');
-      var needed = compose.scrollHeight;
+      if (!stage || available <= 80) return;
 
-      if (needed > available && available > 80 && stage) {
-        var gaps = parseFloat(getComputedStyle(compose).rowGap || getComputedStyle(compose).gap) || 16;
-        var fixedStack = needed - stage.offsetHeight;
-        var archMax = available - fixedStack - (gaps * 2) - 8;
+      var needed = measurePortalStack(compose, stage);
+      if (needed > available) {
+        var gaps = parseFloat(getComputedStyle(compose).rowGap || getComputedStyle(compose).gap) || 0;
+        var hudTop = compose.querySelector('.vsl-ig-portal__hud-top');
+        var hudBottom = compose.querySelector('.vsl-ig-portal__hud-bottom');
+        var fixedStack = (hudTop ? hudTop.offsetHeight : 0) + (hudBottom ? hudBottom.offsetHeight : 0);
+        var gapCount = (hudTop && stage ? 1 : 0) + (stage && hudBottom ? 1 : 0);
+        var archMax = available - fixedStack - (gaps * gapCount) - 8;
         if (archMax > 120) {
           portal.style.setProperty('--ig-arch-h', Math.floor(archMax) + 'px');
-          needed = compose.scrollHeight;
+          needed = measurePortalStack(compose, stage);
         }
       }
 
-      if (needed > available && available > 80) {
+      if (needed > available) {
         portal.style.setProperty('--ig-hero-scale', Math.max(0.5, (available / needed) * 0.98).toFixed(4));
       }
     }
