@@ -398,8 +398,11 @@
     align-items: center;
     justify-content: center;
     align-self: stretch;
-    width: calc(var(--ig-portal-p) * 100% + (1 - var(--ig-portal-p)) * auto);
-    min-height: calc(var(--ig-portal-p) * 100%);
+    width: 100%;
+    /* Definite height (resolved against the full-height compose) so the stage
+       can't collapse to 0 at rest — the window's percentage height term would
+       otherwise make this indefinite and let the arch overlap the title. */
+    min-height: calc((1 - var(--ig-portal-p)) * var(--ig-arch-h) + var(--ig-portal-p) * 100%);
   }
   .vsl-ig-portal__arch-glow {
     position: absolute;
@@ -2206,20 +2209,25 @@
 
       var needed = measurePortalStack(compose, stage);
       if (needed > available) {
+        /* Shrink only the arch so the title/CTAs stay full-size — keeps the
+           load layout matching the scrolled-in state instead of scaling the
+           whole hero down (which left it small with large empty margins). */
         var gaps = parseFloat(getComputedStyle(compose).rowGap || getComputedStyle(compose).gap) || 0;
         var hudTop = compose.querySelector('.vsl-ig-portal__hud-top');
         var hudBottom = compose.querySelector('.vsl-ig-portal__hud-bottom');
         var fixedStack = (hudTop ? hudTop.offsetHeight : 0) + (hudBottom ? hudBottom.offsetHeight : 0);
         var gapCount = (hudTop && stage ? 1 : 0) + (stage && hudBottom ? 1 : 0);
-        var archMax = available - fixedStack - (gaps * gapCount) - 8;
-        if (archMax > 120) {
-          portal.style.setProperty('--ig-arch-h', Math.floor(archMax) + 'px');
-          needed = measurePortalStack(compose, stage);
-        }
+        var ARCH_FLOOR = 170;
+        var archTarget = Math.max(ARCH_FLOOR, available - fixedStack - (gaps * gapCount) - 8);
+        portal.style.setProperty('--ig-arch-h', Math.floor(archTarget) + 'px');
+        needed = measurePortalStack(compose, stage);
       }
 
-      if (needed > available) {
-        portal.style.setProperty('--ig-hero-scale', Math.max(0.5, (available / needed) * 0.98).toFixed(4));
+      /* Only fall back to scaling the whole hero on genuinely short screens
+         where even the minimum arch can't fit. Tolerate minor overflow so the
+         hero renders at full size and the viewport clips gracefully. */
+      if (needed > available * 1.06) {
+        portal.style.setProperty('--ig-hero-scale', Math.max(0.6, (available / needed) * 0.99).toFixed(4));
       }
     }
 
@@ -2259,8 +2267,10 @@
           var p = range > 0 ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / range)) : 0;
           portal.style.setProperty('--ig-portal-p', String(p));
           portal.classList.toggle('is-revealed', p > 0.88);
+          /* Re-fit near the top; otherwise leave --ig-hero-scale alone so the
+             compose transform interpolates it toward 1 as the portal reveals
+             (no discrete jump between the load and scrolled states). */
           if (p <= 0.06) schedulePortalFit();
-          else portal.style.setProperty('--ig-hero-scale', '1');
         }
         function onPortalScroll() {
           if (!portalTicking) {
