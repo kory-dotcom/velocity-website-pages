@@ -43,6 +43,11 @@
     text-decoration-line: none !important;
   }
 
+  /* This page opts out of the global sticky "Book Now" bar from the navbar. */
+  body:has(.vsl-ignition) .vsl-navbar__sticky {
+    display: none !important;
+  }
+
   .vsl-ignition {
     --oxblood: #120A0E;
     --oxblood-mid: #1E0F15;
@@ -1438,6 +1443,25 @@
     .vsl-ig-visit__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
     .vsl-ig-menu__item { grid-template-columns: 1fr auto; }
     .vsl-ig-menu__item-leader { display: none; }
+  }
+
+  /* ═══ Large screens — keep the portal hero from shrinking into empty space ═══ */
+  @media (min-width: 1440px) {
+    .vsl-ignition {
+      --text-hero: clamp(6.5rem, 3.3rem + 3.6vw, 10rem);
+    }
+    .vsl-ig-portal {
+      --ig-hero-lift: clamp(64px, 7vh, 150px);
+    }
+    .vsl-ig-portal__window,
+    .vsl-ig-portal__arch-glow {
+      width: calc((1 - var(--ig-portal-p)) * min(1080px, 46vw) + var(--ig-portal-p) * 100vw);
+      height: calc((1 - var(--ig-portal-p)) * clamp(520px, 60vh, 920px) + var(--ig-portal-p) * 100vh);
+    }
+    .vsl-ig-portal--static .vsl-ig-portal__window {
+      width: min(1080px, 46vw);
+      height: clamp(520px, 60vh, 920px);
+    }
   }
 
   /* ═══ One-page experience — floating UI (appended to <body>) ═══ */
