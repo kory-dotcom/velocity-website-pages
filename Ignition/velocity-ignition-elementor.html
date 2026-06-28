@@ -361,12 +361,15 @@
   }
   .vsl-ig-portal__viewport {
     position: absolute;
-    inset: var(--ig-nav-offset) 0 0 0;
+    inset: calc(var(--ig-nav-offset) * (1 - var(--ig-portal-p))) 0 0 0;
     z-index: 1;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
-    padding: clamp(8px, 1.5vh, 16px) var(--page-margin) max(12px, env(safe-area-inset-bottom, 0px));
+    padding:
+      calc(clamp(8px, 1.5vh, 16px) * (1 - var(--ig-portal-p)))
+      calc(var(--page-margin) * (1 - var(--ig-portal-p)))
+      calc(max(12px, env(safe-area-inset-bottom, 0px)) * (1 - var(--ig-portal-p)));
     box-sizing: border-box;
   }
   .vsl-ig-portal__compose {
@@ -374,19 +377,25 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--ig-hero-gap);
+    gap: calc(var(--ig-hero-gap) * (1 - var(--ig-portal-p)));
     width: 100%;
     max-width: 100%;
-    transform: scale(var(--ig-hero-scale));
+    height: calc(var(--ig-portal-p) * 100%);
+    min-height: calc(var(--ig-portal-p) * 100%);
+    margin-block: calc((1 - var(--ig-portal-p)) * auto);
+    transform: scale(calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale))));
     transform-origin: center center;
     will-change: transform;
   }
   .vsl-ig-portal__stage {
     position: relative;
-    flex: 0 0 auto;
+    flex: var(--ig-portal-p) 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: stretch;
+    width: calc(var(--ig-portal-p) * 100% + (1 - var(--ig-portal-p)) * auto);
+    min-height: calc(var(--ig-portal-p) * 100%);
   }
   .vsl-ig-portal__arch-glow {
     position: absolute;
@@ -394,8 +403,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 0;
-    width: calc((1 - var(--ig-portal-p)) * var(--ig-arch-w) + var(--ig-portal-p) * 100vw);
-    height: calc((1 - var(--ig-portal-p)) * var(--ig-arch-h) + var(--ig-portal-p) * 100vh);
+    width: calc((1 - var(--ig-portal-p)) * var(--ig-arch-w) + var(--ig-portal-p) * 100%);
+    height: calc((1 - var(--ig-portal-p)) * var(--ig-arch-h) + var(--ig-portal-p) * 100%);
     border-radius:
       calc(50% * (1 - var(--ig-portal-p)))
       calc(50% * (1 - var(--ig-portal-p)))
@@ -421,8 +430,8 @@
     position: relative;
     z-index: 1;
     overflow: hidden;
-    width: calc((1 - var(--ig-portal-p)) * var(--ig-arch-w) + var(--ig-portal-p) * 100vw);
-    height: calc((1 - var(--ig-portal-p)) * var(--ig-arch-h) + var(--ig-portal-p) * 100vh);
+    width: calc((1 - var(--ig-portal-p)) * var(--ig-arch-w) + var(--ig-portal-p) * 100%);
+    height: calc((1 - var(--ig-portal-p)) * var(--ig-arch-h) + var(--ig-portal-p) * 100%);
     border-radius:
       calc(50% * (1 - var(--ig-portal-p)))
       calc(50% * (1 - var(--ig-portal-p)))
@@ -442,7 +451,7 @@
   .vsl-ig-portal__media {
     position: absolute;
     width: 100vw;
-    height: 100vh;
+    height: calc((1 - var(--ig-portal-p)) * 100vh + var(--ig-portal-p) * 100dvh);
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(calc(1.06 + var(--ig-portal-p) * 0.14));
@@ -452,7 +461,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center calc(42% - var(--ig-portal-p) * 8%);
+    object-position: center calc((1 - var(--ig-portal-p)) * 42% + var(--ig-portal-p) * 50%);
     display: block;
   }
   .vsl-ig-portal:not(.is-revealed) .vsl-ig-portal__media img {
@@ -490,6 +499,8 @@
     width: 100%;
     text-align: center;
     padding: 0;
+    max-height: calc((1 - min(1, var(--ig-portal-p) * 2)) * 120px);
+    overflow: hidden;
     opacity: calc(1 - min(1, var(--ig-portal-p) * 2.8));
     transform: translateY(calc(var(--ig-portal-p) * -16px));
     pointer-events: none;
@@ -501,6 +512,8 @@
     width: 100%;
     text-align: center;
     padding: 0;
+    max-height: calc((1 - min(1, var(--ig-portal-p) * 1.5)) * 520px);
+    overflow: hidden;
     opacity: calc(1 - min(1, var(--ig-portal-p) * 1.5));
     transform: translateY(calc(var(--ig-portal-p) * 24px));
     pointer-events: auto;
