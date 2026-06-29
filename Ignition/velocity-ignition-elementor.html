@@ -388,12 +388,12 @@
     transform-origin: center center;
     will-change: transform;
   }
-  .vsl-ig-portal.is-revealed .vsl-ig-portal__compose {
-    justify-content: flex-start;
-  }
   .vsl-ig-portal__stage {
     position: relative;
-    flex: calc(var(--ig-portal-p) * 999) 1 auto;
+    /* Grow purely via the interpolated min-height below — never via flex-grow.
+       A scroll-driven flex-grow would jump from 0 (centered) to huge
+       (bottom-anchored) the instant scrolling starts, shifting the hud-bottom. */
+    flex: 0 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
