@@ -15,18 +15,20 @@
   width: 100% !important;
 }
 
-/* Kill white hairline gaps *above* the pink stripe (Elementor wrappers + subpixel stacking) */
+/* Flush Elementor wrappers without pulling footer background above the stripe */
 .elementor-widget-html .elementor-widget-container:has(.vsl-site-footer),
-.elementor-element .elementor-widget-container:has(.vsl-site-footer) {
-  margin-top: -14px !important;
-  padding-top: 0 !important;
-}
+.elementor-element .elementor-widget-container:has(.vsl-site-footer),
 .elementor-section:has(.vsl-site-footer),
 .elementor-element:has(.vsl-site-footer),
 .e-con:has(.vsl-site-footer),
 .e-con-inner:has(.vsl-site-footer),
 .e-flex:has(.vsl-site-footer) {
-  margin-top: -14px !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  line-height: 0;
+}
+.elementor-widget-html .elementor-widget-container:has(.vsl-site-footer) .vsl-site-footer {
+  line-height: 1.5;
 }
 
 .vsl-site-footer {
@@ -44,7 +46,7 @@
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  margin: -10px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -53,23 +55,10 @@
   font-size: calc(15px * var(--vsl-ui-scale));
   line-height: 1.5;
   color: var(--circuit-white);
-  background: linear-gradient(180deg, var(--navy) 0%, #060912 100%);
+  background: transparent;
   -webkit-font-smoothing: antialiased;
 }
 .vsl-site-footer *, .vsl-site-footer *::before, .vsl-site-footer *::after { box-sizing: border-box; }
-
-/* Solid bridge over stubborn gaps between last page section & pink stripe */
-.vsl-site-footer::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -20px;
-  height: 20px;
-  z-index: 0;
-  pointer-events: none;
-  background: var(--navy);
-}
 
 .vsl-site-footer__stripe {
   flex-shrink: 0;
@@ -77,11 +66,16 @@
   z-index: 2;
   height: calc(3px * var(--vsl-ui-scale));
   width: 100%;
-  margin: 0 0 -2px;
+  margin: 0;
   padding: 0;
   line-height: 0;
   font-size: 0;
   background: var(--vsl-stripe-bg);
+}
+
+.vsl-site-footer__panel {
+  flex: 1;
+  background: linear-gradient(180deg, var(--navy) 0%, #060912 100%);
 }
 
 .vsl-site-footer__wrap {
@@ -259,6 +253,7 @@
 
 <footer class="vsl-site-footer" id="vsl-site-footer" role="contentinfo" aria-label="Site footer">
   <div class="vsl-site-footer__stripe" aria-hidden="true"></div>
+  <div class="vsl-site-footer__panel">
   <div class="vsl-site-footer__wrap">
     <div class="vsl-site-footer__inner">
       <div class="vsl-site-footer__brand">
@@ -327,6 +322,7 @@
 
   <hr class="vsl-site-footer__rule" aria-hidden="true">
   <p class="vsl-site-footer__copy">© Copyright <span data-vsl-footer-year></span>, Velocity Sim Lounge</p>
+  </div>
 </footer>
 
 <script>

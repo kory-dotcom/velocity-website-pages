@@ -15,7 +15,8 @@
 	#sb-promo-card {
 		display: none;
 		position: fixed;
-		top: 50%;
+		/* Nudged slightly below center so it clears the hero “Houston’s Premier” line */
+		top: 54%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: 90%;
@@ -61,7 +62,7 @@
 			radial-gradient(120% 90% at 50% -10%, rgba(238, 38, 95, 0.45) 0%, rgba(238, 38, 95, 0) 55%),
 			radial-gradient(90% 80% at 85% 120%, rgba(41, 56, 147, 0.55) 0%, rgba(41, 56, 147, 0) 60%),
 			linear-gradient(162deg, #1B1E55 0%, var(--sb-navy) 100%);
-		padding: 38px 24px 30px;
+		padding: 34px 24px 26px;
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -88,7 +89,7 @@
 	.sb-flag-icon {
 		width: 40px;
 		height: 40px;
-		margin-bottom: 12px;
+		margin-bottom: 10px;
 		position: relative;
 		z-index: 1;
 		filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
@@ -107,7 +108,7 @@
 		color: #fff;
 		background: linear-gradient(135deg, #D22026 0%, var(--sb-magenta) 100%);
 		border-radius: 0;
-		margin-bottom: 14px;
+		margin-bottom: 12px;
 		position: relative;
 		z-index: 1;
 		box-shadow: 0 6px 16px rgba(238, 38, 95, 0.4);
@@ -133,22 +134,22 @@
 
 	/* Checkered finish-line strip between header and body */
 	.sb-finish-line {
-		height: 14px;
+		height: 12px;
 		background-image:
 			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%),
 			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%);
-		background-size: 14px 14px;
-		background-position: 0 0, 7px 7px;
+		background-size: 12px 12px;
+		background-position: 0 0, 6px 6px;
 		background-color: #fff;
 	}
 
 	.sb-card-body {
-		padding: 26px 32px 34px;
+		padding: 22px 32px 30px;
 		background: white;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 8px;
+		gap: 6px;
 		border-radius: 0 0 28px 28px;
 	}
 
@@ -169,7 +170,7 @@
 		color: var(--sb-magenta);
 		font-weight: 700;
 		font-style: italic;
-		margin: 2px 0 10px;
+		margin: 0 0 8px;
 		line-height: 1.2;
 		letter-spacing: 0.03em;
 	}
@@ -178,7 +179,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
-		gap: 12px;
+		gap: 10px;
 		width: 100%;
 		max-width: 22rem;
 		margin-top: 2px;
@@ -197,7 +198,7 @@
 		justify-content: center;
 		width: 100%;
 		border-radius: 14px;
-		padding: 12px 22px;
+		padding: 11px 22px;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -289,12 +290,13 @@
 		#sb-promo-card {
 			max-width: 380px;
 			border-radius: 22px;
+			top: 52%;
 		}
 		.sb-card-header {
-			padding: 30px 20px 24px;
+			padding: 28px 20px 22px;
 		}
 		.sb-card-body {
-			padding: 22px 22px 28px;
+			padding: 20px 22px 26px;
 			border-radius: 0 0 22px 22px;
 		}
 		.sb-flag-icon {
@@ -322,6 +324,10 @@
 		.sb-btn-meta {
 			font-size: 11px;
 		}
+		.sb-card-btn {
+			padding: 11px 18px;
+			border-radius: 12px;
+		}
 		.sb-controls {
 			top: 10px;
 			right: 12px;
@@ -338,7 +344,7 @@
 	}
 
 	@keyframes sb-card-entry {
-		from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+		from { opacity: 0; transform: translate(-50%, -46%) scale(0.97); }
 		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 	}
 	@keyframes sb-bounce-in {
@@ -404,11 +410,11 @@
 		<div class="sb-card-cta-row">
 			<button type="button" class="sb-card-btn" data-sb-url="https://form.jotform.com/261647113297157">
 				<span class="sb-btn-title">Champions League</span>
-				<span class="sb-btn-meta">July 2026 Season</span>
+				<span class="sb-btn-meta">6 Weeks of Racing</span>
 			</button>
 			<button type="button" class="sb-card-btn sb-card-btn--secondary" data-sb-url="https://form.jotform.com/261725770505155">
 				<span class="sb-btn-title">July 4th Race</span>
-				<span class="sb-btn-meta">Independence Day Showdown</span>
+				<span class="sb-btn-meta">NASCAR Oval Race</span>
 			</button>
 		</div>
 	</div>
@@ -424,7 +430,7 @@
 	var endDate = new Date('2026-07-04T11:00:00-05:00');
 	if (Date.now() >= endDate.getTime()) return;
 
-	var version = "sb-competitions-v6";
+	var version = "sb-competitions-v9";
 
 	if (sessionStorage.getItem('sbPromoVersion') !== version) {
 		sessionStorage.removeItem('sbMobileMin');

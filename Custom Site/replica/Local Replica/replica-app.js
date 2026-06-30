@@ -211,14 +211,23 @@
       var variant = pickVariant(section, idx);
       if (variant) section.classList.add(variant);
 
-      var children = section.querySelectorAll(":scope > div > h2, :scope > div > h3, :scope > div > p, :scope > div > a[class], :scope > div > div > h2, :scope > div > div > h3, :scope > div > div > p");
-      var count = 0;
-      children.forEach(function (child) {
-        if (count >= 6) return;
-        child.setAttribute("data-vsl-stagger", "");
-        child.style.setProperty("--vsl-si", String(count));
-        count++;
-      });
+      /* Hero Eat/Drink/Race tiles run their own clip + word reveal — never stagger them */
+      if (section.classList.contains("vsl-home-edr")) {
+        section.querySelectorAll(".vsl-home-edr__col[data-vsl-stagger]").forEach(function (col) {
+          col.removeAttribute("data-vsl-stagger");
+          col.style.removeProperty("--vsl-si");
+        });
+      } else {
+        var children = section.querySelectorAll(":scope > div > h2, :scope > div > h3, :scope > div > p, :scope > div > a[class], :scope > div > div > h2, :scope > div > div > h3, :scope > div > div > p");
+        var count = 0;
+        children.forEach(function (child) {
+          if (count >= 6) return;
+          if (child.classList.contains("vsl-home-edr__col")) return;
+          child.setAttribute("data-vsl-stagger", "");
+          child.style.setProperty("--vsl-si", String(count));
+          count++;
+        });
+      }
 
       if (isInViewport(section)) {
         section.classList.add("is-visible");
@@ -454,25 +463,45 @@
     });
   }
 
+  function clearModuleHeadAssets(moduleKey) {
+    document.querySelectorAll('[data-vsl-module-asset="' + moduleKey + '"]').forEach(function (el) {
+      el.remove();
+    });
+  }
+
+  /** Hoist <style>/<link> into <head> so module CSS applies reliably (innerHTML in a div can miss rules). */
+  function injectModuleHtml(html, moduleKey) {
+    clearModuleHeadAssets(moduleKey);
+    var wrapper = document.createElement("div");
+    wrapper.innerHTML = html.trim();
+    wrapper.querySelectorAll("style, link[rel='stylesheet'], link[rel='preconnect']").forEach(function (el) {
+      el.setAttribute("data-vsl-module-asset", moduleKey);
+      document.head.appendChild(el);
+    });
+    pageRoot.innerHTML = wrapper.innerHTML;
+  }
+
   function loadModulePage() {
     var page = REPLICA_PAGES[pageKey];
     document.title = page.title + " | Velocity Local Replica";
 
     if (!page.modulePath) {
+      clearModuleHeadAssets(pageKey);
       removeReplicaPortalModals();
       pageRoot.innerHTML = makeHomeMarkup();
       applySectionReveals(pageRoot);
       return Promise.resolve();
     }
 
-    return fetch(replicaAssetUrl(page.modulePath), { cache: "no-store" })
+    var moduleUrl = replicaAssetUrl(page.modulePath) + (page.modulePath.indexOf("?") >= 0 ? "&" : "?") + "_=" + Date.now();
+    return fetch(moduleUrl, { cache: "no-store" })
       .then(function (res) {
         if (!res.ok) throw new Error("Failed to load module: " + page.modulePath);
         return res.text();
       })
       .then(function (html) {
         removeReplicaPortalModals();
-        pageRoot.innerHTML = html;
+        injectModuleHtml(html, pageKey);
         executeInlineScripts(pageRoot);
         applyLocalLinks(pageRoot);
         notifyReplicaAfterLocalLinks(pageRoot);

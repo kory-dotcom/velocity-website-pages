@@ -1565,6 +1565,37 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   z-index: calc(var(--z-navbar) - 1);
   transition: none;
 }
+/* Full-viewport blur that sits beneath the mega panel (but below the navbar bar) while Explore is open */
+.vsl-navbar__mega-backdrop {
+  position: fixed;
+  top: calc(var(--nav-height) + var(--stripe-h) - 1px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 10, 26, 0.18);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: calc(var(--z-navbar) - 2);
+  transition: opacity 0.18s ease-out, visibility 0.18s ease-out;
+}
+.vsl-navbar__mega-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsl-navbar__mega-backdrop { transition: none; }
+}
+/* Scale the Explore mega-menu content ~30% larger than the rest of the navbar UI.
+   Scoped to the inner content so the panel's own top offset/padding stay aligned to the bar.
+   Value = global --vsl-ui-scale (1.15) x 1.2. */
+.vsl-navbar__mega-grid,
+.vsl-navbar__mega-utils {
+  --vsl-ui-scale: 1.38;
+}
 .vsl-navbar__mega.is-preloading {
   opacity: 1;
   visibility: visible;
@@ -2182,6 +2213,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     </div>
   </div>
 
+  <!-- Backdrop blur shown behind the Explore mega-menu -->
+  <div class="vsl-navbar__mega-backdrop" aria-hidden="true"></div>
+
   <!-- Race Mega-Menu Panel -->
   <div class="vsl-navbar__mega is-preloading" id="vsl-mega-panel" aria-hidden="true" inert>
     <div class="vsl-navbar__mega-grid">
@@ -2648,6 +2682,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   var raceToggle = navbar.querySelector('[data-race-toggle]');
   var megaPanel = navbar.querySelector('#vsl-mega-panel');
+  var megaBackdrop = navbar.querySelector('.vsl-navbar__mega-backdrop');
   var megaBookLinks = navbar.querySelectorAll('[data-mega-book]');
   var mobileBookLinks = navbar.querySelectorAll('[data-mobile-mega-book]');
 
@@ -2769,6 +2804,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       megaPanel.setAttribute('aria-hidden', 'true');
       megaPanel.setAttribute('inert', '');
     }
+    if (megaBackdrop) megaBackdrop.classList.remove('is-open');
   }
 
   function openMega() {
@@ -2783,6 +2819,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       megaPanel.classList.add('is-open');
       megaPanel.setAttribute('aria-hidden', 'false');
     }
+    if (megaBackdrop) megaBackdrop.classList.add('is-open');
   }
 
   function closeAllDesktop() {
