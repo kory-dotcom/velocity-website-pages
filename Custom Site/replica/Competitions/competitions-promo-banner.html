@@ -1,0 +1,499 @@
+<!-- CSS for Velocity Competitions floating popup (Desktop + Mobile) -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
+
+	:root {
+		--sb-navy: #10182B;
+		--sb-magenta: #EE265F;
+		--sb-blue: #293893;
+		--sb-yellow: #FDC70C;
+		/* Sits above page content but BELOW the Velocity navbar (--z-navbar: 9999)
+		   and its mobile menu overlay (--z-overlay: 10000) on desktop and mobile. */
+		--sb-banner-z: 9000;
+	}
+
+	#sb-promo-card {
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 520px;
+		z-index: var(--sb-banner-z);
+		background: white;
+		border-radius: 28px;
+		overflow: hidden;
+		box-shadow: 0 30px 60px rgba(16, 24, 43, 0.45);
+		text-align: center;
+		font-family: 'Khand', system-ui, sans-serif;
+		animation: sb-card-entry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	#sb-promo-minimized {
+		display: none;
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		z-index: var(--sb-banner-z);
+		background: var(--sb-magenta);
+		color: white;
+		padding: 12px 28px;
+		border-radius: 50px;
+		cursor: pointer;
+		font-family: 'Khand', system-ui, sans-serif;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 17px;
+		letter-spacing: 0.5px;
+		box-shadow: 0 10px 20px rgba(238, 38, 95, 0.35);
+		transition: transform 0.2s;
+		animation: sb-bounce-in 0.5s;
+	}
+
+	#sb-promo-minimized:hover {
+		transform: scale(1.1);
+	}
+
+	.sb-card-header {
+		background:
+			radial-gradient(120% 90% at 50% -10%, rgba(238, 38, 95, 0.45) 0%, rgba(238, 38, 95, 0) 55%),
+			radial-gradient(90% 80% at 85% 120%, rgba(41, 56, 147, 0.55) 0%, rgba(41, 56, 147, 0) 60%),
+			linear-gradient(162deg, #1B1E55 0%, var(--sb-navy) 100%);
+		padding: 38px 24px 30px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	/* Subtle diagonal speed lines behind the headline */
+	.sb-card-header::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: repeating-linear-gradient(
+			115deg,
+			rgba(255, 255, 255, 0.05) 0px,
+			rgba(255, 255, 255, 0.05) 2px,
+			transparent 2px,
+			transparent 16px
+		);
+		pointer-events: none;
+	}
+
+	.sb-flag-icon {
+		width: 40px;
+		height: 40px;
+		margin-bottom: 12px;
+		position: relative;
+		z-index: 1;
+		filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+		animation: sb-flag-wave 2.6s ease-in-out infinite;
+		transform-origin: 10% 50%;
+	}
+
+	.sb-eyebrow {
+		display: inline-block;
+		padding: 6px 20px;
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #fff;
+		background: linear-gradient(135deg, #D22026 0%, var(--sb-magenta) 100%);
+		border-radius: 0;
+		margin-bottom: 14px;
+		position: relative;
+		z-index: 1;
+		box-shadow: 0 6px 16px rgba(238, 38, 95, 0.4);
+	}
+
+	.sb-headline {
+		font-size: 42px;
+		line-height: 1.02;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		color: white;
+		letter-spacing: 0.02em;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	.sb-headline span {
+		color: var(--sb-yellow);
+		text-shadow: 0 2px 18px rgba(253, 199, 12, 0.45);
+	}
+
+	/* Checkered finish-line strip between header and body */
+	.sb-finish-line {
+		height: 14px;
+		background-image:
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%),
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%);
+		background-size: 14px 14px;
+		background-position: 0 0, 7px 7px;
+		background-color: #fff;
+	}
+
+	.sb-card-body {
+		padding: 26px 32px 34px;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		border-radius: 0 0 28px 28px;
+	}
+
+	.sb-subtitle {
+		font-size: 21px;
+		text-transform: uppercase;
+		color: var(--sb-navy);
+		font-weight: 600;
+		font-style: italic;
+		margin: 0;
+		line-height: 1.2;
+		letter-spacing: 0.02em;
+	}
+
+	.sb-urgency {
+		font-size: 14px;
+		text-transform: uppercase;
+		color: var(--sb-magenta);
+		font-weight: 700;
+		font-style: italic;
+		margin: 2px 0 10px;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+	}
+
+	.sb-card-cta-row {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 12px;
+		width: 100%;
+		max-width: 22rem;
+		margin-top: 2px;
+	}
+
+	.sb-card-btn {
+		position: relative;
+		overflow: hidden;
+		background: linear-gradient(135deg, #F23E72 0%, var(--sb-magenta) 100%);
+		color: white;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		border-radius: 14px;
+		padding: 12px 22px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		border: none;
+		cursor: pointer;
+		text-align: center;
+		-webkit-appearance: none;
+		appearance: none;
+		animation: sb-btn-pulse 2.4s infinite;
+	}
+
+	.sb-btn-title {
+		font-size: 22px;
+		font-weight: 700;
+		font-style: italic;
+		line-height: 1.1;
+	}
+
+	.sb-btn-meta {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		letter-spacing: 0.08em;
+		opacity: 0.85;
+		margin-top: 2px;
+	}
+
+	/* Animated shine sweep */
+	.sb-card-btn::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -120%;
+		width: 60%;
+		height: 100%;
+		background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+		transform: skewX(-20deg);
+		transition: left 0.6s ease;
+		pointer-events: none;
+	}
+
+	.sb-card-btn--secondary {
+		background: linear-gradient(135deg, #34419E 0%, var(--sb-blue) 100%);
+		box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35);
+		animation: sb-btn-pulse-blue 2.4s infinite;
+	}
+
+	button.sb-card-btn::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+
+	.sb-card-btn:hover {
+		transform: translateY(-2px) scale(1.02);
+		background: linear-gradient(135deg, #FF4F80 0%, #d41e53 100%);
+		box-shadow: 0 16px 32px rgba(238, 38, 95, 0.45);
+		color: white;
+	}
+
+	.sb-card-btn--secondary:hover {
+		background: linear-gradient(135deg, #3D4BB5 0%, #1f2b6e 100%);
+		box-shadow: 0 16px 32px rgba(41, 56, 147, 0.45);
+	}
+
+	.sb-card-btn:hover::after {
+		left: 130%;
+	}
+
+	.sb-controls {
+		position: absolute;
+		top: 14px;
+		right: 18px;
+		z-index: 10;
+	}
+
+	.sb-control-btn {
+		cursor: pointer;
+		font-size: 22px;
+		color: rgba(255,255,255,0.55);
+		transition: all 0.2s;
+		font-family: Arial, sans-serif;
+		line-height: 1;
+	}
+
+	.sb-control-btn:hover { color: white; transform: rotate(90deg); }
+
+	@media (max-width: 768px) {
+		#sb-promo-card {
+			max-width: 380px;
+			border-radius: 22px;
+		}
+		.sb-card-header {
+			padding: 30px 20px 24px;
+		}
+		.sb-card-body {
+			padding: 22px 22px 28px;
+			border-radius: 0 0 22px 22px;
+		}
+		.sb-flag-icon {
+			width: 34px;
+			height: 34px;
+			margin-bottom: 10px;
+		}
+		.sb-eyebrow {
+			padding: 5px 16px;
+			font-size: 11px;
+			margin-bottom: 12px;
+		}
+		.sb-headline {
+			font-size: 32px;
+		}
+		.sb-subtitle {
+			font-size: 18px;
+		}
+		.sb-urgency {
+			font-size: 13px;
+		}
+		.sb-btn-title {
+			font-size: 19px;
+		}
+		.sb-btn-meta {
+			font-size: 11px;
+		}
+		.sb-controls {
+			top: 10px;
+			right: 12px;
+		}
+		.sb-control-btn {
+			font-size: 24px;
+		}
+		#sb-promo-minimized {
+			bottom: 16px;
+			right: 16px;
+			padding: 10px 22px;
+			font-size: 15px;
+		}
+	}
+
+	@keyframes sb-card-entry {
+		from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	}
+	@keyframes sb-bounce-in {
+		0% { transform: scale(0); }
+		100% { transform: scale(1); }
+	}
+	@keyframes sb-btn-pulse {
+		0% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 14px rgba(238, 38, 95, 0); }
+		100% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0); }
+	}
+	@keyframes sb-btn-pulse-blue {
+		0% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 0 rgba(41, 56, 147, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 14px rgba(41, 56, 147, 0); }
+		100% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 0 rgba(41, 56, 147, 0); }
+	}
+	@keyframes sb-flag-wave {
+		0%, 100% { transform: rotate(0deg); }
+		25% { transform: rotate(-6deg); }
+		75% { transform: rotate(6deg); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		#sb-promo-card,
+		.sb-card-btn,
+		.sb-flag-icon,
+		#sb-promo-minimized {
+			animation: none !important;
+		}
+		.sb-card-btn::after { display: none; }
+	}
+</style>
+
+<div id="sb-promo-card">
+	<div class="sb-controls">
+		<div id="sb-btn-minimize" class="sb-control-btn" title="Close">&#10005;</div>
+	</div>
+
+	<div class="sb-card-header">
+		<svg class="sb-flag-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<rect x="6" y="4" width="3" height="40" rx="1.5" fill="#FFFFFF"/>
+			<path d="M11 7 H40 V27 H11 Z" fill="#FFFFFF"/>
+			<g fill="#10182B">
+				<rect x="11" y="7" width="7.25" height="5" />
+				<rect x="25.5" y="7" width="7.25" height="5" />
+				<rect x="18.25" y="12" width="7.25" height="5" />
+				<rect x="32.75" y="12" width="7.25" height="5" />
+				<rect x="11" y="17" width="7.25" height="5" />
+				<rect x="25.5" y="17" width="7.25" height="5" />
+				<rect x="18.25" y="22" width="7.25" height="5" />
+				<rect x="32.75" y="22" width="7.25" height="5" />
+			</g>
+		</svg>
+		<div class="sb-eyebrow">Registration Open</div>
+		<div class="sb-headline">Upcoming Velocity<br><span>Competitions</span></div>
+	</div>
+
+	<div class="sb-finish-line"></div>
+
+	<div class="sb-card-body">
+		<div class="sb-subtitle">Great For All Levels Of Experience</div>
+		<p class="sb-urgency">Limited Spots Remaining &mdash; Sign Up Today!</p>
+
+		<div class="sb-card-cta-row">
+			<button type="button" class="sb-card-btn" data-sb-url="https://form.jotform.com/261647113297157">
+				<span class="sb-btn-title">Champions League</span>
+				<span class="sb-btn-meta">July 2026 Season</span>
+			</button>
+			<button type="button" class="sb-card-btn sb-card-btn--secondary" data-sb-url="https://form.jotform.com/261725770505155">
+				<span class="sb-btn-title">July 4th Race</span>
+				<span class="sb-btn-meta">Independence Day Showdown</span>
+			</button>
+		</div>
+	</div>
+</div>
+
+<div id="sb-promo-minimized">
+	Velocity Competitions
+</div>
+
+<script>
+(function() {
+	/* Hide automatically after Saturday, July 4, 2026 at 11:00 AM Central. */
+	var endDate = new Date('2026-07-04T11:00:00-05:00');
+	if (Date.now() >= endDate.getTime()) return;
+
+	var version = "sb-competitions-v6";
+
+	if (sessionStorage.getItem('sbPromoVersion') !== version) {
+		sessionStorage.removeItem('sbMobileMin');
+		sessionStorage.removeItem('sbDesktopMin');
+		sessionStorage.removeItem('sbCardMin');
+		sessionStorage.setItem('sbPromoVersion', version);
+	}
+
+	var card = document.getElementById("sb-promo-card");
+	var mini = document.getElementById("sb-promo-minimized");
+
+	function sbAttachPromoToBody() {
+		try {
+			if (card && card.parentNode && card.parentNode !== document.body) {
+				document.body.appendChild(card);
+			}
+			if (mini && mini.parentNode && mini.parentNode !== document.body) {
+				document.body.appendChild(mini);
+			}
+		} catch (err) {}
+	}
+	sbAttachPromoToBody();
+
+	function sbGoCtaNewTab(btn, e) {
+		var url = btn.getAttribute('data-sb-url') || '';
+		if (!url) return;
+		if (e && e.preventDefault) {
+			e.preventDefault();
+			e.stopPropagation();
+			e.stopImmediatePropagation();
+		}
+		window.open(url, '_blank', 'noopener,noreferrer');
+	}
+
+	function sbBindCta(btn) {
+		if (!btn) return;
+		btn.addEventListener('click', function(e) { sbGoCtaNewTab(btn, e); }, true);
+		btn.addEventListener(
+			'touchend',
+			function(e) {
+				sbGoCtaNewTab(btn, e);
+			},
+			{ passive: false, capture: true }
+		);
+	}
+
+	if (card) {
+		var ctaButtons = card.querySelectorAll('.sb-card-btn[data-sb-url]');
+		for (var i = 0; i < ctaButtons.length; i++) {
+			sbBindCta(ctaButtons[i]);
+		}
+	}
+
+	var btnMin = document.getElementById("sb-btn-minimize");
+
+	function showCard() {
+		if (card) card.style.display = "block";
+		if (mini) mini.style.display = "none";
+		sessionStorage.setItem('sbCardMin', 'false');
+	}
+	function hideCard() {
+		if (card) card.style.display = "none";
+		if (mini) mini.style.display = "block";
+		sessionStorage.setItem('sbCardMin', 'true');
+	}
+
+	sessionStorage.getItem('sbCardMin') === 'true' ? hideCard() : showCard();
+
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (mini) mini.addEventListener('click', showCard);
+})();
+</script>
