@@ -254,7 +254,7 @@
       box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
   }
-  /* Third Eat / Drink hero column points to Father's Day Eat & Race bundles */
+  /* Anchor variant of the hero column tile (Eat / Drink / Race) */
   a.vsl-home-edr__col {
     text-decoration: none;
     color: inherit;
@@ -468,10 +468,7 @@
       font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem);
       padding-bottom: clamp(8%, 5vh, 18%);
     }
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
-      font-size: clamp(1.2rem, 0.82rem + 4.8vw, 2.65rem);
-    }
-    /* Mobile: third card ("Eat & Race.") gets the digital magenta brand color by default */
+    /* Mobile: third card ("Race.") gets the digital magenta brand color by default */
     .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
     .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
       color: var(--magenta) !important;
@@ -508,7 +505,7 @@
       color: var(--magenta) !important;
       -webkit-text-fill-color: var(--magenta) !important;
     }
-    /* Eat & Race column flips to brand gold when it's the tapped tile, with a matching gold glow */
+    /* RACE column flips to brand gold when it's the tapped tile, with a matching gold glow */
     .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__word-text,
     .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__dot {
       color: var(--yellow) !important;
@@ -1731,21 +1728,31 @@
           </div>
           <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></div>
         </a>
-        <a href="https://velocitysimlounge.com/fathers-day/" class="vsl-home-edr__col" aria-label="Father's Day Eat and Race bundles">
+        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-edr__col" data-vsl-cta-key="book" aria-label="Race — Book your sim racing session">
           <div class="vsl-home-edr__media">
             <img
-              data-edr-img="fathers-day"
-              src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Fathers_Racer.webp"
+              data-edr-img="race"
+              src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2048x2560.webp"
+              srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-480x600.webp 480w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x750.webp 600w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x960.webp 768w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-800x1000.webp 800w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x1280.webp 1024w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x1500.webp 1200w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1920.webp 1536w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2048x2560.webp 2048w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2400x3000.webp 2400w,
+                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2560x3200.webp 2560w"
               sizes="(max-width: 640px) 92vw, 33vw"
-              alt="Father's Day Eat &amp; Race bundles at Velocity Sim Racing Lounge"
-              width="1024"
-              height="683"
+              alt="Sim racing at Velocity Sim Racing Lounge"
+              width="2048"
+              height="2560"
               loading="eager"
               decoding="async"
               fetchpriority="low"
             >
           </div>
-          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Eat &amp; Race</span><span class="vsl-home-edr__dot">.</span></div>
+          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></div>
         </a>
       </div>
       <div class="vsl-home-edr__ctas">
@@ -2035,7 +2042,8 @@
       houston: {
         label: 'Houston',
         ctas: {
-          book:    'https://velocitysimlounge.com/book-now/',
+          /* Mirrors navbar bookingUrl pattern so the active city carries through */
+          book:    'https://velocitysimlounge.com/book-now/?loc=houston',
           events:  'https://velocitysimlounge.com/group-events/',
           reviews: 'https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0'
         }
@@ -2043,7 +2051,8 @@
       dallas: {
         label: 'Dallas',
         ctas: {
-          book:    'https://velocitysimlounge.com/dallas',
+          /* Mirrors navbar bookingUrl pattern; the book-now page renders the Dallas variant via ?loc=dallas */
+          book:    'https://velocitysimlounge.com/book-now/?loc=dallas',
           events:  'https://velocitysimlounge.com/dallas',
           reviews: 'https://velocitysimlounge.com/dallas'
         }

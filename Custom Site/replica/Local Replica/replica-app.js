@@ -243,12 +243,12 @@
   var NAVBAR_LOC_CONFIG = {
     houston: {
       label: "Houston",
-      bookingUrl: "https://velocitysimlounge.com/book-now/",
+      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=houston",
       ariaBook: "Book now at Houston"
     },
     dallas: {
       label: "Dallas",
-      bookingUrl: "https://velocitysimlounge.com/dallas",
+      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=dallas",
       ariaBook: "Book now at Dallas"
     }
   };
