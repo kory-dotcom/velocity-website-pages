@@ -722,10 +722,33 @@
     .vsl-home-edr__compete-btn-meta { font-size: clamp(0.62rem, 0.44rem + 0.28vw, 0.78rem); }
   }
 
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-    z-index: 14;
-    font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem) !important;
-    padding-bottom: clamp(10%, 8vh, 24%);
+  /* Desktop only: RACE word band under the competitions promo */
+  @media (min-width: 1025px) {
+    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
+      z-index: 14;
+      font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem) !important;
+      padding-bottom: clamp(10%, 8vh, 24%);
+    }
+  }
+  /* Phone + tablet: hide RACE — promo fills the card (no overlap) */
+  @media (max-width: 1024px) {
+    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
+      --vsl-compete-word-band: clamp(0.45rem, 1.5cqh, 0.9rem);
+      justify-content: flex-start;
+      padding-bottom: clamp(0.45rem, 1.5cqh, 0.9rem);
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel::before {
+      bottom: 0;
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-btns {
+      margin-top: auto;
+    }
   }
   .vsl-home-edr__compete-btn--primary {
     background: linear-gradient(135deg, #F23E72 0%, var(--magenta) 100%);
@@ -786,10 +809,6 @@
     }
   }
   @media (max-width: 640px) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-      font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem) !important;
-      padding-bottom: clamp(8%, 5vh, 18%);
-    }
     .vsl-home-edr__compete-panel {
       --vsl-compete-word-band: clamp(calc(10% + 1.75rem), calc(8cqh + 1.25rem), calc(22% + 3.25rem));
       --vsl-compete-pad-top: clamp(0.4rem, 5.5cqh, 1.35rem);
@@ -929,9 +948,9 @@
       font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem);
       padding-bottom: clamp(8%, 5vh, 18%);
     }
-    /* Mobile: third card ("Race.") gets the digital magenta brand color by default */
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
+    /* Mobile: third card ("Race.") — only when competitions promo is off */
+    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
+    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
       color: var(--magenta) !important;
       -webkit-text-fill-color: var(--magenta) !important;
     }
