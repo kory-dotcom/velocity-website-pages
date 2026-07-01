@@ -15,6 +15,7 @@
     "party-packs": { title: "Party Packs", modulePath: "../Party Packs/velocity-party-packs-elementor.html" },
     "semi-private": { title: "Semi-Private", modulePath: "../Semi-Private/velocity-semi-private-elementor.html" },
     "fathers-day": { title: "Father's Day Bundles", modulePath: "../Bundles Page/velocity-fathers-day-elementor.html" },
+    "summer-special": { title: "Student Summer Special", modulePath: "../Summer Special/velocity-summer-special-elementor.html" },
     "promotions": { title: "Promotions", modulePath: "../Promotions/velocity-promotions-elementor.html" },
     "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" }
   };
@@ -47,6 +48,10 @@
     "/fathers-day": "index.html?p=fathers-day",
     "/spring-bundles/": "index.html?p=fathers-day",
     "/spring-bundles": "index.html?p=fathers-day",
+    "/summer-special/": "index.html?p=summer-special",
+    "/summer-special": "index.html?p=summer-special",
+    "/Summer Special/velocity-summer-special-elementor.html": "index.html?p=summer-special",
+    "/VelocityStagingSite/Summer Special/velocity-summer-special-elementor.html": "index.html?p=summer-special",
     "/promotions/": "index.html?p=promotions",
     "/promotions": "index.html?p=promotions",
     "/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
@@ -382,6 +387,7 @@
       '<li><a href="index.html?p=party-packs">Party Packs</a></li>' +
       '<li><a href="index.html?p=membership">Membership</a></li>' +
       '<li><a href="index.html?p=fathers-day">Father\'s Day Bundles</a></li>' +
+      '<li><a href="index.html?p=summer-special">Student Summer Special</a></li>' +
       '<li><a href="index.html?p=promotions">Promotions</a></li>' +
       '<li><a href="index.html?p=buyout">Full Venue Buyout</a></li>' +
       '<li><a href="index.html?p=contact">Contact (Houston)</a></li>' +
