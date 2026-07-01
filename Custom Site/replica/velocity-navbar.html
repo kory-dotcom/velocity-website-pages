@@ -1265,6 +1265,37 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   z-index: calc(var(--z-navbar) - 1);
   transition: none;
 }
+/* Full-viewport blur that sits beneath the mega panel (but below the navbar bar) while Explore is open */
+.vsl-navbar__mega-backdrop {
+  position: fixed;
+  top: calc(var(--nav-height) + var(--stripe-h) - 1px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 10, 26, 0.18);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: calc(var(--z-navbar) - 2);
+  transition: opacity 0.18s ease-out, visibility 0.18s ease-out;
+}
+.vsl-navbar__mega-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsl-navbar__mega-backdrop { transition: none; }
+}
+/* Scale the Explore mega-menu content ~30% larger than the rest of the navbar UI.
+   Scoped to the inner content so the panel's own top offset/padding stay aligned to the bar.
+   Value = global --vsl-ui-scale (1.15) x 1.2. */
+.vsl-navbar__mega-grid,
+.vsl-navbar__mega-utils {
+  --vsl-ui-scale: 1.38;
+}
 .vsl-navbar__mega.is-preloading {
   opacity: 1;
   visibility: visible;
@@ -1299,12 +1330,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(6) { animation-delay: 0.125s; }
 .vsl-navbar__mega.is-open .vsl-navbar__mega-utils {
   animation: vsl-card-in 0.18s cubic-bezier(0, 0, 0.2, 1) 0.1s both;
-}
-/* Scale the Explore dropdown content up ~20% (1.15 base -> 1.38) without moving the panel,
-   which stays anchored to the real nav height via its own unscaled top offset. */
-.vsl-navbar__mega-grid,
-.vsl-navbar__mega-utils {
-  --vsl-ui-scale: 1.38;
 }
 .vsl-navbar__mega-grid {
   display: grid;
@@ -1750,21 +1775,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   .vsl-navbar__cta-loc { padding: calc(9px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)); font-size: calc(12px * var(--vsl-ui-scale)); }
   .vsl-navbar__mega { padding: calc(20px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)); }
 }
-/* Desktop-only: ease the Explore dropdown's +20% scale back toward the known-good base as the
-   viewport narrows, so the enlarged card title/subtitle text stops wrapping and overflowing.
-   (The mega panel is hidden at <=900px, so these only ever affect desktop.) */
-@media (min-width: 1201px) and (max-width: 1400px) {
-  .vsl-navbar__mega-grid,
-  .vsl-navbar__mega-utils { --vsl-ui-scale: 1.30; }
-}
-@media (min-width: 1051px) and (max-width: 1200px) {
-  .vsl-navbar__mega-grid,
-  .vsl-navbar__mega-utils { --vsl-ui-scale: 1.22; }
-}
-@media (min-width: 901px) and (max-width: 1050px) {
-  .vsl-navbar__mega-grid,
-  .vsl-navbar__mega-utils { --vsl-ui-scale: 1.15; }
-}
 @media (max-width: 900px) {
   .vsl-navbar { --vsl-ui-scale: 1; }
   .vsl-navbar__menu,
@@ -1889,6 +1899,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   </div>
 
   <!-- Race Mega-Menu Panel -->
+  <div class="vsl-navbar__mega-backdrop" aria-hidden="true"></div>
+
   <div class="vsl-navbar__mega is-preloading" id="vsl-mega-panel" aria-hidden="true" inert>
     <div class="vsl-navbar__mega-grid">
       <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__mega-card vsl-navbar__mega-card--lg vsl-navbar__mega-card--book" data-mega-book>
@@ -2342,6 +2354,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   var raceToggle = navbar.querySelector('[data-race-toggle]');
   var megaPanel = navbar.querySelector('#vsl-mega-panel');
+  var megaBackdrop = navbar.querySelector('.vsl-navbar__mega-backdrop');
   var megaBookLinks = navbar.querySelectorAll('[data-mega-book]');
   var mobileBookLinks = navbar.querySelectorAll('[data-mobile-mega-book]');
 
@@ -2422,6 +2435,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       megaPanel.setAttribute('aria-hidden', 'true');
       megaPanel.setAttribute('inert', '');
     }
+    if (megaBackdrop) megaBackdrop.classList.remove('is-open');
   }
 
   function openMega() {
@@ -2436,6 +2450,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       megaPanel.classList.add('is-open');
       megaPanel.setAttribute('aria-hidden', 'false');
     }
+    if (megaBackdrop) megaBackdrop.classList.add('is-open');
   }
 
   function closeAllDesktop() {
