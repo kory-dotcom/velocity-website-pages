@@ -264,12 +264,18 @@
   .vsl-summer-hero--hero-bg-vimeo::before {
     opacity: 0.72;
   }
+  /* WP/Elementor global `img { height: auto; max-width: 100% }` rules break cover sizing — force full-bleed */
   .vsl-summer-hero__video,
-  .vsl-summer-hero__banner-img {
+  .vsl-summer-hero__banner-img,
+  .vsl-summer .vsl-summer-hero__video,
+  .vsl-summer .vsl-summer-hero__banner-img {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    min-height: 0 !important;
     object-fit: cover;
     object-position: center;
     z-index: 0;
@@ -558,13 +564,26 @@
      FIRST-GLANCE / ONE-VIEW SUMMER LAYOUT
      Hero + offer card share a single viewport fold.
      ═══════════════════════════════════════════════ */
-  /* Warm summer wash layered over the base navy gradient */
+  /* One-view fold: fixed height + checker pinned to the bottom edge (matches home hero) */
   .vsl-summer-hero--glance {
+    height: calc(100vh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+    height: calc(100svh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+    max-height: calc(100vh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+    max-height: calc(100svh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--vsl-hero-finish-h);
+    box-sizing: border-box;
     background:
       radial-gradient(120% 90% at 88% 8%, rgba(253, 199, 12, 0.20) 0%, transparent 42%),
       radial-gradient(110% 80% at 92% 30%, rgba(255, 122, 41, 0.18) 0%, transparent 46%),
       radial-gradient(120% 120% at 8% 100%, rgba(238, 38, 95, 0.20) 0%, transparent 52%),
       linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 52%, #0d1322 100%);
+  }
+  .vsl-summer-hero--glance .vsl-summer-hero__finish {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 0;
   }
   /* Left-side scrim over the photo — dark behind copy, fades out toward the card */
   .vsl-summer-hero--glance::before {
@@ -634,6 +653,7 @@
   .vsl-summer-hero__inner--split {
     max-width: min(1200px, 100%);
     flex: 1 1 0%;
+    min-height: 0;
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 440px);
     align-items: center;
@@ -646,6 +666,7 @@
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    min-width: 0;
     max-width: none;
     margin: 0;
     gap: 0;
@@ -662,11 +683,26 @@
   .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title,
   .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__lede {
     margin: 0;
-    width: 100%;
-    max-width: none;
     box-sizing: border-box;
     padding-inline: var(--vsl-hero-panel-x);
+  }
+  .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title {
+    display: inline-block;
+    width: fit-content;
+    min-width: min-content;
+    max-width: 100%;
+    justify-self: start;
+    text-align: center;
+    text-wrap: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
+    padding-block: clamp(12px, 2vw, 18px);
+  }
+  .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__lede {
+    width: 100%;
+    max-width: none;
     text-align: left;
+    padding-block: clamp(14px, 1.6vw, 18px);
   }
   .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__eyebrow {
     margin: 0;
@@ -680,25 +716,26 @@
     text-align: center;
     letter-spacing: 0.1em;
   }
-  .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title {
+  /* Headline: two lines — "Special" centered under "Limited Time" */
+  .vsl-summer-hero--glance .vsl-summer-hero__title-line {
     display: block;
-    padding-block: clamp(12px, 2vw, 18px);
+    white-space: nowrap;
   }
-  .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__lede {
-    padding-block: clamp(14px, 1.6vw, 18px);
-  }
-  /* Diagonal headline: second line tabs right */
   .vsl-summer-hero--glance .vsl-summer-hero__title-line + .vsl-summer-hero__title-line {
-    margin-left: clamp(1.35rem, 3.8vw, 3rem);
+    margin-left: 0;
+    padding-left: 0;
   }
   /* Standardized translucent panel behind the headline */
   .vsl-summer-hero--glance .vsl-summer-hero__title {
     display: inline-block;
     width: fit-content;
+    min-width: min-content;
     max-width: 100%;
     font-size: clamp(2.6rem, 1.4rem + 5.4vw, 4.6rem);
     text-align: inherit;
-    text-wrap: initial;
+    text-wrap: nowrap;
+    overflow-wrap: normal;
+    word-break: keep-all;
     background: rgba(0, 0, 0, 0.78);
     border-radius: 16px;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.35);
@@ -1098,9 +1135,17 @@
     background: rgba(16,24,43,0.06);
     overflow: hidden;
   }
-  .vsl-summer-card__media img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
+  /* !important guards against WP/Elementor global img sizing rules (height:auto etc.) */
+  .vsl-summer-card__media img,
+  .vsl-summer .vsl-summer-card__media img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
   .vsl-summer-card__body {
     padding: clamp(18px, 2vw, 26px) clamp(20px, 2.6vw, 32px) clamp(22px, 2.5vw, 30px);
@@ -1308,6 +1353,96 @@
   }
 
   /* ── RESPONSIVE ── */
+  /* Stack hero before split columns get tight — headline nowrap is wider than the copy column ~901–1080px */
+  @media (max-width: 1100px) {
+    /* Mobile: one fixed viewport fold — checker always pinned at the bottom edge */
+    .vsl-summer-hero--glance {
+      height: calc(100vh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+      height: calc(100svh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+      max-height: calc(100vh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+      max-height: calc(100svh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
+      padding-bottom: var(--vsl-hero-finish-h);
+    }
+    .vsl-summer-hero--glance.vsl-summer-hero--hero-bg-image::before,
+    .vsl-summer-hero--glance.vsl-summer-hero--has-video::before {
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.52) 0%,
+        rgba(0, 0, 0, 0.24) 38%,
+        transparent 68%
+      );
+    }
+    .vsl-summer-hero__inner--split {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto minmax(0, 1fr);
+      justify-content: start;
+      align-content: stretch;
+      align-items: stretch;
+      flex: 1 1 auto;
+      min-height: 0;
+      max-width: min(420px, 100%);
+      gap: 25px;
+      padding: clamp(10px, 2svh, 20px) clamp(14px, 4vw, 18px) clamp(12px, 2svh, 20px);
+      overflow: visible;
+    }
+    .vsl-summer-hero__inner--split .vsl-summer-hero__mast {
+      align-items: center;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 0;
+      text-align: center;
+      margin-inline: auto;
+      width: 100%;
+    }
+    .vsl-summer-hero__inner--split .vsl-summer-hero__copy {
+      width: 100%;
+      justify-items: center;
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__eyebrow {
+      align-items: center;
+      text-align: center;
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title {
+      justify-self: center;
+      text-align: center;
+    }
+    .vsl-summer-hero__map {
+      opacity: 0.14;
+      width: min(95vw, 640px);
+      right: -24%;
+    }
+    .vsl-summer-hero__inner--split .vsl-summer-card {
+      max-width: 100%;
+      width: 100%;
+      margin-inline: auto;
+      align-self: stretch;
+      min-height: 0;
+      max-height: 100%;
+      flex: 1 1 auto;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__media {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: none;
+      height: auto;
+      aspect-ratio: auto;
+      overflow: hidden;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__body {
+      flex: 0 0 auto;
+      flex-shrink: 0;
+      padding: 12px 14px 14px;
+      gap: 0.34rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__list li {
+      margin-bottom: 0.22em;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__cta {
+      margin-top: 0.25rem;
+    }
+  }
   @media (max-width: 900px) {
     .vsl-summer-card-grid--4,
     .vsl-summer-card-grid--2 {
@@ -1315,7 +1450,7 @@
       max-width: min(480px, 100%);
       margin-inline: auto;
     }
-    .vsl-summer-card__media {
+    .vsl-summer-card:not(.vsl-summer-card--hero) .vsl-summer-card__media {
       aspect-ratio: 4 / 3;
     }
     .vsl-summer-offer {
@@ -1326,45 +1461,71 @@
       aspect-ratio: 16 / 9;
       max-height: 168px;
     }
-    /* Stack the first-glance split: headline on top, card below, both centered */
-    .vsl-summer-hero__inner--split {
-      grid-template-columns: minmax(0, 460px);
-      justify-content: center;
-      gap: clamp(22px, 4vw, 36px);
-      text-align: center;
-      padding-block: clamp(32px, 8vh, 64px);
-    }
-    .vsl-summer-hero__inner--split .vsl-summer-hero__mast {
-      align-items: center;
-      text-align: center;
-      margin-inline: auto;
-    }
-    .vsl-summer-hero__inner--split .vsl-summer-hero__copy {
-      justify-items: stretch;
-    }
-    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__eyebrow {
-      align-items: center;
-      text-align: center;
-    }
-    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title,
-    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__lede {
-      text-align: center;
-    }
-    .vsl-summer-hero__inner--split .vsl-summer-card {
-      margin-inline: auto;
-    }
   }
   @media (max-width: 639px) {
     .vsl-summer-hero__title { line-height: 1.08; }
     .vsl-summer--glance .vsl-summer-hero__title,
     .vsl-summer-hero--glance .vsl-summer-hero__title {
-      font-size: clamp(2.4rem, 1.2rem + 7vw, 3.2rem);
+      font-size: clamp(2rem, 1rem + 8vw, 2.75rem);
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy {
+      --vsl-hero-panel-x: 1.25rem;
+      gap: clamp(0.65rem, 2vh, 0.85rem);
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__eyebrow {
+      font-size: clamp(0.8rem, 0.74rem + 0.45vw, 0.9rem);
+      padding: 0.58rem 1.25rem;
+      letter-spacing: 0.07em;
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__title {
+      padding-block: 10px;
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__lede {
+      font-size: 0.92rem;
+      line-height: 1.4;
+      padding-block: 10px;
     }
     .vsl-summer-hero__sun {
-      width: clamp(180px, 52vw, 260px);
-      height: clamp(180px, 52vw, 260px);
-      top: -70px;
-      right: -60px;
+      display: none;
+    }
+    .vsl-summer-hero__map {
+      display: none;
+    }
+    .vsl-summer-hero__inner--split {
+      max-width: min(440px, 100%);
+      gap: 25px;
+      padding-top: clamp(8px, 1.5svh, 16px);
+      padding-bottom: clamp(10px, 1.5svh, 16px);
+    }
+    .vsl-summer-card--hero .vsl-summer-card__body {
+      padding: 14px 16px 16px;
+      gap: 0.42rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__name {
+      font-size: 1.15rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__price {
+      font-size: clamp(1.4rem, 1.1rem + 2.2vw, 1.62rem);
+    }
+    .vsl-summer-card--hero .vsl-summer-card__save {
+      font-size: 0.72rem;
+      padding: 0.36em 0.58em;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__list {
+      font-size: 0.9rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__list li {
+      margin-bottom: 0.3em;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__fine {
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__cta {
+      min-height: 44px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      margin-top: 0.35rem;
     }
     .vsl-summer-section-title { line-height: 1.2; }
     .vsl-summer-bundles { padding: 36px 0 64px; }
@@ -1380,7 +1541,7 @@
       width: 100%;
       max-width: 320px;
     }
-    .vsl-summer-card__media {
+    .vsl-summer-card:not(.vsl-summer-card--hero) .vsl-summer-card__media {
       aspect-ratio: 3 / 2;
     }
     .vsl-summer-offer__media img {
@@ -1393,8 +1554,67 @@
     .vsl-summer-card__name {
       font-size: clamp(1.2rem, 3.8vw + 0.75rem, 1.4rem);
     }
-    .vsl-summer-hero__inner {
+    .vsl-summer-hero__inner:not(.vsl-summer-hero__inner--split) {
       padding: clamp(44px, 12vw, 80px) clamp(16px, 5vw, var(--page-margin)) clamp(24px, 6vw, 40px);
+    }
+  }
+  /* Short phones: compress the fold so copy + card + checker still fit one viewport */
+  @media (max-width: 1100px) and (max-height: 760px) {
+    .vsl-summer-hero--glance .vsl-summer-hero__copy {
+      gap: 0.5rem;
+    }
+    .vsl-summer-hero--glance .vsl-summer-hero__copy .vsl-summer-hero__eyebrow {
+      padding-block: 0.45rem;
+      font-size: 0.78rem;
+    }
+    .vsl-summer--glance .vsl-summer-hero__title,
+    .vsl-summer-hero--glance .vsl-summer-hero__title {
+      font-size: clamp(1.7rem, 0.9rem + 6vw, 2.2rem);
+      padding-block: 8px;
+    }
+    .vsl-summer-hero__inner--split {
+      gap: 20px;
+      padding-top: clamp(6px, 1.2svh, 12px);
+      padding-bottom: clamp(8px, 1.2svh, 12px);
+    }
+    .vsl-summer-card--hero .vsl-summer-card__fine {
+      display: none;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__body {
+      padding: 10px 14px 12px;
+      gap: 0.3rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__name {
+      font-size: 1rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__price {
+      font-size: 1.3rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__save {
+      font-size: 0.66rem;
+      padding: 0.3em 0.5em;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__list {
+      font-size: 0.82rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__list li {
+      margin-bottom: 0.2em;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__fine {
+      font-size: 0.66rem;
+    }
+    .vsl-summer-card--hero .vsl-summer-card__cta {
+      min-height: 40px;
+      padding: 8px 14px;
+      margin-top: 0.25rem;
+    }
+  }
+  /* Very short screens (landscape phones): content can't fit one fold — let the hero grow and scroll */
+  @media (max-width: 1100px) and (max-height: 540px) {
+    .vsl-summer-hero--glance {
+      height: auto;
+      max-height: none;
+      min-height: calc(100svh - var(--vsl-nav-offset) - env(safe-area-inset-bottom, 0px));
     }
   }
 
@@ -1597,10 +1817,9 @@
               <span class="vsl-summer-hero__eyebrow-line vsl-summer-hero__eyebrow-line--date">All July 2026</span>
             </div>
             <h1 class="vsl-summer-hero__title" id="summer-hero-title">
-              <span class="vsl-summer-hero__title-line">Race All</span>
-              <span class="vsl-summer-hero__title-line vsl-summer-hero__title-accent">Summer Long</span>
+              <span class="vsl-summer-hero__title-line">Limited Time</span>
+              <span class="vsl-summer-hero__title-line vsl-summer-hero__title-accent">Special</span>
             </h1>
-            <p class="vsl-summer-hero__lede">School&rsquo;s out, helmets on. Grab a Quick Race all July &mdash; solo or with the whole crew.</p>
           </div>
         </div>
 
@@ -1682,6 +1901,19 @@
   }
 
   var vslSummerLastBookingFocus = null;
+  var vslSummerModalPassThroughTimer = null;
+
+  function vslSummerBlockModalPassThrough(ms) {
+    ms = ms || 450;
+    if (vslSummerModalPassThroughTimer) {
+      window.clearTimeout(vslSummerModalPassThroughTimer);
+    }
+    document.body.style.pointerEvents = 'none';
+    vslSummerModalPassThroughTimer = window.setTimeout(function () {
+      document.body.style.pointerEvents = '';
+      vslSummerModalPassThroughTimer = null;
+    }, ms);
+  }
 
   function openSummerBookModal(url, title) {
     var modal = document.getElementById('vsl-summer-book-modal');
@@ -1689,6 +1921,11 @@
     var loader = document.getElementById('vsl-summer-book-modal-loader');
     var titleEl = document.getElementById('vsl-summer-book-modal-title');
     if (!modal || !iframe) return;
+    if (vslSummerModalPassThroughTimer) {
+      window.clearTimeout(vslSummerModalPassThroughTimer);
+      vslSummerModalPassThroughTimer = null;
+      document.body.style.pointerEvents = '';
+    }
     if (modal.parentNode !== document.body) {
       document.body.appendChild(modal);
     }
@@ -1714,6 +1951,7 @@
     modal.setAttribute('aria-hidden', 'true');
     iframe.src = 'about:blank';
     document.body.style.overflow = '';
+    vslSummerBlockModalPassThrough();
     if (vslSummerLastBookingFocus) {
       try { vslSummerLastBookingFocus.focus(); } catch (e1) {}
     }
@@ -1736,9 +1974,9 @@
   if (!window.__vslSummerBookingModalBound) {
     window.__vslSummerBookingModalBound = true;
     window.addEventListener(
-      'pointerdown',
+      'click',
       function vslSummerBookModalCloseWinCapture(e) {
-        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        if (e.button !== 0) return;
         var m = document.getElementById('vsl-summer-book-modal');
         if (!m || m.getAttribute('aria-hidden') !== 'false') return;
         var t = e.target;
