@@ -587,7 +587,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(1px, 0.4cqh, 3px);
+    gap: clamp(3px, 0.55cqh, 6px);
     border: 2px solid rgba(255, 255, 255, 0.28);
     border-radius: clamp(6px, 2cqi, 12px);
     padding: clamp(0.35rem, 1.4cqh, 0.75rem) clamp(0.2rem, 1.5cqi, 0.55rem);
@@ -659,11 +659,12 @@
   }
   .vsl-home-edr__compete-btn-title {
     font-size: clamp(0.72rem, 7.5cqi, 1.18rem);
-    line-height: 1.12;
+    line-height: 1.1;
     max-width: 100%;
     overflow-wrap: anywhere;
     text-wrap: balance;
     letter-spacing: 0.04em;
+    flex-shrink: 0;
   }
   .vsl-home-edr__compete-btn-meta {
     font-family: var(--font-body, Inter, system-ui, sans-serif);
@@ -672,10 +673,11 @@
     font-style: normal;
     letter-spacing: 0.05em;
     opacity: 1;
-    line-height: 1.18;
+    line-height: 1.22;
     max-width: 100%;
     overflow-wrap: anywhere;
     text-transform: none;
+    flex-shrink: 0;
   }
   /* Scale promo content down when the Race tile gets tight (zoom / short viewports) */
   @container vsl-compete (max-height: 380px) {
@@ -684,11 +686,18 @@
     .vsl-home-edr__compete-sub { font-size: clamp(0.6rem, 4.8cqi, 0.88rem); }
     .vsl-home-edr__compete-urgency { font-size: clamp(0.64rem, 5cqi, 0.92rem); }
     .vsl-home-edr__compete-btn {
-      min-height: clamp(2.15rem, 17cqh, 3.5rem);
-      max-height: clamp(2.35rem, 19cqh, 3.75rem);
+      min-height: clamp(2rem, 14cqh, 3.25rem);
+      max-height: none;
+      gap: clamp(3px, 0.7cqh, 6px);
     }
-    .vsl-home-edr__compete-btn-title { font-size: clamp(0.62rem, 6.2cqi, 1rem); }
-    .vsl-home-edr__compete-btn-meta { font-size: clamp(0.52rem, 4.6cqi, 0.78rem); }
+    .vsl-home-edr__compete-btn-title {
+      font-size: min(clamp(0.62rem, 6.2cqi, 1rem), 5.5cqh);
+      line-height: 1.1;
+    }
+    .vsl-home-edr__compete-btn-meta {
+      font-size: min(clamp(0.52rem, 4.6cqi, 0.78rem), 4.8cqh);
+      line-height: 1.22;
+    }
   }
   @container vsl-compete (max-height: 300px) {
     .vsl-home-edr__compete-kicker { font-size: clamp(0.6rem, 5cqi, 1rem); letter-spacing: 0.05em; }
@@ -696,12 +705,19 @@
     .vsl-home-edr__compete-sub { font-size: clamp(0.56rem, 4.4cqi, 0.8rem); }
     .vsl-home-edr__compete-urgency { font-size: clamp(0.6rem, 4.6cqi, 0.85rem); }
     .vsl-home-edr__compete-btn {
-      min-height: clamp(1.95rem, 15cqh, 3rem);
-      max-height: clamp(2.1rem, 17cqh, 3.25rem);
-      padding-block: clamp(0.25rem, 1.2cqh, 0.55rem);
+      min-height: clamp(1.85rem, 12cqh, 2.75rem);
+      max-height: none;
+      gap: clamp(2px, 0.6cqh, 5px);
+      padding-block: clamp(0.28rem, 1cqh, 0.5rem);
     }
-    .vsl-home-edr__compete-btn-title { font-size: clamp(0.58rem, 5.8cqi, 0.92rem); }
-    .vsl-home-edr__compete-btn-meta { font-size: clamp(0.5rem, 4.4cqi, 0.72rem); }
+    .vsl-home-edr__compete-btn-title {
+      font-size: min(clamp(0.58rem, 5.8cqi, 0.92rem), 5cqh);
+      line-height: 1.08;
+    }
+    .vsl-home-edr__compete-btn-meta {
+      font-size: min(clamp(0.5rem, 4.4cqi, 0.72rem), 4.5cqh);
+      line-height: 1.2;
+    }
   }
   @supports not (width: 1cqi) {
     .vsl-home-edr__compete-panel {
@@ -722,10 +738,48 @@
     .vsl-home-edr__compete-btn-meta { font-size: clamp(0.62rem, 0.44rem + 0.28vw, 0.78rem); }
   }
 
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-    z-index: 14;
-    font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem) !important;
-    padding-bottom: clamp(10%, 8vh, 24%);
+  /* Desktop only: RACE word band under the competitions promo */
+  @media (min-width: 1025px) {
+    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
+      z-index: 14;
+      font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem) !important;
+      padding-bottom: clamp(10%, 8vh, 24%);
+    }
+  }
+  /* Phone + tablet: hide RACE — promo fills the card (no overlap) */
+  @media (max-width: 1024px) {
+    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
+      --vsl-compete-word-band: clamp(0.45rem, 1.5cqh, 0.9rem);
+      justify-content: flex-start;
+      padding-bottom: clamp(0.45rem, 1.5cqh, 0.9rem);
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel::before {
+      bottom: 0;
+    }
+    .vsl-home-edr--compete-active .vsl-home-edr__compete-btns {
+      margin-top: auto;
+    }
+    /* Stacked layouts: cap button type by height so cqi width scaling cannot squash lines */
+    .vsl-home-edr__compete-btn {
+      max-height: none;
+      min-height: clamp(2.45rem, 13cqh, 3.5rem);
+      gap: clamp(4px, 0.85cqh, 8px);
+      padding-block: clamp(0.32rem, 1.15cqh, 0.62rem);
+    }
+    .vsl-home-edr__compete-btn-title {
+      font-size: min(clamp(0.58rem, 5.5cqi, 0.95rem), 5.8cqh);
+      line-height: 1.08;
+    }
+    .vsl-home-edr__compete-btn-meta {
+      font-size: min(clamp(0.5rem, 4.5cqi, 0.78rem), 5cqh);
+      line-height: 1.22;
+    }
   }
   .vsl-home-edr__compete-btn--primary {
     background: linear-gradient(135deg, #F23E72 0%, var(--magenta) 100%);
@@ -786,10 +840,6 @@
     }
   }
   @media (max-width: 640px) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-      font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem) !important;
-      padding-bottom: clamp(8%, 5vh, 18%);
-    }
     .vsl-home-edr__compete-panel {
       --vsl-compete-word-band: clamp(calc(10% + 1.75rem), calc(8cqh + 1.25rem), calc(22% + 3.25rem));
       --vsl-compete-pad-top: clamp(0.4rem, 5.5cqh, 1.35rem);
@@ -798,9 +848,10 @@
       gap: clamp(4px, 2cqi, 8px);
     }
     .vsl-home-edr__compete-btn {
-      min-height: clamp(2.15rem, 13cqh, 3.25rem);
-      max-height: clamp(2.35rem, 15cqh, 3.5rem);
-      padding: clamp(0.3rem, 1.2cqh, 0.6rem) clamp(0.18rem, 1.2cqi, 0.45rem);
+      min-height: clamp(2.35rem, 12cqh, 3.25rem);
+      max-height: none;
+      padding: clamp(0.32rem, 1.1cqh, 0.58rem) clamp(0.18rem, 1.2cqi, 0.45rem);
+      gap: clamp(4px, 0.75cqh, 7px);
       border-width: 2px;
     }
     .vsl-home-edr__compete-btn:active {
@@ -811,10 +862,12 @@
         0 8px 20px rgba(0, 0, 0, 0.4);
     }
     .vsl-home-edr__compete-btn-title {
-      font-size: clamp(0.62rem, 6.5cqi, 1rem);
+      font-size: min(clamp(0.58rem, 5.5cqi, 0.92rem), 5.5cqh);
+      line-height: 1.08;
     }
     .vsl-home-edr__compete-btn-meta {
-      font-size: clamp(0.52rem, 5cqi, 0.78rem);
+      font-size: min(clamp(0.5rem, 4.5cqi, 0.74rem), 4.8cqh);
+      line-height: 1.22;
     }
     .vsl-home-edr--compete-active .vsl-home-edr__col--compete.is-tapped {
       z-index: 5;
@@ -929,9 +982,9 @@
       font-size: clamp(1.75rem, 1rem + 7vw, 3.25rem);
       padding-bottom: clamp(8%, 5vh, 18%);
     }
-    /* Mobile: third card ("Race.") gets the digital magenta brand color by default */
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
+    /* Mobile: third card ("Race.") — only when competitions promo is off */
+    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
+    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
       color: var(--magenta) !important;
       -webkit-text-fill-color: var(--magenta) !important;
     }
