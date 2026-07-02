@@ -1393,7 +1393,7 @@
   }
 </style>
 
-<div class="vsl-partypack vsl-partypack--dallas" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","proPack":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1478,13 +1478,6 @@
             </div>
           </article>
 
-        </div>
-
-        <div class="vsl-pp-dallas-soon" data-vsl-pp-dallas-soon role="status" aria-live="polite" hidden>
-          <p class="vsl-pp-dallas-soon__eyebrow">Dallas</p>
-          <p class="vsl-pp-dallas-soon__title">Party Packs coming to Dallas</p>
-          <p class="vsl-pp-dallas-soon__text">We&rsquo;re opening in Dallas Summer 2026. Get updates on our Dallas page&mdash;or switch to Houston to book a Party Pack today.</p>
-          <a class="vsl-pp-btn" href="https://velocitysimlounge.com/dallas/">Dallas &mdash; Coming Summer 2026</a>
         </div>
       </div>
     </section>
@@ -1775,27 +1768,45 @@
     var images = cfg.images || {};
     var links = cfg.links || {};
 
-    var VSL_PP_LOC_KEY = 'vslPreferredLocation';
-    function vslPPNormalizeLoc(key) {
-      return key === 'dallas' ? 'dallas' : 'houston';
+    if (images.heroFinishLine) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+      root.style.setProperty('--vsl-hero-finish-h', 'clamp(16px, 2.8vw + 9px, 39px)');
     }
-    function vslPPReadLocation() {
-      if (window.VSL_LOCATION) return vslPPNormalizeLoc(window.VSL_LOCATION.readLocation());
-      try {
-        var fromUrl = new URLSearchParams(window.location.search).get('loc');
-        if (fromUrl === 'dallas' || fromUrl === 'houston') {
-          localStorage.setItem(VSL_PP_LOC_KEY, fromUrl);
-          return vslPPNormalizeLoc(fromUrl);
-        }
-      } catch (e) {}
-      try {
-        return vslPPNormalizeLoc(localStorage.getItem(VSL_PP_LOC_KEY));
-      } catch (e) {
-        return 'houston';
-      }
-    }
-    var dallasSoonEl = root.querySelector('[data-vsl-pp-dallas-soon]');
-                var sid = 'vsl-pp-vimeo-player-api';
+
+    var heroVideo = cfg.heroVideo || '';
+    if (heroVideo) {
+      var video = root.querySelector('video[data-vsl-pp-video]');
+      var bannerImg = root.querySelector('[data-vsl-pp-hero-banner]');
+      var vimeoWrap = root.querySelector('[data-vsl-pp-vimeo]');
+      var hero = root.querySelector('.vsl-pp-hero');
+      if (hero) {
+        var path = heroVideo.split('?')[0].split('#')[0];
+        var vimeoMatch = heroVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        var isVideoFile = /\.(mp4|webm|ogg|mov|m4v)$/i.test(path);
+        hero.classList.remove('vsl-pp-hero--hero-bg-image', 'vsl-pp-hero--hero-bg-vimeo');
+        if (vimeoMatch && vimeoWrap) {
+          var vid = vimeoMatch[1];
+          var vimeoSrc =
+            'https://player.vimeo.com/video/' + vid +
+            '?autoplay=1&muted=1&loop=1&background=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&api=1';
+          vimeoWrap.innerHTML =
+            '<iframe id="vsl-pp-vimeo-iframe" src="' +
+            vimeoSrc.replace(/"/g, '&quot;') +
+            '" style="position:absolute;top:50%;left:50%;width:110%;height:110%;transform:translate(-50%,-50%) scale(1.09);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+          vimeoWrap.removeAttribute('hidden');
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-pp-hero--has-video', 'vsl-pp-hero--hero-bg-vimeo');
+          (function(iframeEl) {
+            if (!iframeEl) return;
+            function bindLoop() {
+              try {
+                if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+                var pl = new Vimeo.Player(iframeEl);
+                pl.on('ended', function(){ pl.setCurrentTime(0).then(function(){ return pl.play(); }).catch(function(){}); });
+              } catch(e){}
+            }
+            var sid = 'vsl-pp-vimeo-player-api';
             if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindLoop(); }
             else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindLoop); }
             else {
