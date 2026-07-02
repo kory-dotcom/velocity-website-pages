@@ -2494,16 +2494,7 @@
 <div class="vsl-home">
   <main>
     <!-- ═══════ HERO: Eat. Drink. Race. ═══════ -->
-    <section class="vsl-home-edr vsl-home-edr--compete-active" id="home-hero" aria-labelledby="vsl-home-edr-eyebrow">
-      <script>
-        (function () {
-          var hero = document.getElementById('home-hero');
-          if (!hero) return;
-          if (Date.now() >= new Date('2026-07-04T11:00:00-05:00').getTime()) {
-            hero.classList.remove('vsl-home-edr--compete-active');
-          }
-        })();
-      </script>
+    <section class="vsl-home-edr" id="home-hero" aria-labelledby="vsl-home-edr-eyebrow">
       <p class="vsl-home-edr__eyebrow" id="vsl-home-edr-eyebrow"><span class="vsl-home-edr__eyebrow-white"><span class="vsl-home-edr__eyebrow-city" data-vsl-city-name>Houston</span>'s Premier</span> <span class="vsl-home-edr__eyebrow-accent">Sim Racing Lounge</span></p>
       <div class="vsl-home-edr__row">
         <a href="https://velocitysimlounge.com/dallas/food-and-drink/#entrees" class="vsl-home-edr__col" aria-label="Eat — View food menu (entrees)">
@@ -2558,7 +2549,7 @@
           </div>
           <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></div>
         </a>
-        <div class="vsl-home-edr__col vsl-home-edr__col--compete" data-vsl-compete data-vsl-book-fallback="https://velocitysimlounge.com/dallas/book-now/" role="button" tabindex="0" aria-label="Race — Upcoming Velocity Competitions">
+        <a href="https://velocitysimlounge.com/dallas/book-now/" class="vsl-home-edr__col" aria-label="Race — Book sim racing online">
           <div class="vsl-home-edr__media">
             <img data-recalc-dims="1"
               data-edr-img="race"
@@ -2582,25 +2573,8 @@
               fetchpriority="low"
             >
           </div>
-          <span class="vsl-home-edr__compete-badge">Registration Open</span>
-          <div class="vsl-home-edr__compete-panel">
-            <p class="vsl-home-edr__compete-kicker">Upcoming Velocity</p>
-            <p class="vsl-home-edr__compete-title">Competitions</p>
-            <p class="vsl-home-edr__compete-sub">Great For All Levels Of Experience</p>
-            <p class="vsl-home-edr__compete-urgency">Limited Spots &mdash; Sign Up Today!</p>
-            <div class="vsl-home-edr__compete-btns">
-              <button type="button" class="vsl-home-edr__compete-btn vsl-home-edr__compete-btn--primary" data-vsl-compete-url="https://form.jotform.com/261647113297157">
-                <span class="vsl-home-edr__compete-btn-title">Champions League</span>
-                <span class="vsl-home-edr__compete-btn-meta">6 Weeks of Racing</span>
-              </button>
-              <button type="button" class="vsl-home-edr__compete-btn vsl-home-edr__compete-btn--secondary" data-vsl-compete-url="https://form.jotform.com/261725770505155">
-                <span class="vsl-home-edr__compete-btn-title">July 4th Race</span>
-                <span class="vsl-home-edr__compete-btn-meta">NASCAR Oval Race</span>
-              </button>
-            </div>
-          </div>
           <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></div>
-        </div>
+        </a>
       </div>
       <div class="vsl-home-edr__ctas">
         <a href="https://velocitysimlounge.com/dallas/book-now/" class="vsl-home-btn vsl-home-btn--primary vsl-home-edr__cta-events" data-vsl-cta-key="book">Book Now</a>
@@ -2938,45 +2912,6 @@
       }
 
       /* ── Mobile sticky tap-state: tap a tile to highlight; stays until another tap ── */
-      var competeEnd = new Date('2026-07-04T11:00:00-05:00');
-      var competeActive = Date.now() < competeEnd.getTime();
-      var competeCol = hero.querySelector('[data-vsl-compete]');
-      if (competeActive) {
-        hero.classList.add('vsl-home-edr--compete-active');
-      } else {
-        hero.classList.remove('vsl-home-edr--compete-active');
-      }
-      if (competeCol) {
-        competeCol.querySelectorAll('[data-vsl-compete-url]').forEach(function(btn) {
-          function openCompeteSignup(e) {
-            var url = btn.getAttribute('data-vsl-compete-url');
-            if (!url) return;
-            if (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            window.open(url, '_blank', 'noopener,noreferrer');
-          }
-          btn.addEventListener('click', openCompeteSignup, true);
-          btn.addEventListener('touchend', function(e) {
-            openCompeteSignup(e);
-          }, { passive: false, capture: true });
-        });
-        if (!competeActive) {
-          competeCol.addEventListener('click', function() {
-            var url = competeCol.getAttribute('data-vsl-book-fallback') || 'https://velocitysimlounge.com/dallas/book-now/';
-            window.location.assign(url);
-          });
-          competeCol.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              var url = competeCol.getAttribute('data-vsl-book-fallback') || 'https://velocitysimlounge.com/dallas/book-now/';
-              window.location.assign(url);
-            }
-          });
-        }
-      }
-
       var edrCols = hero.querySelectorAll('.vsl-home-edr__col');
       if (edrCols.length) {
         var edrTouchMql = (window.matchMedia && window.matchMedia('(hover: none), (max-width: 1024px)')) || null;
@@ -2986,9 +2921,6 @@
         edrCols.forEach(function(col) {
           col.addEventListener('click', function(e) {
             if (!isTouchView()) return;
-            if (competeActive && col.hasAttribute('data-vsl-compete') && e.target.closest('[data-vsl-compete-url]')) {
-              return;
-            }
             edrCols.forEach(function(other) {
               if (other !== col) other.classList.remove('is-tapped');
             });
