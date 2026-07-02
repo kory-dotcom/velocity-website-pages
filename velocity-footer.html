@@ -380,6 +380,11 @@
   }
 
   function applyFooterNavLinks(loc) {
+    loc = normalize(loc);
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === 'function') {
+      window.VSL_REPLICA_APPLY_FOOTER_LINKS(loc);
+      return;
+    }
     if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
     root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
       var href = a.getAttribute('href');

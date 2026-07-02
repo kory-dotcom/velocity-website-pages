@@ -163,6 +163,50 @@
     return "index.html?p=" + key;
   };
 
+  function replicaHrefFromSiteUrl(href, loc) {
+    if (!href) return null;
+    if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return null;
+    if (window.VSL_LOCATION && href.indexOf("velocitysimlounge.com") !== -1) {
+      return toLocalHref(window.VSL_LOCATION.rewriteInternalHref(href, loc));
+    }
+    return toLocalHref(href);
+  }
+
+  window.VSL_REPLICA_TO_LOCAL_HREF = toLocalHref;
+
+  window.VSL_REPLICA_BOOKING_HREF = function (loc) {
+    return loc === "dallas" ? "index.html?p=dallas-book-now" : "index.html?p=book-now";
+  };
+
+  window.VSL_REPLICA_APPLY_NAV_LINKS = function (loc) {
+    loc = loc === "dallas" ? "dallas" : "houston";
+    var root = document.getElementById("replica-navbar-root") || document;
+    root.querySelectorAll('a[href*="velocitysimlounge.com"]').forEach(function (a) {
+      var local = replicaHrefFromSiteUrl(a.getAttribute("href"), loc);
+      if (local) a.setAttribute("href", local);
+    });
+    root.querySelectorAll('a[href="https://velocitysimlounge.com/dallas"]').forEach(function (a) {
+      a.setAttribute("href", loc === "dallas" ? "index.html?p=dallas-home" : "index.html?p=home");
+    });
+    var logo = root.querySelector(".vsl-navbar__logo");
+    if (logo) logo.setAttribute("href", loc === "dallas" ? "index.html?p=dallas-home" : "index.html?p=home");
+  };
+
+  window.VSL_REPLICA_APPLY_FOOTER_LINKS = function (loc) {
+    loc = loc === "dallas" ? "dallas" : "houston";
+    var root = document.getElementById("replica-footer-root");
+    if (!root) return;
+    root.querySelectorAll("[data-footer-nav]").forEach(function (a) {
+      var local = replicaHrefFromSiteUrl(a.getAttribute("href"), loc);
+      if (local) a.setAttribute("href", local);
+    });
+    var logo = root.querySelector(".vsl-site-footer__logo");
+    if (logo) {
+      var localHome = replicaHrefFromSiteUrl("https://velocitysimlounge.com/", loc);
+      if (localHome) logo.setAttribute("href", localHome);
+    }
+  };
+
   var navbarRoot = document.getElementById("replica-navbar-root");
   var pageRoot = document.getElementById("replica-page-root");
   var footerRoot = document.getElementById("replica-footer-root");
@@ -439,12 +483,20 @@
   function localizeNavbarLinks() {
     if (!navbarRoot) return;
 
-    var logo = navbarRoot.querySelector('.vsl-navbar__logo[href="https://velocitysimlounge.com/"]');
-    if (logo) logo.setAttribute("href", "index.html?p=home");
+    var loc = window.VSL_LOCATION ? window.VSL_LOCATION.readLocation() : "houston";
+    var logo = navbarRoot.querySelector(".vsl-navbar__logo");
+    if (logo) {
+      logo.setAttribute("href", loc === "dallas" ? "index.html?p=dallas-home" : "index.html?p=home");
+    }
 
     navbarRoot.querySelectorAll("img[src^='navbar-assets/']").forEach(function (img) {
       img.src = "../" + img.getAttribute("src");
     });
+
+    if (typeof window.VSL_REPLICA_APPLY_NAV_LINKS === "function") {
+      window.VSL_REPLICA_APPLY_NAV_LINKS(loc);
+      return;
+    }
 
     navbarRoot.querySelectorAll("a[href]").forEach(function (a) {
       var href = a.getAttribute("href");
@@ -599,7 +651,12 @@
       return loadModulePage();
     })
     .then(loadFooter)
-    .then(loadPromoBanner)
+    .then(function () {
+      if (window.VSL_LOCATION && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
+        window.VSL_REPLICA_APPLY_FOOTER_LINKS(window.VSL_LOCATION.readLocation());
+      }
+      return loadPromoBanner();
+    })
     .catch(function (err) {
       document.title = replicaDocumentTitle("Navbar");
       navbarRoot.innerHTML = "";
@@ -618,5 +675,17 @@
     if (a.getAttribute("href") === mapped) return;
     evt.preventDefault();
     window.location.href = mapped;
+  });
+
+  window.addEventListener("_vslLocationChanged", function (e) {
+    if (!e.detail || !e.detail.location) return;
+    var loc = e.detail.location;
+    if (typeof window.VSL_REPLICA_APPLY_NAV_LINKS === "function") {
+      window.VSL_REPLICA_APPLY_NAV_LINKS(loc);
+    }
+    if (typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
+      window.VSL_REPLICA_APPLY_FOOTER_LINKS(loc);
+    }
+    syncNavbarLocationDom(loc);
   });
 })();

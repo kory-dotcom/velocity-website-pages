@@ -2388,13 +2388,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
   }
 
+  function resolveBookingUrl(config, locKey) {
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_BOOKING_HREF === 'function') {
+      return window.VSL_REPLICA_BOOKING_HREF(locKey);
+    }
+    return config.bookingUrl;
+  }
+
   function applyLocation(key) {
     var normalized = normalizeLocation(key);
     var config = LOCATIONS[normalized];
     currentLocation = normalized;
+    var bookHref = resolveBookingUrl(config, normalized);
 
     if (primaryCta) {
-      primaryCta.href = config.bookingUrl;
+      primaryCta.href = bookHref;
       primaryCta.setAttribute('aria-label', 'Book now at ' + config.label);
     }
     if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
@@ -2407,11 +2415,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       }
     }
     if (mobileCtaPrimary) {
-      mobileCtaPrimary.href = config.bookingUrl;
+      mobileCtaPrimary.href = bookHref;
     }
-    megaBookLinks.forEach(function(el) { el.href = config.bookingUrl; });
-    mobileBookLinks.forEach(function(el) { el.href = config.bookingUrl; });
-    if (stickyBookNow) stickyBookNow.href = config.bookingUrl;
+    megaBookLinks.forEach(function(el) { el.href = bookHref; });
+    mobileBookLinks.forEach(function(el) { el.href = bookHref; });
+    if (stickyBookNow) stickyBookNow.href = bookHref;
     if (stickyLocation) stickyLocation.textContent = config.label;
 
     markCurrentLocation(normalized);
@@ -2550,6 +2558,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function applyNavLinks(loc) {
     loc = normalizeLocation(loc);
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_APPLY_NAV_LINKS === 'function') {
+      window.VSL_REPLICA_APPLY_NAV_LINKS(loc);
+      return;
+    }
     if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
     navbar.querySelectorAll('a[href*="velocitysimlounge.com"]').forEach(function(a) {
       var href = a.getAttribute('href');
@@ -2566,10 +2578,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   function getContactFaqUrl(loc) {
-    if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
-      return window.VSL_LOCATION.buildLocationUrl(normalizeLocation(loc), 'contact') + '#faq';
+    loc = normalizeLocation(loc);
+    if (window.__VSL_SITE_REPLICA__) {
+      return (loc === 'dallas' ? 'index.html?p=dallas-contact' : 'index.html?p=contact') + '#faq';
     }
-    return normalizeLocation(loc) === 'dallas'
+    if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
+      return window.VSL_LOCATION.buildLocationUrl(loc, 'contact') + '#faq';
+    }
+    return loc === 'dallas'
       ? 'https://velocitysimlounge.com/dallas/contact/#faq'
       : 'https://velocitysimlounge.com/contact/#faq';
   }
