@@ -102,6 +102,67 @@
     return "'" + pageTitle + "' : Velocity Staging Site";
   }
 
+  function getRepoRootUrl() {
+    var script = document.querySelector('script[src*="replica-app.js"]');
+    if (script && script.src) {
+      try {
+        return new URL("../", script.src).href;
+      } catch (e) {}
+    }
+    return new URL("../", window.location.href).href;
+  }
+
+  /** Fetch repo assets; tries .html path then extensionless (serve cleanUrls fallback). */
+  function fetchReplicaText(relativePath, label) {
+    var rel = String(relativePath || "").replace(/^\.\.\//, "");
+    var repoRoot = getRepoRootUrl();
+    var urls = [
+      new URL(rel, repoRoot).href,
+      new URL(rel.replace(/\.html(?=[?#]|$)/, ""), repoRoot).href
+    ];
+    var i = 0;
+    function attempt() {
+      if (i >= urls.length) {
+        return Promise.reject(new Error("Failed to fetch " + (label || rel)));
+      }
+      var url = urls[i++];
+      return fetch(url, { cache: "no-store" }).then(function (res) {
+        if (!res.ok) return attempt();
+        return res.text();
+      }, function () {
+        return attempt();
+      });
+    }
+    return attempt();
+  }
+
+  var REPLICA_SLUG_PAGE_KEYS = {
+    home: { houston: "home", dallas: "dallas-home" },
+    "party-packs": { houston: "party-packs", dallas: "dallas-party-packs" },
+    "book-now": { houston: "book-now", dallas: "dallas-book-now" },
+    contact: { houston: "contact", dallas: "dallas-contact" },
+    "group-events": { houston: "parties-events", dallas: "dallas-parties-events" },
+    "corporate-events": { houston: "corporate-events", dallas: "dallas-corporate-events" },
+    "food-and-drink": { houston: "food-drink", dallas: "dallas-food-drink" },
+    "semi-private": { houston: "semi-private", dallas: "dallas-semi-private" },
+    promotions: { houston: "promotions", dallas: "dallas-promotions" },
+    buyout: { houston: "buyout", dallas: "dallas-buyout" },
+    about: { houston: "about", dallas: "dallas-home" },
+    membership: { houston: "membership", dallas: "dallas-home" },
+    ignition: { houston: "ignition", dallas: "dallas-home" },
+    "summer-special": { houston: "summer-special", dallas: "dallas-home" },
+    "fathers-day": { houston: "fathers-day", dallas: "dallas-home" }
+  };
+
+  window.VSL_REPLICA_BUILD_URL = function (loc, slug) {
+    loc = loc === "dallas" ? "dallas" : "houston";
+    var dallasPages = ["home", "party-packs", "book-now", "contact", "group-events", "corporate-events", "food-and-drink", "semi-private", "promotions", "buyout"];
+    if (loc === "dallas" && dallasPages.indexOf(slug) === -1) slug = "home";
+    var map = REPLICA_SLUG_PAGE_KEYS[slug];
+    var key = map ? map[loc] : (loc === "dallas" ? "dallas-home" : "home");
+    return "index.html?p=" + key;
+  };
+
   var navbarRoot = document.getElementById("replica-navbar-root");
   var pageRoot = document.getElementById("replica-page-root");
   var footerRoot = document.getElementById("replica-footer-root");
@@ -473,11 +534,7 @@
     }
 
     var moduleUrl = page.modulePath + (page.modulePath.indexOf("?") >= 0 ? "&" : "?") + "_=" + Date.now();
-    return fetch(moduleUrl, { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Failed to load module: " + page.modulePath);
-        return res.text();
-      })
+    return fetchReplicaText(moduleUrl, "page module (" + pageKey + ")")
       .then(function (html) {
         injectModuleHtml(html, pageKey);
         executeInlineScripts(pageRoot);
@@ -498,11 +555,7 @@
 
   function loadFooter() {
     if (!footerRoot) return Promise.resolve();
-    return fetch("../velocity-footer.html", { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Failed to load footer");
-        return res.text();
-      })
+    return fetchReplicaText("../velocity-footer.html", "footer")
       .then(function (html) {
         footerRoot.innerHTML = html;
         executeInlineScripts(footerRoot);
@@ -522,11 +575,7 @@
   }
 
   function loadVslLocation() {
-    return fetch("../vsl-location.js", { cache: "no-store" })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Failed to load vsl-location.js");
-        return res.text();
-      })
+    return fetchReplicaText("../vsl-location.js", "vsl-location.js")
       .then(function (js) {
         var s = document.createElement("script");
         s.textContent = js;
@@ -537,9 +586,8 @@
   loadVslLocation()
     .catch(function () {})
     .then(function () {
-      return fetch("../velocity-navbar.html", { cache: "no-store" });
+      return fetchReplicaText("../velocity-navbar.html", "navbar");
     })
-    .then(function (res) { return res.text(); })
     .then(function (html) {
       navbarRoot.innerHTML = html;
       setLocationFromQuery();

@@ -2576,6 +2576,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function handleLocationChoice(key, shouldPersist) {
     var normalized = normalizeLocation(key);
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_BUILD_URL === 'function' && window.VSL_LOCATION) {
+      var slug = window.VSL_LOCATION.getPageSlug();
+      var targetUrl = window.VSL_REPLICA_BUILD_URL(normalized, slug);
+      var targetKey = (new URLSearchParams(targetUrl.split('?')[1] || '')).get('p') || 'home';
+      var currentKey = (new URLSearchParams(window.location.search)).get('p') || 'home';
+      if (shouldPersist) persistLocation(normalized);
+      dismissForSession();
+      closeLocationPrompt();
+      if (currentKey !== targetKey) {
+        window.location.href = targetUrl + (window.location.hash || '');
+        return;
+      }
+      applyLocation(normalized);
+      return;
+    }
     if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
       var slug = window.VSL_LOCATION.getPageSlug();
       var targetUrl = window.VSL_LOCATION.buildLocationUrl(normalized, slug);
