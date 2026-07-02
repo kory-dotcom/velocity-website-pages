@@ -2023,10 +2023,7 @@
     var root = document.querySelector('.vsl-summer');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Student Summer Special in Houston', text: 'The Student Summer Special is available at Velocity Houston. Dallas promotions are coming soon.' });
-
-
-    var cfg;
+var cfg;
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
     window.VSL_SUMMER_CONFIG = cfg;
 

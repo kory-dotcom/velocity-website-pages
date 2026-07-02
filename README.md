@@ -63,6 +63,11 @@ Use these **blob** links when you need a stable URL (spaces and `&` are encoded)
 | 10  | Site-wide navbar            | [velocity-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/velocity-navbar.html)                                                                                                                         |
 | 11  | *(optional)* Preview navbar | [preview-navbar.html](https://github.com/kory-dotcom/velocity-website-pages/blob/main/preview-navbar.html)                                                                                                                           |
 
+### Dallas local SEO pages (`/dallas/{slug}/`)
+
+Dedicated Dallas HTML modules live under [`Dallas/`](Dallas/). Paste map, redirects, and GSC URLs: [`Dallas/WORDPRESS-PASTE-MAP.md`](Dallas/WORDPRESS-PASTE-MAP.md), [`Dallas/rank-math-redirects.txt`](Dallas/rank-math-redirects.txt), [`Dallas/gsc-urls.txt`](Dallas/gsc-urls.txt).
+
+Staging preview keys: `?p=dallas-home`, `?p=dallas-party-packs`, `?p=dallas-book-now`, etc. (see `VelocityStagingSite/replica-app.js`).
 
 In **Cursor / VS Code**, open files with spaces from the terminal using quotes, e.g. `open "Food & Drink/velocity-food-drink-elementor.html"`.
 

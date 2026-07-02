@@ -17,7 +17,17 @@
     "fathers-day": { title: "Father's Day Bundles", modulePath: "../Bundles Page/velocity-fathers-day-elementor.html" },
     "summer-special": { title: "Student Summer Special", modulePath: "../Summer Special/velocity-summer-special-elementor.html" },
     "promotions": { title: "Promotions", modulePath: "../Promotions/velocity-promotions-elementor.html" },
-    "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" }
+    "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" },
+    "dallas-home": { title: "Dallas Home", modulePath: "../Dallas/Home/velocity-home-elementor.html" },
+    "dallas-book-now": { title: "Dallas Book Now", modulePath: "../Dallas/Book Now/velocity-book-now-elementor.html" },
+    "dallas-contact": { title: "Dallas Contact", modulePath: "../Dallas/Contact/velocity-contact-elementor.html" },
+    "dallas-corporate-events": { title: "Dallas Corporate Events", modulePath: "../Dallas/Corporate Events/velocity-corporate-events-elementor.html" },
+    "dallas-food-drink": { title: "Dallas Food & Drink", modulePath: "../Dallas/Food & Drink/velocity-food-drink-elementor.html" },
+    "dallas-parties-events": { title: "Dallas Group Events", modulePath: "../Dallas/Parties & Events/velocity-parties-events-elementor.html" },
+    "dallas-party-packs": { title: "Dallas Party Packs", modulePath: "../Dallas/Party Packs/velocity-party-packs-elementor.html" },
+    "dallas-semi-private": { title: "Dallas Semi-Private", modulePath: "../Dallas/Semi-Private/velocity-semi-private-elementor.html" },
+    "dallas-promotions": { title: "Dallas Promotions", modulePath: "../Dallas/Promotions/velocity-promotions-elementor.html" },
+    "dallas-buyout": { title: "Dallas Buyout", modulePath: "../Dallas/Buyout/velocity-buyout-elementor.html" }
   };
 
   var NAV_PATH_MAP = {
@@ -58,8 +68,26 @@
     "/VelocityStagingSite/Promotions/velocity-promotions-elementor.html": "index.html?p=promotions",
     "/buyout/": "index.html?p=buyout",
     "/buyout": "index.html?p=buyout",
-    "/dallas/": "index.html?p=contact&loc=dallas",
-    "/dallas": "index.html?p=contact&loc=dallas"
+    "/dallas/": "index.html?p=dallas-home",
+    "/dallas": "index.html?p=dallas-home",
+    "/dallas/book-now/": "index.html?p=dallas-book-now",
+    "/dallas/book-now": "index.html?p=dallas-book-now",
+    "/dallas/contact/": "index.html?p=dallas-contact",
+    "/dallas/contact": "index.html?p=dallas-contact",
+    "/dallas/corporate-events/": "index.html?p=dallas-corporate-events",
+    "/dallas/corporate-events": "index.html?p=dallas-corporate-events",
+    "/dallas/food-and-drink/": "index.html?p=dallas-food-drink",
+    "/dallas/food-and-drink": "index.html?p=dallas-food-drink",
+    "/dallas/group-events/": "index.html?p=dallas-parties-events",
+    "/dallas/group-events": "index.html?p=dallas-parties-events",
+    "/dallas/party-packs/": "index.html?p=dallas-party-packs",
+    "/dallas/party-packs": "index.html?p=dallas-party-packs",
+    "/dallas/semi-private/": "index.html?p=dallas-semi-private",
+    "/dallas/semi-private": "index.html?p=dallas-semi-private",
+    "/dallas/promotions/": "index.html?p=dallas-promotions",
+    "/dallas/promotions": "index.html?p=dallas-promotions",
+    "/dallas/buyout/": "index.html?p=dallas-buyout",
+    "/dallas/buyout": "index.html?p=dallas-buyout"
   };
   var EXTERNAL_LOCAL_MAP = {
     /* book.velocitysimlounge.com (Roverd) must keep real https URLs — the Book Now page
@@ -214,12 +242,12 @@
   var NAVBAR_LOC_CONFIG = {
     houston: {
       label: "Houston",
-      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=houston",
+      bookingUrl: "https://velocitysimlounge.com/book-now/",
       ariaBook: "Book now at Houston"
     },
     dallas: {
       label: "Dallas",
-      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=dallas",
+      bookingUrl: "https://velocitysimlounge.com/dallas/book-now/",
       ariaBook: "Book now at Dallas"
     }
   };
@@ -229,9 +257,6 @@
     var config = NAVBAR_LOC_CONFIG[loc];
     if (!config) return;
     var bookHref = toLocalHref(config.bookingUrl) || config.bookingUrl;
-    if (bookHref.indexOf("p=book-now") !== -1 && bookHref.indexOf("loc=") === -1) {
-      bookHref += (bookHref.indexOf("?") === -1 ? "?" : "&") + "loc=" + loc;
-    }
     var root = document.getElementById("replica-navbar-root") || document;
     root.querySelectorAll("[data-book-now-location]").forEach(function (el) {
       el.textContent = config.label;
@@ -260,10 +285,13 @@
     });
   }
 
-  function setLocationFromQuery() {
-    if (!forcedLoc) return;
-    var loc = String(forcedLoc).toLowerCase();
-    if (loc !== "houston" && loc !== "dallas") return;
+  function setLocationFromPageKey() {
+    var loc = pageKey.indexOf("dallas-") === 0 || pageKey === "dallas-home" ? "dallas" : null;
+    if (!loc && forcedLoc) {
+      loc = String(forcedLoc).toLowerCase();
+      if (loc !== "houston" && loc !== "dallas") loc = null;
+    }
+    if (!loc) return;
     try {
       localStorage.setItem("vslPreferredLocation", loc);
       syncNavbarLocationDom(loc);
@@ -273,6 +301,10 @@
         window.dispatchEvent(new CustomEvent("_vslLocationChanged", { detail: { location: loc } }));
       }
     } catch (e) {}
+  }
+
+  function setLocationFromQuery() {
+    setLocationFromPageKey();
   }
 
   function normalizePath(pathname) {
@@ -295,7 +327,8 @@
 
     // Roverd booking: never rewrite to replica routes — modals/iframes and CTAs
     // depend on the real https://book… URLs.
-    if (parsed.hostname === "book.velocitysimlounge.com") {
+    if (parsed.hostname === "book.velocitysimlounge.com" ||
+        parsed.hostname === "book-dtx.velocitysimlounge.com") {
       return null;
     }
 
@@ -360,7 +393,7 @@
       if (href === "#") {
         var mobileLoc = a.getAttribute("data-mobile-location");
         if (mobileLoc === "dallas" || mobileLoc === "houston") {
-          a.setAttribute("href", "index.html?p=contact&loc=" + mobileLoc);
+          a.setAttribute("href", mobileLoc === "dallas" ? "index.html?p=dallas-home" : "index.html?p=contact");
         }
         return;
       }
@@ -391,7 +424,19 @@
       '<li><a href="index.html?p=promotions">Promotions</a></li>' +
       '<li><a href="index.html?p=buyout">Full Venue Buyout</a></li>' +
       '<li><a href="index.html?p=contact">Contact (Houston)</a></li>' +
-      '<li><a href="index.html?p=contact&loc=dallas">Contact (Dallas state)</a></li>' +
+      "</ul>" +
+      "<h2>Dallas pages</h2>" +
+      '<ul class="vsl-local-grid">' +
+      '<li><a href="index.html?p=dallas-home">Dallas Home</a></li>' +
+      '<li><a href="index.html?p=dallas-book-now">Dallas Book Now</a></li>' +
+      '<li><a href="index.html?p=dallas-contact">Dallas Contact</a></li>' +
+      '<li><a href="index.html?p=dallas-party-packs">Dallas Party Packs</a></li>' +
+      '<li><a href="index.html?p=dallas-parties-events">Dallas Group Events</a></li>' +
+      '<li><a href="index.html?p=dallas-corporate-events">Dallas Corporate Events</a></li>' +
+      '<li><a href="index.html?p=dallas-food-drink">Dallas Food &amp; Drink</a></li>' +
+      '<li><a href="index.html?p=dallas-semi-private">Dallas Semi-Private</a></li>' +
+      '<li><a href="index.html?p=dallas-promotions">Dallas Promotions</a></li>' +
+      '<li><a href="index.html?p=dallas-buyout">Dallas Buyout</a></li>' +
       "</ul>" +
       "</div>" +
       "</section>"
@@ -476,7 +521,24 @@
     return Promise.resolve();
   }
 
-  fetch("../velocity-navbar.html", { cache: "no-store" })
+  function loadVslLocation() {
+    return fetch("../vsl-location.js", { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to load vsl-location.js");
+        return res.text();
+      })
+      .then(function (js) {
+        var s = document.createElement("script");
+        s.textContent = js;
+        document.head.appendChild(s);
+      });
+  }
+
+  loadVslLocation()
+    .catch(function () {})
+    .then(function () {
+      return fetch("../velocity-navbar.html", { cache: "no-store" });
+    })
     .then(function (res) { return res.text(); })
     .then(function (html) {
       navbarRoot.innerHTML = html;
@@ -485,6 +547,7 @@
       localizeNavbarLinks();
       applyLocalLinks(navbarRoot);
       setLocationFromQuery();
+      if (window.VSL_LOCATION) syncNavbarLocationDom(window.VSL_LOCATION.readLocation());
       return loadModulePage();
     })
     .then(loadFooter)

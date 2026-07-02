@@ -1435,10 +1435,7 @@
     var root = document.querySelector('.vsl-spring');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Spring bundles in Houston', text: 'These seasonal bundles are available at Velocity Houston. Dallas promotions are coming Summer 2026.' });
-
-
-    var cfg;
+var cfg;
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
     window.VSL_SPRING_CONFIG = cfg;
 

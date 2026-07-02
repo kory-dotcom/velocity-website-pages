@@ -2,8 +2,8 @@
 <script>
   window.VSL_BUYOUT_CONFIG = {
     links: {
-      inquire: 'https://velocitysimracinglounge.tripleseat.com/party_request/45152',
-      allEvents: 'https://velocitysimlounge.com/group-events/'
+      inquire: 'https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1',
+      allEvents: 'https://velocitysimlounge.com/dallas/group-events/'
     },
     images: {
       hero: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate.webp',
@@ -902,8 +902,8 @@
 
 <div class="vsl-buyout"
      data-vsl-config='{
-       "inquireUrl": "https://velocitysimracinglounge.tripleseat.com/party_request/45152",
-       "allEventsUrl": "https://velocitysimlounge.com/group-events/"
+       "inquireUrl": "https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1",
+       "allEventsUrl": "https://velocitysimlounge.com/dallas/group-events/"
      }'>
   <main>
     <div data-vsl-houston-only>
@@ -923,7 +923,7 @@
         <p class="vsl-bo-hero__eyebrow">Exclusive Private Events</p>
         <h1 class="vsl-bo-hero__title" id="bo-hero-heading">Full Venue <span class="vsl-bo-hero__accent">Buyout</span></h1>
         <p class="vsl-bo-hero__sub">Take over the entire venue for a completely private, fully customized event experience your guests will never forget.</p>
-        <a class="vsl-bo-hero__cta" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+        <a class="vsl-bo-hero__cta" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
       </div>
       <div class="vsl-bo-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
@@ -964,7 +964,7 @@
               <li>Custom food and beverage packages</li>
             </ul>
             <div class="vsl-bo-venue__cta">
-              <a class="vsl-bo-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+              <a class="vsl-bo-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
             </div>
           </div>
         </div>
@@ -1169,8 +1169,8 @@
         <h2 class="vsl-bo-section__title vsl-bo-section__title--yellow vsl-bo-section__title--center" id="bo-cta-heading">Book Your Full Venue Buyout</h2>
         <p class="vsl-bo-section__sub vsl-bo-section__sub--dark vsl-bo-section__sub--center">Ready to take over the venue? Our events team will help you plan every detail.</p>
         <div class="vsl-bo-bottom-cta__actions">
-          <a class="vsl-bo-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45152" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
-          <a class="vsl-bo-btn--secondary" href="https://velocitysimlounge.com/group-events/" data-vsl-link="allEvents">Back to All Events</a>
+          <a class="vsl-bo-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" data-vsl-link="inquire" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+          <a class="vsl-bo-btn--secondary" href="https://velocitysimlounge.com/dallas/group-events/" data-vsl-link="allEvents">Back to All Events</a>
         </div>
       </div>
     </section>
@@ -1183,7 +1183,7 @@
   (function () {
     var root = document.querySelector('.vsl-buyout');
     if (!root) return;
-var cfg = window.VSL_BUYOUT_CONFIG || {};
+    if (window.VSL_LOCATION) var cfg = window.VSL_BUYOUT_CONFIG || {};
     var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
     if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
@@ -1217,7 +1217,7 @@ var cfg = window.VSL_BUYOUT_CONFIG || {};
     Book a full venue buyout at Velocity Sim Racing Lounge. Exclusive private events with racing simulators, custom catering, branding, and dedicated staff.
 
   Canonical URL:
-    https://velocitysimlounge.com/buyout/
+    https://velocitysimlounge.com/dallas/buyout/
 
   Open Graph:
     og:title       = Full Venue Buyout | Velocity Sim Racing Lounge

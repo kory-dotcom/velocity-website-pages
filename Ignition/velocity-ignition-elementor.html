@@ -2120,10 +2120,7 @@
     var root = document.querySelector('.vsl-ignition');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: true, title: 'Ignition is at Velocity Houston', text: 'Ignition is our hidden cocktail lounge at Velocity Houston (2110 Edwards St). Dallas opening updates are on our Dallas page.' });
-
-
-    var cfg = {};
+var cfg = {};
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }
 
     var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;

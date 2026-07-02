@@ -986,10 +986,7 @@
     var root = document.querySelector('.vsl-partypack');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: false, title: 'Party Packs coming to Dallas', text: 'Inquire about Party Packs in Houston today\u2014or get Dallas opening updates on our Dallas page.' });
-
-
-    var cfg;
+var cfg;
     try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
     window.VSL_PP_CONFIG = cfg;
 

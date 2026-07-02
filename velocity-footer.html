@@ -339,7 +339,7 @@
     },
     dallas: {
       addressLine: 'Dallas, TX — Coming Summer 2026',
-      mapsUrl: 'https://velocitysimlounge.com/dallas',
+      mapsUrl: 'https://velocitysimlounge.com/dallas/',
       phone: '',
       phoneTel: '',
       careersMail: 'info@velocitysimlounge.com'
@@ -376,6 +376,20 @@
       return normalize(localStorage.getItem(STORAGE_KEY));
     } catch (_) {
       return 'houston';
+    }
+  }
+
+  function applyFooterNavLinks(loc) {
+    if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
+    root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!href) return;
+      var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
+      if (next && next !== href) a.setAttribute('href', next);
+    });
+    var logo = root.querySelector('.vsl-site-footer__logo');
+    if (logo && window.VSL_LOCATION.buildLocationUrl) {
+      logo.setAttribute('href', window.VSL_LOCATION.buildLocationUrl(loc, 'home'));
     }
   }
 
@@ -425,6 +439,7 @@
   }
 
   applyLocation(readLocation());
+  applyFooterNavLinks(readLocation());
   markActiveNav();
 
   window.addEventListener('storage', function (e) {
@@ -432,7 +447,10 @@
   });
 
   window.addEventListener('_vslLocationChanged', function (e) {
-    if (e.detail && e.detail.location) applyLocation(e.detail.location);
+    if (e.detail && e.detail.location) {
+      applyLocation(e.detail.location);
+      applyFooterNavLinks(e.detail.location);
+    }
   });
 })();
 </script>

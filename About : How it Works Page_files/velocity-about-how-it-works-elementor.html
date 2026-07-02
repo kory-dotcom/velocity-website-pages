@@ -2500,10 +2500,7 @@ SEO HANDOFF (apply in page-level SEO plugin/theme controls):
 
     var root = document.querySelector(".vsl-how-it-works");
     if (!root) return;
-    if (window.VSL_LOCATION) VSL_LOCATION.setupHoustonOnlyPage(root, { onDark: false, title: 'Velocity Dallas coming Summer 2026', text: 'Learn how Velocity works at our Houston lounge today\u2014or follow Dallas opening updates on our Dallas page.' });
-
-
-    var hero = root.querySelector(".vsl-how-hero");
+var hero = root.querySelector(".vsl-how-hero");
     var heroVideo = root.querySelector("[data-vsl-hero-video]");
     if (heroVideo) {
       /* If a config-driven source URL is provided, prefer it over the inline <source> */

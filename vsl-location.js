@@ -1,5 +1,5 @@
 /**
- * Velocity site-wide location helper (?loc=houston|dallas).
+ * Velocity site-wide location helper (path /dallas/... + legacy ?loc=).
  * Upload to WordPress (e.g. wp-content/uploads/2026/06/vsl-location.js)
  * and include via <script src="..."> in navbar + each page HTML widget.
  */
@@ -7,13 +7,74 @@
   'use strict';
 
   var STORAGE_KEY = 'vslPreferredLocation';
-  var DALLAS_PAGE = 'https://velocitysimlounge.com/dallas';
+  var SITE_ORIGIN = 'https://velocitysimlounge.com';
+  var DALLAS_PAGE = SITE_ORIGIN + '/dallas/';
+
+  var DALLAS_PAGES = [
+    'home', 'party-packs', 'book-now', 'contact', 'group-events',
+    'corporate-events', 'food-and-drink', 'semi-private', 'promotions', 'buyout'
+  ];
+
+  var HOUSTON_ONLY_SLUGS = {
+    about: true,
+    membership: true,
+    ignition: true,
+    'summer-special': true,
+    'fathers-day': true,
+    'spring-bundles': true,
+    'menu-2025': true,
+    blog: true
+  };
+
+  var INTERNAL_PATH_SLUGS = {
+    '/': 'home',
+    '/about/': 'about',
+    '/book-now/': 'book-now',
+    '/contact/': 'contact',
+    '/membership/': 'membership',
+    '/food-and-drink/': 'food-and-drink',
+    '/ignition/': 'ignition',
+    '/group-events/': 'group-events',
+    '/corporate-events/': 'corporate-events',
+    '/party-packs/': 'party-packs',
+    '/semi-private/': 'semi-private',
+    '/promotions/': 'promotions',
+    '/buyout/': 'buyout',
+    '/summer-special/': 'summer-special',
+    '/fathers-day/': 'fathers-day',
+    '/spring-bundles/': 'fathers-day',
+    '/blog/': 'blog',
+    '/dallas/': 'home',
+    '/dallas/book-now/': 'book-now',
+    '/dallas/contact/': 'contact',
+    '/dallas/food-and-drink/': 'food-and-drink',
+    '/dallas/group-events/': 'group-events',
+    '/dallas/corporate-events/': 'corporate-events',
+    '/dallas/party-packs/': 'party-packs',
+    '/dallas/semi-private/': 'semi-private',
+    '/dallas/promotions/': 'promotions',
+    '/dallas/buyout/': 'buyout'
+  };
 
   function normalize(key) {
     return key === 'dallas' ? 'dallas' : 'houston';
   }
 
-  function readFromUrl() {
+  function normalizePathname(pathname) {
+    if (!pathname) return '/';
+    var p = pathname.split('?')[0].split('#')[0];
+    if (p.length > 1 && p.charAt(p.length - 1) !== '/') return p + '/';
+    return p;
+  }
+
+  function readFromPath() {
+    try {
+      if (/^\/dallas(\/|$)/.test(global.location.pathname)) return 'dallas';
+    } catch (_) {}
+    return null;
+  }
+
+  function readFromUrlParam() {
     try {
       var q = new URLSearchParams(global.location.search).get('loc');
       if (!q) return null;
@@ -23,8 +84,22 @@
     return null;
   }
 
+  function readFromStagingPageKey() {
+    try {
+      if (!global.__VSL_SITE_REPLICA__) return null;
+      var p = new URLSearchParams(global.location.search).get('p') || '';
+      if (p.indexOf('dallas-') === 0 || p === 'dallas-home') return 'dallas';
+    } catch (_) {}
+    return null;
+  }
+
   function readLocation() {
-    var fromUrl = readFromUrl();
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    if (fromPath) {
+      try { global.localStorage.setItem(STORAGE_KEY, fromPath); } catch (_) {}
+      return normalize(fromPath);
+    }
+    var fromUrl = readFromUrlParam();
     if (fromUrl) {
       try { global.localStorage.setItem(STORAGE_KEY, fromUrl); } catch (_) {}
       return normalize(fromUrl);
@@ -36,12 +111,94 @@
     }
   }
 
-  function bootstrap() {
-    var fromUrl = readFromUrl();
-    if (!fromUrl) return;
-    try { global.localStorage.setItem(STORAGE_KEY, fromUrl); } catch (_) {}
+  function getPageSlug() {
     try {
-      global.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: fromUrl } }));
+      if (global.__VSL_SITE_REPLICA__) {
+        var p = new URLSearchParams(global.location.search).get('p') || 'home';
+        if (p === 'spring-bundles') return 'fathers-day';
+        if (p.indexOf('dallas-') === 0) {
+          var dSlug = p.slice(7);
+          if (dSlug === 'home') return 'home';
+          if (dSlug === 'parties-events') return 'group-events';
+          if (dSlug === 'food-drink') return 'food-and-drink';
+          return dSlug;
+        }
+        if (p === 'parties-events') return 'group-events';
+        if (p === 'food-drink') return 'food-and-drink';
+        return p;
+      }
+      var path = normalizePathname(global.location.pathname);
+      if (INTERNAL_PATH_SLUGS[path]) return INTERNAL_PATH_SLUGS[path];
+      if (/^\/dallas\/([^/]+)\/?$/.test(path)) {
+        return path.replace(/^\/dallas\//, '').replace(/\/$/, '');
+      }
+      if (path === '/dallas/' || path === '/dallas') return 'home';
+      if (path === '/') return 'home';
+    } catch (_) {}
+    return 'home';
+  }
+
+  function getLocationPrefix(loc) {
+    return normalize(loc) === 'dallas' ? '/dallas' : '';
+  }
+
+  function buildLocationUrl(loc, slug) {
+    loc = normalize(loc);
+    slug = slug || getPageSlug();
+    if (loc === 'dallas' && DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
+    if (loc === 'houston' && slug === 'home') return SITE_ORIGIN + '/';
+    if (loc === 'dallas' && slug === 'home') return DALLAS_PAGE;
+    var prefix = loc === 'dallas' ? '/dallas' : '';
+    return SITE_ORIGIN + prefix + '/' + slug + '/';
+  }
+
+  function isDallasPath() {
+    return readFromPath() === 'dallas' || readFromStagingPageKey() === 'dallas';
+  }
+
+  function rewriteInternalHref(href, loc) {
+    if (!href || href.charAt(0) === '#') return href;
+    if (/^(mailto:|tel:|javascript:)/i.test(href)) return href;
+    loc = normalize(loc || readLocation());
+    var prefix = getLocationPrefix(loc);
+
+    try {
+      var u = new URL(href, global.location.href);
+      var isSite =
+        u.hostname === 'velocitysimlounge.com' ||
+        u.hostname === 'www.velocitysimlounge.com';
+      if (!isSite) return href;
+
+      var path = normalizePathname(u.pathname);
+      var slug = INTERNAL_PATH_SLUGS[path];
+      if (!slug && /^\/dallas\/([^/]+)\/?$/.test(path)) {
+        slug = path.replace(/^\/dallas\//, '').replace(/\/$/, '');
+      }
+      if (!slug && (path === '/dallas/' || path === '/dallas')) slug = 'home';
+      if (!slug && path === '/') slug = 'home';
+
+      if (!slug) return href;
+      if (HOUSTON_ONLY_SLUGS[slug]) return href;
+
+      if (loc === 'dallas') {
+        if (slug === 'home') return DALLAS_PAGE + u.hash;
+        return SITE_ORIGIN + '/dallas/' + slug + '/' + u.hash;
+      }
+      if (slug === 'home') return SITE_ORIGIN + '/' + u.hash;
+      return SITE_ORIGIN + '/' + slug + '/' + u.hash;
+    } catch (_) {
+      return href;
+    }
+  }
+
+  function bootstrap() {
+    var fromUrl = readFromUrlParam();
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    var loc = fromPath || fromUrl;
+    if (!loc) return;
+    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    try {
+      global.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: loc } }));
     } catch (_) {}
   }
 
@@ -85,9 +242,6 @@
     );
   }
 
-  /**
-   * Houston-only pages: hide [data-vsl-houston-only], show [data-vsl-dallas-soon] when loc=dallas.
-   */
   function setupHoustonOnlyPage(root, options) {
     if (!root) return;
     options = options || {};
@@ -125,9 +279,17 @@
 
   global.VSL_LOCATION = {
     STORAGE_KEY: STORAGE_KEY,
+    SITE_ORIGIN: SITE_ORIGIN,
     DALLAS_PAGE: DALLAS_PAGE,
+    DALLAS_PAGES: DALLAS_PAGES,
     normalize: normalize,
+    readFromPath: readFromPath,
     readLocation: readLocation,
+    getPageSlug: getPageSlug,
+    getLocationPrefix: getLocationPrefix,
+    buildLocationUrl: buildLocationUrl,
+    rewriteInternalHref: rewriteInternalHref,
+    isDallasPath: isDallasPath,
     bootstrap: bootstrap,
     bindLocationSync: bindLocationSync,
     setupHoustonOnlyPage: setupHoustonOnlyPage

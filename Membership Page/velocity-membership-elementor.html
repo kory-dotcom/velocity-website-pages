@@ -1250,14 +1250,7 @@
       var map = cfg.images || {};
       var joins = cfg.joinLinks || {};
       if (root) {
-        if (window.VSL_LOCATION) {
-          VSL_LOCATION.setupHoustonOnlyPage(root, {
-            onDark: false,
-            title: 'Memberships available in Houston',
-            text: 'Velocity memberships are available at our Houston lounge today. Dallas membership details are coming Summer 2026.'
-          });
-        }
-        var heroFinish = map.heroFinishLine;
+var heroFinish = map.heroFinishLine;
         if (heroFinish) {
           root.style.setProperty('--vsl-hero-finish', 'url("' + heroFinish + '")');
         }

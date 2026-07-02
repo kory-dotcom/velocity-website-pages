@@ -1,0 +1,26 @@
+# Rank Math 301 redirects — import or add manually in WP Admin → Rank Math → Redirections
+# Source uses regex where noted; destination is always the Dallas path URL.
+
+/party-packs/?loc=dallas          →  https://velocitysimlounge.com/dallas/party-packs/
+/book-now/?loc=dallas             →  https://velocitysimlounge.com/dallas/book-now/
+/contact/?loc=dallas              →  https://velocitysimlounge.com/dallas/contact/
+/group-events/?loc=dallas         →  https://velocitysimlounge.com/dallas/group-events/
+/corporate-events/?loc=dallas     →  https://velocitysimlounge.com/dallas/corporate-events/
+/food-and-drink/?loc=dallas       →  https://velocitysimlounge.com/dallas/food-and-drink/
+/semi-private/?loc=dallas          →  https://velocitysimlounge.com/dallas/semi-private/
+/promotions/?loc=dallas           →  https://velocitysimlounge.com/dallas/promotions/
+/buyout/?loc=dallas               →  https://velocitysimlounge.com/dallas/buyout/
+
+# Houston-only pages — no Dallas sibling; send to Dallas hub
+/about/?loc=dallas                →  https://velocitysimlounge.com/dallas/
+/membership/?loc=dallas           →  https://velocitysimlounge.com/dallas/
+/ignition/?loc=dallas             →  https://velocitysimlounge.com/dallas/
+/summer-special/?loc=dallas       →  https://velocitysimlounge.com/dallas/
+/fathers-day/?loc=dallas          →  https://velocitysimlounge.com/dallas/
+/spring-bundles/?loc=dallas       →  https://velocitysimlounge.com/dallas/
+
+# Legacy standalone Dallas teaser → Dallas home hub
+/dallas                           →  https://velocitysimlounge.com/dallas/
+
+# Homepage with Dallas param
+/?loc=dallas                      →  https://velocitysimlounge.com/dallas/

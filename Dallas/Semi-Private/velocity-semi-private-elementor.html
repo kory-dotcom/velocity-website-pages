@@ -1,8 +1,8 @@
 <script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
 <script>
   window.VSL_SP_CONFIG = {
-    inquiryLink: 'https://velocitysimracinglounge.tripleseat.com/party_request/45556',
-    allEventsLink: 'https://velocitysimlounge.com/group-events/',
+    inquiryLink: 'https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1',
+    allEventsLink: 'https://velocitysimlounge.com/dallas/group-events/',
     images: {
       hero: 'https://velocitysimlounge.com/wp-content/uploads/2025/04/Velocity_GrandOpening_QUITNGUYEN_DSCF7601.jpg',
       features: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845.webp',
@@ -846,8 +846,8 @@
 
 <div class="vsl-semiprivate"
      data-vsl-config='{
-       "inquiryLink": "https://velocitysimracinglounge.tripleseat.com/party_request/45556",
-       "allEventsLink": "https://velocitysimlounge.com/group-events/"
+       "inquiryLink": "https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1",
+       "allEventsLink": "https://velocitysimlounge.com/dallas/group-events/"
      }'>
   <main id="sp-primary-content">
     <div data-vsl-houston-only>
@@ -865,7 +865,7 @@
           Semi-Private <span class="vsl-sp-hero__accent">Group Events</span>
         </h1>
         <p class="vsl-sp-hero__sub">Host a fun and memorable event at Velocity. Dedicated space, premium experience, and nonstop energy&nbsp;&mdash; perfect for groups who want more than the ordinary.</p>
-        <a class="vsl-sp-btn vsl-sp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/party_request/45556" data-vsl-sp-link="inquiry" target="_blank" rel="noopener noreferrer">Inquire Now</a>
+        <a class="vsl-sp-btn vsl-sp-btn--primary" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" data-vsl-sp-link="inquiry" target="_blank" rel="noopener noreferrer">Inquire Now</a>
       </div>
       <div class="vsl-sp-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
@@ -885,7 +885,7 @@
           </ul>
           <div class="vsl-sp-features__cta">
             <a class="vsl-sp-btn vsl-sp-btn--primary"
-               href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+               href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
                data-vsl-sp-link="inquiry"
                target="_blank" rel="noopener noreferrer">Inquire Now</a>
           </div>
@@ -908,7 +908,7 @@
         <div class="vsl-sp-usecases__grid">
 
           <a class="vsl-sp-usecase"
-             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
              data-vsl-sp-link="inquiry"
              target="_blank" rel="noopener noreferrer"
              aria-label="Inquire about a Corporate Team Building event">
@@ -920,7 +920,7 @@
           </a>
 
           <a class="vsl-sp-usecase"
-             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
              data-vsl-sp-link="inquiry"
              target="_blank" rel="noopener noreferrer"
              aria-label="Inquire about a Holiday Celebration event">
@@ -932,7 +932,7 @@
           </a>
 
           <a class="vsl-sp-usecase"
-             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
              data-vsl-sp-link="inquiry"
              target="_blank" rel="noopener noreferrer"
              aria-label="Inquire about a Workshop or Sales Meeting event">
@@ -944,7 +944,7 @@
           </a>
 
           <a class="vsl-sp-usecase"
-             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
              data-vsl-sp-link="inquiry"
              target="_blank" rel="noopener noreferrer"
              aria-label="Inquire about a Networking Mixer event">
@@ -1043,11 +1043,11 @@
         <p class="vsl-sp-cta__sub">Ready to host something extraordinary? Get in touch and let us plan the perfect event for your group.</p>
         <div class="vsl-sp-cta__actions">
           <a class="vsl-sp-btn vsl-sp-btn--primary"
-             href="https://velocitysimracinglounge.tripleseat.com/party_request/45556"
+             href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1"
              data-vsl-sp-link="inquiry"
              target="_blank" rel="noopener noreferrer">Inquire Now</a>
           <a class="vsl-sp-btn vsl-sp-btn--outline"
-             href="https://velocitysimlounge.com/group-events/"
+             href="https://velocitysimlounge.com/dallas/group-events/"
              data-vsl-sp-link="allEvents">Back to All Events</a>
         </div>
       </div>
@@ -1061,7 +1061,7 @@
   (function () {
     var root = document.querySelector('.vsl-semiprivate');
     if (!root) return;
-var cfg = window.VSL_SP_CONFIG || {};
+    if (window.VSL_LOCATION) var cfg = window.VSL_SP_CONFIG || {};
     var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
     if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
