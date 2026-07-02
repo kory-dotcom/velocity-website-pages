@@ -1,5 +1,8 @@
 name: Deploy staging site
 
+# Requires repo Settings → Pages → Build and deployment → Source: GitHub Actions.
+# If Source is still "Deploy from branch", the built-in pages-build-deployment
+# workflow also runs on every push and races this deploy (400 in-progress conflict).
 on:
   push:
     branches: [main]
@@ -20,6 +23,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Check Pages source is GitHub Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          build_type=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type')
+          echo "Pages build_type=$build_type"
+          if [ "$build_type" != "workflow" ]; then
+            echo "::warning::Pages is still on legacy branch deploy ($build_type). Switch to GitHub Actions in repo Settings → Pages to stop duplicate deploys. This run will wait and retry if the legacy workflow is still publishing."
+          fi
 
       - name: Prepare staging artifact
         run: |
@@ -42,7 +55,40 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
     steps:
+      - name: Wait for in-progress Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for attempt in $(seq 1 18); do
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" --jq '.[0].state // "none"')
+            version=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" --jq '.[0].pages_build_version // ""')
+            echo "Latest Pages deployment: state=$state sha=${version:0:7}"
+            if [ "$state" != "queued" ] && [ "$state" != "in_progress" ]; then
+              echo "No conflicting deployment in progress."
+              exit 0
+            fi
+            echo "Waiting 20s for in-progress deployment ($attempt/18)..."
+            sleep 20
+          done
+          echo "Proceeding after wait timeout."
+
       - id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Wait and retry deploy
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 45
+
+      - id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Fail if deploy did not succeed
+        if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
+        run: |
+          echo "::error::GitHub Pages deploy failed after retry. If Pages Source is still 'Deploy from branch', switch it to GitHub Actions in repo Settings → Pages."
+          exit 1
