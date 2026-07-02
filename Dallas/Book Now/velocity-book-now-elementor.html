@@ -681,6 +681,17 @@
   .vsl-bn-card-grid--4 {
     grid-template-columns: repeat(4, 1fr);
   }
+  .vsl-bn-card-grid--3 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gutter);
+  }
+  .vsl-bn-card-grid--3 .vsl-bn-card {
+    flex: 0 1 calc((100% - 3 * var(--gutter)) / 4);
+    max-width: calc((100% - 3 * var(--gutter)) / 4);
+    min-width: min(100%, 260px);
+  }
   .vsl-bn-card-grid--2 {
     grid-template-columns: repeat(2, 1fr);
     gap: clamp(24px, 3vw, 36px);
@@ -1808,10 +1819,19 @@
   }
   @media (max-width: 900px) {
     .vsl-bn-card-grid--4,
+    .vsl-bn-card-grid--3,
     .vsl-bn-card-grid--2 {
       grid-template-columns: 1fr;
       max-width: min(480px, 100%);
       margin-inline: auto;
+    }
+    .vsl-bn-card-grid--3 {
+      display: grid;
+    }
+    .vsl-bn-card-grid--3 .vsl-bn-card {
+      flex: none;
+      max-width: none;
+      min-width: 0;
     }
     .vsl-bn-spring-grid {
       grid-template-columns: 1fr;
@@ -2333,7 +2353,6 @@
   "images": {
     "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
     "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
-    "sixTen":         "https://velocitysimlounge.com/wp-content/uploads/2026/01/610-challenge-cover.jpeg",
     "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard-e1777680352239.webp",
     "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
     "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
@@ -2372,7 +2391,7 @@
         </div>
 
         <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
-          <div class="vsl-bn-card-grid vsl-bn-card-grid--4">
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--3">
 
             <a class="vsl-bn-card" data-l="quickRace" href="https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
@@ -2409,25 +2428,6 @@
                   <li>Drive more save more, great value</li>
                   <li>Approx. 55 minute experience</li>
                   <li>Two races, double the fun</li>
-                </ul>
-                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-              </div>
-            </a>
-
-            <a class="vsl-bn-card vsl-bn-card--soon" data-l="sixTen" aria-disabled="true" tabindex="-1">
-              <div class="vsl-bn-card__media">
-                <img data-i="sixTen" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="Traffic Rush Dallas exclusive at Velocity" width="1024" height="1008" loading="eager" decoding="async">
-                <span class="vsl-bn-card__badge vsl-bn-card__badge--coming-soon">Coming Soon</span>
-                <h3 class="vsl-bn-card__overlay-name">Traffic Rush</h3>
-              </div>
-              <div class="vsl-bn-card__body">
-                <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
-                </div>
-                <ul class="vsl-bn-card__features">
-                  <li>A Velocity Dallas Exclusive</li>
-                  <li>Navigate busy metro traffic scenarios</li>
-                  <li>Full experience details coming soon</li>
                 </ul>
                 <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
@@ -2893,26 +2893,9 @@
         media.appendChild(chip);
       }
     });
-    var sixTenCard = root.querySelector('[data-l="sixTen"]');
-    if (sixTenCard) {
-      var sixTenName = sixTenCard.querySelector('.vsl-bn-card__overlay-name');
-      var sixTenImg = sixTenCard.querySelector('img[data-i="sixTen"]');
-      var sixTenFeatures = sixTenCard.querySelectorAll('.vsl-bn-card__features li');
-      if (sixTenName) sixTenName.textContent = 'Traffic Rush';
-      if (sixTenImg) sixTenImg.setAttribute('alt', 'Traffic Rush Dallas exclusive at Velocity');
-      if (sixTenFeatures[0]) sixTenFeatures[0].textContent = 'A Velocity Dallas Exclusive';
-      if (sixTenFeatures[1]) sixTenFeatures[1].textContent = 'Navigate busy metro traffic scenarios';
-      if (sixTenFeatures[2]) sixTenFeatures[2].textContent = 'Full experience details coming soon';
-      sixTenCard.removeAttribute('href');
-      sixTenCard.removeAttribute('target');
-      sixTenCard.removeAttribute('rel');
-      sixTenCard.setAttribute('aria-disabled', 'true');
-      sixTenCard.setAttribute('tabindex', '-1');
-      sixTenCard.classList.add('vsl-bn-card--soon');
-    }
     root.querySelectorAll('[data-l]').forEach(function(el) {
       var key = el.getAttribute('data-l');
-      if (!key || key === 'sixTen') return;
+      if (!key) return;
       if (links[key]) {
         el.setAttribute('href', links[key]);
         el.setAttribute('target', '_blank');
