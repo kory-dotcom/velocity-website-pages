@@ -37,12 +37,14 @@
   .vsl-booknow {
     --c0: #10182B;
     --c1: #191B4D;
-    --c2: #EE265F;
+    --vsl-dallas-accent: #5A6FDC;
+    --vsl-dallas-accent-mid: #4a5ec4;
+    --vsl-dallas-accent-dark: #3d52b8;
+    --c2: var(--vsl-dallas-accent);
     --c3: #293893;
     --c4: #FDC70C;
     --c5: #D22026;
     --c6: #EAEAEA;
-    --vsl-dallas-accent: #5A6FDC;
     --c7: #DFDFDE;
     --c8: #B2AEBF;
     --c9: #5F5782;
@@ -386,7 +388,7 @@
     pointer-events: none;
     background:
       radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(90,111,220,0.16) 0%, transparent 70%),
       radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.22) 0%, transparent 68%),
       radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25,27,77,0.4) 0%, transparent 55%);
   }
@@ -399,7 +401,7 @@
     height: 42%;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient(8deg, rgba(238,38,95,0.09) 0%, transparent 58%);
+    background: linear-gradient(8deg, rgba(90,111,220,0.09) 0%, transparent 58%);
     transform: skewY(-2deg);
     transform-origin: bottom left;
   }
@@ -419,7 +421,7 @@
     transform: translate(-50%, -50%) rotate(-14deg);
     aspect-ratio: 2.35 / 1;
   }
-  .vsl-bn-hero__rings span:nth-child(1) { width: min(118vw, 920px); box-shadow: 0 0 0 1px rgba(238,38,95,0.04); }
+  .vsl-bn-hero__rings span:nth-child(1) { width: min(118vw, 920px); box-shadow: 0 0 0 1px rgba(90,111,220,0.04); }
   .vsl-bn-hero__rings span:nth-child(2) { width: min(138vw, 1080px); opacity: 0.85; border-color: rgba(41,56,147,0.12); }
   .vsl-bn-hero__rings span:nth-child(3) { width: min(162vw, 1280px); opacity: 0.55; border-color: rgba(253,199,12,0.08); }
   .vsl-bn-hero__inner {
@@ -551,7 +553,7 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     line-height: 1;
-    box-shadow: 0 8px 22px rgba(238,38,95,0.30);
+    box-shadow: 0 8px 22px rgba(90,111,220,0.30);
     transition: background 0.3s ease, box-shadow 0.3s ease;
   }
   .vsl-bn-locbadge__pin {
@@ -615,7 +617,7 @@
     color: var(--c2) !important;
     -webkit-text-fill-color: var(--c2) !important;
     background: transparent !important;
-    box-shadow: 0 4px 18px rgba(238,38,95,0.12) !important;
+    box-shadow: 0 4px 18px rgba(90,111,220,0.12) !important;
     transform: translateY(-2px);
   }
   button.vsl-bn-tab[aria-selected="true"],
@@ -625,7 +627,7 @@
     -webkit-text-fill-color: #fff !important;
     background: var(--c2) !important;
     background-size: 200% 200% !important;
-    box-shadow: 0 6px 24px rgba(238,38,95,0.3), 0 0 0 1px rgba(238,38,95,0.1) !important;
+    box-shadow: 0 6px 24px rgba(90,111,220,0.3), 0 0 0 1px rgba(90,111,220,0.1) !important;
     transform: translateY(-1px);
     animation: vsl-tab-gradient 3s ease infinite;
   }
@@ -904,11 +906,11 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%);
   }
   .vsl-bn-card__badge--popular {
-    background: linear-gradient(135deg, #EE265F 0%, #d41e52 100%);
+    background: linear-gradient(135deg, var(--vsl-dallas-accent) 0%, var(--vsl-dallas-accent-mid) 100%);
     color: #fff;
   }
   .vsl-bn-card__badge--popular::after {
-    background: #a1193f;
+    background: var(--vsl-dallas-accent-dark);
   }
   .vsl-bn-card__badge--value {
     background: linear-gradient(135deg, #FDC70C 0%, #e8b40a 100%);
@@ -1203,7 +1205,7 @@
     pointer-events: none;
     background:
       radial-gradient(ellipse 60% 50% at 20% 80%, rgba(41,56,147,0.22) 0%, transparent 65%),
-      radial-gradient(ellipse 55% 45% at 80% 20%, rgba(238,38,95,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 55% 45% at 80% 20%, rgba(90,111,220,0.12) 0%, transparent 70%),
       radial-gradient(ellipse 80% 60% at 50% 50%, rgba(25,27,77,0.3) 0%, transparent 55%);
   }
   .vsl-bn-membership::after {
@@ -1212,7 +1214,7 @@
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(circle 400px at 15% 85%, rgba(238,38,95,0.15) 0%, transparent 70%),
+      radial-gradient(circle 400px at 15% 85%, rgba(90,111,220,0.15) 0%, transparent 70%),
       radial-gradient(circle 350px at 85% 15%, rgba(253,199,12,0.1) 0%, transparent 70%);
     animation: vsl-mem-glow 6s ease-in-out infinite alternate;
   }
@@ -1248,7 +1250,7 @@
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-bn-membership__media img:hover {
-      box-shadow: 0 8px 32px rgba(238,38,95,0.25), 0 4px 16px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(90,111,220,0.25), 0 4px 16px rgba(0,0,0,0.3);
     }
   }
   .vsl-bn-membership__media img:first-child {
@@ -1718,8 +1720,8 @@
     background-size: auto;
     animation: none;
     box-shadow:
-      0 6px 24px rgba(238,38,95,0.28),
-      0 0 0 0 rgba(238,38,95,0);
+      0 6px 24px rgba(90,111,220,0.28),
+      0 0 0 0 rgba(90,111,220,0);
     overflow: hidden;
     z-index: 0;
     transition: box-shadow 0.25s ease, transform 0.18s ease;
@@ -1750,14 +1752,14 @@
     }
     .vsl-bn-btn:hover {
       box-shadow:
-        0 12px 36px rgba(238,38,95,0.38),
-        0 0 20px rgba(238,38,95,0.15);
+        0 12px 36px rgba(90,111,220,0.38),
+        0 0 20px rgba(90,111,220,0.15);
       transform: translateY(-3px) scale(1.03);
     }
   }
   .vsl-bn-btn:active {
     transform: translateY(0) scale(0.97);
-    box-shadow: 0 3px 14px rgba(238,38,95,0.22);
+    box-shadow: 0 3px 14px rgba(90,111,220,0.22);
   }
   .vsl-bn-btn:focus-visible {
     outline: 3px solid var(--c4);
@@ -2273,7 +2275,7 @@
     .vsl-bn-mem-tier:hover .vsl-bn-mem-tier__btn {
       background: var(--c2);
       color: #fff;
-      box-shadow: 0 6px 20px rgba(238,38,95,0.25);
+      box-shadow: 0 6px 20px rgba(90,111,220,0.25);
     }
   }
   .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__btn {
@@ -2317,7 +2319,7 @@
 </style>
 <script>(function(){var o=new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(function(n){if(n.querySelectorAll){n.querySelectorAll('img[data-s]').forEach(function(i){try{i.src=atob(i.getAttribute('data-s'));}catch(e){}});}});});});o.observe(document,{childList:true,subtree:true});})();</script>
 
-<div class="vsl-booknow" data-cfg='{
+<div class="vsl-booknow vsl-loc--dallas" data-cfg='{
   "links": {
     "quickRace":      "https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1",
     "doubleRace":     "https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1",
@@ -2872,6 +2874,11 @@
       if (key && images[key]) img.src = images[key];
     });
 
+    var VSL_ACCENT = '#5A6FDC';
+    var VSL_ACCENT_MID = '#4a5ec4';
+    var VSL_ACCENT_DARK = '#3d52b8';
+    var VSL_TAB_GRAD = 'linear-gradient(135deg, ' + VSL_ACCENT + ' 0%, ' + VSL_ACCENT_MID + ' 50%, ' + VSL_ACCENT_DARK + ' 100%)';
+
     root.classList.add('vsl-loc--dallas');
     root._vslCity = 'Dallas';
     root.querySelectorAll('.vsl-bn-card').forEach(function(card) {
@@ -3006,8 +3013,8 @@
       var styleEl = document.createElement('style');
       styleEl.textContent =
         all + ' { color: #EAEAEA !important; -webkit-text-fill-color: #EAEAEA !important; background: transparent !important; border-color: #EAEAEA !important; }\n' +
-        allSel + ' { color: #fff !important; -webkit-text-fill-color: #fff !important; background: linear-gradient(135deg,#EE265F 0%,#d41e52 50%,#E5253C 100%) !important; border-color: transparent !important; }\n' +
-        allHov + ' { color: #EE265F !important; -webkit-text-fill-color: #EE265F !important; border-color: #EE265F !important; }\n' +
+        allSel + ' { color: #fff !important; -webkit-text-fill-color: #fff !important; background: ' + VSL_TAB_GRAD + ' !important; border-color: transparent !important; }\n' +
+        allHov + ' { color: ' + VSL_ACCENT + ' !important; -webkit-text-fill-color: ' + VSL_ACCENT + ' !important; border-color: ' + VSL_ACCENT + ' !important; }\n' +
         allSelHov + ' { color: #fff !important; -webkit-text-fill-color: #fff !important; border-color: transparent !important; }';
       document.head.appendChild(styleEl);
     }
@@ -3019,7 +3026,7 @@
         t.style.setProperty('-webkit-text-fill-color', selected ? '#fff' : '#EAEAEA', 'important');
         t.style.setProperty('border-color', selected ? 'transparent' : '#EAEAEA', 'important');
         if (selected) {
-          t.style.setProperty('background', 'linear-gradient(135deg, #EE265F 0%, #d41e52 50%, #E5253C 100%)', 'important');
+          t.style.setProperty('background', VSL_TAB_GRAD, 'important');
         } else {
           t.style.setProperty('background', 'transparent', 'important');
         }
@@ -3057,9 +3064,9 @@
 
       tab.addEventListener('mouseenter', function() {
         if (tab.getAttribute('aria-selected') !== 'true') {
-          tab.style.setProperty('color', '#EE265F', 'important');
-          tab.style.setProperty('-webkit-text-fill-color', '#EE265F', 'important');
-          tab.style.setProperty('border-color', '#EE265F', 'important');
+          tab.style.setProperty('color', VSL_ACCENT, 'important');
+          tab.style.setProperty('-webkit-text-fill-color', VSL_ACCENT, 'important');
+          tab.style.setProperty('border-color', VSL_ACCENT, 'important');
         }
       });
       tab.addEventListener('mouseleave', function() {
