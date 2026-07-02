@@ -1,11 +1,12 @@
 <!--
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
   Velocity Sim Racing Lounge — Location Page
   Elementor Custom HTML module  ·  v2.0.0
 
   ── SEO Handoff ──
-  Meta title:    Velocity Sim Racing Lounge Houston | Sim Racing, Events & Bar
-  Meta desc:     Visit Velocity Sim Racing Lounge in Houston — 16 professional simulators, full bar & restaurant, private event space. 2110 Edwards St, Houston TX 77007.
-  Canonical:     https://velocitysimlounge.com/contact/
+  Meta title:    Velocity Sim Racing Lounge Dallas | Sim Racing, Events & Bar
+  Meta desc:     Visit Velocity Sim Racing Lounge in Dallas — 32 professional simulators, full kitchen & bar, 10,000+ sqft at The Hill. 9830 N Central Expy #400, Dallas TX 75231.
+  Canonical:     https://velocitysimlounge.com/dallas/contact/
   OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg
 
   ── Schema Recommendation (implement via Yoast / RankMath) ──
@@ -73,7 +74,7 @@
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     /* Thin finish-line strip (new default across the rest of the site) */
     --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
-    /* Same fixed block height for every location (Dallas hides CTAs; without this, Houston is taller). */
+    /* Min hero height shared across locations; grows with content so zoom/wrap never overlaps the finish strip. */
     --vsl-loc-hero-h: clamp(420px, 72svh, 900px);
 
     font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
@@ -122,7 +123,6 @@
     overflow: hidden;
     isolation: isolate;
     min-height: var(--vsl-loc-hero-h);
-    height: var(--vsl-loc-hero-h);
   }
   .vsl-loc-hero__bg {
     position: absolute;
@@ -171,30 +171,32 @@
   .vsl-loc-hero__inner {
     position: relative;
     z-index: 3;
-    flex: 1;
-    min-height: 0;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: clamp(56px, 14vw, 110px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    gap: clamp(16px, 2.5vw, 24px);
+    padding: clamp(56px, 14vw, 110px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 8vw, 64px);
     max-width: 56rem;
     margin: 0 auto;
     width: 100%;
   }
   .vsl-loc-hero__logo {
     display: block;
-    margin: 0 auto 24px;
+    flex-shrink: 0;
+    margin: 0 auto;
     width: clamp(200px, 30vw, 320px);
     height: auto;
     filter: brightness(1.05);
   }
   .vsl-loc-hero__title {
-    margin: 0 0 0.35em;
+    flex-shrink: 0;
+    margin: 0;
     padding: 10px 12px;
     font-family: var(--font-display);
-    font-size: clamp(3.2rem, 2rem + 8vw, 6rem);
+    font-size: clamp(2.75rem, 1.75rem + 5vw, 5.5rem);
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
@@ -207,9 +209,10 @@
     border-radius: 10px;
   }
   .vsl-loc-hero__sub {
-    margin: 0 0 2rem;
+    flex-shrink: 0;
+    margin: 0;
     padding: 6px 12px;
-    font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem);
+    font-size: clamp(1rem, 0.92rem + 0.35vw, 1.2rem);
     font-weight: 400;
     line-height: 1.55;
     color: rgba(234, 234, 234, 0.9);
@@ -218,10 +221,12 @@
     border-radius: 8px;
   }
   .vsl-loc-hero__actions {
+    flex-shrink: 0;
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: clamp(4px, 1vw, 8px);
   }
   .vsl-loc-hero__finish {
     position: relative;
@@ -258,7 +263,7 @@
     cursor: pointer;
     border: 2px solid var(--magenta);
     border-radius: 8px;
-    background: linear-gradient(135deg, var(--red), var(--magenta));
+    background: var(--magenta);
     box-shadow: 0 4px 18px rgba(238,38,95,0.22);
     transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease;
   }
@@ -539,6 +544,8 @@
     outline-offset: 2px;
     border-radius: 2px;
   }
+  /* Hours: tight two-column subgrid layout shared with the navbar location popover.
+     Each <li> is a real grid box so today's row can be highlighted as a single pill. */
   .vsl-info-card__hours {
     margin: 0;
     padding: 0;
@@ -579,6 +586,7 @@
     font-weight: 500;
     letter-spacing: 0.02em;
   }
+  /* Today highlight (set by JS based on America/Chicago weekday) */
   .vsl-info-card__hours li.is-today {
     background: linear-gradient(90deg, rgba(238, 38, 95, 0.32), rgba(238, 38, 95, 0.14));
     box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.45);
@@ -669,7 +677,7 @@
   .vsl-faq__label {
     flex: 1;
     min-width: 0;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'Archivo Narrow', Inter, system-ui, sans-serif;
     font-size: var(--vsl-text-faq-label);
     font-weight: 600;
     line-height: 1.45;
@@ -810,6 +818,15 @@
   .vsl-loc-teaser-only { display: none; }
   .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-open-only { display: none; }
   .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-teaser-only { display: block; }
+  /* Reserve CTA row height when buttons are hidden so Dallas hero matches Houston */
+  .vsl-contact[data-loc-status="coming_soon"] .vsl-loc-hero__inner::after {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    min-height: 48px;
+    margin-top: clamp(4px, 1vw, 8px);
+  }
 
   /* ═══ Responsive ═══ */
   @media (prefers-reduced-motion: reduce) {
@@ -826,7 +843,7 @@
     html { scroll-behavior: smooth; }
   }
   @media (max-width: 639px) {
-    .vsl-loc-hero__title { line-height: 1.02; }
+    .vsl-loc-hero__title { line-height: 1.02; font-size: clamp(2.25rem, 1.5rem + 6vw, 3.5rem); }
     .vsl-loc-section-title { line-height: 1.2; }
     .vsl-loc-cta__actions { flex-direction: column; }
     .vsl-loc-cta__actions .vsl-loc-btn { width: 100%; max-width: 320px; }
@@ -850,11 +867,11 @@
       <div class="vsl-loc-hero__inner">
         <!-- Logo: absolute Media Library URL (relative ../navbar-assets/... breaks inside Elementor) -->
         <img class="vsl-loc-hero__logo" src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png" alt="Velocity Sim Racing Lounge" width="230" height="48">
-        <h1 class="vsl-loc-hero__title" id="loc-hero-heading" data-vsl-loc="cityName">Houston</h1>
-        <p class="vsl-loc-hero__sub" data-vsl-loc="tagline">Houston's premier sim racing lounge, bar &amp; event venue. 16 professional-grade simulators, full bar &amp; restaurant, and 5,000 sqft of private event space.</p>
+        <h1 class="vsl-loc-hero__title" id="loc-hero-heading" data-vsl-loc="cityName">Dallas</h1>
+        <p class="vsl-loc-hero__sub" data-vsl-loc="tagline">The largest sim racing entertainment destination in Texas &mdash; 32 professional-grade simulators, full kitchen &amp; bar, and over 10,000 sqft at The Hill.</p>
         <div class="vsl-loc-hero__actions vsl-loc-open-only">
-          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Now</a>
-          <a class="vsl-loc-btn vsl-loc-btn--outline vsl-loc-btn--on-dark" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Plan an Event</a>
+          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book Now</a>
+          <a class="vsl-loc-btn vsl-loc-btn--outline vsl-loc-btn--on-dark" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/dallas/group-events/">Plan an Event</a>
         </div>
       </div>
       <div class="vsl-loc-hero__finish" role="presentation" aria-hidden="true"></div>
@@ -871,17 +888,17 @@
             </div>
             <div class="vsl-info-card__body">
               <div class="vsl-info-card__label">Address</div>
-              <p class="vsl-info-card__value"><a data-vsl-loc-link="googleMaps" href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer"><span data-vsl-loc="address">2110 Edwards St</span>, <span data-vsl-loc="cityStateZip">Houston, TX 77007</span></a></p>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="googleMaps" href="https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231" target="_blank" rel="noopener noreferrer"><span data-vsl-loc="address">9830 N Central Expy #400</span><br><span data-vsl-loc="venueName">The Hill</span> &middot; <span data-vsl-loc="cityStateZip">Dallas, TX 75231</span></a></p>
             </div>
           </div>
 
-          <div class="vsl-info-card">
+          <div class="vsl-info-card" data-vsl-loc-phone-card hidden>
             <div class="vsl-info-card__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.94.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.87.34 2 .57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div class="vsl-info-card__body">
               <div class="vsl-info-card__label">Phone</div>
-              <p class="vsl-info-card__value"><a data-vsl-loc-link="phoneTel" href="tel:+18326274981"><span data-vsl-loc="phone">832-627-4981</span></a></p>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="phoneTel" href=""><span data-vsl-loc="phone"></span></a></p>
             </div>
           </div>
 
@@ -892,12 +909,10 @@
             <div class="vsl-info-card__body">
               <div class="vsl-info-card__label">Hours</div>
               <ul class="vsl-info-card__hours" data-vsl-loc-hours aria-label="Hours">
-                <li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
-                <li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
-                <li data-day="Wed,Thu"><span class="vsl-day">Wed &ndash; Thu</span><span class="vsl-time">2PM &ndash; 11PM</span></li>
+                <li data-day="Mon,Thu"><span class="vsl-day">Mon &ndash; Thu</span><span class="vsl-time">12PM &ndash; 11PM</span></li>
                 <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM &ndash; 12AM</span></li>
                 <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM &ndash; 12AM</span></li>
-                <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM &ndash; 10PM</span></li>
+                <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM &ndash; 12AM</span></li>
               </ul>
             </div>
           </div>
@@ -908,7 +923,7 @@
             </div>
             <div class="vsl-info-card__body">
               <div class="vsl-info-card__label">Email</div>
-              <p class="vsl-info-card__value"><a data-vsl-loc-link="emailLink" href="mailto:info@velocitysimlounge.com"><span data-vsl-loc="email">info@velocitysimlounge.com</span></a></p>
+              <p class="vsl-info-card__value"><a data-vsl-loc-link="emailLink" href="mailto:dtxinfo@velocitysimlounge.com"><span data-vsl-loc="email">dtxinfo@velocitysimlounge.com</span></a></p>
             </div>
           </div>
 
@@ -924,7 +939,7 @@
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-            16 Professional Simulators
+            32 Professional Simulators
           </div>
 
           <div class="vsl-loc-feat">
@@ -934,12 +949,12 @@
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-            <a data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book a Simulator</a>
+            <a data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book a Simulator</a>
           </div>
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
-            <a data-vsl-loc-link="menu" href="https://velocitysimlounge.com/food-and-drink/">Full Bar &amp; Restaurant</a>
+            <a data-vsl-loc-link="menu" href="https://velocitysimlounge.com/dallas/food-and-drink/">Full Kitchen &amp; Bar</a>
           </div>
 
           <div class="vsl-loc-feat">
@@ -949,17 +964,17 @@
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></span>
-            <a data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Private Event Spaces</a>
+            <a data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/dallas/group-events/">Private Event Spaces</a>
           </div>
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-            5,000 sqft Venue
+            10,000+ sqft Venue
           </div>
 
           <div class="vsl-loc-feat">
-            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></span>
-            70-Foot Covered Patio
+            <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            Located at The Hill
           </div>
 
           <div class="vsl-loc-feat">
@@ -969,7 +984,7 @@
 
           <div class="vsl-loc-feat">
             <span class="vsl-loc-feat__icon vsl-loc-feat__icon--stroke" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-            214-Person Capacity
+            400-Guest Capacity
           </div>
 
         </div>
@@ -981,13 +996,13 @@
       <div class="vsl-loc-about__inner">
         <div class="vsl-loc-about__split">
           <div class="vsl-loc-about__content">
-            <h2 class="vsl-loc-section-title vsl-loc-section-title--white" id="about-heading">About Velocity <em data-vsl-loc="cityName">Houston</em></h2>
-            <p class="vsl-loc-about__text" data-vsl-loc="aboutText">Welcome to Velocity Sim Racing Lounge in Houston &mdash; the city's premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you're a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 16 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 5,000 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.</p>
-            <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Your Session</a>
+            <h2 class="vsl-loc-section-title vsl-loc-section-title--white" id="about-heading">About Velocity <em data-vsl-loc="cityName">Dallas</em></h2>
+            <p class="vsl-loc-about__text" data-vsl-loc="aboutText">Velocity Dallas is the largest simulation racing entertainment destination in Texas. With over 10,000 square feet of space and room for 400 guests, our 32 professional-grade simulators deliver an experience unlike anything else in DFW. Grab a drink from our full kitchen and bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. Located at The Hill, Velocity Dallas is where racing meets hospitality.</p>
+            <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book Your Session</a>
           </div>
           <div class="vsl-loc-about__media">
             <img data-vsl-loc="venueImage" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg"
-                 alt="Chef-crafted shareables and dining at Velocity Sim Racing Lounge Houston" width="2400" height="1600" loading="lazy" decoding="async">
+                 alt="Velocity Sim Racing Lounge Dallas at The Hill" width="2400" height="1600" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -1069,7 +1084,7 @@
               <span class="vsl-faq__chev" aria-hidden="true"></span>
             </button>
             <div class="vsl-faq__panel" id="vsl-faq-panel-6" role="region" aria-labelledby="vsl-faq-btn-6" hidden>
-              <p class="vsl-faq__answer">Prices can vary based on the type of simulator and experience that you choose. Check out our <a href="https://velocitysimlounge.com/book-now/" data-vsl-loc-link="bookNow">Book Now</a> page for more information.</p>
+              <p class="vsl-faq__answer">Prices can vary based on the type of simulator and experience that you choose. Check out our <a href="https://velocitysimlounge.com/dallas/book-now/" data-vsl-loc-link="bookNow">Book Now</a> page for more information.</p>
             </div>
           </li>
 
@@ -1079,7 +1094,7 @@
               <span class="vsl-faq__chev" aria-hidden="true"></span>
             </button>
             <div class="vsl-faq__panel" id="vsl-faq-panel-7" role="region" aria-labelledby="vsl-faq-btn-7" hidden>
-              <p class="vsl-faq__answer">Yes, Velocity has a full bar and kitchen. We are proud to feature signature cocktails and delicious fresh made food. Check out our <a href="https://velocitysimlounge.com/food-and-drink/" data-vsl-loc-link="menu">Menu</a> for more information.</p>
+              <p class="vsl-faq__answer">Yes, Velocity has a full bar and kitchen. We are proud to feature signature cocktails and delicious fresh made food. Check out our <a href="https://velocitysimlounge.com/dallas/food-and-drink/" data-vsl-loc-link="menu">Menu</a> for more information.</p>
             </div>
           </li>
 
@@ -1089,7 +1104,7 @@
               <span class="vsl-faq__chev" aria-hidden="true"></span>
             </button>
             <div class="vsl-faq__panel" id="vsl-faq-panel-8" role="region" aria-labelledby="vsl-faq-btn-8" hidden>
-              <p class="vsl-faq__answer">Yes, Velocity is available for private events. We have nearly 5,000sqft of space with a 214 occupancy rating (inside) and a large 70&rsquo; patio for more guests. We offer food and drinks and can provide an all inclusive package. For more information, please reach out to <a href="mailto:events@velocitysimlounge.com">events@velocitysimlounge.com</a>.</p>
+              <p class="vsl-faq__answer">Yes, Velocity is available for private events. Our Dallas location offers over 10,000 sqft of space with a 400-guest occupancy rating. We offer food and drinks and can provide an all-inclusive package. For more information, please reach out to <a href="mailto:dtxinfo@velocitysimlounge.com">dtxinfo@velocitysimlounge.com</a>.</p>
             </div>
           </li>
 
@@ -1106,8 +1121,8 @@
       <div class="vsl-loc-cta__inner">
         <h2 class="vsl-loc-section-title vsl-loc-section-title--center vsl-loc-section-title--white" id="cta-heading">Ready to Race?</h2>
         <div class="vsl-loc-cta__actions">
-          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/book-now/">Book Now</a>
-          <a class="vsl-loc-btn vsl-loc-btn--outline" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/group-events/">Plan an Event</a>
+          <a class="vsl-loc-btn" data-vsl-loc-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book Now</a>
+          <a class="vsl-loc-btn vsl-loc-btn--outline" data-vsl-loc-link="planEvent" href="https://velocitysimlounge.com/dallas/group-events/">Plan an Event</a>
         </div>
       </div>
     </section>
@@ -1122,7 +1137,7 @@
   var VSL_LOCATIONS = {
     houston: {
       cityName: 'Houston',
-      tagline: "Houston\u2019s premier sim racing lounge, bar & event venue. 16 professional-grade simulators, full bar & restaurant, and 5,000 sqft of private event space.",
+      tagline: "Houston\u2019s premier sim racing lounge, bar & event venue. 25 professional-grade simulators, full bar & restaurant, and 9,500 sqft of private event space.",
       address: '2110 Edwards St',
       cityStateZip: 'Houston, TX 77007',
       phone: '832-627-4981',
@@ -1130,7 +1145,7 @@
       email: 'info@velocitysimlounge.com',
       emailLink: 'mailto:info@velocitysimlounge.com',
       googleMaps: 'https://maps.app.goo.gl/B9jCNecVWwU5HsVo6',
-      bookNow: 'https://velocitysimlounge.com/book-now/?loc=houston',
+      bookNow: 'https://velocitysimlounge.com/book-now/',
       planEvent: 'https://velocitysimlounge.com/group-events/',
       menu: 'https://velocitysimlounge.com/food-and-drink/',
       hoursSummary: 'Mon\u2013Thu 2PM\u201311PM \u00b7 Fri 12PM\u201312AM \u00b7 Sat 11AM\u201312AM \u00b7 Sun 11AM\u201310PM',
@@ -1140,32 +1155,34 @@
         + '<li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM \u2013 12AM</span></li>'
         + '<li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM \u2013 12AM</span></li>'
         + '<li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM \u2013 10PM</span></li>',
-      aboutText: "Welcome to Velocity Sim Racing Lounge in Houston \u2014 the city\u2019s premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you\u2019re a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 16 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 5,000 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.",
+      aboutText: "Welcome to Velocity Sim Racing Lounge in Houston \u2014 the city\u2019s premier destination for high-performance sim racing, world-class dining, and unforgettable events. Whether you\u2019re a seasoned racer looking to sharpen your skills or a first-timer ready for the thrill of the track, our 25 professional-grade simulators deliver an experience unlike anything else in Texas. Grab a drink from our full bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. With nearly 9,500 square feet of event space, a 70-foot patio, and dedicated event coordinators, Velocity is where racing meets hospitality.",
       heroImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg',
       venueImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971.jpg',
       status: 'open'
     },
     dallas: {
       cityName: 'Dallas',
-      tagline: "Something big is coming to Dallas. Velocity Sim Racing Lounge is expanding \u2014 bringing professional-grade sim racing, a full bar & restaurant, and world-class event space to DFW.",
-      address: '',
-      cityStateZip: 'Dallas, TX',
+      tagline: "The largest sim racing entertainment destination in Texas \u2014 32 professional-grade simulators, full kitchen & bar, and over 10,000 sqft at The Hill.",
+      address: '9830 N Central Expy #400',
+      venueName: 'The Hill',
+      cityStateZip: 'Dallas, TX 75231',
       phone: '',
       phoneTel: '',
-      email: 'info@velocitysimlounge.com',
-      emailLink: 'mailto:info@velocitysimlounge.com',
-      googleMaps: '',
-      bookNow: 'https://velocitysimlounge.com/book-now/?loc=dallas',
-      planEvent: 'https://velocitysimlounge.com/dallas',
-      menu: 'https://velocitysimlounge.com/food-and-drink/',
-      hoursSummary: 'Coming Summer 2026',
-      hoursHtml: '<li><span class="vsl-day">Coming Soon</span><span class="vsl-time">Summer 2026</span></li>',
-      aboutText: '',
-      teaserBadge: 'Coming Summer 2026',
-      teaserText: "Velocity Sim Racing Lounge is expanding to Dallas. Be the first to know when we open our doors \u2014 follow us on social media or reach out for more details.",
+      email: 'dtxinfo@velocitysimlounge.com',
+      emailLink: 'mailto:dtxinfo@velocitysimlounge.com',
+      googleMaps: 'https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231',
+      bookNow: 'https://velocitysimlounge.com/dallas/book-now/',
+      planEvent: 'https://velocitysimlounge.com/dallas/group-events/',
+      menu: 'https://velocitysimlounge.com/dallas/food-and-drink/',
+      hoursSummary: 'Mon\u2013Thu 12PM\u201311PM \u00b7 Fri 12PM\u201312AM \u00b7 Sat 11AM\u201312AM \u00b7 Sun 11AM\u201312AM',
+      hoursHtml: '<li data-day="Mon,Thu"><span class="vsl-day">Mon \u2013 Thu</span><span class="vsl-time">12PM \u2013 11PM</span></li>'
+        + '<li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM \u2013 12AM</span></li>'
+        + '<li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM \u2013 12AM</span></li>'
+        + '<li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM \u2013 12AM</span></li>',
+      aboutText: "Velocity Dallas is the largest simulation racing entertainment destination in Texas. With over 10,000 square feet of space and room for 400 guests, our 32 professional-grade simulators deliver an experience unlike anything else in DFW. Grab a drink from our full kitchen and bar, fuel up with chef-crafted shareables, and compete with friends on iconic circuits from around the world. Located at The Hill, Velocity Dallas is where racing meets hospitality.",
       heroImage: 'https://velocitysimlounge.com/wp-content/uploads/2025/02/howitworks_drivingexperiences.webp',
       venueImage: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/IMG_3934.webp',
-      status: 'coming_soon'
+      status: 'open'
     }
   };
 
@@ -1178,6 +1195,14 @@
   if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
 
   function readLocation() {
+    if (window.VSL_LOCATION) return window.VSL_LOCATION.readLocation();
+    try {
+      var fromUrl = new URLSearchParams(window.location.search).get('loc');
+      if (fromUrl === 'dallas' || fromUrl === 'houston') {
+        localStorage.setItem(STORAGE_KEY, fromUrl);
+        return fromUrl;
+      }
+    } catch (e) {}
     try { return localStorage.getItem(STORAGE_KEY) || 'houston'; } catch (e) { return 'houston'; }
   }
 
@@ -1208,11 +1233,19 @@
     if (hoursEl && loc.hoursHtml) {
       hoursEl.innerHTML = loc.hoursHtml;
     }
+
+    var phoneCard = root.querySelector('[data-vsl-loc-phone-card]');
+    if (phoneCard) {
+      phoneCard.hidden = !(loc.phone && loc.phoneTel);
+    }
+    // Re-mark today after the hours markup gets swapped in for the new location
     highlightTodayHours();
 
     document.title = 'Velocity Sim Racing Lounge ' + loc.cityName + ' | Sim Racing, Events & Bar';
   }
 
+  // Highlight the row for today's day-of-week in any hours list on the page.
+  // Houston & Dallas are both Central time, so we pin to America/Chicago.
   function highlightTodayHours() {
     var today;
     try {
@@ -1226,6 +1259,7 @@
       li.classList.toggle('is-today', days.indexOf(today) !== -1);
     });
   }
+  // Recompute at next local midnight so a long-open tab refreshes itself
   (function scheduleMidnightRefresh() {
     var now = new Date();
     var next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 5, 0);
@@ -1236,7 +1270,8 @@
     }, ms);
   })();
 
-  applyLocation(readLocation());
+  applyLocation('dallas');
+  root.classList.add('vsl-loc--dallas');
 
   window.addEventListener('storage', function (e) {
     if (e.key === STORAGE_KEY && e.newValue) {

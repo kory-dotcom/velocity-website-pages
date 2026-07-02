@@ -338,11 +338,11 @@
       careersMail: 'info@velocitysimlounge.com'
     },
     dallas: {
-      addressLine: 'Dallas, TX — Coming Summer 2026',
-      mapsUrl: 'https://velocitysimlounge.com/dallas/',
+      addressLine: '9830 N Central Expy #400, The Hill · Dallas, TX 75231',
+      mapsUrl: 'https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231',
       phone: '',
       phoneTel: '',
-      careersMail: 'info@velocitysimlounge.com'
+      careersMail: 'dtxinfo@velocitysimlounge.com'
     }
   };
 
@@ -424,8 +424,8 @@
         phoneA.hidden = false;
         phoneRow.style.display = '';
       } else {
-        phoneA.setAttribute('href', loc.mapsUrl || 'https://velocitysimlounge.com/dallas');
-        phoneText.textContent = 'Opening Summer 2026 — get updates';
+        phoneA.setAttribute('href', loc.emailLink || ('mailto:' + loc.careersMail));
+        phoneText.textContent = loc.careersMail || 'Contact us by email';
         phoneA.hidden = false;
         phoneRow.style.display = '';
       }

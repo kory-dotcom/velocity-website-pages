@@ -338,11 +338,11 @@
       careersMail: 'info@velocitysimlounge.com'
     },
     dallas: {
-      addressLine: 'Dallas, TX — Coming Summer 2026',
-      mapsUrl: 'https://velocitysimlounge.com/dallas',
+      addressLine: '9830 N Central Expy #400, The Hill · Dallas, TX 75231',
+      mapsUrl: 'https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231',
       phone: '',
       phoneTel: '',
-      careersMail: 'info@velocitysimlounge.com'
+      careersMail: 'dtxinfo@velocitysimlounge.com'
     }
   };
 
@@ -379,6 +379,25 @@
     }
   }
 
+  function applyFooterNavLinks(loc) {
+    loc = normalize(loc);
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === 'function') {
+      window.VSL_REPLICA_APPLY_FOOTER_LINKS(loc);
+      return;
+    }
+    if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
+    root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!href) return;
+      var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
+      if (next && next !== href) a.setAttribute('href', next);
+    });
+    var logo = root.querySelector('.vsl-site-footer__logo');
+    if (logo && window.VSL_LOCATION.buildLocationUrl) {
+      logo.setAttribute('href', window.VSL_LOCATION.buildLocationUrl(loc, 'home'));
+    }
+  }
+
   function applyLocation(key) {
     var loc = LOC[normalize(key)] || LOC.houston;
 
@@ -405,34 +424,62 @@
         phoneA.hidden = false;
         phoneRow.style.display = '';
       } else {
-        phoneA.setAttribute('href', loc.mapsUrl || 'https://velocitysimlounge.com/dallas');
-        phoneText.textContent = 'Opening Summer 2026 — get updates';
+        phoneA.setAttribute('href', loc.emailLink || ('mailto:' + loc.careersMail));
+        phoneText.textContent = loc.careersMail || 'Contact us by email';
         phoneA.hidden = false;
         phoneRow.style.display = '';
       }
     }
   }
 
-  function markActiveNav() {
-    var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
-    root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
-      var p = '';
-      try {
-        p = new URL(a.getAttribute('href'), window.location.origin).pathname.replace(/\/+$/, '').toLowerCase();
-      } catch (_) {}
-      a.classList.toggle('is-active', !!p && path === p);
-    });
+  function slugFromFooterHref(href) {
+    if (!href) return '';
+    if (window.__VSL_SITE_REPLICA__) {
+      var qMatch = href.match(/[?&]p=(?:dallas-)?([^&#]+)/i);
+      if (qMatch) {
+        var pk = qMatch[1].toLowerCase();
+        if (pk === 'parties-events') return 'group-events';
+        if (pk === 'food-drink') return 'food-and-drink';
+        if (pk.indexOf('dallas-') === 0) pk = pk.slice(7);
+        return pk;
+      }
+    }
+    try {
+      var path = new URL(href, window.location.href).pathname.replace(/\/+$/, '').toLowerCase();
+      var dallasMatch = path.match(/\/dallas\/([^/]+)$/);
+      if (dallasMatch) return dallasMatch[1];
+      var parts = path.split('/').filter(Boolean);
+      var last = parts[parts.length - 1];
+      if (last === 'index.html' && parts.length > 1) last = parts[parts.length - 2];
+      return last;
+    } catch (_) {}
+    return '';
   }
 
+  function updateFooterActiveNav() {
+    var currentSlug = window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug
+      ? window.VSL_LOCATION.getPageSlug() : '';
+    root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
+      var linkSlug = slugFromFooterHref(a.getAttribute('href'));
+      a.classList.toggle('is-active', !!currentSlug && linkSlug === currentSlug);
+    });
+  }
+  window.vslUpdateFooterActiveNav = updateFooterActiveNav;
+
   applyLocation(readLocation());
-  markActiveNav();
+  applyFooterNavLinks(readLocation());
+  updateFooterActiveNav();
 
   window.addEventListener('storage', function (e) {
     if (e.key === STORAGE_KEY && e.newValue) applyLocation(e.newValue);
   });
 
   window.addEventListener('_vslLocationChanged', function (e) {
-    if (e.detail && e.detail.location) applyLocation(e.detail.location);
+    if (e.detail && e.detail.location) {
+      applyLocation(e.detail.location);
+      applyFooterNavLinks(e.detail.location);
+      updateFooterActiveNav();
+    }
   });
 })();
 </script>

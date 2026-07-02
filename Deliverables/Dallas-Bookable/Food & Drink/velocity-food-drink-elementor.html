@@ -1,0 +1,1571 @@
+<!-- VSL Food+Drink v4 — Full interactive menu is embedded on this page. Hero button scrolls to #full-menu. -->
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+    html { scroll-behavior: smooth; }
+    html.no-smooth-scroll { scroll-behavior: auto !important; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto !important; }
+    }
+    .vsl-fooddrink {
+      --navy: #10182B;
+      --deep-indigo: #191B4D;
+      --magenta: #EE265F;
+      --blue: #293893;
+      --yellow: #FDC70C;
+      --red: #D22026;
+      --circuit-white: #EAEAEA;
+      --silver: #DFDFDE;
+      --mist: #B2AEBF;
+      --slate-violet: #5F5782;
+      --gutter: 24px;
+      --page-margin: 64px;
+      --soft: 8px;
+      --font-display: 'Khand', system-ui, sans-serif;
+      --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      --vsl-text-section: clamp(1.375rem, 0.55rem + 4vw, 2.375rem);
+      --vsl-text-section-sub: clamp(0.9375rem, 0.84rem + 0.35vw, 1.0625rem);
+      --vsl-outdent: 0px;
+      --vsl-hero-bleed-top: -12px;
+      --vsl-hero-bleed-bottom: -12px;
+      --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+      --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+      --vsl-hero-photo: url("https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp");
+      --vsl-vh: 1vh;
+      --vsl-hero-offset: 0px;
+      /* Clear fixed `.vsl-navbar__sticky` (matches velocity-navbar: height 60px×scale + small gap) */
+      --vsl-site-header-offset: calc(60px * 1.15 + 14px);
+      /* Sticky `.vsl-fooddrink-menu-nav` (padding + 1–2 rows of pills); keeps section titles visible under it */
+      --vsl-menu-pill-offset: clamp(3.75rem, 2.85rem + 4vw, 6.75rem);
+
+      font-family: var(--font-body);
+      color: var(--navy);
+      box-sizing: border-box;
+      width: calc(100% + 2 * var(--vsl-outdent));
+      max-width: none;
+      margin-left: calc(-1 * var(--vsl-outdent));
+      margin-right: calc(-1 * var(--vsl-outdent));
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .vsl-fooddrink:has(> main > section.vsl-fooddrink-hero:first-of-type) {
+      margin-top: var(--vsl-hero-bleed-top);
+      margin-bottom: var(--vsl-hero-bleed-bottom);
+    }
+    .vsl-fooddrink > main#primary-content {
+      display: block;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-block-start: 0;
+      padding-block-end: 0;
+    }
+    .elementor-section:has(.vsl-fooddrink),
+    .elementor-column:has(.vsl-fooddrink),
+    .elementor-widget-wrap:has(.vsl-fooddrink),
+    .elementor-widget-html:has(.vsl-fooddrink),
+    .elementor-widget-container:has(.vsl-fooddrink),
+    .e-con:has(.vsl-fooddrink),
+    .e-con-inner:has(.vsl-fooddrink) {
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: 0 !important;
+    }
+    .elementor-widget-html .elementor-widget-container:has(> .vsl-fooddrink) {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    .vsl-fooddrink *,
+    .vsl-fooddrink *::before,
+    .vsl-fooddrink *::after { box-sizing: border-box; }
+
+    #food-hero,
+    #full-menu,
+    #food-cta {
+      scroll-margin-top: max(5rem, var(--vsl-site-header-offset));
+    }
+    #entrees,
+    #appetizers,
+    #sweet,
+    #cocktails,
+    #classics,
+    #beer-wine,
+    #flights {
+      scroll-margin-top: max(
+        5rem,
+        calc(var(--vsl-site-header-offset) + var(--vsl-menu-pill-offset))
+      );
+    }
+
+    @media (max-width: 900px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(60px + 14px);
+      }
+    }
+    @media (max-width: 600px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(54px + 14px);
+      }
+    }
+    @media (max-width: 420px) {
+      .vsl-fooddrink {
+        --vsl-site-header-offset: calc(50px + 12px);
+      }
+    }
+    @media (max-width: 720px) {
+      .vsl-fooddrink {
+        --vsl-menu-pill-offset: clamp(4.5rem, 3.5rem + 5vw, 8.25rem);
+      }
+    }
+
+    .vsl-fooddrink-hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      margin-top: 0;
+      background: var(--navy);
+      color: var(--circuit-white);
+      overflow: clip;
+      isolation: isolate;
+      min-height: calc((var(--vsl-vh) * 100) - var(--vsl-hero-offset));
+    }
+    @supports (height: 100svh) {
+      .vsl-fooddrink-hero {
+        min-height: calc(100svh - var(--vsl-hero-offset));
+      }
+    }
+    .vsl-fooddrink-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-color: #1a1f2a;
+      background-image: var(--vsl-hero-photo);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    .vsl-fooddrink-hero__inner {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(22px, 4vh, 44px) clamp(20px, 5vw, var(--page-margin)) clamp(56px, 10vh, 112px);
+      max-width: 40rem;
+      margin: 0 auto;
+      width: 100%;
+      background: none;
+      pointer-events: none;
+    }
+    .vsl-fooddrink-hero__inner > * {
+      pointer-events: auto;
+    }
+    .vsl-fooddrink-hero__title {
+      margin: 0 0 0.35em;
+      padding: 18px 36px;
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 1.2rem + 5vw, 4rem);
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-wrap: balance;
+      background: linear-gradient(135deg, rgba(16, 24, 43, 0.82) 0%, rgba(25, 27, 77, 0.78) 100%);
+      border-radius: 14px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      background: rgba(4, 7, 18, 0.72);
+      border-radius: 10px;
+    }
+    .vsl-fooddrink-hero__sub {
+      margin: 0 0 1.25rem;
+      padding: 6px 12px;
+      font-size: clamp(0.9rem, 0.82rem + 0.35vw, 1.05rem);
+      font-weight: 400;
+      font-style: normal;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.94) !important;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.94) !important;
+      max-width: 40ch;
+      background: rgba(4, 7, 18, 0.68);
+      border-radius: 8px;
+    }
+    .vsl-fooddrink-hero__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+    }
+    .vsl-fooddrink-hero__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 36px;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.92rem + 0.35vw, 1.15rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: var(--magenta);
+      border: 2px solid var(--magenta);
+      box-shadow: 0 8px 32px rgba(238, 38, 95, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .vsl-fooddrink-hero__btn:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 12px 40px rgba(238, 38, 95, 0.55);
+      transform: translateY(-2px);
+    }
+    .vsl-fooddrink-hero__btn:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+    }
+    .vsl-fooddrink-hero__btn:active {
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-hero__btn { transition: filter 0.2s ease, box-shadow 0.2s ease; }
+      .vsl-fooddrink-hero__btn:hover { transform: none; }
+    }
+    @media (max-width: 680px) {
+      .vsl-fooddrink-hero__inner {
+        justify-content: flex-start;
+        padding-top: clamp(68px, 14vh, 120px);
+        padding-bottom: clamp(24px, 4vh, 40px);
+      }
+      .vsl-fooddrink-hero__sub {
+        margin-bottom: 0.9rem;
+      }
+      .vsl-fooddrink-hero__btn {
+        min-height: 46px;
+        padding: 10px 24px;
+      }
+    }
+
+    .vsl-fooddrink-section--light {
+      background: var(--navy);
+      color: var(--circuit-white);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) 80px;
+      position: relative;
+    }
+    .vsl-fooddrink-section--light + .vsl-fooddrink-section--light {
+      padding-top: 48px;
+    }
+    .vsl-fooddrink-section__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .vsl-fooddrink-section__title {
+      margin: 0 0 1.25em;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: var(--vsl-text-section);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+      text-wrap: balance;
+    }
+
+    .vsl-fooddrink-grid {
+      display: grid !important;
+      grid-template-columns: 1fr;
+      gap: var(--gutter);
+    }
+    @media (min-width: 640px) {
+      .vsl-fooddrink-grid--share { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .vsl-fooddrink-grid--share { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 640px) {
+      .vsl-fooddrink-grid--three { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .vsl-fooddrink-grid--three { grid-template-columns: repeat(3, 1fr); }
+    }
+    /* Three flatbreads always share one row when viewport allows */
+    .vsl-fooddrink-grid--flatbread-row {
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .vsl-fooddrink-grid--flatbread-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    .vsl-fooddrink-entrees-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gutter);
+    }
+
+    .vsl-fooddrink-card {
+      background: #fff;
+      border-radius: calc(var(--soft) + 2px);
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(16, 24, 43, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      display: flex !important;
+      flex-direction: column;
+      visibility: visible !important;
+      opacity: 1 !important;
+      transition: box-shadow 0.28s ease, transform 0.28s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover {
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.42), 0 8px 18px rgba(0, 0, 0, 0.22);
+        transform: translateY(-3px);
+      }
+    }
+    .vsl-fooddrink-card__media {
+      position: relative;
+      display: block !important;
+      visibility: visible !important;
+      width: 100%;
+      min-height: 120px;
+      margin: 0;
+      padding: 0;
+      border: none;
+      cursor: zoom-in;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: linear-gradient(145deg, #e8eaef 0%, #cfd3dc 100%);
+    }
+    .vsl-fooddrink-card__media:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 2px;
+      z-index: 1;
+    }
+    .vsl-fooddrink-card__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media img {
+        transform: scale(1.05);
+      }
+    }
+    .vsl-fooddrink-card__media-hint {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 6px 12px;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(16, 24, 43, 0.72);
+      border-radius: 4px;
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media-hint {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .vsl-fooddrink-card__body {
+      padding: 1.25rem 1.35rem 1.35rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .vsl-fooddrink-card__name {
+      margin: 0 0 var(--soft);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.85rem + 0.6vw, 1.125rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.25;
+      color: var(--navy) !important;
+      -webkit-text-fill-color: var(--navy) !important;
+    }
+    .vsl-fooddrink-card__desc {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: normal;
+      line-height: 1.45;
+      color: var(--slate-violet);
+    }
+
+    .vsl-fooddrink-section--dark {
+      background: var(--navy);
+      padding: 72px clamp(20px, 5vw, var(--page-margin)) 80px;
+      position: relative;
+      overflow: clip;
+    }
+    .vsl-fooddrink-section--dark::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(160deg, rgba(25, 27, 77, 0.45) 0%, transparent 62%);
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-section__inner {
+      position: relative;
+      z-index: 1;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-section__title {
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(234, 234, 234, 0.12);
+      box-shadow: none;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .vsl-fooddrink-section--dark .vsl-fooddrink-card:hover {
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+      }
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__media {
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(234, 234, 234, 0.1);
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__name {
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-fooddrink-section--dark .vsl-fooddrink-card__desc {
+      color: var(--mist);
+    }
+
+    .vsl-fooddrink-fullmenu {
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+      padding: 56px clamp(16px, 5vw, var(--page-margin)) 70px;
+      display: block !important;
+      visibility: visible !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+    .vsl-fooddrink-fullmenu__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: block !important;
+      visibility: visible !important;
+    }
+    .vsl-fooddrink-fullmenu__intro {
+      margin: 0 auto 1rem;
+      max-width: 72ch;
+      text-align: center;
+      color: var(--circuit-white);
+      opacity: 0.85;
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+    .vsl-fooddrink-dallas-soon {
+      text-align: center;
+      padding: clamp(2.5rem, 7vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+      margin: 0 auto 1.5rem;
+      max-width: 44rem;
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(16, 24, 43, 0.75) 0%, rgba(25, 27, 77, 0.65) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.18);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(238, 38, 95, 0.12);
+    }
+    .vsl-fooddrink-dallas-soon__eyebrow {
+      margin: 0 0 0.65rem;
+      font-size: clamp(0.8rem, 0.7rem + 0.45vw, 1rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+    }
+    .vsl-fooddrink-dallas-soon__title {
+      margin: 0 0 1rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 1.15rem + 2.8vw, 2.85rem);
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.12;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+      text-wrap: balance;
+    }
+    .vsl-fooddrink-dallas-soon__text {
+      margin: 0 auto;
+      max-width: 38ch;
+      font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.28rem);
+      line-height: 1.5;
+      font-weight: 500;
+      color: rgba(234, 234, 234, 0.96) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.96) !important;
+    }
+    .vsl-fooddrink-fullmenu__pdf {
+      text-align: center;
+      margin: -0.35rem auto 1.15rem;
+    }
+    .vsl-fooddrink-fullmenu__pdf-link {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(234, 234, 234, 0.95) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.95) !important;
+      text-decoration: underline;
+      text-underline-offset: 0.22em;
+      text-decoration-color: rgba(238, 38, 95, 0.75);
+    }
+    .vsl-fooddrink-fullmenu__pdf-link:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-decoration-color: var(--magenta);
+    }
+    .vsl-fooddrink-fullmenu__pdf-link:focus-visible {
+      outline: 2px solid var(--yellow);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    .vsl-fooddrink-menu-houston {
+      display: block;
+    }
+    .vsl-fooddrink--dallas .vsl-fooddrink-menu-houston {
+      display: none;
+    }
+    .vsl-fooddrink-menu-nav {
+      position: sticky;
+      top: calc(var(--vsl-site-header-offset) + 0.35rem);
+      z-index: 40;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0;
+      padding: 4px;
+      margin: 0 auto 1.25rem;
+      max-width: max-content;
+      background: rgba(16, 24, 43, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(234, 234, 234, 0.14);
+      border-radius: 999px;
+    }
+    .vsl-fooddrink-menu-nav a {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: none;
+      background: none;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(234, 234, 234, 0.75) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.75) !important;
+      white-space: nowrap;
+      transition: background 0.18s ease, color 0.18s ease, -webkit-text-fill-color 0.18s ease;
+    }
+    .vsl-fooddrink-menu-nav a:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .vsl-fooddrink-menu-nav a:active {
+      background: var(--magenta);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .vsl-fooddrink-menu-nav > a.is-active {
+      background: var(--magenta);
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .vsl-fooddrink-menu-nav > a.is-active:hover {
+      background: var(--magenta);
+      filter: brightness(1.08);
+    }
+    /* Classics + Zero Proof share one magenta pill */
+    .vsl-fooddrink-menu-nav__twin {
+      display: inline-flex;
+      align-items: stretch;
+      border-radius: 999px;
+      margin: 0;
+    }
+    .vsl-fooddrink-menu-nav__twin a {
+      border-radius: 0 !important;
+    }
+    .vsl-fooddrink-menu-nav__twin a:first-of-type {
+      border-radius: 999px 0 0 999px !important;
+      padding-left: 14px;
+    }
+    .vsl-fooddrink-menu-nav__twin a:last-of-type {
+      border-radius: 0 999px 999px 0 !important;
+      padding-right: 14px;
+    }
+    .vsl-fooddrink-menu-nav__twin:not(:has(a.is-active)):hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .vsl-fooddrink-menu-nav__twin:not(:has(a.is-active)) a:hover {
+      background: none !important;
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) {
+      background: var(--magenta);
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) a {
+      background: none !important;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active):hover {
+      filter: brightness(1.08);
+    }
+    .vsl-fooddrink-menu-nav__twin:has(a.is-active) a:hover {
+      filter: none;
+    }
+    .vsl-fooddrink-menu-block {
+      margin: 1.5rem 0 2rem;
+      display: block !important;
+      visibility: visible !important;
+    }
+
+    /* Neutralise site-wide scroll-reveal animations inside this widget.
+       The global JS adds .vsl-reveal / .vsl-reveal--* classes and sets opacity:0 +
+       transform before the Intersection Observer fires. On mobile the observer can
+       silently fail, leaving every section permanently invisible. */
+    .vsl-fooddrink [class*="vsl-reveal"] {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+      transition: none !important;
+      animation: none !important;
+    }
+    .vsl-fooddrink-menu-block__title {
+      margin: 0 0 1rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 3px solid var(--magenta);
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 0.85rem + 1.6vw, 1.75rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--circuit-white) !important;
+      -webkit-text-fill-color: var(--circuit-white) !important;
+    }
+    .vsl-fooddrink-classics__titles {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.35rem 14px;
+      margin: 0 0 1rem;
+    }
+    .vsl-fooddrink-classics__titles .vsl-fooddrink-menu-block__title {
+      margin: 0;
+    }
+    @media (min-width: 760px) {
+      .vsl-fooddrink-classics__titles {
+        grid-template-columns: repeat(2, 1fr);
+        align-items: end;
+      }
+    }
+    .vsl-fooddrink-sweet-hero {
+      margin: 2rem 0 2.75rem;
+    }
+    .vsl-fooddrink-sweet-hero__panel {
+      padding: clamp(1.75rem, 4.5vw, 2.75rem) clamp(1.25rem, 3vw, 2rem);
+      border-radius: 14px;
+      background: linear-gradient(155deg, rgba(25, 27, 77, 0.55) 0%, rgba(16, 24, 43, 0.88) 45%, rgba(238, 38, 95, 0.14) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.14);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+    }
+    .vsl-fooddrink-sweet-hero__head {
+      text-align: center;
+      margin-bottom: clamp(0.85rem, 2vw, 1.25rem);
+    }
+    .vsl-fooddrink-sweet-hero__eyebrow {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      opacity: 0.95;
+    }
+    .vsl-fooddrink-sweet-hero .vsl-fooddrink-menu-block__title {
+      margin: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+      font-size: clamp(1.5rem, 1.05rem + 2vw, 2.125rem);
+      text-align: center;
+    }
+    .vsl-fooddrink-sweet-hero__card {
+      max-width: 56rem;
+      margin: 0 auto;
+    }
+    /* Skillet: slightly taller portrait (2:3) than 3:4 — hugs vertical photo; gap:0 = no dark stripe to text */
+    .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card {
+      gap: 0;
+    }
+    .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media {
+      aspect-ratio: 2 / 3;
+      background: linear-gradient(160deg, #2c2638 0%, #1a1522 55%, #12101a 100%);
+    }
+    .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media img {
+      object-fit: contain;
+      object-position: center center;
+    }
+    @media (min-width: 900px) {
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 0;
+      }
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__media {
+        flex: 0 1 30%;
+        min-width: 0;
+        max-width: 32%;
+        aspect-ratio: 2 / 3;
+        max-height: none;
+      }
+      .vsl-fooddrink-sweet-hero__card .vsl-fooddrink-card__body {
+        flex: 1 1 52%;
+        min-width: 0;
+        max-width: 58%;
+        padding: clamp(1rem, 2vw, 1.35rem) clamp(0.95rem, 1.65vw, 1.25rem);
+        justify-content: center;
+      }
+    }
+    .vsl-fooddrink-card__row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.6rem;
+      margin: 0 0 var(--soft);
+    }
+    .vsl-fooddrink-card__price {
+      margin: 0;
+      color: var(--magenta);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .vsl-fooddrink-card__media--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ebedf2 0%, #d7dbe4 100%);
+      cursor: default;
+    }
+    .vsl-fooddrink-card__media--placeholder span {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.1em;
+      color: rgba(16, 24, 43, 0.2);
+      text-transform: uppercase;
+    }
+    .vsl-fooddrink-listgrid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    @media (min-width: 760px) {
+      .vsl-fooddrink-listgrid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .vsl-fooddrink-listcard {
+      margin: 0;
+      padding: 1rem 1.1rem;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid rgba(16, 24, 43, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18);
+      color: var(--slate-violet);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .vsl-fooddrink-cta {
+      padding: clamp(48px, 7vw, 88px) clamp(20px, 5vw, var(--page-margin)) clamp(72px, 11vw, 112px);
+      background: var(--deep-indigo);
+      color: var(--circuit-white);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    .vsl-fooddrink-cta__card {
+      max-width: min(700px, 100%);
+      margin: 0 auto;
+      border-radius: 16px;
+      background: linear-gradient(165deg, rgba(16, 24, 43, 0.78) 0%, rgba(25, 27, 77, 0.68) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.16);
+      border-top: 3px solid var(--yellow);
+      box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.28),
+        0 0 0 1px rgba(238, 38, 95, 0.1);
+      padding: clamp(36px, 6vh, 64px) clamp(24px, 4vw, 48px);
+      text-align: center;
+    }
+    .vsl-fooddrink-cta__title {
+      margin: 0 0 1.35rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 1.1rem + 2.2vw, 2.85rem);
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+      color: var(--yellow) !important;
+      -webkit-text-fill-color: var(--yellow) !important;
+      line-height: 1.08;
+      text-wrap: balance;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    }
+    .vsl-fooddrink-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+    }
+    .vsl-fooddrink-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 28px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition:
+        color 0.22s ease,
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.14s ease,
+        filter 0.14s ease;
+    }
+    .vsl-fooddrink-cta__btn--primary {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--magenta);
+      border: 2px solid var(--magenta);
+      box-shadow:
+        0 6px 24px rgba(238, 38, 95, 0.35),
+        0 0 36px rgba(238, 38, 95, 0.2);
+    }
+    .vsl-fooddrink-cta__btn--primary:hover {
+      filter: brightness(1.06);
+      box-shadow:
+        0 8px 32px rgba(238, 38, 95, 0.42),
+        0 0 44px rgba(238, 38, 95, 0.28);
+    }
+    .vsl-fooddrink-cta__btn--outline {
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+      background-color: transparent;
+      border: 2px solid var(--magenta);
+    }
+    .vsl-fooddrink-cta__btn--outline:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--magenta);
+      box-shadow: 0 6px 22px rgba(238, 38, 95, 0.26);
+    }
+    .vsl-fooddrink-cta__btn:active {
+      filter: brightness(0.93);
+      transform: scale(0.99);
+    }
+    .vsl-fooddrink-cta__btn:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-cta__btn { transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease; }
+      .vsl-fooddrink-cta__btn:active { transform: none; }
+    }
+    @media (max-width: 639px) {
+      .vsl-fooddrink-section--light,
+      .vsl-fooddrink-section--dark { padding: 48px clamp(16px, 5vw, var(--page-margin)) 56px; }
+    }
+
+    .vsl-fooddrink-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      display: none !important;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 4vw, 28px);
+    }
+    .vsl-fooddrink-lightbox.is-open {
+      display: flex !important;
+    }
+    .vsl-fooddrink-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: rgba(16, 24, 43, 0.94);
+      cursor: pointer;
+    }
+    .vsl-fooddrink-lightbox__panel {
+      position: relative;
+      z-index: 1;
+      max-width: min(96vw, 1120px);
+      max-height: min(88vh, 900px);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: none;
+    }
+    .vsl-fooddrink-lightbox__panel > * {
+      pointer-events: auto;
+    }
+    .vsl-fooddrink-lightbox__close {
+      align-self: flex-end;
+      margin: 0 0 4px;
+      width: 44px;
+      height: 44px;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.35);
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .vsl-fooddrink-lightbox__close:hover {
+      border-color: var(--yellow);
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .vsl-fooddrink-lightbox__close:focus-visible {
+      outline: 3px solid var(--yellow);
+      outline-offset: 3px;
+    }
+    .vsl-fooddrink-lightbox__img {
+      max-width: 100%;
+      max-height: min(72vh, 760px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+    .vsl-fooddrink-lightbox__caption {
+      margin: 0;
+      max-width: 42rem;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+      font-weight: 600;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--circuit-white);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vsl-fooddrink-card,
+      .vsl-fooddrink-card__media img,
+      .vsl-fooddrink-card__media-hint { transition: none; }
+      .vsl-fooddrink-card:hover { transform: none; }
+      .vsl-fooddrink-card:hover .vsl-fooddrink-card__media img { transform: none; }
+    }
+    @media (hover: none) {
+      .vsl-fooddrink-card__media-hint {
+        opacity: 0.9;
+        transform: none;
+      }
+    }
+    /* Beer / Flights feature photos (WordPress URLs applied when asset-links filled) */
+    .vsl-fooddrink-feature {
+      margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+      border-radius: var(--soft);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .vsl-fooddrink-feature__img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 21 / 9;
+      object-fit: cover;
+      background: #1a2238;
+    }
+    .vsl-fooddrink-feature--split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      align-items: start;
+    }
+    /* Each tile owns 16:10 — equal column widths ⇒ matched heights; img fills cell for smooth zoom */
+    .vsl-fooddrink-feature--split__cell {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      aspect-ratio: 16 / 10;
+      min-height: 160px;
+      overflow: hidden;
+    }
+    .vsl-fooddrink-feature--split__cell .vsl-fooddrink-feature__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      aspect-ratio: unset;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .vsl-fooddrink-feature--split {
+        grid-template-columns: 1fr;
+      }
+    }
+</style>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/dallas/book-now/","events":"https://velocitysimlounge.com/dallas/group-events/","menuPdf":"https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+  <main id="primary-content">
+    <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
+      <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
+      <div class="vsl-fooddrink-hero__inner">
+        <h1 class="vsl-fooddrink-hero__title" id="food-hero-heading">Our <span style="color:var(--magenta);-webkit-text-fill-color:var(--magenta);">Menu</span></h1>
+        <p class="vsl-fooddrink-hero__sub">Take a Break, Grab a Bite &mdash; Whether you&rsquo;re celebrating a victory or just in need of a quick pit stop, our in-house bar and restaurant has everything you need. Fuel up, grab some drinks, then grid up!</p>
+        <div class="vsl-fooddrink-hero__actions">
+          <a class="vsl-fooddrink-hero__btn vsl-fooddrink-hero__btn--menu" data-vsl-soft-scroll href="#full-menu">View the menu</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-fooddrink-fullmenu" id="full-menu" aria-labelledby="full-menu-heading">
+      <div class="vsl-fooddrink-fullmenu__inner">
+        <h2 class="vsl-fooddrink-section__title" id="full-menu-heading">Full Menu</h2>
+        <div class="vsl-fooddrink-dallas-soon" id="dallas-menu-soon" role="status" aria-live="polite" hidden>
+          <p class="vsl-fooddrink-dallas-soon__eyebrow">Dallas</p>
+          <p class="vsl-fooddrink-dallas-soon__title">Food &amp; drink menu coming soon</p>
+          <p class="vsl-fooddrink-dallas-soon__text">We&rsquo;re finishing the opening menu for our Dallas lounge. Check back shortly&mdash;or switch to Houston to browse the full menu online.</p>
+        </div>
+        <div class="vsl-fooddrink-menu-houston">
+        <p class="vsl-fooddrink-fullmenu__pdf">
+          <a class="vsl-fooddrink-fullmenu__pdf-link" href="https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view" data-vsl-link="menuPdf" target="_blank" rel="noopener noreferrer">Download PDF menu</a>
+        </p>
+        <nav class="vsl-fooddrink-menu-nav" aria-label="Full menu sections">
+          <a href="#appetizers">Appetizers</a>
+          <a href="#entrees">Entrees</a>
+          <a href="#sweet">Sweet</a>
+          <a href="#cocktails">Cocktails</a>
+          <span class="vsl-fooddrink-menu-nav__twin" role="group" aria-label="Classics and Zero Proof">
+            <a href="#classics">Classics</a>
+            <a href="#classics">Zero Proof</a>
+          </span>
+          <a href="#beer-wine">Beer + Other</a>
+          <a href="#flights">Flights</a>
+        </nav>
+
+        <section class="vsl-fooddrink-menu-block" id="appetizers" aria-labelledby="appetizers-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="appetizers-heading">Appetizers</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-16-triple-crown"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter.webp" aria-label="Open larger photo: Triple Crown Platter"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1024x640.webp" alt="Triple Crown Platter" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/triple-crown-platter-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Triple Crown Platter</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Chips &amp; queso and chicken diavolo taquitos.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-17-charcuterie"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2.webp" aria-label="Open larger photo: Charcuterie Board"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1024x640.webp" alt="Charcuterie Board" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Charcuterie-Board-photo-2-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Charcuterie Board</h4><p class="vsl-fooddrink-card__price">$22</p></div><p class="vsl-fooddrink-card__desc">Brie, cheddar, goat cheese, soppressata, salami, cranberries, almonds, olives, fig jam, crackers.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="entrees" aria-labelledby="entrees-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="entrees-heading">Entrees</h3>
+          <div class="vsl-fooddrink-entrees-stack">
+            <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card">
+              <button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Chicken_Diavolo_Taquitos.webp" aria-label="Open larger photo: Chicken Diavolo Taquitos">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Chicken_Diavolo_Taquitos.webp" alt="Chicken Diavolo Taquitos" width="900" height="600" loading="lazy" decoding="async">
+              </button>
+              <div class="vsl-fooddrink-card__body">
+                <div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Chicken Diavolo Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div>
+                <p class="vsl-fooddrink-card__desc">Spicy baked chicken taquitos filled with shredded chicken, cream cheese, sour cream, cheddar jack, with a chipotle sauce.</p>
+              </div>
+            </article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beef_Taquitos.webp" aria-label="Open larger photo: Beef Taquitos"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beef_Taquitos.webp" alt="Beef Taquitos" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Beef Taquitos</h4><p class="vsl-fooddrink-card__price">$12</p></div><p class="vsl-fooddrink-card__desc">Ground beef taquitos smothered in queso and sour cream.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" aria-label="Open larger photo: Bacon Cheeseburger"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Compressed8.webp" alt="Bacon Cheeseburger" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Bacon Cheeseburger</h4><p class="vsl-fooddrink-card__price">$10</p></div><p class="vsl-fooddrink-card__desc">Beef burger with caramelized onions and cheese. Add chips +$2.</p></div></article>
+            </div>
+            <div class="vsl-fooddrink-grid vsl-fooddrink-grid--flatbread-row">
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Margherita_Flatbread.webp" aria-label="Open larger photo: Margherita Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Margherita_Flatbread.webp" alt="Margherita Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Margherita Flatbread</h4><p class="vsl-fooddrink-card__price">$14</p></div><p class="vsl-fooddrink-card__desc">Tomatoes, fresh mozzarella, and fresh basil flatbread.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-pepperoni-flatbread"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item-.webp" aria-label="Open larger photo: Pepperoni Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x640.webp" alt="Pepperoni Flatbread" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 32vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Pepperoni Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">House marinara, mozzarella, pepperoni, and fresh basil.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/BBQ_Cheese_Flatbread.webp" aria-label="Open larger photo: BBQ Cheese Flatbread"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/BBQ_Cheese_Flatbread.webp" alt="BBQ Cheese Flatbread" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">BBQ Cheese Flatbread</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Gochujang BBQ sauce, mozzarella, cheddar, and sliced red onions.</p></div></article>
+            </div>
+            <div class="vsl-fooddrink-grid vsl-fooddrink-grid--share">
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Tsukune_Meatballs.webp" aria-label="Open larger photo: Tsukune Meatballs"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Tsukune_Meatballs.webp" alt="Tsukune Meatballs" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Tsukune Meatballs</h4><p class="vsl-fooddrink-card__price">$15</p></div><p class="vsl-fooddrink-card__desc">Japanese-style teriyaki chicken meatballs on creamy, mashed garlic sweet potatoes.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" aria-label="Open larger photo: Pork Belly Lettuce Wraps"><img src="https://velocitysimlounge.com/wp-content/uploads/2025/11/Velocity_SummerMenu_QUITNGUYEN_DSCF2147-opt.jpg" alt="Pork Belly Lettuce Wraps" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Pork Belly Lettuce Wraps</h4><p class="vsl-fooddrink-card__price">$16</p></div><p class="vsl-fooddrink-card__desc">Pineapple marinated pork belly, pickled carrots, bean sprouts, lettuce, with gochujang sauce.</p></div></article>
+            <article class="vsl-fooddrink-card"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" aria-label="Open larger photo: Wagyu Sliders"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Sliders.webp" alt="Wagyu Sliders" width="900" height="600" loading="lazy" decoding="async"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Wagyu Sliders</h4><p class="vsl-fooddrink-card__price">$18</p></div><p class="vsl-fooddrink-card__desc">Wagyu sliders with caramelized onions, garlic mustard aioli, and cheese, with a side of fries.</p></div></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block vsl-fooddrink-sweet-hero" id="sweet" aria-labelledby="sweet-heading">
+          <div class="vsl-fooddrink-sweet-hero__panel">
+            <header class="vsl-fooddrink-sweet-hero__head">
+              <p class="vsl-fooddrink-sweet-hero__eyebrow">Finish on a high note</p>
+              <h3 class="vsl-fooddrink-menu-block__title" id="sweet-heading">Sweet</h3>
+            </header>
+            <div class="vsl-fooddrink-sweet-hero__card">
+              <article class="vsl-fooddrink-card" data-asset-key="menu-skillet-cookie"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo.webp" aria-label="Open larger photo: Skillet Chocolate Cookie and Ice Cream"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1024x640.webp" alt="Skillet Chocolate Cookie and Ice Cream" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 899px) 92vw, min(720px, 58vw)" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Skillet-Chocolate-Cookie-Ice-Cream-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><div class="vsl-fooddrink-card__row"><h4 class="vsl-fooddrink-card__name">Skillet Chocolate Cookie &amp; Ice Cream</h4><p class="vsl-fooddrink-card__price">$8</p></div><p class="vsl-fooddrink-card__desc">Chocolate chip cookie, topped with a scoop of Cosmic vanilla bean ice cream and drizzled with chocolate and caramel.</p></div></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="cocktails" aria-labelledby="cocktails-full-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="cocktails-full-heading">Signature Cocktails</h3>
+          <div class="vsl-fooddrink-grid vsl-fooddrink-grid--three">
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-21-suzuka"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo.webp" aria-label="Open larger photo: Suzuka Old Fashioned"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1024x640.webp" alt="Suzuka Old Fashioned" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Suzuka Old Fashioned</h4><p class="vsl-fooddrink-card__desc">Suntory whiskey, simple, bitters, orange, cherry.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-22-rainmaster"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo.webp" aria-label="Open larger photo: Rain Master Caipirinha"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1024x640.webp" alt="Rain Master Caipirinha" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Rainmaster-Caipirinha-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Rain Master Caipirinha</h4><p class="vsl-fooddrink-card__desc">Cachaça, lime, orange, mint.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-23-carajillo"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo.webp" aria-label="Open larger photo: Cafe Racer Carajillo"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1024x640.webp" alt="Cafe Racer Carajillo" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Cafe-Racer-Carajillo-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Cafe Racer Carajillo</h4><p class="vsl-fooddrink-card__desc">Cold brew, liqueur 43, topped with cinnamon.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-24-le-mans-75"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo.webp" aria-label="Open larger photo: Le Mans 75"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1024x640.webp" alt="Le Mans 75 cocktail" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Le-Mans-75-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Le Mans 75</h4><p class="vsl-fooddrink-card__desc">Gin, prosecco, elderflower, chambord, lemon.</p></div></article>
+            <article class="vsl-fooddrink-card" data-asset-key="menu-photo-25-pace-car"><button type="button" class="vsl-fooddrink-card__media" data-vsl-lightbox data-full="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo.webp" aria-label="Open larger photo: Pace Car"><img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1024x640.webp" alt="Pace Car cocktail" width="1024" height="640" loading="lazy" decoding="async" sizes="(max-width: 639px) 92vw, (max-width: 899px) 46vw, 31vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pace-Car-cocktail-photo-1536x960.webp 1536w"></button><div class="vsl-fooddrink-card__body"><h4 class="vsl-fooddrink-card__name">Pace Car</h4><p class="vsl-fooddrink-card__desc">Remy Martin VSOP, cointreau, lemon, orange.</p></div></article>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="classics" aria-labelledby="classics-heading zero-proof-heading">
+          <div class="vsl-fooddrink-classics__titles">
+            <h3 class="vsl-fooddrink-menu-block__title" id="classics-heading">Classics</h3>
+            <h3 class="vsl-fooddrink-menu-block__title" id="zero-proof-heading">Zero Proof</h3>
+          </div>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Margarita</strong>: blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong>: pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong>: irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong>: tequila, cointreau, lime, topo chico</p>
+            <p class="vsl-fooddrink-listcard"><strong>Agua de Jamaica</strong>: hibiscus, lime, sugar, water<br><strong>The Quattro</strong>: lemon, mint &amp; white peach syrup, topo chico<br><strong>Virgin Mojito</strong>: lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong>: spicy ginger, mint lavender, strawberry</p>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="beer-wine" aria-labelledby="beer-wine-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="beer-wine-heading">Beer + Wine + Other</h3>
+          <div class="vsl-fooddrink-feature" data-asset-key="menu-beer-feature">
+            <img class="vsl-fooddrink-feature__img" data-asset-key="menu-photo-28-beer-feature" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1200x400.webp" alt="Beer and wine selection at Velocity" width="1200" height="400" loading="lazy" decoding="async" sizes="(max-width: 768px) calc(100vw - 32px), min(1120px, calc(100vw - 48px))" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-600x200.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-768x256.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1024x342.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1200x400.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Beer-section-feature-photo-1536x512.webp 1536w">
+          </div>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Domestic</strong>: Austin East Cider, Coors Light, Michelob Ultra, Miller Lite, Pacifico, Saint Arnold Citrus Shandy, Saint Arnold Seasonal, White Claw<br><strong>Draft</strong>: Blue Moon, Karbach Love Street, Modelo Especial, Mini Boss, Seasonal, Shiner Bock<br><strong>Import</strong>: Corona, Dos Equis, Guinness, Stella Artois, Heineken 0.0</p>
+            <p class="vsl-fooddrink-listcard"><strong>Wine by glass/bottle</strong>: Chardonnay, Sauvignon Blanc, Spanish White, Riesling, Chianti, Pinot Noir, Spanish Red, Prosecco<br><strong>Soda/Tea/Coffee</strong>: Coke, Coke Zero, Diet Coke, Dr Pepper, Ginger Ale, Sprite, Iced Coffee, Iced Tea, Red Bull, Saint Arnold Root Beer, Topo Chico</p>
+          </div>
+        </section>
+
+        <section class="vsl-fooddrink-menu-block" id="flights" aria-labelledby="flights-heading">
+          <h3 class="vsl-fooddrink-menu-block__title" id="flights-heading">Flights</h3>
+          <div class="vsl-fooddrink-feature vsl-fooddrink-feature--split" data-asset-key="menu-flights-photos">
+            <div class="vsl-fooddrink-feature--split__cell">
+            <img class="vsl-fooddrink-feature__img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-left-e1777677791489.webp" alt="Whiskey flight at Velocity" loading="lazy" decoding="async" data-asset-key="menu-flights-left" sizes="(max-width: 768px) calc(100vw - 32px), 46vw">
+            </div>
+            <div class="vsl-fooddrink-feature--split__cell">
+            <img class="vsl-fooddrink-feature__img" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1536x960.webp" alt="Cocktail flights at Velocity" width="1536" height="960" loading="lazy" decoding="async" data-asset-key="menu-flights-right" sizes="(max-width: 768px) calc(100vw - 32px), 46vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Flights-section-photo-right-1536x960.webp 1536w">
+            </div>
+          </div>
+          <div class="vsl-fooddrink-listgrid">
+            <p class="vsl-fooddrink-listcard"><strong>Race Around the World</strong>: Still Austin, Glenfiddich 14 Blue Swift, Yamazaki<br><strong>Smooth is Fast</strong>: Buffalo Trace, Basil Hayden, Eagle Rare, Angel&rsquo;s Envy<br><strong>Tourist Trophy</strong>: Tullamore DEW, Laphroaig 10, Glenlivet 12, Glenfiddich 14</p>
+            <p class="vsl-fooddrink-listcard"><strong>The JWM</strong>: Toki Suntory, Yamazaki, Nikka Coffey Grain, Matsui Mizunara<br><strong>Texas Track Meet</strong>: Yellow Rose, TX Whiskey, Garrison Brothers, Still Austin<br><strong>Sparkle GT Mimosas</strong>: cucumber basil, jalapeno lime, strawberry lemonade, mint mango</p>
+          </div>
+        </section>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="vsl-fooddrink-cta" id="food-cta" aria-labelledby="cta-heading">
+      <div class="vsl-fooddrink-cta__card">
+        <h2 class="vsl-fooddrink-cta__title" id="cta-heading">Ready to Race?</h2>
+        <div class="vsl-fooddrink-cta__actions">
+          <a class="vsl-fooddrink-cta__btn vsl-fooddrink-cta__btn--primary" href="https://velocitysimlounge.com/dallas/book-now/" data-vsl-link="bookNow">Book Now</a>
+          <a class="vsl-fooddrink-cta__btn vsl-fooddrink-cta__btn--outline" href="https://velocitysimlounge.com/dallas/group-events/" data-vsl-link="events">View Our Events</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="vsl-fooddrink-lightbox" id="vsl-fooddrink-lightbox" aria-modal="true" role="dialog" aria-label="Enlarged menu photo" aria-hidden="true">
+    <button type="button" class="vsl-fooddrink-lightbox__backdrop" aria-label="Close enlarged photo"></button>
+    <div class="vsl-fooddrink-lightbox__panel">
+      <button type="button" class="vsl-fooddrink-lightbox__close" aria-label="Close">&times;</button>
+      <img class="vsl-fooddrink-lightbox__img" src="" alt="">
+      <p class="vsl-fooddrink-lightbox__caption"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.querySelector('.vsl-fooddrink');
+    if (!root) return;
+    function setRealViewportHeight() {
+      var vh = window.innerHeight * 0.01;
+      root.style.setProperty('--vsl-vh', vh + 'px');
+      var hero = root.querySelector('.vsl-fooddrink-hero');
+      if (hero) {
+        var topOffset = Math.max(0, hero.offsetTop || 0);
+        root.style.setProperty('--vsl-hero-offset', topOffset + 'px');
+      }
+    }
+    setRealViewportHeight();
+    var cfg = {};
+    try {
+      var raw = root.getAttribute('data-vsl-config');
+      if (raw) cfg = JSON.parse(raw);
+    } catch (e) {}
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+    var map = cfg.images || {};
+    var links = cfg.links || {};
+    var heroFinish = map.heroFinishLine;
+    if (heroFinish) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + heroFinish + '")');
+    }
+    var heroBg = map.heroBackground;
+    if (heroBg) {
+      root.style.setProperty('--vsl-hero-photo', 'url("' + heroBg + '")');
+    }
+    root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
+      var k = a.getAttribute('data-vsl-link');
+      if (k && links[k]) a.setAttribute('href', links[k]);
+    });
+
+    var VSL_LOC_KEY = 'vslPreferredLocation';
+    var houstonMenuSectionHash = /^(appetizers|entrees|sweet|cocktails|classics|beer-wine|flights)$/;
+    function normalizeVslLocation(key) {
+      return key === 'dallas' ? 'dallas' : 'houston';
+    }
+    function readPersistedVslLocation() {
+      if (window.VSL_LOCATION) return normalizeVslLocation(window.VSL_LOCATION.readLocation());
+      try {
+        var fromUrl = new URLSearchParams(window.location.search).get('loc');
+        if (fromUrl === 'dallas' || fromUrl === 'houston') {
+          localStorage.setItem(VSL_LOC_KEY, fromUrl);
+          return normalizeVslLocation(fromUrl);
+        }
+      } catch (e) {}
+      try {
+        return normalizeVslLocation(localStorage.getItem(VSL_LOC_KEY));
+      } catch (e) {
+        return 'houston';
+      }
+    }
+    var dallasSoonEl = root.querySelector('.vsl-fooddrink-dallas-soon');
+    var houstonWrapEl = root.querySelector('.vsl-fooddrink-menu-houston');
+    var requestMenuSpyRefresh = function () {};
+
+    function applyFoodDrinkLocationMode(loc) {
+      var isDallas = loc === 'dallas';
+      root.classList.toggle('vsl-fooddrink--dallas', isDallas);
+      if (houstonWrapEl) houstonWrapEl.setAttribute('aria-hidden', isDallas ? 'true' : 'false');
+      if (dallasSoonEl) dallasSoonEl.hidden = !isDallas;
+      requestMenuSpyRefresh();
+    }
+
+    /* Deep links (#entrees, #cocktails, etc.): native scroll often fails inside Elementor / sticky UI */
+    var menuSectionIds = { entrees: 1, appetizers: 1, sweet: 1, cocktails: 1, classics: 1, 'beer-wine': 1, flights: 1, 'full-menu': 1, 'food-hero': 1, 'food-cta': 1 };
+    function scrollToMenuHash() {
+      var raw = (window.location.hash || '').replace(/^#/, '');
+      if (!raw || !menuSectionIds.hasOwnProperty(raw)) return;
+      if (root.classList.contains('vsl-fooddrink--dallas') && houstonMenuSectionHash.test(raw)) {
+        raw = 'full-menu';
+      }
+      var target = root.querySelector('#' + raw);
+      if (!target) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var noSmooth = document.documentElement.classList.contains('no-smooth-scroll');
+      var behavior = reduce || noSmooth ? 'auto' : 'smooth';
+      function run() {
+        try {
+          if (typeof window.vslScrollToTargetPastStickyNav === 'function') {
+            window.vslScrollToTargetPastStickyNav(target, { updateUrl: false });
+          } else {
+            target.scrollIntoView({ block: 'start', behavior: behavior });
+          }
+        } catch (e) {
+          target.scrollIntoView(true);
+        }
+      }
+      requestAnimationFrame(function () {
+        requestAnimationFrame(run);
+      });
+    }
+    applyFoodDrinkLocationMode('dallas');
+    scrollToMenuHash();
+    window.addEventListener('hashchange', scrollToMenuHash);
+    window.addEventListener('load', function () {
+      setRealViewportHeight();
+      scrollToMenuHash();
+      var reduceM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var noSmoothHtml = document.documentElement.classList.contains('no-smooth-scroll');
+      if (!reduceM && !noSmoothHtml) {
+        setTimeout(scrollToMenuHash, 280);
+      }
+    }, { once: true });
+
+    /* Scroll spy: highlight nav pill for the section currently under the sticky bar */
+    var menuNav = root.querySelector('.vsl-fooddrink-menu-nav');
+    if (menuNav) {
+      var menuBlocks = root.querySelectorAll('.vsl-fooddrink-menu-block[id]');
+      var spyLinks = menuNav.querySelectorAll('a[href^="#"]');
+      var spyRaf = 0;
+
+      function menuBlockSpyTop(block) {
+        var title = block.querySelector('.vsl-fooddrink-menu-block__title');
+        var el = title || block;
+        return el.getBoundingClientRect().top;
+      }
+
+      function setActiveNavFromId(id) {
+        spyLinks.forEach(function (a) {
+          a.classList.remove('is-active');
+          a.removeAttribute('aria-current');
+        });
+        if (!id) return;
+        spyLinks.forEach(function (a) {
+          var h = (a.getAttribute('href') || '').replace(/^#/, '');
+          if (h === id) a.classList.add('is-active');
+        });
+        var firstOn = menuNav.querySelector('a.is-active');
+        if (firstOn) firstOn.setAttribute('aria-current', 'location');
+      }
+
+      function updateMenuScrollSpy() {
+        spyRaf = 0;
+        if (root.classList.contains('vsl-fooddrink--dallas')) {
+          spyLinks.forEach(function (a) {
+            a.classList.remove('is-active');
+            a.removeAttribute('aria-current');
+          });
+          return;
+        }
+        if (!menuBlocks.length || !spyLinks.length) return;
+        var navBottom = menuNav.getBoundingClientRect().bottom + 8;
+        var spyLeadPx = Math.min(200, Math.max(88, Math.round(window.innerHeight * 0.16)));
+        var threshold = navBottom + spyLeadPx;
+        var activeId = '';
+        for (var si = 0; si < menuBlocks.length; si++) {
+          if (menuBlockSpyTop(menuBlocks[si]) <= threshold) {
+            activeId = menuBlocks[si].id;
+          }
+        }
+        var fullMenuEl = root.querySelector('#full-menu');
+        if (!activeId && fullMenuEl && menuBlocks.length) {
+          var fmr = fullMenuEl.getBoundingClientRect();
+          if (fmr.top < window.innerHeight * 0.92 && fmr.bottom > 120) {
+            activeId = menuBlocks[0].id;
+          }
+        }
+        setActiveNavFromId(activeId || '');
+      }
+
+      function requestMenuSpy() {
+        if (spyRaf) return;
+        spyRaf = requestAnimationFrame(updateMenuScrollSpy);
+      }
+      requestMenuSpyRefresh = requestMenuSpy;
+
+      menuNav.addEventListener('click', function (e) {
+        var t = e.target && e.target.closest && e.target.closest('a[href^="#"]');
+        if (!t || !menuNav.contains(t)) return;
+        var hid = (t.getAttribute('href') || '').replace(/^#/, '');
+        if (hid) setActiveNavFromId(hid);
+      });
+
+      window.addEventListener('scroll', requestMenuSpy, { passive: true });
+      window.addEventListener('resize', requestMenuSpy, { passive: true });
+      if ('onscrollend' in window) {
+        window.addEventListener('scrollend', requestMenuSpy, { passive: true });
+      }
+      requestMenuSpy();
+      window.addEventListener('load', requestMenuSpy, { once: true });
+    }
+
+    window.addEventListener('_vslLocationChanged', function (ev) {
+      var loc = ev.detail && ev.detail.location;
+      if (!loc) return;
+      applyFoodDrinkLocationMode(normalizeVslLocation(loc));
+      scrollToMenuHash();
+    });
+
+    var lb = root.querySelector('#vsl-fooddrink-lightbox');
+    if (!lb) return;
+    var lbImg = lb.querySelector('.vsl-fooddrink-lightbox__img');
+    var lbCap = lb.querySelector('.vsl-fooddrink-lightbox__caption');
+    var lbClose = lb.querySelector('.vsl-fooddrink-lightbox__close');
+    var lbBackdrop = lb.querySelector('.vsl-fooddrink-lightbox__backdrop');
+    var lastFocus = null;
+
+    function openLightbox(fullUrl, caption, alt) {
+      lastFocus = document.activeElement;
+      lbImg.src = fullUrl;
+      lbImg.alt = alt || '';
+      lbCap.textContent = caption || '';
+      lb.classList.add('is-open');
+      lb.removeAttribute('aria-hidden');
+      document.documentElement.style.overflow = 'hidden';
+      if (lbClose) lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      lbImg.removeAttribute('src');
+      lbImg.alt = '';
+      lbCap.textContent = '';
+      document.documentElement.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+
+    root.querySelectorAll('[data-vsl-lightbox]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var full = btn.getAttribute('data-full');
+        var card = btn.closest('.vsl-fooddrink-card');
+        var titleEl = card && card.querySelector('.vsl-fooddrink-card__name');
+        var img = btn.querySelector('img');
+        var caption = titleEl ? titleEl.textContent.trim() : '';
+        var alt = img ? img.getAttribute('alt') || caption : caption;
+        var src = full || (img && img.getAttribute('src')) || '';
+        if (!src) return;
+        openLightbox(src, caption, alt);
+      });
+    });
+
+    if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lbBackdrop) lbBackdrop.addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', function (e) {
+      if (!lb || lb.hidden) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+      }
+    });
+
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "name": "Velocity Sim Lounge Food and Drink Menu",
+  "inLanguage": "en",
+  "hasMenuSection": [
+    {
+      "@type": "MenuSection",
+      "name": "Appetizers",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Triple Crown Platter", "offers": { "@type": "Offer", "price": "18", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Charcuterie Board", "offers": { "@type": "Offer", "price": "22", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Entrees",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Chicken Diavolo Taquitos", "offers": { "@type": "Offer", "price": "12", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Beef Taquitos", "offers": { "@type": "Offer", "price": "12", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Bacon Cheeseburger", "offers": { "@type": "Offer", "price": "10", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Wagyu Sliders", "offers": { "@type": "Offer", "price": "18", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Margherita Flatbread", "offers": { "@type": "Offer", "price": "14", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Pepperoni Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "BBQ Cheese Flatbread", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Tsukune Meatballs", "offers": { "@type": "Offer", "price": "15", "priceCurrency": "USD" } },
+        { "@type": "MenuItem", "name": "Pork Belly Lettuce Wraps", "offers": { "@type": "Offer", "price": "16", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Sweet",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Skillet Chocolate Cookie & Ice Cream", "offers": { "@type": "Offer", "price": "8", "priceCurrency": "USD" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Signature Cocktails",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Le Mans 75" },
+        { "@type": "MenuItem", "name": "Pace Car" }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Zero Proof",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Agua de Jamaica" },
+        { "@type": "MenuItem", "name": "Virgin Mojito" }
+      ]
+    }
+  ]
+}
+</script>

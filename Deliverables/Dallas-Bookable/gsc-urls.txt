@@ -1,0 +1,14 @@
+# Google Search Console — request indexing for these URLs after WordPress publish
+
+https://velocitysimlounge.com/dallas/
+https://velocitysimlounge.com/dallas/party-packs/
+https://velocitysimlounge.com/dallas/book-now/
+https://velocitysimlounge.com/dallas/contact/
+https://velocitysimlounge.com/dallas/group-events/
+https://velocitysimlounge.com/dallas/corporate-events/
+https://velocitysimlounge.com/dallas/food-and-drink/
+https://velocitysimlounge.com/dallas/semi-private/
+https://velocitysimlounge.com/dallas/promotions/
+https://velocitysimlounge.com/dallas/buyout/
+
+# Paid media: update campaign landing URLs to use /dallas/ paths directly (no ?loc=dallas)

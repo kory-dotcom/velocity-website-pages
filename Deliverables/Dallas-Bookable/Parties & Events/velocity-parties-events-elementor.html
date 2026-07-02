@@ -1,0 +1,2042 @@
+<!-- Velocity Group Events Hub — VSM 1.1.3 -->
+<script src="https://velocitysimlounge.com/wp-content/uploads/2026/06/vsl-location.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Elementor Button widgets and Velocity CTA-style links clean */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="mem-tier"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════
+     Velocity Group Events Hub — VSM 1.1.3
+     ═══════════════════════════════════════════════ */
+  .vsl-events {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --silver: #DFDFDE;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: clamp(22px, 2.8vw, 36px);
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --text-card-name: clamp(1.35rem, 0.85rem + 1.8vw, 1.75rem);
+    --text-faq-label: clamp(0.9375rem, 0.86rem + 0.32vw, 1.0625rem);
+    --vsl-outdent: 0px;
+    --vsl-bleed-top: 0px;
+    --vsl-bleed-bottom: 0px;
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+    /* Set by JS to (visual viewport height − gap above hero) so finish line clears fixed headers */
+    --vsl-hero-available-vh: 100dvh;
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .vsl-events:has(> main > .vsl-events-hero:first-of-type) {
+    margin-top: var(--vsl-bleed-top);
+    margin-bottom: var(--vsl-bleed-bottom);
+  }
+  .vsl-events > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-events) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-events),
+  .elementor-container:has(.vsl-events),
+  .elementor-column:has(.vsl-events),
+  .elementor-column-wrap:has(.vsl-events),
+  .elementor-widget-wrap:has(.vsl-events),
+  .elementor-widget:has(.vsl-events) {
+    padding: 0 !important;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .e-con:has(.vsl-events),
+  .e-con-inner:has(.vsl-events),
+  .e-con-inner > .elementor-widget:has(.vsl-events),
+  .elementor-element:has(> .elementor-widget-container > .vsl-events) {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .vsl-events *, .vsl-events *::before, .vsl-events *::after { box-sizing: border-box; }
+  .vsl-events a { text-decoration: none; color: inherit; }
+  .vsl-events,
+  .vsl-events main,
+  .vsl-events section,
+  .vsl-events-card,
+  .vsl-events-card__body,
+  .vsl-events-hero__inner,
+  .vsl-events-btn,
+  .vsl-events-card__cta {
+    pointer-events: auto !important;
+  }
+  #events-hero, #events-types, #events-difference, #events-includes, #events-faq, #events-cta { scroll-margin-top: 5rem; }
+  #events-types-heading { scroll-margin-top: 5.2rem; }
+
+  /* ── ELEMENTOR GLOBAL RESETS ── */
+  .vsl-events h1,
+  .vsl-events h2,
+  .vsl-events h3,
+  .vsl-events h4,
+  .vsl-events h5,
+  .vsl-events h6 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .vsl-events hr {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: 0 !important;
+    border-top: none !important;
+    background: rgba(16,24,43,0.1) !important;
+  }
+  .vsl-events .vsl-events-types .vsl-events-card__name {
+    color: var(--navy) !important;
+  }
+  .vsl-events .vsl-events-card__name {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: var(--circuit-white) !important;
+    font-family: var(--font-display) !important;
+    font-size: var(--text-card-name) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .vsl-events .vsl-events-card__body p {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* ── HERO (aligned with Corporate Events hero shell — full-bleed, flex column + finish strip) ── */
+  .vsl-events-hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--navy);
+    color: var(--circuit-white);
+    overflow: hidden;
+    isolation: isolate;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: max(420px, 58vh);
+    min-height: max(420px, 58svh);
+  }
+  .vsl-events-hero--hero-bg-vimeo {
+    background: var(--navy);
+  }
+
+  .vsl-events-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .vsl-events-hero__bg .vsl-events-hero__video,
+  .vsl-events-hero__bg .vsl-events-hero__banner-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: none;
+    opacity: 0.85;
+  }
+  .vsl-events-hero__bg .vsl-events-hero__vimeo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: clip;
+    display: none;
+    opacity: 0.85;
+  }
+  .vsl-events-hero__bg .vsl-events-hero__vimeo iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-width: 177.78vh;
+    min-height: 100%;
+    border: 0;
+    transform: translate(-50%, -50%) scale(1.09);
+    transform-origin: center center;
+  }
+  .vsl-events-hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(16, 24, 40, 0.2) 0%, rgba(25, 24, 64, 0.5) 100%);
+  }
+  .vsl-events-hero--has-video .vsl-events-hero__bg .vsl-events-hero__video { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__bg .vsl-events-hero__video { display: none; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-image .vsl-events-hero__bg .vsl-events-hero__banner-img { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__vimeo { display: block; }
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__video,
+  .vsl-events-hero--has-video.vsl-events-hero--hero-bg-vimeo .vsl-events-hero__bg .vsl-events-hero__banner-img { display: none !important; }
+
+  .vsl-events-hero__inner {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(56px, 14vw, 112px) clamp(20px, 5vw, var(--page-margin)) clamp(32px, 7vw, 56px);
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 0;
+  }
+  .vsl-events-hero__inner > * {
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 7px 22px;
+    font-family: var(--font-display);
+    font-size: clamp(0.8rem, 0.6rem + 0.9vw, 1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+    border: none;
+    border-radius: 0;
+  }
+  /* Hero type: chip containers + weights — scoped !important beats Elementor / theme resets */
+  .vsl-events-hero .vsl-events-hero__title {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    margin: 0 0 0.65em !important;
+    padding: clamp(12px, 2vw, 18px) clamp(14px, 2.2vw, 22px) !important;
+    box-sizing: border-box !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.75rem, 0.85rem + 4.8vw, 3rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    text-transform: uppercase !important;
+    line-height: 1.12 !important;
+    letter-spacing: 0.04em !important;
+    text-align: center !important;
+    text-wrap: balance !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: rgba(4, 7, 18, 0.72) !important;
+    border-radius: 12px !important;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  /* Parent -webkit-fill would otherwise mute accent spans under WebKit */
+  .vsl-events-hero .vsl-events-hero__title .vsl-events-hero__title-highlight {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+  }
+  .vsl-events-hero__title-accent {
+    display: block;
+    margin-top: 0.08em;
+  }
+  .vsl-events-hero .vsl-events-hero__tagline {
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 42ch !important;
+    margin: 0 auto 1.75rem !important;
+    padding: clamp(10px, 1.8vw, 14px) clamp(14px, 2vw, 20px) !important;
+    box-sizing: border-box !important;
+    font-family: var(--font-body) !important;
+    font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem) !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0.015em !important;
+    text-align: center !important;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    background: rgba(4, 7, 18, 0.68) !important;
+    border-radius: 10px !important;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .vsl-events-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px 28px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition:
+      color 0.22s ease, background-color 0.22s ease,
+      border-color 0.22s ease, box-shadow 0.22s ease,
+      transform 0.14s ease, filter 0.14s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-btn:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: #d41e52;
+      border-color: #d41e52;
+      box-shadow: 0 8px 28px rgba(238,38,95,0.35);
+    }
+  }
+  .vsl-events-btn:active {
+    filter: brightness(0.9);
+    transform: scale(0.98);
+    box-shadow: 0 3px 14px rgba(238,38,95,0.2);
+  }
+  .vsl-events-btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-events-btn--outline {
+    background-color: transparent;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-btn--outline:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--magenta);
+    }
+  }
+  /* Corporate hero CTA — primary button shape / shadow inside hero only */
+  .vsl-events-hero .vsl-events-btn {
+    padding: 14px 36px;
+    font-family: var(--font-display) !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background-color: var(--magenta) !important;
+    box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
+    transition:
+      box-shadow 0.22s ease,
+      transform 0.14s ease,
+      filter 0.14s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-hero .vsl-events-btn:hover {
+      box-shadow: 0 10px 36px rgba(238, 38, 95, 0.45);
+      transform: translateY(-2px);
+    }
+  }
+  .vsl-events-hero .vsl-events-btn:active {
+    filter: brightness(0.93);
+    transform: scale(0.99);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-events-hero .vsl-events-btn { transition: box-shadow 0.22s ease, filter 0.14s ease; }
+    .vsl-events-hero .vsl-events-btn:hover { transform: none; }
+    .vsl-events-hero .vsl-events-btn:active { transform: none; }
+  }
+  .vsl-events-hero__finish {
+    position: relative;
+    z-index: 3;
+    flex-shrink: 0;
+    display: block;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center center;
+    background-size: auto 100%;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* ── SECTION GRID ── */
+  .vsl-events-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-events-types,
+  .vsl-events-difference,
+  .vsl-events-includes,
+  .vsl-events-faq,
+  .vsl-events-cta-section {
+    display: block;
+    box-sizing: border-box;
+  }
+
+  /* ── EVENT TYPE CARDS SECTION (deep-indigo band; white cards pop) ── */
+  .vsl-events-types {
+    background: var(--deep-indigo);
+    padding: clamp(64px, 10vh, 120px) 0 clamp(80px, 12vh, 140px);
+    position: relative;
+    overflow: clip;
+    isolation: isolate;
+    color: var(--circuit-white);
+  }
+  .vsl-events-types::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    width: min(900px, 120vw);
+    height: min(900px, 120vw);
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(86, 104, 212, 0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .vsl-events-hero + .vsl-events-types {
+    margin-top: -1px;
+    padding-top: calc(clamp(56px, 10vh, 120px) + 1px);
+  }
+  .vsl-events-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+  }
+  .vsl-events-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.35;
+    max-width: 42ch;
+  }
+  .vsl-events-types .vsl-events-section-title {
+    color: var(--circuit-white);
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-types .vsl-events-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-events-types .vsl-events-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-types .vsl-events-grid,
+  .vsl-events-types .vsl-events-card-grid {
+    position: relative;
+    z-index: 1;
+  }
+
+  .vsl-events-types .vsl-events-card {
+    background: #fff;
+    border: 1px solid rgba(16, 24, 43, 0.07);
+    box-shadow:
+      0 4px 20px rgba(16, 24, 43, 0.06),
+      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-types .vsl-events-card:hover {
+      box-shadow:
+        0 12px 40px rgba(16, 24, 43, 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    }
+  }
+  .vsl-events-types .vsl-events-card--touch-active {
+    box-shadow:
+      0 12px 40px rgba(16, 24, 43, 0.1),
+      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+  }
+  .vsl-events-types .vsl-events-card__media {
+    background: rgba(16, 24, 43, 0.06);
+  }
+  .vsl-events-types .vsl-events-card__name {
+    color: var(--navy);
+  }
+  .vsl-events-types .vsl-events-card__desc {
+    color: var(--slate-violet);
+  }
+  .vsl-events-types .vsl-events-card__meta {
+    color: rgba(95, 87, 130, 0.92);
+  }
+  .vsl-events-types .vsl-events-card__rule {
+    background: rgba(16, 24, 43, 0.08);
+  }
+  .vsl-events-types__review {
+    position: relative;
+    z-index: 1;
+    margin: clamp(40px, 6vw, 64px) auto 0;
+    padding: clamp(22px, 3vw, 30px) clamp(24px, 3.5vw, 36px);
+    max-width: min(720px, 100%);
+    background: #fff;
+    border: 1px solid rgba(16, 24, 43, 0.07);
+    border-left: 3px solid var(--magenta);
+    border-radius: 14px;
+    box-shadow:
+      0 4px 20px rgba(16, 24, 43, 0.06),
+      0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    text-align: left;
+  }
+  .vsl-events-types__review-stars {
+    font-size: 1rem;
+    color: #f5a623;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.55rem;
+  }
+  .vsl-events-types__review p {
+    margin: 0;
+    font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.1rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--navy);
+  }
+  .vsl-events-types__review cite {
+    display: block;
+    margin-top: 0.65rem;
+    font-size: 0.78rem;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--slate-violet);
+  }
+
+  /* ── CARD GRID (3-up) ── */
+  .vsl-events-card-grid {
+    display: grid;
+    gap: var(--gutter);
+    align-items: stretch;
+  }
+  .vsl-events-card-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .vsl-events-card-grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ── EVENT CARD (taller, more visual) ── */
+  .vsl-events-card {
+    position: relative;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(234,234,234,0.08);
+    border-radius: 18px;
+    overflow: clip;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0 4px 16px rgba(0,0,0,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: box-shadow 0.45s ease;
+    transform-style: preserve-3d;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-card:hover {
+      z-index: 3;
+      box-shadow:
+        0 24px 56px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+  }
+  .vsl-events-card--touch-active {
+    z-index: 3;
+    box-shadow:
+      0 24px 56px rgba(0,0,0,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  @media (pointer: coarse) {
+    .vsl-events-card {
+      transition: box-shadow 0.25s ease;
+    }
+  }
+  .vsl-events-card__accent {
+    height: 7px;
+    flex-shrink: 0;
+  }
+  .vsl-events-card:nth-child(1) .vsl-events-card__accent { background: var(--magenta); }
+  .vsl-events-card:nth-child(2) .vsl-events-card__accent { background: var(--yellow); }
+  .vsl-events-card:nth-child(3) .vsl-events-card__accent { background: var(--blue); }
+  .vsl-events-card:nth-child(4) .vsl-events-card__accent { background: var(--magenta); }
+
+  .vsl-events-card figure.vsl-events-card__media {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .vsl-events-card__media {
+    margin: 0;
+    flex-shrink: 0;
+    aspect-ratio: 16 / 11;
+    line-height: 0;
+    background: rgba(16,24,43,0.15);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .vsl-events-card__media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.3) translateZ(0);
+    -webkit-transform: scale(1.3) translateZ(0);
+    transform-origin: center center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .vsl-events-card__media--buyout img {
+    object-position: center 75%;
+  }
+  .vsl-events-card__body {
+    padding: clamp(22px, 3vw, 32px) clamp(24px, 3vw, 36px) clamp(28px, 3.5vw, 38px);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.85rem;
+    min-height: 0;
+  }
+  .vsl-events-card__body > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .vsl-events-card__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-card-name);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: var(--circuit-white);
+    text-align: left;
+  }
+  .vsl-events-card__desc {
+    margin: 0;
+    font-size: clamp(0.94rem, 0.88rem + 0.3vw, 1.06rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(234, 234, 234, 0.8);
+    flex: 1;
+  }
+  .vsl-events-card__meta {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    color: var(--mist);
+  }
+  .vsl-events-card__rule {
+    display: block;
+    flex-shrink: 0;
+    height: 1px;
+    background: rgba(234,234,234,0.1);
+    border: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-top: auto;
+  }
+  .vsl-events-card__cta-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+    width: 100%;
+  }
+  .vsl-events-card__cta-row--labeled {
+    gap: 12px;
+  }
+  .vsl-events-card__cta-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+  }
+  .vsl-events-card__cta-label {
+    font-family: var(--font-display);
+    font-size: clamp(0.7rem, 0.6rem + 0.35vw, 0.8rem);
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy);
+    text-align: center;
+  }
+  .vsl-events-card__cta-col .vsl-events-card__cta {
+    width: 100%;
+    text-align: center;
+  }
+  .vsl-events-card__cta {
+    flex: 0 0 auto;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 13px 16px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow:
+      0 2px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px rgba(238, 38, 95, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    transition:
+      color 0.2s ease, background-color 0.2s ease,
+      border-color 0.2s ease, box-shadow 0.2s ease,
+      transform 0.18s ease, filter 0.15s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-card__cta:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: #ff3d7a;
+      border-color: #ff6a9a;
+      transform: translateY(-2px);
+      box-shadow:
+        0 4px 0 rgba(0, 0, 0, 0.12),
+        0 14px 36px rgba(238, 38, 95, 0.48),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+    }
+  }
+  .vsl-events-card__cta:active {
+    filter: brightness(0.96);
+    transform: translateY(0) scale(0.99);
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.18),
+      0 4px 16px rgba(238, 38, 95, 0.28);
+  }
+  .vsl-events-card__cta:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+  .vsl-events-card__cta--outline {
+    background-color: rgba(41, 56, 147, 0.06);
+    color: var(--blue) !important;
+    -webkit-text-fill-color: var(--blue) !important;
+    border: 2px solid rgba(41, 56, 147, 0.82);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 2px 10px rgba(41, 56, 147, 0.12);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-card__cta--outline:hover {
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      background-color: var(--blue);
+      border-color: #4458bf;
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 0 2px rgba(41, 56, 147, 0.24),
+        0 12px 30px rgba(41, 56, 147, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+  }
+  .vsl-events-card__cta--outline:active {
+    transform: translateY(0) scale(0.99);
+    border-color: #26358a;
+    box-shadow: 0 2px 12px rgba(41, 56, 147, 0.32);
+  }
+
+  /* ── THE VELOCITY DIFFERENCE (deep-indigo band) ── */
+  .vsl-events-difference {
+    background: var(--deep-indigo);
+    padding: clamp(64px, 10vh, 112px) 0;
+    position: relative;
+    overflow: clip;
+    color: var(--circuit-white);
+  }
+  .vsl-events-difference::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 80% at 50% 0%, rgba(41, 56, 147, 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 60% at 90% 100%, rgba(238, 38, 95, 0.08) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .vsl-events-difference .vsl-events-section-title {
+    color: var(--circuit-white);
+    margin-bottom: 0.25em;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-difference .vsl-events-section-title em {
+    font-style: italic;
+    color: var(--yellow);
+  }
+  .vsl-events-difference .vsl-events-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-diff-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-difference .vsl-events-diff-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(234, 234, 234, 0.1);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-difference .vsl-events-diff-card:hover {
+      box-shadow:
+        0 24px 56px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transform: translateY(-4px);
+    }
+  }
+  .vsl-events-diff-card {
+    border-radius: 18px;
+    padding: clamp(28px, 3.5vw, 40px) clamp(22px, 2.8vw, 32px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(12px, 1.5vw, 18px);
+    transition: box-shadow 0.35s ease, transform 0.3s ease;
+  }
+  .vsl-events-diff-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    border-radius: 18px 18px 0 0;
+  }
+  .vsl-events-diff-card:nth-child(1)::before { background: var(--magenta); }
+  .vsl-events-diff-card:nth-child(2)::before { background: var(--yellow); }
+  .vsl-events-diff-card:nth-child(3)::before { background: var(--blue); }
+  .vsl-events-diff-card:nth-child(4)::before { background: var(--magenta); }
+  .vsl-events-diff-card__icon {
+    width: clamp(76px, 11vw, 100px);
+    height: clamp(76px, 11vw, 100px);
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    padding: clamp(7px, 1.1vw, 11px);
+    line-height: 0;
+    border-radius: 16px;
+    /* Slightly lighter well so dark PNG art reads; artwork forced to light via filter below */
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(14, 20, 40, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+  }
+  .vsl-events-diff-card__icon img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 82%;
+    max-height: 82%;
+    margin: 0;
+    object-fit: contain;
+    object-position: center center;
+    /* Dark line-art PNGs → light icons on dark cards */
+    filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+  }
+  .vsl-events-diff-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 0.85rem + 0.8vw, 1.25rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    color: var(--circuit-white);
+  }
+  .vsl-events-diff-card__body {
+    margin: 0;
+    font-size: clamp(0.92rem, 0.86rem + 0.28vw, 1.02rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(234, 234, 234, 0.82);
+  }
+
+  /* ── EVERY EVENT INCLUDES (navy band; white tiles pop) ── */
+  .vsl-events-includes {
+    background: var(--navy);
+    padding: clamp(52px, 9vh, 96px) 0 clamp(56px, 10vh, 100px);
+    position: relative;
+    overflow: clip;
+    isolation: isolate;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--circuit-white);
+  }
+  .vsl-events-includes::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: 50%;
+    width: min(880px, 115vw);
+    height: min(880px, 115vw);
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(86, 104, 212, 0.16) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .vsl-events-includes .vsl-events-section-title {
+    color: var(--circuit-white);
+    margin-bottom: clamp(2rem, 4vh, 3rem);
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-includes .vsl-events-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-includes .vsl-events-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-events-includes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--gutter);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .vsl-events-includes-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 1.5vw, 16px);
+    padding: clamp(12px, 2vw, 24px) clamp(8px, 1.5vw, 16px);
+  }
+  .vsl-events-includes-item__icon {
+    position: relative;
+    width: 100%;
+    max-width: min(224px, 100%);
+    margin-inline: auto;
+    height: min(152px, 38vw);
+    min-height: 120px;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: clamp(20px, 4vw, 32px);
+    overflow: hidden;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.95) inset,
+      0 6px 18px rgba(0, 0, 0, 0.32),
+      0 18px 44px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-events-includes-item:hover .vsl-events-includes-item__icon {
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.95) inset,
+        0 8px 22px rgba(0, 0, 0, 0.36),
+        0 24px 56px rgba(86, 104, 212, 0.30),
+        0 0 0 1px rgba(255, 255, 255, 0.18);
+      transform: translateY(-3px);
+    }
+  }
+  /* % max-height inside grid often fails vs Elementor/img rules → hard caps + contain */
+  .elementor-widget-html .vsl-events-includes-item__icon img,
+  .vsl-events-includes-item__icon img,
+  .elementor-widget-html .vsl-events-includes-item__icon picture img,
+  .vsl-events-includes-item__icon picture img {
+    display: block !important;
+    margin: 0 !important;
+    box-sizing: content-box !important;
+    flex: none !important;
+    vertical-align: middle;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    /* Keep art inside padded tile even when uploads are huge or ultra-wide */
+    max-width: min(148px, 92%) !important;
+    max-height: clamp(56px, 15vw, 88px) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+  .vsl-events-includes-item__label {
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 0.72rem + 0.55vw, 1.05rem);
+    font-weight: 600;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--circuit-white);
+    line-height: 1.3;
+  }
+
+  /* ── FAQ SECTION (navy band; white panel pops) ── */
+  .vsl-events-faq {
+    background-color: var(--navy);
+    padding: clamp(64px, 10vh, 112px) 0;
+    color: var(--circuit-white);
+  }
+  .vsl-events-faq .vsl-events-section-title {
+    color: var(--circuit-white);
+    margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  }
+  .vsl-events-faq .vsl-events-section-title em {
+    font-style: italic;
+    color: var(--magenta);
+  }
+  .vsl-events-faq .vsl-events-section-sub {
+    color: var(--circuit-white);
+    opacity: 0.85;
+  }
+  .vsl-events-faq__list {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    max-width: min(860px, 100%);
+    border-radius: 16px;
+    overflow: clip;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #fff;
+    box-shadow:
+      0 12px 36px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.18);
+    text-align: left;
+  }
+  .vsl-events-faq__item {
+    border-bottom: 1px solid rgba(16,24,43,0.1);
+    background: #fff;
+    border-radius: 0;
+  }
+  .vsl-events-faq__item:last-child { border-bottom: none; }
+  .vsl-events-faq__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    color: var(--navy);
+    -webkit-text-fill-color: var(--navy);
+    transition: background-color 0.22s ease;
+  }
+  .vsl-events-faq__trigger:hover {
+    background-color: rgba(16,24,43,0.04);
+  }
+  .vsl-events-faq__trigger:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 2px;
+  }
+  .vsl-events .vsl-events-faq__trigger {
+    background: #fff !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+  }
+  .vsl-events .vsl-events-faq__trigger:hover,
+  .vsl-events .vsl-events-faq__trigger:focus {
+    background: rgba(16,24,43,0.04) !important;
+    background-color: rgba(16,24,43,0.04) !important;
+    background-image: none !important;
+  }
+  .vsl-events-faq__label {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-body);
+    font-size: var(--text-faq-label);
+    font-weight: 600;
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.45;
+    color: var(--navy);
+    -webkit-text-fill-color: currentColor !important;
+  }
+  .vsl-events-faq__chev {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    stroke: var(--slate-violet);
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .vsl-events-faq__item.is-open .vsl-events-faq__chev {
+    transform: rotate(180deg);
+  }
+  .vsl-events-faq__panel {
+    padding: 4px 24px 24px;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--slate-violet);
+    background: #fff;
+  }
+  .vsl-events-faq__panel[hidden] { display: none; }
+  .vsl-events-faq__item.is-open .vsl-events-faq__panel { display: block; }
+  .vsl-events-faq__answer {
+    margin: 0;
+    padding-top: 2px;
+  }
+
+  /* ── Bottom CTA (Buyout-style: dark band, yellow headline, two buttons) ── */
+  .vsl-events-cta-section {
+    background: linear-gradient(180deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(56px, 9vh, 100px) clamp(20px, 5vw, 48px);
+    color: var(--circuit-white);
+    text-align: center;
+  }
+  .vsl-events-cta-section .vsl-events-grid {
+    max-width: min(900px, 100%);
+    margin: 0 auto;
+  }
+  .vsl-events-cta-buyout {
+    margin: 0 auto;
+  }
+  .vsl-events-cta-buyout__title {
+    margin: 0 0 clamp(1.5rem, 3vh, 2rem);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(1.75rem, 1.1rem + 2.5vw, 2.75rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+    text-wrap: balance;
+  }
+  .vsl-events-cta-buyout__actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .vsl-events-cta-buyout__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 14px 36px;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease;
+  }
+  .vsl-events-cta-buyout__btn--primary {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    background: var(--magenta);
+    border: none;
+    box-shadow: 0 6px 24px rgba(210, 32, 38, 0.35);
+  }
+  .vsl-events-cta-buyout__btn--primary:hover {
+    box-shadow: 0 10px 36px rgba(238, 38, 95, 0.45);
+    transform: translateY(-2px);
+  }
+  .vsl-events-cta-buyout__btn--secondary {
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    box-shadow: none;
+  }
+  .vsl-events-cta-buyout__btn--secondary:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .vsl-events-cta-buyout__btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 4px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .vsl-events-card-grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .vsl-events-card-grid--3 {
+      grid-template-columns: 1fr;
+      max-width: min(540px, 100%);
+      margin-inline: auto;
+    }
+    .vsl-events-diff-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .vsl-events-includes-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 639px) {
+    .vsl-events-hero {
+      min-height: max(320px, 52vh);
+      min-height: max(320px, 52svh);
+    }
+    .vsl-events-card-grid--4 {
+      grid-template-columns: 1fr;
+      max-width: min(540px, 100%);
+      margin-inline: auto;
+    }
+    .vsl-events-section-title { line-height: 1.2; }
+    .vsl-events-types { padding: 48px 0 72px; }
+    .vsl-events-hero + .vsl-events-types { padding-top: calc(48px + 1px); }
+    .vsl-events-difference { padding: 48px 0; }
+    .vsl-events-diff-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .vsl-events-includes { padding: 40px 0; }
+    .vsl-events-includes-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .vsl-events-faq { padding: 40px 0; }
+    .vsl-events-cta-section { padding: 40px 0 48px; }
+    .vsl-events-cta-buyout__actions { flex-direction: column; align-items: center; }
+    .vsl-events-cta-buyout__btn { width: 100%; max-width: 320px; }
+    .vsl-events-card__media { aspect-ratio: 16 / 10; }
+    .vsl-events-card__body { padding: 20px 22px 24px; }
+    .vsl-events-card__name {
+      font-size: clamp(1.2rem, 3.8vw + 0.75rem, 1.4rem);
+    }
+    .vsl-events-diff-card {
+      padding: 22px 18px;
+    }
+  }
+  @media (max-width: 420px) {
+    .vsl-events-diff-grid { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-events-btn, .vsl-events-card__cta {
+      transition: color 0.22s ease, background-color 0.22s ease,
+        border-color 0.22s ease, box-shadow 0.22s ease, filter 0.14s ease;
+    }
+    .vsl-events-card__cta:hover,
+    .vsl-events-card__cta--outline:hover {
+      transform: none;
+    }
+    .vsl-events-btn:active, .vsl-events-card__cta:active { transform: none; }
+    .vsl-events-card { transition: none; }
+    .vsl-events-card:hover { transform: none; }
+    .vsl-events-diff-card { transition: none; }
+    .vsl-events-diff-card:hover { transform: none; }
+    .vsl-events-includes-item:hover .vsl-events-includes-item__icon { transform: none; }
+    .vsl-events-faq__chev { transition: none; }
+    .vsl-events-faq__trigger { transition: none; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  /* Elementor / theme link styles often underline <a>; force CTAs clean */
+  .vsl-events a.vsl-events-btn,
+  .vsl-events a.vsl-events-card__cta,
+  .vsl-events a.vsl-events-cta-buyout__btn {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .vsl-events a.vsl-events-btn:is(:hover, :focus, :focus-visible, :visited, :active),
+  .vsl-events a.vsl-events-card__cta:is(:hover, :focus, :focus-visible, :visited, :active),
+  .vsl-events a.vsl-events-cta-buyout__btn:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+</style>
+
+<div class="vsl-events" data-vsl-config='{"links":{"corporatePage":"https://velocitysimlounge.com/dallas/corporate-events/","corporate":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","corporateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","semiPrivate":"https://velocitysimlounge.com/dallas/semi-private/","semiPrivateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPacks":"https://velocitysimlounge.com/dallas/party-packs/","partyPacksInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","buyoutPage":"https://velocitysimlounge.com/dallas/buyout/","fullBuyoutInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPackCards":"https://velocitysimlounge.com/dallas/party-packs/","partyPackRacer":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","partyPackPro":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","bookNow":"https://velocitysimlounge.com/dallas/book-now/","inquire":"https://velocitysimlounge.com/dallas/contact/"},"images":{"corporate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1024x683.webp","semiPrivate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1024x683.webp","fullBuyout":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp","partyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/group_events_hero-1920x1080.webp","elementorColumnOutdentPx":0}'>
+  <main>
+
+    <!-- ▸ Hero -->
+    <section class="vsl-events-hero" id="events-hero" aria-labelledby="events-hero-title">
+      <div class="vsl-events-hero__bg" aria-hidden="true">
+      <div class="vsl-events-hero__vimeo" data-vsl-events-vimeo hidden aria-hidden="true"></div>
+      <video class="vsl-events-hero__video" data-vsl-events-video autoplay muted loop playsinline aria-hidden="true"></video>
+      <img class="vsl-events-hero__banner-img" data-vsl-events-hero-banner alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      </div>
+      <div class="vsl-events-hero__inner">
+        <h1 class="vsl-events-hero__title" id="events-hero-title">
+          Group <span class="vsl-events-hero__title-highlight">Events</span>
+          <span class="vsl-events-hero__title-accent">
+            at <span class="vsl-events-hero__title-highlight">Velocity</span>
+          </span>
+        </h1>
+        <p class="vsl-events-hero__tagline"><span data-vsl-events-city-possessive>Houston's</span> most exciting event space &mdash; drive together, dine together, &amp; celebrate together.</p>
+        <a class="vsl-events-btn" data-vsl-soft-scroll href="#events-types-heading">Explore event types</a>
+      </div>
+      <div class="vsl-events-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ Event Type Cards -->
+    <section class="vsl-events-types" id="events-types" aria-labelledby="events-types-heading">
+      <div class="vsl-events-grid">
+        <h2 class="vsl-events-section-title" id="events-types-heading">
+          Choose Your <em>Experience</em>
+        </h2>
+        <p class="vsl-events-section-sub">From corporate groups to private celebrations &mdash; we have an event format for every occasion.</p>
+
+        <div class="vsl-events-card-grid vsl-events-card-grid--4">
+
+          <!-- Corporate Events -->
+          <article class="vsl-events-card">
+            <div class="vsl-events-card__accent"></div>
+            <figure class="vsl-events-card__media">
+              <img data-vsl-events-img="corporate" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 23vw" alt="Corporate team event at Velocity Sim Racing Lounge Houston — meetings and group racing" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-events-card__body">
+              <h3 class="vsl-events-card__name">Corporate Events</h3>
+              <p class="vsl-events-card__desc">Team building, client entertaining, offsites, and holiday parties with dedicated coordinators and chef-driven catering.</p>
+              <p class="vsl-events-card__meta">Custom packages &bull; A/V available</p>
+              <hr class="vsl-events-card__rule">
+              <div class="vsl-events-card__cta-row">
+                <a class="vsl-events-card__cta" data-vsl-events-link="corporateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="corporatePage" href="https://velocitysimlounge.com/dallas/corporate-events/">Learn more</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Semi-Private -->
+          <article class="vsl-events-card">
+            <div class="vsl-events-card__accent"></div>
+            <figure class="vsl-events-card__media">
+              <img data-vsl-events-img="semiPrivate" data-asset-key="events-photo-30-semi-private" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 23vw" alt="Semi-private group event at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-events-card__body">
+              <h3 class="vsl-events-card__name">Semi-Private</h3>
+              <p class="vsl-events-card__desc">Dedicated space with racing, dining, and bar service. Perfect for team building, mixers, and celebrations.</p>
+              <p class="vsl-events-card__meta">10&ndash;40 guests</p>
+              <hr class="vsl-events-card__rule">
+              <div class="vsl-events-card__cta-row">
+                <a class="vsl-events-card__cta" data-vsl-events-link="semiPrivateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="semiPrivate" href="https://velocitysimlounge.com/dallas/semi-private/">Learn more</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Full Buyout -->
+          <article class="vsl-events-card">
+            <div class="vsl-events-card__accent"></div>
+            <figure class="vsl-events-card__media vsl-events-card__media--buyout">
+              <img data-vsl-events-img="fullBuyout" data-asset-key="events-photo-31-full-buyout" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 23vw" alt="Full venue buyout event at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-events-card__body">
+              <h3 class="vsl-events-card__name">Full Buyout</h3>
+              <p class="vsl-events-card__desc">The entire venue is yours &mdash; 250 capacity with custom racetracks, specialty cocktails, and a dedicated event team.</p>
+              <p class="vsl-events-card__meta">Up to 250 guests</p>
+              <hr class="vsl-events-card__rule">
+              <div class="vsl-events-card__cta-row">
+                <a class="vsl-events-card__cta" data-vsl-events-link="fullBuyoutInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="buyoutPage" href="https://velocitysimlounge.com/dallas/buyout/">Learn more</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Party Packs -->
+          <article class="vsl-events-card">
+            <div class="vsl-events-card__accent"></div>
+            <figure class="vsl-events-card__media">
+              <img data-vsl-events-img="partyPacks" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 23vw" alt="Birthday party celebration at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-events-card__body">
+              <h3 class="vsl-events-card__name">Party Packs</h3>
+              <p class="vsl-events-card__desc">Birthdays, bachelor/bachelorette, and graduations. Dedicated simulators, reserved seating, and the full dinner-and-drinks experience.</p>
+              <p class="vsl-events-card__meta">Groups of 5&ndash;16</p>
+              <hr class="vsl-events-card__rule">
+              <div class="vsl-events-card__cta-row">
+                <a class="vsl-events-card__cta" data-vsl-events-link="partyPackCards" href="https://velocitysimlounge.com/dallas/party-packs/">Book now</a>
+                <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="partyPacks" href="https://velocitysimlounge.com/dallas/party-packs/">Learn more</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <blockquote class="vsl-events-types__review">
+          <div class="vsl-events-types__review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>&ldquo;Great for company events, especially if you have a competitive team! The staff is incredibly personable, the atmosphere is fun and easy to get everyone engaged and the food was really good.&rdquo;</p>
+          <cite>&mdash; Google Review</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ▸ Every Event Includes -->
+    <section class="vsl-events-includes" id="events-includes" aria-labelledby="events-includes-heading">
+      <div class="vsl-events-grid">
+        <h2 class="vsl-events-section-title" id="events-includes-heading">
+          Every Event <em>Includes</em>
+        </h2>
+        <div class="vsl-events-includes-grid">
+          <div class="vsl-events-includes-item">
+            <div class="vsl-events-includes-item__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/dedicated-simulators.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-32a">
+            </div>
+            <span class="vsl-events-includes-item__label">Dedicated Racing Simulators</span>
+          </div>
+          <div class="vsl-events-includes-item">
+            <div class="vsl-events-includes-item__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-32b">
+            </div>
+            <span class="vsl-events-includes-item__label">Reserved Area &amp; Seating</span>
+          </div>
+          <div class="vsl-events-includes-item">
+            <div class="vsl-events-includes-item__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/choice-of-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-32c">
+            </div>
+            <span class="vsl-events-includes-item__label">Choice of Menu</span>
+          </div>
+          <div class="vsl-events-includes-item">
+            <div class="vsl-events-includes-item__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/event-manager-and-staff.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-32d">
+            </div>
+            <span class="vsl-events-includes-item__label">Event Manager &amp; Staff</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ The Velocity Difference -->
+    <section class="vsl-events-difference" id="events-difference" aria-labelledby="events-difference-heading">
+      <div class="vsl-events-grid">
+        <h2 class="vsl-events-section-title" id="events-difference-heading">
+          The <em>Velocity</em> Difference
+        </h2>
+        <p class="vsl-events-section-sub">More than racing &mdash; a full-service event experience your guests will talk about for years.</p>
+
+        <div class="vsl-events-diff-grid">
+
+          <div class="vsl-events-diff-card">
+            <div class="vsl-events-diff-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/fun-for-all-skill-levels.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-33a">
+            </div>
+            <h3 class="vsl-events-diff-card__title">Fun for All Skill Levels</h3>
+            <p class="vsl-events-diff-card__body">No experience needed &mdash; first-timers and seasoned racers alike will have a blast. Our team guides every guest through the experience.</p>
+          </div>
+
+          <div class="vsl-events-diff-card">
+            <div class="vsl-events-diff-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/chef-crafted-menu.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-33b">
+            </div>
+            <h3 class="vsl-events-diff-card__title">Chef-Crafted Menu</h3>
+            <p class="vsl-events-diff-card__body">Full restaurant and craft bar on-site. Choose from curated catering packages or let your guests order from our full menu.</p>
+          </div>
+
+          <div class="vsl-events-diff-card">
+            <div class="vsl-events-diff-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/flexible-venue.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-33c">
+            </div>
+            <h3 class="vsl-events-diff-card__title">Flexible Venue</h3>
+            <p class="vsl-events-diff-card__body">214 indoor capacity plus a 60-person patio. Accommodate groups from 5 to 200+ with modular layouts for any event format.</p>
+          </div>
+
+          <div class="vsl-events-diff-card">
+            <div class="vsl-events-diff-card__icon" aria-hidden="true">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/unique-upgrades.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="events-icon-33d">
+            </div>
+            <h3 class="vsl-events-diff-card__title">Unique Event Upgrades</h3>
+            <p class="vsl-events-diff-card__body">Custom branded racetracks, winner trophies, specialty cocktails &amp; mocktails, and A/V for presentations. Make it truly yours.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ FAQ -->
+    <section class="vsl-events-faq" id="events-faq" aria-labelledby="events-faq-heading">
+      <div class="vsl-events-grid">
+        <h2 class="vsl-events-section-title" id="events-faq-heading">
+          Frequently Asked <em>Questions</em>
+        </h2>
+        <ul class="vsl-events-faq__list">
+          <li class="vsl-events-faq__item">
+            <button type="button" class="vsl-events-faq__trigger" id="vsl-efaq-btn-1" aria-expanded="false" aria-controls="vsl-efaq-panel-1">
+              <span class="vsl-events-faq__label">How much does an event cost?</span>
+              <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="vsl-events-faq__panel" id="vsl-efaq-panel-1" role="region" aria-labelledby="vsl-efaq-btn-1" hidden>
+              <p class="vsl-events-faq__answer">Pricing varies by event type, group size, and package options. Visit the <a href="https://velocitysimlounge.com/dallas/corporate-events/" style="color:var(--blue);text-decoration:underline;">Corporate Events</a>, <a href="https://velocitysimlounge.com/dallas/semi-private/" style="color:var(--blue);text-decoration:underline;">Semi-Private</a>, or <a href="https://velocitysimlounge.com/dallas/party-packs/" style="color:var(--blue);text-decoration:underline;">Party Packs</a> pages for details, or submit an inquiry and our events team will put together a custom quote.</p>
+            </div>
+          </li>
+          <li class="vsl-events-faq__item">
+            <button type="button" class="vsl-events-faq__trigger" id="vsl-efaq-btn-2" aria-expanded="false" aria-controls="vsl-efaq-panel-2">
+              <span class="vsl-events-faq__label">Can I bring my own food or cake?</span>
+              <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="vsl-events-faq__panel" id="vsl-efaq-panel-2" role="region" aria-labelledby="vsl-efaq-btn-2" hidden>
+              <p class="vsl-events-faq__answer">Outside food policies depend on the event type. Contact our events team to discuss options &mdash; we&rsquo;re happy to accommodate special requests like celebration cakes whenever possible.</p>
+            </div>
+          </li>
+          <li class="vsl-events-faq__item">
+            <button type="button" class="vsl-events-faq__trigger" id="vsl-efaq-btn-3" aria-expanded="false" aria-controls="vsl-efaq-panel-3">
+              <span class="vsl-events-faq__label">Do you offer A/V equipment for presentations?</span>
+              <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="vsl-events-faq__panel" id="vsl-efaq-panel-3" role="region" aria-labelledby="vsl-efaq-btn-3" hidden>
+              <p class="vsl-events-faq__answer">Yes! Our semi-private and corporate event packages include access to A/V solutions for workshops, presentations, and team meetings. Let our events team know your requirements and we&rsquo;ll set everything up.</p>
+            </div>
+          </li>
+          <li class="vsl-events-faq__item">
+            <button type="button" class="vsl-events-faq__trigger" id="vsl-efaq-btn-4" aria-expanded="false" aria-controls="vsl-efaq-panel-4">
+              <span class="vsl-events-faq__label">Is there a minimum group size?</span>
+              <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="vsl-events-faq__panel" id="vsl-efaq-panel-4" role="region" aria-labelledby="vsl-efaq-btn-4" hidden>
+              <p class="vsl-events-faq__answer">Party Packs start at just 5 guests, making them perfect for smaller celebrations. Semi-private events are ideal for groups of 10&ndash;40, and corporate buyouts can host up to 274 guests across our indoor and patio spaces.</p>
+            </div>
+          </li>
+          <li class="vsl-events-faq__item">
+            <button type="button" class="vsl-events-faq__trigger" id="vsl-efaq-btn-5" aria-expanded="false" aria-controls="vsl-efaq-panel-5">
+              <span class="vsl-events-faq__label">Can you do off-site events?</span>
+              <svg class="vsl-events-faq__chev" viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="vsl-events-faq__panel" id="vsl-efaq-panel-5" role="region" aria-labelledby="vsl-efaq-btn-5" hidden>
+              <p class="vsl-events-faq__answer">Yes &mdash; we offer a mobile simulator experience. We transport and set up a full-motion racing simulator at your event with dedicated staff, a live leaderboard, and optional custom branding. <a href="https://velocitysimlounge.com/dallas/contact/" style="color:var(--blue);text-decoration:underline;">Inquire about mobile sim events</a>.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ▸ Bottom CTA (Buyout-style band) -->
+    <section class="vsl-events-cta-section" id="events-cta" aria-labelledby="events-cta-heading">
+      <div class="vsl-events-grid">
+        <div class="vsl-events-cta-buyout">
+          <h2 id="events-cta-heading" class="vsl-events-cta-buyout__title">Book your group event today</h2>
+          <div class="vsl-events-cta-buyout__actions">
+            <a class="vsl-events-cta-buyout__btn vsl-events-cta-buyout__btn--primary" data-vsl-events-link="inquire" href="https://velocitysimlounge.com/dallas/contact/">Inquire Now</a>
+            <a class="vsl-events-cta-buyout__btn vsl-events-cta-buyout__btn--secondary" data-vsl-events-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  var VSL_EVENTS_LOC_STORAGE = 'vslPreferredLocation';
+
+  function bindEventsLocationSync(root) {
+    if (!root) return;
+
+    function normalizeLocKey(key) {
+      return key === 'dallas' ? 'dallas' : 'houston';
+    }
+
+    function readLocKey() {
+      if (window.VSL_LOCATION) return normalizeLocKey(window.VSL_LOCATION.readLocation());
+      try {
+        var fromUrl = new URLSearchParams(window.location.search).get('loc');
+        if (fromUrl === 'dallas' || fromUrl === 'houston') {
+          localStorage.setItem(VSL_EVENTS_LOC_STORAGE, fromUrl);
+          return normalizeLocKey(fromUrl);
+        }
+      } catch (e) {}
+      try {
+        return normalizeLocKey(localStorage.getItem(VSL_EVENTS_LOC_STORAGE));
+      } catch (e) {
+        return 'houston';
+      }
+    }
+
+    function applyEventsLocation(key) {
+      var city = 'Dallas';
+      var possessive = "Dallas's";
+
+      root.querySelectorAll('[data-vsl-events-city-possessive]').forEach(function(el) {
+        el.textContent = possessive;
+      });
+      root.querySelectorAll('[data-vsl-events-city]').forEach(function(el) {
+        el.textContent = city;
+      });
+
+      root.querySelectorAll('img[data-vsl-events-dynamic-city-alt]').forEach(function(img) {
+        var baseline = img.getAttribute('data-vsl-events-alt-baseline');
+        if (!baseline) {
+          baseline = img.getAttribute('alt') || '';
+          img.setAttribute('data-vsl-events-alt-baseline', baseline);
+        }
+        img.alt = baseline.replace(/\bHouston\b/g, 'Dallas');
+      });
+    }
+
+    applyEventsLocation('dallas');
+  }
+
+  function bindHeroFoldHeight(root, cfg) {
+    if (!root || (cfg && cfg.heroFoldHeight === 'fullViewport')) return;
+    var heroEl = root.querySelector('.vsl-events-hero');
+    if (!heroEl) return;
+
+    function updateHeroAvailableHeight() {
+      var vv = window.visualViewport;
+      var vh = vv && vv.height ? vv.height : window.innerHeight;
+      var r = heroEl.getBoundingClientRect();
+      var top = Math.max(0, r.top);
+      var avail = Math.round(vh - top);
+      if (avail < 260) avail = 260;
+      root.style.setProperty('--vsl-hero-available-vh', avail + 'px');
+    }
+    function scheduleHeroFold() {
+      requestAnimationFrame(function() {
+        requestAnimationFrame(updateHeroAvailableHeight);
+      });
+    }
+
+    scheduleHeroFold();
+
+    if (root._vslHeroFoldBound) return;
+    root._vslHeroFoldBound = true;
+    window.addEventListener('resize', scheduleHeroFold);
+    window.addEventListener('orientationchange', scheduleHeroFold);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', scheduleHeroFold);
+    }
+    window.addEventListener('load', scheduleHeroFold);
+  }
+
+  function fixAncestorScrollTraps(root) {
+    var el = root.parentElement;
+    while (el && el !== document.documentElement) {
+      var cs = getComputedStyle(el);
+      if (cs.overflowX === 'hidden') {
+        el.style.setProperty('overflow-x', 'clip', 'important');
+      }
+      if (cs.overflowY === 'hidden') {
+        el.style.setProperty('overflow-y', 'clip', 'important');
+      }
+      el = el.parentElement;
+    }
+  }
+
+  function vslEventsInit() {
+    var root = document.querySelector('.vsl-events');
+    if (!root) return;
+
+    var cfg;
+    try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch(e) { cfg = {}; }
+    bindHeroFoldHeight(root, cfg);
+    bindEventsLocationSync(root);
+    fixAncestorScrollTraps(root);
+
+    if (root._vslInitDone) return;
+    root._vslInitDone = true;
+
+    window.VSL_EVENTS_CONFIG = cfg;
+
+    var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+    if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+    var images = cfg.images || {};
+    var links = cfg.links || {};
+
+    if (images.heroFinishLine) {
+      root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine + '")');
+    }
+
+    var heroVideo = cfg.heroVideo || '';
+    if (heroVideo) {
+      var video = root.querySelector('video[data-vsl-events-video]');
+      var bannerImg = root.querySelector('[data-vsl-events-hero-banner]');
+      var vimeoWrap = root.querySelector('[data-vsl-events-vimeo]');
+      var hero = root.querySelector('.vsl-events-hero');
+      if (hero) {
+        var path = heroVideo.split('?')[0].split('#')[0];
+        var vimeoMatch = heroVideo.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        var isVideoFile = /\.(mp4|webm|ogg|mov|m4v)$/i.test(path);
+        hero.classList.remove('vsl-events-hero--hero-bg-image', 'vsl-events-hero--hero-bg-vimeo');
+        if (vimeoMatch && vimeoWrap) {
+          var vid = vimeoMatch[1];
+          var vimeoSrc =
+            'https://player.vimeo.com/video/' + vid +
+            '?autoplay=1&muted=1&loop=1&background=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&api=1';
+          vimeoWrap.innerHTML =
+            '<iframe id="vsl-events-vimeo-iframe" src="' +
+            vimeoSrc.replace(/"/g, '&quot;') +
+            '" style="position:absolute;top:50%;left:50%;width:110%;height:110%;transform:translate(-50%,-50%) scale(1.09);border:0;" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title=""></iframe>';
+          vimeoWrap.removeAttribute('hidden');
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-events-hero--has-video', 'vsl-events-hero--hero-bg-vimeo');
+          (function(iframeEl) {
+            if (!iframeEl) return;
+            function bindLoop() {
+              try {
+                if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+                var pl = new Vimeo.Player(iframeEl);
+                pl.on('ended', function(){ pl.setCurrentTime(0).then(function(){ return pl.play(); }).catch(function(){}); });
+              } catch(e){}
+            }
+            var sid = 'vsl-events-vimeo-player-api';
+            if (typeof Vimeo !== 'undefined' && Vimeo.Player) { bindLoop(); }
+            else if (document.getElementById(sid)) { document.getElementById(sid).addEventListener('load', bindLoop); }
+            else {
+              var sc = document.createElement('script');
+              sc.id = sid;
+              sc.src = 'https://player.vimeo.com/api/player.js';
+              sc.async = true;
+              sc.onload = bindLoop;
+              document.head.appendChild(sc);
+            }
+          })(vimeoWrap.querySelector('iframe'));
+        } else if (isVideoFile && video) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          video.src = heroVideo;
+          if (bannerImg) { bannerImg.removeAttribute('src'); bannerImg.setAttribute('hidden', ''); }
+          hero.classList.add('vsl-events-hero--has-video');
+        } else if (bannerImg) {
+          if (vimeoWrap) { vimeoWrap.innerHTML = ''; vimeoWrap.setAttribute('hidden', ''); }
+          bannerImg.src = heroVideo;
+          /* Auto-generate responsive srcset from a WP-style "-1920x1080.webp" URL */
+          var sizeMatch = heroVideo.match(/^(.*?)-\d+x\d+(\.\w+)$/);
+          if (sizeMatch) {
+            var base = sizeMatch[1];
+            var ext = sizeMatch[2];
+            bannerImg.srcset = [
+              base + '-768x432' + ext + ' 768w',
+              base + '-1024x576' + ext + ' 1024w',
+              base + '-1536x864' + ext + ' 1536w',
+              base + '-1920x1080' + ext + ' 1920w'
+            ].join(', ');
+            bannerImg.sizes = '100vw';
+          }
+          bannerImg.removeAttribute('hidden');
+          if (video) { video.removeAttribute('src'); video.load(); }
+          hero.classList.add('vsl-events-hero--has-video', 'vsl-events-hero--hero-bg-image');
+        }
+      }
+    }
+
+    root.querySelectorAll('img[data-vsl-events-img]').forEach(function(img) {
+      var key = img.getAttribute('data-vsl-events-img');
+      if (key && images[key]) img.src = images[key];
+      img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+    });
+
+    root.querySelectorAll('a[data-vsl-events-link]').forEach(function(a) {
+      var key = a.getAttribute('data-vsl-events-link');
+      if (key && links[key]) {
+        var href = links[key];
+        a.setAttribute('href', href);
+        /* Same-tab navigation — event cards / CTAs leave the SPA in the active tab */
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+      }
+    });
+
+    /* ── FAQ accordion ── */
+    var faqItems = root.querySelectorAll('.vsl-events-faq__item');
+    faqItems.forEach(function(item) {
+      var btn = item.querySelector('.vsl-events-faq__trigger');
+      var panel = item.querySelector('.vsl-events-faq__panel');
+      if (!btn || !panel) return;
+
+      btn.addEventListener('click', function() {
+        var willClose = item.classList.contains('is-open');
+        faqItems.forEach(function(other) {
+          if (other === item) return;
+          other.classList.remove('is-open');
+          var ob = other.querySelector('.vsl-events-faq__trigger');
+          var op = other.querySelector('.vsl-events-faq__panel');
+          if (ob && op) {
+            ob.setAttribute('aria-expanded', 'false');
+            op.setAttribute('hidden', '');
+          }
+        });
+        if (willClose) {
+          item.classList.remove('is-open');
+          btn.setAttribute('aria-expanded', 'false');
+          panel.setAttribute('hidden', '');
+        } else {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+          panel.removeAttribute('hidden');
+        }
+      });
+    });
+
+    /* ── Experience cards: click outside buttons → landing page (Learn more URL); CTAs unchanged ── */
+    root.querySelectorAll('.vsl-events-types .vsl-events-card').forEach(function(card) {
+      if (card._vslEventsCardLandingClick) return;
+      card._vslEventsCardLandingClick = true;
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('a.vsl-events-card__cta')) return;
+        var land = card.querySelector('a.vsl-events-card__cta--outline');
+        if (land) land.click();
+      });
+    });
+
+    /* ── Scroll fade-in ── */
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!reduceMotion.matches) {
+      var fadeEls = root.querySelectorAll(
+        '.vsl-events-card, .vsl-events-diff-card, .vsl-events-includes-item, ' +
+        '.vsl-events-faq__item, .vsl-events-section-title, .vsl-events-section-sub, ' +
+        '.vsl-events-types__review, .vsl-events-cta-buyout'
+      );
+      fadeEls.forEach(function(el) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(22px)';
+        el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+      });
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+              obs.unobserve(entry.target);
+              setTimeout(function() {
+                entry.target.style.removeProperty('opacity');
+                entry.target.style.removeProperty('transform');
+                entry.target.style.removeProperty('transition');
+              }, 650);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+        fadeEls.forEach(function(el) { obs.observe(el); });
+      } else {
+        fadeEls.forEach(function(el) {
+          el.style.opacity = '1';
+          el.style.transform = '';
+          el.style.transition = '';
+        });
+      }
+    }
+
+    /* ── 3D tilt on cards ── */
+    if (reduceMotion.matches) return;
+
+    var isCoarse = window.matchMedia('(pointer: coarse)').matches;
+
+    root.querySelectorAll('.vsl-events-card').forEach(function(card) {
+      if (card._vslTiltBound) return;
+      card._vslTiltBound = true;
+
+      if (isCoarse) {
+        card.addEventListener('touchstart', function(){ card.classList.add('vsl-events-card--touch-active'); }, {passive:true});
+        function touchRelease(){ card.classList.remove('vsl-events-card--touch-active'); }
+        card.addEventListener('touchend', touchRelease, {passive:true});
+        card.addEventListener('touchcancel', touchRelease, {passive:true});
+        return;
+      }
+
+      var TILT = 12, SCALE_UP = 1.035, LERP_POS = 0.09, LERP_SCALE = 0.1;
+      var raf = null;
+      var target = { mx:0.5, my:0.5, scale:1 };
+      var current = { mx:0.5, my:0.5, scale:1 };
+      var active = false;
+      function lerp(a,b,t){ return a+(b-a)*t; }
+      function tick() {
+        current.mx = lerp(current.mx, target.mx, LERP_POS);
+        current.my = lerp(current.my, target.my, LERP_POS);
+        current.scale = lerp(current.scale, target.scale, LERP_SCALE);
+        var rx = (current.my-0.5)*-TILT;
+        var ry = (current.mx-0.5)*TILT;
+        var lift = (current.scale-1)*-115;
+        card.style.transform =
+          'perspective(800px) rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg) scale('+current.scale.toFixed(4)+') translateY('+lift.toFixed(1)+'px)';
+        var settled = Math.abs(current.mx-target.mx)<0.0005 && Math.abs(current.my-target.my)<0.0005 && Math.abs(current.scale-target.scale)<0.0005;
+        if (!settled) { raf = requestAnimationFrame(tick); }
+        else { if (!active) card.style.transform = ''; raf = null; }
+      }
+      function engage(){ active=true; target.scale=SCALE_UP; if(!raf) raf=requestAnimationFrame(tick); }
+      function move(cx,cy){
+        var rect=card.getBoundingClientRect();
+        target.mx=Math.max(0,Math.min(1,(cx-rect.left)/rect.width));
+        target.my=Math.max(0,Math.min(1,(cy-rect.top)/rect.height));
+        if(!raf) raf=requestAnimationFrame(tick);
+      }
+      function release(){ active=false; target.mx=0.5; target.my=0.5; target.scale=1; if(!raf) raf=requestAnimationFrame(tick); }
+      card.addEventListener('mouseenter', engage);
+      card.addEventListener('mousemove', function(e){ move(e.clientX,e.clientY); });
+      card.addEventListener('mouseleave', release);
+    });
+
+  }
+
+  function tryInit() { try { vslEventsInit(); } catch(e) { console.error('[VSL Events] init error:', e); } }
+
+  if (document.readyState !== 'loading') { tryInit(); } else { document.addEventListener('DOMContentLoaded', tryInit); }
+
+  if (window.elementorFrontend && window.elementorFrontend.hooks) {
+    window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+  } else {
+    window.addEventListener('elementor/frontend/init', function() {
+      if (window.elementorFrontend && window.elementorFrontend.hooks) {
+        window.elementorFrontend.hooks.addAction('frontend/element_ready/global', tryInit);
+      }
+    });
+  }
+
+  window.addEventListener('load', tryInit);
+
+  var attempts = 0;
+  var poller = setInterval(function() {
+    attempts++;
+    var r = document.querySelector('.vsl-events');
+    if (r && r._vslInitDone) { clearInterval(poller); return; }
+    tryInit();
+    if (attempts >= 20) clearInterval(poller);
+  }, 300);
+})();
+</script>
