@@ -69,7 +69,9 @@
 
   function readFromPath() {
     try {
-      if (/^\/dallas(\/|$)/.test(global.location.pathname)) return 'dallas';
+      var path = normalizePathname(global.location.pathname);
+      if (/^\/dallas(\/|$)/.test(path)) return 'dallas';
+      if (path === '/' || INTERNAL_PATH_SLUGS[path]) return 'houston';
     } catch (_) {}
     return null;
   }
@@ -87,8 +89,9 @@
   function readFromStagingPageKey() {
     try {
       if (!global.__VSL_SITE_REPLICA__) return null;
-      var p = new URLSearchParams(global.location.search).get('p') || '';
+      var p = new URLSearchParams(global.location.search).get('p') || 'home';
       if (p.indexOf('dallas-') === 0 || p === 'dallas-home') return 'dallas';
+      return 'houston';
     } catch (_) {}
     return null;
   }
