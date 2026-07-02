@@ -6,14 +6,19 @@ Static HTML modules and the **Velocity Staging Site** router (`VelocityStagingSi
 
 1. Push this repository to GitHub (see below).
 2. In the repo on GitHub: **Settings → Pages**.
-3. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-4. Choose branch **main** and folder **/ (root)**.
-5. Save. After a minute, the site will be at:
-  **[https://kory-dotcom.github.io/velocity-website-pages/](https://kory-dotcom.github.io/velocity-website-pages/)**
-6. Open the staging app at:
-  **[https://kory-dotcom.github.io/velocity-website-pages/VelocityStagingSite/](https://kory-dotcom.github.io/velocity-website-pages/VelocityStagingSite/)**
+3. Under **Build and deployment**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+4. Select the workflow **Deploy staging site** (`.github/workflows/deploy-staging-pages.yml`).
+5. After a successful run, open the staging app at:
+   **[https://kory-dotcom.github.io/velocity-website-pages/VelocityStagingSite/](https://kory-dotcom.github.io/velocity-website-pages/VelocityStagingSite/)**
    Or open the repo root; `index.html` redirects into `VelocityStagingSite/`.
    Custom domain (if configured): **[https://staging.velocitytx.com/VelocityStagingSite/](https://staging.velocitytx.com/VelocityStagingSite/)**
+
+**If deploy fails with “Deployment failed, try again later” during `syncing_files`:**
+
+- GitHub Pages may be wedged from a prior failed/cancelled deploy. In **Settings → Pages**, note if status shows **Errored** or **Building** for a long time.
+- Go to **Actions → Deploy staging site → Run workflow** (manual re-run after 5–10 minutes).
+- Do not cancel in-progress Pages deploy jobs — that often causes the wedge.
+- Local preview always works: `npm run preview` → `http://localhost:8000/VelocityStagingSite/?p=dallas-home`
 
 Repository: **[https://github.com/kory-dotcom/velocity-website-pages](https://github.com/kory-dotcom/velocity-website-pages)**
 
