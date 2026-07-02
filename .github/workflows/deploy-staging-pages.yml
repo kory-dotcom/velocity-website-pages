@@ -62,8 +62,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           for attempt in $(seq 1 18); do
-            state=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" --jq '.[0].state // "none"')
-            version=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" --jq '.[0].pages_build_version // ""')
+            if ! deployments=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" 2>/dev/null); then
+              echo "No prior Pages deployments yet; continuing."
+              exit 0
+            fi
+            state=$(echo "$deployments" | jq -r '.[0].state // "none"')
+            version=$(echo "$deployments" | jq -r '.[0].pages_build_version // ""')
             echo "Latest Pages deployment: state=$state sha=${version:0:7}"
             if [ "$state" != "queued" ] && [ "$state" != "in_progress" ]; then
               echo "No conflicting deployment in progress."
