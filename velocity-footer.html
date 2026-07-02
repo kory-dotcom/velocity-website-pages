@@ -432,20 +432,43 @@
     }
   }
 
-  function markActiveNav() {
-    var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  function slugFromFooterHref(href) {
+    if (!href) return '';
+    if (window.__VSL_SITE_REPLICA__) {
+      var qMatch = href.match(/[?&]p=(?:dallas-)?([^&#]+)/i);
+      if (qMatch) {
+        var pk = qMatch[1].toLowerCase();
+        if (pk === 'parties-events') return 'group-events';
+        if (pk === 'food-drink') return 'food-and-drink';
+        if (pk.indexOf('dallas-') === 0) pk = pk.slice(7);
+        return pk;
+      }
+    }
+    try {
+      var path = new URL(href, window.location.href).pathname.replace(/\/+$/, '').toLowerCase();
+      var dallasMatch = path.match(/\/dallas\/([^/]+)$/);
+      if (dallasMatch) return dallasMatch[1];
+      var parts = path.split('/').filter(Boolean);
+      var last = parts[parts.length - 1];
+      if (last === 'index.html' && parts.length > 1) last = parts[parts.length - 2];
+      return last;
+    } catch (_) {}
+    return '';
+  }
+
+  function updateFooterActiveNav() {
+    var currentSlug = window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug
+      ? window.VSL_LOCATION.getPageSlug() : '';
     root.querySelectorAll('[data-footer-nav]').forEach(function (a) {
-      var p = '';
-      try {
-        p = new URL(a.getAttribute('href'), window.location.origin).pathname.replace(/\/+$/, '').toLowerCase();
-      } catch (_) {}
-      a.classList.toggle('is-active', !!p && path === p);
+      var linkSlug = slugFromFooterHref(a.getAttribute('href'));
+      a.classList.toggle('is-active', !!currentSlug && linkSlug === currentSlug);
     });
   }
+  window.vslUpdateFooterActiveNav = updateFooterActiveNav;
 
   applyLocation(readLocation());
   applyFooterNavLinks(readLocation());
-  markActiveNav();
+  updateFooterActiveNav();
 
   window.addEventListener('storage', function (e) {
     if (e.key === STORAGE_KEY && e.newValue) applyLocation(e.newValue);
@@ -455,6 +478,7 @@
     if (e.detail && e.detail.location) {
       applyLocation(e.detail.location);
       applyFooterNavLinks(e.detail.location);
+      updateFooterActiveNav();
     }
   });
 })();

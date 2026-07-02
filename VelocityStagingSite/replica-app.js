@@ -646,6 +646,9 @@
       executeInlineScripts(navbarRoot);
       localizeNavbarLinks();
       applyLocalLinks(navbarRoot);
+      if (typeof window.vslUpdateNavbarActiveLink === "function") {
+        window.vslUpdateNavbarActiveLink();
+      }
       setLocationFromQuery();
       if (window.VSL_LOCATION) syncNavbarLocationDom(window.VSL_LOCATION.readLocation());
       return loadModulePage();
@@ -683,8 +686,14 @@
     if (typeof window.VSL_REPLICA_APPLY_NAV_LINKS === "function") {
       window.VSL_REPLICA_APPLY_NAV_LINKS(loc);
     }
+    if (typeof window.vslUpdateNavbarActiveLink === "function") {
+      window.vslUpdateNavbarActiveLink();
+    }
     if (typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
       window.VSL_REPLICA_APPLY_FOOTER_LINKS(loc);
+    }
+    if (typeof window.vslUpdateFooterActiveNav === "function") {
+      window.vslUpdateFooterActiveNav();
     }
     syncNavbarLocationDom(loc);
   });

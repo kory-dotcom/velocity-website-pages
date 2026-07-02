@@ -2314,14 +2314,43 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   if (!navbar) return;
 
 
-  (function markActiveLink() {
-    var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  function slugFromNavHref(href) {
+    if (!href) return '';
+    if (window.__VSL_SITE_REPLICA__) {
+      var qMatch = href.match(/[?&]p=(?:dallas-)?([^&#]+)/i);
+      if (qMatch) {
+        var pk = qMatch[1].toLowerCase();
+        if (pk === 'parties-events') return 'group-events';
+        if (pk === 'food-drink') return 'food-and-drink';
+        if (pk.indexOf('dallas-') === 0) pk = pk.slice(7);
+        return pk;
+      }
+    }
+    try {
+      var path = new URL(href, window.location.href).pathname.replace(/\/+$/, '').toLowerCase();
+      var dallasMatch = path.match(/\/dallas\/([^/]+)$/);
+      if (dallasMatch) return dallasMatch[1];
+      if (path === '' || path.endsWith('/velocitystagingsite') || path.endsWith('/index.html')) return '';
+      var parts = path.split('/').filter(Boolean);
+      var last = parts[parts.length - 1];
+      if (last === 'index.html' && parts.length > 1) last = parts[parts.length - 2];
+      return last;
+    } catch (_) {}
+    return '';
+  }
+
+  function updateNavbarActiveLink() {
+    var currentSlug = window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug
+      ? window.VSL_LOCATION.getPageSlug() : '';
+    var topNavSlugs = { 'group-events': true, 'food-and-drink': true };
     navbar.querySelectorAll('.vsl-navbar__menu .vsl-navbar__link[href]').forEach(function(a) {
-      var linkPath = '';
-      try { linkPath = new URL(a.href).pathname.replace(/\/+$/, '').toLowerCase(); } catch (_) { return; }
-      if (path === linkPath) a.classList.add('vsl-navbar__link--active');
+      a.classList.remove('vsl-navbar__link--active');
+      if (!topNavSlugs[currentSlug]) return;
+      var linkSlug = slugFromNavHref(a.getAttribute('href'));
+      if (linkSlug === currentSlug) a.classList.add('vsl-navbar__link--active');
     });
-  })();
+  }
+  window.vslUpdateNavbarActiveLink = updateNavbarActiveLink;
 
   var items = navbar.querySelectorAll('[data-dropdown]');
   var ctaWrap = navbar.querySelector('[data-cta-dropdown]');
@@ -2424,6 +2453,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
     markCurrentLocation(normalized);
     applyNavLinks(normalized);
+    updateNavbarActiveLink();
 
     try {
       window.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: normalized } }));
@@ -2482,8 +2512,15 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   function isContactPagePath() {
-    return /^\/contact\/?$/.test(window.location.pathname) ||
-      /^\/dallas\/contact\/?$/.test(window.location.pathname);
+    if (window.__VSL_SITE_REPLICA__) {
+      var p = new URLSearchParams(window.location.search).get('p') || 'home';
+      return p === 'contact' || p === 'dallas-contact';
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug) {
+      return window.VSL_LOCATION.getPageSlug() === 'contact';
+    }
+    var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+    return /\/contact\/?$/.test(path) || /\/dallas\/contact\/?$/.test(path);
   }
 
   function scrollFaqIntoView(attempt) {
