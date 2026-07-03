@@ -221,10 +221,41 @@
 
   if (!REPLICA_PAGES[pageKey]) pageKey = "home";
 
+  var MEGA_CARD_IMAGES = [
+    "https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg",
+    "https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp",
+    "https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp",
+    "https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp",
+    "https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp",
+    "https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg"
+  ];
+
   function normalizePageKey(key) {
     if (!key || key === "spring-bundles") return "fathers-day";
     return REPLICA_PAGES[key] ? key : "home";
   }
+
+  function kickExploreMegaPreloads() {
+    if (typeof window.vslWarmMegaMenuAssets === "function") {
+      window.vslWarmMegaMenuAssets();
+      return;
+    }
+    MEGA_CARD_IMAGES.forEach(function (url) {
+      if (!document.querySelector('link[rel="preload"][href="' + url + '"]')) {
+        var link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "image";
+        link.href = url;
+        document.head.appendChild(link);
+      }
+      var img = new Image();
+      img.decoding = "async";
+      img.src = url;
+    });
+  }
+
+  kickExploreMegaPreloads();
+  fetchModuleHtml(normalizePageKey(pageKey));
 
   function pageKeyFromLocalHref(href) {
     if (!href || href.charAt(0) === "#") return null;
@@ -235,19 +266,25 @@
 
   function finalizeModuleMount(html, moduleKey) {
     injectModuleHtml(html, moduleKey);
-    executeInlineScripts(pageRoot);
-    applyLocalLinks(pageRoot);
-    notifyReplicaAfterLocalLinks(pageRoot);
-    applySectionReveals(pageRoot);
-    if (typeof window.vslUpdateNavbarActiveLink === "function") {
-      window.vslUpdateNavbarActiveLink();
-    }
-    if (window.VSL_LOCATION && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
-      window.VSL_REPLICA_APPLY_FOOTER_LINKS(window.VSL_LOCATION.readLocation());
-    }
-    if (typeof window.vslUpdateFooterActiveNav === "function") {
-      window.vslUpdateFooterActiveNav();
-    }
+    var mountPage = function () {
+      executeInlineScripts(pageRoot);
+      applyLocalLinks(pageRoot);
+      notifyReplicaAfterLocalLinks(pageRoot);
+      applySectionReveals(pageRoot);
+      if (typeof window.vslUpdateNavbarActiveLink === "function") {
+        window.vslUpdateNavbarActiveLink();
+      }
+      if (window.VSL_LOCATION && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
+        window.VSL_REPLICA_APPLY_FOOTER_LINKS(window.VSL_LOCATION.readLocation());
+      }
+      if (typeof window.vslUpdateFooterActiveNav === "function") {
+        window.vslUpdateFooterActiveNav();
+      }
+    };
+    var megaReady = window.vslMegaMenuReady || Promise.resolve();
+    megaReady.then(function () {
+      requestAnimationFrame(mountPage);
+    });
   }
 
   function fetchModuleHtml(key) {

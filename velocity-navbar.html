@@ -1819,7 +1819,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   visibility: hidden;
   pointer-events: none;
   transform: translateZ(0);
-  contain: layout style;
   z-index: calc(var(--z-navbar) - 1);
   transition: none;
 }
@@ -1854,16 +1853,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-utils {
   --vsl-ui-scale: 1.38;
 }
-.vsl-navbar__mega.is-preloading {
-  opacity: 1;
-  visibility: visible;
-  z-index: -1;
-  pointer-events: none;
-}
-.vsl-navbar__mega.is-preloading .vsl-navbar__mega-card,
-.vsl-navbar__mega.is-preloading .vsl-navbar__mega-utils {
-  animation: none !important;
-}
 .vsl-navbar__mega.is-ready {
   transition: opacity 0.12s ease-out, visibility 0.12s ease-out;
 }
@@ -1872,22 +1861,59 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   visibility: visible;
   pointer-events: auto;
 }
-/* Opacity-only so hover transform/scale isn’t overridden by animation-fill-mode */
+/* Hold cards in start pose while the panel opens and images finish decoding */
+.vsl-navbar__mega.is-open.is-mega-waiting .vsl-navbar__mega-card {
+  opacity: 1;
+  transform: translate3d(0, calc(18px * var(--vsl-ui-scale)), 0) scale(0.97) !important;
+  transition: none !important;
+  animation: none !important;
+}
+.vsl-navbar__mega.is-open.is-mega-waiting .vsl-navbar__mega-utils {
+  opacity: 1;
+  transform: translate3d(0, calc(12px * var(--vsl-ui-scale)), 0) !important;
+  transition: none !important;
+  animation: none !important;
+}
+/* Transform-only stagger — cards stay opacity:1 so photo layers decode before reveal */
+.vsl-navbar__mega.is-open:not(.is-mega-cards-animate):not(.is-mega-waiting) .vsl-navbar__mega-card {
+  opacity: 1;
+  transform: translate3d(0, calc(18px * var(--vsl-ui-scale)), 0) scale(0.97);
+}
+.vsl-navbar__mega.is-open:not(.is-mega-cards-animate):not(.is-mega-waiting) .vsl-navbar__mega-utils {
+  opacity: 1;
+  transform: translate3d(0, calc(12px * var(--vsl-ui-scale)), 0);
+}
 @keyframes vsl-card-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { transform: translate3d(0, calc(18px * var(--vsl-ui-scale)), 0) scale(0.97); }
+  to   { transform: translate3d(0, 0, 0) scale(1); }
 }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card {
-  animation: vsl-card-in 0.18s cubic-bezier(0, 0, 0.2, 1) both;
+@keyframes vsl-utils-in {
+  from { transform: translate3d(0, calc(12px * var(--vsl-ui-scale)), 0); }
+  to   { transform: translate3d(0, 0, 0); }
 }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(1) { animation-delay: 0s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(2) { animation-delay: 0.025s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(3) { animation-delay: 0.05s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(4) { animation-delay: 0.075s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(5) { animation-delay: 0.1s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-card:nth-child(6) { animation-delay: 0.125s; }
-.vsl-navbar__mega.is-open .vsl-navbar__mega-utils {
-  animation: vsl-card-in 0.18s cubic-bezier(0, 0, 0.2, 1) 0.1s both;
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:not(.is-mega-entered) {
+  animation: vsl-card-in 0.28s cubic-bezier(0, 0, 0.2, 1) both;
+  transition: none !important;
+}
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(1):not(.is-mega-entered) { animation-delay: 0s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(2):not(.is-mega-entered) { animation-delay: 0.04s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(3):not(.is-mega-entered) { animation-delay: 0.08s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(4):not(.is-mega-entered) { animation-delay: 0.12s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(5):not(.is-mega-entered) { animation-delay: 0.16s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card:nth-child(6):not(.is-mega-entered) { animation-delay: 0.2s; }
+.vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-utils:not(.is-mega-entered) {
+  animation: vsl-utils-in 0.28s cubic-bezier(0, 0, 0.2, 1) 0.16s both;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vsl-navbar__mega.is-open:not(.is-mega-cards-animate) .vsl-navbar__mega-card,
+  .vsl-navbar__mega.is-open:not(.is-mega-cards-animate) .vsl-navbar__mega-utils {
+    transform: none;
+  }
+  .vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-card,
+  .vsl-navbar__mega.is-open.is-mega-cards-animate .vsl-navbar__mega-utils {
+    animation: none !important;
+  }
 }
 .vsl-navbar__mega-grid {
   display: grid;
@@ -1918,6 +1944,27 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   min-height: calc(110px * var(--vsl-ui-scale));
   position: relative;
   overflow: hidden;
+  isolation: isolate;
+}
+.vsl-navbar__mega-card__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.vsl-navbar__mega-card--how .vsl-navbar__mega-card__bg {
+  transform: scaleX(-1);
+}
+.vsl-navbar__mega-card__title,
+.vsl-navbar__mega-card__sub,
+.vsl-navbar__mega-card__arrow {
+  position: relative;
+  z-index: 1;
 }
 .vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--contact):not(.vsl-navbar__mega-card--promos):hover {
   z-index: 2;
@@ -1932,10 +1979,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   min-height: calc(230px * var(--vsl-ui-scale));
 }
 .vsl-navbar__mega-card--book {
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #1e2338;
 }
 .vsl-navbar__mega-card--book:hover {
   z-index: 2;
@@ -1947,10 +1991,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
 .vsl-navbar__mega-card--events {
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #1e2338;
 }
 .vsl-navbar__mega-card--events:hover {
   z-index: 2;
@@ -1962,10 +2003,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
 .vsl-navbar__mega-card--membership {
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #1e2338;
 }
 .vsl-navbar__mega-card--membership:hover {
   z-index: 2;
@@ -1977,10 +2015,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
 .vsl-navbar__mega-card--contact {
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #1e2338;
 }
 .vsl-navbar__mega-card--contact:hover {
   z-index: 2;
@@ -1992,10 +2027,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
 .vsl-navbar__mega-card--promos {
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #1e2338;
   border-color: rgba(210, 32, 38, 0.35);
 }
 .vsl-navbar__mega-card--promos:hover {
@@ -2009,20 +2041,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 .vsl-navbar__mega-card--how {
   background-color: #1e2338;
-  isolation: isolate;
-}
-.vsl-navbar__mega-card--how::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transform: scaleX(-1);
-  pointer-events: none;
-  z-index: -1;
-  border-radius: inherit;
 }
 .vsl-navbar__mega-card--how:hover {
   z-index: 2;
@@ -2605,34 +2623,40 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   <div class="vsl-navbar__mega-backdrop" aria-hidden="true"></div>
 
   <!-- Race Mega-Menu Panel -->
-  <div class="vsl-navbar__mega is-preloading" id="vsl-mega-panel" aria-hidden="true" inert>
+  <div class="vsl-navbar__mega" id="vsl-mega-panel" aria-hidden="true" inert>
     <div class="vsl-navbar__mega-grid">
       <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__mega-card vsl-navbar__mega-card--lg vsl-navbar__mega-card--book" data-mega-book>
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Book a Race</span>
         <span class="vsl-navbar__mega-card__sub">Reserve your simulator session now</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/party-packs/" class="vsl-navbar__mega-card vsl-navbar__mega-card--lg vsl-navbar__mega-card--events">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Party Packs</span>
         <span class="vsl-navbar__mega-card__sub">Celebrating? Book a party pack for groups of 5-18 drivers.</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/about/" class="vsl-navbar__mega-card vsl-navbar__mega-card--how">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">How It Works</span>
         <span class="vsl-navbar__mega-card__sub">Your first visit explained</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/membership/" class="vsl-navbar__mega-card vsl-navbar__mega-card--membership">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Membership</span>
         <span class="vsl-navbar__mega-card__sub">Exclusive perks &amp; unlimited racing</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/promotions/" class="vsl-navbar__mega-card vsl-navbar__mega-card--promos">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Deals &amp; Promotions</span>
         <span class="vsl-navbar__mega-card__sub">Discounts, happy hour, and specials</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__mega-card vsl-navbar__mega-card--contact">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Contact</span>
         <span class="vsl-navbar__mega-card__sub">Hours, address, and help</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
@@ -3326,24 +3350,108 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var megaBookLinks = navbar.querySelectorAll('[data-mega-book]');
   var mobileBookLinks = navbar.querySelectorAll('[data-mobile-mega-book]');
 
-  function warmMegaAssets() {
-    if (!megaPanel || warmMegaAssets._ran) return;
-    warmMegaAssets._ran = true;
-    var seen = Object.create(null);
-    var cards = megaPanel.querySelectorAll('.vsl-navbar__mega-card');
-    cards.forEach(function(card) {
-      var bg = window.getComputedStyle(card).backgroundImage || '';
-      var match;
-      var re = /url\((['"]?)(.*?)\1\)/g;
-      while ((match = re.exec(bg))) {
-        var src = match[2];
-        if (!src || seen[src]) continue;
-        seen[src] = true;
-        var img = new Image();
-        img.decoding = 'async';
-        img.src = src;
-        if (img.decode) img.decode().catch(function() {});
+  var MEGA_CARD_IMAGES = [
+    'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg'
+  ];
+  var megaImagesPromise = null;
+
+  function injectMegaPreloads() {
+    if (injectMegaPreloads._ran || !document.head) return;
+    injectMegaPreloads._ran = true;
+    MEGA_CARD_IMAGES.forEach(function(url) {
+      if (document.querySelector('link[rel="preload"][href="' + url + '"]')) return;
+      var link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = url;
+      document.head.appendChild(link);
+    });
+  }
+
+  function decodeDomImage(img) {
+    return new Promise(function(resolve) {
+      if (!img || !img.src) { resolve(); return; }
+      function done() { resolve(); }
+      if (img.complete && img.naturalWidth > 0) {
+        if (img.decode) img.decode().then(done).catch(done);
+        else done();
+        return;
       }
+      img.addEventListener('load', function() {
+        if (img.decode) img.decode().then(done).catch(done);
+        else done();
+      }, { once: true });
+      img.addEventListener('error', done, { once: true });
+    });
+  }
+
+  function decodeImageSrc(src) {
+    return new Promise(function(resolve) {
+      var img = new Image();
+      img.decoding = 'async';
+      function done() { resolve(); }
+      img.onload = function() {
+        if (img.decode) img.decode().then(done).catch(done);
+        else done();
+      };
+      img.onerror = done;
+      img.src = src;
+      if (img.complete) {
+        if (img.decode) img.decode().then(done).catch(done);
+        else done();
+      }
+    });
+  }
+
+  function decodeMegaCardImages() {
+    if (!megaPanel) return Promise.all(MEGA_CARD_IMAGES.map(decodeImageSrc));
+    var imgs = megaPanel.querySelectorAll('.vsl-navbar__mega-card__bg');
+    if (!imgs.length) return Promise.all(MEGA_CARD_IMAGES.map(decodeImageSrc));
+    return Promise.all(Array.prototype.map.call(imgs, decodeDomImage));
+  }
+
+  function warmMegaAssets() {
+    injectMegaPreloads();
+    if (!megaImagesPromise) {
+      megaImagesPromise = decodeMegaCardImages();
+    }
+    return megaImagesPromise;
+  }
+
+  function ensureMegaReady() {
+    if (!megaPanel) return;
+    megaPanel.classList.add('is-ready');
+  }
+
+  function runMegaCardAnimation() {
+    if (!megaPanel || !megaPanel.classList.contains('is-open')) return;
+    var reduceMotion = false;
+    try {
+      reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (_) {}
+    megaPanel.querySelectorAll('.vsl-navbar__mega-card, .vsl-navbar__mega-utils').forEach(function(el) {
+      el.classList.remove('is-mega-entered');
+    });
+    megaPanel.classList.remove('is-mega-cards-animate');
+    if (reduceMotion) {
+      megaPanel.classList.add('is-mega-cards-animate');
+      megaPanel.querySelectorAll('.vsl-navbar__mega-card, .vsl-navbar__mega-utils').forEach(function(el) {
+        el.classList.add('is-mega-entered');
+      });
+      return;
+    }
+    void megaPanel.offsetWidth;
+    megaPanel.classList.add('is-mega-cards-animate');
+    megaPanel.querySelectorAll('.vsl-navbar__mega-card, .vsl-navbar__mega-utils').forEach(function(el) {
+      el.addEventListener('animationend', function(evt) {
+        if (evt.target !== el) return;
+        el.classList.add('is-mega-entered');
+      }, { once: true });
     });
   }
 
@@ -3370,22 +3478,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   if (megaPanel) {
+    injectMegaPreloads();
+    window.vslWarmMegaMenuAssets = warmMegaAssets;
+    window.vslMegaMenuReady = warmMegaAssets().then(function() {
+      ensureMegaReady();
+    });
     if (isMobileViewport()) {
-      megaPanel.classList.remove('is-preloading');
-      megaPanel.classList.add('is-ready');
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(warmOverlayCards, { timeout: 1500 });
-      } else {
-        setTimeout(warmOverlayCards, 400);
-      }
+      window.vslMegaMenuReady.then(function() {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(warmOverlayCards, { timeout: 1500 });
+        } else {
+          setTimeout(warmOverlayCards, 400);
+        }
+      });
     } else {
-      requestAnimationFrame(function() {
-        megaPanel.classList.remove('is-preloading');
-        requestAnimationFrame(function() {
-          megaPanel.classList.add('is-ready');
-        });
-        // Decode mega card backgrounds right after the off-screen warm paint so the first open is instant
-        setTimeout(warmMegaAssets, 0);
+      window.vslMegaMenuReady.then(function() {
         if ('requestIdleCallback' in window) {
           requestIdleCallback(warmOverlayCards, { timeout: 3000 });
         } else {
@@ -3450,7 +3557,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       raceToggle.setAttribute('aria-expanded', 'false');
     }
     if (megaPanel) {
-      megaPanel.classList.remove('is-open');
+      megaPanel.classList.remove('is-open', 'is-mega-cards-animate', 'is-mega-waiting');
       megaPanel.setAttribute('aria-hidden', 'true');
       megaPanel.setAttribute('inert', '');
     }
@@ -3461,16 +3568,32 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     closeNavDropdowns();
     closeLocDropdown();
     closeStickyLocMenu();
+    ensureMegaReady();
+    injectMegaPreloads();
+    if (megaPanel) {
+      megaPanel.classList.remove('is-mega-cards-animate', 'is-mega-waiting');
+      megaPanel.querySelectorAll('.vsl-navbar__mega-card, .vsl-navbar__mega-utils').forEach(function(el) {
+        el.classList.remove('is-mega-entered');
+      });
+    }
     if (raceToggle) {
       raceToggle.classList.add('is-open');
       raceToggle.setAttribute('aria-expanded', 'true');
     }
-    if (megaPanel) {
-      megaPanel.removeAttribute('inert');
-      megaPanel.classList.add('is-open');
-      megaPanel.setAttribute('aria-hidden', 'false');
-    }
     if (megaBackdrop) megaBackdrop.classList.add('is-open');
+    warmMegaAssets().then(function() {
+      if (!megaPanel) return;
+      megaPanel.removeAttribute('inert');
+      megaPanel.classList.add('is-open', 'is-mega-waiting');
+      megaPanel.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          if (!megaPanel.classList.contains('is-open')) return;
+          megaPanel.classList.remove('is-mega-waiting');
+          runMegaCardAnimation();
+        });
+      });
+    });
   }
 
   function closeAllDesktop() {
@@ -3519,9 +3642,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     // transition is armed, so the very first open animates smoothly instead of snapping in.
     ['pointerenter', 'focus', 'touchstart'].forEach(function(evt) {
       raceToggle.addEventListener(evt, function() {
-        if (megaPanel && !megaPanel.classList.contains('is-preloading')) {
-          megaPanel.classList.add('is-ready');
-        }
+        ensureMegaReady();
         warmMegaAssets();
       }, { passive: true });
     });
