@@ -42,7 +42,6 @@
     --c4: #FDC70C;
     --c5: #D22026;
     --c6: #EAEAEA;
-    --vsl-dallas-accent: #5A6FDC;
     --c7: #DFDFDE;
     --c8: #B2AEBF;
     --c9: #5F5782;
@@ -202,6 +201,11 @@
   .vsl-booknow .vsl-bn-section-title em {
     color: var(--c2) !important;
     -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-section-title__city {
+    color: var(--c4) !important;
+    -webkit-text-fill-color: var(--c4) !important;
+    font-style: italic !important;
   }
   .vsl-booknow .vsl-bn-card,
   .elementor-widget-container .vsl-bn-card,
@@ -513,6 +517,10 @@
     color: var(--c6);
   }
   .vsl-bn-section-title em { font-style: italic; color: var(--c2); }
+  .vsl-bn-section-title__city {
+    font-style: italic;
+    color: var(--c4);
+  }
   .vsl-bn-section-title::after {
     content: '';
     display: block;
@@ -566,12 +574,6 @@
   }
   .vsl-bn-locbadge__city {
     font-weight: 800;
-  }
-  .vsl-loc--dallas .vsl-bn-locbadge {
-    background: var(--vsl-dallas-accent);
-    color: #fff;
-    -webkit-text-fill-color: #fff;
-    box-shadow: 0 8px 22px rgba(90,111,220,0.38);
   }
 
   .vsl-bn-tabs {
@@ -827,7 +829,7 @@
     flex-shrink: 0;
   }
   .vsl-loc--dallas .vsl-bn-card__loc-chip {
-    background: var(--vsl-dallas-accent);
+    background: var(--c2);
     color: #fff;
     -webkit-text-fill-color: #fff;
   }
@@ -2370,7 +2372,7 @@
           </span>
         </div>
         <h2 class="vsl-bn-section-title" id="experiences-heading">
-          Choose Your <em>Experience</em>
+          Choose Your <span class="vsl-bn-section-title__city" data-bn-loc-heading-city>Houston</span> Experience
         </h2>
 
         <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
@@ -2891,6 +2893,8 @@
       root._vslCity = city;
       var cityEl = root.querySelector('[data-bn-loc-city]');
       if (cityEl) cityEl.textContent = city;
+      var headingCityEl = root.querySelector('[data-bn-loc-heading-city]');
+      if (headingCityEl) headingCityEl.textContent = city;
       root.querySelectorAll('.vsl-bn-card').forEach(function(card) {
         var media = card.querySelector('.vsl-bn-card__media');
         if (!media) return;
@@ -2957,10 +2961,10 @@
       });
     }
 
-    if (window.VSL_LOCATION) {
-      applyLocationLinks('houston');
+    if (window.VSL_LOCATION && window.VSL_LOCATION.bindLocationSync) {
+      window.VSL_LOCATION.bindLocationSync(applyLocationLinks);
     } else {
-      applyLocationLinks('houston');
+      applyLocationLinks(window.VSL_LOCATION ? window.VSL_LOCATION.readLocation() : 'houston');
     }
 
     var tabs = root.querySelectorAll('.vsl-bn-tab[role="tab"]');
@@ -3086,7 +3090,12 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        staggerCards(panel);
+        if (panel.dataset.vslTabSeen === '1') {
+          clearCardEntrance(panel);
+        } else {
+          panel.dataset.vslTabSeen = '1';
+          staggerCards(panel);
+        }
       }
     }
 

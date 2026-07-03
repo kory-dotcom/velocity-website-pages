@@ -194,15 +194,31 @@
     }
   }
 
+  function locationFromPageKey(pageKey) {
+    pageKey = String(pageKey || 'home');
+    if (pageKey.indexOf('dallas-') === 0 || pageKey === 'dallas-home') return 'dallas';
+    return 'houston';
+  }
+
+  function setPreferredLocation(loc, options) {
+    loc = normalize(loc);
+    options = options || {};
+    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    if (options.skipEvent) return loc;
+    try {
+      global.dispatchEvent(new CustomEvent('_vslLocationChanged', {
+        detail: { location: loc, source: options.source || 'setPreferredLocation' }
+      }));
+    } catch (_) {}
+    return loc;
+  }
+
   function bootstrap() {
     var fromUrl = readFromUrlParam();
     var fromPath = readFromPath() || readFromStagingPageKey();
     var loc = fromPath || fromUrl;
     if (!loc) return;
-    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
-    try {
-      global.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: loc } }));
-    } catch (_) {}
+    setPreferredLocation(loc, { source: 'bootstrap' });
   }
 
   function bindLocationSync(applyFn) {
@@ -293,6 +309,8 @@
     buildLocationUrl: buildLocationUrl,
     rewriteInternalHref: rewriteInternalHref,
     isDallasPath: isDallasPath,
+    locationFromPageKey: locationFromPageKey,
+    setPreferredLocation: setPreferredLocation,
     bootstrap: bootstrap,
     bindLocationSync: bindLocationSync,
     setupHoustonOnlyPage: setupHoustonOnlyPage

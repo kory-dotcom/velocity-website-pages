@@ -10,6 +10,7 @@ Source: internal team answers. Use this as the single source of truth for Dallas
 | Email | `dtxinfo@velocitysimlounge.com` |
 | Located in | The Hill |
 | Address | 9830 N Central Expy #400, Dallas, TX 75231 |
+| Google Maps | https://maps.app.goo.gl/teXX8C3U46jsjQNk6 |
 | Hours | Mon–Thu 12PM–11PM · Fri 12PM–12AM · Sat 11AM–12AM · Sun 11AM–12AM |
 | Venue | Largest simulation racing entertainment destination in Texas |
 | Size | Over 10,000 sqft, 400 guest occupancy |

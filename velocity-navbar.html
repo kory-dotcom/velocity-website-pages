@@ -21,11 +21,13 @@ if (!window.VSL_LOCATION) {
   function buildLocationUrl(loc, slug) { loc = normalize(loc); slug = slug || getPageSlug(); if (loc === 'dallas' && DALLAS_PAGES.indexOf(slug) === -1) slug = 'home'; if (loc === 'houston' && slug === 'home') return SITE_ORIGIN + '/'; if (loc === 'dallas' && slug === 'home') return DALLAS_PAGE; var prefix = loc === 'dallas' ? '/dallas' : ''; return SITE_ORIGIN + prefix + '/' + slug + '/'; }
   function isDallasPath() { return readFromPath() === 'dallas' || readFromStagingPageKey() === 'dallas'; }
   function rewriteInternalHref(href, loc) { if (!href || href.charAt(0) === '#') return href; if (/^(mailto:|tel:|javascript:)/i.test(href)) return href; loc = normalize(loc || readLocation()); try { var u = new URL(href, global.location.href); var isSite = u.hostname === 'velocitysimlounge.com' || u.hostname === 'www.velocitysimlounge.com'; if (!isSite) return href; var path = normalizePathname(u.pathname); var slug = INTERNAL_PATH_SLUGS[path]; if (!slug && /^\/dallas\/([^/]+)\/?$/.test(path)) slug = path.replace(/^\/dallas\//, '').replace(/\/$/, ''); if (!slug && (path === '/dallas/' || path === '/dallas')) slug = 'home'; if (!slug && path === '/') slug = 'home'; if (!slug) return href; if (HOUSTON_ONLY_SLUGS[slug]) return href; if (loc === 'dallas') { if (slug === 'home') return DALLAS_PAGE + u.hash; return SITE_ORIGIN + '/dallas/' + slug + '/' + u.hash; } if (slug === 'home') return SITE_ORIGIN + '/' + u.hash; return SITE_ORIGIN + '/' + slug + '/' + u.hash; } catch (_) { return href; } }
-  function bootstrap() { var fromUrl = readFromUrlParam(); var fromPath = readFromPath() || readFromStagingPageKey(); var loc = fromPath || fromUrl; if (!loc) return; try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {} try { global.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: loc } })); } catch (_) {} }
+  function locationFromPageKey(pageKey) { pageKey = String(pageKey || 'home'); if (pageKey.indexOf('dallas-') === 0 || pageKey === 'dallas-home') return 'dallas'; return 'houston'; }
+  function setPreferredLocation(loc, options) { loc = normalize(loc); options = options || {}; try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {} if (options.skipEvent) return loc; try { global.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: loc, source: options.source || 'setPreferredLocation' } })); } catch (_) {} return loc; }
+  function bootstrap() { var fromUrl = readFromUrlParam(); var fromPath = readFromPath() || readFromStagingPageKey(); var loc = fromPath || fromUrl; if (!loc) return; setPreferredLocation(loc, { source: 'bootstrap' }); }
   function bindLocationSync(applyFn) { if (typeof applyFn !== 'function') return; applyFn(readLocation()); if (bindLocationSync._bound) return; bindLocationSync._bound = true; global.addEventListener('storage', function (e) { if (e.key === STORAGE_KEY && e.newValue) applyFn(normalize(e.newValue)); }); global.addEventListener('_vslLocationChanged', function (e) { if (e.detail && e.detail.location) applyFn(normalize(e.detail.location)); }); }
   function injectStyles() { if (global.document.getElementById('vsl-location-styles')) return; var style = global.document.createElement('style'); style.id = 'vsl-location-styles'; style.textContent = '.vsl-dallas-soon[hidden]{display:none!important}'; global.document.head.appendChild(style); }
   function setupHoustonOnlyPage(root, options) { if (!root) return; options = options || {}; injectStyles(); var houstonSelector = options.houstonSelector || '[data-vsl-houston-only]'; var dallasSelector = options.dallasSelector || '[data-vsl-dallas-soon]'; var dallasEl = root.querySelector(dallasSelector); function apply(loc) { var isDallas = loc === 'dallas'; root.classList.toggle('vsl-loc--dallas', isDallas); root.querySelectorAll(houstonSelector).forEach(function (el) { el.hidden = isDallas; }); if (dallasEl) dallasEl.hidden = !isDallas; } bindLocationSync(apply); }
-  global.VSL_LOCATION = { STORAGE_KEY: STORAGE_KEY, SITE_ORIGIN: SITE_ORIGIN, DALLAS_PAGE: DALLAS_PAGE, DALLAS_PAGES: DALLAS_PAGES, normalize: normalize, readFromPath: readFromPath, readLocation: readLocation, getPageSlug: getPageSlug, getLocationPrefix: getLocationPrefix, buildLocationUrl: buildLocationUrl, rewriteInternalHref: rewriteInternalHref, isDallasPath: isDallasPath, bootstrap: bootstrap, bindLocationSync: bindLocationSync, setupHoustonOnlyPage: setupHoustonOnlyPage };
+  global.VSL_LOCATION = { STORAGE_KEY: STORAGE_KEY, SITE_ORIGIN: SITE_ORIGIN, DALLAS_PAGE: DALLAS_PAGE, DALLAS_PAGES: DALLAS_PAGES, normalize: normalize, readFromPath: readFromPath, readLocation: readLocation, getPageSlug: getPageSlug, getLocationPrefix: getLocationPrefix, buildLocationUrl: buildLocationUrl, rewriteInternalHref: rewriteInternalHref, isDallasPath: isDallasPath, locationFromPageKey: locationFromPageKey, setPreferredLocation: setPreferredLocation, bootstrap: bootstrap, bindLocationSync: bindLocationSync, setupHoustonOnlyPage: setupHoustonOnlyPage };
   global.vslReadLocation = readLocation;
   global.vslBootstrapLocationFromUrl = bootstrap;
   injectStyles();
@@ -147,6 +149,7 @@ if (!window.VSL_LOCATION) {
   padding: 0 calc(48px * var(--vsl-ui-scale)) 0 calc(24px * var(--vsl-ui-scale));
   background: var(--vsl-bar-bg);
   border-bottom: 1px solid var(--vsl-bar-border);
+  overflow: visible;
 }
 .vsl-navbar__logo {
   flex-shrink: 0;
@@ -282,7 +285,301 @@ if (!window.VSL_LOCATION) {
   color: var(--text-muted);
   margin-top: calc(2px * var(--vsl-ui-scale));
 }
-/* ── Book Now CTA (unified pill: location | book) ── */
+/* ── Navbar actions: location pill + Book Now ── */
+.vsl-navbar__actions {
+  position: relative;
+  flex-shrink: 0;
+  margin-left: calc(16px * var(--vsl-ui-scale));
+  display: flex;
+  align-items: stretch;
+  gap: calc(10px * var(--vsl-ui-scale));
+  overflow: visible;
+}
+.vsl-navbar__loc-wrap {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+}
+.vsl-navbar__loc-wrap--open {
+  z-index: calc(var(--z-overlay) + 1);
+}
+.vsl-navbar__loc-pill {
+  display: flex;
+  align-items: center;
+  gap: calc(10px * var(--vsl-ui-scale));
+  padding: calc(8px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  min-height: calc(44px * var(--vsl-ui-scale));
+  width: 100%;
+  background: rgba(41, 56, 147, 0.35);
+  border: 1px solid rgba(234, 234, 234, 0.14);
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  color: #fff;
+  position: relative;
+  z-index: 2;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, border-radius 0.2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__loc-pill:hover,
+  .vsl-navbar__loc-pill:focus-visible {
+    background: rgba(41, 56, 147, 0.5);
+    border-color: rgba(234, 234, 234, 0.22);
+  }
+  .vsl-navbar__loc-pill:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28);
+  }
+}
+.vsl-navbar__loc-wrap--open .vsl-navbar__loc-pill {
+  background: rgba(41, 56, 147, 0.55);
+  border-color: rgba(234, 234, 234, 0.24);
+  box-shadow: 0 calc(4px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.28);
+}
+.vsl-navbar__loc-pill-pin {
+  width: calc(18px * var(--vsl-ui-scale));
+  height: calc(18px * var(--vsl-ui-scale));
+  fill: var(--yellow);
+  flex-shrink: 0;
+}
+.vsl-navbar__loc-pill-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(2px * var(--vsl-ui-scale));
+  min-width: 0;
+}
+.vsl-navbar__loc-pill-city {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(14px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.vsl-navbar__loc-pill-hours {
+  font-family: var(--font-body);
+  font-size: calc(11px * var(--vsl-ui-scale));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(234, 234, 234, 0.82);
+  white-space: nowrap;
+}
+.vsl-navbar__loc-pill-chevron {
+  width: calc(12px * var(--vsl-ui-scale));
+  height: calc(12px * var(--vsl-ui-scale));
+  flex-shrink: 0;
+  stroke: var(--yellow);
+  transition: transform 0.25s ease;
+}
+.vsl-navbar__loc-wrap--open .vsl-navbar__loc-pill-chevron {
+  transform: rotate(180deg);
+}
+.vsl-navbar__loc-panel {
+  position: absolute;
+  top: calc(100% + (8px * var(--vsl-ui-scale)));
+  left: 50%;
+  right: auto;
+  width: calc(320px * var(--vsl-ui-scale));
+  min-width: 100%;
+  background: var(--navy-deep);
+  border: 1px solid rgba(104, 124, 238, 0.22);
+  border-radius: calc(10px * var(--vsl-ui-scale));
+  box-shadow:
+    0 calc(16px * var(--vsl-ui-scale)) calc(40px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.42),
+    0 calc(2px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.18);
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, calc(-6px * var(--vsl-ui-scale)));
+  transition: opacity 0.24s ease, transform 0.24s ease, visibility 0.24s ease;
+  overflow: hidden;
+  z-index: 1;
+}
+.vsl-navbar__loc-wrap--open .vsl-navbar__loc-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+.vsl-navbar__loc-panel-footer {
+  padding: calc(14px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale));
+  border-top: 1px solid rgba(234,234,234,0.08);
+  background: rgba(0, 0, 0, 0.12);
+}
+.vsl-navbar__loc-change {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8px * var(--vsl-ui-scale));
+  width: 100%;
+  padding: calc(11px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(12px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.vsl-navbar__loc-change svg {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+.vsl-navbar__loc-change:hover,
+.vsl-navbar__loc-change:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #fff;
+}
+.vsl-navbar__loc-panel-view[hidden] {
+  display: none !important;
+}
+.vsl-navbar__loc-panel-view--switcher {
+  position: relative;
+  padding: calc(18px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-panel-view--switcher::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(20px * var(--vsl-ui-scale));
+  right: calc(20px * var(--vsl-ui-scale));
+  height: 3px;
+  background: linear-gradient(90deg, #D22026 0%, #EE265F 100%);
+  border-radius: 0 0 2px 2px;
+}
+.vsl-navbar__loc-switcher-back {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(4px * var(--vsl-ui-scale));
+  margin: 0 0 calc(10px * var(--vsl-ui-scale));
+  padding: 0;
+  border: none;
+  background: none;
+  color: rgba(178, 174, 191, 0.95);
+  font-family: var(--font-body);
+  font-size: calc(12px * var(--vsl-ui-scale));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.vsl-navbar__loc-switcher-back[hidden] {
+  display: none !important;
+}
+.vsl-navbar__loc-switcher-back svg {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: currentColor;
+  flex-shrink: 0;
+}
+.vsl-navbar__loc-switcher-back:hover,
+.vsl-navbar__loc-switcher-back:focus-visible {
+  color: #fff;
+}
+.vsl-navbar__loc-switcher-heading {
+  display: flex;
+  align-items: center;
+  gap: calc(10px * var(--vsl-ui-scale));
+  margin: calc(4px * var(--vsl-ui-scale)) 0 calc(8px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-switcher-pin {
+  width: calc(24px * var(--vsl-ui-scale));
+  height: calc(24px * var(--vsl-ui-scale));
+  fill: #EE265F;
+  flex-shrink: 0;
+}
+.vsl-navbar__loc-switcher-title {
+  margin: 0;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(20px * var(--vsl-ui-scale));
+  font-style: italic;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.15;
+}
+.vsl-navbar__loc-switcher-text {
+  margin: 0 0 calc(16px * var(--vsl-ui-scale));
+  color: rgba(178, 174, 191, 0.95);
+  font-family: var(--font-body);
+  font-size: calc(13px * var(--vsl-ui-scale));
+  line-height: 1.5;
+}
+.vsl-navbar__loc-switcher-picks {
+  display: flex;
+  gap: calc(10px * var(--vsl-ui-scale));
+}
+.vsl-navbar__loc-switcher-pick {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid rgba(104, 124, 238, 0.4);
+  background: rgba(41, 56, 147, 0.28);
+  color: #fff;
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  padding: calc(14px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-size: calc(15px * var(--vsl-ui-scale));
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.vsl-navbar__loc-switcher-pick.is-current {
+  border-color: rgba(238, 38, 95, 0.7);
+  background: rgba(210, 32, 38, 0.28);
+  box-shadow: 0 0 12px rgba(210, 32, 38, 0.15);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__loc-switcher-pick:not(.is-current):hover,
+  .vsl-navbar__loc-switcher-pick:not(.is-current):focus-visible {
+    border-color: rgba(238, 38, 95, 0.55);
+    background: rgba(210, 32, 38, 0.18);
+  }
+}
+.vsl-navbar__loc-switcher-dismiss {
+  display: inline-block;
+  margin-top: calc(14px * var(--vsl-ui-scale));
+  border: none;
+  background: none;
+  color: rgba(178, 174, 191, 0.85);
+  font-family: var(--font-body);
+  font-size: calc(12px * var(--vsl-ui-scale));
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.vsl-navbar__loc-switcher-dismiss[hidden] {
+  display: none !important;
+}
+.vsl-navbar__loc-switcher-dismiss:hover,
+.vsl-navbar__loc-switcher-dismiss:focus-visible {
+  color: #fff;
+}
+.vsl-navbar__cta--solo {
+  border-radius: calc(6px * var(--vsl-ui-scale));
+}
+/* Legacy aliases kept for older CSS references */
 .vsl-navbar__cta-wrap {
   position: relative;
   flex-shrink: 0;
@@ -437,23 +734,28 @@ if (!window.VSL_LOCATION) {
 }
 .vsl-navbar__loc-detail {
   display: none;
-  padding: calc(16px * var(--vsl-ui-scale));
+  padding: calc(18px * var(--vsl-ui-scale)) calc(20px * var(--vsl-ui-scale)) calc(16px * var(--vsl-ui-scale));
 }
 .vsl-navbar__loc-detail.is-active { display: block; }
 .vsl-navbar__loc-detail-header {
   display: flex;
-  align-items: baseline;
-  gap: calc(10px * var(--vsl-ui-scale));
-  margin-bottom: calc(6px * var(--vsl-ui-scale));
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(4px * var(--vsl-ui-scale));
+  width: 100%;
+  margin-bottom: calc(12px * var(--vsl-ui-scale));
+  padding-bottom: calc(12px * var(--vsl-ui-scale));
+  border-bottom: 1px solid rgba(234, 234, 234, 0.1);
 }
 .vsl-navbar__loc-detail-name {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: calc(20px * var(--vsl-ui-scale));
+  font-size: calc(22px * var(--vsl-ui-scale));
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #fff;
+  line-height: 1.05;
 }
 .vsl-navbar__loc-detail-hours {
   font-family: var(--font-body);
@@ -465,61 +767,61 @@ if (!window.VSL_LOCATION) {
 }
 .vsl-navbar__loc-detail-venue {
   font-family: var(--font-body);
-  font-size: calc(11px * var(--vsl-ui-scale));
+  font-size: calc(12px * var(--vsl-ui-scale));
   color: var(--yellow);
   font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-transform: none;
   white-space: nowrap;
 }
 .vsl-navbar__loc-detail-hours-list {
   list-style: none;
-  margin: 0 0 calc(10px * var(--vsl-ui-scale));
-  padding: calc(8px * var(--vsl-ui-scale)) 0 calc(2px * var(--vsl-ui-scale));
-  /* Parent grid sets the shared day + hours columns; each <li> uses subgrid so day labels
-     stay aligned across rows AND each row is a real box that can be highlighted.
-     Both columns are sized to content so the highlight pill only wraps the text,
-     not the full popover width. */
-  display: grid;
-  grid-template-columns: max-content max-content;
-  justify-content: start;
-  row-gap: calc(2px * var(--vsl-ui-scale));
-  border-top: 1px solid rgba(234,234,234,0.06);
+  width: 100%;
+  margin: 0 0 calc(14px * var(--vsl-ui-scale));
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(4px * var(--vsl-ui-scale));
 }
 .vsl-navbar__loc-detail-hours-list li {
   display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  column-gap: calc(12px * var(--vsl-ui-scale));
-  align-items: baseline;
-  padding: calc(4px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale));
-  margin: 0 calc(-8px * var(--vsl-ui-scale));
-  border-radius: 999px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: calc(16px * var(--vsl-ui-scale));
+  width: 100%;
+  padding: calc(7px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  margin: 0;
+  border-radius: calc(6px * var(--vsl-ui-scale));
   font-family: var(--font-body);
-  font-size: calc(11px * var(--vsl-ui-scale));
+  font-size: calc(12px * var(--vsl-ui-scale));
   color: rgba(234,234,234,0.85);
   letter-spacing: 0.02em;
-  white-space: nowrap;
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
 .vsl-navbar__loc-detail-hours-list .vsl-day {
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: calc(11px * var(--vsl-ui-scale));
+  font-size: calc(12px * var(--vsl-ui-scale));
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--yellow);
+  min-width: 0;
 }
 .vsl-navbar__loc-detail-hours-list .vsl-time {
   font-weight: 600;
   color: #fff;
+  text-align: right;
+  white-space: nowrap;
 }
 .vsl-navbar__loc-detail-hours-list .vsl-time--closed {
   color: rgba(234,234,234,0.55);
   font-style: italic;
   font-weight: 500;
   letter-spacing: 0.04em;
+  white-space: normal;
+  text-align: right;
+  max-width: calc(9.5rem * var(--vsl-ui-scale));
 }
 /* Today highlight: full row pill (day + hours share one box). Set by JS based on America/Chicago weekday. */
 .vsl-navbar__loc-detail-hours-list li.is-today {
@@ -539,78 +841,112 @@ if (!window.VSL_LOCATION) {
   text-shadow: none;
   font-style: italic;
 }
-/* Address + phone share one row to better use the popover width.
-   Wraps gracefully on narrow screens (phone drops below address). */
+/* Address, phone, and email — body font, no full-width underline bars. */
 .vsl-navbar__loc-detail-contact {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: flex-start;
-  gap: calc(6px * var(--vsl-ui-scale)) calc(16px * var(--vsl-ui-scale));
-  margin-bottom: calc(12px * var(--vsl-ui-scale));
+  gap: calc(8px * var(--vsl-ui-scale));
+  width: 100%;
+  margin-bottom: calc(14px * var(--vsl-ui-scale));
+  padding-bottom: calc(14px * var(--vsl-ui-scale));
+  border-bottom: 1px solid rgba(234, 234, 234, 0.08);
 }
 .vsl-navbar__loc-detail-address {
-  display: inline-block;
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: calc(14px * var(--vsl-ui-scale));
-  line-height: 1.4;
-  color: #fff;
-  text-decoration: underline;
-  text-decoration-color: var(--magenta);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-  text-decoration-skip-ink: none;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  display: block;
+  width: 100%;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: calc(13px * var(--vsl-ui-scale));
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: rgba(234, 234, 234, 0.92);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 a.vsl-navbar__loc-detail-address:hover,
 a.vsl-navbar__loc-detail-address:focus-visible {
-  color: var(--magenta);
-}
-.vsl-navbar__loc-detail-phone {
-  display: inline-block;
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: calc(14px * var(--vsl-ui-scale));
   color: #fff;
-  text-decoration: none;
-  border-bottom: 2px solid var(--magenta);
-  padding-bottom: 1px;
-  transition: color 0.2s ease;
 }
-.vsl-navbar__loc-detail-phone:hover { color: var(--magenta); }
+.vsl-navbar__loc-detail-phone,
 .vsl-navbar__loc-detail-email {
   display: inline-block;
-  font-family: var(--font-head);
-  font-weight: 700;
+  width: fit-content;
+  max-width: 100%;
+  font-family: var(--font-body);
+  font-weight: 600;
   font-size: calc(13px * var(--vsl-ui-scale));
+  line-height: 1.4;
+  letter-spacing: 0.01em;
   color: #fff;
   text-decoration: none;
-  border-bottom: 2px solid var(--magenta);
-  padding-bottom: 1px;
+  border-bottom: none;
+  padding-bottom: 0;
+  word-break: break-word;
   transition: color 0.2s ease;
 }
-.vsl-navbar__loc-detail-email:hover { color: var(--magenta); }
+.vsl-navbar__loc-detail-phone:hover,
+.vsl-navbar__loc-detail-email:hover {
+  color: var(--yellow);
+}
 .vsl-navbar__loc-detail-links {
-  display: flex;
-  flex-direction: column;
-  gap: calc(6px * var(--vsl-ui-scale));
-  margin-bottom: calc(12px * var(--vsl-ui-scale));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(10px * var(--vsl-ui-scale));
+  width: 100%;
+  margin-bottom: 0;
 }
 .vsl-navbar__loc-detail-action {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: calc(8px * var(--vsl-ui-scale));
+  min-height: calc(36px * var(--vsl-ui-scale));
+  padding: calc(8px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
   font-family: var(--font-head);
   font-weight: 600;
+  font-size: calc(11px * var(--vsl-ui-scale));
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--light);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(234, 234, 234, 0.1);
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.vsl-navbar__loc-detail-action:hover {
+  color: #fff;
+  background: rgba(41, 56, 147, 0.35);
+  border-color: rgba(234, 234, 234, 0.18);
+}
+.vsl-navbar__loc-detail-visit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: calc(10px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
   font-size: calc(12px * var(--vsl-ui-scale));
   font-style: italic;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--light);
-  text-decoration: none;
-  transition: color 0.2s ease;
+  color: #10182B;
+  background: var(--yellow);
+  border: none;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
-.vsl-navbar__loc-detail-action:hover { color: var(--magenta); }
+.vsl-navbar__loc-detail-visit:hover,
+.vsl-navbar__loc-detail-visit:focus-visible {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+.vsl-navbar__loc-detail-visit[hidden] { display: none !important; }
 .vsl-navbar__loc-detail-action svg {
   width: calc(14px * var(--vsl-ui-scale));
   height: calc(14px * var(--vsl-ui-scale));
@@ -661,6 +997,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   border-color: rgba(210,32,38,0.5);
   color: #fff;
   box-shadow: 0 0 8px rgba(210,32,38,0.2);
+}
+.vsl-navbar__loc-detail-switch-btn.is-just-selected {
+  animation: vsl-loc-tab-flash 0.55s ease;
+}
+@keyframes vsl-loc-tab-flash {
+  0% { box-shadow: 0 0 0 0 rgba(253,199,12,0.55); }
+  45% { box-shadow: 0 0 0 4px rgba(253,199,12,0.35); }
+  100% { box-shadow: 0 0 8px rgba(210,32,38,0.2); }
 }
 .vsl-navbar__loc-detail-switch-btn svg {
   width: calc(13px * var(--vsl-ui-scale));
@@ -1841,6 +2185,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   box-shadow: 0 calc(6px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)) rgba(0,0,0,0.45);
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
+  overflow: visible;
 }
 .vsl-navbar__sticky.is-visible {
   transform: translateX(-50%) translateY(0);
@@ -1925,6 +2270,93 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   fill: currentColor;
   flex-shrink: 0;
   opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+.vsl-navbar__sticky-loc-wrap {
+  position: relative;
+  display: flex;
+  align-self: stretch;
+}
+.vsl-navbar__sticky-loc-wrap--open {
+  z-index: 2;
+}
+.vsl-navbar__sticky-loc-wrap--open .vsl-navbar__sticky-loc-arrow {
+  transform: rotate(180deg);
+}
+.vsl-navbar__sticky-loc-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: calc(196px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  background: linear-gradient(168deg, #1c2054 0%, #131638 55%, #0e1030 100%);
+  border: 1px solid rgba(104, 124, 238, 0.32);
+  border-radius: calc(10px * var(--vsl-ui-scale));
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  z-index: 10;
+}
+.vsl-navbar__sticky-loc-menu[hidden] {
+  display: none !important;
+}
+.vsl-navbar__sticky-loc-menu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: linear-gradient(90deg, #D22026 0%, #EE265F 100%);
+  border-radius: 0 0 2px 2px;
+}
+.vsl-navbar__sticky-loc-menu-label {
+  margin: 0 0 calc(8px * var(--vsl-ui-scale));
+  padding-top: calc(4px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-size: calc(10px * var(--vsl-ui-scale));
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(178, 174, 191, 0.9);
+}
+.vsl-navbar__sticky-loc-picks {
+  display: flex;
+  gap: calc(6px * var(--vsl-ui-scale));
+}
+.vsl-navbar__sticky-loc-pick {
+  flex: 1 1 0;
+  min-width: 0;
+  border: 1px solid rgba(104, 124, 238, 0.4);
+  background: rgba(41, 56, 147, 0.28);
+  color: #fff;
+  border-radius: calc(6px * var(--vsl-ui-scale));
+  padding: calc(10px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-size: calc(13px * var(--vsl-ui-scale));
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.vsl-navbar__sticky-loc-pick.is-current {
+  border-color: rgba(238, 38, 95, 0.7);
+  background: rgba(210, 32, 38, 0.28);
+  box-shadow: 0 0 12px rgba(210, 32, 38, 0.15);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__sticky-loc-pick:not(.is-current):hover,
+  .vsl-navbar__sticky-loc-pick:not(.is-current):focus-visible {
+    border-color: rgba(238, 38, 95, 0.55);
+    background: rgba(210, 32, 38, 0.18);
+  }
+  .vsl-navbar__sticky-loc-pick:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.28);
+  }
 }
 .vsl-navbar__sticky-cta {
   display: flex;
@@ -1969,7 +2401,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 @media (max-width: 900px) {
   .vsl-navbar { --vsl-ui-scale: 1; }
   .vsl-navbar__menu,
-  .vsl-navbar__cta-wrap,
+  .vsl-navbar__actions,
   .vsl-navbar__mega { display: none !important; }
   .vsl-navbar__toggle { display: flex; }
   .vsl-navbar__bar { padding: 0 calc(20px * var(--vsl-ui-scale)); }
@@ -2045,78 +2477,98 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         </button>
       </li>
     </ul>
-    <div class="vsl-navbar__cta-wrap" data-cta-dropdown>
-      <button type="button" class="vsl-navbar__cta-loc" data-cta-change aria-haspopup="true" aria-expanded="false" aria-controls="vsl-book-now-locations">
-        <svg class="vsl-navbar__cta-loc-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-        <span class="vsl-navbar__cta-loc-name" data-book-now-location>Houston</span>
-        <svg class="vsl-navbar__cta-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__cta" data-book-now-primary>Book Now</a>
-      <div id="vsl-book-now-locations" class="vsl-navbar__cta-dropdown">
-        <div class="vsl-navbar__loc-detail-switch">
-          <button type="button" class="vsl-navbar__loc-detail-switch-btn is-current" data-location-option="houston">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-            Houston
-          </button>
-          <button type="button" class="vsl-navbar__loc-detail-switch-btn" data-location-option="dallas">
-            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-            Dallas
-          </button>
-        </div>
-        <div class="vsl-navbar__loc-detail is-active" data-loc-detail="houston">
-          <div class="vsl-navbar__loc-detail-header">
-            <span class="vsl-navbar__loc-detail-name">Houston</span>
+    <div class="vsl-navbar__actions">
+      <div class="vsl-navbar__loc-wrap" data-loc-dropdown>
+        <button type="button" class="vsl-navbar__loc-pill" data-loc-pill-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-loc-info-panel">
+          <svg class="vsl-navbar__loc-pill-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+          <span class="vsl-navbar__loc-pill-body">
+            <span class="vsl-navbar__loc-pill-city" data-book-now-location>Houston</span>
+            <span class="vsl-navbar__loc-pill-hours" data-loc-pill-hours>Thu: 2PM – 11PM</span>
+          </span>
+          <svg class="vsl-navbar__loc-pill-chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="vsl-loc-info-panel" class="vsl-navbar__loc-panel">
+          <div class="vsl-navbar__loc-panel-view" data-loc-panel-view="details">
+          <div class="vsl-navbar__loc-detail is-active" data-loc-detail="houston">
+            <div class="vsl-navbar__loc-detail-header">
+              <span class="vsl-navbar__loc-detail-name">Houston</span>
+              <span class="vsl-navbar__loc-detail-venue">(Sawyer Yards)</span>
+            </div>
+            <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Houston hours">
+              <li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM – 11PM</span></li>
+              <li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
+              <li data-day="Wed,Thu"><span class="vsl-day">Wed – Thu</span><span class="vsl-time">2PM – 11PM</span></li>
+              <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
+              <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
+              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
+            </ul>
+            <div class="vsl-navbar__loc-detail-contact">
+              <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 2110 Edwards St, Houston in Google Maps">2110 Edwards St<br>Houston, TX 77007</a>
+              <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
+            </div>
+            <div class="vsl-navbar__loc-detail-links">
+              <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                Get Directions
+              </a>
+              <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__loc-detail-action">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                Location Info
+              </a>
+            </div>
           </div>
-          <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Houston hours">
-            <li data-day="Mon"><span class="vsl-day">Mon</span><span class="vsl-time">2PM – 11PM</span></li>
-            <li data-day="Tue"><span class="vsl-day">Tue</span><span class="vsl-time vsl-time--closed">Private events only</span></li>
-            <li data-day="Wed,Thu"><span class="vsl-day">Wed – Thu</span><span class="vsl-time">2PM – 11PM</span></li>
-            <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
-            <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
-            <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
-          </ul>
-          <div class="vsl-navbar__loc-detail-contact">
-            <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 2110 Edwards St, Houston in Google Maps">2110 Edwards St<br>Houston, TX 77007</a>
-            <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
+          <div class="vsl-navbar__loc-detail" data-loc-detail="dallas">
+            <div class="vsl-navbar__loc-detail-header">
+              <span class="vsl-navbar__loc-detail-name">Dallas</span>
+              <span class="vsl-navbar__loc-detail-venue">(The Hill)</span>
+            </div>
+            <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Dallas hours">
+              <li data-day="Mon,Thu"><span class="vsl-day">Mon – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
+              <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
+              <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
+              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 12AM</span></li>
+            </ul>
+            <div class="vsl-navbar__loc-detail-contact">
+              <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 9830 N Central Expy #400, Dallas in Google Maps">9830 N Central Expy #400<br>Dallas, TX 75231</a>
+              <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
+            </div>
+            <div class="vsl-navbar__loc-detail-links">
+              <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                Get Directions
+              </a>
+              <a href="https://velocitysimlounge.com/dallas/contact/" class="vsl-navbar__loc-detail-action">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                Location Info
+              </a>
+            </div>
           </div>
-          <div class="vsl-navbar__loc-detail-links">
-            <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
-              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-              Get Directions
-            </a>
-            <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__loc-detail-action">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-              Location Info
-            </a>
+          <div class="vsl-navbar__loc-panel-footer">
+            <button type="button" class="vsl-navbar__loc-change" data-loc-change-open>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Change Location
+            </button>
           </div>
-        </div>
-        <div class="vsl-navbar__loc-detail" data-loc-detail="dallas">
-          <div class="vsl-navbar__loc-detail-header">
-            <span class="vsl-navbar__loc-detail-name">Dallas</span>
-            <span class="vsl-navbar__loc-detail-venue">The Hill</span>
           </div>
-          <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Dallas hours">
-            <li data-day="Mon,Thu"><span class="vsl-day">Mon – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
-            <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
-            <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
-            <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 12AM</span></li>
-          </ul>
-          <div class="vsl-navbar__loc-detail-contact">
-            <a href="https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 9830 N Central Expy #400, Dallas in Google Maps">9830 N Central Expy #400<br>The Hill · Dallas, TX 75231</a>
-            <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
-          </div>
-          <div class="vsl-navbar__loc-detail-links">
-            <a href="https://maps.google.com/?q=9830+N+Central+Expy+%23400,+Dallas,+TX+75231" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
-              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-              Get Directions
-            </a>
-            <a href="https://velocitysimlounge.com/dallas/contact/" class="vsl-navbar__loc-detail-action">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-              Location Info
-            </a>
+          <div class="vsl-navbar__loc-panel-view vsl-navbar__loc-panel-view--switcher" data-loc-panel-view="switcher" hidden>
+            <button type="button" class="vsl-navbar__loc-switcher-back" data-loc-switcher-back>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+              Back to location info
+            </button>
+            <div class="vsl-navbar__loc-switcher-heading">
+              <svg class="vsl-navbar__loc-switcher-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+              <h3 class="vsl-navbar__loc-switcher-title" data-loc-switcher-title>Change your lounge</h3>
+            </div>
+            <p class="vsl-navbar__loc-switcher-text" data-loc-switcher-text>Choose the lounge you&rsquo;d like to visit.</p>
+            <div class="vsl-navbar__loc-switcher-picks" role="group" aria-label="Select city">
+              <button type="button" class="vsl-navbar__loc-switcher-pick" data-location-pick="houston">Houston</button>
+              <button type="button" class="vsl-navbar__loc-switcher-pick" data-location-pick="dallas">Dallas</button>
+            </div>
+            <button type="button" class="vsl-navbar__loc-switcher-dismiss" data-loc-switcher-dismiss hidden>Skip for now</button>
           </div>
         </div>
       </div>
+      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__cta vsl-navbar__cta--solo" data-book-now-primary>Book Now</a>
     </div>
     <button class="vsl-navbar__toggle" aria-label="Open menu" aria-expanded="false">
       <span class="vsl-navbar__toggle-line"></span>
@@ -2131,11 +2583,20 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       <img src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png" alt="Velocity Sim Racing Lounge" width="160" height="34" loading="eager" decoding="async" fetchpriority="high">
     </a>
     <div class="vsl-navbar__sticky-book">
-      <button type="button" class="vsl-navbar__sticky-loc" data-sticky-loc-toggle aria-label="Switch location">
-        <svg class="vsl-navbar__sticky-loc-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-        <span data-sticky-location>Houston</span>
-        <svg class="vsl-navbar__sticky-loc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-      </button>
+      <div class="vsl-navbar__sticky-loc-wrap" data-sticky-loc-dropdown>
+        <button type="button" class="vsl-navbar__sticky-loc" data-sticky-loc-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-sticky-loc-menu" aria-label="Change location">
+          <svg class="vsl-navbar__sticky-loc-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+          <span data-sticky-location>Houston</span>
+          <svg class="vsl-navbar__sticky-loc-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+        </button>
+        <div id="vsl-sticky-loc-menu" class="vsl-navbar__sticky-loc-menu" data-sticky-loc-menu hidden role="menu" aria-label="Switch location">
+          <p class="vsl-navbar__sticky-loc-menu-label">Switch location</p>
+          <div class="vsl-navbar__sticky-loc-picks" role="group" aria-label="Select city">
+            <button type="button" class="vsl-navbar__sticky-loc-pick" data-sticky-loc-pick="houston" role="menuitemradio" aria-checked="false">Houston</button>
+            <button type="button" class="vsl-navbar__sticky-loc-pick" data-sticky-loc-pick="dallas" role="menuitemradio" aria-checked="false">Dallas</button>
+          </div>
+        </div>
+      </div>
       <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__sticky-cta" data-sticky-book-now>Book Now</a>
     </div>
   </div>
@@ -2387,9 +2848,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   window.vslUpdateNavbarActiveLink = updateNavbarActiveLink;
 
   var items = navbar.querySelectorAll('[data-dropdown]');
-  var ctaWrap = navbar.querySelector('[data-cta-dropdown]');
-  var ctaBtn = ctaWrap ? ctaWrap.querySelector('.vsl-navbar__cta') : null;
-  var ctaLocBtn = ctaWrap ? ctaWrap.querySelector('[data-cta-change]') : null;
+  var locWrap = navbar.querySelector('[data-loc-dropdown]');
+  var locPillBtn = locWrap ? locWrap.querySelector('[data-loc-pill-toggle]') : null;
+  var locPillHours = navbar.querySelector('[data-loc-pill-hours]');
   var STORAGE_KEY = 'vslPreferredLocation';
   var SESSION_DISMISS_KEY = 'vslLocationPromptDismissed';
 
@@ -2422,13 +2883,23 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var mobileLocToggle = navbar.querySelector('[data-mobile-loc-toggle]');
   var stickyBookNow = navbar.querySelector('[data-sticky-book-now]');
   var stickyLocation = navbar.querySelector('[data-sticky-location]');
-  var locationLinks = navbar.querySelectorAll('[data-location-option]');
-
+  var stickyLocWrap = navbar.querySelector('[data-sticky-loc-dropdown]');
+  var stickyLocMenu = stickyLocWrap ? stickyLocWrap.querySelector('[data-sticky-loc-menu]') : null;
   var locationBackdrop = navbar.querySelector('[data-location-backdrop]');
   var locationPanel = navbar.querySelector('[data-location-panel]');
+  var locationTitle = navbar.querySelector('#vsl-location-title');
+  var locationText = navbar.querySelector('.vsl-navbar__geo-text');
   var dismissBtn = navbar.querySelector('[data-location-dismiss]');
   var pickButtons = navbar.querySelectorAll('[data-location-pick]');
   var locationOpenButtons = navbar.querySelectorAll('[data-location-open]');
+  var locChangeBtn = navbar.querySelector('[data-loc-change-open]');
+  var locInfoPanel = navbar.querySelector('#vsl-loc-info-panel');
+  var locPanelDetailsView = locInfoPanel ? locInfoPanel.querySelector('[data-loc-panel-view="details"]') : null;
+  var locPanelSwitcherView = locInfoPanel ? locInfoPanel.querySelector('[data-loc-panel-view="switcher"]') : null;
+  var locSwitcherBack = navbar.querySelector('[data-loc-switcher-back]');
+  var locSwitcherTitle = navbar.querySelector('[data-loc-switcher-title]');
+  var locSwitcherText = navbar.querySelector('[data-loc-switcher-text]');
+  var locSwitcherDismiss = navbar.querySelector('[data-loc-switcher-dismiss]');
   var faqNavLinks = navbar.querySelectorAll('a[href*="/contact/#faq"], a[href*="/contact/#FAQ"]');
   var currentLocation = 'houston';
 
@@ -2437,18 +2908,48 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   function markCurrentLocation(key) {
-    locationLinks.forEach(function(link) {
-      var isCurrent = link.getAttribute('data-location-option') === key;
-      link.classList.toggle('is-current', isCurrent);
-      if (isCurrent) {
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.removeAttribute('aria-current');
-      }
-    });
     navbar.querySelectorAll('[data-loc-detail]').forEach(function(panel) {
       panel.classList.toggle('is-active', panel.getAttribute('data-loc-detail') === key);
     });
+    highlightTodayHours();
+  }
+
+  function getChicagoWeekdayShort() {
+    try {
+      return new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', weekday: 'short' })
+        .format(new Date());
+    } catch (_) {
+      return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date().getDay()];
+    }
+  }
+
+  function getTodayHoursSummary(loc) {
+    var panel = navbar.querySelector('[data-loc-detail="' + normalizeLocation(loc) + '"]');
+    if (!panel) return '';
+    var today = getChicagoWeekdayShort();
+    var matchRow = null;
+    panel.querySelectorAll('.vsl-navbar__loc-detail-hours-list li[data-day]').forEach(function(li) {
+      var days = (li.getAttribute('data-day') || '').split(',').map(function(s) { return s.trim(); });
+      if (days.indexOf(today) !== -1) matchRow = li;
+    });
+    if (!matchRow) return '';
+    var dayEl = matchRow.querySelector('.vsl-day');
+    var timeEl = matchRow.querySelector('.vsl-time');
+    var dayLabel = dayEl ? dayEl.textContent.trim() : today;
+    var timeLabel = timeEl ? timeEl.textContent.trim() : '';
+    if (!timeLabel) return dayLabel;
+    if (dayLabel.indexOf('–') !== -1 || dayLabel.indexOf('-') !== -1) {
+      return dayLabel + ': ' + timeLabel;
+    }
+    return dayLabel + ': ' + timeLabel;
+  }
+
+  function updateLocPill(loc) {
+    var config = LOCATIONS[normalizeLocation(loc)] || LOCATIONS.houston;
+    if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
+    if (mobileCtaTitle) mobileCtaTitle.textContent = config.label;
+    if (stickyLocation) stickyLocation.textContent = config.label;
+    if (locPillHours) locPillHours.textContent = getTodayHoursSummary(loc);
   }
 
   function resolveBookingUrl(config, locKey) {
@@ -2458,7 +2959,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     return config.bookingUrl;
   }
 
-  function applyLocation(key) {
+  function applyLocation(key, options) {
+    options = options || {};
     var normalized = normalizeLocation(key);
     var config = LOCATIONS[normalized];
     currentLocation = normalized;
@@ -2471,11 +2973,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
     if (mobileCtaTitle) mobileCtaTitle.textContent = config.label;
     if (mobileLocToggle) {
-      var otherKey = normalized === 'houston' ? 'dallas' : 'houston';
-      var otherLabel = LOCATIONS[otherKey] ? LOCATIONS[otherKey].label : '';
-      if (otherLabel) {
-        mobileLocToggle.setAttribute('aria-label', 'Switch location to ' + otherLabel);
-      }
+      mobileLocToggle.setAttribute('aria-label', 'Change Velocity location');
     }
     if (mobileCtaPrimary) {
       mobileCtaPrimary.href = bookHref;
@@ -2486,12 +2984,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     if (stickyLocation) stickyLocation.textContent = config.label;
 
     markCurrentLocation(normalized);
+    updateLocPill(normalized);
+    syncStickyLocMenu();
+    syncLocSwitcherPicks();
     applyNavLinks(normalized);
     updateNavbarActiveLink();
 
-    try {
-      window.dispatchEvent(new CustomEvent('_vslLocationChanged', { detail: { location: normalized } }));
-    } catch (_) {}
+    if (!options.silent) {
+      try {
+        window.dispatchEvent(new CustomEvent('_vslLocationChanged', {
+          detail: { location: normalized, source: 'navbar-apply' }
+        }));
+      } catch (_) {}
+    }
   }
 
   function persistLocation(key) {
@@ -2642,10 +3147,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
     var dallasLearn = navbar.querySelector('a[href="https://velocitysimlounge.com/dallas"]');
     if (dallasLearn) dallasLearn.setAttribute('href', 'https://velocitysimlounge.com/dallas/');
-    var houstonContactInfo = navbar.querySelector('[data-loc-detail="houston"] a[href*="velocitysimlounge.com/contact"]');
-    if (houstonContactInfo && loc === 'dallas') {
-      houstonContactInfo.setAttribute('href', 'https://velocitysimlounge.com/dallas/contact/');
-    }
   }
 
   function getContactFaqUrl(loc) {
@@ -2661,41 +3162,97 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       : 'https://velocitysimlounge.com/contact/#faq';
   }
 
-  function handleLocationChoice(key, shouldPersist) {
-    var normalized = normalizeLocation(key);
-    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_BUILD_URL === 'function' && window.VSL_LOCATION) {
-      var slug = window.VSL_LOCATION.getPageSlug();
-      var targetUrl = window.VSL_REPLICA_BUILD_URL(normalized, slug);
-      var targetKey = (new URLSearchParams(targetUrl.split('?')[1] || '')).get('p') || 'home';
-      var currentKey = (new URLSearchParams(window.location.search)).get('p') || 'home';
-      if (shouldPersist) persistLocation(normalized);
-      dismissForSession();
-      closeLocationPrompt();
-      if (currentKey !== targetKey) {
-        window.location.href = targetUrl + (window.location.hash || '');
-        return;
-      }
-      applyLocation(normalized);
+  function canUseIntegratedLocSwitcher() {
+    return !isMobileViewport() && !!locWrap && !!locInfoPanel;
+  }
+
+  function syncLocSwitcherPicks() {
+    navbar.querySelectorAll('.vsl-navbar__loc-switcher-pick').forEach(function(btn) {
+      var isCurrent = btn.getAttribute('data-location-pick') === currentLocation;
+      btn.classList.toggle('is-current', isCurrent);
+      btn.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
+    });
+  }
+
+  function showLocPanelDetails() {
+    if (locPanelDetailsView) locPanelDetailsView.hidden = false;
+    if (locPanelSwitcherView) locPanelSwitcherView.hidden = true;
+    if (locInfoPanel) locInfoPanel.classList.remove('vsl-navbar__loc-panel--switcher');
+  }
+
+  function showLocPanelSwitcher(mode) {
+    mode = mode || 'change';
+    if (locSwitcherTitle) {
+      locSwitcherTitle.textContent = mode === 'choose' ? 'Choose your lounge' : 'Change your lounge';
+    }
+    if (locSwitcherText) {
+      locSwitcherText.textContent = mode === 'choose'
+        ? 'Select your nearest Velocity location. Your booking links will update automatically.'
+        : 'Choose the lounge you\u2019d like to visit.';
+    }
+    if (locSwitcherBack) locSwitcherBack.hidden = mode === 'choose';
+    if (locSwitcherDismiss) locSwitcherDismiss.hidden = mode !== 'choose';
+    syncLocSwitcherPicks();
+    if (locPanelDetailsView) locPanelDetailsView.hidden = true;
+    if (locPanelSwitcherView) locPanelSwitcherView.hidden = false;
+    if (locInfoPanel) locInfoPanel.classList.add('vsl-navbar__loc-panel--switcher');
+  }
+
+  function openLocationPicker(mode) {
+    mode = mode || 'choose';
+    if (canUseIntegratedLocSwitcher()) {
+      openLocDropdown();
+      showLocPanelSwitcher(mode);
       return;
     }
+    if (locationTitle) {
+      locationTitle.textContent = mode === 'change' ? 'Change your lounge' : 'Choose your lounge';
+    }
+    if (locationText) {
+      locationText.textContent = mode === 'change'
+        ? 'Choose the lounge you\u2019d like to visit.'
+        : 'Select your nearest Velocity location. Your booking links will update automatically.';
+    }
+    openLocationPrompt();
+  }
+
+  function handleLocationChoice(key, shouldPersist, options) {
+    options = options || {};
+    var normalized = normalizeLocation(key);
+    dismissForSession();
+    closeLocationPrompt();
+    if (options.returnToDetails) {
+      showLocPanelDetails();
+    } else if (!options.keepDropdownOpen) {
+      closeLocDropdown();
+    }
+
+    if (shouldPersist) {
+      if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
+        window.VSL_LOCATION.setPreferredLocation(normalized, { source: 'location-picker' });
+      } else {
+        persistLocation(normalized);
+        applyLocation(normalized);
+      }
+    } else {
+      applyLocation(normalized);
+    }
+
+    if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_SWITCH_LOCATION === 'function') {
+      window.VSL_REPLICA_SWITCH_LOCATION(normalized);
+      return;
+    }
+
     if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
-      var slug = window.VSL_LOCATION.getPageSlug();
-      var targetUrl = window.VSL_LOCATION.buildLocationUrl(normalized, slug);
-      if (shouldPersist) persistLocation(normalized);
-      dismissForSession();
-      closeLocationPrompt();
+      var pageSlug = window.VSL_LOCATION.getPageSlug();
+      var destUrl = window.VSL_LOCATION.buildLocationUrl(normalized, pageSlug);
       try {
-        var targetPath = new URL(targetUrl, window.location.origin).pathname;
+        var targetPath = new URL(destUrl, window.location.origin).pathname;
         if (window.location.pathname !== targetPath) {
-          window.location.href = targetUrl + (window.location.hash || '');
-          return;
+          window.location.href = destUrl + (window.location.hash || '');
         }
       } catch (_) {}
     }
-    applyLocation(normalized);
-    if (shouldPersist) persistLocation(normalized);
-    dismissForSession();
-    closeLocationPrompt();
   }
 
   function closeNavDropdowns() {
@@ -2706,16 +3263,61 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
   }
 
-  function closeCtaDropdown() {
-    if (ctaWrap) {
-      ctaWrap.classList.remove('vsl-navbar__cta-wrap--open');
-      if (ctaLocBtn) {
-        ctaLocBtn.setAttribute('aria-expanded', 'false');
-        // Drop focus so the location pill doesn't keep the highlighted/focus state
-        // after the dropdown closes (Safari/Firefox keep :focus on click).
-        if (typeof ctaLocBtn.blur === 'function') ctaLocBtn.blur();
+  function syncStickyLocMenu() {
+    if (!stickyLocMenu) return;
+    navbar.querySelectorAll('[data-sticky-loc-pick]').forEach(function(btn) {
+      var isCurrent = btn.getAttribute('data-sticky-loc-pick') === currentLocation;
+      btn.classList.toggle('is-current', isCurrent);
+      btn.setAttribute('aria-checked', isCurrent ? 'true' : 'false');
+    });
+  }
+
+  function closeStickyLocMenu() {
+    if (!stickyLocWrap) return;
+    stickyLocWrap.classList.remove('vsl-navbar__sticky-loc-wrap--open');
+    if (stickyLocToggle) stickyLocToggle.setAttribute('aria-expanded', 'false');
+    if (stickyLocMenu) stickyLocMenu.hidden = true;
+  }
+
+  function openStickyLocMenu() {
+    if (!stickyLocWrap || !stickyLocMenu) return;
+    closeLocDropdown();
+    closeLocationPrompt();
+    closeMega();
+    closeNavDropdowns();
+    syncStickyLocMenu();
+    stickyLocWrap.classList.add('vsl-navbar__sticky-loc-wrap--open');
+    if (stickyLocToggle) stickyLocToggle.setAttribute('aria-expanded', 'true');
+    stickyLocMenu.hidden = false;
+  }
+
+  function toggleStickyLocMenu() {
+    if (!stickyLocWrap) return;
+    if (stickyLocWrap.classList.contains('vsl-navbar__sticky-loc-wrap--open')) closeStickyLocMenu();
+    else openStickyLocMenu();
+  }
+
+  function closeLocDropdown() {
+    if (locWrap) {
+      locWrap.classList.remove('vsl-navbar__loc-wrap--open');
+      if (locPillBtn) {
+        locPillBtn.setAttribute('aria-expanded', 'false');
+        if (typeof locPillBtn.blur === 'function') locPillBtn.blur();
       }
     }
+    showLocPanelDetails();
+  }
+
+  function openLocDropdown() {
+    if (!locWrap) return;
+    closeNavDropdowns();
+    closeMega();
+    closeStickyLocMenu();
+    showLocPanelDetails();
+    locWrap.classList.add('vsl-navbar__loc-wrap--open');
+    if (locPillBtn) locPillBtn.setAttribute('aria-expanded', 'true');
+    highlightTodayHours();
+    updateLocPill(currentLocation);
   }
 
   var raceToggle = navbar.querySelector('[data-race-toggle]');
@@ -2824,11 +3426,23 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   if (stickyLocToggle) {
     stickyLocToggle.addEventListener('click', function(e) {
       e.stopPropagation();
-      var next = currentLocation === 'houston' ? 'dallas' : 'houston';
-      handleLocationChoice(next, true);
+      toggleStickyLocMenu();
       if (typeof stickyLocToggle.blur === 'function') stickyLocToggle.blur();
     });
   }
+
+  navbar.querySelectorAll('[data-sticky-loc-pick]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var pick = btn.getAttribute('data-sticky-loc-pick');
+      if (pick === currentLocation) {
+        closeStickyLocMenu();
+        return;
+      }
+      handleLocationChoice(pick, true);
+      closeStickyLocMenu();
+    });
+  });
 
   function closeMega() {
     if (raceToggle) {
@@ -2845,7 +3459,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function openMega() {
     closeNavDropdowns();
-    closeCtaDropdown();
+    closeLocDropdown();
+    closeStickyLocMenu();
     if (raceToggle) {
       raceToggle.classList.add('is-open');
       raceToggle.setAttribute('aria-expanded', 'true');
@@ -2860,18 +3475,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function closeAllDesktop() {
     closeNavDropdowns();
-    closeCtaDropdown();
+    closeLocDropdown();
+    closeStickyLocMenu();
     closeMega();
-  }
-
-  function openCtaDropdown() {
-    if (!ctaWrap) return;
-    closeNavDropdowns();
-    closeMega();
-    ctaWrap.classList.add('vsl-navbar__cta-wrap--open');
-    if (ctaLocBtn) ctaLocBtn.setAttribute('aria-expanded', 'true');
-    // Refresh "today" highlight in case the tab was open across midnight
-    highlightTodayHours();
   }
 
   // Highlight the row for today's day-of-week in every hours list (always America/Chicago,
@@ -2897,6 +3503,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     var ms = Math.max(60 * 1000, next - now);
     setTimeout(function tick() {
       highlightTodayHours();
+      updateLocPill(currentLocation);
       setTimeout(tick, 24 * 60 * 60 * 1000);
     }, ms);
   })();
@@ -2934,7 +3541,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
     item.addEventListener('mouseenter', function() {
       closeMega();
-      closeCtaDropdown();
+      closeLocDropdown();
       closeNavDropdowns();
       item.classList.add('vsl-navbar__item--open');
       if (trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'true');
@@ -2945,25 +3552,38 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
   });
 
-  if (ctaWrap && ctaLocBtn) {
-    ctaLocBtn.addEventListener('click', function(e) {
+  if (locWrap && locPillBtn) {
+    locPillBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var isOpen = ctaWrap.classList.contains('vsl-navbar__cta-wrap--open');
-      if (isOpen) closeCtaDropdown();
-      else openCtaDropdown();
+      var isOpen = locWrap.classList.contains('vsl-navbar__loc-wrap--open');
+      if (isOpen) closeLocDropdown();
+      else openLocDropdown();
     });
   }
 
-  locationLinks.forEach(function(link) {
-    link.addEventListener('click', function(e) {
+  if (locChangeBtn) {
+    locChangeBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var key = link.getAttribute('data-location-option');
-      if (key === currentLocation) return;
-      handleLocationChoice(key, true);
+      showLocPanelSwitcher('change');
     });
-  });
+  }
+
+  if (locSwitcherBack) {
+    locSwitcherBack.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      showLocPanelDetails();
+    });
+  }
+
+  if (locSwitcherDismiss) {
+    locSwitcherDismiss.addEventListener('click', function() {
+      dismissForSession();
+      closeLocDropdown();
+    });
+  }
 
   if (dismissBtn) {
     dismissBtn.addEventListener('click', function() {
@@ -2982,7 +3602,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   locationOpenButtons.forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      openLocationPrompt();
+      openLocationPicker('choose');
     });
   });
 
@@ -2995,7 +3615,12 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         scrollFaqIntoView(0);
       } else {
         try { sessionStorage.setItem('vslScrollTarget', 'faq'); } catch (_) {}
-        window.location.href = faqUrl;
+        if (typeof window.VSL_REPLICA_NAVIGATE === 'function') {
+          var faqKey = currentLocation === 'dallas' ? 'dallas-contact' : 'contact';
+          window.VSL_REPLICA_NAVIGATE(faqKey);
+        } else {
+          window.location.href = faqUrl;
+        }
       }
     });
   });
@@ -3003,15 +3628,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   if (mobileLocToggle) {
     mobileLocToggle.addEventListener('click', function(e) {
       e.stopPropagation();
-      var next = currentLocation === 'houston' ? 'dallas' : 'houston';
-      handleLocationChoice(next, true);
+      closeMobile();
+      openLocationPicker('change');
     });
   }
 
   pickButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
       var selected = btn.getAttribute('data-location-pick');
-      handleLocationChoice(selected, true);
+      var fromIntegrated = locPanelSwitcherView && !locPanelSwitcherView.hidden;
+      handleLocationChoice(selected, true, {
+        returnToDetails: fromIntegrated,
+        keepDropdownOpen: fromIntegrated
+      });
     });
   });
 
@@ -3033,12 +3662,15 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     } else if (!inMega && !inRaceToggle && raceToggle && raceToggle.classList.contains('is-open')) {
       closeMega();
     }
-    if (ctaWrap && !ctaWrap.contains(e.target) && !inMega && !inRaceToggle) {
-      closeCtaDropdown();
+    if (locWrap && !locWrap.contains(e.target) && !inMega && !inRaceToggle) {
+      closeLocDropdown();
       if (locationPanel && !locationPanel.hidden && !inLocationUi) {
         dismissForSession();
         closeLocationPrompt();
       }
+    }
+    if (stickyLocWrap && !stickyLocWrap.contains(e.target) && !inMega && !inRaceToggle) {
+      closeStickyLocMenu();
     }
   });
   document.addEventListener('keydown', function(e) {
@@ -3050,6 +3682,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       if (locationPanel && !locationPanel.hidden) {
         dismissForSession();
         closeLocationPrompt();
+        return;
+      }
+      if (stickyLocWrap && stickyLocWrap.classList.contains('vsl-navbar__sticky-loc-wrap--open')) {
+        closeStickyLocMenu();
+        return;
+      }
+      if (locPanelSwitcherView && !locPanelSwitcherView.hidden) {
+        showLocPanelDetails();
         return;
       }
       closeAllDesktop();
@@ -3083,6 +3723,40 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     if (om) om.classList.remove('vsl-navbar__overlay-menu--sub-open');
     overlay.querySelectorAll('.vsl-navbar__overlay-item--open').forEach(function(el) { el.classList.remove('vsl-navbar__overlay-item--open'); });
   }
+
+  function dismissNavMenusForNavigation() {
+    closeAllDesktop();
+    if (overlay && overlay.classList.contains('vsl-navbar__overlay--open')) {
+      closeMobile();
+    }
+  }
+
+  function bindNavLinkDismiss(scope) {
+    if (!scope) return;
+    scope.querySelectorAll('a[href]').forEach(function(link) {
+      if (link._vslNavDismissBound) return;
+      link._vslNavDismissBound = true;
+      link.addEventListener('click', function() {
+        var href = link.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;
+        dismissNavMenusForNavigation();
+      });
+    });
+  }
+
+  bindNavLinkDismiss(megaPanel);
+  bindNavLinkDismiss(overlay);
+  navbar.querySelectorAll('.vsl-navbar__menu a[href], .vsl-navbar__dropdown a[href]').forEach(function(link) {
+    if (link._vslNavDismissBound) return;
+    link._vslNavDismissBound = true;
+    link.addEventListener('click', function() {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      dismissNavMenusForNavigation();
+    });
+  });
+
+  window.addEventListener('vslReplicaNavigate', dismissNavMenusForNavigation);
   var mobileItems = overlay.querySelectorAll('[data-mobile-dropdown]');
   var overlayMenu = overlay.querySelector('.vsl-navbar__overlay-menu');
   mobileItems.forEach(function(mi) {
@@ -3103,14 +3777,16 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   maybeScrollToFaq();
 
   window.addEventListener('_vslLocationChanged', function(e) {
-    if (e.detail && e.detail.location) applyLocation(e.detail.location);
+    if (!e.detail || !e.detail.location) return;
+    if (e.detail.source === 'navbar-apply') return;
+    applyLocation(e.detail.location, { silent: true });
   });
 
   try {
     var hasStoredLocation = !!localStorage.getItem(STORAGE_KEY);
     if (!hasStoredLocation && !isSessionDismissed() && !isElementorEditorContext()) {
       setTimeout(function() {
-        openLocationPrompt();
+        openLocationPicker('choose');
       }, isMobileViewport() ? 400 : 500);
     }
   } catch (_) {}

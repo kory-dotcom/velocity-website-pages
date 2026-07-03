@@ -215,8 +215,64 @@
   if (pageKey === "spring-bundles") pageKey = "fathers-day";
   var forcedLoc = params.get("loc");
   var revealObserver = null;
+  var moduleCache = Object.create(null);
+  var pageLoadToken = 0;
+  var routerReady = false;
 
   if (!REPLICA_PAGES[pageKey]) pageKey = "home";
+
+  function normalizePageKey(key) {
+    if (!key || key === "spring-bundles") return "fathers-day";
+    return REPLICA_PAGES[key] ? key : "home";
+  }
+
+  function pageKeyFromLocalHref(href) {
+    if (!href || href.charAt(0) === "#") return null;
+    var match = String(href).match(/(?:^|\/)index\.html\?p=([^&#]+)/i);
+    if (!match) return null;
+    return normalizePageKey(decodeURIComponent(match[1]));
+  }
+
+  function finalizeModuleMount(html, moduleKey) {
+    injectModuleHtml(html, moduleKey);
+    executeInlineScripts(pageRoot);
+    applyLocalLinks(pageRoot);
+    notifyReplicaAfterLocalLinks(pageRoot);
+    applySectionReveals(pageRoot);
+    if (typeof window.vslUpdateNavbarActiveLink === "function") {
+      window.vslUpdateNavbarActiveLink();
+    }
+    if (window.VSL_LOCATION && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
+      window.VSL_REPLICA_APPLY_FOOTER_LINKS(window.VSL_LOCATION.readLocation());
+    }
+    if (typeof window.vslUpdateFooterActiveNav === "function") {
+      window.vslUpdateFooterActiveNav();
+    }
+  }
+
+  function fetchModuleHtml(key) {
+    if (moduleCache[key]) return Promise.resolve(moduleCache[key]);
+    var page = REPLICA_PAGES[key];
+    if (!page || !page.modulePath) return Promise.resolve(null);
+    var moduleUrl = page.modulePath + (page.modulePath.indexOf("?") >= 0 ? "&" : "?") + "_=" + Date.now();
+    return fetchReplicaText(moduleUrl, "page module (" + key + ")").then(function (html) {
+      moduleCache[key] = html;
+      return html;
+    });
+  }
+
+  function prefetchModulePage(key) {
+    key = normalizePageKey(key);
+    if (moduleCache[key]) return;
+    fetchModuleHtml(key).catch(function () {});
+  }
+
+  function ensureVisibleReveals() {
+    if (document.hidden || !pageRoot) return;
+    pageRoot.querySelectorAll(".vsl-reveal:not(.is-visible)").forEach(function (section) {
+      if (isInViewport(section)) section.classList.add("is-visible");
+    });
+  }
 
   function executeInlineScripts(scopeNode) {
     var scripts = scopeNode.querySelectorAll("script");
@@ -390,23 +446,53 @@
     });
   }
 
-  function setLocationFromPageKey() {
-    var loc = pageKey.indexOf("dallas-") === 0 || pageKey === "dallas-home" ? "dallas" : null;
-    if (!loc && forcedLoc) {
-      loc = String(forcedLoc).toLowerCase();
-      if (loc !== "houston" && loc !== "dallas") loc = null;
+  function resolveLocationFromPageKey(key) {
+    key = String(key || pageKey || "home");
+    if (window.VSL_LOCATION && window.VSL_LOCATION.locationFromPageKey) {
+      return window.VSL_LOCATION.locationFromPageKey(key);
     }
-    if (!loc) return;
+    return key.indexOf("dallas-") === 0 || key === "dallas-home" ? "dallas" : "houston";
+  }
+
+  function syncLocationState(loc, source) {
+    loc = loc === "dallas" ? "dallas" : "houston";
+    if (forcedLoc) {
+      var forced = String(forcedLoc).toLowerCase();
+      if (forced === "houston" || forced === "dallas") loc = forced;
+    }
     try {
       localStorage.setItem("vslPreferredLocation", loc);
-      syncNavbarLocationDom(loc);
-      if (window.VSL_LOCATION && window.VSL_LOCATION.bootstrap) {
-        window.VSL_LOCATION.bootstrap();
-      } else {
-        window.dispatchEvent(new CustomEvent("_vslLocationChanged", { detail: { location: loc } }));
-      }
     } catch (e) {}
+    syncNavbarLocationDom(loc);
+    try {
+      window.dispatchEvent(new CustomEvent("_vslLocationChanged", {
+        detail: { location: loc, source: source || "replica-router" }
+      }));
+    } catch (e) {}
+    return loc;
   }
+
+  function setLocationFromPageKey() {
+    syncLocationState(resolveLocationFromPageKey(pageKey), "replica-page-key");
+  }
+
+  function replicaTargetPageKey(loc, slug) {
+    var targetUrl = window.VSL_REPLICA_BUILD_URL(loc, slug || "home");
+    return (new URLSearchParams(String(targetUrl).split("?")[1] || "")).get("p") || "home";
+  }
+
+  window.VSL_REPLICA_SWITCH_LOCATION = function (loc) {
+    loc = loc === "dallas" ? "dallas" : "houston";
+    var slug = window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug
+      ? window.VSL_LOCATION.getPageSlug()
+      : "home";
+    var targetKey = replicaTargetPageKey(loc, slug);
+    if (targetKey !== pageKey) {
+      return navigateToPageKey(targetKey);
+    }
+    syncLocationState(loc, "replica-switch-same-page");
+    return Promise.resolve();
+  };
 
   function setLocationFromQuery() {
     setLocationFromPageKey();
@@ -574,28 +660,41 @@
     pageRoot.innerHTML = wrapper.innerHTML;
   }
 
-  function loadModulePage() {
+  function loadModulePage(options) {
+    options = options || {};
+    var expectedToken = options.token;
+    var key = normalizePageKey(pageKey);
+    pageKey = key;
     var page = REPLICA_PAGES[pageKey];
     document.title = replicaDocumentTitle(page.title);
 
+    function isStale() {
+      return expectedToken != null && expectedToken !== pageLoadToken;
+    }
+
     if (!page.modulePath) {
       clearModuleHeadAssets(pageKey);
-      pageRoot.innerHTML = makeHomeMarkup();
-      applySectionReveals(pageRoot);
+      if (!isStale()) {
+        pageRoot.innerHTML = makeHomeMarkup();
+        applySectionReveals(pageRoot);
+      }
       return Promise.resolve();
     }
 
-    var moduleUrl = page.modulePath + (page.modulePath.indexOf("?") >= 0 ? "&" : "?") + "_=" + Date.now();
-    return fetchReplicaText(moduleUrl, "page module (" + pageKey + ")")
+    if (moduleCache[pageKey]) {
+      if (!isStale()) finalizeModuleMount(moduleCache[pageKey], pageKey);
+      document.title = replicaDocumentTitle(page.title);
+      return Promise.resolve();
+    }
+
+    return fetchModuleHtml(pageKey)
       .then(function (html) {
-        injectModuleHtml(html, pageKey);
-        executeInlineScripts(pageRoot);
-        applyLocalLinks(pageRoot);
-        notifyReplicaAfterLocalLinks(pageRoot);
-        applySectionReveals(pageRoot);
+        if (isStale()) return;
+        finalizeModuleMount(html, pageKey);
         document.title = replicaDocumentTitle(page.title);
       })
       .catch(function (err) {
+        if (isStale()) return;
         document.title = replicaDocumentTitle(page.title);
         pageRoot.innerHTML =
           '<div style="padding:24px;color:#eaeaea;font-family:Inter,sans-serif;">' +
@@ -604,6 +703,44 @@
           "</div>";
       });
   }
+
+  function navigateToPageKey(nextKey, options) {
+    options = options || {};
+    nextKey = normalizePageKey(nextKey);
+    if (!routerReady) {
+      window.location.href = "index.html?p=" + nextKey + (window.location.hash || "");
+      return Promise.resolve();
+    }
+    if (nextKey === pageKey && !options.force) return Promise.resolve();
+
+    var token = ++pageLoadToken;
+    pageKey = nextKey;
+    notifyReplicaNavigate(nextKey);
+    var nextUrl = "index.html?p=" + pageKey + (window.location.hash || "");
+
+    if (options.replace) history.replaceState({ p: pageKey }, "", nextUrl);
+    else history.pushState({ p: pageKey }, "", nextUrl);
+
+    document.title = replicaDocumentTitle(REPLICA_PAGES[pageKey].title);
+    setLocationFromPageKey();
+
+    return loadModulePage({ token: token }).then(function () {
+      if (options.scrollTop !== false) window.scrollTo(0, 0);
+      ensureVisibleReveals();
+    });
+  }
+
+  function notifyReplicaNavigate(nextKey) {
+    try {
+      window.dispatchEvent(new CustomEvent("vslReplicaNavigate", { detail: { pageKey: nextKey } }));
+    } catch (e) {}
+  }
+
+  window.VSL_REPLICA_NAVIGATE = function (urlOrKey) {
+    if (!urlOrKey) return Promise.resolve();
+    var key = pageKeyFromLocalHref(urlOrKey) || normalizePageKey(String(urlOrKey).replace(/^.*[?&]p=/, "").split(/[#&]/)[0]);
+    return navigateToPageKey(key);
+  };
 
   function loadFooter() {
     if (!footerRoot) return Promise.resolve();
@@ -658,6 +795,10 @@
       if (window.VSL_LOCATION && typeof window.VSL_REPLICA_APPLY_FOOTER_LINKS === "function") {
         window.VSL_REPLICA_APPLY_FOOTER_LINKS(window.VSL_LOCATION.readLocation());
       }
+      routerReady = true;
+      try {
+        history.replaceState({ p: pageKey }, "", window.location.pathname + window.location.search + window.location.hash);
+      } catch (e) {}
       return loadPromoBanner();
     })
     .catch(function (err) {
@@ -673,12 +814,35 @@
   document.addEventListener("click", function (evt) {
     var a = evt.target && evt.target.closest ? evt.target.closest("a[href]") : null;
     if (!a) return;
-    var mapped = toLocalHref(a.getAttribute("href"));
-    if (!mapped) return;
-    if (a.getAttribute("href") === mapped) return;
+    if (a.target === "_blank" || evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey) return;
+
+    var href = a.getAttribute("href");
+    if (!href || href.charAt(0) === "#") return;
+
+    var mapped = toLocalHref(href) || href;
+    var key = pageKeyFromLocalHref(mapped);
+    if (!key) return;
+
     evt.preventDefault();
-    window.location.href = mapped;
+    navigateToPageKey(key);
   });
+
+  window.addEventListener("popstate", function (evt) {
+    if (!routerReady) return;
+    var key = normalizePageKey((evt.state && evt.state.p) || new URLSearchParams(window.location.search).get("p") || "home");
+    navigateToPageKey(key, { replace: true, scrollTop: false, force: true });
+  });
+
+  document.addEventListener("mouseover", function (evt) {
+    var a = evt.target && evt.target.closest ? evt.target.closest("a[href]") : null;
+    if (!a) return;
+    var mapped = toLocalHref(a.getAttribute("href")) || a.getAttribute("href");
+    var key = pageKeyFromLocalHref(mapped);
+    if (key) prefetchModulePage(key);
+  }, true);
+
+  document.addEventListener("visibilitychange", ensureVisibleReveals);
+  window.addEventListener("pageshow", ensureVisibleReveals);
 
   window.addEventListener("_vslLocationChanged", function (e) {
     if (!e.detail || !e.detail.location) return;
