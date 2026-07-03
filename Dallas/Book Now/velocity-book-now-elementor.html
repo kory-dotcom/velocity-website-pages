@@ -235,7 +235,7 @@
     -webkit-text-fill-color: var(--c0) !important;
     background: var(--c4) !important;
   }
-  .vsl-booknow .vsl-bn-modal__close {
+  #vsl-bn-modal .vsl-bn-modal__close {
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
     display: flex !important;
@@ -674,6 +674,20 @@
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     animation-delay: var(--vsl-enter-delay, 0ms);
     animation-fill-mode: forwards;
+  }
+
+  .vsl-bn-card {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vsl-bn-card--touch-active {
+    transform: scale(0.985);
+    box-shadow: 0 8px 24px rgba(16,24,43,0.2);
+  }
+  .vsl-bn-card--touch-active .vsl-bn-card__cta-hint {
+    background: var(--c4);
+    color: var(--c0);
+    -webkit-text-fill-color: var(--c0);
   }
 
   .vsl-bn-card-grid {
@@ -1904,7 +1918,13 @@
     html { scroll-behavior: smooth; }
   }
 
-  .vsl-bn-modal {
+  /* Roverd booking modal — #id tokens so styles survive portal to <body> */
+  #vsl-bn-modal.vsl-bn-modal {
+    --bn-c0: #10182B;
+    --bn-c2: #EE265F;
+    --bn-c4: #FDC70C;
+    --bn-f0: 'Khand', system-ui, sans-serif;
+    --bn-f1: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
     display: none;
     position: fixed;
     inset: 0;
@@ -1912,25 +1932,31 @@
     align-items: center;
     justify-content: center;
     padding: clamp(16px, 3vw, 40px);
+    font-family: var(--bn-f1);
+    box-sizing: border-box;
   }
-  .vsl-bn-modal[aria-hidden="false"] {
+  #vsl-bn-modal.vsl-bn-modal[aria-hidden="false"] {
     display: flex;
+    isolation: isolate;
   }
-  .vsl-bn-modal__backdrop {
+  #vsl-bn-modal .vsl-bn-modal__backdrop {
     position: absolute;
     inset: 0;
+    z-index: 0;
     background: rgba(16,24,43,0.72);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     animation: vsl-modal-fadeIn 0.25s ease;
     cursor: pointer;
   }
-  .vsl-bn-modal__window {
+  #vsl-bn-modal .vsl-bn-modal__window {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    pointer-events: auto;
     width: 100%;
     max-width: 860px;
     height: min(88vh, 720px);
+    min-height: 0;
     background: #fff;
     border-radius: 18px;
     overflow: hidden;
@@ -1941,73 +1967,94 @@
     display: flex;
     flex-direction: column;
   }
-  .vsl-bn-modal__header {
+  #vsl-bn-modal .vsl-bn-modal__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 14px 20px;
-    background: var(--c0);
+    padding-top: max(14px, env(safe-area-inset-top, 0px));
+    background: var(--bn-c0);
     color: #fff;
     flex-shrink: 0;
+    position: relative;
+    z-index: 3;
   }
-  .vsl-bn-modal__title {
-    font-family: var(--f0);
+  #vsl-bn-modal .vsl-bn-modal__title {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--bn-f0);
     font-size: 1.05rem;
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin: 0;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .vsl-bn-modal__close {
+  #vsl-bn-modal .vsl-bn-modal__close {
     appearance: none;
     -webkit-appearance: none;
+    position: relative;
+    z-index: 4;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.15);
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
     width: 36px;
     height: 36px;
+    min-width: 36px;
     border-radius: 8px;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     flex-shrink: 0;
-    margin-left: 12px;
-    transition: background 0.18s ease, transform 0.14s ease;
-    font-size: 22px;
+    margin-left: 0;
+    padding: 0;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.14s ease;
+    font-size: 22px !important;
     font-weight: 300;
     line-height: 1;
     font-family: Arial, sans-serif;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
-  .vsl-bn-modal__close:hover {
-    background: var(--c2);
-    border-color: var(--c2);
+  #vsl-bn-modal .vsl-bn-modal__close:hover {
+    background: var(--bn-c2) !important;
+    border-color: var(--bn-c2) !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
     transform: scale(1.08);
   }
-  .vsl-bn-modal__close:active {
+  #vsl-bn-modal .vsl-bn-modal__close:active {
     transform: scale(0.95);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
   }
-  .vsl-bn-modal__close:focus-visible {
-    outline: 3px solid var(--c4);
+  #vsl-bn-modal .vsl-bn-modal__close:focus-visible {
+    outline: 3px solid var(--bn-c4);
     outline-offset: 2px;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
   }
-  .vsl-bn-modal__body {
+  #vsl-bn-modal .vsl-bn-modal__body {
     flex: 1;
     position: relative;
     background: #f5f5f5;
+    min-height: 0;
   }
-  .vsl-bn-modal__iframe {
+  #vsl-bn-modal .vsl-bn-modal__iframe {
     width: 100%;
     height: 100%;
     border: 0;
     display: block;
   }
-  .vsl-bn-modal__loader {
+  #vsl-bn-modal .vsl-bn-modal__loader {
     position: absolute;
     inset: 0;
     display: flex;
@@ -2017,15 +2064,15 @@
     z-index: 2;
     transition: opacity 0.3s ease;
   }
-  .vsl-bn-modal__loader[data-loaded="true"] {
+  #vsl-bn-modal .vsl-bn-modal__loader[data-loaded="true"] {
     opacity: 0;
     pointer-events: none;
   }
-  .vsl-bn-modal__spinner {
+  #vsl-bn-modal .vsl-bn-modal__spinner {
     width: 40px;
     height: 40px;
     border: 4px solid rgba(16,24,43,0.1);
-    border-top-color: var(--c2);
+    border-top-color: var(--bn-c2);
     border-radius: 50%;
     animation: vsl-modal-spin 0.7s linear infinite;
   }
@@ -2041,12 +2088,43 @@
     to { transform: rotate(360deg); }
   }
   @media (max-width: 639px) {
-    .vsl-bn-modal { padding: 0; }
-    .vsl-bn-modal__window {
+    #vsl-bn-modal.vsl-bn-modal { padding: 0; }
+    #vsl-bn-modal .vsl-bn-modal__window {
       max-width: 100%;
       height: 100%;
       border-radius: 0;
       max-height: 100vh;
+      max-height: 100dvh;
+    }
+    #vsl-bn-modal .vsl-bn-modal__header {
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+  }
+  @media (pointer: coarse) {
+    .vsl-bn-card.vsl-entering {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+    .vsl-bn-card:hover .vsl-bn-card__cta-hint,
+    .vsl-bn-card:hover .vsl-bn-card__cta-hint svg {
+      background: var(--c2);
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+      transform: none;
+    }
+    #vsl-bn-modal .vsl-bn-modal__backdrop {
+      animation-duration: 0.12s;
+    }
+    #vsl-bn-modal .vsl-bn-modal__window {
+      animation-duration: 0.16s;
+    }
+    .vsl-bn-mem-modal .vsl-bn-modal__backdrop {
+      animation-duration: 0.12s;
+    }
+    .vsl-bn-mem-modal__window {
+      animation-duration: 0.18s;
     }
   }
 
@@ -2734,7 +2812,7 @@
       <div class="vsl-bn-modal__window">
         <div class="vsl-bn-modal__header">
           <span class="vsl-bn-modal__title" id="vsl-bn-modal-title">Book Now</span>
-          <button class="vsl-bn-modal__close" data-mc aria-label="Close booking window">&times;</button>
+          <button type="button" class="vsl-bn-modal__close" data-mc aria-label="Close booking window">&times;</button>
         </div>
         <div class="vsl-bn-modal__body">
           <div class="vsl-bn-modal__loader" id="vsl-bn-modal-loader">
@@ -2914,6 +2992,7 @@
 
     var STAGGER_MS = 80;
     var reduceMotionForTabs = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
     function panelTabCards(panel) {
       var nl = panel.querySelectorAll('.vsl-bn-card-grid .vsl-bn-card');
@@ -2929,7 +3008,7 @@
     }
 
     function staggerCards(panel) {
-      if (reduceMotionForTabs) {
+      if (reduceMotionForTabs || isCoarsePointer) {
         clearCardEntrance(panel);
         return;
       }
@@ -3107,21 +3186,26 @@
 
     function openModal(url, title) {
       if (!modal || !modalIframe) return;
+      if (modal.parentNode !== document.body) {
+        document.body.appendChild(modal);
+      }
       lastFocused = document.activeElement;
       modalTitle.textContent = title || 'Book Now';
       modalLoader.removeAttribute('data-loaded');
-      modalIframe.src = url;
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      modalIframe.src = url;
 
       modalIframe.onload = function() {
         modalLoader.setAttribute('data-loaded', 'true');
       };
 
-      setTimeout(function() {
-        var closeBtn = modal.querySelector('.vsl-bn-modal__close');
-        if (closeBtn) closeBtn.focus();
-      }, 80);
+      if (!isCoarsePointer) {
+        setTimeout(function() {
+          var closeBtn = modal.querySelector('.vsl-bn-modal__close');
+          if (closeBtn) closeBtn.focus();
+        }, 80);
+      }
     }
 
     function closeModal() {
@@ -3144,22 +3228,40 @@
       });
     }
 
+    function openBookingCard(card) {
+      if (!card || card.classList.contains('vsl-bn-card--soon') || card.getAttribute('aria-disabled') === 'true') return;
+      var href = card.getAttribute('href');
+      if (!href || href.charAt(0) === '#') return;
+      var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
+      var title = nameEl ? nameEl.textContent.trim() : 'Book Now';
+      var city = root._vslCity || (root.classList.contains('vsl-loc--dallas') ? 'Dallas' : 'Houston');
+      openModal(href, title + ' \u2014 ' + city);
+    }
+
     root.querySelectorAll('a.vsl-bn-card').forEach(function(card) {
       card.setAttribute('data-elementor-open-lightbox', 'no');
       card.removeAttribute('target');
-      card.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        var href = card.getAttribute('href');
-        if (!href || href.charAt(0) === '#') return;
-        var nameEl = card.querySelector('.vsl-bn-card__overlay-name');
-        var title = nameEl ? nameEl.textContent.trim() : 'Book Now';
-        var city = root._vslCity || (root.classList.contains('vsl-loc--dallas') ? 'Dallas' : 'Houston');
-        openModal(href, title + ' \u2014 ' + city);
-        return false;
-      }, true);
+      if (isCoarsePointer) {
+        card.addEventListener('touchstart', function() {
+          card.classList.add('vsl-bn-card--touch-active');
+        }, { passive: true });
+        function releaseTouchActive() {
+          card.classList.remove('vsl-bn-card--touch-active');
+        }
+        card.addEventListener('touchend', releaseTouchActive, { passive: true });
+        card.addEventListener('touchcancel', releaseTouchActive, { passive: true });
+      }
     });
+
+    root.addEventListener('click', function(e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var card = e.target && e.target.closest ? e.target.closest('a.vsl-bn-card') : null;
+      if (!card || !root.contains(card)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openBookingCard(card);
+    }, true);
 
     var memModal = root.querySelector('#vsl-bn-mem-modal');
     var memLastFocused = null;
@@ -3171,13 +3273,18 @@
 
     function openMemModal() {
       if (!memModal) return;
+      if (memModal.parentNode !== document.body) {
+        document.body.appendChild(memModal);
+      }
       memLastFocused = document.activeElement;
       memModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
-      setTimeout(function() {
-        var closeBtn = memModal.querySelector('.vsl-bn-mem-modal__close');
-        if (closeBtn) closeBtn.focus();
-      }, 80);
+      if (!isCoarsePointer) {
+        setTimeout(function() {
+          var closeBtn = memModal.querySelector('.vsl-bn-mem-modal__close');
+          if (closeBtn) closeBtn.focus();
+        }, 80);
+      }
     }
 
     function closeMemModal() {
