@@ -1144,6 +1144,7 @@
   @media (max-width: 1024px) {
     .vsl-home-edr {
       --vsl-hero-finish-h: clamp(14px, 2.4svh, 26px);
+      --vsl-edr-mobile-rows: minmax(0, 0.78fr) minmax(0, 0.78fr) minmax(0, 1.44fr);
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto var(--vsl-hero-finish-h);
       height: calc(100svh - var(--vsl-nav-offset, 0px));
@@ -1151,6 +1152,9 @@
       min-height: 0;
       overflow: hidden;
       padding-bottom: 0;
+    }
+    .vsl-home-edr:not(.vsl-home-edr--compete-active) {
+      --vsl-edr-mobile-rows: repeat(3, minmax(0, 1fr));
     }
     .vsl-home-edr__eyebrow {
       flex-shrink: 0;
@@ -1160,7 +1164,7 @@
     }
     .vsl-home-edr__row {
       grid-template-columns: 1fr;
-      grid-template-rows: minmax(0, 0.78fr) minmax(0, 0.78fr) minmax(0, 1.44fr);
+      grid-template-rows: var(--vsl-edr-mobile-rows);
       min-height: 0;
       gap: clamp(5px, 0.9svh, 8px);
       padding: 0 clamp(12px, 4vw, 20px) clamp(2px, 0.4svh, 6px);
@@ -1265,12 +1269,17 @@
     }
     /* Tablet: larger stacked mobile */
     @media (min-width: 641px) {
+      .vsl-home-edr {
+        --vsl-edr-mobile-rows: minmax(0, 0.72fr) minmax(0, 0.72fr) minmax(0, 1.56fr);
+      }
+      .vsl-home-edr:not(.vsl-home-edr--compete-active) {
+        --vsl-edr-mobile-rows: repeat(3, minmax(0, 1fr));
+      }
       .vsl-home-edr__eyebrow {
         font-size: clamp(1.15rem, 0.88rem + 1.2vw, 1.75rem);
         padding: clamp(8px, 1.2svh, 16px) clamp(24px, 5vw, 56px) clamp(6px, 0.8svh, 12px);
       }
       .vsl-home-edr__row {
-        grid-template-rows: minmax(0, 0.72fr) minmax(0, 0.72fr) minmax(0, 1.56fr);
         gap: clamp(8px, 1.1svh, 12px);
         padding-inline: clamp(24px, 5vw, 56px);
       }
@@ -1293,12 +1302,17 @@
     }
     /* Extra-tight scaling on short phones so nothing clips above the flag */
     @media (max-height: 740px) {
+      .vsl-home-edr {
+        --vsl-edr-mobile-rows: minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.25fr);
+      }
+      .vsl-home-edr:not(.vsl-home-edr--compete-active) {
+        --vsl-edr-mobile-rows: repeat(3, minmax(0, 1fr));
+      }
       .vsl-home-edr__eyebrow {
         font-size: clamp(0.82rem, 0.65rem + 1.8vw, 1.15rem);
         padding-block: clamp(4px, 0.7svh, 8px);
       }
       .vsl-home-edr__row {
-        grid-template-rows: minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.25fr);
         gap: clamp(4px, 0.7svh, 6px);
       }
       .vsl-home-edr__word {
