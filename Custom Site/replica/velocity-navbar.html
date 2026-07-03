@@ -3163,11 +3163,16 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       return;
     }
     if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
-    navbar.querySelectorAll('a[href*="velocitysimlounge.com"]').forEach(function(a) {
+    navbar.querySelectorAll('a[href]').forEach(function(a) {
       var href = a.getAttribute('href');
-      if (!href || /instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return;
+      if (!href || href.charAt(0) === '#') return;
+      if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return;
+      var isInternal =
+        href.indexOf('velocitysimlounge.com') !== -1 ||
+        (href.charAt(0) === '/' && href.charAt(1) !== '/');
+      if (!isInternal) return;
       var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
-      if (next && next !== href) a.setAttribute('href', next);
+      if (next) a.setAttribute('href', next);
     });
     var dallasLearn = navbar.querySelector('a[href="https://velocitysimlounge.com/dallas"]');
     if (dallasLearn) dallasLearn.setAttribute('href', 'https://velocitysimlounge.com/dallas/');

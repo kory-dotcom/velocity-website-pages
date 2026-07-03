@@ -163,6 +163,45 @@
     return "index.html?p=" + key;
   };
 
+  var REPLICA_PAGE_KEY_TO_SLUG = Object.create(null);
+  Object.keys(REPLICA_SLUG_PAGE_KEYS).forEach(function (slug) {
+    var map = REPLICA_SLUG_PAGE_KEYS[slug];
+    if (map.houston) REPLICA_PAGE_KEY_TO_SLUG[map.houston] = slug;
+    if (map.dallas) REPLICA_PAGE_KEY_TO_SLUG[map.dallas] = slug;
+  });
+
+  function replicaSlugFromNavHref(href) {
+    if (!href || href.charAt(0) === "#") return null;
+    if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return null;
+
+    var hashIdx = href.indexOf("#");
+    var hrefPath = hashIdx !== -1 ? href.slice(0, hashIdx) : href;
+
+    var qMatch = hrefPath.match(/[?&]p=([^&#]+)/i);
+    if (qMatch) {
+      var pk = decodeURIComponent(qMatch[1]).toLowerCase();
+      if (pk === "spring-bundles") pk = "fathers-day";
+      return REPLICA_PAGE_KEY_TO_SLUG[pk] || null;
+    }
+
+    if (hrefPath.indexOf("velocitysimlounge.com") !== -1) {
+      try {
+        var u = new URL(hrefPath, window.location.href);
+        var path = u.pathname.replace(/\/+$/, "").toLowerCase();
+        if (!path || path === "/") return "home";
+        var dallasMatch = path.match(/\/dallas\/([^/]+)$/);
+        if (dallasMatch) return dallasMatch[1];
+        if (path === "/dallas") return "home";
+        var parts = path.split("/").filter(Boolean);
+        var last = parts[parts.length - 1];
+        if (last === "index.html" && parts.length > 1) last = parts[parts.length - 2];
+        return last || "home";
+      } catch (e) {}
+    }
+
+    return null;
+  }
+
   function replicaHrefFromSiteUrl(href, loc) {
     if (!href) return null;
     if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return null;
@@ -181,10 +220,27 @@
   window.VSL_REPLICA_APPLY_NAV_LINKS = function (loc) {
     loc = loc === "dallas" ? "dallas" : "houston";
     var root = document.getElementById("replica-navbar-root") || document;
-    root.querySelectorAll('a[href*="velocitysimlounge.com"]').forEach(function (a) {
-      var local = replicaHrefFromSiteUrl(a.getAttribute("href"), loc);
-      if (local) a.setAttribute("href", local);
+
+    root.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || href.charAt(0) === "#") return;
+
+      var hash = "";
+      var hashIdx = href.indexOf("#");
+      if (hashIdx !== -1) hash = href.slice(hashIdx);
+
+      var slug = replicaSlugFromNavHref(href);
+      if (slug && window.VSL_REPLICA_BUILD_URL) {
+        a.setAttribute("href", window.VSL_REPLICA_BUILD_URL(loc, slug) + hash);
+        return;
+      }
+
+      if (href.indexOf("velocitysimlounge.com") !== -1) {
+        var local = replicaHrefFromSiteUrl(href, loc);
+        if (local) a.setAttribute("href", local);
+      }
     });
+
     root.querySelectorAll('a[href="https://velocitysimlounge.com/dallas"]').forEach(function (a) {
       a.setAttribute("href", loc === "dallas" ? "index.html?p=dallas-home" : "index.html?p=home");
     });
@@ -197,12 +253,29 @@
     var root = document.getElementById("replica-footer-root");
     if (!root) return;
     root.querySelectorAll("[data-footer-nav]").forEach(function (a) {
-      var local = replicaHrefFromSiteUrl(a.getAttribute("href"), loc);
-      if (local) a.setAttribute("href", local);
+      var href = a.getAttribute("href");
+      if (!href) return;
+
+      var hash = "";
+      var hashIdx = href.indexOf("#");
+      if (hashIdx !== -1) hash = href.slice(hashIdx);
+
+      var slug = replicaSlugFromNavHref(href);
+      if (slug && window.VSL_REPLICA_BUILD_URL) {
+        a.setAttribute("href", window.VSL_REPLICA_BUILD_URL(loc, slug) + hash);
+        return;
+      }
+
+      if (href.indexOf("velocitysimlounge.com") !== -1) {
+        var local = replicaHrefFromSiteUrl(href, loc);
+        if (local) a.setAttribute("href", local);
+      }
     });
     var logo = root.querySelector(".vsl-site-footer__logo");
     if (logo) {
-      var localHome = replicaHrefFromSiteUrl("https://velocitysimlounge.com/", loc);
+      var localHome = window.VSL_REPLICA_BUILD_URL
+        ? window.VSL_REPLICA_BUILD_URL(loc, "home")
+        : replicaHrefFromSiteUrl("https://velocitysimlounge.com/", loc);
       if (localHome) logo.setAttribute("href", localHome);
     }
   };

@@ -390,7 +390,7 @@
       var href = a.getAttribute('href');
       if (!href) return;
       var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
-      if (next && next !== href) a.setAttribute('href', next);
+      if (next) a.setAttribute('href', next);
     });
     var logo = root.querySelector('.vsl-site-footer__logo');
     if (logo && window.VSL_LOCATION.buildLocationUrl) {
