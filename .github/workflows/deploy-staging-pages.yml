@@ -31,7 +31,7 @@ jobs:
           build_type=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.build_type')
           echo "Pages build_type=$build_type"
           if [ "$build_type" != "workflow" ]; then
-            echo "::warning::Pages is still on legacy branch deploy ($build_type). Switch to GitHub Actions in repo Settings → Pages to stop duplicate deploys. This run will wait and retry if the legacy workflow is still publishing."
+            echo "::warning::Pages is still on legacy branch deploy ($build_type). Switch to GitHub Actions in repo Settings → Pages to stop duplicate deploys."
           fi
 
       - name: Prepare staging artifact
@@ -55,26 +55,26 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment_4.outputs.page_url || steps.deployment_3.outputs.page_url || steps.deployment_2.outputs.page_url || steps.deployment.outputs.page_url }}
     steps:
-      - name: Wait for in-progress Pages deployment
+      - name: Wait for in-progress github-pages deployment
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          for attempt in $(seq 1 18); do
-            if ! deployments=$(gh api "repos/${GITHUB_REPOSITORY}/pages/deployments?per_page=1" 2>/dev/null); then
-              echo "No prior Pages deployments yet; continuing."
+          for attempt in $(seq 1 12); do
+            deployment_id=$(gh api "repos/${GITHUB_REPOSITORY}/deployments?environment=github-pages&per_page=1" --jq '.[0].id // empty' 2>/dev/null || true)
+            if [ -z "$deployment_id" ]; then
+              echo "No prior github-pages deployments; continuing."
               exit 0
             fi
-            state=$(echo "$deployments" | jq -r '.[0].state // "none"')
-            version=$(echo "$deployments" | jq -r '.[0].pages_build_version // ""')
-            echo "Latest Pages deployment: state=$state sha=${version:0:7}"
-            if [ "$state" != "queued" ] && [ "$state" != "in_progress" ]; then
+            state=$(gh api "repos/${GITHUB_REPOSITORY}/deployments/${deployment_id}/statuses?per_page=1" --jq '.[0].state // "unknown"' 2>/dev/null || echo "unknown")
+            echo "Latest github-pages deployment #$deployment_id state=$state"
+            if [ "$state" != "pending" ] && [ "$state" != "queued" ] && [ "$state" != "in_progress" ]; then
               echo "No conflicting deployment in progress."
               exit 0
             fi
-            echo "Waiting 20s for in-progress deployment ($attempt/18)..."
-            sleep 20
+            echo "Waiting 30s for in-progress deployment ($attempt/12)..."
+            sleep 30
           done
           echo "Proceeding after wait timeout."
 
@@ -82,17 +82,39 @@ jobs:
         uses: actions/deploy-pages@v4
         continue-on-error: true
 
-      - name: Wait and retry deploy
+      - name: Wait before retry 2
         if: steps.deployment.outcome == 'failure'
-        run: sleep 45
+        run: sleep 90
 
-      - id: deployment_retry
+      - id: deployment_2
         if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
         continue-on-error: true
 
+      - name: Wait before retry 3
+        if: steps.deployment.outcome == 'failure' && steps.deployment_2.outcome == 'failure'
+        run: sleep 120
+
+      - id: deployment_3
+        if: steps.deployment.outcome == 'failure' && steps.deployment_2.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Wait before retry 4
+        if: steps.deployment.outcome == 'failure' && steps.deployment_2.outcome == 'failure' && steps.deployment_3.outcome == 'failure'
+        run: sleep 180
+
+      - id: deployment_4
+        if: steps.deployment.outcome == 'failure' && steps.deployment_2.outcome == 'failure' && steps.deployment_3.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
       - name: Fail if deploy did not succeed
-        if: steps.deployment.outcome == 'failure' && steps.deployment_retry.outcome == 'failure'
+        if: >-
+          steps.deployment.outcome == 'failure' &&
+          steps.deployment_2.outcome == 'failure' &&
+          steps.deployment_3.outcome == 'failure' &&
+          steps.deployment_4.outcome == 'failure'
         run: |
-          echo "::error::GitHub Pages deploy failed after retry. If Pages Source is still 'Deploy from branch', switch it to GitHub Actions in repo Settings → Pages."
+          echo "::error::GitHub Pages failed during syncing_files after 4 attempts. This is usually a transient Pages backend issue — re-run this workflow from the Actions tab. Staging may still be on the previous successful deploy."
           exit 1
