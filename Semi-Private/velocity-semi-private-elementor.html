@@ -110,6 +110,7 @@
     margin-bottom: 0;
     padding-top: 0;
     padding-bottom: 0;
+    overflow-x: clip;
   }
 
   .vsl-semiprivate:has(> main > section.vsl-sp-hero:first-of-type) {
@@ -130,6 +131,23 @@
   .vsl-semiprivate *,
   .vsl-semiprivate *::before,
   .vsl-semiprivate *::after { box-sizing: border-box; }
+
+  /* Elementor column outdent can exceed the viewport on narrow screens. */
+  @media (max-width: 800px) {
+    .vsl-semiprivate {
+      --vsl-outdent: 0px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  html:has(.vsl-semiprivate),
+  body:has(.vsl-semiprivate) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
 
 
   /* ── HERO ────────────────────────────────────────────── */

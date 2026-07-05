@@ -16,8 +16,12 @@
   <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp">
   <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg">
   <style>
-    html, body { margin: 0; padding: 0; background: #10182B; }
+    html, body { margin: 0; padding: 0; background: #10182B; overflow-x: clip; max-width: 100%; }
     body { overflow-x: clip; }
+    #replica-page-root,
+    #replica-navbar-root,
+    #replica-footer-root,
+    #replica-promo-root { max-width: 100%; overflow-x: clip; }
     #replica-page-root { min-height: 100vh; background: #10182B; }
     .vsl-local-home {
       min-height: calc(100vh - 80px);

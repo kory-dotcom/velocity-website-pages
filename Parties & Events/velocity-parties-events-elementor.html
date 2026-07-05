@@ -132,6 +132,21 @@
     min-height: auto !important;
   }
   .vsl-events *, .vsl-events *::before, .vsl-events *::after { box-sizing: border-box; }
+
+  /* Full-bleed 100vw breakout can add horizontal scroll on mobile (scrollbar width). */
+  html:has(.vsl-events),
+  body:has(.vsl-events) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+  @media (max-width: 800px) {
+    .vsl-events {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
   .vsl-events a { text-decoration: none; color: inherit; }
   .vsl-events,
   .vsl-events main,
@@ -238,7 +253,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100vw;
+    width: 100%;
     height: 56.25vw;
     min-width: 177.78vh;
     min-height: 100%;

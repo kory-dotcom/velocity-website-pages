@@ -80,6 +80,7 @@
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
+      overflow-x: clip;
     }
     .vsl-fooddrink:has(> main > section.vsl-fooddrink-hero:first-of-type) {
       margin-top: var(--vsl-hero-bleed-top);
@@ -113,6 +114,22 @@
     .vsl-fooddrink *,
     .vsl-fooddrink *::before,
     .vsl-fooddrink *::after { box-sizing: border-box; }
+
+    html:has(.vsl-fooddrink),
+    body:has(.vsl-fooddrink) {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
+    @media (max-width: 800px) {
+      .vsl-fooddrink {
+        --vsl-outdent: 0px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
 
     #food-hero,
     #full-menu,

@@ -257,7 +257,7 @@
     },
     dallas: {
       label: "Dallas",
-      bookingUrl: "https://velocitysimlounge.com/book-now/?loc=dallas",
+      bookingUrl: "https://velocitysimlounge.com/dallas/book-now/",
       ariaBook: "Book now at Dallas"
     }
   };

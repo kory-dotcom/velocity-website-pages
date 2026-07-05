@@ -67,16 +67,14 @@
     font-family: var(--font-body);
     color: var(--navy);
     box-sizing: border-box;
-    position: relative;
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
     margin-top: 0;
     margin-bottom: 0;
     padding: 0;
     overflow-x: clip;
-    overflow-y: visible;
   }
   .vsl-events:has(> main > .vsl-events-hero:first-of-type) {
     margin-top: var(--vsl-bleed-top);
@@ -132,6 +130,22 @@
     min-height: auto !important;
   }
   .vsl-events *, .vsl-events *::before, .vsl-events *::after { box-sizing: border-box; }
+
+  @media (max-width: 800px) {
+    .vsl-events {
+      --vsl-outdent: 0px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  html:has(.vsl-events),
+  body:has(.vsl-events) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
   .vsl-events a { text-decoration: none; color: inherit; }
   .vsl-events,
   .vsl-events main,
@@ -238,7 +252,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 100vw;
+    width: 100%;
     height: 56.25vw;
     min-width: 177.78vh;
     min-height: 100%;
@@ -1401,7 +1415,7 @@
   }
 </style>
 
-<div class="vsl-events" data-vsl-config='{"links":{"corporatePage":"https://velocitysimlounge.com/dallas/corporate-events/","corporate":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","corporateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","semiPrivate":"https://velocitysimlounge.com/dallas/semi-private/","semiPrivateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPacks":"https://velocitysimlounge.com/dallas/party-packs/","partyPacksInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","buyoutPage":"https://velocitysimlounge.com/dallas/buyout/","fullBuyoutInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPackCards":"https://velocitysimlounge.com/dallas/party-packs/","partyPackRacer":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19","partyPackPro":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24","bookNow":"https://velocitysimlounge.com/dallas/book-now/","inquire":"https://velocitysimlounge.com/dallas/contact/"},"images":{"corporate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1024x683.webp","semiPrivate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1024x683.webp","fullBuyout":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp","partyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/group_events_hero-1920x1080.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-events" data-vsl-config='{"links":{"corporatePage":"https://velocitysimlounge.com/dallas/corporate-events/","corporate":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","corporateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","semiPrivate":"https://velocitysimlounge.com/dallas/semi-private/","semiPrivateInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPacks":"https://velocitysimlounge.com/dallas/party-packs/","partyPacksInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","buyoutPage":"https://velocitysimlounge.com/dallas/buyout/","fullBuyoutInquiry":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","partyPackCards":"https://velocitysimlounge.com/dallas/party-packs/","partyPackRacer":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27","partyPackPro":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28","bookNow":"https://velocitysimlounge.com/dallas/book-now/","inquire":"https://velocitysimlounge.com/dallas/contact/"},"images":{"corporate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-1024x683.webp","semiPrivate":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Semi-Private-card-photo-1024x683.webp","fullBuyout":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp","partyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/04/group_events_hero-1920x1080.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->

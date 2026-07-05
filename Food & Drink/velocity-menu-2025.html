@@ -21,7 +21,11 @@
       --nav-h: 52px;
     }
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+      max-width: 100%;
+    }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .vm-card { transition: none; }
@@ -34,6 +38,8 @@
       background: var(--paper);
       line-height: 1.45;
       padding-bottom: 3rem;
+      overflow-x: clip;
+      max-width: 100%;
     }
     .vm-header {
       position: sticky;
@@ -102,6 +108,8 @@
       -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(16, 24, 43, 0.08);
       box-shadow: 0 4px 20px rgba(16, 24, 43, 0.06);
+      overflow-x: clip;
+      max-width: 100%;
     }
     .vm-nav__track {
       display: flex;

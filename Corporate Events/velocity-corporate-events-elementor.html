@@ -111,6 +111,12 @@
     .vsl-corporate *::before,
     .vsl-corporate *::after { box-sizing: border-box; }
 
+    html:has(.vsl-corporate),
+    body:has(.vsl-corporate) {
+      overflow-x: clip;
+      max-width: 100%;
+    }
+
     /* On mobile, Elementor's column padding shrinks below the outdent and
        causes the wrapper to overflow horizontally. Force the outdent off. */
     @media (max-width: 800px) {

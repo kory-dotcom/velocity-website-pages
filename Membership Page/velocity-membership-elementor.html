@@ -98,6 +98,7 @@
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
+      overflow-x: clip;
     }
     /* Flush under header / above footer: counter theme + HTML widget spacing when hero is first section */
     .vsl-membership:has(> main > section.vsl-membership-hero:first-of-type) {
@@ -121,6 +122,22 @@
     .vsl-membership *,
     .vsl-membership *::before,
     .vsl-membership *::after { box-sizing: border-box; }
+
+    @media (max-width: 800px) {
+      .vsl-membership {
+        --vsl-outdent: 0px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+    }
+
+    html:has(.vsl-membership),
+    body:has(.vsl-membership) {
+      overflow-x: clip;
+      max-width: 100%;
+    }
 
     #membership-hero,
     #membership-benefits,

@@ -64,17 +64,14 @@
     font-family: var(--f1);
     color: var(--c0);
     box-sizing: border-box;
-    position: relative;
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
     margin-top: 0;
     margin-bottom: 0;
     padding: 0 0 clamp(60px, 10vh, 120px);
     background-color: var(--c0);
-    overflow-x: hidden;
-    overflow-y: visible;
   }
   .vsl-booknow:has(> main > .vsl-bn-hero:first-of-type) {
     margin-top: var(--vsl-bleed-top);
@@ -717,6 +714,36 @@
     gap: clamp(24px, 3vw, 36px);
     max-width: min(720px, 100%);
     margin-inline: auto;
+  }
+
+  /* In-store food menu QR — ?menu=races shows Quick + Double Race only */
+  .vsl-booknow--menu-races #bn-tabs,
+  .vsl-booknow--menu-races #panel-2seater,
+  .vsl-booknow--menu-races #panel-party,
+  .vsl-booknow--menu-races .vsl-bn-features,
+  .vsl-booknow--menu-races .vsl-bn-membership,
+  .vsl-booknow--menu-races .vsl-bn-faq,
+  .vsl-booknow--menu-races .vsl-bn-cta {
+    display: none !important;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card[data-l]:not([data-l="quickRace"]):not([data-l="doubleRace"]) {
+    display: none !important;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(24px, 3vw, 36px);
+    max-width: min(720px, 100%);
+    margin-inline: auto;
+    flex-wrap: unset;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card-grid .vsl-bn-card {
+    flex: unset;
+    max-width: none;
+    min-width: 0;
+  }
+  .vsl-booknow--menu-races .vsl-bn-experiences {
+    padding-top: clamp(32px, 5vw, 48px);
   }
 
   .vsl-bn-spring-grid {
@@ -2425,23 +2452,29 @@
 
 <div class="vsl-booknow vsl-loc--dallas" data-cfg='{
   "links": {
-    "quickRace":      "https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1",
+    "quickRace":      "https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1#rvrd-1",
     "doubleRace":     "https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1",
-    "leaderboard":    "https://book-dtx.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1",
+    "trafficRush":    "https://book-dtx.velocitysimlounge.com/book/610-challenge/15#rvrd-1",
+    "dinoRush":      "https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/32#rvrd-1",
+    "leaderboard":    "https://book-dtx.velocitysimlounge.com/book/leaderboard-challenge-30-mins/6#rvrd-1",
     "twoSeaterQuick": "https://book-dtx.velocitysimlounge.com/book/2-seater-quick-race/22",
     "twoSeaterDouble":"https://book-dtx.velocitysimlounge.com/book/2-seater-double-race/23",
-    "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19",
-    "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24"
+    "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27",
+    "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28",
+    "partyChampion":  "https://velocitysimlounge.com/dallas/party-packs/#pp-packs"
   },
   "bookNow": "https://velocitysimlounge.com/dallas/book-now/",
   "images": {
     "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
     "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
+    "trafficRush":    "https://velocitysimlounge.com/wp-content/uploads/2026/01/610-challenge-cover.jpeg",
+    "dinoRush":       "https://dtx-velocity.roverd.com/storage/activityImages/32.jpg",
     "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard-e1777680352239.webp",
     "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
     "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
     "partyRacer":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp",
     "partyPro":       "https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp",
+    "partyChampion":  "https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp",
     "heroFinishLine": "https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png",
     "featureHeight":  "https://velocitysimlounge.com/wp-content/uploads/2026/01/3.png",
     "featureFriends": "https://velocitysimlounge.com/wp-content/uploads/2026/01/Icons.png",
@@ -2477,7 +2510,7 @@
         <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
           <div class="vsl-bn-card-grid vsl-bn-card-grid--3">
 
-            <a class="vsl-bn-card" data-l="quickRace" href="https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="quickRace" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
                 <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcXVpY2tfcmFjZS53ZWJw" alt="Quick Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="sync" fetchpriority="high">
                 <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
@@ -2517,7 +2550,43 @@
               </div>
             </a>
 
-            <a class="vsl-bn-card" data-l="leaderboard" href="https://book-dtx.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="trafficRush" href="https://book-dtx.velocitysimlounge.com/book/610-challenge/15#rvrd-1" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="trafficRush" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDEvNjEwLWNoYWxsZW5nZS1jb3Zlci5qcGVn" alt="Traffic Rush Dallas exclusive at Velocity Sim Lounge" width="1024" height="1008" loading="eager" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Traffic Rush</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>A Velocity Dallas exclusive</li>
+                  <li>Navigate busy metro traffic scenarios</li>
+                  <li>Nearly 40 miles with AI traffic</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="dinoRush" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/32#rvrd-1" target="_blank" rel="noopener noreferrer">
+              <div class="vsl-bn-card__media">
+                <img data-i="dinoRush" src="https://dtx-velocity.roverd.com/storage/activityImages/32.jpg" alt="Dino Rush experience at Velocity Sim Lounge Dallas" width="400" height="280" loading="eager" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Dino Rush</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__price-row">
+                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $29</span>
+                </div>
+                <ul class="vsl-bn-card__features">
+                  <li>Prehistoric racing adventure</li>
+                  <li>Approx. 25 minute experience</li>
+                  <li>Race solo or with friends</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="leaderboard" href="https://book-dtx.velocitysimlounge.com/book/leaderboard-challenge-30-mins/6#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
                 <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvbGVhZGVyYm9hcmQtZTE3Nzc2ODAzNTIyMzkud2VicA==" alt="Leaderboard Challenge competitive time-attack at Velocity" width="3450" height="2490" loading="eager" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">Leaderboard Challenge</h3>
@@ -2582,47 +2651,59 @@
 
         <div class="vsl-bn-panel" id="panel-party" role="tabpanel" aria-labelledby="tab-party" aria-hidden="true">
 
-          <div class="vsl-bn-card-grid vsl-bn-card-grid--2">
+          <div class="vsl-bn-card-grid vsl-bn-card-grid--3">
 
-            <a class="vsl-bn-card" data-l="partyRacer" href="https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="partyRacer" href="https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="partyRacer" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcmFjZXJfY2FyZC0xMDI0eDY4My53ZWJw" alt="Racer Party Pack at Velocity Sim Lounge" width="1024" height="683" loading="lazy" decoding="async">
-                <h3 class="vsl-bn-card__overlay-name">Racer Pack</h3>
+                <img data-i="partyRacer" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcmFjZXJfY2FyZC0xMDI0eDY4My53ZWJw" alt="Racer Party Pack at Velocity Sim Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Racer Party Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
-                <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $499</span>
-                </div>
                 <ul class="vsl-bn-card__features">
+                  <li>5 Racer rigs &bull; Semi-private space</li>
                   <li>Great for groups of 5&ndash;10 drivers</li>
-                  <li>5 racer rigs for 2 hours of racing</li>
-                  <li>2 &times; Triple Crown Platters</li>
-                  <li>Reserved seating</li>
-                  <li>Dedicated event captain</li>
+                  <li>2 hours of racing</li>
+                  <li>Triple Crown Platters included</li>
+                  <li>Dedicated Pit Crew</li>
                   <li>Upgrades available</li>
                 </ul>
                 <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
             </a>
 
-            <a class="vsl-bn-card" data-l="partyPro" href="https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24" target="_blank" rel="noopener noreferrer">
+            <a class="vsl-bn-card" data-l="partyPro" href="https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="partyPro" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvVW50aXRsZWRfZGVzaWduLTIyLTEwMjR4NjgzLndlYnA=" alt="Pro Party Pack at Velocity Sim Lounge" width="1024" height="683" loading="lazy" decoding="async">
-                <h3 class="vsl-bn-card__overlay-name">Pro Pack</h3>
+                <img data-i="partyPro" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvVW50aXRsZWRfZGVzaWduLTIyLTEwMjR4NjgzLndlYnA=" alt="Pro Party Pack at Velocity Sim Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Pro Party Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
-                <div class="vsl-bn-card__price-row">
-                  <span class="vsl-bn-card__price-badge"><span class="vsl-bn-card__price-from">From</span> $725</span>
-                </div>
                 <ul class="vsl-bn-card__features">
-                  <li>6 Pro rigs for groups of 6&ndash;18</li>
+                  <li>5 Pro rigs &bull; Semi-private space</li>
+                  <li>Ideal for groups of 5&ndash;15 drivers</li>
                   <li>2 hours of racing</li>
-                  <li>3 &times; Triple Crown Platters</li>
-                  <li>Reserved seating</li>
-                  <li>Dedicated event captain</li>
+                  <li>Triple Crown Platters included</li>
+                  <li>Dedicated Pit Crew</li>
                   <li>Upgrades available</li>
                 </ul>
                 <span class="vsl-bn-card__cta-hint">Book now <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+              </div>
+            </a>
+
+            <a class="vsl-bn-card" data-l="partyChampion" href="https://velocitysimlounge.com/dallas/party-packs/#pp-packs">
+              <div class="vsl-bn-card__media">
+                <img data-i="partyChampion" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRnVsbC1CdXlvdXQtY2FyZC1waG90by0xMDI0eDY4My53ZWJw" alt="Champion Party Pack at Velocity Sim Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Champion Party Pack</h3>
+              </div>
+              <div class="vsl-bn-card__body">
+                <ul class="vsl-bn-card__features">
+                  <li>10 rigs &bull; Full private space</li>
+                  <li>Our largest Party Pack for groups of 10&ndash;25</li>
+                  <li>2 hours of racing on 10 rigs</li>
+                  <li>Enhanced catering options</li>
+                  <li>Dedicated Pit Crew</li>
+                  <li>Upgrades available</li>
+                </ul>
+                <span class="vsl-bn-card__cta-hint">View pack details <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
             </a>
 
@@ -2987,6 +3068,36 @@
       }
     });
 
+    function isMenuRacesMode() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var menu = (params.get('menu') || '').toLowerCase();
+        var filter = (params.get('filter') || '').toLowerCase();
+        if (menu === 'races' || menu === 'quick-double') return true;
+        if (filter === 'quick-double' || filter === 'quick,double' || filter === 'races') return true;
+      } catch (e) {}
+      return (window.location.hash || '').toLowerCase() === '#menu-races';
+    }
+
+    function applyMenuRacesMode() {
+      if (!isMenuRacesMode()) return false;
+      root.classList.add('vsl-booknow--menu-races');
+      var cityEl = root.querySelector('[data-bn-loc-heading-city]') || root.querySelector('[data-bn-loc-city]');
+      var city = cityEl ? cityEl.textContent : 'Dallas';
+      var heading = root.querySelector('#experiences-heading');
+      if (heading) {
+        heading.innerHTML = 'Book a Race in <span class="vsl-bn-section-title__city" data-bn-loc-heading-city>' + city + '</span>';
+      }
+      var grid = root.querySelector('#panel-main .vsl-bn-card-grid');
+      if (grid) {
+        grid.classList.remove('vsl-bn-card-grid--4', 'vsl-bn-card-grid--3');
+        grid.classList.add('vsl-bn-card-grid--2');
+      }
+      return true;
+    }
+
+    var menuRacesMode = applyMenuRacesMode();
+
     var tabs = root.querySelectorAll('.vsl-bn-tab[role="tab"]');
     var panels = root.querySelectorAll('.vsl-bn-panel[role="tabpanel"]');
 
@@ -3111,12 +3222,7 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        if (panel.dataset.vslTabSeen === '1') {
-          clearCardEntrance(panel);
-        } else {
-          panel.dataset.vslTabSeen = '1';
-          staggerCards(panel);
-        }
+        staggerCards(panel);
       }
     }
 
@@ -3170,6 +3276,12 @@
     var initialPanel = root.querySelector('.vsl-bn-panel[aria-hidden="false"]');
 
     requestAnimationFrame(function() {
+      if (menuRacesMode) {
+        var exp = document.getElementById('experiences');
+        if (exp) {
+          try { exp.scrollIntoView({ behavior: 'auto', block: 'start' }); } catch (e) {}
+        }
+      }
       equalizeCardHeights();
       requestAnimationFrame(function() {
         if (initialPanel) {
