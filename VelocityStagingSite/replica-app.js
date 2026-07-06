@@ -136,6 +136,18 @@
     return attempt();
   }
 
+  /* Keep in sync with velocity-navbar.html HOUSTON_ONLY_SLUGS */
+  var HOUSTON_ONLY_SLUGS = {
+    about: 1,
+    membership: 1,
+    ignition: 1,
+    "summer-special": 1,
+    "fathers-day": 1,
+    "spring-bundles": 1,
+    "menu-2025": 1,
+    blog: 1
+  };
+
   var REPLICA_SLUG_PAGE_KEYS = {
     home: { houston: "home", dallas: "dallas-home" },
     "party-packs": { houston: "party-packs", dallas: "dallas-party-packs" },
@@ -156,6 +168,8 @@
 
   window.VSL_REPLICA_BUILD_URL = function (loc, slug) {
     loc = loc === "dallas" ? "dallas" : "houston";
+    /* Houston-only pages always resolve to Houston replica keys (matches production nav rewrite). */
+    if (HOUSTON_ONLY_SLUGS[slug]) loc = "houston";
     var dallasPages = ["home", "party-packs", "book-now", "contact", "group-events", "corporate-events", "food-and-drink", "semi-private", "promotions", "buyout"];
     if (loc === "dallas" && dallasPages.indexOf(slug) === -1) slug = "home";
     var map = REPLICA_SLUG_PAGE_KEYS[slug];
@@ -163,12 +177,35 @@
     return "index.html?p=" + key;
   };
 
-  var REPLICA_PAGE_KEY_TO_SLUG = Object.create(null);
-  Object.keys(REPLICA_SLUG_PAGE_KEYS).forEach(function (slug) {
-    var map = REPLICA_SLUG_PAGE_KEYS[slug];
-    if (map.houston) REPLICA_PAGE_KEY_TO_SLUG[map.houston] = slug;
-    if (map.dallas) REPLICA_PAGE_KEY_TO_SLUG[map.dallas] = slug;
-  });
+  /* Explicit map — do not derive from REPLICA_SLUG_PAGE_KEYS (many slugs share dallas-home). */
+  var REPLICA_PAGE_KEY_TO_SLUG = {
+    home: "home",
+    about: "about",
+    "book-now": "book-now",
+    contact: "contact",
+    "food-drink": "food-and-drink",
+    ignition: "ignition",
+    "menu-2025": "menu-2025",
+    membership: "membership",
+    "parties-events": "group-events",
+    "party-packs": "party-packs",
+    "semi-private": "semi-private",
+    "corporate-events": "corporate-events",
+    "fathers-day": "fathers-day",
+    "summer-special": "summer-special",
+    promotions: "promotions",
+    buyout: "buyout",
+    "dallas-home": "home",
+    "dallas-book-now": "book-now",
+    "dallas-contact": "contact",
+    "dallas-food-drink": "food-and-drink",
+    "dallas-parties-events": "group-events",
+    "dallas-party-packs": "party-packs",
+    "dallas-semi-private": "semi-private",
+    "dallas-corporate-events": "corporate-events",
+    "dallas-promotions": "promotions",
+    "dallas-buyout": "buyout"
+  };
 
   function replicaSlugFromNavHref(href) {
     if (!href || href.charAt(0) === "#") return null;
@@ -195,6 +232,7 @@
         var parts = path.split("/").filter(Boolean);
         var last = parts[parts.length - 1];
         if (last === "index.html" && parts.length > 1) last = parts[parts.length - 2];
+        if (last === "spring-bundles") return "fathers-day";
         return last || "home";
       } catch (e) {}
     }
