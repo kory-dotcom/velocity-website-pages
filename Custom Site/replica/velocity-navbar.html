@@ -3248,13 +3248,18 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   function handleLocationChoice(key, shouldPersist, options) {
     options = options || {};
     var normalized = normalizeLocation(key);
-    dismissForSession();
-    closeLocationPrompt();
-    if (options.returnToDetails) {
-      showLocPanelDetails();
-    } else if (!options.keepDropdownOpen) {
-      closeLocDropdown();
+    if (normalized === currentLocation) {
+      closeLocationPrompt();
+      closeStickyLocMenu();
+      closeLocDropdown({ instant: true });
+      return;
     }
+    dismissForSession();
+    closeMega();
+    closeMobile();
+    closeLocationPrompt();
+    closeStickyLocMenu();
+    closeLocDropdown({ instant: true });
 
     if (shouldPersist) {
       if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
@@ -3326,13 +3331,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     else openStickyLocMenu();
   }
 
-  function closeLocDropdown() {
+  function closeLocDropdown(options) {
+    options = options || {};
+    if (locInfoPanel && options.instant) {
+      locInfoPanel.style.transition = 'none';
+    }
     if (locWrap) {
       locWrap.classList.remove('vsl-navbar__loc-wrap--open');
       if (locPillBtn) {
         locPillBtn.setAttribute('aria-expanded', 'false');
         if (typeof locPillBtn.blur === 'function') locPillBtn.blur();
       }
+    }
+    if (locInfoPanel && options.instant) {
+      void locInfoPanel.offsetHeight;
+      locInfoPanel.style.transition = '';
     }
     showLocPanelDetails();
   }
@@ -3761,12 +3774,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   pickButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var selected = btn.getAttribute('data-location-pick');
-      var fromIntegrated = locPanelSwitcherView && !locPanelSwitcherView.hidden;
-      handleLocationChoice(selected, true, {
-        returnToDetails: fromIntegrated,
-        keepDropdownOpen: fromIntegrated
-      });
+      handleLocationChoice(btn.getAttribute('data-location-pick'), true);
     });
   });
 
