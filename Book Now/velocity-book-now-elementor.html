@@ -611,6 +611,7 @@
     line-height: 1.3 !important;
     background: transparent !important;
   }
+  .vsl-bn-tab__short { display: none; }
   button.vsl-bn-tab:hover,
   .vsl-bn-tab:hover {
     border-color: var(--c2) !important;
@@ -700,6 +701,36 @@
     gap: clamp(24px, 3vw, 36px);
     max-width: min(720px, 100%);
     margin-inline: auto;
+  }
+
+  /* In-store food menu QR — ?menu=races shows Quick + Double Race only */
+  .vsl-booknow--menu-races #bn-tabs,
+  .vsl-booknow--menu-races #panel-2seater,
+  .vsl-booknow--menu-races #panel-party,
+  .vsl-booknow--menu-races .vsl-bn-features,
+  .vsl-booknow--menu-races .vsl-bn-membership,
+  .vsl-booknow--menu-races .vsl-bn-faq,
+  .vsl-booknow--menu-races .vsl-bn-cta {
+    display: none !important;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card[data-l]:not([data-l="quickRace"]):not([data-l="doubleRace"]) {
+    display: none !important;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(24px, 3vw, 36px);
+    max-width: min(720px, 100%);
+    margin-inline: auto;
+    flex-wrap: unset;
+  }
+  .vsl-booknow--menu-races #panel-main .vsl-bn-card-grid .vsl-bn-card {
+    flex: unset;
+    max-width: none;
+    min-width: 0;
+  }
+  .vsl-booknow--menu-races .vsl-bn-experiences {
+    padding-top: clamp(32px, 5vw, 48px);
   }
 
   .vsl-bn-spring-grid {
@@ -1859,7 +1890,26 @@
     .vsl-bn-card__ticket::before { left: -6px; }
     .vsl-bn-card__ticket::after { right: -6px; }
     .vsl-bn-card__body { padding: 14px 16px 18px; }
-    .vsl-bn-tab { padding: 8px 18px; font-size: 0.8rem; }
+    .vsl-bn-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      flex-wrap: nowrap;
+      gap: 8px;
+    }
+    .vsl-bn-tab {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 4px !important;
+      font-size: 0.8rem !important;
+      letter-spacing: 0.03em !important;
+      min-width: 0;
+      white-space: nowrap;
+      text-align: center;
+      line-height: 1.15 !important;
+    }
+    .vsl-bn-tab__full { display: none; }
+    .vsl-bn-tab__short { display: inline; }
     .vsl-bn-features { padding: 10px 0; }
     .vsl-bn-features__row { flex-wrap: wrap; gap: 20px; justify-content: center; }
     .vsl-bn-cta { padding: 40px 0 48px; }
@@ -2442,21 +2492,14 @@
 
     <section class="vsl-bn-experiences" id="experiences" aria-labelledby="experiences-heading">
       <div class="vsl-bn-grid">
-        <div class="vsl-bn-locbadge-row">
-          <span class="vsl-bn-locbadge" data-bn-locbadge>
-            <svg class="vsl-bn-locbadge__pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
-            <span class="vsl-bn-locbadge__label">Now booking</span>
-            <span class="vsl-bn-locbadge__city" data-bn-loc-city>Houston</span>
-          </span>
-        </div>
         <h2 class="vsl-bn-section-title" id="experiences-heading">
           Choose Your <span class="vsl-bn-section-title__city" data-bn-loc-heading-city>Houston</span> Experience
         </h2>
 
         <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
-          <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true">Main Experiences</button>
-          <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false">2-Seater Experiences</button>
-          <button class="vsl-bn-tab" role="tab" id="tab-party" aria-controls="panel-party" aria-selected="false">Party Packs</button>
+          <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true"><span class="vsl-bn-tab__full">Main Experiences</span><span class="vsl-bn-tab__short">Main</span></button>
+          <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false"><span class="vsl-bn-tab__full">2-Seater Experiences</span><span class="vsl-bn-tab__short">2-Seater</span></button>
+          <button class="vsl-bn-tab" role="tab" id="tab-party" aria-controls="panel-party" aria-selected="false"><span class="vsl-bn-tab__full">Party Packs</span><span class="vsl-bn-tab__short">Party Packs</span></button>
         </div>
 
         <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
@@ -3045,6 +3088,36 @@
       applyLocationLinks(window.VSL_LOCATION ? window.VSL_LOCATION.readLocation() : 'houston');
     }
 
+    function isMenuRacesMode() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var menu = (params.get('menu') || '').toLowerCase();
+        var filter = (params.get('filter') || '').toLowerCase();
+        if (menu === 'races' || menu === 'quick-double') return true;
+        if (filter === 'quick-double' || filter === 'quick,double' || filter === 'races') return true;
+      } catch (e) {}
+      return (window.location.hash || '').toLowerCase() === '#menu-races';
+    }
+
+    function applyMenuRacesMode() {
+      if (!isMenuRacesMode()) return false;
+      root.classList.add('vsl-booknow--menu-races');
+      var cityEl = root.querySelector('[data-bn-loc-heading-city]') || root.querySelector('[data-bn-loc-city]');
+      var city = cityEl ? cityEl.textContent : 'Houston';
+      var heading = root.querySelector('#experiences-heading');
+      if (heading) {
+        heading.innerHTML = 'Book a Race in <span class="vsl-bn-section-title__city" data-bn-loc-heading-city>' + city + '</span>';
+      }
+      var grid = root.querySelector('#panel-main .vsl-bn-card-grid');
+      if (grid) {
+        grid.classList.remove('vsl-bn-card-grid--4', 'vsl-bn-card-grid--3');
+        grid.classList.add('vsl-bn-card-grid--2');
+      }
+      return true;
+    }
+
+    var menuRacesMode = applyMenuRacesMode();
+
     var tabs = root.querySelectorAll('.vsl-bn-tab[role="tab"]');
     var panels = root.querySelectorAll('.vsl-bn-panel[role="tabpanel"]');
 
@@ -3169,12 +3242,7 @@
       var panel = root.querySelector('#' + panelId);
       if (panel) {
         panel.setAttribute('aria-hidden', 'false');
-        if (panel.dataset.vslTabSeen === '1') {
-          clearCardEntrance(panel);
-        } else {
-          panel.dataset.vslTabSeen = '1';
-          staggerCards(panel);
-        }
+        staggerCards(panel);
       }
     }
 
@@ -3228,6 +3296,12 @@
     var initialPanel = root.querySelector('.vsl-bn-panel[aria-hidden="false"]');
 
     requestAnimationFrame(function() {
+      if (menuRacesMode) {
+        var exp = document.getElementById('experiences');
+        if (exp) {
+          try { exp.scrollIntoView({ behavior: 'auto', block: 'start' }); } catch (e) {}
+        }
+      }
       equalizeCardHeights();
       requestAnimationFrame(function() {
         if (initialPanel) {

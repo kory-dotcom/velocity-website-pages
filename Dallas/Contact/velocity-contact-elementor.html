@@ -101,10 +101,47 @@
     padding-block-end: 0;
   }
   .elementor-widget-html .elementor-widget-container:has(> .vsl-contact) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-contact),
+  .elementor-container:has(.vsl-contact),
+  .elementor-column:has(.vsl-contact),
+  .elementor-column-wrap:has(.vsl-contact),
+  .elementor-widget-wrap:has(.vsl-contact),
+  .elementor-widget:has(.vsl-contact) {
+    flex-shrink: 0 !important;
+    padding: 0 !important;
     padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .e-con:has(.vsl-contact),
+  .e-con-inner:has(.vsl-contact),
+  .e-con-inner > .elementor-widget:has(.vsl-contact),
+  .elementor-element:has(> .elementor-widget-container > .vsl-contact) {
+    flex-shrink: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
   }
   .vsl-contact *,
   .vsl-contact *::before,

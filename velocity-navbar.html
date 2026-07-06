@@ -42,16 +42,17 @@ if (!window.VSL_LOCATION) {
 <!-- Mobile Explore card images — high-priority preload for instant menu render -->
 <link rel="preconnect" href="https://velocitysimlounge.com">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg" media="(max-width: 900px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/07/Velocity-Logomark-Small-Scale-White-Standalone.webp" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg" media="(max-width: 1024px)">
 <script>
   /* Immediate image warmup (no waiting for DOMContentLoaded) — viewport-aware to avoid wasting mobile bandwidth */
   (function() {
-    var isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+    var isMobile = window.matchMedia && window.matchMedia('(max-width: 1024px)').matches;
     var urls = isMobile ? [
       'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-768x432.jpg',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp',
@@ -130,6 +131,7 @@ if (!window.VSL_LOCATION) {
   --vsl-cta-loc-bg-hover: rgba(104,123,234,0.55);
   --vsl-race-bg: rgba(238,38,95,0.2);
   --vsl-race-border: rgba(255,92,148,0.6);
+  --vsl-finish-line: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
   position: relative;
   z-index: var(--z-navbar);
   width: 100%;
@@ -168,6 +170,100 @@ if (!window.VSL_LOCATION) {
 .vsl-navbar__logo:hover img,
 .vsl-navbar__sticky-logo:hover img {
   filter: brightness(1.18) drop-shadow(0 0 6px rgba(210,32,38,0.4)) drop-shadow(0 0 14px rgba(210,32,38,0.15));
+}
+.vsl-navbar__logo-mark {
+  display: none;
+}
+.vsl-navbar__mcta {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.vsl-navbar__mcta-explore,
+.vsl-navbar__mcta-book,
+.vsl-navbar__mcta-events {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 0 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.vsl-navbar__mcta-explore {
+  color: #101828;
+  -webkit-text-fill-color: #101828;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.22);
+}
+.vsl-navbar__mcta-explore svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.25s ease;
+}
+.vsl-navbar__mcta-explore[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__mcta-explore:hover,
+  .vsl-navbar__mcta-explore:focus-visible {
+    background: #fff;
+    filter: brightness(1.04);
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+}
+.vsl-navbar__mcta-explore[aria-expanded="true"] {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  box-shadow: none;
+}
+.vsl-navbar__mcta-book {
+  color: #fff;
+  background: var(--magenta);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__mcta-book:hover,
+  .vsl-navbar__mcta-book:focus-visible {
+    filter: brightness(1.08) saturate(1.05);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+      0 0 14px rgba(238, 38, 95, 0.35);
+  }
+}
+.vsl-navbar__mcta-events {
+  color: #fff;
+  background: rgba(41, 56, 147, 0.42);
+  border: 1px solid rgba(234, 234, 234, 0.22);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vsl-navbar__mcta-events:hover,
+  .vsl-navbar__mcta-events:focus-visible {
+    background: rgba(41, 56, 147, 0.58);
+    border-color: rgba(234, 234, 234, 0.36);
+  }
 }
 .vsl-navbar__menu {
   display: flex;
@@ -387,8 +483,9 @@ if (!window.VSL_LOCATION) {
   top: calc(100% + (8px * var(--vsl-ui-scale)));
   left: 50%;
   right: auto;
-  width: calc(320px * var(--vsl-ui-scale));
-  min-width: 100%;
+  width: min(calc(320px * var(--vsl-ui-scale)), calc(100vw - (24px * var(--vsl-ui-scale))));
+  max-width: calc(320px * var(--vsl-ui-scale));
+  min-width: 0;
   background: var(--navy-deep);
   border: 1px solid rgba(104, 124, 238, 0.22);
   border-radius: calc(10px * var(--vsl-ui-scale));
@@ -414,24 +511,28 @@ if (!window.VSL_LOCATION) {
   background: rgba(0, 0, 0, 0.12);
 }
 .vsl-navbar__loc-change {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: calc(8px * var(--vsl-ui-scale));
-  width: 100%;
-  padding: calc(11px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale));
+  gap: calc(6px * var(--vsl-ui-scale));
+  width: fit-content;
+  max-width: 100%;
+  flex: 0 0 auto;
+  padding: calc(8px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: calc(12px * var(--vsl-ui-scale));
+  font-size: calc(11px * var(--vsl-ui-scale));
   font-style: italic;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #fff;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.72);
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  box-shadow: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .vsl-navbar__loc-change svg {
   width: calc(14px * var(--vsl-ui-scale));
@@ -442,8 +543,10 @@ if (!window.VSL_LOCATION) {
 }
 .vsl-navbar__loc-change:hover,
 .vsl-navbar__loc-change:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(238, 38, 95, 0.5);
+  box-shadow: none;
 }
 .vsl-navbar__loc-panel-view[hidden] {
   display: none !important;
@@ -643,8 +746,7 @@ if (!window.VSL_LOCATION) {
 }
 /* Fixed slot so Houston/Dallas swaps don't resize the bar (min-width ignored on plain inline) */
 .vsl-navbar__cta-loc-name,
-[data-sticky-location],
-[data-book-now-mobile-title] {
+[data-sticky-location] {
   display: inline-block;
   min-width: 6em;
   text-align: center;
@@ -746,6 +848,13 @@ if (!window.VSL_LOCATION) {
   margin-bottom: calc(12px * var(--vsl-ui-scale));
   padding-bottom: calc(12px * var(--vsl-ui-scale));
   border-bottom: 1px solid rgba(234, 234, 234, 0.1);
+}
+.vsl-navbar__loc-detail-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: calc(8px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  width: 100%;
 }
 .vsl-navbar__loc-detail-name {
   font-family: var(--font-head);
@@ -890,19 +999,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   color: var(--yellow);
 }
 .vsl-navbar__loc-detail-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: calc(10px * var(--vsl-ui-scale));
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(8px * var(--vsl-ui-scale));
   width: 100%;
   margin-bottom: 0;
 }
 .vsl-navbar__loc-detail-action {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: calc(8px * var(--vsl-ui-scale));
-  min-height: calc(36px * var(--vsl-ui-scale));
-  padding: calc(8px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  width: 100%;
+  min-height: calc(34px * var(--vsl-ui-scale));
+  padding: calc(7px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
   font-family: var(--font-head);
   font-weight: 600;
   font-size: calc(11px * var(--vsl-ui-scale));
@@ -920,6 +1031,29 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   color: #fff;
   background: rgba(41, 56, 147, 0.35);
   border-color: rgba(234, 234, 234, 0.18);
+}
+.vsl-navbar__loc-detail-action--event {
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff3d6e 0%, var(--magenta) 55%, #c81d4c 100%);
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 calc(4px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.32);
+}
+.vsl-navbar__loc-detail-action--event:hover,
+.vsl-navbar__loc-detail-action--event:focus-visible {
+  color: #fff;
+  background: linear-gradient(135deg, #ff4f7c 0%, #f22a63 55%, #d21f50 100%);
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 calc(6px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.45);
+  transform: translateY(-1px);
+}
+.vsl-navbar__loc-detail-action--event svg {
+  stroke: currentColor;
+  fill: none;
 }
 .vsl-navbar__loc-detail-visit {
   display: flex;
@@ -1058,7 +1192,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   margin: 0 !important;
   padding: 0 !important;
 }
-@media (min-width: 901px) {
+@media (min-width: 1025px) {
   .vsl-navbar__geo-panel,
   #vsl-location-dialog.vsl-navbar__geo-panel {
     left: auto !important;
@@ -1306,62 +1440,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   outline: none !important;
   text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 0 1px rgba(255,255,255,0.4);
 }
-/* Mobile Explore: white pill (matches desktop Explore + Book Now language). Closed = white pill, open = magenta CTA. */
-.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link {
-  width: fit-content !important;
-  max-width: min(calc(280px * var(--vsl-ui-scale)), 80%);
-  margin: calc(10px * var(--vsl-ui-scale)) auto !important;
-  padding: calc(11px * var(--vsl-ui-scale)) calc(26px * var(--vsl-ui-scale)) !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center !important;
-  gap: calc(12px * var(--vsl-ui-scale));
-  background: #fff !important;
-  color: #101828 !important;
-  -webkit-text-fill-color: #101828 !important;
-  border: none !important;
-  border-radius: 999px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
-    0 1px 3px rgba(0, 0, 0, 0.22) !important;
-  text-shadow: none !important;
-  transition: background-color 0.22s ease, color 0.22s ease, -webkit-text-fill-color 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-}
-.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:hover,
-.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus,
-.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible {
-  background: #fff !important;
-  color: #101828 !important;
-  -webkit-text-fill-color: #101828 !important;
-  filter: brightness(1.04);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
-    0 0 calc(14px * var(--vsl-ui-scale)) rgba(255, 255, 255, 0.2),
-    0 1px 4px rgba(0, 0, 0, 0.28) !important;
-  text-shadow: none !important;
-}
-.vsl-navbar__overlay-item:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:active {
-  filter: brightness(0.98);
-  box-shadow:
-    inset 0 calc(2px * var(--vsl-ui-scale)) calc(8px * var(--vsl-ui-scale)) rgba(0, 0, 0, 0.12),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2) !important;
-}
-/* Mobile Explore open (after tap): magenta CTA pill, white label + chevron — same glow as Book Now hover */
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link,
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:hover,
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus,
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:focus-visible,
-.vsl-navbar__overlay-item--open:has(.vsl-navbar__overlay-sub--cards) > .vsl-navbar__overlay-link:active {
-  background: var(--magenta) !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  filter: brightness(1.06) saturate(1.05);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
-    0 0 calc(20px * var(--vsl-ui-scale)) rgba(255, 110, 170, 0.4),
-    0 0 calc(36px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.42) !important;
-  text-shadow: none !important;
-}
 .vsl-navbar__overlay-arrow {
   width: calc(14px * var(--vsl-ui-scale));
   height: calc(14px * var(--vsl-ui-scale));
@@ -1392,24 +1470,25 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   transition: none;
   contain: layout style;
 }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards {
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards {
   max-height: none;
   overflow: visible;
+  padding-top: calc(4px * var(--vsl-ui-scale));
+  padding-bottom: calc(8px * var(--vsl-ui-scale));
 }
-/* Cards appear instantly when parent opens — no fade delay. Optional keyframe polish. */
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card {
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card {
   animation: vsl-card-pop 0.18s ease-out both;
 }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(1) { animation-delay: 0s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(2) { animation-delay: 0.02s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(3) { animation-delay: 0.04s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(4) { animation-delay: 0.06s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(5) { animation-delay: 0.08s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(6) { animation-delay: 0.10s; }
 @keyframes vsl-card-pop {
   from { opacity: 0.4; transform: translateY(4px); }
   to   { opacity: 1;   transform: translateY(0); }
 }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(1) { animation-delay: 0s; }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(2) { animation-delay: 0.02s; }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(3) { animation-delay: 0.04s; }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(4) { animation-delay: 0.06s; }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(5) { animation-delay: 0.08s; }
-.vsl-navbar__overlay-item--open > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(6) { animation-delay: 0.10s; }
 .vsl-navbar__overlay-sub-link {
   display: block;
   padding: calc(10px * var(--vsl-ui-scale)) 0;
@@ -2416,23 +2495,321 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   .vsl-navbar__cta-loc { padding: calc(9px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale)); font-size: calc(12px * var(--vsl-ui-scale)); }
   .vsl-navbar__mega { padding: calc(20px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)); }
 }
-@media (max-width: 900px) {
-  .vsl-navbar { --vsl-ui-scale: 1; }
+@media (max-width: 1024px) {
+  .vsl-navbar {
+    --vsl-ui-scale: 1;
+    --vsl-mobile-top-row: 52px;
+    --vsl-mobile-dock-finish-h: var(--stripe-h, 3px);
+    --vsl-mobile-dock-row: 50px;
+    --vsl-mobile-dock-safe: env(safe-area-inset-bottom, 0px);
+    --vsl-mobile-dock-h: calc(var(--vsl-mobile-dock-finish-h) + var(--vsl-mobile-dock-row) + var(--vsl-mobile-dock-safe));
+    --vsl-mobile-header-h: calc(var(--stripe-h) + var(--vsl-mobile-top-row));
+  }
+  /* Site-wide: checkered finish lives on the mobile dock — hide per-page hero/footer flags */
+  [class$="__finish"] {
+    display: none !important;
+  }
+  html {
+    scroll-padding-bottom: var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h));
+  }
+  body {
+    padding-bottom: var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h));
+  }
+  .vsl-navbar__sticky { display: none !important; }
   .vsl-navbar__menu,
-  .vsl-navbar__actions,
   .vsl-navbar__mega { display: none !important; }
-  .vsl-navbar__toggle { display: flex; }
-  .vsl-navbar__bar { padding: 0 calc(20px * var(--vsl-ui-scale)); }
-  /* Keep header + hamburger/X above the full-screen overlay (z-index only works with positioned ancestors) */
+  .vsl-navbar__toggle { display: none !important; }
+  .vsl-navbar__bar {
+    flex-wrap: nowrap;
+    align-items: center;
+    height: auto;
+    min-height: var(--vsl-mobile-top-row);
+    padding: 8px 12px;
+    gap: 0;
+    position: relative;
+    z-index: calc(var(--z-overlay) + 2);
+    overflow: visible;
+    background: var(--vsl-bar-bg);
+  }
+  .vsl-navbar__logo {
+    order: 1;
+    flex: 0 0 auto;
+    align-self: center;
+    margin-right: 8px;
+  }
+  .vsl-navbar__logo-img { display: none !important; }
+  .vsl-navbar__logo-mark {
+    display: block;
+    height: 44px;
+    width: auto;
+    transform: none;
+  }
+  .vsl-navbar__actions {
+    display: flex !important;
+    order: 2;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    min-height: var(--vsl-mobile-top-row);
+    align-items: center;
+    justify-content: flex-end;
+    border-top: none;
+    background: transparent;
+  }
+  .vsl-navbar__actions .vsl-navbar__cta--solo { display: none !important; }
+  .vsl-navbar__loc-wrap {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .vsl-navbar__loc-pill {
+    width: fit-content;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid rgba(234, 234, 234, 0.14);
+    border-radius: 8px;
+    background: rgba(41, 56, 147, 0.35);
+    gap: 8px;
+  }
+  .vsl-navbar__loc-wrap--open .vsl-navbar__loc-pill {
+    background: rgba(41, 56, 147, 0.48);
+    border-radius: 8px 8px 0 0;
+    border-color: rgba(234, 234, 234, 0.22);
+  }
+  .vsl-navbar__loc-pill-body {
+    flex: 0 1 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    min-width: 0;
+  }
+  .vsl-navbar__loc-pill-city {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+  .vsl-navbar__loc-pill-hours {
+    font-size: 11px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: none;
+  }
+  .vsl-navbar__loc-panel {
+    left: auto;
+    right: 0;
+    width: min(300px, calc(100vw - 24px));
+    max-width: 300px;
+    min-width: 0;
+    transform: translate(0, -6px);
+    border-radius: 0 0 10px 10px;
+  }
+  .vsl-navbar__loc-wrap--open .vsl-navbar__loc-panel {
+    transform: translate(0, 0);
+  }
+  .vsl-navbar__mcta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: calc(var(--z-overlay) + 3);
+    display: grid;
+    align-items: stretch;
+    width: 100%;
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.5fr) minmax(0, 0.9fr);
+    gap: 8px;
+    margin: 0;
+    padding: calc(10px + var(--vsl-mobile-dock-finish-h)) 12px calc(10px + var(--vsl-mobile-dock-safe));
+    border-top: none;
+    background: var(--vsl-bar-bg);
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
+    isolation: isolate;
+  }
+  .vsl-navbar__mcta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--vsl-mobile-dock-finish-h);
+    background: var(--vsl-stripe-bg);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .vsl-navbar__mcta-explore,
+  .vsl-navbar__mcta-book,
+  .vsl-navbar__mcta-events {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    gap: 6px;
+  }
+  .vsl-navbar__mcta-explore svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+  .vsl-navbar__mcta-book {
+    min-height: 52px;
+    font-size: 13.5px;
+    letter-spacing: 0.09em;
+    border-radius: 8px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.30),
+      0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+  .vsl-navbar__overlay {
+    padding-top: calc(var(--vsl-mobile-header-h) + 16px);
+    padding-bottom: calc(var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h)) + 16px);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .vsl-navbar__overlay-link {
+    font-size: clamp(1.05rem, 4.8vw, 1.35rem);
+    padding: 14px 0;
+  }
+  .vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards {
+    padding-top: 4px;
+    padding-bottom: 8px;
+  }
+  /* Mobile menu open: pin header to viewport so Explore/Close stays reachable after scroll */
+  .vsl-navbar.vsl-navbar--mobile-menu-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: calc(var(--z-overlay) + 2);
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__sticky {
+    display: none !important;
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__stripe,
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__bar {
+    position: relative;
+    z-index: calc(var(--z-overlay) + 2);
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__mcta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: calc(var(--z-overlay) + 4);
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__overlay {
+    z-index: calc(var(--z-overlay) + 1);
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__loc-wrap--open {
+    z-index: calc(var(--z-overlay) + 3);
+  }
+  /* Legacy :has() fallback when JS class is unavailable */
+  .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__stripe,
+  .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__bar {
+    position: relative;
+    z-index: calc(var(--z-overlay) + 2);
+  }
+  .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__actions {
+    position: relative;
+    z-index: calc(var(--z-overlay) + 2);
+  }
+  .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__mcta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: calc(var(--z-overlay) + 4);
+  }
+  .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__loc-wrap--open {
+    z-index: calc(var(--z-overlay) + 3);
+  }
   .vsl-navbar__stripe {
     position: relative;
     z-index: calc(var(--z-overlay) + 2);
     flex-shrink: 0;
   }
+}
+@media (min-width: 1025px) {
+  html { scroll-padding-bottom: 0; }
+  body { padding-bottom: 0; }
+  .vsl-navbar__logo-mark,
+  .vsl-navbar__mcta,
+  .vsl-navbar__toggle { display: none !important; }
+  .vsl-navbar__logo-img { display: block !important; }
+  .vsl-navbar__menu { display: flex !important; }
+  .vsl-navbar__actions .vsl-navbar__cta--solo { display: inline-flex !important; }
   .vsl-navbar__bar {
-    position: relative;
-    z-index: calc(var(--z-overlay) + 2);
-    overflow: visible;
+    flex-wrap: nowrap;
+    height: var(--nav-height);
+    padding: 0 calc(48px * var(--vsl-ui-scale)) 0 calc(24px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__actions {
+    display: flex !important;
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 0;
+    margin-left: calc(16px * var(--vsl-ui-scale));
+    padding: 0;
+    border-top: none;
+    background: transparent;
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+  .vsl-navbar__loc-wrap {
+    width: auto;
+    max-width: none;
+    flex: 0 0 auto;
+    align-items: stretch;
+  }
+  .vsl-navbar__loc-pill {
+    width: auto;
+    min-height: 0;
+    padding: calc(9px * var(--vsl-ui-scale)) calc(10px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__loc-panel {
+    left: 50%;
+    right: auto;
+    width: calc(320px * var(--vsl-ui-scale));
+    max-width: calc(320px * var(--vsl-ui-scale));
+    transform: translate(-50%, -6px);
+    border-radius: calc(10px * var(--vsl-ui-scale));
+  }
+  .vsl-navbar__loc-wrap--open .vsl-navbar__loc-panel {
+    transform: translate(-50%, 0);
+  }
+}
+@media (max-width: 380px) {
+  .vsl-navbar__mcta {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr) minmax(0, 0.82fr);
+    gap: 5px;
+  }
+  .vsl-navbar__mcta-explore,
+  .vsl-navbar__mcta-events {
+    font-size: 12px;
+    padding: 0 5px;
+    letter-spacing: 0.04em;
+    gap: 4px;
+  }
+  .vsl-navbar__mcta-book {
+    font-size: 12.5px;
+  }
+  .vsl-navbar__loc-pill {
+    max-width: calc(100vw - 72px);
+  }
+  .vsl-navbar__loc-pill-hours {
+    font-size: 10px;
   }
 }
 @media (max-width: 600px) {
@@ -2478,8 +2855,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 <nav class="vsl-navbar" role="navigation" aria-label="Main navigation">
   <div class="vsl-navbar__stripe" aria-hidden="true"></div>
   <div class="vsl-navbar__bar">
-    <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" aria-label="Velocity Sim Racing Lounge — Home">
+    <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
       <img class="vsl-navbar__logo-img skip-lazy no-lazyload" src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png" alt="Velocity Sim Racing Lounge" width="230" height="48" loading="eager" decoding="sync" fetchpriority="high" data-no-lazy="1" data-skip-lazy="1">
+      <img class="vsl-navbar__logo-mark skip-lazy no-lazyload" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/Velocity-Logomark-Small-Scale-White-Standalone.webp" alt="Velocity Sim Racing Lounge" width="512" height="512" loading="eager" decoding="sync" fetchpriority="high" data-no-lazy="1" data-skip-lazy="1">
     </a>
     <ul class="vsl-navbar__menu">
       <li class="vsl-navbar__item">
@@ -2509,7 +2887,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
           <div class="vsl-navbar__loc-panel-view" data-loc-panel-view="details">
           <div class="vsl-navbar__loc-detail is-active" data-loc-detail="houston">
             <div class="vsl-navbar__loc-detail-header">
-              <span class="vsl-navbar__loc-detail-name">Houston</span>
+              <div class="vsl-navbar__loc-detail-title-row">
+                <span class="vsl-navbar__loc-detail-name">Houston</span>
+                <button type="button" class="vsl-navbar__loc-change" data-loc-change-open>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Change Location
+                </button>
+              </div>
               <span class="vsl-navbar__loc-detail-venue">(Sawyer Yards)</span>
             </div>
             <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Houston hours">
@@ -2525,9 +2909,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <a href="tel:+12818291516" class="vsl-navbar__loc-detail-phone">(281) 829-1516</a>
             </div>
             <div class="vsl-navbar__loc-detail-links">
-              <a href="https://maps.google.com/?q=2110+Edwards+St+Houston+TX+77007" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-                Get Directions
+              <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__loc-detail-action vsl-navbar__loc-detail-action--event">
+                <svg viewBox="0 0 24 24"><path d="M7 2v2M17 2v2M3 8h18M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Book an Event
               </a>
               <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__loc-detail-action">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -2537,7 +2921,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
           </div>
           <div class="vsl-navbar__loc-detail" data-loc-detail="dallas">
             <div class="vsl-navbar__loc-detail-header">
-              <span class="vsl-navbar__loc-detail-name">Dallas</span>
+              <div class="vsl-navbar__loc-detail-title-row">
+                <span class="vsl-navbar__loc-detail-name">Dallas</span>
+                <button type="button" class="vsl-navbar__loc-change" data-loc-change-open>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Change Location
+                </button>
+              </div>
               <span class="vsl-navbar__loc-detail-venue">(The Hill)</span>
             </div>
             <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Dallas hours">
@@ -2551,21 +2941,15 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
             </div>
             <div class="vsl-navbar__loc-detail-links">
-              <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener" class="vsl-navbar__loc-detail-action">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
-                Get Directions
+              <a href="https://velocitysimlounge.com/dallas/group-events/" class="vsl-navbar__loc-detail-action vsl-navbar__loc-detail-action--event">
+                <svg viewBox="0 0 24 24"><path d="M7 2v2M17 2v2M3 8h18M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Book an Event
               </a>
               <a href="https://velocitysimlounge.com/dallas/contact/" class="vsl-navbar__loc-detail-action">
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                 Location Info
               </a>
             </div>
-          </div>
-          <div class="vsl-navbar__loc-panel-footer">
-            <button type="button" class="vsl-navbar__loc-change" data-loc-change-open>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Change Location
-            </button>
           </div>
           </div>
           <div class="vsl-navbar__loc-panel-view vsl-navbar__loc-panel-view--switcher" data-loc-panel-view="switcher" hidden>
@@ -2595,9 +2979,18 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     </button>
   </div>
 
+  <div class="vsl-navbar__mcta" aria-label="Quick actions">
+    <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__mcta-events" data-mobile-bar-events aria-label="Parties and events">Events</a>
+    <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__mcta-book" data-mobile-bar-book>Book Now</a>
+    <button type="button" class="vsl-navbar__mcta-explore" data-mobile-explore data-mobile-menu-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-mobile-explore-panel" aria-label="Open menu">
+      Explore
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
   <!-- Sticky Book Now Bar (appears on scroll) -->
   <div class="vsl-navbar__sticky" aria-hidden="true">
-    <a href="https://velocitysimlounge.com/" class="vsl-navbar__sticky-logo" aria-label="Velocity Sim Racing Lounge — Home">
+    <a href="https://velocitysimlounge.com/" class="vsl-navbar__sticky-logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
       <img src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png" alt="Velocity Sim Racing Lounge" width="160" height="34" loading="eager" decoding="async" fetchpriority="high">
     </a>
     <div class="vsl-navbar__sticky-book">
@@ -2674,23 +3067,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     </div>
   </div>
 
-  <div class="vsl-navbar__overlay" aria-hidden="true">
-    <div class="vsl-navbar__overlay-cta">
-      <button type="button" class="vsl-navbar__overlay-cta-loc" data-mobile-loc-toggle aria-label="Switch location">
-        <span class="vsl-navbar__overlay-cta-loc-row">
-          <span data-book-now-mobile-title>Houston</span>
-          <span class="vsl-navbar__overlay-cta-loc-chip" aria-hidden="true">
-            <svg class="vsl-navbar__cta-swap" viewBox="0 0 24 24"><path d="M16 3l4 4-4 4M4 7h16M8 21l-4-4 4-4M20 17H4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </span>
-        </span>
-      </button>
-      <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__overlay-cta-book" data-book-now-mobile-primary>Book Now</a>
-    </div>
+  <div class="vsl-navbar__overlay" id="vsl-mobile-explore-panel" aria-hidden="true">
     <ul class="vsl-navbar__overlay-menu">
-      <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
-        <button class="vsl-navbar__overlay-link">Explore
-          <svg class="vsl-navbar__overlay-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+      <li class="vsl-navbar__overlay-item vsl-navbar__overlay-item--explore-cards" data-mobile-explore-cards>
         <div class="vsl-navbar__overlay-sub vsl-navbar__overlay-sub--cards">
           <div class="vsl-navbar__overlay-cards">
             <a href="https://velocitysimlounge.com/book-now/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--book" data-mobile-mega-book>
@@ -2721,7 +3100,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         </div>
       </li>
       <li class="vsl-navbar__overlay-item">
-        <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__overlay-link">Group Events</a>
+        <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__overlay-link" data-mobile-overlay-contact>Contact</a>
       </li>
       <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
         <button class="vsl-navbar__overlay-link">Our Menu
@@ -2742,7 +3121,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       <a href="https://www.facebook.com/VelocitySimLounge/" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
       <a href="https://www.tiktok.com/@velocitysimlounge" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
     </div>
-    <a href="https://velocitysimlounge.com/" class="vsl-navbar__overlay-logo" aria-label="Velocity Sim Racing Lounge — Home">
+    <a href="https://velocitysimlounge.com/" class="vsl-navbar__overlay-logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
       <img class="vsl-navbar__logo-img skip-lazy no-lazyload" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Logomark-Master-Black-Standalone.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Logomark-Master-Black-Standalone-256x256.webp 256w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Logomark-Master-Black-Standalone-512x512.webp 512w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity-Logomark-Master-Black-Standalone.webp 1024w" sizes="52px" alt="Velocity" width="512" height="512" loading="eager" decoding="sync" fetchpriority="high" data-no-lazy="1" data-skip-lazy="1">
     </a>
   </div>
@@ -2832,6 +3211,31 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var navbar = document.querySelector('.vsl-navbar');
   if (!navbar) return;
 
+  function publishNavHeight() {
+    var h = Math.round(navbar.getBoundingClientRect().height);
+    document.documentElement.style.setProperty('--vsl-navbar-height', h + 'px');
+    var dock = navbar.querySelector('.vsl-navbar__mcta');
+    var dockH = 0;
+    if (dock && isMobileViewport()) {
+      var dockRect = dock.getBoundingClientRect();
+      dockH = dockRect.height > 0 ? Math.round(dockRect.height) : 0;
+    }
+    document.documentElement.style.setProperty('--vsl-mobile-dock-height', dockH + 'px');
+    try {
+      document.dispatchEvent(new CustomEvent('vslNavbarHeightChange', {
+        detail: { height: h, dockHeight: dockH, chromeHeight: h + dockH }
+      }));
+    } catch (_) {}
+  }
+  publishNavHeight();
+  if ('ResizeObserver' in window) {
+    var navResizeObserver = new ResizeObserver(publishNavHeight);
+    navResizeObserver.observe(navbar);
+    var mobileDock = navbar.querySelector('.vsl-navbar__mcta');
+    if (mobileDock) navResizeObserver.observe(mobileDock);
+  } else {
+    window.addEventListener('resize', publishNavHeight);
+  }
 
   function slugFromNavHref(href) {
     if (!href) return '';
@@ -2902,9 +3306,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   var primaryCta = navbar.querySelector('[data-book-now-primary]');
   var primaryCtaLocation = navbar.querySelector('[data-book-now-location]');
-  var mobileCtaTitle = navbar.querySelector('[data-book-now-mobile-title]');
-  var mobileCtaPrimary = navbar.querySelector('[data-book-now-mobile-primary]');
-  var mobileLocToggle = navbar.querySelector('[data-mobile-loc-toggle]');
+  var mobileBarBook = navbar.querySelector('[data-mobile-bar-book]');
+  var mobileBarEvents = navbar.querySelector('[data-mobile-bar-events]');
+  var mobileOverlayContact = navbar.querySelector('[data-mobile-overlay-contact]');
+  var mobileExploreBtn = navbar.querySelector('[data-mobile-explore]');
+  var navHomeLinks = navbar.querySelectorAll('[data-nav-home]');
   var stickyBookNow = navbar.querySelector('[data-sticky-book-now]');
   var stickyLocation = navbar.querySelector('[data-sticky-location]');
   var stickyLocWrap = navbar.querySelector('[data-sticky-loc-dropdown]');
@@ -2916,7 +3322,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var dismissBtn = navbar.querySelector('[data-location-dismiss]');
   var pickButtons = navbar.querySelectorAll('[data-location-pick]');
   var locationOpenButtons = navbar.querySelectorAll('[data-location-open]');
-  var locChangeBtn = navbar.querySelector('[data-loc-change-open]');
   var locInfoPanel = navbar.querySelector('#vsl-loc-info-panel');
   var locPanelDetailsView = locInfoPanel ? locInfoPanel.querySelector('[data-loc-panel-view="details"]') : null;
   var locPanelSwitcherView = locInfoPanel ? locInfoPanel.querySelector('[data-loc-panel-view="switcher"]') : null;
@@ -2971,7 +3376,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   function updateLocPill(loc) {
     var config = LOCATIONS[normalizeLocation(loc)] || LOCATIONS.houston;
     if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
-    if (mobileCtaTitle) mobileCtaTitle.textContent = config.label;
     if (stickyLocation) stickyLocation.textContent = config.label;
     if (locPillHours) locPillHours.textContent = getTodayHoursSummary(loc);
   }
@@ -2981,6 +3385,54 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       return window.VSL_REPLICA_BOOKING_HREF(locKey);
     }
     return config.bookingUrl;
+  }
+
+  function resolveHomeUrl(locKey) {
+    locKey = normalizeLocation(locKey);
+    if (window.__VSL_SITE_REPLICA__ && window.VSL_REPLICA_BUILD_URL) {
+      return window.VSL_REPLICA_BUILD_URL(locKey, 'home');
+    }
+    if (window.__VSL_SITE_REPLICA__) {
+      return locKey === 'dallas' ? 'index.html?p=dallas-home' : 'index.html?p=home';
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
+      return window.VSL_LOCATION.buildLocationUrl(locKey, 'home');
+    }
+    return locKey === 'dallas'
+      ? 'https://velocitysimlounge.com/dallas/'
+      : 'https://velocitysimlounge.com/';
+  }
+
+  function resolveGroupEventsUrl(locKey) {
+    locKey = normalizeLocation(locKey);
+    if (window.__VSL_SITE_REPLICA__ && window.VSL_REPLICA_BUILD_URL) {
+      return window.VSL_REPLICA_BUILD_URL(locKey, 'group-events');
+    }
+    if (window.__VSL_SITE_REPLICA__) {
+      return locKey === 'dallas' ? 'index.html?p=dallas-parties-events' : 'index.html?p=parties-events';
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
+      return window.VSL_LOCATION.buildLocationUrl(locKey, 'group-events');
+    }
+    return locKey === 'dallas'
+      ? 'https://velocitysimlounge.com/dallas/group-events/'
+      : 'https://velocitysimlounge.com/group-events/';
+  }
+
+  function resolveContactUrl(locKey) {
+    locKey = normalizeLocation(locKey);
+    if (window.__VSL_SITE_REPLICA__ && window.VSL_REPLICA_BUILD_URL) {
+      return window.VSL_REPLICA_BUILD_URL(locKey, 'contact');
+    }
+    if (window.__VSL_SITE_REPLICA__) {
+      return locKey === 'dallas' ? 'index.html?p=dallas-contact' : 'index.html?p=contact';
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
+      return window.VSL_LOCATION.buildLocationUrl(locKey, 'contact');
+    }
+    return locKey === 'dallas'
+      ? 'https://velocitysimlounge.com/dallas/contact/'
+      : 'https://velocitysimlounge.com/contact/';
   }
 
   function applyLocation(key, options) {
@@ -2994,14 +3446,24 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       primaryCta.href = bookHref;
       primaryCta.setAttribute('aria-label', 'Book now at ' + config.label);
     }
+    if (mobileBarBook) {
+      mobileBarBook.href = bookHref;
+      mobileBarBook.setAttribute('aria-label', 'Book now at ' + config.label);
+    }
+    if (mobileBarEvents) {
+      var eventsHref = resolveGroupEventsUrl(normalized);
+      mobileBarEvents.href = eventsHref;
+      mobileBarEvents.setAttribute('aria-label', 'Parties and events at ' + config.label);
+    }
+    if (mobileOverlayContact) {
+      var contactHref = resolveContactUrl(normalized);
+      mobileOverlayContact.href = contactHref;
+      mobileOverlayContact.setAttribute('aria-label', 'Contact ' + config.label);
+    }
+    navHomeLinks.forEach(function(link) {
+      link.href = resolveHomeUrl(normalized);
+    });
     if (primaryCtaLocation) primaryCtaLocation.textContent = config.label;
-    if (mobileCtaTitle) mobileCtaTitle.textContent = config.label;
-    if (mobileLocToggle) {
-      mobileLocToggle.setAttribute('aria-label', 'Change Velocity location');
-    }
-    if (mobileCtaPrimary) {
-      mobileCtaPrimary.href = bookHref;
-    }
     megaBookLinks.forEach(function(el) { el.href = bookHref; });
     mobileBookLinks.forEach(function(el) { el.href = bookHref; });
     if (stickyBookNow) stickyBookNow.href = bookHref;
@@ -3060,7 +3522,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
 
   function isMobileViewport() {
-    return window.matchMedia('(max-width: 900px)').matches;
+    return window.matchMedia('(max-width: 1024px)').matches;
   }
 
   function isElementorEditorContext() {
@@ -3509,10 +3971,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   var mobileOverlay = navbar.querySelector('.vsl-navbar__overlay');
   if (mobileOverlay) {
-    var toggleBtn = navbar.querySelector('.vsl-navbar__toggle');
-    if (toggleBtn) {
+    var menuToggleBtn = navbar.querySelector('[data-mobile-menu-toggle]');
+    if (menuToggleBtn) {
       ['touchstart', 'mouseenter', 'focus'].forEach(function(evt) {
-        toggleBtn.addEventListener(evt, warmOverlayCards, { once: true, passive: true });
+        menuToggleBtn.addEventListener(evt, warmOverlayCards, { once: true, passive: true });
       });
     }
   }
@@ -3688,13 +4150,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
   }
 
-  if (locChangeBtn) {
+  navbar.querySelectorAll('[data-loc-change-open]').forEach(function(locChangeBtn) {
     locChangeBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
       showLocPanelSwitcher('change');
     });
-  }
+  });
 
   if (locSwitcherBack) {
     locSwitcherBack.addEventListener('click', function(e) {
@@ -3750,14 +4212,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       }
     });
   });
-
-  if (mobileLocToggle) {
-    mobileLocToggle.addEventListener('click', function(e) {
-      e.stopPropagation();
-      closeMobile();
-      openLocationPicker('change');
-    });
-  }
 
   pickButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
@@ -3822,29 +4276,86 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       closeMobile();
     }
   });
-  var toggle = navbar.querySelector('.vsl-navbar__toggle');
   var overlay = navbar.querySelector('.vsl-navbar__overlay');
-  toggle.addEventListener('click', function() {
-    var isOpen = overlay.classList.contains('vsl-navbar__overlay--open');
-    if (isOpen) { closeMobile(); }
-    else {
-      overlay.classList.add('vsl-navbar__overlay--open');
-      overlay.setAttribute('aria-hidden', 'false');
-      toggle.classList.add('vsl-navbar__toggle--active');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
+  var mobileMenuScrollY = 0;
+
+  function lockMobileMenuScroll() {
+    mobileMenuScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + mobileMenuScrollY + 'px';
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function restoreMobileMenuScroll(y) {
+    var root = document.documentElement;
+    var prevScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    root.scrollTop = y;
+    if (typeof window.scrollTo === 'function') {
+      try {
+        window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+      } catch (_) {
+        window.scrollTo(0, y);
+      }
     }
-  });
+    root.style.scrollBehavior = prevScrollBehavior;
+  }
+
+  function unlockMobileMenuScroll() {
+    restoreMobileMenuScroll(mobileMenuScrollY);
+  }
+
+  function openMobileMenu() {
+    if (!overlay) return;
+    closeAllDesktop();
+    closeLocDropdown();
+    closeStickyLocMenu();
+    navbar.classList.add('vsl-navbar--mobile-menu-open');
+    overlay.classList.add('vsl-navbar__overlay--open');
+    overlay.setAttribute('aria-hidden', 'false');
+    lockMobileMenuScroll();
+    publishNavHeight();
+    if (mobileExploreBtn) {
+      mobileExploreBtn.setAttribute('aria-expanded', 'true');
+      mobileExploreBtn.setAttribute('aria-label', 'Close menu');
+    }
+  }
+  function toggleMobileMenu() {
+    if (!overlay) return;
+    if (overlay.classList.contains('vsl-navbar__overlay--open')) {
+      closeMobile();
+    } else {
+      openMobileMenu();
+    }
+  }
+  if (mobileExploreBtn) {
+    mobileExploreBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+  }
   function closeMobile() {
+    if (!overlay) return;
     overlay.classList.remove('vsl-navbar__overlay--open');
     overlay.setAttribute('aria-hidden', 'true');
-    toggle.classList.remove('vsl-navbar__toggle--active');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Open menu');
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
+    navbar.classList.remove('vsl-navbar--mobile-menu-open');
+    unlockMobileMenuScroll();
+    publishNavHeight();
+    if (mobileExploreBtn) {
+      mobileExploreBtn.setAttribute('aria-expanded', 'false');
+      mobileExploreBtn.setAttribute('aria-label', 'Open menu');
+    }
     var om = overlay.querySelector('.vsl-navbar__overlay-menu');
     if (om) om.classList.remove('vsl-navbar__overlay-menu--sub-open');
     overlay.querySelectorAll('.vsl-navbar__overlay-item--open').forEach(function(el) { el.classList.remove('vsl-navbar__overlay-item--open'); });
@@ -3856,6 +4367,79 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       closeMobile();
     }
   }
+
+  function isOnHomePageForLocation(locKey) {
+    locKey = normalizeLocation(locKey);
+    if (window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug) {
+      if (window.VSL_LOCATION.getPageSlug() !== 'home') return false;
+    } else if (window.__VSL_SITE_REPLICA__) {
+      var p = new URLSearchParams(window.location.search).get('p') || 'home';
+      var expected = locKey === 'dallas' ? 'dallas-home' : 'home';
+      if (p !== expected) return false;
+    } else {
+      var path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+      if (locKey === 'dallas') {
+        if (path !== '/dallas') return false;
+      } else if (path !== '' && path !== '/') {
+        return false;
+      }
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.readFromPath) {
+      var pathLoc = window.VSL_LOCATION.readFromPath();
+      if (pathLoc && pathLoc !== locKey) return false;
+    }
+    return true;
+  }
+
+  function homeLinkTargetsCurrentPage(link) {
+    if (!isOnHomePageForLocation(currentLocation)) return false;
+    try {
+      var target = new URL(link.getAttribute('href') || link.href, window.location.href);
+      var home = new URL(resolveHomeUrl(currentLocation), window.location.href);
+      target.hash = '';
+      home.hash = '';
+      return target.pathname === home.pathname && target.search === home.search;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function scrollHomeToTop() {
+    dismissNavMenusForNavigation();
+    closeLocDropdown();
+    closeStickyLocMenu();
+    try {
+      if (window.history && window.history.replaceState) {
+        var u = new URL(window.location.href);
+        if (u.hash) {
+          u.hash = '';
+          history.replaceState(history.state, '', u.pathname + u.search);
+        }
+      }
+    } catch (_) {}
+    var root = document.documentElement;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    root.scrollTop = 0;
+    if (typeof window.scrollTo === 'function') {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      } catch (_) {
+        window.scrollTo(0, 0);
+      }
+    }
+    root.style.scrollBehavior = prev;
+  }
+
+  navHomeLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || link.target === '_blank') return;
+      if (!homeLinkTargetsCurrentPage(link)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      scrollHomeToTop();
+    });
+  });
 
   function bindNavLinkDismiss(scope) {
     if (!scope) return;
