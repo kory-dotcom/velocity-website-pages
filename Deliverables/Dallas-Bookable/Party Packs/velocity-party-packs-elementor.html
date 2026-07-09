@@ -689,9 +689,9 @@
   }
   .vsl-pp-pack-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--gutter);
-    max-width: min(1320px, 100%);
+    max-width: min(1040px, 100%);
     margin-inline: auto;
     align-items: stretch;
     margin-top: clamp(3.5rem, 7vh, 5.5rem);
@@ -1146,26 +1146,11 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  @media (max-width: 1100px) {
-    .vsl-pp-pack-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .vsl-pp-pack-grid > .vsl-pp-pack-card:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
-      max-width: min(520px, 100%);
-      justify-self: center;
-      width: 100%;
-    }
-  }
   @media (max-width: 900px) {
     .vsl-pp-pack-grid {
       grid-template-columns: 1fr;
       max-width: min(480px, 100%);
       margin-inline: auto;
-    }
-    .vsl-pp-pack-grid > .vsl-pp-pack-card:last-child:nth-child(odd) {
-      grid-column: auto;
-      max-width: none;
     }
     .vsl-pp-pack-card__media {
       aspect-ratio: 4 / 3;
@@ -1447,7 +1432,7 @@
         <h2 class="vsl-pp-section-title" id="pp-packs-heading">
           Choose Your <em>Party Pack</em>
         </h2>
-        <p class="vsl-pp-section-sub">Select the pack that fits your group and book instantly.</p>
+        <p class="vsl-pp-section-sub">Select the pack that fits your group.</p>
 
         <div class="vsl-pp-pack-grid">
 
