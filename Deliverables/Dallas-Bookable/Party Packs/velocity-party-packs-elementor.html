@@ -1414,7 +1414,7 @@
   }
 </style>
 
-<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27","proPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/28","championPack":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","championPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27","proPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/28","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1495,28 +1495,6 @@
             </div>
           </article>
 
-          <!-- Champion Party Pack -->
-          <article class="vsl-pp-pack-card">
-            <div class="vsl-pp-pack-card__accent"></div>
-            <figure class="vsl-pp-pack-card__media">
-              <img data-vsl-pp-img="championPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Champion Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
-            </figure>
-            <div class="vsl-pp-pack-card__body">
-              <h3 class="vsl-pp-pack-card__name">Champion Party Pack</h3>
-              <p class="vsl-pp-pack-card__meta">10 rigs &bull; Full private space</p>
-              <hr class="vsl-pp-pack-card__rule">
-              <ul class="vsl-pp-pack-card__list">
-                <li>Our largest Party Pack for groups of 10&ndash;25</li>
-                <li>2 hours of racing on 10 rigs</li>
-                <li>Enhanced catering options</li>
-                <li>Full private lounge space</li>
-                <li>Dedicated Pit Crew</li>
-                <li>Upgrades available</li>
-              </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="championPack" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
-            </div>
-          </article>
-
         </div>
       </div>
     </section>
@@ -1546,7 +1524,7 @@
               <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/reserved-seating-area.png" alt="" width="72" height="72" loading="lazy" decoding="async" data-vsl-asset-wp="pp-icon-included-seating">
             </div>
             <h3 class="vsl-pp-included-card__name">Semi-Private or Private Space</h3>
-            <p class="vsl-pp-included-card__desc">Your own area of the lounge &mdash; semi-private for Racer and Pro packs, fully private for Champion.</p>
+            <p class="vsl-pp-included-card__desc">Your own semi-private area of the lounge for Racer and Pro packs.</p>
           </div>
 
           <div class="vsl-pp-included-card">
@@ -1760,7 +1738,7 @@
     var nameEl = card && card.querySelector ? card.querySelector('.vsl-pp-pack-card__name') : null;
     if (nameEl && nameEl.textContent.trim()) return nameEl.textContent.trim();
     var key = a.getAttribute('data-vsl-pp-link');
-    var map = { racerPack: 'Racer Party Pack', proPack: 'Pro Party Pack', championPack: 'Champion Party Pack' };
+    var map = { racerPack: 'Racer Party Pack', proPack: 'Pro Party Pack' };
     if (key && map[key]) return map[key];
     return (a.textContent || '').trim() || 'Book Now';
   }
