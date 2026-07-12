@@ -34,8 +34,8 @@ Party Packs:
 |------|--------|
 | Dallas phone number | TBD |
 | "610 Challenge" equivalent | Won't have at launch; likely new year — keep off the site |
-| Tripleseat Dallas links (corporate, semi-private, buyout, party packs) | Delayed ~1 week; launching TS for Dallas only after CO for operations. Form 3383 links already in place — revisit once TS is live |
-| Event package details + pricing | Same as above (with Tripleseat) |
+| Tripleseat Dallas links | **Live** — Corporate/buyout/party packs: form **3383**; Semi-private: form **4336** (`?hide_banner=1` on all) |
+| Event package details + pricing | Semi-private ideal 15–50 guests; full buyout up to 400 guests indoors, 30+ simulators; no off-site mobile sims |
 | Food & drink menu + final PDF | Expected later week of Jul 2 |
 | Venue/lounge photos | ~Jul 14, 2026 |
 | Food & drink photos | ~Jul 14, 2026 |

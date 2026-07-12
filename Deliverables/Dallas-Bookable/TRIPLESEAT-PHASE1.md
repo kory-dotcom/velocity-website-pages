@@ -1,9 +1,12 @@
-# Tripleseat Dallas (form 3383) — Phase 1 decision
+# Tripleseat Dallas — inquiry forms
 
-**Phase 1 (launch):** External links to  
+**Corporate events, full buyout, party packs:**  
 `https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1`
 
-All Dallas inquire CTAs in `Dallas/Contact/` and `Dallas/Corporate Events/` (and group-events where applicable) use this URL.
+**Semi-private events:**  
+`https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4336?hide_banner=1`
+
+All Dallas inquire CTAs use the form above for that package type.
 
 **Phase 2 (optional):** Embed iframe on contact/corporate pages:
 
