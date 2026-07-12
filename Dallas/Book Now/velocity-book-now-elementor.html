@@ -1004,6 +1004,7 @@
   .vsl-bn-card__badge--coming-soon::after {
     background: #0a0f1a;
   }
+  .vsl-bn-card--soon .vsl-bn-card__badge--coming-soon,
   .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__badge--coming-soon {
     display: block;
   }
@@ -1021,12 +1022,15 @@
   .vsl-bn-card--soon:hover .vsl-bn-card__cta-hint svg {
     transform: none;
   }
+  .vsl-bn-card--soon .vsl-bn-card__cta-hint,
   .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint {
     font-size: 0;
   }
+  .vsl-bn-card--soon .vsl-bn-card__cta-hint svg,
   .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint svg {
     display: none;
   }
+  .vsl-bn-card--soon .vsl-bn-card__cta-hint::after,
   .vsl-loc--dallas .vsl-bn-card--soon .vsl-bn-card__cta-hint::after {
     content: 'Coming Soon';
     font-size: 0.8rem;
@@ -3030,13 +3034,27 @@
         media.appendChild(chip);
       }
     });
-    root.querySelectorAll('[data-l]').forEach(function(el) {
-      var key = el.getAttribute('data-l');
-      if (!key) return;
-      if (links[key]) {
-        el.setAttribute('href', links[key]);
-        el.setAttribute('target', '_blank');
-        el.setAttribute('rel', 'noopener noreferrer');
+    /* Temporary: Dallas RoverD booking not live yet — show Coming Soon on all book cards */
+    root.querySelectorAll('a.vsl-bn-card[data-l]').forEach(function(el) {
+      el.classList.add('vsl-bn-card--soon');
+      el.removeAttribute('href');
+      el.removeAttribute('target');
+      el.removeAttribute('rel');
+      el.setAttribute('aria-disabled', 'true');
+      el.setAttribute('tabindex', '-1');
+      var media = el.querySelector('.vsl-bn-card__media');
+      if (!media) return;
+      if (media.querySelector('.vsl-bn-card__badge--coming-soon')) return;
+      var badge = document.createElement('span');
+      badge.className = 'vsl-bn-card__badge vsl-bn-card__badge--coming-soon';
+      badge.textContent = 'Coming Soon';
+      var stack = media.querySelector('.vsl-bn-card__badge-stack');
+      if (stack) {
+        stack.appendChild(badge);
+      } else {
+        var name = media.querySelector('.vsl-bn-card__overlay-name');
+        if (name) media.insertBefore(badge, name);
+        else media.appendChild(badge);
       }
     });
 

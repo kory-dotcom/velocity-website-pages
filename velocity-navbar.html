@@ -4130,31 +4130,51 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     closeStickyLocMenu();
     closeLocDropdown({ instant: true });
 
-    if (shouldPersist) {
-      if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
-        window.VSL_LOCATION.setPreferredLocation(normalized, { source: 'location-picker' });
-      } else {
-        persistLocation(normalized);
-        applyLocation(normalized);
-      }
-    } else {
-      applyLocation(normalized);
-    }
-
     if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_SWITCH_LOCATION === 'function') {
+      if (shouldPersist) {
+        if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
+          window.VSL_LOCATION.setPreferredLocation(normalized, { source: 'location-picker', skipEvent: true });
+        } else {
+          persistLocation(normalized);
+        }
+      }
       window.VSL_REPLICA_SWITCH_LOCATION(normalized);
       return;
     }
 
+    var destUrl = null;
+    var willNavigate = false;
     if (window.VSL_LOCATION && window.VSL_LOCATION.buildLocationUrl) {
       var pageSlug = window.VSL_LOCATION.getPageSlug();
-      var destUrl = window.VSL_LOCATION.buildLocationUrl(normalized, pageSlug);
+      destUrl = window.VSL_LOCATION.buildLocationUrl(normalized, pageSlug) + (window.location.hash || '');
       try {
-        var targetPath = new URL(destUrl, window.location.origin).pathname;
-        if (window.location.pathname !== targetPath) {
-          window.location.href = destUrl + (window.location.hash || '');
-        }
+        var targetPath = new URL(destUrl, window.location.origin).pathname.replace(/\/+$/, '') || '/';
+        var currentPath = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+        willNavigate = targetPath !== currentPath;
       } catch (_) {}
+    }
+
+    if (shouldPersist) {
+      if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
+        /* skipEvent when navigating so the current page does not rewrite
+           (Houston/Dallas flash) before the new URL loads. */
+        window.VSL_LOCATION.setPreferredLocation(normalized, {
+          source: 'location-picker',
+          skipEvent: willNavigate
+        });
+      } else {
+        persistLocation(normalized);
+      }
+    }
+
+    if (willNavigate && destUrl) {
+      window.location.href = destUrl;
+      return;
+    }
+
+    /* Same path (e.g. Houston-only page) — update navbar/page in place. */
+    if (!shouldPersist || !window.VSL_LOCATION || !window.VSL_LOCATION.setPreferredLocation) {
+      applyLocation(normalized);
     }
   }
 

@@ -954,6 +954,27 @@
     outline: 3px solid var(--yellow);
     outline-offset: 4px;
   }
+  .vsl-pp-pack-card--soon {
+    opacity: 0.82;
+    cursor: default;
+  }
+  .vsl-pp-pack-card--soon .vsl-pp-pack-card__cta {
+    pointer-events: none !important;
+    cursor: default;
+    background: #10182B;
+    color: #FDC70C !important;
+    -webkit-text-fill-color: #FDC70C !important;
+    border-color: #10182B;
+    box-shadow: none;
+  }
+  .vsl-pp-pack-card--soon .vsl-pp-pack-card__cta:hover {
+    filter: none;
+    transform: none;
+    background: #10182B;
+    color: #FDC70C !important;
+    -webkit-text-fill-color: #FDC70C !important;
+    box-shadow: none;
+  }
 
   /* ── PERFECT FOR (deep-indigo band; white cards pop) ── */
   .vsl-pp-perfect {
@@ -1436,7 +1457,7 @@
         <div class="vsl-pp-pack-grid">
 
           <!-- Racer Party Pack -->
-          <article class="vsl-pp-pack-card">
+          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="racerPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Racer Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async" style="transform: scale(1.15); transform-origin: center;">
@@ -1455,12 +1476,12 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27">Book Now</a>
+              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
             </div>
           </article>
 
           <!-- Pro Party Pack -->
-          <article class="vsl-pp-pack-card">
+          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="proPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Pro Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
@@ -1479,7 +1500,7 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28">Book Now</a>
+              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
             </div>
           </article>
 
@@ -1881,6 +1902,7 @@
     root.querySelectorAll('.vsl-pp-pack-card').forEach(function(card) {
       if (card._vslTiltBound) return;
       card._vslTiltBound = true;
+      if (card.classList.contains('vsl-pp-pack-card--soon')) return;
 
       card.style.cursor = 'pointer';
       card.addEventListener('click', function(e) {
