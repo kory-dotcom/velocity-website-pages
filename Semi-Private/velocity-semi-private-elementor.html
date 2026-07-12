@@ -1101,7 +1101,13 @@ var cfg = window.VSL_SP_CONFIG || {};
     };
     root.querySelectorAll('a[data-vsl-sp-link]').forEach(function (a) {
       var k = a.getAttribute('data-vsl-sp-link');
-      if (k && links[k]) a.setAttribute('href', links[k]);
+      if (k && links[k]) {
+        a.setAttribute('href', links[k]);
+        if (/tripleseat\.com/i.test(links[k])) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
     });
 
     var jsonAttr = root.getAttribute('data-vsl-config');
@@ -1121,21 +1127,6 @@ var cfg = window.VSL_SP_CONFIG || {};
       } catch (e) { /* ignore parse errors */ }
     }
 
-    /* Defensive click handling — guarantees inquire/allEvents links open
-       even if a parent (Elementor / theme JS) intercepts the default action.
-       Respects modifier keys, middle/right-click, and contextmenu. */
-    root.querySelectorAll('a[data-vsl-sp-link]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        if (e.defaultPrevented) return;
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        if (typeof e.button === 'number' && e.button !== 0) return;
-        var url = a.getAttribute('href');
-        if (!url || url.charAt(0) === '#') return;
-        e.preventDefault();
-        e.stopPropagation();
-        var opened = window.open(url, '_blank', 'noopener,noreferrer');
-        if (!opened) window.location.href = url;
-      });
-    });
+    /* Inquire / external links use native target="_blank" — no window.open interceptor. */
   })();
 </script>

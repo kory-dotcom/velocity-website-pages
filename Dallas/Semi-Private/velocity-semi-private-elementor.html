@@ -1134,7 +1134,13 @@
     };
     root.querySelectorAll('a[data-vsl-sp-link]').forEach(function (a) {
       var k = a.getAttribute('data-vsl-sp-link');
-      if (k && links[k]) a.setAttribute('href', links[k]);
+      if (k && links[k]) {
+        a.setAttribute('href', links[k]);
+        if (/tripleseat\.com/i.test(links[k])) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
     });
 
     var jsonAttr = root.getAttribute('data-vsl-config');

@@ -1246,7 +1246,13 @@
     var linkMap = cfg.links || {};
     root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
       var key = a.getAttribute('data-vsl-link');
-      if (key && linkMap[key]) a.setAttribute('href', linkMap[key]);
+      if (key && linkMap[key]) {
+        a.setAttribute('href', linkMap[key]);
+        if (/tripleseat\.com/i.test(linkMap[key])) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      }
     });
 
     root.querySelectorAll('img[data-vsl-img]').forEach(function (img) {

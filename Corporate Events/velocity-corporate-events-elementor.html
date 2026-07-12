@@ -1498,7 +1498,13 @@
 
       root.querySelectorAll('a[data-vsl-link]').forEach(function (a) {
         var key = a.getAttribute('data-vsl-link');
-        if (key && linkMap[key]) a.setAttribute('href', linkMap[key]);
+        if (key && linkMap[key]) {
+          a.setAttribute('href', linkMap[key]);
+          if (/tripleseat\.com/i.test(linkMap[key])) {
+            a.setAttribute('target', '_blank');
+            a.setAttribute('rel', 'noopener noreferrer');
+          }
+        }
       });
 
       root.querySelectorAll('img[data-vsl-img]').forEach(function (img) {
@@ -1507,41 +1513,11 @@
       });
     }
 
-    /* Defensive click handler:
-       Even if something else (Elementor, theme, plugin) rewrites the href
-       between page load and click, this guarantees clicks on
-       data-vsl-link anchors always go to the configured URL. */
-    function bindClickInterceptor() {
-      var root = getRoot();
-      if (!root || root._vslClickBound) return;
-      root._vslClickBound = true;
-
-      root.addEventListener('click', function (e) {
-        var a = e.target.closest && e.target.closest('a[data-vsl-link]');
-        if (!a || !root.contains(a)) return;
-        var key = a.getAttribute('data-vsl-link');
-        var cfg = getCfg();
-        var linkMap = cfg.links || {};
-        var url = linkMap[key];
-        if (!url) return;
-
-        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-
-        e.preventDefault();
-        e.stopPropagation();
-        var target = a.getAttribute('target') || '_blank';
-        if (target === '_self' || target === '_top' || target === '_parent') {
-          window.open(url, target);
-        } else {
-          window.open(url, '_blank', 'noopener,noreferrer');
-        }
-      }, true);
-    }
+    /* Defensive click handler removed — Tripleseat inquire links use native target="_blank" only. */
 
     function init() {
       if (!getRoot()) return;
 syncLinksAndImages();
-      bindClickInterceptor();
     }
 
     if (document.readyState !== 'loading') { init(); } else { document.addEventListener('DOMContentLoaded', init); }

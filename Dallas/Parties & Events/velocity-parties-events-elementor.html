@@ -1936,7 +1936,7 @@
       card._vslEventsCardLandingClick = true;
       card.style.cursor = 'pointer';
       card.addEventListener('click', function(e) {
-        if (e.target.closest('a.vsl-events-card__cta')) return;
+        if (e.target.closest('a')) return;
         var land = card.querySelector('a.vsl-events-card__cta--outline');
         if (land) land.click();
       });

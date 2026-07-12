@@ -1892,8 +1892,10 @@
         if (vslPPIsRoverdBookingUrl(href)) {
           var nameEl = card.querySelector('.vsl-pp-pack-card__name');
           openPPBookModal(href, nameEl ? nameEl.textContent.trim() : 'Book Now');
-        } else {
-          window.open(href, cta.getAttribute('target') || '_self');
+        } else if (href) {
+          cta.setAttribute('target', '_blank');
+          cta.setAttribute('rel', 'noopener noreferrer');
+          cta.click();
         }
       });
 
