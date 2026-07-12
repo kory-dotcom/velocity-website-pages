@@ -2,6 +2,10 @@
 /**
  * Generate Dallas/ HTML modules from Houston sources.
  * Run: node scripts/build-dallas-modules.js
+ *
+ * WARNING: Re-running overwrites Dallas/ files with Houston-derived transforms.
+ * After Dallas-specific edits (Tripleseat IDs, copy, RoverD links), only add new
+ * pages to PAGES[] or run targeted transforms — do not bulk-regenerate committed pages.
  */
 const fs = require('fs');
 const path = require('path');
@@ -20,12 +24,13 @@ const PAGES = [
   { src: 'Food & Drink/velocity-food-drink-elementor.html', dest: 'Dallas/Food & Drink/velocity-food-drink-elementor.html' },
   { src: 'Semi-Private/velocity-semi-private-elementor.html', dest: 'Dallas/Semi-Private/velocity-semi-private-elementor.html' },
   { src: 'Promotions/velocity-promotions-elementor.html', dest: 'Dallas/Promotions/velocity-promotions-elementor.html' },
+  { src: 'Membership Page/velocity-membership-elementor.html', dest: 'Dallas/Memberships/velocity-membership-elementor.html' },
   { src: 'Buyout/velocity-buyout-elementor.html', dest: 'Dallas/Buyout/velocity-buyout-elementor.html' }
 ];
 
 const DALLAS_SLUGS = [
   'party-packs', 'book-now', 'contact', 'group-events', 'corporate-events',
-  'food-and-drink', 'semi-private', 'promotions', 'buyout'
+  'food-and-drink', 'semi-private', 'promotions', 'memberships', 'buyout'
 ];
 
 const HOUSTON_TRIPLESEAT = [
@@ -48,6 +53,7 @@ function rewriteInternalLinks(html) {
     const re = new RegExp(`https://velocitysimlounge\\.com/${slug}/`, 'g');
     out = out.replace(re, `https://velocitysimlounge.com/dallas/${slug}/`);
   }
+  out = out.replace(/https:\/\/velocitysimlounge\.com\/membership\//g, 'https://velocitysimlounge.com/dallas/memberships/');
   out = out.replace(/https:\/\/velocitysimlounge\.com\/"(?!dallas)/g, 'https://velocitysimlounge.com/dallas/"');
   out = out.replace(/https:\/\/velocitysimlounge\.com\/'/g, "https://velocitysimlounge.com/dallas/'");
   return out;
@@ -104,8 +110,21 @@ function transformPartyPacks(html) {
   return out;
 }
 
+function stripHoustonOnlyWrapper(html) {
+  return html
+    .replace(/\n\s*<div data-vsl-houston-only>\s*\n/g, '\n')
+    .replace(/\n\s*<\/div>\s*\n<\/main>/g, '\n</main>');
+}
+
+function transformMembership(html) {
+  let out = baseTransform(html);
+  out = stripHoustonOnlyWrapper(out);
+  return out;
+}
+
 function transformPromotions(html) {
   let out = baseTransform(html);
+  out = stripHoustonOnlyWrapper(out);
   out = out.replace(/springBundles[^,]*fathers-day[^"]*"/g, 'springBundles":"https://velocitysimlounge.com/dallas/promotions/"');
   out = out.replace(/View bundles/g, 'View promotions');
   return out;
@@ -124,10 +143,11 @@ for (const page of PAGES) {
       html = transformContact(html);
       break;
     default:
-      html = baseTransform(html);
       if (page.src.startsWith('Home/')) html = transformHome(html);
-      if (page.src.startsWith('Party Packs/')) html = transformPartyPacks(html);
-      if (page.src.startsWith('Promotions/')) html = transformPromotions(html);
+      else if (page.src.startsWith('Party Packs/')) html = transformPartyPacks(html);
+      else if (page.src.startsWith('Promotions/')) html = transformPromotions(html);
+      else if (page.src.startsWith('Membership Page/')) html = transformMembership(html);
+      else html = baseTransform(html);
   }
 
   ensureDir(destPath);

@@ -15,8 +15,9 @@ Configure Rank Math per page (unique Dallas title, description, self-referencing
 | `/dallas/food-and-drink/` | `Dallas/Food & Drink/velocity-food-drink-elementor.html` |
 | `/dallas/semi-private/` | `Dallas/Semi-Private/velocity-semi-private-elementor.html` |
 | `/dallas/promotions/` | `Dallas/Promotions/velocity-promotions-elementor.html` |
+| `/dallas/memberships/` | `Dallas/Memberships/velocity-membership-elementor.html` |
 | `/dallas/buyout/` | `Dallas/Buyout/velocity-buyout-elementor.html` |
 
-Also upload updated `vsl-location.js` and paste updated `velocity-navbar.html` + `velocity-footer.html` into Elementor global widgets.
+Paste updated `velocity-navbar.html` + `velocity-footer.html` into Elementor global widgets (location logic is inlined in the navbar — no separate `vsl-location.js` upload).
 
 See `rank-math-redirects.txt` and `gsc-urls.txt` for post-launch SEO steps.

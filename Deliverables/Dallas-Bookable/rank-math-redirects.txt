@@ -11,9 +11,10 @@
 /promotions/?loc=dallas           →  https://velocitysimlounge.com/dallas/promotions/
 /buyout/?loc=dallas               →  https://velocitysimlounge.com/dallas/buyout/
 
+/membership/?loc=dallas           →  https://velocitysimlounge.com/dallas/memberships/
+
 # Houston-only pages — no Dallas sibling; send to Dallas hub
 /about/?loc=dallas                →  https://velocitysimlounge.com/dallas/
-/membership/?loc=dallas           →  https://velocitysimlounge.com/dallas/
 /ignition/?loc=dallas             →  https://velocitysimlounge.com/dallas/
 /summer-special/?loc=dallas       →  https://velocitysimlounge.com/dallas/
 /fathers-day/?loc=dallas          →  https://velocitysimlounge.com/dallas/

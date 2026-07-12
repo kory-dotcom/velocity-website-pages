@@ -1,7 +1,8 @@
 /**
  * Velocity site-wide location helper (path /dallas/... + legacy ?loc=).
- * Upload to WordPress (e.g. wp-content/uploads/2026/06/vsl-location.js)
- * and include via <script src="..."> in navbar + each page HTML widget.
+ * SOURCE OF TRUTH for the inlined copy at the top of velocity-navbar.html.
+ * Do not upload this file separately — paste the navbar widget instead.
+ * After editing this file, re-sync into velocity-navbar.html (and Custom Site/replica/).
  */
 (function (global) {
   'use strict';
@@ -12,12 +13,16 @@
 
   var DALLAS_PAGES = [
     'home', 'party-packs', 'book-now', 'contact', 'group-events',
-    'corporate-events', 'food-and-drink', 'semi-private', 'promotions', 'buyout'
+    'corporate-events', 'food-and-drink', 'semi-private', 'promotions',
+    'memberships', 'buyout'
   ];
+
+  var DALLAS_SLUG_ALIASES = {
+    membership: 'memberships'
+  };
 
   var HOUSTON_ONLY_SLUGS = {
     about: true,
-    membership: true,
     ignition: true,
     'summer-special': true,
     'fathers-day': true,
@@ -53,8 +58,25 @@
     '/dallas/party-packs/': 'party-packs',
     '/dallas/semi-private/': 'semi-private',
     '/dallas/promotions/': 'promotions',
+    '/dallas/memberships/': 'memberships',
     '/dallas/buyout/': 'buyout'
   };
+
+  function dallasSlugFor(slug) {
+    return DALLAS_SLUG_ALIASES[slug] || slug;
+  }
+
+  function readStoredLocation() {
+    try {
+      var stored = global.localStorage.getItem(STORAGE_KEY);
+      if (stored) return normalize(stored);
+    } catch (_) {}
+    return null;
+  }
+
+  function isHoustonOnlyPageSlug(slug) {
+    return HOUSTON_ONLY_SLUGS[slug] === true;
+  }
 
   function normalize(key) {
     return key === 'dallas' ? 'dallas' : 'houston';
@@ -98,6 +120,10 @@
 
   function readLocation() {
     var fromPath = readFromPath() || readFromStagingPageKey();
+    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
+      var stored = readStoredLocation();
+      if (stored) return stored;
+    }
     if (fromPath) {
       try { global.localStorage.setItem(STORAGE_KEY, fromPath); } catch (_) {}
       return normalize(fromPath);
@@ -148,7 +174,10 @@
   function buildLocationUrl(loc, slug) {
     loc = normalize(loc);
     slug = slug || getPageSlug();
-    if (loc === 'dallas' && DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
+    if (loc === 'dallas') {
+      slug = dallasSlugFor(slug);
+      if (DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
+    }
     if (loc === 'houston' && slug === 'home') return SITE_ORIGIN + '/';
     if (loc === 'dallas' && slug === 'home') return DALLAS_PAGE;
     var prefix = loc === 'dallas' ? '/dallas' : '';
@@ -185,7 +214,7 @@
 
       if (loc === 'dallas') {
         if (slug === 'home') return DALLAS_PAGE + u.hash;
-        return SITE_ORIGIN + '/dallas/' + slug + '/' + u.hash;
+        return SITE_ORIGIN + '/dallas/' + dallasSlugFor(slug) + '/' + u.hash;
       }
       if (slug === 'home') return SITE_ORIGIN + '/' + u.hash;
       return SITE_ORIGIN + '/' + slug + '/' + u.hash;
@@ -218,6 +247,9 @@
     var fromPath = readFromPath() || readFromStagingPageKey();
     var loc = fromPath || fromUrl;
     if (!loc) return;
+    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
+      if (readStoredLocation() === 'dallas') return;
+    }
     setPreferredLocation(loc, { source: 'bootstrap' });
   }
 
