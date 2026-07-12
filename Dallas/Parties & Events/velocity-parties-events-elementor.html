@@ -1460,7 +1460,7 @@
               <p class="vsl-events-card__meta">Custom packages &bull; A/V available</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="corporateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="corporateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" target="_blank" rel="noopener noreferrer">Inquire Now</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="corporatePage" href="https://velocitysimlounge.com/dallas/corporate-events/">Learn more</a>
               </div>
             </div>
@@ -1478,7 +1478,7 @@
               <p class="vsl-events-card__meta">15&ndash;50 guests</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="semiPrivateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4336?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="semiPrivateInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4336?hide_banner=1" target="_blank" rel="noopener noreferrer">Inquire Now</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="semiPrivate" href="https://velocitysimlounge.com/dallas/semi-private/">Learn more</a>
               </div>
             </div>
@@ -1496,7 +1496,7 @@
               <p class="vsl-events-card__meta">Up to 400 guests</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">
-                <a class="vsl-events-card__cta" data-vsl-events-link="fullBuyoutInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1">Inquire Now</a>
+                <a class="vsl-events-card__cta" data-vsl-events-link="fullBuyoutInquiry" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/3383?hide_banner=1" target="_blank" rel="noopener noreferrer">Inquire Now</a>
                 <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="buyoutPage" href="https://velocitysimlounge.com/dallas/buyout/">Learn more</a>
               </div>
             </div>
@@ -1890,9 +1890,13 @@
       if (key && links[key]) {
         var href = links[key];
         a.setAttribute('href', href);
-        /* Same-tab navigation — event cards / CTAs leave the SPA in the active tab */
-        a.removeAttribute('target');
-        a.removeAttribute('rel');
+        if (/tripleseat\.com|book-dtx\.velocitysimlounge\.com/i.test(href)) {
+          a.setAttribute('target', '_blank');
+          a.setAttribute('rel', 'noopener noreferrer');
+        } else {
+          a.removeAttribute('target');
+          a.removeAttribute('rel');
+        }
       }
     });
 
