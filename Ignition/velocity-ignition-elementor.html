@@ -528,7 +528,7 @@ Velocity Sim Racing Lounge — Ignition
     padding: clamp(20px, 7%, 64px) clamp(18px, 6%, 56px);
     text-align: center;
     /* Fade as the arrive logo takes over from this same screen position. */
-    opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.18) / 0.3)));
+    opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.32) / 0.42)));
     pointer-events: none;
   }
   .vsl-ig-portal__caption::before {
@@ -641,7 +641,10 @@ Velocity Sim Racing Lounge — Ignition
     pointer-events: auto;
   }
   .vsl-ig-portal__arrive-logo {
-    --ig-logo-t: min(1, max(0, (var(--ig-portal-p) - 0.2) / 0.52));
+    /* Delay + stretch across most of the scrub so the mark eases
+       from arch center to rest instead of racing ahead of the portal. */
+    --ig-logo-raw: min(1, max(0, (var(--ig-portal-p) - 0.34) / 0.6));
+    --ig-logo-t: calc(var(--ig-logo-raw) * var(--ig-logo-raw) * (3 - 2 * var(--ig-logo-raw)));
     position: relative;
     z-index: 1;
     margin: 0 0 calc(clamp(48px, 6vh, 56px) + 14px);
