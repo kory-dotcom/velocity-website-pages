@@ -609,7 +609,8 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-portal__hud-spacer {
     width: 100%;
-    height: clamp(48px, 6vh, 56px);
+    /* Sized to the CTA rail so stacked mobile buttons don't spill into status. */
+    height: var(--ig-cta-h, clamp(48px, 6vh, 56px));
     pointer-events: none;
   }
   /* Single CTA row — same buttons from rest through reveal */
@@ -1859,9 +1860,11 @@ Velocity Sim Racing Lounge — Ignition
     }
     .vsl-ig-portal__track { height: 260vh; height: 260dvh; }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
-    .vsl-ig-portal__actions { flex-direction: column; align-items: stretch; }
+    .vsl-ig-portal__actions { flex-direction: column; align-items: stretch; gap: 12px; }
     .vsl-ig-portal__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
     .vsl-ig-portal__cta-rail { padding-left: 0; padding-right: 0; }
+    .vsl-ig-portal__hud-spacer { min-height: 120px; }
+    .vsl-ig-portal__hud-bottom .vsl-ig-status { margin-top: 10px; }
     .vsl-ig-portal__arrive { padding-bottom: max(88px, calc(env(safe-area-inset-bottom, 0px) + 72px)); }
     .vsl-ig-visit__actions { flex-direction: column; align-items: stretch; }
     .vsl-ig-visit__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
@@ -2687,6 +2690,7 @@ var cfg = {};
     var portalFitFrame = null;
     var ctaRestY0 = null;
     var ctaTravelCached = null;
+    var ctaHeightCached = null;
 
     function syncPortalNavOffset() {
       if (!portal) return;
@@ -2786,14 +2790,17 @@ var cfg = {};
       if (resetRest) {
         ctaRestY0 = null;
         ctaTravelCached = null;
+        ctaHeightCached = null;
         portal.classList.remove('is-cta-ready');
       }
 
       if (portal.classList.contains('vsl-ig-portal--static')) {
         ctaRestY0 = null;
         ctaTravelCached = null;
+        ctaHeightCached = null;
         portal.style.removeProperty('--ig-cta-y0');
         portal.style.removeProperty('--ig-cta-travel');
+        portal.style.removeProperty('--ig-cta-h');
         portal.classList.add('is-cta-ready');
         return;
       }
@@ -2802,16 +2809,25 @@ var cfg = {};
       /* Measure once at rest and freeze for the whole scrub — live remasure
          while the hud collapses / compose scales makes the buttons stutter. */
       if (ctaRestY0 === null && p <= 0.06) {
+        var railH = Math.max(1, Math.ceil(rail.offsetHeight));
+        /* Expand the in-flow spacer to the real CTA stack height first so
+           stacked mobile buttons don't overflow into the status chip. */
+        portal.style.setProperty('--ig-cta-h', railH + 'px');
+        ctaHeightCached = railH;
+
         var stickyTop = sticky.getBoundingClientRect().top;
         var spacerRect = spacer.getBoundingClientRect();
-        ctaRestY0 = spacerRect.top - stickyTop + (spacerRect.height - rail.offsetHeight) / 2;
+        /* Top-align to the spacer — centering a tall mobile stack spilled
+           into the scroll chevron above and the status below. */
+        ctaRestY0 = spacerRect.top - stickyTop;
         var bottomPad = 48;
         if (arrive) bottomPad = parseFloat(getComputedStyle(arrive).paddingBottom) || bottomPad;
-        var y1 = sticky.clientHeight - bottomPad - rail.offsetHeight;
+        var y1 = sticky.clientHeight - bottomPad - railH;
         ctaTravelCached = y1 - ctaRestY0;
       }
       if (ctaRestY0 === null || ctaTravelCached === null) return;
 
+      if (ctaHeightCached) portal.style.setProperty('--ig-cta-h', ctaHeightCached + 'px');
       portal.style.setProperty('--ig-cta-y0', Math.round(ctaRestY0) + 'px');
       portal.style.setProperty('--ig-cta-travel', Math.round(ctaTravelCached) + 'px');
       portal.classList.add('is-cta-ready');
@@ -2827,6 +2843,13 @@ var cfg = {};
            remasure the CTA rail every frame — freeze fits while animating. */
         if (p > 0.06 && p < 0.98) return;
         syncPortalNavOffset();
+        /* Size the spacer to the CTA stack before fitting the arch so mobile
+           column buttons reserve real space instead of overlapping status. */
+        var rail = portal.querySelector('[data-vsl-portal-cta]');
+        if (rail) {
+          var h = ctaHeightCached || Math.ceil(rail.offsetHeight);
+          if (h > 0) portal.style.setProperty('--ig-cta-h', h + 'px');
+        }
         fitPortalHero();
         syncCtaRail(false);
       });
