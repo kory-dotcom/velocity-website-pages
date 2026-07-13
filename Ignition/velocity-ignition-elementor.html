@@ -473,8 +473,12 @@ Velocity Sim Racing Lounge — Ignition
     object-position: center calc((1 - var(--ig-portal-p)) * 42% + var(--ig-portal-p) * 50%);
     display: block;
   }
-  .vsl-ig-portal:not(.is-revealed) .vsl-ig-portal__media img {
+  .vsl-ig-portal__media img {
     animation: vslIgKenBurns 24s ease-in-out infinite alternate;
+  }
+  /* Freeze (don't remove) the idle zoom while scrubbing so the frame never snaps. */
+  .vsl-ig-portal.is-scrubbing .vsl-ig-portal__media img {
+    animation-play-state: paused;
   }
   @keyframes vslIgKenBurns {
     from { transform: scale(1); }
@@ -523,7 +527,10 @@ Velocity Sim Racing Lounge — Ignition
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(ellipse 78% 62% at 50% 56%, rgba(18, 10, 14, 0.6) 0%, rgba(18, 10, 14, 0.28) 48%, transparent 78%);
+    background: radial-gradient(ellipse 82% 66% at 50% 56%, rgba(18, 10, 14, 0.72) 0%, rgba(18, 10, 14, 0.38) 50%, transparent 80%);
+  }
+  .vsl-ig-portal__caption .vsl-ig-eyebrow {
+    text-shadow: 0 1px 3px rgba(18, 10, 14, 0.9), 0 0 18px rgba(18, 10, 14, 0.75);
   }
   .vsl-ig-portal__caption .vsl-ig-eyebrow { margin: 0; }
   .vsl-ig-portal__caption .vsl-ig-portal__title { margin: 0; }
@@ -547,7 +554,9 @@ Velocity Sim Racing Lounge — Ignition
     width: 100%;
     text-align: center;
     padding: 0;
-    max-height: calc((1 - min(1, var(--ig-portal-p) * 1.5)) * 520px);
+    /* --ig-hud-h is measured by JS so the collapse is proportional from the
+       first frame; the 520px fallback only applies before the script runs. */
+    max-height: calc((1 - min(1, var(--ig-portal-p) * 1.5)) * var(--ig-hud-h, 520px));
     overflow: hidden;
     opacity: calc(1 - min(1, var(--ig-portal-p) * 1.5));
     transform: translateY(calc(var(--ig-portal-p) * 24px));
@@ -1803,7 +1812,7 @@ Velocity Sim Racing Lounge — Ignition
   }
 </style>
 
-<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp","hero":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp","story":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-bar.webp","storyBeat2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-racing.webp","storyBeat3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-shelves.webp","gallery1":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-sims.webp","gallery2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp","gallery3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-lounge.webp","gallery4":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-ceiling-car.webp","gallery5":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-rig.webp","gallery6":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bartender.webp","gallery7":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-cocktails.webp"},"elementorColumnOutdentPx":12}'>
+<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp","hero":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp","story":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-bar.webp","storyBeat2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-racing.webp","storyBeat3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-shelves.webp","gallery1":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-sims.webp","gallery2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp","gallery3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-lounge.webp","gallery4":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-ceiling-car.webp","gallery5":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-rig.webp","gallery6":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bartender.webp","gallery7":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-cocktails.webp"},"elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <div data-vsl-houston-only>
 
@@ -1822,7 +1831,7 @@ Velocity Sim Racing Lounge — Ignition
               <div class="vsl-ig-portal__arch-glow" aria-hidden="true"></div>
               <div class="vsl-ig-portal__window">
                 <div class="vsl-ig-portal__media">
-                  <img data-vsl-img="portalReveal" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp" alt="Ignition lounge at Velocity Sim Lounge Houston" width="1600" height="1065" decoding="async" fetchpriority="high">
+                  <img data-vsl-img="portalReveal" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp" alt="Ignition cocktail bar with backlit arched bottle shelves at Velocity Sim Lounge Houston" width="1600" height="1065" decoding="async" fetchpriority="high">
                 </div>
                 <div class="vsl-ig-portal__shade" aria-hidden="true"></div>
                 <div class="vsl-ig-portal__rim" aria-hidden="true"></div>
@@ -2377,10 +2386,19 @@ var cfg = {};
 
       portal.style.setProperty('--ig-hero-scale', '1');
       portal.style.removeProperty('--ig-arch-h');
+      portal.style.removeProperty('--ig-hud-h');
 
       var available = viewport.clientHeight;
       var stage = portal.querySelector('.vsl-ig-portal__stage');
       if (!stage || available <= 80) return;
+
+      /* Publish the hud's natural height so its scroll collapse starts
+         proportionally on the first frame instead of waiting for the 520px
+         fallback ceiling to clip down to the real content height. */
+      var hudBottomEl = compose.querySelector('.vsl-ig-portal__hud-bottom');
+      if (hudBottomEl) {
+        portal.style.setProperty('--ig-hud-h', Math.ceil(hudBottomEl.offsetHeight) + 'px');
+      }
 
       var needed = measurePortalStack(compose, stage);
       if (needed > available) {
@@ -2439,13 +2457,17 @@ var cfg = {};
           portalTicking = false;
           if (!track) return;
           var range = track.offsetHeight - window.innerHeight;
-          var p = range > 0 ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / range)) : 0;
+          var raw = range > 0 ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / range)) : 0;
+          /* Smoothstep the scrub so the arch eases in and out of the
+             transition instead of starting and stopping abruptly. */
+          var p = raw * raw * (3 - 2 * raw);
           portal.style.setProperty('--ig-portal-p', String(p));
-          portal.classList.toggle('is-revealed', p > 0.88);
+          portal.classList.toggle('is-scrubbing', raw > 0.001 && raw < 0.999);
+          portal.classList.toggle('is-revealed', raw > 0.88);
           /* Re-fit near the top; otherwise leave --ig-hero-scale alone so the
              compose transform interpolates it toward 1 as the portal reveals
              (no discrete jump between the load and scrolled states). */
-          if (p <= 0.06) schedulePortalFit();
+          if (raw <= 0.06) schedulePortalFit();
         }
         function onPortalScroll() {
           if (!portalTicking) {
@@ -2475,22 +2497,44 @@ var cfg = {};
       }
     }
 
-    /* Menu spine — sync active section on scroll */
+    /* Menu spine — sync active section on scroll. A scroll-position spy is
+       used instead of an IntersectionObserver because the Cocktails block is
+       taller than the viewport, so ratio thresholds never fire reliably. */
     var menuSpine = root.querySelector('[data-vsl-menu-spine]');
-    if (menuSpine && 'IntersectionObserver' in window) {
+    if (menuSpine) {
       var menuLinks = menuSpine.querySelectorAll('[data-menu-link]');
-      var menuBlocks = root.querySelectorAll('.vsl-ig-menu__block[id]');
+      var menuBlocks = Array.prototype.slice.call(root.querySelectorAll('.vsl-ig-menu__block[id]'));
       if (menuLinks.length && menuBlocks.length) {
-        var menuIo = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (!entry.isIntersecting) return;
-            var id = entry.target.id;
-            menuLinks.forEach(function(link) {
-              link.classList.toggle('is-active', link.getAttribute('data-menu-link') === id);
-            });
+        var menuTicking = false;
+        var updateMenuSpine = function() {
+          menuTicking = false;
+          /* Reading line: just below the sticky spine/nav, ~35% down the
+             viewport. The active block is the last one whose top has crossed
+             it; before the first block crosses, the first stays active. */
+          var line = window.innerHeight * 0.35;
+          var activeId = menuBlocks[0].id;
+          for (var i = 0; i < menuBlocks.length; i++) {
+            if (menuBlocks[i].getBoundingClientRect().top <= line) activeId = menuBlocks[i].id;
+          }
+          /* At the very bottom of the page, force the last block active so
+             a short final section can still be reached. */
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+            var lastBlock = menuBlocks[menuBlocks.length - 1];
+            if (lastBlock.getBoundingClientRect().top < window.innerHeight) activeId = lastBlock.id;
+          }
+          menuLinks.forEach(function(link) {
+            link.classList.toggle('is-active', link.getAttribute('data-menu-link') === activeId);
           });
-        }, { threshold: 0.35, rootMargin: '-20% 0px -55% 0px' });
-        menuBlocks.forEach(function(block) { menuIo.observe(block); });
+        };
+        var onMenuScroll = function() {
+          if (!menuTicking) {
+            menuTicking = true;
+            requestAnimationFrame(updateMenuSpine);
+          }
+        };
+        window.addEventListener('scroll', onMenuScroll, { passive: true });
+        window.addEventListener('resize', onMenuScroll);
+        updateMenuSpine();
       }
     }
 
