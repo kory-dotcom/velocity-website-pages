@@ -515,7 +515,7 @@ Velocity Sim Racing Lounge — Ignition
     box-shadow: inset 0 20px 60px rgba(238, 38, 95, 0.1);
     opacity: calc(1 - var(--ig-portal-p));
   }
-  /* Eyebrow + logo overlaid inside the arch window, handing off to arrive state */
+  /* Eyebrow overlaid in the arch; logo rides a single rail outside the window */
   .vsl-ig-portal__caption {
     position: absolute;
     inset: 0;
@@ -527,8 +527,7 @@ Velocity Sim Racing Lounge — Ignition
     gap: clamp(0.55rem, 2vh, 1.25rem);
     padding: clamp(20px, 7%, 64px) clamp(18px, 6%, 56px);
     text-align: center;
-    /* Fade as the arrive logo takes over from this same screen position. */
-    opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.32) / 0.42)));
+    opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.18) / 0.38)));
     pointer-events: none;
   }
   .vsl-ig-portal__caption::before {
@@ -558,7 +557,14 @@ Velocity Sim Racing Lounge — Ignition
     height: 1.5px;
     background: linear-gradient(90deg, transparent, rgba(243, 213, 154, 0.7), transparent);
   }
-  .vsl-ig-portal__caption .vsl-ig-portal__title { margin: 0; }
+  /* Invisible slot keeps eyebrow above the logo and anchors rest measurement */
+  .vsl-ig-portal__logo-slot {
+    width: min(820px, 88vw);
+    height: clamp(88px, 18vw, 220px);
+    max-width: 100%;
+    visibility: hidden;
+    pointer-events: none;
+  }
   .vsl-ig-portal__hud-top {
     position: relative;
     z-index: 4;
@@ -609,22 +615,18 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-portal__cta-rail .vsl-ig-portal__actions {
     pointer-events: auto;
   }
-  /* Destination of the scroll — logo travels from arch center; CTAs ride the rail */
+  /* Destination gradient only — logo is a single traveling rail */
   .vsl-ig-portal__arrive {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(16px, 2.4vh, 28px);
+    display: block;
     padding:
       clamp(28px, 5vh, 56px)
       var(--page-margin)
       max(clamp(28px, 4vh, 48px), calc(env(safe-area-inset-bottom, 0px) + 20px));
-    text-align: center;
     background: none;
     pointer-events: none;
   }
@@ -640,23 +642,31 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-portal.is-revealed .vsl-ig-portal__arrive {
     pointer-events: auto;
   }
-  .vsl-ig-portal__arrive-logo {
-    /* Delay + stretch across most of the scrub so the mark eases
-       from arch center to rest instead of racing ahead of the portal. */
-    --ig-logo-raw: min(1, max(0, (var(--ig-portal-p) - 0.34) / 0.6));
+  /* One logo — moves from arch center down to the arrive rest position */
+  .vsl-ig-portal__logo-rail {
+    --ig-logo-raw: min(1, max(0, (var(--ig-portal-p) - 0.22) / 0.72));
     --ig-logo-t: calc(var(--ig-logo-raw) * var(--ig-logo-raw) * (3 - 2 * var(--ig-logo-raw)));
-    position: relative;
-    z-index: 1;
-    margin: 0 0 calc(clamp(48px, 6vh, 56px) + 14px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--ig-logo-y0, 28%);
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
     line-height: 0;
-    opacity: var(--ig-logo-t);
-    /* Start at the caption logo (measured --ig-logo-travel) and settle down. */
-    transform: translateY(calc((1 - var(--ig-logo-t)) * var(--ig-logo-travel, -28vh)))
-      scale(calc(var(--ig-logo-scale0, 1.25) + var(--ig-logo-t) * (1 - var(--ig-logo-scale0, 1.25))));
+    transform: translate3d(0, calc(var(--ig-logo-t) * var(--ig-logo-travel, 0px)), 0)
+      scale(calc(var(--ig-logo-scale0, 1.35) + var(--ig-logo-t) * (1 - var(--ig-logo-scale0, 1.35))));
     transform-origin: center center;
-    will-change: transform, opacity;
+    will-change: transform;
+    pointer-events: none;
   }
-  .vsl-ig-portal__arrive-logo .vsl-ig-portal__title-mark {
+  .vsl-ig-portal__logo-rail .vsl-ig-portal__title {
+    margin: 0;
+    line-height: 0;
+  }
+  .vsl-ig-portal__logo-rail .vsl-ig-portal__title-mark {
     height: clamp(72px, 13vw, 148px);
     max-width: min(640px, 82vw);
     filter:
@@ -828,11 +838,14 @@ Velocity Sim Racing Lounge — Ignition
     will-change: auto;
     padding: clamp(12px, 2vw, 20px) 0 0;
   }
-  .vsl-ig-portal--static .vsl-ig-portal__arrive-logo {
-    opacity: 1;
+  .vsl-ig-portal--static .vsl-ig-portal__logo-rail {
+    position: relative;
+    top: auto;
     transform: none;
-    margin-bottom: 0;
+    will-change: auto;
+    margin: clamp(12px, 2vw, 20px) 0 0;
   }
+  .vsl-ig-portal--static .vsl-ig-portal__logo-slot { display: none; }
 
   /* ═══ Story — scrollytelling corridor ═══ */
   .vsl-ig-story {
@@ -1854,7 +1867,11 @@ Velocity Sim Racing Lounge — Ignition
       height: clamp(24px, 6vw, 34px);
       max-width: min(200px, 72vw);
     }
-    .vsl-ig-portal__arrive-logo .vsl-ig-portal__title-mark {
+    .vsl-ig-portal__logo-slot {
+      height: clamp(72px, 20vw, 140px);
+      width: min(520px, 90vw);
+    }
+    .vsl-ig-portal__logo-rail .vsl-ig-portal__title-mark {
       height: clamp(60px, 18vw, 112px);
       max-width: min(520px, 90vw);
     }
@@ -2137,11 +2154,7 @@ Velocity Sim Racing Lounge — Ignition
                 <div class="vsl-ig-portal__rim" aria-hidden="true"></div>
                 <div class="vsl-ig-portal__caption">
                   <p class="vsl-ig-eyebrow vsl-ig-eyebrow--lined">Cocktails &amp; sim racing</p>
-                  <h1 class="vsl-ig-portal__title" id="ig-hero-title">
-                    <span class="vsl-ig-portal__title-main">
-                      <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png" alt="Ignition" width="1982" height="659" decoding="async">
-                    </span>
-                  </h1>
+                  <div class="vsl-ig-portal__logo-slot" aria-hidden="true"></div>
                 </div>
               </div>
             </div>
@@ -2156,17 +2169,18 @@ Velocity Sim Racing Lounge — Ignition
           </div>
           </div>
           </div>
+          <div class="vsl-ig-portal__logo-rail" data-vsl-portal-logo>
+            <h1 class="vsl-ig-portal__title" id="ig-hero-title">
+              <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png" alt="Ignition" width="1982" height="659" decoding="async">
+            </h1>
+          </div>
           <div class="vsl-ig-portal__cta-rail" data-vsl-portal-cta>
             <div class="vsl-ig-portal__actions">
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
               <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Book an Event</a>
             </div>
           </div>
-          <div class="vsl-ig-portal__arrive">
-            <h2 class="vsl-ig-portal__arrive-logo" aria-hidden="true">
-              <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png" alt="" width="1982" height="659" decoding="async">
-            </h2>
-          </div>
+          <div class="vsl-ig-portal__arrive" aria-hidden="true"></div>
         </div>
       </div>
     </section>
@@ -2698,6 +2712,7 @@ var cfg = {};
     var portalFitFrame = null;
     var ctaRestY0 = null;
     var ctaTravelCached = null;
+    var logoY0Cached = null;
     var logoTravelCached = null;
     var logoScaleCached = null;
 
@@ -2823,42 +2838,55 @@ var cfg = {};
 
     function syncLogoTravel(resetRest) {
       if (!portal) return;
-      var captionMark = portal.querySelector('.vsl-ig-portal__caption .vsl-ig-portal__title-mark');
-      var arriveLogo = portal.querySelector('.vsl-ig-portal__arrive-logo');
-      if (!captionMark || !arriveLogo) return;
+      var sticky = portal.querySelector('.vsl-ig-portal__sticky');
+      var slot = portal.querySelector('.vsl-ig-portal__logo-slot');
+      var logoRail = portal.querySelector('[data-vsl-portal-logo]');
+      var arrive = portal.querySelector('.vsl-ig-portal__arrive');
+      var ctaRail = portal.querySelector('[data-vsl-portal-cta]');
+      var mark = logoRail ? logoRail.querySelector('.vsl-ig-portal__title-mark') : null;
+      if (!sticky || !slot || !logoRail || !mark) return;
 
       if (resetRest) {
+        logoY0Cached = null;
         logoTravelCached = null;
         logoScaleCached = null;
       }
 
       if (portal.classList.contains('vsl-ig-portal--static')) {
+        logoY0Cached = null;
         logoTravelCached = null;
         logoScaleCached = null;
+        portal.style.removeProperty('--ig-logo-y0');
         portal.style.removeProperty('--ig-logo-travel');
         portal.style.removeProperty('--ig-logo-scale0');
         return;
       }
 
       var p = parseFloat(getComputedStyle(portal).getPropertyValue('--ig-portal-p')) || 0;
-      if (logoTravelCached === null && p <= 0.06) {
-        var prevLogoTransform = arriveLogo.style.transform;
-        var prevLogoOpacity = arriveLogo.style.opacity;
-        arriveLogo.style.transform = 'none';
-        arriveLogo.style.opacity = '1';
+      if (logoY0Cached === null && p <= 0.06) {
+        var prevTransform = logoRail.style.transform;
+        logoRail.style.transform = 'none';
 
-        var c = captionMark.getBoundingClientRect();
-        var a = arriveLogo.getBoundingClientRect();
-        logoTravelCached = (c.top + c.height / 2) - (a.top + a.height / 2);
-        logoScaleCached = a.height > 0 ? c.height / a.height : 1.25;
+        var stickyTop = sticky.getBoundingClientRect().top;
+        var slotRect = slot.getBoundingClientRect();
+        var markH = mark.offsetHeight || 1;
+        logoY0Cached = (slotRect.top + slotRect.height / 2) - stickyTop - markH / 2;
+        logoScaleCached = slotRect.height / markH;
 
-        arriveLogo.style.transform = prevLogoTransform;
-        arriveLogo.style.opacity = prevLogoOpacity;
+        var bottomPad = 48;
+        if (arrive) bottomPad = parseFloat(getComputedStyle(arrive).paddingBottom) || bottomPad;
+        var ctaH = ctaRail ? ctaRail.offsetHeight : 48;
+        var ctaTop = sticky.clientHeight - bottomPad - ctaH;
+        var y1 = ctaTop - 18 - markH;
+        logoTravelCached = y1 - logoY0Cached;
+
+        logoRail.style.transform = prevTransform;
       }
-      if (logoTravelCached === null) return;
+      if (logoY0Cached === null || logoTravelCached === null) return;
 
+      portal.style.setProperty('--ig-logo-y0', Math.round(logoY0Cached) + 'px');
       portal.style.setProperty('--ig-logo-travel', Math.round(logoTravelCached) + 'px');
-      portal.style.setProperty('--ig-logo-scale0', (logoScaleCached || 1.25).toFixed(3));
+      portal.style.setProperty('--ig-logo-scale0', (logoScaleCached || 1.35).toFixed(3));
     }
 
     function schedulePortalFit() {
