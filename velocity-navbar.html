@@ -1,5 +1,6 @@
 <!-- Velocity Sim Racing Lounge — Global Navbar Component (Elementor Custom HTML ready) -->
 <!-- Location helper inlined below — paste this navbar only; no separate vsl-location.js upload -->
+<!-- vsl-navbar build: 20260713a — bump when pasting to WordPress so caches pick up the change -->
 <script>
 if (!window.VSL_LOCATION) {
 (function (global) {
@@ -569,16 +570,47 @@ if (!window.VSL_LOCATION) {
   border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.12s ease, color 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, transform 0.1s ease, filter 0.1s ease;
 }
-.vsl-navbar__mcta-explore {
-  color: #101828;
-  -webkit-text-fill-color: #101828;
-  background: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+.vsl-navbar__mcta-explore,
+.vsl-navbar__mcta-explore:link,
+.vsl-navbar__mcta-explore:visited,
+.vsl-navbar__mcta-explore:hover,
+.vsl-navbar__mcta-explore:focus,
+.vsl-navbar__mcta-explore:focus-visible,
+.vsl-navbar__mcta-explore:active,
+.vsl-navbar__mcta-explore[aria-expanded="false"],
+.vsl-navbar__mcta-explore[aria-expanded="false"]:hover,
+.vsl-navbar__mcta-explore[aria-expanded="false"]:focus,
+.vsl-navbar__mcta-explore[aria-expanded="false"]:focus-visible,
+.vsl-navbar__mcta-explore[aria-expanded="false"]:active,
+.vsl-navbar__mcta-explore:not([aria-expanded="true"]) {
+  color: #101828 !important;
+  -webkit-text-fill-color: #101828 !important;
+  background: #fff !important;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.22),
-    0 1px 3px rgba(0, 0, 0, 0.22);
+    0 1px 3px rgba(0, 0, 0, 0.22) !important;
+  filter: none !important;
+  opacity: 1 !important;
+  outline: none;
+}
+.vsl-navbar__mcta-explore.is-pressed,
+.vsl-navbar__mcta-explore:active {
+  transform: scale(0.97);
+  filter: brightness(0.96) !important;
+}
+.vsl-navbar__mcta-book.is-pressed,
+.vsl-navbar__mcta-book:active,
+.vsl-navbar__mcta-events.is-pressed,
+.vsl-navbar__mcta-events:active {
+  transform: scale(0.97);
+  filter: brightness(0.94);
 }
 .vsl-navbar__mcta-explore svg {
   width: 10px;
@@ -586,25 +618,27 @@ if (!window.VSL_LOCATION) {
   fill: currentColor;
   flex-shrink: 0;
   opacity: 0.85;
-  transition: transform 0.25s ease;
+  transition: transform 0.18s ease;
 }
 .vsl-navbar__mcta-explore[aria-expanded="true"] svg {
   transform: rotate(180deg);
 }
-@media (hover: hover) and (pointer: fine) {
-  .vsl-navbar__mcta-explore:hover,
-  .vsl-navbar__mcta-explore:focus-visible {
-    background: #fff;
-    filter: brightness(1.04);
-    border-color: rgba(255, 255, 255, 0.22);
-  }
-}
-.vsl-navbar__mcta-explore[aria-expanded="true"] {
-  background: var(--magenta);
-  border-color: var(--magenta);
-  color: #fff;
-  -webkit-text-fill-color: #fff;
-  box-shadow: none;
+.vsl-navbar__mcta-explore[aria-expanded="true"],
+.vsl-navbar__mcta-explore[aria-expanded="true"]:link,
+.vsl-navbar__mcta-explore[aria-expanded="true"]:visited,
+.vsl-navbar__mcta-explore[aria-expanded="true"]:hover,
+.vsl-navbar__mcta-explore[aria-expanded="true"]:focus,
+.vsl-navbar__mcta-explore[aria-expanded="true"]:focus-visible,
+.vsl-navbar__mcta-explore[aria-expanded="true"]:active {
+  background: #EE265F !important;
+  background-color: #EE265F !important;
+  background-image: none !important;
+  border-color: #EE265F !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 .vsl-navbar__mcta-book {
   color: #fff;
@@ -1720,7 +1754,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   padding: calc(var(--nav-height) + var(--stripe-h) + (32px * var(--vsl-ui-scale))) calc(32px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale));
   overflow-y: auto;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.14s ease;
 }
 .vsl-navbar__overlay--open { display: flex; opacity: 1; }
 .vsl-navbar__overlay-menu {
@@ -1862,16 +1896,16 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   padding-bottom: calc(8px * var(--vsl-ui-scale));
 }
 .vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card {
-  animation: vsl-card-pop 0.18s ease-out both;
+  animation: vsl-card-pop 0.12s ease-out both;
 }
 .vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(1) { animation-delay: 0s; }
-.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(2) { animation-delay: 0.02s; }
-.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(3) { animation-delay: 0.04s; }
-.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(4) { animation-delay: 0.06s; }
-.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(5) { animation-delay: 0.08s; }
-.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(6) { animation-delay: 0.10s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(2) { animation-delay: 0.015s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(3) { animation-delay: 0.03s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(4) { animation-delay: 0.045s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(5) { animation-delay: 0.06s; }
+.vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards .vsl-navbar__overlay-card:nth-child(6) { animation-delay: 0.075s; }
 @keyframes vsl-card-pop {
-  from { opacity: 0.4; transform: translateY(4px); }
+  from { opacity: 0.55; transform: translateY(3px); }
   to   { opacity: 1;   transform: translateY(0); }
 }
 .vsl-navbar__overlay-sub-link {
@@ -1920,6 +1954,44 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease, border-color 0.12s ease, box-shadow 0.12s ease, filter 0.1s ease;
+}
+.vsl-navbar__overlay-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(238, 38, 95, 0);
+  pointer-events: none;
+  transition: background 0.12s ease;
+  z-index: 2;
+  border-radius: inherit;
+}
+.vsl-navbar__overlay-card.is-pressed,
+.vsl-navbar__overlay-card:active {
+  transform: scale(0.97);
+  border-color: rgba(238, 38, 95, 0.72);
+  box-shadow: 0 0 0 1px rgba(238, 38, 95, 0.35), 0 8px 20px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.08);
+}
+.vsl-navbar__overlay-card.is-pressed::after,
+.vsl-navbar__overlay-card:active::after {
+  background: rgba(238, 38, 95, 0.18);
+}
+.vsl-navbar__overlay-card.is-navigating {
+  transform: scale(0.96);
+  border-color: rgba(238, 38, 95, 0.85);
+  filter: brightness(1.12);
+  pointer-events: none;
+}
+.vsl-navbar__overlay-card.is-navigating::after {
+  background: rgba(238, 38, 95, 0.28);
+}
+.vsl-navbar__overlay-card.is-navigating .vsl-navbar__overlay-card__arrow {
+  border-color: #fff;
+  background: rgba(238, 38, 95, 0.85);
+}
+.vsl-navbar__overlay-card.is-navigating .vsl-navbar__overlay-card__arrow svg {
+  fill: #fff;
 }
 .vsl-navbar__overlay-card__title {
   font-family: var(--font-head);
@@ -2930,6 +3002,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     z-index: calc(var(--z-overlay) + 5) !important;
     transform: translate3d(0, 0, 0);
   }
+  body > .vsl-navbar__mcta .vsl-navbar__mcta-explore:not([aria-expanded="true"]) {
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    color: #101828 !important;
+    -webkit-text-fill-color: #101828 !important;
+  }
+  body > .vsl-navbar__mcta .vsl-navbar__mcta-explore[aria-expanded="true"] {
+    background: #EE265F !important;
+    background-color: #EE265F !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
   /* Site-wide: checkered finish lives on the mobile dock — hide per-page hero/footer flags */
   [class$="__finish"] {
     display: none !important;
@@ -3289,7 +3374,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 </style>
 
-<nav class="vsl-navbar" role="navigation" aria-label="Main navigation">
+<nav class="vsl-navbar" data-vsl-build="20260713a" role="navigation" aria-label="Main navigation">
   <div class="vsl-navbar__stripe" aria-hidden="true"></div>
   <div class="vsl-navbar__bar">
     <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
@@ -4918,20 +5003,25 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function openMobileMenu() {
     if (!overlay) return;
-    closeAllDesktop();
-    closeLocDropdown();
-    closeStickyLocMenu();
-    if (locationPanel && !locationPanel.hidden) closeLocationPrompt();
-    navbar.classList.add('vsl-navbar--mobile-menu-open');
-    overlay.classList.add('vsl-navbar__overlay--open');
-    overlay.setAttribute('aria-hidden', 'false');
-    lockMobileMenuScroll();
-    portalMobileDock();
-    syncMobileDockToVisualViewport();
     if (mobileExploreBtn) {
       mobileExploreBtn.setAttribute('aria-expanded', 'true');
       mobileExploreBtn.setAttribute('aria-label', 'Close menu');
+      mobileExploreBtn.classList.add('is-pressed');
     }
+    /* Paint open state first so the tap feels instant */
+    navbar.classList.add('vsl-navbar--mobile-menu-open');
+    overlay.classList.add('vsl-navbar__overlay--open');
+    overlay.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(function() {
+      closeAllDesktop();
+      closeLocDropdown();
+      closeStickyLocMenu();
+      if (locationPanel && !locationPanel.hidden) closeLocationPrompt();
+      lockMobileMenuScroll();
+      portalMobileDock();
+      syncMobileDockToVisualViewport();
+      if (mobileExploreBtn) mobileExploreBtn.classList.remove('is-pressed');
+    });
   }
   function toggleMobileMenu() {
     if (!overlay) return;
@@ -4942,9 +5032,41 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     }
   }
   if (mobileExploreBtn) {
+    var exploreOpenedOnPointer = false;
+    mobileExploreBtn.addEventListener('pointerdown', function(e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      mobileExploreBtn.classList.add('is-pressed');
+      /* Open on press so the menu paints before click latency */
+      if (overlay && !overlay.classList.contains('vsl-navbar__overlay--open')) {
+        exploreOpenedOnPointer = true;
+        openMobileMenu();
+      }
+    });
+    function clearExplorePress() {
+      mobileExploreBtn.classList.remove('is-pressed');
+    }
+    mobileExploreBtn.addEventListener('pointerup', clearExplorePress);
+    mobileExploreBtn.addEventListener('pointercancel', clearExplorePress);
+    mobileExploreBtn.addEventListener('pointerleave', clearExplorePress);
     mobileExploreBtn.addEventListener('click', function(e) {
       e.stopPropagation();
+      if (exploreOpenedOnPointer) {
+        exploreOpenedOnPointer = false;
+        return;
+      }
       toggleMobileMenu();
+    });
+  }
+  if (mobileDock) {
+    mobileDock.querySelectorAll('.vsl-navbar__mcta-book, .vsl-navbar__mcta-events').forEach(function(btn) {
+      btn.addEventListener('pointerdown', function(e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        btn.classList.add('is-pressed');
+      });
+      function clearDockPress() { btn.classList.remove('is-pressed'); }
+      btn.addEventListener('pointerup', clearDockPress);
+      btn.addEventListener('pointercancel', clearDockPress);
+      btn.addEventListener('pointerleave', clearDockPress);
     });
   }
   function closeMobile() {
@@ -4956,10 +5078,16 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     if (mobileExploreBtn) {
       mobileExploreBtn.setAttribute('aria-expanded', 'false');
       mobileExploreBtn.setAttribute('aria-label', 'Open menu');
+      mobileExploreBtn.classList.remove('is-pressed');
+      try { mobileExploreBtn.blur(); } catch (_) {}
     }
     var om = overlay.querySelector('.vsl-navbar__overlay-menu');
     if (om) om.classList.remove('vsl-navbar__overlay-menu--sub-open');
     overlay.querySelectorAll('.vsl-navbar__overlay-item--open').forEach(function(el) { el.classList.remove('vsl-navbar__overlay-item--open'); });
+    overlay.querySelectorAll('.vsl-navbar__overlay-card.is-pressed, .vsl-navbar__overlay-card.is-navigating').forEach(function(el) {
+      el.classList.remove('is-pressed');
+      el.classList.remove('is-navigating');
+    });
   }
 
   function dismissNavMenusForNavigation() {
@@ -5050,6 +5178,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       link.addEventListener('click', function() {
         var href = link.getAttribute('href');
         if (!href || href.charAt(0) === '#') return;
+        if (link.classList.contains('vsl-navbar__overlay-card')) {
+          link.classList.add('is-navigating');
+          link.classList.remove('is-pressed');
+        }
         dismissNavMenusForNavigation();
       });
     });
@@ -5057,6 +5189,23 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   bindNavLinkDismiss(megaPanel);
   bindNavLinkDismiss(overlay);
+
+  if (overlay) {
+    overlay.querySelectorAll('.vsl-navbar__overlay-card').forEach(function(card) {
+      card.addEventListener('pointerdown', function(e) {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        card.classList.add('is-pressed');
+        card.classList.remove('is-navigating');
+      });
+      card.addEventListener('pointercancel', function() {
+        if (!card.classList.contains('is-navigating')) card.classList.remove('is-pressed');
+      });
+      card.addEventListener('pointerleave', function() {
+        if (!card.classList.contains('is-navigating')) card.classList.remove('is-pressed');
+      });
+    });
+  }
+
   navbar.querySelectorAll('.vsl-navbar__menu a[href], .vsl-navbar__dropdown a[href]').forEach(function(link) {
     if (link._vslNavDismissBound) return;
     link._vslNavDismissBound = true;
