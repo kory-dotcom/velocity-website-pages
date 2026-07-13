@@ -314,8 +314,8 @@ Velocity Sim Racing Lounge — Ignition
     --ig-nav-offset: 0px;
   }
   .vsl-ig-portal__track {
-    height: 220vh;
-    height: 220dvh;
+    height: 300vh;
+    height: 300dvh;
   }
   .vsl-ig-portal__sticky {
     position: sticky;
@@ -508,7 +508,7 @@ Velocity Sim Racing Lounge — Ignition
     box-shadow: inset 0 20px 60px rgba(238, 38, 95, 0.1);
     opacity: calc(1 - var(--ig-portal-p));
   }
-  /* Eyebrow + title overlaid inside the arch window, fading out as it reveals */
+  /* Eyebrow + logo overlaid inside the arch window, handing off to arrive state */
   .vsl-ig-portal__caption {
     position: absolute;
     inset: 0;
@@ -520,8 +520,9 @@ Velocity Sim Racing Lounge — Ignition
     gap: clamp(0.55rem, 2vh, 1.25rem);
     padding: clamp(20px, 7%, 64px) clamp(18px, 6%, 56px);
     text-align: center;
-    opacity: calc(1 - min(1, var(--ig-portal-p) * 2.6));
-    transform: translateY(calc(var(--ig-portal-p) * -18px));
+    opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.18) / 0.38)));
+    transform: translateY(calc(var(--ig-portal-p) * -12px))
+      scale(calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.1) / 0.5)) * 0.08));
     pointer-events: none;
   }
   .vsl-ig-portal__caption::before {
@@ -557,22 +558,37 @@ Velocity Sim Racing Lounge — Ignition
     width: 100%;
     text-align: center;
     padding: 0;
-    /* Fade the entry CTAs out fully before collapsing height, so overflow
-       never shears through the middle of a button. Height only starts
-       releasing after --ig-portal-p passes ~0.22 (opacity already 0). */
-    --ig-hud-fade: min(1, var(--ig-portal-p) / 0.22);
-    --ig-hud-collapse: min(1, max(0, var(--ig-portal-p) - 0.22) / 0.4);
+    --ig-hud-fade: min(1, var(--ig-portal-p) / 0.28);
+    --ig-hud-collapse: min(1, max(0, var(--ig-portal-p) - 0.28) / 0.45);
     max-height: calc((1 - var(--ig-hud-collapse)) * var(--ig-hud-h, 520px));
     overflow: hidden;
     opacity: calc(1 - var(--ig-hud-fade));
     transform: translateY(calc(var(--ig-hud-fade) * -12px));
-    pointer-events: auto;
-  }
-  .vsl-ig-portal.is-scrubbing .vsl-ig-portal__hud-bottom,
-  .vsl-ig-portal.is-revealed .vsl-ig-portal__hud-bottom {
     pointer-events: none;
   }
-  /* Destination of the scroll — fades in as the arch fills the frame */
+  .vsl-ig-portal__hud-spacer {
+    width: 100%;
+    height: clamp(48px, 6vh, 56px);
+    pointer-events: none;
+  }
+  /* Single CTA row — same buttons from rest through reveal */
+  .vsl-ig-portal__cta-rail {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--ig-cta-y0, auto);
+    z-index: 7;
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--page-margin);
+    transform: translateY(calc(var(--ig-portal-p) * var(--ig-cta-travel, 0px)));
+    pointer-events: none;
+    will-change: transform;
+  }
+  .vsl-ig-portal__cta-rail .vsl-ig-portal__actions {
+    pointer-events: auto;
+  }
+  /* Destination of the scroll — logo + CTAs fade in as the arch fills the frame */
   .vsl-ig-portal__arrive {
     position: absolute;
     left: 0;
@@ -582,46 +598,34 @@ Velocity Sim Racing Lounge — Ignition
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(14px, 2vh, 22px);
+    gap: clamp(16px, 2.4vh, 28px);
     padding:
       clamp(28px, 5vh, 56px)
       var(--page-margin)
       max(clamp(28px, 4vh, 48px), calc(env(safe-area-inset-bottom, 0px) + 20px));
     text-align: center;
-    background: linear-gradient(180deg, transparent 0%, rgba(18, 10, 14, 0.55) 38%, rgba(18, 10, 14, 0.88) 100%);
-    opacity: calc(max(0, (var(--ig-portal-p) - 0.5) / 0.45));
-    transform: translateY(calc((1 - max(0, (var(--ig-portal-p) - 0.5) / 0.45)) * 36px));
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 10, 14, 0.62) 32%, rgba(18, 10, 14, 0.92) 100%);
+    opacity: calc(max(0, (var(--ig-portal-p) - 0.42) / 0.42));
+    transform: translateY(calc((1 - max(0, (var(--ig-portal-p) - 0.42) / 0.42)) * 32px));
     pointer-events: none;
   }
   .vsl-ig-portal.is-revealed .vsl-ig-portal__arrive {
     pointer-events: auto;
   }
-  .vsl-ig-portal__arrive-kicker {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--amber);
+  .vsl-ig-portal__arrive-logo {
+    margin: 0 0 calc(clamp(48px, 6vh, 56px) + 14px);
+    line-height: 0;
+    opacity: calc(max(0, (var(--ig-portal-p) - 0.38) / 0.45));
+    transform: translateY(calc((1 - max(0, (var(--ig-portal-p) - 0.38) / 0.45)) * 20px))
+      scale(calc(0.92 + max(0, (var(--ig-portal-p) - 0.38) / 0.45) * 0.08));
   }
-  .vsl-ig-portal__arrive-lead {
-    margin: 0;
-    max-width: 28rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.35rem, 0.95rem + 1.4vw, 2.1rem);
-    font-weight: 500;
-    font-style: italic;
-    line-height: 1.3;
-    letter-spacing: 0.02em;
-    color: var(--white);
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
-  }
-  .vsl-ig-portal__arrive-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
+  .vsl-ig-portal__arrive-logo .vsl-ig-portal__title-mark {
+    height: clamp(72px, 13vw, 148px);
+    max-width: min(640px, 82vw);
+    filter:
+      drop-shadow(0 0 32px rgba(238, 38, 95, 0.45))
+      drop-shadow(0 4px 28px rgba(0, 0, 0, 0.75))
+      drop-shadow(0 0 48px rgba(18, 10, 14, 0.85));
   }
   .vsl-ig-portal__enter-hint {
     position: relative;
@@ -766,6 +770,17 @@ Velocity Sim Racing Lounge — Ignition
     pointer-events: auto;
     background: transparent;
     padding: clamp(12px, 2vw, 24px) 0 0;
+  }
+  .vsl-ig-portal--static .vsl-ig-portal__cta-rail {
+    position: relative;
+    top: auto;
+    transform: none;
+    padding: clamp(12px, 2vw, 20px) 0 0;
+  }
+  .vsl-ig-portal--static .vsl-ig-portal__arrive-logo {
+    opacity: 1;
+    transform: none;
+    margin-bottom: 0;
   }
 
   /* ═══ Story — scrollytelling corridor ═══ */
@@ -1361,6 +1376,134 @@ Velocity Sim Racing Lounge — Ignition
     text-align: center;
   }
 
+  /* Menu item detail lightbox */
+  .vsl-ig-menu__item--has-photo {
+    cursor: pointer;
+  }
+  .vsl-ig-menu__item--has-photo:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+  .vsl-ig-menu-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(12px, 4vw, 28px);
+  }
+  .vsl-ig-menu-lightbox.is-open {
+    display: flex !important;
+  }
+  .vsl-ig-menu-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: rgba(18, 10, 14, 0.94);
+    cursor: pointer;
+  }
+  .vsl-ig-menu-lightbox__panel {
+    position: relative;
+    z-index: 1;
+    width: min(96vw, 520px);
+    max-height: min(92vh, 920px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(14px, 2.4vh, 20px);
+    padding: clamp(18px, 3vw, 28px);
+    border-radius: var(--soft);
+    border: 1px solid rgba(232, 180, 90, 0.22);
+    background:
+      radial-gradient(ellipse 120% 80% at 50% 0%, rgba(58, 22, 32, 0.65) 0%, transparent 55%),
+      linear-gradient(180deg, rgba(28, 14, 20, 0.98) 0%, rgba(18, 10, 14, 0.99) 100%);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.65);
+    overflow: auto;
+    pointer-events: none;
+  }
+  .vsl-ig-menu-lightbox__panel > * {
+    pointer-events: auto;
+  }
+  .vsl-ig-menu-lightbox__close {
+    align-self: flex-end;
+    margin: 0 0 2px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(232, 180, 90, 0.35);
+    border-radius: 50%;
+    background: rgba(58, 22, 32, 0.55);
+    color: var(--white);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .vsl-ig-menu-lightbox__close:hover {
+    border-color: var(--amber);
+    background: rgba(58, 22, 32, 0.85);
+  }
+  .vsl-ig-menu-lightbox__close:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+  .vsl-ig-menu-lightbox__frame {
+    width: 100%;
+    max-height: min(62vh, 640px);
+    margin: 0 auto;
+    border-radius: 50% 50% 10px 10px / 28% 28% 10px 10px;
+    overflow: hidden;
+    border: 1px solid rgba(232, 180, 90, 0.28);
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.5),
+      inset 0 0 32px rgba(193, 20, 50, 0.12);
+    background: rgba(18, 10, 14, 0.9);
+  }
+  .vsl-ig-menu-lightbox__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: min(62vh, 640px);
+    object-fit: contain;
+    object-position: center;
+  }
+  .vsl-ig-menu-lightbox__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px 16px;
+  }
+  .vsl-ig-menu-lightbox__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1rem + 1vw, 1.85rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .vsl-ig-menu-lightbox__price {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--amber);
+    white-space: nowrap;
+  }
+  .vsl-ig-menu-lightbox__desc {
+    margin: 0;
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: var(--mist);
+  }
+  .vsl-ig-menu-lightbox__desc em {
+    font-style: italic;
+    color: var(--amber);
+    opacity: 0.9;
+  }
+
   /* ═══ Visit — passage timeline ═══ */
   .vsl-ig-visit {
     padding: clamp(64px, 10vw, 120px) var(--page-margin);
@@ -1671,16 +1814,19 @@ Velocity Sim Racing Lounge — Ignition
       height: clamp(24px, 6vw, 34px);
       max-width: min(200px, 72vw);
     }
+    .vsl-ig-portal__arrive-logo .vsl-ig-portal__title-mark {
+      height: clamp(60px, 18vw, 112px);
+      max-width: min(520px, 90vw);
+    }
     .vsl-ig-portal__title-mark {
       height: clamp(72px, 20vw, 140px);
       max-width: min(520px, 90vw);
     }
-    .vsl-ig-portal__track { height: 180vh; height: 180dvh; }
+    .vsl-ig-portal__track { height: 260vh; height: 260dvh; }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
     .vsl-ig-portal__actions { flex-direction: column; align-items: stretch; }
     .vsl-ig-portal__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
-    .vsl-ig-portal__arrive-actions { flex-direction: column; align-items: stretch; }
-    .vsl-ig-portal__arrive-actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
+    .vsl-ig-portal__cta-rail { padding-left: 0; padding-right: 0; }
     .vsl-ig-portal__arrive { padding-bottom: max(88px, calc(env(safe-area-inset-bottom, 0px) + 72px)); }
     .vsl-ig-visit__actions { flex-direction: column; align-items: stretch; }
     .vsl-ig-visit__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
@@ -1962,21 +2108,21 @@ Velocity Sim Racing Lounge — Ignition
             </div>
           <div class="vsl-ig-portal__hud-bottom">
             <p class="vsl-ig-portal__enter-hint">Scroll to enter</p>
-            <div class="vsl-ig-portal__actions">
-              <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
-              <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Book an Event</a>
-            </div>
+            <div class="vsl-ig-portal__hud-spacer" aria-hidden="true"></div>
             <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
           </div>
           </div>
           </div>
-          <div class="vsl-ig-portal__arrive">
-            <p class="vsl-ig-portal__arrive-kicker">You&rsquo;re in</p>
-            <p class="vsl-ig-portal__arrive-lead">Eight simulators. Craft cocktails. A hidden lounge inside Velocity Houston.</p>
-            <div class="vsl-ig-portal__arrive-actions">
-              <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-gallery">See the Space</a>
-              <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
+          <div class="vsl-ig-portal__cta-rail" data-vsl-portal-cta>
+            <div class="vsl-ig-portal__actions">
+              <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
+              <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Book an Event</a>
             </div>
+          </div>
+          <div class="vsl-ig-portal__arrive">
+            <h2 class="vsl-ig-portal__arrive-logo" aria-hidden="true">
+              <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png" alt="" width="1982" height="659" decoding="async">
+            </h2>
           </div>
         </div>
       </div>
@@ -2087,7 +2233,7 @@ Velocity Sim Racing Lounge — Ignition
             <a href="#ig-plates" data-menu-link="ig-plates">Small Plates</a>
           </nav>
 
-        <div class="vsl-ig-menu__panel vsl-ig-reveal">
+        <div class="vsl-ig-menu__panel">
 
           <section class="vsl-ig-menu__block" id="ig-cocktails" aria-labelledby="ig-cocktails-heading">
             <h3 class="vsl-ig-menu__block-title" id="ig-cocktails-heading">Cocktails</h3>
@@ -2394,6 +2540,21 @@ Velocity Sim Racing Lounge — Ignition
 
       </div>
 </main>
+
+  <div class="vsl-ig-menu-lightbox" id="vsl-ig-menu-lightbox" aria-modal="true" role="dialog" aria-labelledby="vsl-ig-menu-lightbox-name" aria-hidden="true">
+    <button type="button" class="vsl-ig-menu-lightbox__backdrop" aria-label="Close menu item"></button>
+    <div class="vsl-ig-menu-lightbox__panel">
+      <button type="button" class="vsl-ig-menu-lightbox__close" aria-label="Close">&times;</button>
+      <div class="vsl-ig-menu-lightbox__frame">
+        <img class="vsl-ig-menu-lightbox__img" src="" alt="">
+      </div>
+      <div class="vsl-ig-menu-lightbox__head">
+        <h3 class="vsl-ig-menu-lightbox__name" id="vsl-ig-menu-lightbox-name"></h3>
+        <p class="vsl-ig-menu-lightbox__price"></p>
+      </div>
+      <p class="vsl-ig-menu-lightbox__desc"></p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -2450,6 +2611,24 @@ var cfg = {};
 
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    function revealMenuContent() {
+      var menuSection = root.querySelector('#ig-menu');
+      if (!menuSection) return;
+      menuSection.querySelectorAll('.vsl-ig-reveal, .vsl-ig-reveal-title').forEach(function(el) {
+        el.classList.add('is-visible');
+      });
+    }
+
+    function softScrollToHash(href) {
+      if (!href || href.charAt(0) !== '#') return;
+      var target = root.querySelector(href) || document.querySelector(href);
+      if (!target) return;
+      if (href === '#ig-menu' || href === '#ig-cocktails' || href === '#ig-zero' || href === '#ig-plates') {
+        revealMenuContent();
+      }
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+
     /* Soft scroll for in-page anchors */
     root.querySelectorAll('[data-vsl-soft-scroll]').forEach(function(a) {
       a.addEventListener('click', function(e) {
@@ -2458,13 +2637,26 @@ var cfg = {};
         var target = root.querySelector(href) || document.querySelector(href);
         if (!target) return;
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        softScrollToHash(href);
+      });
+    });
+
+    /* Menu section nav — spine + mobile pills */
+    root.querySelectorAll('[data-menu-link], .vsl-ig-menu__nav a[href^="#"]').forEach(function(a) {
+      a.addEventListener('click', function(e) {
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) !== '#') return;
+        var target = root.querySelector(href) || document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        softScrollToHash(href);
       });
     });
 
     /* Portal scroll — walk through the arch */
     var portal = root.querySelector('[data-vsl-portal]');
     var portalFitFrame = null;
+    var ctaRestY0 = null;
 
     function syncPortalNavOffset() {
       if (!portal) return;
@@ -2545,21 +2737,60 @@ var cfg = {};
       }
     }
 
+    function syncCtaRail(resetRest) {
+      if (!portal) return;
+      var sticky = portal.querySelector('.vsl-ig-portal__sticky');
+      var rail = portal.querySelector('[data-vsl-portal-cta]');
+      var spacer = portal.querySelector('.vsl-ig-portal__hud-spacer');
+      var arrive = portal.querySelector('.vsl-ig-portal__arrive');
+      if (!sticky || !rail || !spacer) return;
+
+      if (resetRest) ctaRestY0 = null;
+
+      if (portal.classList.contains('vsl-ig-portal--static')) {
+        ctaRestY0 = null;
+        portal.style.removeProperty('--ig-cta-y0');
+        portal.style.removeProperty('--ig-cta-travel');
+        return;
+      }
+
+      var p = parseFloat(getComputedStyle(portal).getPropertyValue('--ig-portal-p')) || 0;
+      if (ctaRestY0 === null && p <= 0.06) {
+        var stickyTop = sticky.getBoundingClientRect().top;
+        var spacerRect = spacer.getBoundingClientRect();
+        ctaRestY0 = spacerRect.top - stickyTop + (spacerRect.height - rail.offsetHeight) / 2;
+      }
+      if (ctaRestY0 === null) return;
+
+      var bottomPad = 48;
+      if (arrive) bottomPad = parseFloat(getComputedStyle(arrive).paddingBottom) || bottomPad;
+      var y1 = sticky.clientHeight - bottomPad - rail.offsetHeight;
+
+      portal.style.setProperty('--ig-cta-y0', Math.round(ctaRestY0) + 'px');
+      portal.style.setProperty('--ig-cta-travel', Math.round(y1 - ctaRestY0) + 'px');
+    }
+
     function schedulePortalFit() {
       if (portalFitFrame) cancelAnimationFrame(portalFitFrame);
       portalFitFrame = requestAnimationFrame(function() {
         portalFitFrame = null;
         syncPortalNavOffset();
         fitPortalHero();
+        syncCtaRail(false);
       });
+    }
+
+    function schedulePortalFitFull() {
+      syncCtaRail(true);
+      schedulePortalFit();
     }
 
     if (portal) {
       syncPortalNavOffset();
-      schedulePortalFit();
-      window.addEventListener('resize', schedulePortalFit);
+      schedulePortalFitFull();
+      window.addEventListener('resize', schedulePortalFitFull);
       if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(schedulePortalFit);
+        document.fonts.ready.then(schedulePortalFitFull);
       }
       if (window.ResizeObserver) {
         var portalRo = new ResizeObserver(schedulePortalFit);
@@ -2574,6 +2805,36 @@ var cfg = {};
       } else {
         var track = portal.querySelector('.vsl-ig-portal__track');
         var portalTicking = false;
+        var portalTargetP = 0;
+        var portalDisplayP = 0;
+        var portalSmoothFrame = null;
+        var portalWasInRest = true;
+
+        function applyPortalState(p) {
+          portal.style.setProperty('--ig-portal-p', String(p));
+          portal.classList.toggle('is-scrubbing', p > 0.001 && p < 0.999);
+          portal.classList.toggle('is-revealed', p > 0.88);
+        }
+
+        function portalSmoothLoop() {
+          var diff = portalTargetP - portalDisplayP;
+          if (Math.abs(diff) < 0.001) {
+            portalDisplayP = portalTargetP;
+            portalSmoothFrame = null;
+          } else {
+            /* Ease harder on scroll-back so a fast reverse wheel flick
+               does not snap the arch closed in a single frame. */
+            var alpha = diff < 0 ? 0.08 : 0.16;
+            portalDisplayP += diff * alpha;
+            portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
+          }
+          applyPortalState(portalDisplayP);
+
+          var inRest = portalTargetP <= 0.06 && portalDisplayP <= 0.07;
+          if (inRest && !portalWasInRest) schedulePortalFitFull();
+          portalWasInRest = inRest;
+        }
+
         function updatePortalScroll() {
           portalTicking = false;
           if (!track) return;
@@ -2581,14 +2842,8 @@ var cfg = {};
           var raw = range > 0 ? Math.max(0, Math.min(1, -track.getBoundingClientRect().top / range)) : 0;
           /* Smoothstep the scrub so the arch eases in and out of the
              transition instead of starting and stopping abruptly. */
-          var p = raw * raw * (3 - 2 * raw);
-          portal.style.setProperty('--ig-portal-p', String(p));
-          portal.classList.toggle('is-scrubbing', raw > 0.001 && raw < 0.999);
-          portal.classList.toggle('is-revealed', raw > 0.88);
-          /* Re-fit near the top; otherwise leave --ig-hero-scale alone so the
-             compose transform interpolates it toward 1 as the portal reveals
-             (no discrete jump between the load and scrolled states). */
-          if (raw <= 0.06) schedulePortalFit();
+          portalTargetP = raw * raw * (3 - 2 * raw);
+          if (!portalSmoothFrame) portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
         }
         function onPortalScroll() {
           if (!portalTicking) {
@@ -2657,6 +2912,86 @@ var cfg = {};
         window.addEventListener('resize', onMenuScroll);
         updateMenuSpine();
       }
+    }
+
+    /* Menu item detail lightbox — items with photos open full image + ingredients */
+    var menuLightbox = root.querySelector('#vsl-ig-menu-lightbox');
+    if (menuLightbox) {
+      var lbImg = menuLightbox.querySelector('.vsl-ig-menu-lightbox__img');
+      var lbName = menuLightbox.querySelector('.vsl-ig-menu-lightbox__name');
+      var lbPrice = menuLightbox.querySelector('.vsl-ig-menu-lightbox__price');
+      var lbDesc = menuLightbox.querySelector('.vsl-ig-menu-lightbox__desc');
+      var lbClose = menuLightbox.querySelector('.vsl-ig-menu-lightbox__close');
+      var lbBackdrop = menuLightbox.querySelector('.vsl-ig-menu-lightbox__backdrop');
+      var lastMenuFocus = null;
+
+      function openMenuLightbox(item) {
+        var photoImg = item.querySelector('.vsl-ig-menu__item-photo img');
+        var nameEl = item.querySelector('.vsl-ig-menu__item-name');
+        var priceEl = item.querySelector('.vsl-ig-menu__item-price');
+        var descEl = item.querySelector('.vsl-ig-menu__item-desc');
+        if (!photoImg || !nameEl || !priceEl || !descEl) return;
+
+        lastMenuFocus = document.activeElement;
+        var name = nameEl.textContent.trim();
+        var src = photoImg.getAttribute('src') || '';
+        var alt = photoImg.getAttribute('alt') || name;
+
+        lbImg.src = src;
+        lbImg.alt = alt;
+        lbName.textContent = name;
+        lbPrice.textContent = priceEl.textContent.trim();
+        lbDesc.innerHTML = descEl.innerHTML;
+
+        menuLightbox.classList.add('is-open');
+        menuLightbox.removeAttribute('aria-hidden');
+        document.documentElement.style.overflow = 'hidden';
+        if (lbClose) lbClose.focus();
+      }
+
+      function closeMenuLightbox() {
+        menuLightbox.classList.remove('is-open');
+        menuLightbox.setAttribute('aria-hidden', 'true');
+        lbImg.removeAttribute('src');
+        lbImg.alt = '';
+        lbName.textContent = '';
+        lbPrice.textContent = '';
+        lbDesc.textContent = '';
+        document.documentElement.style.overflow = '';
+        if (lastMenuFocus && typeof lastMenuFocus.focus === 'function') lastMenuFocus.focus();
+      }
+
+      root.querySelectorAll('.vsl-ig-menu__item').forEach(function(item) {
+        var photoImg = item.querySelector('.vsl-ig-menu__item-photo img');
+        if (!photoImg) return;
+
+        item.classList.add('vsl-ig-menu__item--has-photo');
+        var name = item.querySelector('.vsl-ig-menu__item-name');
+        var label = name ? name.textContent.trim() : 'menu item';
+        item.setAttribute('tabindex', '0');
+        item.setAttribute('role', 'button');
+        item.setAttribute('aria-label', 'View ' + label);
+
+        item.addEventListener('click', function() {
+          openMenuLightbox(item);
+        });
+        item.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openMenuLightbox(item);
+          }
+        });
+      });
+
+      if (lbClose) lbClose.addEventListener('click', closeMenuLightbox);
+      if (lbBackdrop) lbBackdrop.addEventListener('click', closeMenuLightbox);
+      document.addEventListener('keydown', function(e) {
+        if (!menuLightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeMenuLightbox();
+        }
+      });
     }
 
     /* Live open status — America/Chicago */
@@ -2791,8 +3126,34 @@ var cfg = {};
       }
     }
 
-    /* Scroll reveals */
-    var revealEls = root.querySelectorAll('.vsl-ig-reveal, .vsl-ig-reveal-title');
+    /* Scroll reveals — menu section reveals as one unit so the panel is never
+       left invisible while the header and spine have already faded in. */
+    var menuSection = root.querySelector('#ig-menu');
+    var menuRevealEls = menuSection
+      ? Array.prototype.slice.call(menuSection.querySelectorAll('.vsl-ig-reveal, .vsl-ig-reveal-title'))
+      : [];
+    var allRevealEls = Array.prototype.slice.call(root.querySelectorAll('.vsl-ig-reveal, .vsl-ig-reveal-title'));
+    var revealEls = allRevealEls.filter(function(el) {
+      return menuRevealEls.indexOf(el) === -1;
+    });
+
+    if (menuRevealEls.length) {
+      if (reduceMotion) {
+        menuRevealEls.forEach(function(el) { el.classList.add('is-visible'); });
+      } else if ('IntersectionObserver' in window) {
+        var menuIo = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              menuRevealEls.forEach(function(el) { el.classList.add('is-visible'); });
+              menuIo.disconnect();
+            }
+          });
+        }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
+        menuIo.observe(menuSection);
+      } else {
+        menuRevealEls.forEach(function(el) { el.classList.add('is-visible'); });
+      }
+    }
 
     if (reduceMotion) {
       revealEls.forEach(function(el) { el.classList.add('is-visible'); });
