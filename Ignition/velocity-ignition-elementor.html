@@ -6,10 +6,12 @@ Velocity Sim Racing Lounge — Ignition
   Meta title:    Ignition | Velocity Sim Lounge Houston
   Meta desc:     Ignition is Velocity's hidden cocktail lounge in Houston — eight racing simulators, craft cocktails, and intimate atmosphere at 2110 Edwards St.
   Canonical:     https://velocitysimlounge.com/ignition/
-  OG image:      (swap hero image URL in data-vsl-config after upload)
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp
 
   ── Config ──
-  Update image URLs and menu copy in data-vsl-config / HTML below before launch.
+  Image URLs point at wp-content/uploads/2026/07/. Before publishing, upload
+  every file in Ignition/assets/wordpress-upload/ to the WordPress Media
+  Library (keep filenames; upload in July 2026 so the /2026/07/ path matches).
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -303,6 +305,7 @@ Velocity Sim Racing Lounge — Ignition
     --ig-hero-scale: 1;
     --ig-arch-pref: clamp(300px, 56vh, 640px);
     --ig-arch-h: var(--ig-arch-pref);
+    --ig-media-zoom: 0.14;
     position: relative;
     background: var(--oxblood);
   }
@@ -460,7 +463,7 @@ Velocity Sim Racing Lounge — Ignition
     height: calc((1 - var(--ig-portal-p)) * 100vh + var(--ig-portal-p) * 100dvh);
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(calc(1.06 + var(--ig-portal-p) * 0.14));
+    transform: translate(-50%, -50%) scale(calc(1.06 + var(--ig-portal-p) * var(--ig-media-zoom)));
     transform-origin: center center;
   }
   .vsl-ig-portal__media img {
@@ -584,8 +587,8 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-portal__title-mark {
     display: block;
     width: auto;
-    height: clamp(52px, 10vw, 110px);
-    max-width: min(520px, 78vw);
+    height: clamp(88px, 18vw, 220px);
+    max-width: min(820px, 88vw);
     margin: 0 auto;
     object-fit: contain;
     object-position: center;
@@ -1520,6 +1523,13 @@ Velocity Sim Racing Lounge — Ignition
       --ig-arch-w: min(84vw, 360px);
       --ig-arch-pref: clamp(260px, 42vh, 400px);
       --ig-hero-gap: clamp(8px, 1.4vh, 14px);
+      /* Portrait cover-crop already zooms the landscape hero heavily;
+         skip the extra travel zoom and keep the crop anchored higher so
+         the revealed state shows the room, not the table legs. */
+      --ig-media-zoom: 0.02;
+    }
+    .vsl-ig-portal__media img {
+      object-position: center calc(42% + var(--ig-portal-p) * 2%);
     }
     body:has(.vsl-navbar) .vsl-ig-portal {
       --ig-nav-offset: clamp(48px, 6.5vh, 60px);
@@ -1541,8 +1551,8 @@ Velocity Sim Racing Lounge — Ignition
       max-width: min(200px, 72vw);
     }
     .vsl-ig-portal__title-mark {
-      height: clamp(44px, 12vw, 72px);
-      max-width: min(280px, 82vw);
+      height: clamp(72px, 20vw, 140px);
+      max-width: min(520px, 90vw);
     }
     .vsl-ig-portal__track { height: 180vh; height: 180dvh; }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
@@ -1793,7 +1803,7 @@ Velocity Sim Racing Lounge — Ignition
   }
 </style>
 
-<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignitionlogo.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"assets/ignition-interior-render.png","hero":"assets/ignition-interior-render.png","story":"assets/ignition-interior-construction.png","storyBeat2":"assets/ignition-interior-render.png","storyBeat3":"assets/ignition-interior-construction.png","gallery1":"assets/ignition-interior-render.png","gallery2":"assets/ignition-interior-construction.png","gallery3":"assets/ignition-interior-render.png"},"elementorColumnOutdentPx":12}'>
+<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp","hero":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp","story":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-bar.webp","storyBeat2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-racing.webp","storyBeat3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-shelves.webp","gallery1":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-sims.webp","gallery2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp","gallery3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-lounge.webp","gallery4":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-ceiling-car.webp","gallery5":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-rig.webp","gallery6":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bartender.webp","gallery7":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-cocktails.webp"},"elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <div data-vsl-houston-only>
 
@@ -1812,7 +1822,7 @@ Velocity Sim Racing Lounge — Ignition
               <div class="vsl-ig-portal__arch-glow" aria-hidden="true"></div>
               <div class="vsl-ig-portal__window">
                 <div class="vsl-ig-portal__media">
-                  <img data-vsl-img="portalReveal" src="assets/ignition-interior-render.png" alt="View through the arch into Ignition lounge at Velocity Sim Lounge" width="1920" height="1080" decoding="async" fetchpriority="high">
+                  <img data-vsl-img="portalReveal" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp" alt="Ignition lounge at Velocity Sim Lounge Houston" width="1600" height="1065" decoding="async" fetchpriority="high">
                 </div>
                 <div class="vsl-ig-portal__shade" aria-hidden="true"></div>
                 <div class="vsl-ig-portal__rim" aria-hidden="true"></div>
@@ -1820,7 +1830,7 @@ Velocity Sim Racing Lounge — Ignition
                   <p class="vsl-ig-eyebrow vsl-ig-eyebrow--lined">Cocktails &amp; sim racing</p>
                   <h1 class="vsl-ig-portal__title" id="ig-hero-title">
                     <span class="vsl-ig-portal__title-main">
-                      <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignitionlogo.png" alt="Ignition" width="640" height="160" decoding="async">
+                      <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png" alt="Ignition" width="1982" height="659" decoding="async">
                     </span>
                   </h1>
                 </div>
@@ -1859,7 +1869,7 @@ Velocity Sim Racing Lounge — Ignition
         <div class="vsl-ig-story__beats">
           <article class="vsl-ig-story__beat is-active" data-story-beat="0" aria-labelledby="ig-beat-1-title">
             <div class="vsl-ig-story__beat-visual vsl-ig-arch">
-              <img data-vsl-img="story" src="assets/ignition-interior-construction.png" alt="Neon-lit arched entry to Ignition lounge" width="900" height="1125" loading="lazy" decoding="async">
+              <img data-vsl-img="story" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-bar.webp" alt="Ignition cocktail bar with arched lit bottle shelves" width="900" height="1350" loading="lazy" decoding="async">
             </div>
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">01</span>
@@ -1869,7 +1879,7 @@ Velocity Sim Racing Lounge — Ignition
           </article>
           <article class="vsl-ig-story__beat" data-story-beat="1" aria-labelledby="ig-beat-2-title">
             <div class="vsl-ig-story__beat-visual vsl-ig-arch">
-              <img data-vsl-img="storyBeat2" src="assets/ignition-interior-render.png" alt="Ignition lounge interior with neon arch panels" width="900" height="1125" loading="lazy" decoding="async">
+              <img data-vsl-img="storyBeat2" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-racing.webp" alt="Guest racing on an Ignition simulator" width="900" height="1350" loading="lazy" decoding="async">
             </div>
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">02</span>
@@ -1879,7 +1889,7 @@ Velocity Sim Racing Lounge — Ignition
           </article>
           <article class="vsl-ig-story__beat" data-story-beat="2" aria-labelledby="ig-beat-3-title">
             <div class="vsl-ig-story__beat-visual vsl-ig-arch">
-              <img data-vsl-img="storyBeat3" src="assets/ignition-interior-construction.png" alt="Bar and lounge details at Ignition" width="900" height="1125" loading="lazy" decoding="async">
+              <img data-vsl-img="storyBeat3" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-story-shelves.webp" alt="Premium spirits on Ignition’s backlit bar shelves" width="900" height="1350" loading="lazy" decoding="async">
             </div>
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">03</span>
@@ -1910,7 +1920,7 @@ Velocity Sim Racing Lounge — Ignition
         <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
           <span class="vsl-ig-gallery__index" aria-hidden="true">01</span>
           <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery1" src="assets/ignition-interior-render.png" alt="Ignition lounge with eight racing simulators and neon arch panels" width="1600" height="900" loading="lazy" decoding="async">
+            <img data-vsl-img="gallery1" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-sims.webp" alt="Ignition racing simulators with lounge seating" width="1600" height="1065" loading="lazy" decoding="async">
           </div>
           <figcaption class="vsl-ig-gallery__caption">
             <p>Neon arches &amp; eight sim rigs</p>
@@ -1920,7 +1930,7 @@ Velocity Sim Racing Lounge — Ignition
         <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
           <span class="vsl-ig-gallery__index" aria-hidden="true">02</span>
           <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery2" src="assets/ignition-interior-construction.png" alt="Backlit bar and geometric floor detail at Ignition" width="1600" height="900" loading="lazy" decoding="async">
+            <img data-vsl-img="gallery2" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bar.webp" alt="Ignition cocktail bar with arched bottle displays" width="1600" height="1065" loading="lazy" decoding="async">
           </div>
           <figcaption class="vsl-ig-gallery__caption">
             <p>The bar &amp; backlit details</p>
@@ -1930,11 +1940,51 @@ Velocity Sim Racing Lounge — Ignition
         <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
           <span class="vsl-ig-gallery__index" aria-hidden="true">03</span>
           <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery3" src="assets/ignition-interior-render.png" alt="Atmospheric lighting throughout Ignition lounge" width="1600" height="900" loading="lazy" decoding="async">
+            <img data-vsl-img="gallery3" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-lounge.webp" alt="Ignition lounge seating and simulator row" width="1600" height="1065" loading="lazy" decoding="async">
           </div>
           <figcaption class="vsl-ig-gallery__caption">
             <p>Atmosphere after dark</p>
             <span>When the room comes alive</span>
+          </figcaption>
+        </figure>
+        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
+          <span class="vsl-ig-gallery__index" aria-hidden="true">04</span>
+          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <img data-vsl-img="gallery4" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-ceiling-car.webp" alt="Velocity race car mounted above Ignition lounge" width="1596" height="2400" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="vsl-ig-gallery__caption">
+            <p>The car overhead</p>
+            <span>Signature Ignition centerpiece</span>
+          </figcaption>
+        </figure>
+        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
+          <span class="vsl-ig-gallery__index" aria-hidden="true">05</span>
+          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <img data-vsl-img="gallery5" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-rig.webp" alt="Close-up of Ignition racing simulator seats and screens" width="1600" height="1065" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="vsl-ig-gallery__caption">
+            <p>Pro rigs, ready to launch</p>
+            <span>Eight seats on the grid</span>
+          </figcaption>
+        </figure>
+        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
+          <span class="vsl-ig-gallery__index" aria-hidden="true">06</span>
+          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <img data-vsl-img="gallery6" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-bartender.webp" alt="Bartender serving a cocktail at Ignition" width="1600" height="1067" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="vsl-ig-gallery__caption">
+            <p>Crafted behind the bar</p>
+            <span>Hospitality between heats</span>
+          </figcaption>
+        </figure>
+        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
+          <span class="vsl-ig-gallery__index" aria-hidden="true">07</span>
+          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <img data-vsl-img="gallery7" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-gallery-cocktails.webp" alt="Lineup of Ignition craft cocktails on the bar" width="1600" height="1065" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="vsl-ig-gallery__caption">
+            <p>The Ignition pour</p>
+            <span>Cocktails built for the night</span>
           </figcaption>
         </figure>
       </div>
@@ -1971,7 +2021,7 @@ Velocity Sim Racing Lounge — Ignition
               <h4 class="vsl-ig-menu__item-name">Ignition Old Fashioned</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
               <p class="vsl-ig-menu__item-price">$16</p>
-              <p class="vsl-ig-menu__item-desc">Elijah Craig Small Batch, Turbonado, Angostura</p>
+              <p class="vsl-ig-menu__item-desc">Elijah Craig Small Batch, turbinado, Angostura</p>
             </article>
             <article class="vsl-ig-menu__item">
               <h4 class="vsl-ig-menu__item-name">Green Hornet</h4>
@@ -1995,7 +2045,7 @@ Velocity Sim Racing Lounge — Ignition
               <h4 class="vsl-ig-menu__item-name">Ignition Espresso Martini</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
               <p class="vsl-ig-menu__item-price">$17</p>
-              <p class="vsl-ig-menu__item-desc">Reyka vodka, fresh espresso, Turbonado, Mr Black liqueur</p>
+              <p class="vsl-ig-menu__item-desc">Reyka vodka, fresh espresso, turbinado, Mr Black liqueur</p>
             </article>
             <article class="vsl-ig-menu__item">
               <h4 class="vsl-ig-menu__item-name">Velocity GT</h4>
@@ -2148,7 +2198,7 @@ Velocity Sim Racing Lounge — Ignition
             <div class="vsl-ig-visit__step-body">
               <h3>Location</h3>
               <p><a data-vsl-link="maps" href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer">2110 Edwards St<br>Houston, TX 77007</a></p>
-              <p class="vsl-ig-visit__step-note">Free parking available on-site. <!-- PLACEHOLDER: confirm parking details --></p>
+              <p class="vsl-ig-visit__step-note">Free parking available on-site.</p>
             </div>
             <div class="vsl-ig-visit__step-node" aria-hidden="true">III</div>
           </article>
@@ -2234,6 +2284,12 @@ var cfg = {};
     var assetBase = window.__VSL_SITE_REPLICA__ ? '../Ignition/' : '';
     function resolveSrc(src) {
       if (!src) return src;
+      /* In the staging replica, serve Ignition webp content images from the
+         repo so the preview works before they exist in the WP media library. */
+      if (assetBase) {
+        var m = src.match(/^https:\/\/velocitysimlounge\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/(ignition-[\w-]+\.webp)$/);
+        if (m) return assetBase + 'assets/' + m[1];
+      }
       if (/^(https?:)?\/\//.test(src) || src.charAt(0) === '/' || src.indexOf('data:') === 0) return src;
       return assetBase + src;
     }
