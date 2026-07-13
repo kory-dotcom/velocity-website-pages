@@ -14,11 +14,14 @@
   var DALLAS_PAGES = [
     'home', 'party-packs', 'book-now', 'contact', 'group-events',
     'corporate-events', 'food-and-drink', 'semi-private', 'promotions',
-    'memberships', 'buyout'
+    'membership', 'buyout'
   ];
 
   var DALLAS_SLUG_ALIASES = {
-    membership: 'memberships'
+    memberships: 'membership'
+  };
+  var HOUSTON_SLUG_ALIASES = {
+    memberships: 'membership'
   };
 
   var HOUSTON_ONLY_SLUGS = {
@@ -58,7 +61,8 @@
     '/dallas/party-packs/': 'party-packs',
     '/dallas/semi-private/': 'semi-private',
     '/dallas/promotions/': 'promotions',
-    '/dallas/memberships/': 'memberships',
+    '/dallas/membership/': 'membership',
+    '/dallas/memberships/': 'membership',
     '/dallas/buyout/': 'buyout'
   };
 
@@ -66,10 +70,34 @@
     return DALLAS_SLUG_ALIASES[slug] || slug;
   }
 
+  function houstonSlugFor(slug) {
+    return HOUSTON_SLUG_ALIASES[slug] || slug;
+  }
+
+  function writeStoredLocation(loc) {
+    loc = normalize(loc);
+    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    try {
+      var secure = global.location && global.location.protocol === 'https:' ? ';Secure' : '';
+      global.document.cookie =
+        STORAGE_KEY + '=' + loc + ';path=/;max-age=31536000;SameSite=Lax' + secure;
+    } catch (_) {}
+    return loc;
+  }
+
   function readStoredLocation() {
     try {
       var stored = global.localStorage.getItem(STORAGE_KEY);
-      if (stored) return normalize(stored);
+      if (stored === 'dallas' || stored === 'houston') return stored;
+    } catch (_) {}
+    try {
+      var match = String(global.document.cookie || '').match(
+        new RegExp('(?:^|; )' + STORAGE_KEY + '=(dallas|houston)(?:;|$)')
+      );
+      if (match) {
+        try { global.localStorage.setItem(STORAGE_KEY, match[1]); } catch (_) {}
+        return match[1];
+      }
     } catch (_) {}
     return null;
   }
@@ -118,26 +146,38 @@
     return null;
   }
 
+  /**
+   * Preference priority:
+   * 1) explicit ?loc=
+   * 2) /dallas/... URL (commit Dallas)
+   * 3) stored preference (localStorage + cookie) — survives browser restart
+   * 4) Houston path with no stored preference → Houston
+   *
+   * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
+   */
   function readLocation() {
-    var fromPath = readFromPath() || readFromStagingPageKey();
-    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
-      var stored = readStoredLocation();
-      if (stored) return stored;
-    }
-    if (fromPath) {
-      try { global.localStorage.setItem(STORAGE_KEY, fromPath); } catch (_) {}
-      return normalize(fromPath);
-    }
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
-      try { global.localStorage.setItem(STORAGE_KEY, fromUrl); } catch (_) {}
+      writeStoredLocation(fromUrl);
       return normalize(fromUrl);
     }
-    try {
-      return normalize(global.localStorage.getItem(STORAGE_KEY));
-    } catch (_) {
+
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    var stored = readStoredLocation();
+
+    if (fromPath === 'dallas') {
+      writeStoredLocation('dallas');
+      return 'dallas';
+    }
+
+    if (stored) return stored;
+
+    if (fromPath === 'houston') {
+      writeStoredLocation('houston');
       return 'houston';
     }
+
+    return 'houston';
   }
 
   function getPageSlug() {
@@ -177,6 +217,8 @@
     if (loc === 'dallas') {
       slug = dallasSlugFor(slug);
       if (DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
+    } else {
+      slug = houstonSlugFor(slug);
     }
     if (loc === 'houston' && slug === 'home') return SITE_ORIGIN + '/';
     if (loc === 'dallas' && slug === 'home') return DALLAS_PAGE;
@@ -216,6 +258,7 @@
         if (slug === 'home') return DALLAS_PAGE + u.hash;
         return SITE_ORIGIN + '/dallas/' + dallasSlugFor(slug) + '/' + u.hash;
       }
+      slug = houstonSlugFor(slug);
       if (slug === 'home') return SITE_ORIGIN + '/' + u.hash;
       return SITE_ORIGIN + '/' + slug + '/' + u.hash;
     } catch (_) {
@@ -232,7 +275,7 @@
   function setPreferredLocation(loc, options) {
     loc = normalize(loc);
     options = options || {};
-    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    writeStoredLocation(loc);
     if (options.skipEvent) return loc;
     try {
       global.dispatchEvent(new CustomEvent('_vslLocationChanged', {
@@ -244,13 +287,19 @@
 
   function bootstrap() {
     var fromUrl = readFromUrlParam();
-    var fromPath = readFromPath() || readFromStagingPageKey();
-    var loc = fromPath || fromUrl;
-    if (!loc) return;
-    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
-      if (readStoredLocation() === 'dallas') return;
+    if (fromUrl) {
+      setPreferredLocation(fromUrl, { source: 'bootstrap' });
+      return;
     }
-    setPreferredLocation(loc, { source: 'bootstrap' });
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    if (fromPath === 'dallas') {
+      setPreferredLocation('dallas', { source: 'bootstrap' });
+      return;
+    }
+    /* Houston (or unknown) path: never clobber an existing saved preference */
+    if (!readStoredLocation() && fromPath === 'houston') {
+      setPreferredLocation('houston', { source: 'bootstrap' });
+    }
   }
 
   function bindLocationSync(applyFn) {
@@ -336,6 +385,7 @@
     normalize: normalize,
     readFromPath: readFromPath,
     readLocation: readLocation,
+    readStoredLocation: readStoredLocation,
     getPageSlug: getPageSlug,
     getLocationPrefix: getLocationPrefix,
     buildLocationUrl: buildLocationUrl,

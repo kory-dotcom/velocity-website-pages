@@ -4,7 +4,7 @@ Velocity Sim Racing Lounge — Ignition
 
   ── SEO Handoff ──
   Meta title:    Ignition | Velocity Sim Lounge Houston
-  Meta desc:     Ignition is Velocity's hidden cocktail lounge in Houston — nine racing simulators, craft cocktails, and intimate atmosphere at 2110 Edwards St.
+  Meta desc:     Ignition is Velocity's hidden cocktail lounge in Houston — eight racing simulators, craft cocktails, and intimate atmosphere at 2110 Edwards St.
   Canonical:     https://velocitysimlounge.com/ignition/
   OG image:      (swap hero image URL in data-vsl-config after upload)
 
@@ -579,7 +579,17 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-portal__title-main {
     display: block;
-    line-height: 1.02;
+    line-height: 0;
+  }
+  .vsl-ig-portal__title-mark {
+    display: block;
+    width: auto;
+    height: clamp(52px, 10vw, 110px);
+    max-width: min(520px, 78vw);
+    margin: 0 auto;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 0 28px rgba(238, 38, 95, 0.35)) drop-shadow(0 2px 16px rgba(0, 0, 0, 0.55));
   }
   .vsl-ig-portal__title-credit {
     display: inline-flex;
@@ -1169,11 +1179,17 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-menu__item-name {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.15rem, 0.9rem + 0.6vw, 1.4rem);
+    font-size: clamp(1.05rem, 0.85rem + 0.55vw, 1.35rem);
     font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--white);
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.2;
+  }
+  .vsl-ig-menu__item-desc em {
+    font-style: italic;
+    color: var(--amber);
+    opacity: 0.9;
   }
   .vsl-ig-menu__item-price {
     margin: 0;
@@ -1524,6 +1540,10 @@ Velocity Sim Racing Lounge — Ignition
       height: clamp(24px, 6vw, 34px);
       max-width: min(200px, 72vw);
     }
+    .vsl-ig-portal__title-mark {
+      height: clamp(44px, 12vw, 72px);
+      max-width: min(280px, 82vw);
+    }
     .vsl-ig-portal__track { height: 180vh; height: 180dvh; }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
     .vsl-ig-portal__actions { flex-direction: column; align-items: stretch; }
@@ -1773,7 +1793,7 @@ Velocity Sim Racing Lounge — Ignition
   }
 </style>
 
-<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"assets/ignition-interior-render.png","hero":"assets/ignition-interior-render.png","story":"assets/ignition-interior-construction.png","storyBeat2":"assets/ignition-interior-render.png","storyBeat3":"assets/ignition-interior-construction.png","gallery1":"assets/ignition-interior-render.png","gallery2":"assets/ignition-interior-construction.png","gallery3":"assets/ignition-interior-render.png"},"elementorColumnOutdentPx":12}'>
+<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignitionlogo.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"assets/ignition-interior-render.png","hero":"assets/ignition-interior-render.png","story":"assets/ignition-interior-construction.png","storyBeat2":"assets/ignition-interior-render.png","storyBeat3":"assets/ignition-interior-construction.png","gallery1":"assets/ignition-interior-render.png","gallery2":"assets/ignition-interior-construction.png","gallery3":"assets/ignition-interior-render.png"},"elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <div data-vsl-houston-only>
 
@@ -1797,14 +1817,10 @@ Velocity Sim Racing Lounge — Ignition
                 <div class="vsl-ig-portal__shade" aria-hidden="true"></div>
                 <div class="vsl-ig-portal__rim" aria-hidden="true"></div>
                 <div class="vsl-ig-portal__caption">
-                  <p class="vsl-ig-eyebrow vsl-ig-eyebrow--lined">Cocktails &amp; sim racing, under one roof</p>
+                  <p class="vsl-ig-eyebrow vsl-ig-eyebrow--lined">Cocktails &amp; sim racing</p>
                   <h1 class="vsl-ig-portal__title" id="ig-hero-title">
-                    <span class="vsl-ig-portal__title-main">Ignition</span>
-                    <span class="vsl-ig-portal__title-credit">
-                      <span class="vsl-ig-portal__title-by">by</span>
-                      <span class="vsl-ig-portal__title-logo-wrap">
-                        <img class="vsl-ig-portal__title-logo" data-vsl-img="velocityLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png" alt="Velocity Sim Lounge" width="230" height="48" decoding="async">
-                      </span>
+                    <span class="vsl-ig-portal__title-main">
+                      <img class="vsl-ig-portal__title-mark" data-vsl-img="ignitionLogo" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignitionlogo.png" alt="Ignition" width="640" height="160" decoding="async">
                     </span>
                   </h1>
                 </div>
@@ -1814,6 +1830,7 @@ Velocity Sim Racing Lounge — Ignition
             <p class="vsl-ig-portal__enter-hint">Scroll to enter</p>
             <div class="vsl-ig-portal__actions">
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
+              <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Book an Event</a>
             </div>
             <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
           </div>
@@ -1833,7 +1850,7 @@ Velocity Sim Racing Lounge — Ignition
           <nav class="vsl-ig-story__progress" aria-label="Story chapters">
             <span class="vsl-ig-story__progress-dot is-active" data-story-dot="0">The threshold</span>
             <span class="vsl-ig-story__progress-line" aria-hidden="true"></span>
-            <span class="vsl-ig-story__progress-dot" data-story-dot="1">The room</span>
+            <span class="vsl-ig-story__progress-dot" data-story-dot="1">Ignition</span>
             <span class="vsl-ig-story__progress-line" aria-hidden="true"></span>
             <span class="vsl-ig-story__progress-dot" data-story-dot="2">The pour</span>
           </nav>
@@ -1847,8 +1864,7 @@ Velocity Sim Racing Lounge — Ignition
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">01</span>
               <h3 class="vsl-ig-story__beat-title" id="ig-beat-1-title">The threshold</h3>
-              <p class="vsl-ig-story__beat-text">Ignition lives inside Velocity Sim Lounge &mdash; a hidden room you reach through the main floor. Ask any team member and the night shifts: quieter, closer, more deliberate.</p>
-              <p class="vsl-ig-story__beat-text">No signage spectacle. Just a passage into somewhere that feels discovered, not advertised &mdash; where the simulators are part of the furniture.</p>
+              <p class="vsl-ig-story__beat-text">Ignition, exclusive to Velocity Houston. A passage into a hidden experience that feels discovered, not advertised &mdash; where the pulse of racing is woven into every aspect.</p>
             </div>
           </article>
           <article class="vsl-ig-story__beat" data-story-beat="1" aria-labelledby="ig-beat-2-title">
@@ -1857,9 +1873,8 @@ Velocity Sim Racing Lounge — Ignition
             </div>
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">02</span>
-              <h3 class="vsl-ig-story__beat-title" id="ig-beat-2-title">The room</h3>
-              <p class="vsl-ig-story__beat-text">Nine full-motion simulators ring the room &mdash; close enough to watch a lap unfold, far enough for a real conversation. Backlit arches and warm amber glow replace the urgency of the main floor.</p>
-              <p class="vsl-ig-story__beat-text">Every detail &mdash; the light, the layout, the pace between heats &mdash; is designed so the night slows down when you walk in.</p>
+              <h3 class="vsl-ig-story__beat-title" id="ig-beat-2-title">Ignition</h3>
+              <p class="vsl-ig-story__beat-text">A stunning bar awaits. Backlit arches and warm amber glow replace the urgency of the main floor.</p>
             </div>
           </article>
           <article class="vsl-ig-story__beat" data-story-beat="2" aria-labelledby="ig-beat-3-title">
@@ -1869,7 +1884,7 @@ Velocity Sim Racing Lounge — Ignition
             <div class="vsl-ig-story__beat-copy">
               <span class="vsl-ig-story__beat-num" aria-hidden="true">03</span>
               <h3 class="vsl-ig-story__beat-title" id="ig-beat-3-title">The pour</h3>
-              <p class="vsl-ig-story__beat-text">Craft cocktails for whatever pace you&rsquo;re keeping &mdash; signatures, classics, and zero-proof options whether you&rsquo;re on the grid or just watching.</p>
+              <p class="vsl-ig-story__beat-text">Craft cocktails for whatever pace you&rsquo;re keeping &mdash; signatures, classics, and zero-proof options whether you&rsquo;re on the grid or just enjoying the atmosphere.</p>
               <p class="vsl-ig-story__beat-text"><a class="vsl-ig-btn vsl-ig-btn--ghost" data-vsl-soft-scroll href="#ig-menu" style="margin-top:0.5rem;">Explore the menu</a></p>
             </div>
           </article>
@@ -1895,10 +1910,10 @@ Velocity Sim Racing Lounge — Ignition
         <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
           <span class="vsl-ig-gallery__index" aria-hidden="true">01</span>
           <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery1" src="assets/ignition-interior-render.png" alt="Ignition lounge with nine racing simulators and neon arch panels" width="1600" height="900" loading="lazy" decoding="async">
+            <img data-vsl-img="gallery1" src="assets/ignition-interior-render.png" alt="Ignition lounge with eight racing simulators and neon arch panels" width="1600" height="900" loading="lazy" decoding="async">
           </div>
           <figcaption class="vsl-ig-gallery__caption">
-            <p>Neon arches &amp; nine sim rigs</p>
+            <p>Neon arches &amp; eight sim rigs</p>
             <span>Cocktails meet the grid</span>
           </figcaption>
         </figure>
@@ -1930,89 +1945,169 @@ Velocity Sim Racing Lounge — Ignition
       <div class="vsl-ig-menu__inner">
         <header class="vsl-ig-menu__head vsl-ig-reveal">
           <p class="vsl-ig-eyebrow">The Pour</p>
-          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-menu-heading">Cocktail <em>Menu</em></h2>
-          <p class="vsl-ig-section-sub">Signature pours crafted for Ignition. <!-- PLACEHOLDER: replace items and prices before launch --></p>
+          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-menu-heading">Ignition <em>Menu</em></h2>
+          <p class="vsl-ig-section-sub">Cocktails, zero-proof pours, and small plates &mdash; crafted for Ignition.</p>
         </header>
 
         <nav class="vsl-ig-menu__nav vsl-ig-reveal" aria-label="Menu sections">
-          <a href="#ig-signatures">Signatures</a>
-          <a href="#ig-classics">Classics</a>
-          <a href="#ig-zero">Zero Proof</a>
-          <a href="#ig-spirits">Spirits &amp; Wine</a>
+          <a href="#ig-cocktails">Cocktails</a>
+          <a href="#ig-zero">Zero-Proof</a>
+          <a href="#ig-plates">Small Plates</a>
         </nav>
 
         <div class="vsl-ig-menu__layout">
           <nav class="vsl-ig-menu__spine vsl-ig-reveal" aria-label="Menu sections" data-vsl-menu-spine>
-            <a href="#ig-signatures" data-menu-link="ig-signatures" class="is-active">Signatures</a>
-            <a href="#ig-classics" data-menu-link="ig-classics">Classics</a>
-            <a href="#ig-zero" data-menu-link="ig-zero">Zero Proof</a>
-            <a href="#ig-spirits" data-menu-link="ig-spirits">Spirits &amp; Wine</a>
+            <a href="#ig-cocktails" data-menu-link="ig-cocktails" class="is-active">Cocktails</a>
+            <a href="#ig-zero" data-menu-link="ig-zero">Zero-Proof</a>
+            <a href="#ig-plates" data-menu-link="ig-plates">Small Plates</a>
           </nav>
 
         <div class="vsl-ig-menu__panel vsl-ig-reveal">
 
-          <section class="vsl-ig-menu__block" id="ig-signatures" aria-labelledby="ig-signatures-heading">
-            <h3 class="vsl-ig-menu__block-title" id="ig-signatures-heading">Signatures</h3>
+          <section class="vsl-ig-menu__block" id="ig-cocktails" aria-labelledby="ig-cocktails-heading">
+            <h3 class="vsl-ig-menu__block-title" id="ig-cocktails-heading">Cocktails</h3>
 
             <article class="vsl-ig-menu__item">
-              <h4 class="vsl-ig-menu__item-name">Ember Old Fashioned</h4>
+              <h4 class="vsl-ig-menu__item-name">Ignition Old Fashioned</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
               <p class="vsl-ig-menu__item-price">$16</p>
-              <p class="vsl-ig-menu__item-desc">Bourbon, demerara, aromatic bitters, expressed orange &mdash; smoked with cherrywood.</p>
+              <p class="vsl-ig-menu__item-desc">Elijah Craig Small Batch, Turbonado, Angostura</p>
             </article>
             <article class="vsl-ig-menu__item">
-              <h4 class="vsl-ig-menu__item-name">Crimson Negroni</h4>
-              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
-              <p class="vsl-ig-menu__item-price">$15</p>
-              <p class="vsl-ig-menu__item-desc">Gin, sweet vermouth, Campari, blood orange peel.</p>
-            </article>
-            <article class="vsl-ig-menu__item">
-              <h4 class="vsl-ig-menu__item-name">Midnight Manhattan</h4>
+              <h4 class="vsl-ig-menu__item-name">Green Hornet</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
               <p class="vsl-ig-menu__item-price">$16</p>
-              <p class="vsl-ig-menu__item-desc">Rye whiskey, sweet vermouth, black walnut bitters, luxardo cherry.</p>
+              <p class="vsl-ig-menu__item-desc">Hendrick&rsquo;s gin, lime, fresh mint, cucumber</p>
             </article>
             <article class="vsl-ig-menu__item">
-              <h4 class="vsl-ig-menu__item-name">Velvet Sour</h4>
+              <h4 class="vsl-ig-menu__item-name">Midnight Monaco</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
-              <p class="vsl-ig-menu__item-price">$14</p>
-              <p class="vsl-ig-menu__item-desc">Bourbon, lemon, egg white, amaretto, angostura.</p>
+              <p class="vsl-ig-menu__item-price">$25</p>
+              <p class="vsl-ig-menu__item-desc">Glenfiddich 16yr Aston Martin, honey, Cointreau, Peychaud&rsquo;s, orange</p>
             </article>
             <article class="vsl-ig-menu__item">
-              <h4 class="vsl-ig-menu__item-name">Archway Martini</h4>
+              <h4 class="vsl-ig-menu__item-name">Luxe Macallan Sour</h4>
               <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
-              <p class="vsl-ig-menu__item-price">$15</p>
-              <p class="vsl-ig-menu__item-desc">Gin or vodka, dry vermouth, olive or lemon twist &mdash; your call.</p>
+              <p class="vsl-ig-menu__item-price">$20</p>
+              <p class="vsl-ig-menu__item-desc">Macallan 12yr Double Cask, Aperol, lemon, egg white</p>
             </article>
-          </section>
-
-          <section class="vsl-ig-menu__block" id="ig-classics" aria-labelledby="ig-classics-heading">
-            <h3 class="vsl-ig-menu__block-title" id="ig-classics-heading">Classics</h3>
-            <div class="vsl-ig-menu__listgrid">
-              <p class="vsl-ig-menu__listcard"><strong>Margarita</strong> &mdash; blanco tequila, lime, agave<br><strong>Pimm&rsquo;s Cup</strong> &mdash; Pimm&rsquo;s #1, gin, lemon, cucumber, ginger ale<br><strong>Irish Mule</strong> &mdash; Irish whiskey, lime, ginger beer<br><strong>Ranch Water</strong> &mdash; tequila, cointreau, lime, Topo Chico</p>
-              <p class="vsl-ig-menu__listcard"><strong>Espresso Martini</strong> &mdash; vodka, coffee liqueur, fresh espresso<br><strong>Daiquiri</strong> &mdash; white rum, lime, simple<br><strong>Moscow Mule</strong> &mdash; vodka, lime, ginger beer<br><strong>Whiskey Sour</strong> &mdash; bourbon, lemon, simple, bitters</p>
-            </div>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Ignition Espresso Martini</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$17</p>
+              <p class="vsl-ig-menu__item-desc">Reyka vodka, fresh espresso, Turbonado, Mr Black liqueur</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Velocity GT</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$16</p>
+              <p class="vsl-ig-menu__item-desc">Empress Elderflower gin, St-Germain, lavender, Mediterranean tonic</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Toro Rosso</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$16</p>
+              <p class="vsl-ig-menu__item-desc">Blanco tequila, lime, fire bitters, club soda</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">La Carrera</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$16</p>
+              <p class="vsl-ig-menu__item-desc">Amar&aacute;s mezcal, yellow Chartreuse, maraschino, lime</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Redline Rita</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$19</p>
+              <p class="vsl-ig-menu__item-desc">Reposado tequila, Mandarin Napol&eacute;on, agave, lime</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Phinish Line</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$17</p>
+              <p class="vsl-ig-menu__item-desc">Zacapa aged rum, sweetened condensed milk, fresh espresso, Mr Black liqueur</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Green Flag, Green Flag!</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$18</p>
+              <p class="vsl-ig-menu__item-desc">White rum, Plantation coconut rum, Kota pandan liqueur, coconut cream, pineapple, lime</p>
+            </article>
           </section>
 
           <section class="vsl-ig-menu__block" id="ig-zero" aria-labelledby="ig-zero-heading">
-            <h3 class="vsl-ig-menu__block-title" id="ig-zero-heading">Zero Proof</h3>
-            <div class="vsl-ig-menu__listgrid">
-              <p class="vsl-ig-menu__listcard"><strong>Agua de Jamaica</strong> &mdash; hibiscus, lime, sugar, water<br><strong>Sparkling Quattro</strong> &mdash; lemon, mint &amp; white peach, Topo Chico<br><strong>Virgin Mojito</strong> &mdash; lime, mint, sugar, soda<br><strong>Specialty Lemonades</strong> &mdash; ginger, lavender, strawberry</p>
-              <p class="vsl-ig-menu__listcard"><strong>Ignition Fizz</strong> &mdash; seedlip, citrus, rosemary syrup, soda<br><strong>Dark &amp; Stormy (NA)</strong> &mdash; ginger beer, lime, molasses<br><strong>Paloma Spritz</strong> &mdash; grapefruit, lime, agave, soda<br><strong>Cold Brew Tonic</strong> &mdash; cold brew, tonic, orange</p>
-            </div>
+            <h3 class="vsl-ig-menu__block-title" id="ig-zero-heading">Zero-Proof</h3>
+
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">The Reserve</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$13</p>
+              <p class="vsl-ig-menu__item-desc">Ritual whiskey, Vietnamese black tea, lemon, mint</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Desert Heat</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$13</p>
+              <p class="vsl-ig-menu__item-desc">Ritual tequila, pineapple, lime, agave, jalape&ntilde;o</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Pink Flag</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$13</p>
+              <p class="vsl-ig-menu__item-desc">Ritual gin, lychee, coconut cream, lemon, rose, cranberry</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">High Octane</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$13</p>
+              <p class="vsl-ig-menu__item-desc">Seedlip Grove, lemon, Juneberry Red Bull</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Victory Lane</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$14</p>
+              <p class="vsl-ig-menu__item-desc">Prosecco, elderflower aperitif, lavender, mint, soda water</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Dirty Shirley</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$12</p>
+              <p class="vsl-ig-menu__item-desc">Grenadine, lemon, ginger beer</p>
+            </article>
           </section>
 
-          <section class="vsl-ig-menu__block" id="ig-spirits" aria-labelledby="ig-spirits-heading">
-            <h3 class="vsl-ig-menu__block-title" id="ig-spirits-heading">Spirits &amp; Wine</h3>
-            <div class="vsl-ig-menu__listgrid">
-              <p class="vsl-ig-menu__listcard"><strong>Whiskey</strong> &mdash; bourbon, rye, scotch, Japanese whisky selections<br><strong>Tequila &amp; Mezcal</strong> &mdash; blanco, reposado, a&ntilde;ejo pours<br><strong>Gin &amp; Vodka</strong> &mdash; premium well and call selections</p>
-              <p class="vsl-ig-menu__listcard"><strong>Wine by the Glass</strong> &mdash; chardonnay, sauvignon blanc, pinot noir, prosecco<br><strong>Beer</strong> &mdash; curated draft and bottle list<br><strong>Flights</strong> &mdash; ask your bartender about tonight&rsquo;s tasting flight</p>
-            </div>
+          <section class="vsl-ig-menu__block" id="ig-plates" aria-labelledby="ig-plates-heading">
+            <h3 class="vsl-ig-menu__block-title" id="ig-plates-heading">Small Plates</h3>
+
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Hummus Platter</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$22</p>
+              <p class="vsl-ig-menu__item-desc">Traditional hummus, black garlic hummus, olives, pickled seasonal vegetables, pita bread. <em>+$5 for additional pita bread</em></p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Millionaire Bacon</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$19</p>
+              <p class="vsl-ig-menu__item-desc">Candied bacon, served with two sauces: maple syrup with 5-spice powder and maple syrup with chili, nuts &amp; dried fruit mix</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Charcuterie Board</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$45</p>
+              <p class="vsl-ig-menu__item-desc">Seasonal cheeses, fruit, jam, cured meats, and accoutrements</p>
+            </article>
+            <article class="vsl-ig-menu__item">
+              <h4 class="vsl-ig-menu__item-name">Seafood Campechana</h4>
+              <span class="vsl-ig-menu__item-leader" aria-hidden="true"></span>
+              <p class="vsl-ig-menu__item-price">$24</p>
+              <p class="vsl-ig-menu__item-desc">Octopus, cuttlefish, shrimp, zesty cocktail sauce, tortilla chips</p>
+            </article>
           </section>
 
         </div>
         </div>
-        <p class="vsl-ig-menu__note">Menu items and pricing are placeholders &mdash; update before launch. 21+ to be served alcohol.</p>
+        <p class="vsl-ig-menu__note">21+ with valid ID required for alcohol service. Menu subject to change.</p>
       </div>
     </section>
 
@@ -2030,13 +2125,12 @@ Velocity Sim Racing Lounge — Ignition
             <div class="vsl-ig-visit__step-body">
               <h3>Hours</h3>
               <ul aria-label="Ignition hours">
-                <li><span>Mon &ndash; Thu</span><span>2PM &ndash; 11PM</span></li>
-                <li><span>Fri</span><span>12PM &ndash; 12AM</span></li>
-                <li><span>Sat</span><span>11AM &ndash; 12AM</span></li>
-                <li><span>Sun</span><span>11AM &ndash; 10PM</span></li>
+                <li><span>Thu</span><span>5PM &ndash; 11PM</span></li>
+                <li><span>Fri &ndash; Sat</span><span>5PM &ndash; 12AM</span></li>
+                <li><span>Sun</span><span>5PM &ndash; 10PM</span></li>
               </ul>
               <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
-              <p class="vsl-ig-visit__step-note">Same as Velocity main lounge. <!-- PLACEHOLDER: adjust if Ignition hours differ --></p>
+              <p class="vsl-ig-visit__step-note">Closed Mon &ndash; Wed.</p>
             </div>
             <div class="vsl-ig-visit__step-node" aria-hidden="true">I</div>
           </article>
@@ -2045,7 +2139,7 @@ Velocity Sim Racing Lounge — Ignition
             <div class="vsl-ig-visit__step-body">
               <h3>Entry &amp; Age</h3>
               <p><strong>21+</strong> with valid ID required for alcohol service.</p>
-              <p class="vsl-ig-visit__step-note">Ignition houses nine racing simulators alongside the bar &mdash; the only lounge at Velocity where a pour and a lap share the same room. Enter through the main entrance and ask any team member for directions.</p>
+              <p class="vsl-ig-visit__step-note">Ignition houses eight racing simulators alongside the bar &mdash; the only lounge at Velocity where a pour and a lap share the same room. Enter through the main entrance and ask any team member for directions.</p>
             </div>
             <div class="vsl-ig-visit__step-node" aria-hidden="true">II</div>
           </article>
@@ -2079,13 +2173,13 @@ Velocity Sim Racing Lounge — Ignition
       <div class="vsl-ig-marquee__track">
         <div class="vsl-ig-marquee__group">
           <span>Hidden in plain sight</span><span class="vsl-ig-marquee__sep">&#10022;</span>
-          <span>Nine rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Eight rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
           <span>Pours with intention</span><span class="vsl-ig-marquee__sep">&#10022;</span>
           <span>Ignition</span><span class="vsl-ig-marquee__sep">&#10022;</span>
         </div>
         <div class="vsl-ig-marquee__group">
           <span>Hidden in plain sight</span><span class="vsl-ig-marquee__sep">&#10022;</span>
-          <span>Nine rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
+          <span>Eight rigs, one bar</span><span class="vsl-ig-marquee__sep">&#10022;</span>
           <span>Pours with intention</span><span class="vsl-ig-marquee__sep">&#10022;</span>
           <span>Ignition</span><span class="vsl-ig-marquee__sep">&#10022;</span>
         </div>
@@ -2096,15 +2190,18 @@ Velocity Sim Racing Lounge — Ignition
     <section class="vsl-ig-cta" id="ig-cta" aria-labelledby="ig-cta-heading">
       <div class="vsl-ig-cta__arch vsl-ig-reveal">
         <div class="vsl-ig-cta__inner">
-          <h2 class="vsl-ig-cta__title" id="ig-cta-heading">Your rig awaits</h2>
-          <p class="vsl-ig-cta__sub">Nine simulators, one hidden bar. Step into Houston&rsquo;s cocktail lounge with a starting grid.</p>
+          <h2 class="vsl-ig-cta__title" id="ig-cta-heading">Elevate your next event</h2>
+          <p class="vsl-ig-cta__sub">Ignition is available for private celebrations &mdash; inquire today.</p>
+          <p style="margin-top:1.25rem;">
+            <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Inquire Today</a>
+          </p>
         </div>
       </div>
     </section>
 
     <!-- ═══════ SEO ═══════ -->
     <div class="vsl-ig-seo">
-      <p>Ignition is the hidden cocktail lounge at Velocity Sim Racing Lounge in Houston, Texas. Located at 2110 Edwards St in the Heights/Washington Avenue area, Ignition features nine full-motion racing simulators alongside craft cocktails, intimate atmosphere, and first-come lounge seating. Book simulator time through Velocity&rsquo;s booking system. 21+ with valid ID. Same hours as Velocity Sim Lounge.</p>
+      <p>Ignition is the hidden cocktail lounge at Velocity Sim Racing Lounge in Houston, Texas. Located at 2110 Edwards St in the Heights/Washington Avenue area, Ignition features eight racing simulators alongside craft cocktails, intimate atmosphere, and first-come lounge seating. Open Thursday through Sunday evenings. Book private events through Tripleseat, or book simulator time through Velocity&rsquo;s booking system. 21+ with valid ID.</p>
     </div>
 
       </div>
@@ -2345,13 +2442,13 @@ var cfg = {};
     var statusChips = root.querySelectorAll('[data-vsl-status]');
     if (statusChips.length) {
       var IG_HOURS = [
-        [660, 1320],  /* Sun 11AM–10PM */
-        [840, 1380],  /* Mon 2PM–11PM */
-        [840, 1380],
-        [840, 1380],
-        [840, 1380],
-        [720, 1440],  /* Fri 12PM–12AM */
-        [660, 1440]   /* Sat 11AM–12AM */
+        [1020, 1320], /* Sun 5PM–10PM */
+        null,         /* Mon closed */
+        null,         /* Tue closed */
+        null,         /* Wed closed */
+        [1020, 1380], /* Thu 5PM–11PM */
+        [1020, 1440], /* Fri 5PM–12AM */
+        [1020, 1440]  /* Sat 5PM–12AM */
       ];
       var fmtClock = function(mins) {
         var h = Math.floor(mins / 60) % 24;
@@ -2360,17 +2457,28 @@ var cfg = {};
         var hh = h % 12 || 12;
         return hh + (m ? ':' + (m < 10 ? '0' : '') + m : '') + ap;
       };
+      var nextOpenText = function(fromDay) {
+        for (var i = 1; i <= 7; i++) {
+          var day = (fromDay + i) % 7;
+          var next = IG_HOURS[day];
+          if (!next) continue;
+          var label = i === 1 ? 'tomorrow' : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][day];
+          return 'Opens ' + label + ' at ' + fmtClock(next[0]);
+        }
+        return 'Closed';
+      };
       var updateStatus = function() {
         var now;
         try { now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })); }
         catch (e) { now = new Date(); }
-        var span = IG_HOURS[now.getDay()];
+        var day = now.getDay();
+        var span = IG_HOURS[day];
         var mins = now.getHours() * 60 + now.getMinutes();
-        var isOpen = mins >= span[0] && mins < span[1];
+        var isOpen = !!(span && mins >= span[0] && mins < span[1]);
         var text;
         if (isOpen) text = 'Open now \u00b7 till ' + fmtClock(span[1]);
-        else if (mins < span[0]) text = 'Opens today at ' + fmtClock(span[0]);
-        else text = 'Opens tomorrow at ' + fmtClock(IG_HOURS[(now.getDay() + 1) % 7][0]);
+        else if (span && mins < span[0]) text = 'Opens today at ' + fmtClock(span[0]);
+        else text = nextOpenText(day);
         statusChips.forEach(function(chip) {
           chip.classList.toggle('is-open', isOpen);
           var t = chip.querySelector('[data-vsl-status-text]');

@@ -12,11 +12,14 @@ if (!window.VSL_LOCATION) {
   var DALLAS_PAGES = [
     'home', 'party-packs', 'book-now', 'contact', 'group-events',
     'corporate-events', 'food-and-drink', 'semi-private', 'promotions',
-    'memberships', 'buyout'
+    'membership', 'buyout'
   ];
 
   var DALLAS_SLUG_ALIASES = {
-    membership: 'memberships'
+    memberships: 'membership'
+  };
+  var HOUSTON_SLUG_ALIASES = {
+    memberships: 'membership'
   };
 
   var HOUSTON_ONLY_SLUGS = {
@@ -56,7 +59,8 @@ if (!window.VSL_LOCATION) {
     '/dallas/party-packs/': 'party-packs',
     '/dallas/semi-private/': 'semi-private',
     '/dallas/promotions/': 'promotions',
-    '/dallas/memberships/': 'memberships',
+    '/dallas/membership/': 'membership',
+    '/dallas/memberships/': 'membership',
     '/dallas/buyout/': 'buyout'
   };
 
@@ -64,10 +68,34 @@ if (!window.VSL_LOCATION) {
     return DALLAS_SLUG_ALIASES[slug] || slug;
   }
 
+  function houstonSlugFor(slug) {
+    return HOUSTON_SLUG_ALIASES[slug] || slug;
+  }
+
+  function writeStoredLocation(loc) {
+    loc = normalize(loc);
+    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    try {
+      var secure = global.location && global.location.protocol === 'https:' ? ';Secure' : '';
+      global.document.cookie =
+        STORAGE_KEY + '=' + loc + ';path=/;max-age=31536000;SameSite=Lax' + secure;
+    } catch (_) {}
+    return loc;
+  }
+
   function readStoredLocation() {
     try {
       var stored = global.localStorage.getItem(STORAGE_KEY);
-      if (stored) return normalize(stored);
+      if (stored === 'dallas' || stored === 'houston') return stored;
+    } catch (_) {}
+    try {
+      var match = String(global.document.cookie || '').match(
+        new RegExp('(?:^|; )' + STORAGE_KEY + '=(dallas|houston)(?:;|$)')
+      );
+      if (match) {
+        try { global.localStorage.setItem(STORAGE_KEY, match[1]); } catch (_) {}
+        return match[1];
+      }
     } catch (_) {}
     return null;
   }
@@ -116,26 +144,38 @@ if (!window.VSL_LOCATION) {
     return null;
   }
 
+  /**
+   * Preference priority:
+   * 1) explicit ?loc=
+   * 2) /dallas/... URL (commit Dallas)
+   * 3) stored preference (localStorage + cookie) — survives browser restart
+   * 4) Houston path with no stored preference → Houston
+   *
+   * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
+   */
   function readLocation() {
-    var fromPath = readFromPath() || readFromStagingPageKey();
-    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
-      var stored = readStoredLocation();
-      if (stored) return stored;
-    }
-    if (fromPath) {
-      try { global.localStorage.setItem(STORAGE_KEY, fromPath); } catch (_) {}
-      return normalize(fromPath);
-    }
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
-      try { global.localStorage.setItem(STORAGE_KEY, fromUrl); } catch (_) {}
+      writeStoredLocation(fromUrl);
       return normalize(fromUrl);
     }
-    try {
-      return normalize(global.localStorage.getItem(STORAGE_KEY));
-    } catch (_) {
+
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    var stored = readStoredLocation();
+
+    if (fromPath === 'dallas') {
+      writeStoredLocation('dallas');
+      return 'dallas';
+    }
+
+    if (stored) return stored;
+
+    if (fromPath === 'houston') {
+      writeStoredLocation('houston');
       return 'houston';
     }
+
+    return 'houston';
   }
 
   function getPageSlug() {
@@ -175,6 +215,8 @@ if (!window.VSL_LOCATION) {
     if (loc === 'dallas') {
       slug = dallasSlugFor(slug);
       if (DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
+    } else {
+      slug = houstonSlugFor(slug);
     }
     if (loc === 'houston' && slug === 'home') return SITE_ORIGIN + '/';
     if (loc === 'dallas' && slug === 'home') return DALLAS_PAGE;
@@ -214,6 +256,7 @@ if (!window.VSL_LOCATION) {
         if (slug === 'home') return DALLAS_PAGE + u.hash;
         return SITE_ORIGIN + '/dallas/' + dallasSlugFor(slug) + '/' + u.hash;
       }
+      slug = houstonSlugFor(slug);
       if (slug === 'home') return SITE_ORIGIN + '/' + u.hash;
       return SITE_ORIGIN + '/' + slug + '/' + u.hash;
     } catch (_) {
@@ -230,7 +273,7 @@ if (!window.VSL_LOCATION) {
   function setPreferredLocation(loc, options) {
     loc = normalize(loc);
     options = options || {};
-    try { global.localStorage.setItem(STORAGE_KEY, loc); } catch (_) {}
+    writeStoredLocation(loc);
     if (options.skipEvent) return loc;
     try {
       global.dispatchEvent(new CustomEvent('_vslLocationChanged', {
@@ -242,13 +285,19 @@ if (!window.VSL_LOCATION) {
 
   function bootstrap() {
     var fromUrl = readFromUrlParam();
-    var fromPath = readFromPath() || readFromStagingPageKey();
-    var loc = fromPath || fromUrl;
-    if (!loc) return;
-    if (fromPath === 'houston' && isHoustonOnlyPageSlug(getPageSlug())) {
-      if (readStoredLocation() === 'dallas') return;
+    if (fromUrl) {
+      setPreferredLocation(fromUrl, { source: 'bootstrap' });
+      return;
     }
-    setPreferredLocation(loc, { source: 'bootstrap' });
+    var fromPath = readFromPath() || readFromStagingPageKey();
+    if (fromPath === 'dallas') {
+      setPreferredLocation('dallas', { source: 'bootstrap' });
+      return;
+    }
+    /* Houston (or unknown) path: never clobber an existing saved preference */
+    if (!readStoredLocation() && fromPath === 'houston') {
+      setPreferredLocation('houston', { source: 'bootstrap' });
+    }
   }
 
   function bindLocationSync(applyFn) {
@@ -334,6 +383,7 @@ if (!window.VSL_LOCATION) {
     normalize: normalize,
     readFromPath: readFromPath,
     readLocation: readLocation,
+    readStoredLocation: readStoredLocation,
     getPageSlug: getPageSlug,
     getLocationPrefix: getLocationPrefix,
     buildLocationUrl: buildLocationUrl,
@@ -1732,9 +1782,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   transition: opacity 0.1s ease-out;
 }
 .vsl-navbar__overlay-item--open { z-index: 5; }
-.vsl-navbar__overlay-menu--sub-open .vsl-navbar__overlay-item:not(.vsl-navbar__overlay-item--open) {
+.vsl-navbar__overlay-menu--sub-open .vsl-navbar__overlay-item:not(.vsl-navbar__overlay-item--open):not(.vsl-navbar__overlay-item--explore-cards) {
   opacity: 0;
   pointer-events: none;
+}
+.vsl-navbar__overlay-menu--sub-open .vsl-navbar__overlay-item--explore-cards {
+  opacity: 1;
+  pointer-events: auto;
 }
 .vsl-navbar__overlay-link {
   display: flex;
@@ -1800,7 +1854,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   padding-right: 0;
   max-height: 0;
   transition: none;
-  contain: layout style;
 }
 .vsl-navbar__overlay--open .vsl-navbar__overlay-item--explore-cards > .vsl-navbar__overlay-sub--cards {
   max-height: none;
@@ -1865,6 +1918,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .vsl-navbar__overlay-card__title {
   font-family: var(--font-head);
@@ -2353,20 +2408,33 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   min-height: calc(110px * var(--vsl-ui-scale));
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.vsl-navbar__mega-card__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  position: relative;
+  overflow: hidden !important;
+  isolation: isolate;
+  contain: paint;
+}
+/* Beat Elementor/theme img rules that force height:auto and break cover crops */
+.vsl-navbar .vsl-navbar__mega-card__bg,
+.vsl-navbar img.vsl-navbar__mega-card__bg {
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
   z-index: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   border-radius: inherit;
+  display: block !important;
 }
 .vsl-navbar__mega-card--how .vsl-navbar__mega-card__bg {
   transform: scaleX(-1);
@@ -2379,10 +2447,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 .vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--contact):not(.vsl-navbar__mega-card--promos):hover {
   z-index: 2;
-  overflow: visible;
   background: rgba(72,92,204,0.3);
   border-color: rgba(238,38,95,0.62);
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow: 0 calc(14px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.34);
 }
 .vsl-navbar__mega-card--lg {
@@ -2395,8 +2462,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--book:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2407,8 +2473,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--events:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2419,8 +2484,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--membership:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2431,8 +2495,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--contact:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2444,8 +2507,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--promos:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2456,8 +2518,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--how:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
-  overflow: visible;
-  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.06);
+  transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
   box-shadow:
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
@@ -2506,6 +2567,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   border: 1px solid rgba(255,255,255,0.14);
   border-radius: calc(8px * var(--vsl-ui-scale));
   text-shadow: 0 1px 3px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.25);
+}
+/* Keep tall Explore cards’ footer bands aligned even when copy wraps */
+.vsl-navbar__mega-card--lg .vsl-navbar__mega-card__sub {
+  min-height: calc(2.8em * var(--vsl-ui-scale));
+  max-width: calc(100% - 46px * var(--vsl-ui-scale));
 }
 .vsl-navbar__mega-card__arrow {
   position: absolute;
@@ -2828,6 +2894,17 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   .vsl-navbar__mega { padding: calc(20px * var(--vsl-ui-scale)) calc(24px * var(--vsl-ui-scale)); }
 }
 @media (max-width: 1024px) {
+  :root {
+    --vsl-mobile-dock-finish-h: 3px;
+    --vsl-mobile-dock-row: 50px;
+    --vsl-mobile-dock-safe: env(safe-area-inset-bottom, 0px);
+    --vsl-mobile-dock-h: calc(var(--vsl-mobile-dock-finish-h) + var(--vsl-mobile-dock-row) + var(--vsl-mobile-dock-safe) + 20px);
+    --vsl-bar-bg: #10182B;
+    --vsl-stripe-bg: #ff2f5a;
+    --z-overlay: 10000;
+    --font-head: 'Khand', sans-serif;
+    --magenta: #EE265F;
+  }
   .vsl-navbar {
     --vsl-ui-scale: 1;
     --vsl-mobile-top-row: 52px;
@@ -2836,6 +2913,22 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     --vsl-mobile-dock-safe: env(safe-area-inset-bottom, 0px);
     --vsl-mobile-dock-h: calc(var(--vsl-mobile-dock-finish-h) + var(--vsl-mobile-dock-row) + var(--vsl-mobile-dock-safe));
     --vsl-mobile-header-h: calc(var(--stripe-h) + var(--vsl-mobile-top-row));
+  }
+  html.vsl-nav-scroll-lock,
+  html.vsl-nav-scroll-lock body {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+  /* Dock may be portaled to body — keep vars + fixed pinning outside .vsl-navbar */
+  body > .vsl-navbar__mcta {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    z-index: calc(var(--z-overlay) + 5) !important;
+    transform: translate3d(0, 0, 0);
   }
   /* Site-wide: checkered finish lives on the mobile dock — hide per-page hero/footer flags */
   [class$="__finish"] {
@@ -2952,10 +3045,12 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: calc(var(--z-overlay) + 3);
+    /* Keep dock on the visual viewport — never nest under a transformed/fixed ancestor */
+    z-index: calc(var(--z-overlay) + 5);
     display: grid;
     align-items: stretch;
     width: 100%;
+    max-width: 100vw;
     grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.5fr) minmax(0, 0.9fr);
     gap: 8px;
     margin: 0;
@@ -2964,6 +3059,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     background: var(--vsl-bar-bg);
     box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
     isolation: isolate;
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
   .vsl-navbar__mcta::before {
     content: '';
@@ -3039,13 +3137,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: calc(var(--z-overlay) + 4);
+    transform: translate3d(0, 0, 0);
+    z-index: calc(var(--z-overlay) + 5);
   }
   .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__overlay {
     z-index: calc(var(--z-overlay) + 1);
   }
+  /* Location pill stays usable above the header, but never covers Explore cards */
   .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__loc-wrap--open {
     z-index: calc(var(--z-overlay) + 3);
+  }
+  .vsl-navbar.vsl-navbar--mobile-menu-open .vsl-navbar__loc-panel {
+    max-height: min(70vh, 420px);
+    overflow-y: auto;
   }
   /* Legacy :has() fallback when JS class is unavailable */
   .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__stripe,
@@ -3062,7 +3166,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: calc(var(--z-overlay) + 4);
+    transform: translate3d(0, 0, 0);
+    z-index: calc(var(--z-overlay) + 5);
   }
   .vsl-navbar:has(.vsl-navbar__overlay--open) .vsl-navbar__loc-wrap--open {
     z-index: calc(var(--z-overlay) + 3);
@@ -3432,6 +3537,12 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         </div>
       </li>
       <li class="vsl-navbar__overlay-item">
+        <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__overlay-link" data-mobile-overlay-events>Group Events</a>
+      </li>
+      <li class="vsl-navbar__overlay-item">
+        <a href="https://velocitysimlounge.com/corporate-events/" class="vsl-navbar__overlay-link">Corporate Events</a>
+      </li>
+      <li class="vsl-navbar__overlay-item">
         <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__overlay-link" data-mobile-overlay-contact>Contact</a>
       </li>
       <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
@@ -3546,13 +3657,20 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   function publishNavHeight() {
     var h = Math.round(navbar.getBoundingClientRect().height);
     document.documentElement.style.setProperty('--vsl-navbar-height', h + 'px');
-    var dock = navbar.querySelector('.vsl-navbar__mcta');
+    var dock = document.querySelector('.vsl-navbar__mcta');
     var dockH = 0;
     if (dock && isMobileViewport()) {
+      /* Prefer stable CSS calc over live measurement while the menu scroll-lock
+         is active — measuring during lock is what made the dock “sag”. */
+      if (document.documentElement.classList.contains('vsl-nav-scroll-lock')) {
+        return;
+      }
       var dockRect = dock.getBoundingClientRect();
       dockH = dockRect.height > 0 ? Math.round(dockRect.height) : 0;
     }
-    document.documentElement.style.setProperty('--vsl-mobile-dock-height', dockH + 'px');
+    if (dockH > 0) {
+      document.documentElement.style.setProperty('--vsl-mobile-dock-height', dockH + 'px');
+    }
     try {
       document.dispatchEvent(new CustomEvent('vslNavbarHeightChange', {
         detail: { height: h, dockHeight: dockH, chromeHeight: h + dockH }
@@ -3561,10 +3679,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
   publishNavHeight();
   if ('ResizeObserver' in window) {
-    var navResizeObserver = new ResizeObserver(publishNavHeight);
+    var navResizeObserver = new ResizeObserver(function() {
+      if (document.documentElement.classList.contains('vsl-nav-scroll-lock')) return;
+      publishNavHeight();
+    });
     navResizeObserver.observe(navbar);
-    var mobileDock = navbar.querySelector('.vsl-navbar__mcta');
-    if (mobileDock) navResizeObserver.observe(mobileDock);
+    var observedDock = navbar.querySelector('.vsl-navbar__mcta');
+    if (observedDock) navResizeObserver.observe(observedDock);
   } else {
     window.addEventListener('resize', publishNavHeight);
   }
@@ -3641,7 +3762,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var mobileBarBook = navbar.querySelector('[data-mobile-bar-book]');
   var mobileBarEvents = navbar.querySelector('[data-mobile-bar-events]');
   var mobileOverlayContact = navbar.querySelector('[data-mobile-overlay-contact]');
+  var mobileOverlayEvents = navbar.querySelector('[data-mobile-overlay-events]');
   var mobileExploreBtn = navbar.querySelector('[data-mobile-explore]');
+  var mobileDock = navbar.querySelector('.vsl-navbar__mcta');
+  var mobileDockHome = mobileDock ? mobileDock.parentNode : null;
   var navHomeLinks = navbar.querySelectorAll('[data-nav-home]');
   var stickyBookNow = navbar.querySelector('[data-sticky-book-now]');
   var stickyLocation = navbar.querySelector('[data-sticky-location]');
@@ -3663,6 +3787,41 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var locSwitcherDismiss = navbar.querySelector('[data-loc-switcher-dismiss]');
   var faqNavLinks = navbar.querySelectorAll('a[href*="/contact/#faq"], a[href*="/contact/#FAQ"]');
   var currentLocation = 'houston';
+
+  function syncMobileDockToVisualViewport() {
+    if (!mobileDock || !isMobileViewport()) {
+      if (mobileDock) mobileDock.style.bottom = '';
+      return;
+    }
+    var vv = window.visualViewport;
+    if (!vv) {
+      mobileDock.style.bottom = '0px';
+      return;
+    }
+    var inset = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+    mobileDock.style.bottom = inset + 'px';
+  }
+
+  function portalMobileDock() {
+    if (!mobileDock || !mobileDockHome) return;
+    if (isMobileViewport()) {
+      if (mobileDock.parentNode !== document.body) {
+        document.body.appendChild(mobileDock);
+      }
+      syncMobileDockToVisualViewport();
+      publishNavHeight();
+    } else if (mobileDock.parentNode !== mobileDockHome) {
+      mobileDock.style.bottom = '';
+      mobileDockHome.appendChild(mobileDock);
+      publishNavHeight();
+    }
+  }
+  portalMobileDock();
+  window.addEventListener('resize', portalMobileDock);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', syncMobileDockToVisualViewport);
+    window.visualViewport.addEventListener('scroll', syncMobileDockToVisualViewport);
+  }
 
   function normalizeLocation(key) {
     return LOCATIONS[key] ? key : 'houston';
@@ -3862,6 +4021,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       mobileBarEvents.href = eventsHref;
       mobileBarEvents.setAttribute('aria-label', 'Parties and events at ' + config.label);
     }
+    if (mobileOverlayEvents) {
+      mobileOverlayEvents.href = resolveGroupEventsUrl(normalized);
+    }
     if (mobileOverlayContact) {
       var contactHref = resolveContactUrl(normalized);
       mobileOverlayContact.href = contactHref;
@@ -3894,7 +4056,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function persistLocation(key) {
     try {
-      localStorage.setItem(STORAGE_KEY, normalizeLocation(key));
+      if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
+        window.VSL_LOCATION.setPreferredLocation(normalizeLocation(key), { skipEvent: true, source: 'navbar-persist' });
+      } else {
+        localStorage.setItem(STORAGE_KEY, normalizeLocation(key));
+      }
     } catch (_) {}
   }
 
@@ -4032,16 +4198,21 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       return;
     }
     if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
-    navbar.querySelectorAll('a[href]').forEach(function(a) {
-      var href = a.getAttribute('href');
-      if (!href || href.charAt(0) === '#') return;
-      if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|book-/.test(href)) return;
-      var isInternal =
-        href.indexOf('velocitysimlounge.com') !== -1 ||
-        (href.charAt(0) === '/' && href.charAt(1) !== '/');
-      if (!isInternal) return;
-      var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
-      if (next) a.setAttribute('href', next);
+    var scopes = [navbar];
+    if (mobileDock && mobileDock.parentNode === document.body) scopes.push(mobileDock);
+    scopes.forEach(function(scope) {
+      scope.querySelectorAll('a[href]').forEach(function(a) {
+        var href = a.getAttribute('href');
+        if (!href || href.charAt(0) === '#') return;
+        /* Skip social / maps / external bookers — keep /book-now/ rewriteable */
+        if (/instagram|facebook|tiktok|maps\.|google\.|tripleseat|roverpass|book\./i.test(href)) return;
+        var isInternal =
+          href.indexOf('velocitysimlounge.com') !== -1 ||
+          (href.charAt(0) === '/' && href.charAt(1) !== '/');
+        if (!isInternal) return;
+        var next = window.VSL_LOCATION.rewriteInternalHref(href, loc);
+        if (next) a.setAttribute('href', next);
+      });
     });
     var dallasLearn = navbar.querySelector('a[href="https://velocitysimlounge.com/dallas"]');
     if (dallasLearn) dallasLearn.setAttribute('href', 'https://velocitysimlounge.com/dallas/');
@@ -4716,39 +4887,33 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function lockMobileMenuScroll() {
     mobileMenuScrollY = window.scrollY || window.pageYOffset || 0;
-    document.body.style.position = 'fixed';
-    document.body.style.top = '-' + mobileMenuScrollY + 'px';
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+    document.documentElement.classList.add('vsl-nav-scroll-lock');
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-  }
-
-  function restoreMobileMenuScroll(y) {
-    var root = document.documentElement;
-    var prevScrollBehavior = root.style.scrollBehavior;
-    root.style.scrollBehavior = 'auto';
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    root.scrollTop = y;
-    if (typeof window.scrollTo === 'function') {
-      try {
-        window.scrollTo({ top: y, left: 0, behavior: 'instant' });
-      } catch (_) {
-        window.scrollTo(0, y);
-      }
-    }
-    root.style.scrollBehavior = prevScrollBehavior;
+    /* Avoid body position:fixed — it drifts the dock on iOS after repeated toggles */
   }
 
   function unlockMobileMenuScroll() {
-    restoreMobileMenuScroll(mobileMenuScrollY);
+    document.documentElement.classList.remove('vsl-nav-scroll-lock');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    var y = mobileMenuScrollY || 0;
+    requestAnimationFrame(function() {
+      var root = document.documentElement;
+      var prevScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      if (typeof window.scrollTo === 'function') {
+        try {
+          window.scrollTo({ top: y, left: 0, behavior: 'instant' });
+        } catch (_) {
+          window.scrollTo(0, y);
+        }
+      } else {
+        root.scrollTop = y;
+      }
+      root.style.scrollBehavior = prevScrollBehavior;
+      syncMobileDockToVisualViewport();
+    });
   }
 
   function openMobileMenu() {
@@ -4756,11 +4921,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     closeAllDesktop();
     closeLocDropdown();
     closeStickyLocMenu();
+    if (locationPanel && !locationPanel.hidden) closeLocationPrompt();
     navbar.classList.add('vsl-navbar--mobile-menu-open');
     overlay.classList.add('vsl-navbar__overlay--open');
     overlay.setAttribute('aria-hidden', 'false');
     lockMobileMenuScroll();
-    publishNavHeight();
+    portalMobileDock();
+    syncMobileDockToVisualViewport();
     if (mobileExploreBtn) {
       mobileExploreBtn.setAttribute('aria-expanded', 'true');
       mobileExploreBtn.setAttribute('aria-label', 'Close menu');
@@ -4786,7 +4953,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     overlay.setAttribute('aria-hidden', 'true');
     navbar.classList.remove('vsl-navbar--mobile-menu-open');
     unlockMobileMenuScroll();
-    publishNavHeight();
     if (mobileExploreBtn) {
       mobileExploreBtn.setAttribute('aria-expanded', 'false');
       mobileExploreBtn.setAttribute('aria-label', 'Open menu');
@@ -4935,7 +5101,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   });
 
   try {
-    var hasStoredLocation = !!localStorage.getItem(STORAGE_KEY);
+    var hasStoredLocation = !!(window.VSL_LOCATION && window.VSL_LOCATION.readStoredLocation
+      ? window.VSL_LOCATION.readStoredLocation()
+      : localStorage.getItem(STORAGE_KEY));
     if (!hasStoredLocation && !isSessionDismissed() && !isElementorEditorContext()) {
       setTimeout(function() {
         openLocationPicker('choose');

@@ -2482,7 +2482,7 @@
     "twoSeaterDouble":"https://book-dtx.velocitysimlounge.com/book/2-seater-double-race/23",
     "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27",
     "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28",
-    "partyChampion":  "https://velocitysimlounge.com/dallas/party-packs/#pp-packs"
+    "partyChampion":  "https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4341"
   },
   "bookNow": "https://velocitysimlounge.com/dallas/book-now/",
   "images": {
@@ -2665,21 +2665,21 @@
               </div>
             </a>
 
-            <a class="vsl-bn-card" data-l="partyChampion" href="https://velocitysimlounge.com/dallas/party-packs/#pp-packs">
+            <a class="vsl-bn-card" data-l="partyChampion" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4341" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="partyChampion" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRnVsbC1CdXlvdXQtY2FyZC1waG90by0xMDI0eDY4My53ZWJw" alt="Champion Party Pack at Velocity Sim Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
-                <h3 class="vsl-bn-card__overlay-name">Champion Party Pack</h3>
+                <img data-i="partyChampion" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvRnVsbC1CdXlvdXQtY2FyZC1waG90by0xMDI0eDY4My53ZWJw" alt="Full Private Room party pack at Velocity Sim Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
+                <h3 class="vsl-bn-card__overlay-name">Full Private Room</h3>
               </div>
               <div class="vsl-bn-card__body">
                 <ul class="vsl-bn-card__features">
                   <li>10 rigs &bull; Full private space</li>
-                  <li>Our largest Party Pack for groups of 10&ndash;25</li>
+                  <li>For groups of 30+</li>
                   <li>2 hours of racing on 10 rigs</li>
                   <li>Enhanced catering options</li>
                   <li>Dedicated Pit Crew</li>
                   <li>Upgrades available</li>
                 </ul>
-                <span class="vsl-bn-card__cta-hint">View pack details <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+                <span class="vsl-bn-card__cta-hint">Inquire Today <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
               </div>
             </a>
 
@@ -3034,8 +3034,10 @@
         media.appendChild(chip);
       }
     });
-    /* Temporary: Dallas RoverD booking not live yet — show Coming Soon on all book cards */
+    /* Temporary: Dallas RoverD booking not live yet — Coming Soon on book cards,
+       except Full Private Room (partyChampion) which uses Tripleseat inquire. */
     root.querySelectorAll('a.vsl-bn-card[data-l]').forEach(function(el) {
+      if (el.getAttribute('data-l') === 'partyChampion') return;
       el.classList.add('vsl-bn-card--soon');
       el.removeAttribute('href');
       el.removeAttribute('target');

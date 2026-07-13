@@ -30,7 +30,7 @@ const PAGES = [
 
 const DALLAS_SLUGS = [
   'party-packs', 'book-now', 'contact', 'group-events', 'corporate-events',
-  'food-and-drink', 'semi-private', 'promotions', 'memberships', 'buyout'
+  'food-and-drink', 'semi-private', 'promotions', 'membership', 'buyout'
 ];
 
 const HOUSTON_TRIPLESEAT = [
@@ -53,7 +53,6 @@ function rewriteInternalLinks(html) {
     const re = new RegExp(`https://velocitysimlounge\\.com/${slug}/`, 'g');
     out = out.replace(re, `https://velocitysimlounge.com/dallas/${slug}/`);
   }
-  out = out.replace(/https:\/\/velocitysimlounge\.com\/membership\//g, 'https://velocitysimlounge.com/dallas/memberships/');
   out = out.replace(/https:\/\/velocitysimlounge\.com\/"(?!dallas)/g, 'https://velocitysimlounge.com/dallas/"');
   out = out.replace(/https:\/\/velocitysimlounge\.com\/'/g, "https://velocitysimlounge.com/dallas/'");
   return out;
