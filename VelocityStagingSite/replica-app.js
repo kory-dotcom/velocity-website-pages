@@ -923,7 +923,7 @@
   loadVslLocation()
     .catch(function () {})
     .then(function () {
-      return fetchReplicaText("../velocity-navbar.html?v=20260713a", "navbar");
+      return fetchReplicaText("../velocity-navbar.html?v=20260713b", "navbar");
     })
     .then(function (html) {
       navbarRoot.innerHTML = html;

@@ -8,6 +8,7 @@
   'use strict';
 
   var STORAGE_KEY = 'vslPreferredLocation';
+  var CHOSEN_KEY = 'vslLocationChosen';
   var SITE_ORIGIN = 'https://velocitysimlounge.com';
   var DALLAS_PAGE = SITE_ORIGIN + '/dallas/';
 
@@ -85,6 +86,26 @@
     return loc;
   }
 
+  function markLocationChosen() {
+    try { global.localStorage.setItem(CHOSEN_KEY, '1'); } catch (_) {}
+    try {
+      var secure = global.location && global.location.protocol === 'https:' ? ';Secure' : '';
+      global.document.cookie = CHOSEN_KEY + '=1;path=/;max-age=31536000;SameSite=Lax' + secure;
+    } catch (_) {}
+  }
+
+  function hasChosenLocation() {
+    try {
+      if (global.localStorage.getItem(CHOSEN_KEY) === '1') return true;
+    } catch (_) {}
+    try {
+      if (/(?:^|; )vslLocationChosen=1(?:;|$)/.test(String(global.document.cookie || ''))) return true;
+    } catch (_) {}
+    /* Legacy: preference saved before explicit-choice tracking */
+    if (readStoredLocation()) return true;
+    return false;
+  }
+
   function readStoredLocation() {
     try {
       var stored = global.localStorage.getItem(STORAGE_KEY);
@@ -151,7 +172,7 @@
    * 1) explicit ?loc=
    * 2) /dallas/... URL (commit Dallas)
    * 3) stored preference (localStorage + cookie) — survives browser restart
-   * 4) Houston path with no stored preference → Houston
+   * 4) Houston path with no stored preference → infer Houston (do not persist)
    *
    * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
    */
@@ -159,6 +180,7 @@
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
       writeStoredLocation(fromUrl);
+      markLocationChosen();
       return normalize(fromUrl);
     }
 
@@ -167,15 +189,14 @@
 
     if (fromPath === 'dallas') {
       writeStoredLocation('dallas');
+      markLocationChosen();
       return 'dallas';
     }
 
     if (stored) return stored;
 
-    if (fromPath === 'houston') {
-      writeStoredLocation('houston');
-      return 'houston';
-    }
+    /* Infer Houston for links/copy — do not persist until the user chooses */
+    if (fromPath === 'houston') return 'houston';
 
     return 'houston';
   }
@@ -276,6 +297,9 @@
     loc = normalize(loc);
     options = options || {};
     writeStoredLocation(loc);
+    if (options.source === 'location-picker' || options.source === 'bootstrap' || options.markChosen) {
+      markLocationChosen();
+    }
     if (options.skipEvent) return loc;
     try {
       global.dispatchEvent(new CustomEvent('_vslLocationChanged', {
@@ -296,10 +320,7 @@
       setPreferredLocation('dallas', { source: 'bootstrap' });
       return;
     }
-    /* Houston (or unknown) path: never clobber an existing saved preference */
-    if (!readStoredLocation() && fromPath === 'houston') {
-      setPreferredLocation('houston', { source: 'bootstrap' });
-    }
+    /* Houston path alone: never auto-persist — welcome chooser handles first visit */
   }
 
   function bindLocationSync(applyFn) {
@@ -379,6 +400,7 @@
 
   global.VSL_LOCATION = {
     STORAGE_KEY: STORAGE_KEY,
+    CHOSEN_KEY: CHOSEN_KEY,
     SITE_ORIGIN: SITE_ORIGIN,
     DALLAS_PAGE: DALLAS_PAGE,
     DALLAS_PAGES: DALLAS_PAGES,
@@ -386,6 +408,8 @@
     readFromPath: readFromPath,
     readLocation: readLocation,
     readStoredLocation: readStoredLocation,
+    hasChosenLocation: hasChosenLocation,
+    markLocationChosen: markLocationChosen,
     getPageSlug: getPageSlug,
     getLocationPrefix: getLocationPrefix,
     buildLocationUrl: buildLocationUrl,

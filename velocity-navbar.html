@@ -1,12 +1,13 @@
 <!-- Velocity Sim Racing Lounge — Global Navbar Component (Elementor Custom HTML ready) -->
 <!-- Location helper inlined below — paste this navbar only; no separate vsl-location.js upload -->
-<!-- vsl-navbar build: 20260713a — bump when pasting to WordPress so caches pick up the change -->
+<!-- vsl-navbar build: 20260713b — bump when pasting to WordPress so caches pick up the change -->
 <script>
 if (!window.VSL_LOCATION) {
 (function (global) {
   'use strict';
 
   var STORAGE_KEY = 'vslPreferredLocation';
+  var CHOSEN_KEY = 'vslLocationChosen';
   var SITE_ORIGIN = 'https://velocitysimlounge.com';
   var DALLAS_PAGE = SITE_ORIGIN + '/dallas/';
 
@@ -84,6 +85,26 @@ if (!window.VSL_LOCATION) {
     return loc;
   }
 
+  function markLocationChosen() {
+    try { global.localStorage.setItem(CHOSEN_KEY, '1'); } catch (_) {}
+    try {
+      var secure = global.location && global.location.protocol === 'https:' ? ';Secure' : '';
+      global.document.cookie = CHOSEN_KEY + '=1;path=/;max-age=31536000;SameSite=Lax' + secure;
+    } catch (_) {}
+  }
+
+  function hasChosenLocation() {
+    try {
+      if (global.localStorage.getItem(CHOSEN_KEY) === '1') return true;
+    } catch (_) {}
+    try {
+      if (/(?:^|; )vslLocationChosen=1(?:;|$)/.test(String(global.document.cookie || ''))) return true;
+    } catch (_) {}
+    /* Legacy: preference saved before explicit-choice tracking */
+    if (readStoredLocation()) return true;
+    return false;
+  }
+
   function readStoredLocation() {
     try {
       var stored = global.localStorage.getItem(STORAGE_KEY);
@@ -150,7 +171,7 @@ if (!window.VSL_LOCATION) {
    * 1) explicit ?loc=
    * 2) /dallas/... URL (commit Dallas)
    * 3) stored preference (localStorage + cookie) — survives browser restart
-   * 4) Houston path with no stored preference → Houston
+   * 4) Houston path with no stored preference → infer Houston (do not persist)
    *
    * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
    */
@@ -158,6 +179,7 @@ if (!window.VSL_LOCATION) {
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
       writeStoredLocation(fromUrl);
+      markLocationChosen();
       return normalize(fromUrl);
     }
 
@@ -166,15 +188,14 @@ if (!window.VSL_LOCATION) {
 
     if (fromPath === 'dallas') {
       writeStoredLocation('dallas');
+      markLocationChosen();
       return 'dallas';
     }
 
     if (stored) return stored;
 
-    if (fromPath === 'houston') {
-      writeStoredLocation('houston');
-      return 'houston';
-    }
+    /* Infer Houston for links/copy — do not persist until the user chooses */
+    if (fromPath === 'houston') return 'houston';
 
     return 'houston';
   }
@@ -275,6 +296,9 @@ if (!window.VSL_LOCATION) {
     loc = normalize(loc);
     options = options || {};
     writeStoredLocation(loc);
+    if (options.source === 'location-picker' || options.source === 'bootstrap' || options.markChosen) {
+      markLocationChosen();
+    }
     if (options.skipEvent) return loc;
     try {
       global.dispatchEvent(new CustomEvent('_vslLocationChanged', {
@@ -295,10 +319,7 @@ if (!window.VSL_LOCATION) {
       setPreferredLocation('dallas', { source: 'bootstrap' });
       return;
     }
-    /* Houston (or unknown) path: never clobber an existing saved preference */
-    if (!readStoredLocation() && fromPath === 'houston') {
-      setPreferredLocation('houston', { source: 'bootstrap' });
-    }
+    /* Houston path alone: never auto-persist — welcome chooser handles first visit */
   }
 
   function bindLocationSync(applyFn) {
@@ -378,6 +399,7 @@ if (!window.VSL_LOCATION) {
 
   global.VSL_LOCATION = {
     STORAGE_KEY: STORAGE_KEY,
+    CHOSEN_KEY: CHOSEN_KEY,
     SITE_ORIGIN: SITE_ORIGIN,
     DALLAS_PAGE: DALLAS_PAGE,
     DALLAS_PAGES: DALLAS_PAGES,
@@ -385,6 +407,8 @@ if (!window.VSL_LOCATION) {
     readFromPath: readFromPath,
     readLocation: readLocation,
     readStoredLocation: readStoredLocation,
+    hasChosenLocation: hasChosenLocation,
+    markLocationChosen: markLocationChosen,
     getPageSlug: getPageSlug,
     getLocationPrefix: getLocationPrefix,
     buildLocationUrl: buildLocationUrl,
@@ -1620,6 +1644,26 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   }
   .vsl-navbar__geo-backdrop { display: none !important; }
 }
+/* Welcome first-visit modal — centered on all viewports */
+.vsl-navbar__geo-panel--welcome,
+#vsl-location-dialog.vsl-navbar__geo-panel--welcome {
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(380px, calc(100vw - 32px)) !important;
+  max-width: calc(100vw - 32px) !important;
+  text-align: center !important;
+  padding: 30px 24px 24px !important;
+  animation: vsl-geo-welcome-in 0.28s ease-out both;
+}
+.vsl-navbar__geo-backdrop--welcome:not([hidden]) {
+  display: block !important;
+}
+@keyframes vsl-geo-welcome-in {
+  from { opacity: 0; transform: translate(-50%, calc(-50% + 10px)); }
+  to   { opacity: 1; transform: translate(-50%, -50%); }
+}
 /* Red accent stripe at top */
 .vsl-navbar__geo-panel::before {
   content: '';
@@ -1666,7 +1710,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   background: rgba(41, 56, 147, 0.28) !important;
   color: #fff !important;
   border-radius: 8px !important;
-  padding: 14px 10px !important;
+  padding: 14px 10px 12px !important;
   font-family: 'Khand', sans-serif !important;
   font-size: 16px !important;
   font-weight: 700 !important;
@@ -1676,10 +1720,43 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   cursor: pointer !important;
   text-align: center !important;
   line-height: 1.2 !important;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+  transition: border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease, transform 0.1s ease !important;
   text-decoration: none !important;
   outline: none !important;
   -webkit-appearance: none !important;
+  touch-action: manipulation !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+.vsl-navbar__geo-pick__city {
+  display: block !important;
+  font-size: 17px !important;
+  letter-spacing: 0.1em !important;
+}
+.vsl-navbar__geo-pick__sub {
+  display: block !important;
+  font-family: 'Archivo Narrow', 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  color: rgba(210, 214, 235, 0.88) !important;
+  line-height: 1.25 !important;
+}
+.vsl-navbar__geo-panel--welcome .vsl-navbar__geo-title {
+  font-size: clamp(20px, 5vw, 24px) !important;
+  letter-spacing: 0.05em !important;
+}
+.vsl-navbar__geo-panel--welcome .vsl-navbar__geo-text {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  max-width: 30ch !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 .vsl-navbar__geo-pick:hover,
 .vsl-navbar__geo-pick:focus-visible {
@@ -1690,6 +1767,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__geo-pick:active {
   background: rgba(210, 32, 38, 0.32) !important;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  transform: scale(0.97) !important;
 }
 .vsl-navbar__geo-pick-divider {
   display: none !important;
@@ -3374,7 +3452,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 </style>
 
-<nav class="vsl-navbar" data-vsl-build="20260713a" role="navigation" aria-label="Main navigation">
+<nav class="vsl-navbar" data-vsl-build="20260713b" role="navigation" aria-label="Main navigation">
   <div class="vsl-navbar__stripe" aria-hidden="true"></div>
   <div class="vsl-navbar__bar">
     <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
@@ -3660,8 +3738,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     <h2 id="vsl-location-title" class="vsl-navbar__geo-title">Choose your lounge</h2>
     <p class="vsl-navbar__geo-text">Select your nearest Velocity location. Your booking links will update automatically.</p>
     <div class="vsl-navbar__geo-picks" role="group" aria-label="Select city">
-      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="houston">Houston</button>
-      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="dallas">Dallas</button>
+      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="houston">
+        <span class="vsl-navbar__geo-pick__city">Houston</span>
+        <span class="vsl-navbar__geo-pick__sub">Original lounge</span>
+      </button>
+      <button class="vsl-navbar__geo-pick" type="button" data-location-pick="dallas">
+        <span class="vsl-navbar__geo-pick__city">Dallas</span>
+        <span class="vsl-navbar__geo-pick__sub">DFW metro</span>
+      </button>
     </div>
     <button class="vsl-navbar__geo-dismiss" type="button" data-location-dismiss>Skip for now</button>
   </div>
@@ -4194,6 +4278,32 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     return false;
   }
 
+  function isHoustonHomePage() {
+    if (window.__VSL_SITE_REPLICA__) {
+      var p = new URLSearchParams(window.location.search).get('p') || 'home';
+      return p === 'home';
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.isDallasPath && window.VSL_LOCATION.isDallasPath()) {
+      return false;
+    }
+    if (window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug) {
+      return window.VSL_LOCATION.getPageSlug() === 'home';
+    }
+    var path = window.location.pathname.replace(/\/+$/, '') || '/';
+    return path === '' || path === '/';
+  }
+
+  function hasChosenHomeLocation() {
+    if (window.VSL_LOCATION && window.VSL_LOCATION.hasChosenLocation) {
+      return window.VSL_LOCATION.hasChosenLocation();
+    }
+    try {
+      return localStorage.getItem('vslLocationChosen') === '1';
+    } catch (_) {
+      return false;
+    }
+  }
+
   function isContactPagePath() {
     if (window.__VSL_SITE_REPLICA__) {
       var p = new URLSearchParams(window.location.search).get('p') || 'home';
@@ -4259,21 +4369,48 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
   }
 
-  function openLocationPrompt() {
+  function openLocationPrompt(options) {
     if (!locationPanel) return;
+    options = options || {};
     portalLocationPromptToBody();
-    locationPanel.hidden = false;
-    if (locationBackdrop && isMobileViewport()) {
-      locationBackdrop.hidden = false;
+    locationPanel.classList.toggle('vsl-navbar__geo-panel--welcome', !!options.welcome);
+    if (locationBackdrop) {
+      locationBackdrop.classList.toggle('vsl-navbar__geo-backdrop--welcome', !!options.welcome);
+      locationBackdrop.hidden = !(options.welcome || isMobileViewport());
     }
+    locationPanel.hidden = false;
     setLocationPromptAria(true);
+    if (options.welcome) {
+      var firstPick = locationPanel.querySelector('[data-location-pick]');
+      if (firstPick) {
+        requestAnimationFrame(function() {
+          try { firstPick.focus(); } catch (_) {}
+        });
+      }
+    }
   }
 
   function closeLocationPrompt() {
-    if (locationPanel) locationPanel.hidden = true;
-    if (locationBackdrop) locationBackdrop.hidden = true;
+    if (locationPanel) {
+      locationPanel.hidden = true;
+      locationPanel.classList.remove('vsl-navbar__geo-panel--welcome');
+    }
+    if (locationBackdrop) {
+      locationBackdrop.hidden = true;
+      locationBackdrop.classList.remove('vsl-navbar__geo-backdrop--welcome');
+    }
     restoreLocationPromptToNavbar();
     setLocationPromptAria(false);
+  }
+
+  function openWelcomeLocationPrompt() {
+    if (locationTitle) {
+      locationTitle.textContent = 'Where do you want to race?';
+    }
+    if (locationText) {
+      locationText.textContent = 'Velocity has sim lounges in Houston and Dallas. Pick your location and we\u2019ll show the right booking links and hours.';
+    }
+    openLocationPrompt({ welcome: true });
   }
 
   function applyNavLinks(loc) {
@@ -4374,6 +4511,17 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     options = options || {};
     var normalized = normalizeLocation(key);
     if (normalized === currentLocation) {
+      if (shouldPersist) {
+        if (window.VSL_LOCATION && window.VSL_LOCATION.setPreferredLocation) {
+          window.VSL_LOCATION.setPreferredLocation(normalized, {
+            source: 'location-picker',
+            skipEvent: true
+          });
+        } else {
+          persistLocation(normalized);
+        }
+      }
+      dismissForSession();
       closeLocationPrompt();
       closeStickyLocMenu();
       closeLocDropdown({ instant: true });
@@ -5250,12 +5398,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   });
 
   try {
-    var hasStoredLocation = !!(window.VSL_LOCATION && window.VSL_LOCATION.readStoredLocation
-      ? window.VSL_LOCATION.readStoredLocation()
-      : localStorage.getItem(STORAGE_KEY));
-    if (!hasStoredLocation && !isSessionDismissed() && !isElementorEditorContext()) {
+    if (
+      isHoustonHomePage() &&
+      !hasChosenHomeLocation() &&
+      !isSessionDismissed() &&
+      !isElementorEditorContext()
+    ) {
       setTimeout(function() {
-        openLocationPicker('choose');
+        openWelcomeLocationPrompt();
       }, isMobileViewport() ? 400 : 500);
     }
   } catch (_) {}
