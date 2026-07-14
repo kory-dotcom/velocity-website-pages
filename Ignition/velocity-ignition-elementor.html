@@ -7,12 +7,43 @@ Velocity Sim Racing Lounge — Ignition
   Meta desc:     Ignition is Velocity's hidden cocktail lounge in Houston — elevated full bar, craft cocktails, and a unique racing-inspired atmosphere at 2110 Edwards St.
   Canonical:     https://velocitysimlounge.com/ignition/
   OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-portal.webp
+  Favicon:       https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-favicon.jpg
 
   ── Config ──
   Image URLs point at wp-content/uploads/2026/07/. Before publishing, upload
   every file in Ignition/assets/wordpress-upload/ to the WordPress Media
   Library (keep filenames; upload in July 2026 so the /2026/07/ path matches).
 -->
+<script>
+  /* Hide the global Velocity chrome BEFORE first paint. Runs synchronously as
+     the module is parsed and injects a <head> style keyed off an <html> class,
+     so the navbar / footer / mobile dock never flash on load. The body :has()
+     rules below remain as a fallback. */
+  (function () {
+    try {
+      var d = document;
+      d.documentElement.classList.add('vsl-ig-chrome-hidden');
+      if (!d.getElementById('vsl-ig-chrome-hide')) {
+        var s = d.createElement('style');
+        s.id = 'vsl-ig-chrome-hide';
+        s.textContent =
+          '.vsl-ig-chrome-hidden .vsl-navbar,' +
+          '.vsl-ig-chrome-hidden #replica-navbar-root,' +
+          '.vsl-ig-chrome-hidden .vsl-navbar__mcta,' +
+          '.vsl-ig-chrome-hidden body > .vsl-navbar__mcta,' +
+          '.vsl-ig-chrome-hidden .vsl-site-footer,' +
+          '.vsl-ig-chrome-hidden #replica-footer-root,' +
+          '.vsl-ig-chrome-hidden .elementor-location-footer,' +
+          '.vsl-ig-chrome-hidden footer.elementor-location-footer' +
+          '{display:none !important;}' +
+          '.vsl-ig-chrome-hidden,.vsl-ig-chrome-hidden body{' +
+          '--vsl-navbar-height:0px;--vsl-mobile-dock-height:0px;--vsl-mobile-dock-h:0px;}' +
+          '.vsl-ig-chrome-hidden body{padding-bottom:0 !important;scroll-padding-bottom:0 !important;}';
+        (d.head || d.documentElement).appendChild(s);
+      }
+    } catch (e) {}
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
@@ -79,6 +110,32 @@ Velocity Sim Racing Lounge — Ignition
   body:has(.vsl-ignition) {
     overflow-x: clip;
     max-width: 100%;
+  }
+  /* Soft-stop the intro at full open. Native scroll-snap catches a fast scroll
+     or fling at the end of the arch animation so it can't fly into the page; the
+     user simply scrolls again to continue. "proximity" keeps the scrub free
+     (it only engages near the end), and snap-stop:always means one long fling
+     can't skip over the full-open state. Compositor-driven = smooth, no JS. */
+  html:has(.vsl-ignition),
+  body:has(.vsl-ignition) {
+    scroll-snap-type: y proximity;
+  }
+  /* Phones/tablets: drop the Elementor outdent — the negative side margins
+     overshot narrow containers and produced horizontal scroll. Overrides the
+     inline --vsl-outdent width/margins directly (higher specificity path). */
+  @media (max-width: 1024px) {
+    .vsl-ignition {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      overflow-x: clip;
+    }
+    .vsl-ignition .vsl-ig-portal,
+    .vsl-ignition .vsl-ig-portal__track,
+    .vsl-ignition .vsl-ig-portal__sticky {
+      overflow-x: clip;
+    }
   }
 
   .vsl-ignition {
@@ -314,6 +371,10 @@ Velocity Sim Racing Lounge — Ignition
   /* ═══ Portal hero — scroll through the arch ═══ */
   .vsl-ig-portal {
     --ig-portal-p: 0;
+    /* Stable 1% viewport unit. JS pins this to a px value and only refreshes on
+       orientation / large resizes, so the mobile URL bar showing/hiding during
+       scroll can't reflow the track and re-anchor (the scroll "snap"). */
+    --ig-vh: 1vh;
     --ig-arch-w: min(760px, 92vw);
     --ig-nav-offset: 0px;
     --ig-hero-gap: clamp(8px, 1.4vh, 18px);
@@ -333,18 +394,32 @@ Velocity Sim Racing Lounge — Ignition
     --ig-nav-offset: var(--vsl-navbar-height, 0px);
   }
   .vsl-ig-portal__track {
-    /* Tall scrub range = natural rate limit; !important beats Elementor height clamps */
-    height: 300vh !important;
-    height: 300dvh !important;
-    min-height: 300vh !important;
-    min-height: 300dvh !important;
+    /* Tall sticky scrub so the arch can't be blown past in a single swipe/flick
+       (the animation is spread across this scroll distance, symmetric in reverse).
+       Uses the JS-pinned --ig-vh so it doesn't reflow on mobile URL-bar show/hide. */
+    height: calc(340 * var(--ig-vh, 1vh)) !important;
+    min-height: calc(340 * var(--ig-vh, 1vh)) !important;
+    /* Snap point at the end of the scrub = the full-open state. Combined with
+       scroll-snap-stop:always, a fast scroll settles here instead of flying past. */
+    scroll-snap-align: end;
+    scroll-snap-stop: always;
+  }
+  /* Reduced-motion / static fallback isn't a scrub — don't snap it. */
+  .vsl-ig-portal--static .vsl-ig-portal__track {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
+  }
+  /* Once the arch has settled fully open, JS releases the snap so scrolling
+     down to continue isn't pulled back up by proximity magnetism. It re-arms
+     when the user scrolls back up into the animation. */
+  .vsl-ig-portal.is-portal-open .vsl-ig-portal__track {
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
   }
   .vsl-ig-portal__sticky {
     position: sticky;
-    /* Sit flush under the site navbar — never stick at 0 and slide underneath. */
     top: var(--ig-nav-offset, 0px);
-    height: calc(100vh - var(--ig-nav-offset, 0px));
-    height: calc(100dvh - var(--ig-nav-offset, 0px));
+    height: calc(100 * var(--ig-vh, 1vh) - var(--ig-nav-offset, 0px));
     overflow: hidden;
     background:
       radial-gradient(ellipse 90% 70% at 50% 0%, rgba(58, 22, 32, 0.6) 0%, transparent 55%),
@@ -586,11 +661,13 @@ Velocity Sim Racing Lounge — Ignition
     color: #f3d59a;
     opacity: calc(1 - min(1, max(0, (var(--ig-portal-p) - 0.12) / 0.28)));
     transform: translateY(calc(var(--ig-portal-p) * -8px));
+    /* Soft drop shadow only — no hard outline/stroke ring */
+    -webkit-text-stroke: 0;
+    paint-order: normal;
     text-shadow:
-      0 1px 2px rgba(18, 10, 14, 0.95),
-      0 2px 10px rgba(18, 10, 14, 0.9),
-      0 0 24px rgba(18, 10, 14, 0.85),
-      0 0 2px rgba(18, 10, 14, 1);
+      0 2px 6px rgba(18, 10, 14, 0.75),
+      0 6px 18px rgba(18, 10, 14, 0.55),
+      0 12px 32px rgba(18, 10, 14, 0.4);
   }
   .vsl-ig-portal__caption .vsl-ig-eyebrow--lined { gap: 1.1rem; }
   .vsl-ig-portal__caption .vsl-ig-eyebrow--lined::before,
@@ -647,12 +724,12 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-portal__hud-spacer {
     width: 100%;
-    /* Sized to the CTA rail (+ air) so buttons never sit on the status chip. */
-    height: var(--ig-cta-h, clamp(56px, 7vh, 64px));
-    margin-bottom: 14px;
+    /* Sized to the full CTA stack (buttons + status) so nothing collides. */
+    height: var(--ig-cta-h, clamp(72px, 9vh, 96px));
+    margin-bottom: 0;
     pointer-events: none;
   }
-  /* Single CTA row — same buttons from rest through reveal */
+  /* Single CTA stack — buttons + status travel/scale together (no mid-scrub overlap) */
   .vsl-ig-portal__cta-rail {
     position: absolute;
     left: 0;
@@ -660,7 +737,10 @@ Velocity Sim Racing Lounge — Ignition
     top: var(--ig-cta-y0, auto);
     z-index: 7;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
     padding: 0 var(--page-margin);
     /* Match compose hero-scale so full-size pills don't crush the scaled HUD */
     transform:
@@ -680,6 +760,16 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-portal__cta-rail .vsl-ig-portal__actions {
     pointer-events: auto;
+  }
+  .vsl-ig-portal__cta-rail .vsl-ig-status {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    flex: 0 0 auto;
+    /* Soft exit as the arch opens — still locked to the button stack */
+    opacity: calc(1 - min(1, var(--ig-portal-p) / 0.55));
+    transform: translate3d(0, calc(var(--ig-portal-p) * -4px), 0);
+    pointer-events: none;
   }
   /* Destination gradient only */
   .vsl-ig-portal__arrive {
@@ -799,13 +889,15 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ignition .vsl-ig-portal__actions {
     display: flex !important;
     flex-direction: row !important;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 16px !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 18px !important;
     margin: 0 !important;
-    width: auto;
+    width: auto !important;
     max-width: 100%;
+    /* Keep pills in one row while the rail scales — no theme float/wrap collisions */
+    isolation: isolate;
   }
   .vsl-ignition .vsl-ig-portal__actions .vsl-ig-btn {
     position: relative !important;
@@ -818,7 +910,12 @@ Velocity Sim Racing Lounge — Ignition
     width: auto !important;
     max-width: none !important;
     margin: 0 !important;
-    flex: 0 0 auto;
+    flex: 0 0 auto !important;
+    transform: none !important;
+  }
+  .vsl-ignition .vsl-ig-portal__actions .vsl-ig-btn:hover,
+  .vsl-ignition .vsl-ig-portal__actions .vsl-ig-btn:active {
+    transform: none !important;
   }
   /* Static fallback when scroll effect is disabled */
   .vsl-ig-portal--static .vsl-ig-portal__track {
@@ -1615,111 +1712,131 @@ Velocity Sim Racing Lounge — Ignition
     opacity: 1;
   }
 
-  /* ═══ Visit — passage timeline ═══ */
-  /* ═══ Plan your visit — compact fact grid ═══ */
+  /* ═══ Plan your visit — clean fact rows ═══ */
   .vsl-ig-visit {
-    padding: clamp(48px, 7vw, 80px) var(--page-margin);
-    background:
-      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(58, 22, 32, 0.5) 0%, transparent 50%),
-      linear-gradient(180deg, var(--oxblood-mid) 0%, var(--wall) 45%, var(--oxblood-mid) 100%);
+    padding: clamp(64px, 10vw, 120px) var(--page-margin);
+    background: var(--oxblood-mid);
   }
   .vsl-ig-visit__inner {
-    max-width: 52rem;
+    max-width: 40rem;
     margin: 0 auto;
   }
   .vsl-ig-visit__head {
     text-align: center;
-    margin-bottom: clamp(28px, 4vw, 40px);
+    margin-bottom: clamp(36px, 5vw, 52px);
   }
   .vsl-ig-visit__head .vsl-ig-section-sub {
     margin: 0.55rem auto 0;
-    max-width: 34rem;
+    max-width: 28rem;
   }
-  .vsl-ig-visit__passage {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0;
-    border-top: 1px solid rgba(238, 38, 95, 0.22);
-    border-bottom: 1px solid rgba(238, 38, 95, 0.22);
-  }
-  .vsl-ig-visit__passage::before { display: none; }
-  .vsl-ig-visit__step {
-    display: block;
+  .vsl-ig-visit__facts {
     margin: 0;
-    padding: clamp(20px, 3vw, 28px) clamp(18px, 2.5vw, 28px);
-    border-right: 1px solid rgba(95, 87, 130, 0.22);
-    border-bottom: 1px solid rgba(95, 87, 130, 0.22);
-  }
-  .vsl-ig-visit__step:nth-child(2n) { border-right: none; }
-  .vsl-ig-visit__step:nth-last-child(-n+2) { border-bottom: none; }
-  .vsl-ig-visit__step-body {
     padding: 0;
-    background: none;
-    border: none;
-    border-radius: 0;
+    border-top: 1px solid rgba(232, 180, 90, 0.18);
   }
-  .vsl-ig-visit__step-node { display: none; }
-  .vsl-ig-visit__step--left .vsl-ig-visit__step-body,
-  .vsl-ig-visit__step--right .vsl-ig-visit__step-body {
-    text-align: left;
+  .vsl-ig-visit__fact {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 12px 28px;
+    margin: 0;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid rgba(234, 234, 234, 0.08);
   }
-  .vsl-ig-visit__step h3 {
-    margin: 0 0 0.55rem;
+  .vsl-ig-visit__fact dt {
+    margin: 0;
+    padding-top: 0.15rem;
     font-family: var(--font-body);
     font-size: 0.68rem;
     font-weight: 600;
-    font-style: normal;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--amber);
   }
-  .vsl-ig-visit__step p,
-  .vsl-ig-visit__step ul {
+  .vsl-ig-visit__fact dd {
     margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    min-width: 0;
+  }
+  .vsl-ig-visit__fact p,
+  .vsl-ig-visit__fact ul {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
     color: var(--silver);
   }
-  .vsl-ig-visit__step ul {
+  .vsl-ig-visit__fact ul {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: 0.2rem;
+    gap: 0.4rem;
   }
-  .vsl-ig-visit__step li {
+  .vsl-ig-visit__fact li {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     gap: 16px;
-    padding: 0.15rem 0;
-    border-bottom: none;
     color: var(--white);
   }
-  .vsl-ig-visit__step li span:first-child {
+  .vsl-ig-visit__fact li span:first-child {
     color: var(--mist);
-    min-width: 5.5rem;
+    min-width: 5rem;
   }
-  .vsl-ig-visit__step--left .vsl-ig-visit__step li { flex-direction: row; }
-  .vsl-ig-visit__step a {
+  .vsl-ig-visit__fact a {
     color: var(--white);
     text-decoration: underline;
     text-underline-offset: 3px;
     transition: color 0.2s ease;
   }
-  .vsl-ig-visit__step a:hover { color: var(--amber); }
-  .vsl-ig-visit__step-note {
+  .vsl-ig-visit__fact a:hover { color: var(--amber); }
+  .vsl-ig-visit__fact-note {
     margin-top: 0.45rem !important;
-    font-size: 0.82rem !important;
+    font-size: 0.9rem !important;
     line-height: 1.45 !important;
-    color: var(--slate) !important;
+    color: var(--mist) !important;
   }
-  .vsl-ig-visit__step .vsl-ig-status { margin: 0.55rem 0 0; }
-  .vsl-ig-visit__grid { display: none; }
+  .vsl-ig-visit__hours-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1rem;
+    margin-top: 0.65rem;
+  }
+  .vsl-ig-visit__hours-meta .vsl-ig-visit__fact-note {
+    margin-top: 0 !important;
+  }
+  .vsl-ig-visit__hours-meta .vsl-ig-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--amber);
+  }
+  .vsl-ig-visit__hours-meta .vsl-ig-status__dot {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+  }
+  .vsl-ig-visit__hours-meta .vsl-ig-status.is-open {
+    border: none;
+    color: #65D38A;
+  }
+  .vsl-ig-visit__hours-meta .vsl-ig-status.is-open .vsl-ig-status__dot {
+    background: #65D38A;
+  }
   .vsl-ig-visit__actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
-    margin-top: clamp(24px, 4vw, 36px);
+    margin-top: clamp(32px, 5vw, 44px);
   }
 
   /* ═══ CTA — closing arch ═══ */
@@ -1864,29 +1981,34 @@ Velocity Sim Racing Lounge — Ignition
       max-height: 420px;
       aspect-ratio: 16 / 10;
     }
-    .vsl-ig-visit__passage {
+    .vsl-ig-visit__fact {
       grid-template-columns: 1fr;
+      gap: 0.45rem;
+      padding: 1.15rem 0;
     }
-    .vsl-ig-visit__step {
-      border-right: none;
-      border-bottom: 1px solid rgba(95, 87, 130, 0.22);
-      padding: 18px 0;
-    }
-    .vsl-ig-visit__step:nth-last-child(-n+2) { border-bottom: 1px solid rgba(95, 87, 130, 0.22); }
-    .vsl-ig-visit__step:last-child { border-bottom: none; }
     .vsl-ig-menu__layout { grid-template-columns: 1fr; }
     .vsl-ig-menu__spine {
       position: relative;
       top: auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px 20px;
+      flex-wrap: nowrap;
+      gap: 8px;
       padding-left: 0;
       margin-bottom: clamp(24px, 4vw, 36px);
+      /* Keep all three categories on one line; scroll only if a very narrow
+         phone can't fit them, rather than wrapping "Small Plates" below. */
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .vsl-ig-menu__spine::-webkit-scrollbar { display: none; }
     .vsl-ig-menu__spine::before { display: none; }
     .vsl-ig-menu__spine a {
-      padding: 8px 16px;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      padding: 7px 12px;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
       border: 1px solid rgba(178, 174, 191, 0.25);
       border-radius: 999px;
     }
@@ -1921,6 +2043,22 @@ Velocity Sim Racing Lounge — Ignition
     }
     .vsl-ig-portal__media img {
       object-position: center 46%;
+    }
+    /* Pin media height to the stable --ig-vh so the URL bar can't resize it
+       mid-scroll. Keeps the desktop counter-scale (arch reveals more of the
+       room — no plain zoom). will-change promotes it to its own GPU layer. */
+    .vsl-ig-portal__media {
+      height: calc(100 * var(--ig-vh, 1vh));
+      will-change: transform;
+    }
+    /* MOBILE SMOOTHNESS: the viewport padding + compose gap/padding-top were
+       animated by --ig-portal-p, which reflowed the whole hero subtree every
+       frame (the stutter). Freeze them — the arch still expands via the window's
+       GPU scale transform, clipped to full-bleed by the sticky's overflow. */
+    .vsl-ig-portal__viewport { padding: 0; }
+    .vsl-ig-portal__compose {
+      gap: var(--ig-hero-gap);
+      padding-top: clamp(18px, 4vh, 44px);
     }
     body:has(.vsl-navbar) .vsl-ig-portal {
       --ig-nav-offset: var(--vsl-navbar-height, 0px);
@@ -1958,10 +2096,10 @@ Velocity Sim Racing Lounge — Ignition
       max-width: min(520px, 90vw);
     }
     .vsl-ig-portal__track {
-      height: 280vh !important;
-      height: 280dvh !important;
-      min-height: 280vh !important;
-      min-height: 280dvh !important;
+      /* Taller on mobile too — a finger fling covers a big fraction of a short
+         screen, so more track distance is needed to stop one-swipe skips. */
+      height: calc(320 * var(--ig-vh, 1vh)) !important;
+      min-height: calc(320 * var(--ig-vh, 1vh)) !important;
     }
     .vsl-ig-portal__enter-hint { margin-top: 0.15rem; margin-bottom: 0.35rem; }
     .vsl-ignition .vsl-ig-portal__actions {
@@ -1975,27 +2113,36 @@ Velocity Sim Racing Lounge — Ignition
       max-width: 320px !important;
       margin: 0 auto !important;
     }
+    /* Mobile: static button dock at the bottom, visible through the scrub
+       (matches the desktop persistent CTAs). A soft dark halo sits behind it so
+       the buttons read as their own layer instead of clashing with the photo. */
     .vsl-ig-portal__cta-rail {
       padding-left: max(16px, var(--page-margin));
       padding-right: max(16px, var(--page-margin));
-      /* Bottom-anchored travel: rest lifts up by --ig-cta-travel, reveal sits
-         in the safe band under the photo (top+translate undershot on mobile). */
       top: auto !important;
-      bottom: calc(
-        max(16px, env(safe-area-inset-bottom, 0px) + 14px)
-        + (1 - var(--ig-portal-p)) * var(--ig-cta-travel, 0px)
-      );
-      transform: scale(
-        calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale)))
-      );
-      transform-origin: bottom center;
-    }
-    .vsl-ig-portal.is-revealed .vsl-ig-portal__cta-rail {
       bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px));
-      transform: none;
+      transform: none !important;
+      will-change: auto;
     }
-    .vsl-ig-portal__hud-spacer { min-height: 120px; margin-bottom: 16px; }
-    .vsl-ig-portal__hud-bottom .vsl-ig-status { margin-top: 0; }
+    .vsl-ig-portal__cta-rail::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -28px;
+      transform: translateX(-50%);
+      width: min(600px, 118%);
+      height: calc(100% + 96px);
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse 72% 68% at 50% 62%,
+        rgba(18, 10, 14, 0.92) 0%,
+        rgba(18, 10, 14, 0.6) 48%,
+        transparent 78%
+      );
+    }
+    .vsl-ig-portal__hud-spacer { min-height: 0; margin-bottom: 0; }
+    .vsl-ig-portal__cta-rail { gap: 10px; }
     /* Dock is hidden on Ignition — don't reserve its old clearance */
     .vsl-ig-portal__arrive {
       padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
@@ -2181,10 +2328,9 @@ Velocity Sim Racing Lounge — Ignition
     text-transform: uppercase;
     color: var(--silver);
   }
-  .vsl-ig-portal__hud-bottom .vsl-ig-status {
-    position: relative;
-    z-index: 1;
-    margin-top: 0;
+  .vsl-ig-portal--static .vsl-ig-portal__cta-rail .vsl-ig-status {
+    opacity: 1;
+    transform: none;
   }
   .vsl-ig-status__dot {
     width: 7px;
@@ -2220,7 +2366,7 @@ Velocity Sim Racing Lounge — Ignition
   }
 </style>
 
-<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://velocitysimlounge.com/contact/","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp","hero":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp","gallery1":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-rigs.webp","gallery2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-bar.webp","gallery3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-room.webp","gallery4":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-drinks-lineup.webp","gallery5":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-racing.webp","gallery6":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-booth.webp","gallery7":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-sim-screen.webp"},"elementorColumnOutdentPx":12}'>
+<div class="vsl-ignition" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","bookEvent":"https://velocitysimracinglounge.tripleseat.com/party_request/50584","contact":"https://share.google/pruFNiVeC3Yguj2Ms","velocity":"https://velocitysimlounge.com/","maps":"https://maps.app.goo.gl/B9jCNecVWwU5HsVo6"},"images":{"ignitionLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-logo-transparent.png","velocityLogo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png","portalReveal":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp","hero":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp","gallery1":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-rigs.webp","gallery2":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-bar.webp","gallery3":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-room.webp","gallery4":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-drinks-lineup.webp","gallery5":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-racing.webp","gallery6":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-booth.webp","gallery7":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-sim-screen.webp","favicon":"https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-favicon.jpg"},"elementorColumnOutdentPx":12}'>
   <main id="primary-content">
     <div data-vsl-houston-only>
 
@@ -2258,7 +2404,6 @@ Velocity Sim Racing Lounge — Ignition
               </svg>
             </p>
             <div class="vsl-ig-portal__hud-spacer" aria-hidden="true"></div>
-            <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
           </div>
           </div>
           </div>
@@ -2267,6 +2412,7 @@ Velocity Sim Racing Lounge — Ignition
               <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-soft-scroll href="#ig-menu">View the Menu</a>
               <a class="vsl-ig-btn vsl-ig-btn--primary" data-vsl-link="bookEvent" href="https://velocitysimracinglounge.tripleseat.com/party_request/50584" target="_blank" rel="noopener noreferrer">Book an Event</a>
             </div>
+            <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
           </div>
           <div class="vsl-ig-portal__arrive" aria-hidden="true"></div>
         </div>
@@ -2535,50 +2681,53 @@ Velocity Sim Racing Lounge — Ignition
       <div class="vsl-ig-visit__inner">
         <header class="vsl-ig-visit__head vsl-ig-reveal">
           <p class="vsl-ig-eyebrow">Plan Your Visit</p>
-          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-visit-heading">Find your <em>way in</em></h2>
+          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-visit-heading">Hours, entry &amp; location</h2>
           <p class="vsl-ig-section-sub">Walk in for the lounge. Inquire for private events.</p>
         </header>
 
-        <div class="vsl-ig-visit__passage vsl-ig-reveal">
-          <article class="vsl-ig-visit__step">
-            <div class="vsl-ig-visit__step-body">
-              <h3>Hours</h3>
+        <dl class="vsl-ig-visit__facts vsl-ig-reveal">
+          <div class="vsl-ig-visit__fact">
+            <dt>Hours</dt>
+            <dd>
               <ul aria-label="Ignition hours">
                 <li><span>Thu</span><span>5PM &ndash; 11PM</span></li>
                 <li><span>Fri &ndash; Sat</span><span>5PM &ndash; 12AM</span></li>
                 <li><span>Sun</span><span>5PM &ndash; 10PM</span></li>
               </ul>
-              <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
-              <p class="vsl-ig-visit__step-note">Closed Mon &ndash; Wed</p>
-            </div>
-          </article>
+              <div class="vsl-ig-visit__hours-meta">
+                <p class="vsl-ig-visit__fact-note">Closed Mon &ndash; Wed</p>
+                <p class="vsl-ig-status" data-vsl-status hidden><span class="vsl-ig-status__dot" aria-hidden="true"></span><span data-vsl-status-text>&nbsp;</span></p>
+              </div>
+            </dd>
+          </div>
 
-          <article class="vsl-ig-visit__step">
-            <div class="vsl-ig-visit__step-body">
-              <h3>Entry &amp; Age</h3>
+          <div class="vsl-ig-visit__fact">
+            <dt>Entry</dt>
+            <dd>
               <p><strong>21+</strong> with valid ID for alcohol service.</p>
-              <p class="vsl-ig-visit__step-note">Enter through the main lobby and ask for Ignition.</p>
-            </div>
-          </article>
+              <p class="vsl-ig-visit__fact-note">Enter through the main lobby and ask for Ignition.</p>
+            </dd>
+          </div>
 
-          <article class="vsl-ig-visit__step">
-            <div class="vsl-ig-visit__step-body">
-              <h3>Location</h3>
+          <div class="vsl-ig-visit__fact">
+            <dt>Location</dt>
+            <dd>
               <p><a data-vsl-link="maps" href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer">2110 Edwards St, Houston, TX 77007</a></p>
-              <p class="vsl-ig-visit__step-note">Free on-site parking</p>
-            </div>
-          </article>
+              <p class="vsl-ig-visit__fact-note">Free on-site parking</p>
+            </dd>
+          </div>
 
-          <article class="vsl-ig-visit__step">
-            <div class="vsl-ig-visit__step-body">
-              <h3>Booking</h3>
-              <p>Ignition is first come, first served. Please submit an inquiry for private events.</p>
-            </div>
-          </article>
-        </div>
+          <div class="vsl-ig-visit__fact">
+            <dt>Booking</dt>
+            <dd>
+              <p>Ignition is first come, first served.</p>
+              <p class="vsl-ig-visit__fact-note">Submit an inquiry for private events.</p>
+            </dd>
+          </div>
+        </dl>
 
         <div class="vsl-ig-visit__actions vsl-ig-reveal">
-          <a class="vsl-ig-btn vsl-ig-btn--ghost" data-vsl-link="contact" href="https://velocitysimlounge.com/contact/">Contact &amp; Directions</a>
+          <a class="vsl-ig-btn vsl-ig-btn--outline" data-vsl-link="contact" href="https://share.google/pruFNiVeC3Yguj2Ms" target="_blank" rel="noopener noreferrer">Contact &amp; Directions</a>
         </div>
       </div>
     </section>
@@ -2651,10 +2800,10 @@ var cfg = {};
     var assetBase = window.__VSL_SITE_REPLICA__ ? '../Ignition/' : '';
     function resolveSrc(src) {
       if (!src) return src;
-      /* In the staging replica, serve Ignition webp content images from the
-         repo so the preview works before they exist in the WP media library. */
+      /* In the staging replica, serve Ignition media from the repo so the
+         preview works before files exist in the WP media library. */
       if (assetBase) {
-        var m = src.match(/^https:\/\/velocitysimlounge\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/(ignition-[\w-]+\.webp)$/);
+        var m = src.match(/^https:\/\/velocitysimlounge\.com\/wp-content\/uploads\/\d{4}\/\d{2}\/(ignition-[\w.-]+\.(?:webp|png))$/i);
         if (m) return assetBase + 'assets/' + m[1];
       }
       if (/^(https?:)?\/\//.test(src) || src.charAt(0) === '/' || src.indexOf('data:') === 0) return src;
@@ -2676,6 +2825,60 @@ var cfg = {};
         if (mapped !== src) img.setAttribute('src', mapped);
       });
     }
+
+    /* Page favicon — Elementor can't own <head>, and WP/Jetpack leave multiple
+       site-icon <link>s. Strip every competitor, then pin Ignition's icons and
+       re-apply if the theme re-injects the Velocity favicon later. */
+    (function setIgnitionFavicon() {
+      var baseHref = resolveSrc(images.favicon || 'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-favicon.jpg');
+      if (!baseHref) return;
+      var href = baseHref + (baseHref.indexOf('?') >= 0 ? '&' : '?') + 'v=ig2';
+      var MARK = 'data-vsl-ig-favicon';
+      var ICON_SEL = 'link[rel="icon"],link[rel="shortcut icon"],link[rel="apple-touch-icon"],link[rel="apple-touch-icon-precomposed"],link[rel="mask-icon"]';
+
+      function apply() {
+        document.querySelectorAll(ICON_SEL).forEach(function(node) {
+          if (!node.hasAttribute(MARK)) node.parentNode && node.parentNode.removeChild(node);
+        });
+        var specs = [
+          { rel: 'icon', type: 'image/jpeg', sizes: '32x32' },
+          { rel: 'icon', type: 'image/jpeg', sizes: '192x192' },
+          { rel: 'shortcut icon', type: 'image/jpeg' },
+          { rel: 'apple-touch-icon', sizes: '180x180' }
+        ];
+        specs.forEach(function(spec) {
+          var sel = 'link[' + MARK + '][rel="' + spec.rel + '"]' +
+            (spec.sizes ? '[sizes="' + spec.sizes + '"]' : ':not([sizes])');
+          var link = document.head.querySelector(sel);
+          if (!link) {
+            link = document.createElement('link');
+            link.setAttribute(MARK, '');
+            link.setAttribute('rel', spec.rel);
+            if (spec.type) link.setAttribute('type', spec.type);
+            if (spec.sizes) link.setAttribute('sizes', spec.sizes);
+            document.head.appendChild(link);
+          }
+          if (link.getAttribute('href') !== href) link.setAttribute('href', href);
+        });
+      }
+
+      apply();
+      /* Theme/Site Icon often finishes after widget scripts — reassert briefly. */
+      var tries = 0;
+      var timer = window.setInterval(function() {
+        apply();
+        if (++tries >= 8) window.clearInterval(timer);
+      }, 400);
+
+      if (typeof MutationObserver === 'function' && document.head) {
+        var obs = new MutationObserver(function() {
+          var foreign = document.head.querySelector(ICON_SEL + ':not([' + MARK + '])');
+          if (foreign) apply();
+        });
+        obs.observe(document.head, { childList: true, subtree: true });
+        window.setTimeout(function() { obs.disconnect(); }, 8000);
+      }
+    })();
 
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2871,9 +3074,8 @@ var cfg = {};
          were cleared and we're back near rest (scroll-up / orientation). */
       if (ctaRestY0 === null && p <= 0.08) {
         var railH = Math.max(1, Math.ceil(rail.offsetHeight));
-        /* Extra air below the rail so pills never sit on the status chip
-           (WP theme padding can make buttons taller than first measure). */
-        var spacerH = railH + 8;
+        /* Status lives in the rail now — small pad for WP theme button chrome. */
+        var spacerH = railH + 6;
         portal.style.setProperty('--ig-cta-h', spacerH + 'px');
         /* Force layout with the new spacer before reading its position */
         void spacer.offsetHeight;
@@ -2941,9 +3143,34 @@ var cfg = {};
     }
 
     if (portal) {
+      /* Pin a stable viewport unit for the portal track/sticky. Only refresh on
+         width change (orientation) or a large height jump — NOT the small mobile
+         URL-bar show/hide, which otherwise reflowed the track and snapped scroll. */
+      var portalVpW = window.innerWidth;
+      var portalVpH = window.innerHeight;
+      function setPortalVh(force) {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        if (force || w !== portalVpW || Math.abs(h - portalVpH) > 120) {
+          portalVpW = w;
+          portalVpH = h;
+          portal.style.setProperty('--ig-vh', (h / 100) + 'px');
+          return true;
+        }
+        return false;
+      }
+      setPortalVh(true);
+      window.addEventListener('orientationchange', function () {
+        /* Wait a tick for the new dimensions to settle after rotation */
+        setTimeout(function () { setPortalVh(true); schedulePortalFitFull(); }, 250);
+      });
+
       syncPortalNavOffset();
       schedulePortalFitFull();
-      window.addEventListener('resize', schedulePortalFitFull);
+      window.addEventListener('resize', function () {
+        /* Only re-fit on meaningful resizes so URL-bar nudges don't churn layout */
+        if (setPortalVh(false)) schedulePortalFitFull();
+      });
       document.addEventListener('vslNavbarHeightChange', schedulePortalFitFull);
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(schedulePortalFitFull);
@@ -2963,12 +3190,48 @@ var cfg = {};
         portal.style.setProperty('--ig-portal-p', '0');
       } else {
         var track = portal.querySelector('.vsl-ig-portal__track');
-        var portalTargetP = 0;
         var portalDisplayP = 0;
         var portalSmoothFrame = null;
         var portalWasInRest = true;
         var portalScrubbing = false;
         var portalRevealed = false;
+        /* Sticky scrub. Touch: map 1:1 to scroll (no lerp) so it tracks the
+           finger exactly — the lerp lag read as "not smooth" on mobile.
+           Fine pointer (mouse/trackpad): keep a light ease for wheel steps. */
+        var finePointer = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+        var PORTAL_LERP = finePointer ? 0.28 : 1;
+
+        /* Snap release: the end snap must stay armed while approaching (so a fast
+           fling is caught at full open), then release once settled there so the
+           proximity snap doesn't pull the user back up as they scroll on. Re-arm
+           after they've scrolled well back up into the animation. */
+        var portalSnapReleased = false;
+        var portalSnapTimer = null;
+        function managePortalSnap(p) {
+          if (p >= 0.985) {
+            if (!portalSnapReleased && portalSnapTimer === null) {
+              /* Brief hold at full open (the soft stop), then drop the magnet. */
+              portalSnapTimer = window.setTimeout(function () {
+                portalSnapTimer = null;
+                if (portalDisplayP >= 0.97) {
+                  portalSnapReleased = true;
+                  portal.classList.add('is-portal-open');
+                }
+              }, 160);
+            }
+          } else {
+            if (portalSnapTimer !== null) {
+              window.clearTimeout(portalSnapTimer);
+              portalSnapTimer = null;
+            }
+            /* Re-arm only once they're well clear of the end snap, so re-enabling
+               it can't immediately yank them back down. */
+            if (portalSnapReleased && p <= 0.5) {
+              portalSnapReleased = false;
+              portal.classList.remove('is-portal-open');
+            }
+          }
+        }
 
         function applyPortalState(p) {
           portal.style.setProperty('--ig-portal-p', p.toFixed(4));
@@ -2982,11 +3245,14 @@ var cfg = {};
             portalRevealed = revealed;
             portal.classList.toggle('is-revealed', revealed);
           }
+          managePortalSnap(p);
         }
 
         function readPortalRawP() {
           if (!track) return 0;
-          var vh = window.innerHeight || document.documentElement.clientHeight || 1;
+          /* Use the pinned sticky height (matches the track's --ig-vh sizing) so
+             mobile URL-bar changes don't shift the progress mapping. */
+          var vh = portalVpH || window.innerHeight || document.documentElement.clientHeight || 1;
           var range = track.offsetHeight - vh;
           if (!(range > 0)) return 0;
           var top = track.getBoundingClientRect().top;
@@ -2994,25 +3260,20 @@ var cfg = {};
         }
 
         function portalSmoothLoop() {
-          /* Resample every frame so WP/coalesced scroll still tracks cleanly */
           var raw = readPortalRawP();
-          portalTargetP = raw * raw * (3 - 2 * raw);
-
-          var diff = portalTargetP - portalDisplayP;
-          if (Math.abs(diff) < 0.0008) {
-            portalDisplayP = portalTargetP;
+          var target = raw * raw * (3 - 2 * raw);
+          var diff = target - portalDisplayP;
+          if (Math.abs(diff) < 0.001) {
+            portalDisplayP = target;
             portalSmoothFrame = null;
           } else {
-            /* Light ease only — no hard speed cap (that felt laggy/weird) */
-            portalDisplayP += diff * 0.22;
+            portalDisplayP += diff * PORTAL_LERP;
             portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
           }
           applyPortalState(portalDisplayP);
 
-          var inRest = portalTargetP <= 0.02 && portalDisplayP <= 0.02;
+          var inRest = target <= 0.02 && portalDisplayP <= 0.02;
           if (inRest && !portalWasInRest) {
-            /* Scroll-back to the top: remasure CTA rest slot so mobile
-               chrome changes don't leave the buttons off-screen/hidden. */
             ctaRestY0 = null;
             ctaTravelCached = null;
             ctaHeightCached = null;
@@ -3030,7 +3291,14 @@ var cfg = {};
         function onPortalScroll() { kickPortalLoop(); }
         window.addEventListener('scroll', onPortalScroll, { passive: true });
         document.addEventListener('scroll', onPortalScroll, { passive: true, capture: true });
+        window.addEventListener('touchmove', onPortalScroll, { passive: true });
         window.addEventListener('resize', kickPortalLoop);
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener('resize', kickPortalLoop);
+          window.visualViewport.addEventListener('scroll', onPortalScroll);
+        }
+        portalDisplayP = readPortalRawP();
+        applyPortalState(portalDisplayP);
         kickPortalLoop();
       }
     }
@@ -3168,6 +3436,11 @@ var cfg = {};
         [1020, 1440], /* Fri 5PM–12AM */
         [1020, 1440]  /* Sat 5PM–12AM */
       ];
+      /* Show until opening day, then fall back to the live schedule. */
+      var IG_OPENING_LABEL = 'Opens Friday, July 17';
+      var IG_OPENING_Y = 2026;
+      var IG_OPENING_M = 6;  /* July (0-indexed) */
+      var IG_OPENING_D = 17;
       var fmtClock = function(mins) {
         var h = Math.floor(mins / 60) % 24;
         var m = mins % 60;
@@ -3194,16 +3467,23 @@ var cfg = {};
         var mins = now.getHours() * 60 + now.getMinutes();
         var isOpen = !!(span && mins >= span[0] && mins < span[1]);
         var text;
+        var todayKey = now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
+        var openingKey = IG_OPENING_Y * 10000 + IG_OPENING_M * 100 + IG_OPENING_D;
         if (isOpen) text = 'Open now \u00b7 till ' + fmtClock(span[1]);
+        else if (todayKey < openingKey) text = IG_OPENING_LABEL;
         else if (span && mins < span[0]) text = 'Opens today at ' + fmtClock(span[0]);
         else text = nextOpenText(day);
+        var revealedChip = false;
         statusChips.forEach(function(chip) {
           chip.classList.toggle('is-open', isOpen);
           var t = chip.querySelector('[data-vsl-status-text]');
           if (t) t.textContent = text;
+          if (chip.hidden) revealedChip = true;
           chip.hidden = false;
         });
-        if (typeof schedulePortalFit === 'function') schedulePortalFit();
+        /* First paint of the status chip changes CTA rail height — remasure. */
+        if (revealedChip && typeof schedulePortalFitFull === 'function') schedulePortalFitFull();
+        else if (typeof schedulePortalFit === 'function') schedulePortalFit();
       };
       updateStatus();
       setInterval(updateStatus, 60000);
