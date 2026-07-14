@@ -49,6 +49,10 @@ Velocity Sim Racing Lounge — Ignition
   body:has(.vsl-ignition) #replica-navbar-root,
   html:has(.vsl-ignition) .vsl-navbar,
   html:has(.vsl-ignition) #replica-navbar-root,
+  body:has(.vsl-ignition) .vsl-navbar__mcta,
+  body:has(.vsl-ignition) > .vsl-navbar__mcta,
+  html:has(.vsl-ignition) .vsl-navbar__mcta,
+  html:has(.vsl-ignition) body > .vsl-navbar__mcta,
   body:has(.vsl-ignition) .vsl-site-footer,
   body:has(.vsl-ignition) #replica-footer-root,
   html:has(.vsl-ignition) .vsl-site-footer,
@@ -59,8 +63,15 @@ Velocity Sim Racing Lounge — Ignition
   html:has(.vsl-ignition) footer.elementor-location-footer {
     display: none !important;
   }
-  body:has(.vsl-ignition) {
+  body:has(.vsl-ignition),
+  html:has(.vsl-ignition) {
     --vsl-navbar-height: 0px;
+    --vsl-mobile-dock-height: 0px;
+    --vsl-mobile-dock-h: 0px;
+  }
+  body:has(.vsl-ignition) {
+    padding-bottom: 0 !important;
+    scroll-padding-bottom: 0 !important;
   }
 
   /* Guard against horizontal scroll from full-bleed / outdented sections. */
@@ -346,13 +357,9 @@ Velocity Sim Racing Lounge — Ignition
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
-    opacity: calc(1 - var(--ig-portal-p) * 0.9);
-  }
-  .vsl-ig-portal.is-scrubbing .vsl-ig-portal__ambient,
-  .vsl-ig-portal.is-revealed .vsl-ig-portal__ambient {
-    visibility: hidden;
-    opacity: 0;
-    animation: none;
+    /* Ease out over the first half of the scrub — no hard cut on is-scrubbing */
+    opacity: calc(1 - min(1, var(--ig-portal-p) / 0.48));
+    will-change: opacity;
   }
   .vsl-ig-portal__orb {
     position: absolute;
@@ -361,6 +368,10 @@ Velocity Sim Racing Lounge — Ignition
     opacity: 0.55;
     transform: translateZ(0);
     animation: vslIgOrbDrift 18s ease-in-out infinite alternate;
+  }
+  .vsl-ig-portal.is-scrubbing .vsl-ig-portal__orb,
+  .vsl-ig-portal.is-revealed .vsl-ig-portal__orb {
+    animation-play-state: paused;
   }
   .vsl-ig-portal__orb:nth-child(1) {
     width: 420px; height: 420px; top: -4%; left: 2%;
@@ -398,7 +409,7 @@ Velocity Sim Racing Lounge — Ignition
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Sit the arch high under the nav — vertical centering left too much empty sky. */
+    /* Sit slightly below the top — full centering left too much empty sky. */
     justify-content: flex-start;
     gap: calc(var(--ig-hero-gap) * (1 - var(--ig-portal-p)));
     width: 100%;
@@ -407,7 +418,7 @@ Velocity Sim Racing Lounge — Ignition
     min-height: 0;
     max-height: 100%;
     height: 100%;
-    padding-top: calc(clamp(2px, 0.8vh, 10px) * (1 - var(--ig-portal-p)));
+    padding-top: calc(clamp(28px, 5.5vh, 64px) * (1 - var(--ig-portal-p)));
     transform: scale3d(
       calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale))),
       calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale))),
@@ -595,8 +606,12 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-portal__caption .vsl-ig-portal__title {
     margin: 0;
-    /* Ease down toward the CTAs + shrink as the portal opens */
-    transform: translate3d(0, calc(var(--ig-logo-t) * 30vh), 0)
+    /* Rest sits a touch lower in the arch; then ease down toward the CTAs */
+    transform: translate3d(
+        0,
+        calc((1 - var(--ig-logo-t)) * 3.5vh + var(--ig-logo-t) * 30vh),
+        0
+      )
       scale(calc(1 - var(--ig-logo-t) * 0.36));
     transform-origin: center center;
     will-change: transform;
@@ -1927,7 +1942,11 @@ Velocity Sim Racing Lounge — Ignition
       max-width: min(200px, 72vw);
     }
     .vsl-ig-portal__caption .vsl-ig-portal__title {
-      transform: translate3d(0, calc(var(--ig-logo-t) * 24vh), 0)
+      transform: translate3d(
+          0,
+          calc((1 - var(--ig-logo-t)) * 2.5vh + var(--ig-logo-t) * 24vh),
+          0
+        )
         scale(calc(1 - var(--ig-logo-t) * 0.32));
     }
     .vsl-ig-portal__caption::after {
@@ -1956,10 +1975,41 @@ Velocity Sim Racing Lounge — Ignition
       max-width: 320px !important;
       margin: 0 auto !important;
     }
-    .vsl-ig-portal__cta-rail { padding-left: 0; padding-right: 0; }
+    .vsl-ig-portal__cta-rail {
+      padding-left: max(16px, var(--page-margin));
+      padding-right: max(16px, var(--page-margin));
+      /* Bottom-anchored travel: rest lifts up by --ig-cta-travel, reveal sits
+         in the safe band under the photo (top+translate undershot on mobile). */
+      top: auto !important;
+      bottom: calc(
+        max(16px, env(safe-area-inset-bottom, 0px) + 14px)
+        + (1 - var(--ig-portal-p)) * var(--ig-cta-travel, 0px)
+      );
+      transform: scale(
+        calc(var(--ig-hero-scale) + var(--ig-portal-p) * (1 - var(--ig-hero-scale)))
+      );
+      transform-origin: bottom center;
+    }
+    .vsl-ig-portal.is-revealed .vsl-ig-portal__cta-rail {
+      bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 14px));
+      transform: none;
+    }
     .vsl-ig-portal__hud-spacer { min-height: 120px; margin-bottom: 16px; }
     .vsl-ig-portal__hud-bottom .vsl-ig-status { margin-top: 0; }
-    .vsl-ig-portal__arrive { padding-bottom: max(88px, calc(env(safe-area-inset-bottom, 0px) + 72px)); }
+    /* Dock is hidden on Ignition — don't reserve its old clearance */
+    .vsl-ig-portal__arrive {
+      padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+      padding-top: clamp(48px, 10vh, 88px);
+    }
+    .vsl-ig-portal__arrive::before {
+      background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(18, 10, 14, 0.55) 28%,
+        rgba(18, 10, 14, 0.88) 62%,
+        rgba(18, 10, 14, 0.96) 100%
+      );
+    }
     .vsl-ig-visit__actions { flex-direction: column; align-items: stretch; }
     .vsl-ig-visit__actions .vsl-ig-btn { width: 100%; max-width: 320px; margin: 0 auto; }
     .vsl-ig-menu__item-body { grid-template-columns: 1fr auto; }
@@ -2834,10 +2884,14 @@ var cfg = {};
         /* Top-align to the spacer — centering a tall mobile stack spilled
            into the scroll chevron above and the status below. */
         ctaRestY0 = spacerRect.top - stickyTop;
-        var bottomPad = 48;
-        if (arrive) bottomPad = parseFloat(getComputedStyle(arrive).paddingBottom) || bottomPad;
+        var bottomPad = 30;
+        if (arrive) {
+          var padY = parseFloat(getComputedStyle(arrive).paddingBottom);
+          if (isFinite(padY) && padY > 0) bottomPad = Math.max(bottomPad, padY);
+        }
+        /* Stacked mobile pills are tall — aim so the stack clears the photo. */
         var y1 = sticky.clientHeight - bottomPad - railH;
-        ctaTravelCached = y1 - ctaRestY0;
+        ctaTravelCached = Math.max(0, y1 - ctaRestY0);
       }
       if (ctaRestY0 === null || ctaTravelCached === null) {
         /* Keep last published CSS vars + ready state so buttons stay visible */
@@ -2913,16 +2967,8 @@ var cfg = {};
         var portalDisplayP = 0;
         var portalSmoothFrame = null;
         var portalWasInRest = true;
-        var portalLastTs = 0;
         var portalScrubbing = false;
         var portalRevealed = false;
-        /* Cap how fast display progress can chase scroll (p-units / second).
-           WordPress/Elementor often delivers large wheel deltas; without a
-           hard ceiling the arch snaps open/closed in one flick. */
-        var PORTAL_MAX_SPEED_DOWN = 0.72;
-        var PORTAL_MAX_SPEED_UP = 0.48;
-        var PORTAL_EASE_DOWN = 6.2;
-        var PORTAL_EASE_UP = 4.4;
 
         function applyPortalState(p) {
           portal.style.setProperty('--ig-portal-p', p.toFixed(4));
@@ -2947,36 +2993,20 @@ var cfg = {};
           return Math.max(0, Math.min(1, -top / range));
         }
 
-        function samplePortalTarget() {
+        function portalSmoothLoop() {
+          /* Resample every frame so WP/coalesced scroll still tracks cleanly */
           var raw = readPortalRawP();
-          /* Smoothstep so the ends ease; mid-scroll stays readable */
           portalTargetP = raw * raw * (3 - 2 * raw);
-        }
-
-        function portalSmoothLoop(ts) {
-          if (!portalLastTs) portalLastTs = ts;
-          var dt = Math.min(48, Math.max(0, ts - portalLastTs));
-          portalLastTs = ts;
-
-          /* Resample every frame — WP smooth-scroll / Lenis-style transforms
-             often coalesce window "scroll" events so target would otherwise jump. */
-          samplePortalTarget();
 
           var diff = portalTargetP - portalDisplayP;
-          var settled = Math.abs(diff) < 0.0004;
-          if (settled) {
+          if (Math.abs(diff) < 0.0008) {
             portalDisplayP = portalTargetP;
+            portalSmoothFrame = null;
           } else {
-            var goingUp = diff < 0;
-            var ease = goingUp ? PORTAL_EASE_UP : PORTAL_EASE_DOWN;
-            var maxSpeed = goingUp ? PORTAL_MAX_SPEED_UP : PORTAL_MAX_SPEED_DOWN;
-            var k = 1 - Math.exp(-dt * ease / 1000);
-            var step = diff * k;
-            var maxStep = maxSpeed * (dt / 1000);
-            if (Math.abs(step) > maxStep) step = (step < 0 ? -1 : 1) * maxStep;
-            portalDisplayP += step;
+            /* Light ease only — no hard speed cap (that felt laggy/weird) */
+            portalDisplayP += diff * 0.22;
+            portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
           }
-
           applyPortalState(portalDisplayP);
 
           var inRest = portalTargetP <= 0.02 && portalDisplayP <= 0.02;
@@ -2989,18 +3019,10 @@ var cfg = {};
             schedulePortalFit();
           }
           portalWasInRest = inRest;
-
-          if (!settled) {
-            portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
-          } else {
-            portalSmoothFrame = null;
-            portalLastTs = 0;
-          }
         }
 
         function kickPortalLoop() {
           if (!portalSmoothFrame) {
-            portalLastTs = 0;
             portalSmoothFrame = requestAnimationFrame(portalSmoothLoop);
           }
         }
@@ -3008,13 +3030,7 @@ var cfg = {};
         function onPortalScroll() { kickPortalLoop(); }
         window.addEventListener('scroll', onPortalScroll, { passive: true });
         document.addEventListener('scroll', onPortalScroll, { passive: true, capture: true });
-        window.addEventListener('wheel', onPortalScroll, { passive: true });
-        window.addEventListener('touchmove', onPortalScroll, { passive: true });
         window.addEventListener('resize', kickPortalLoop);
-        if (window.visualViewport) {
-          window.visualViewport.addEventListener('resize', kickPortalLoop);
-          window.visualViewport.addEventListener('scroll', onPortalScroll);
-        }
         kickPortalLoop();
       }
     }
