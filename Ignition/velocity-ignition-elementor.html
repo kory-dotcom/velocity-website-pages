@@ -44,9 +44,15 @@ Velocity Sim Racing Lounge — Ignition
     text-decoration-line: none !important;
   }
 
-  /* This page opts out of the global sticky "Book Now" bar from the navbar. */
-  body:has(.vsl-ignition) .vsl-navbar__sticky {
+  /* Ignition is a standalone experience — hide the global Velocity navbar. */
+  body:has(.vsl-ignition) .vsl-navbar,
+  body:has(.vsl-ignition) #replica-navbar-root,
+  html:has(.vsl-ignition) .vsl-navbar,
+  html:has(.vsl-ignition) #replica-navbar-root {
     display: none !important;
+  }
+  body:has(.vsl-ignition) {
+    --vsl-navbar-height: 0px;
   }
 
   /* Guard against horizontal scroll from full-bleed / outdented sections. */
@@ -310,8 +316,9 @@ Velocity Sim Racing Lounge — Ignition
     background: var(--oxblood);
   }
   body:has(.vsl-navbar) .vsl-ig-portal {
-    /* Prefer the live published height; keep a sensible pre-JS fallback. */
-    --ig-nav-offset: var(--vsl-navbar-height, 86px);
+    /* Prefer the live published height; keep a sensible pre-JS fallback.
+       Ignition hides the navbar, so this stays 0 via --vsl-navbar-height. */
+    --ig-nav-offset: var(--vsl-navbar-height, 0px);
   }
   .vsl-ig-portal__track {
     height: 300vh;
@@ -1047,10 +1054,10 @@ Velocity Sim Racing Lounge — Ignition
     color: var(--amber);
   }
 
-  /* ═══ Gallery — horizontal film corridor ═══ */
+  /* ═══ The Space — static mosaic, sims first ═══ */
   .vsl-ig-gallery {
     position: relative;
-    padding: clamp(48px, 8vw, 96px) 0 clamp(56px, 8vw, 100px);
+    padding: clamp(48px, 7vw, 88px) var(--page-margin);
     background:
       linear-gradient(180deg, var(--oxblood-mid) 0%, rgba(30, 15, 21, 0.98) 50%, var(--oxblood-mid) 100%);
     overflow: hidden;
@@ -1062,107 +1069,86 @@ Velocity Sim Racing Lounge — Ignition
     pointer-events: none;
     background: radial-gradient(ellipse 70% 45% at 50% 100%, rgba(238, 38, 95, 0.1) 0%, transparent 55%);
   }
-  .vsl-ig-gallery__head {
-    max-width: 72rem;
-    margin: 0 auto clamp(20px, 3vw, 36px);
-    padding: 0 var(--page-margin);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px 28px;
-  }
-  .vsl-ig-gallery__hint {
-    margin: 0;
-    font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--slate);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .vsl-ig-gallery__hint span {
-    display: inline-block;
-    animation: vsl-ig-nudge 2.4s ease-in-out infinite;
-  }
-  @keyframes vsl-ig-nudge {
-    0%, 100% { transform: translateX(0); opacity: 0.45; }
-    50% { transform: translateX(7px); opacity: 1; }
-  }
-  .vsl-ig-gallery__scroll {
-    display: flex;
-    gap: clamp(20px, 3vw, 40px);
-    padding: clamp(12px, 2vw, 24px) var(--page-margin) clamp(28px, 4vw, 44px);
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--page-margin);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .vsl-ig-gallery__scroll::-webkit-scrollbar { display: none; }
-  .vsl-ig-gallery__slide {
-    flex: 0 0 clamp(260px, 68vw, 580px);
-    scroll-snap-align: center;
-    position: relative;
-    padding-top: clamp(56px, 9vw, 112px);
-  }
-  .vsl-ig-gallery__index {
-    position: absolute;
-    top: 0;
-    left: 0.04em;
-    z-index: 0;
-    font-family: var(--font-display);
-    font-size: clamp(3.75rem, 1.75rem + 7vw, 6.5rem);
-    font-weight: 500;
-    font-style: italic;
-    line-height: 0.85;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(238, 38, 95, 0.18);
-    pointer-events: none;
-    user-select: none;
-  }
-  .vsl-ig-gallery__frame {
+  .vsl-ig-gallery__inner {
     position: relative;
     z-index: 1;
-    aspect-ratio: 3 / 4;
-    max-height: min(480px, 58vh);
+    max-width: 72rem;
+    margin: 0 auto;
   }
-  .vsl-ig-gallery__frame img {
-    transition: transform 0.85s ease, filter 0.85s ease;
-    filter: saturate(0.88) brightness(0.92);
+  .vsl-ig-gallery__head {
+    max-width: 36rem;
+    margin: 0 0 clamp(24px, 3.5vw, 36px);
   }
-  .vsl-ig-gallery__slide.is-centered .vsl-ig-gallery__frame img {
+  .vsl-ig-gallery__head .vsl-ig-section-sub {
+    margin: 0.55rem 0 0;
+    max-width: 32rem;
+  }
+  .vsl-ig-gallery__mosaic {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr 1fr;
+    grid-template-rows: minmax(160px, 22vh) minmax(160px, 22vh) minmax(140px, 18vh);
+    gap: clamp(8px, 1.2vw, 14px);
+    min-height: 0;
+  }
+  .vsl-ig-gallery__cell {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 2px;
+    min-height: 0;
+    background: rgba(18, 10, 14, 0.55);
+  }
+  .vsl-ig-gallery__cell--feature {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+  .vsl-ig-gallery__cell--wide {
+    grid-column: 2 / span 2;
+    grid-row: 3;
+  }
+  .vsl-ig-gallery__cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
     transform: scale(1.02);
+    transition: transform 0.7s ease, filter 0.7s ease;
+    filter: saturate(0.94) brightness(0.96);
+  }
+  .vsl-ig-gallery__cell:hover img {
+    transform: scale(1.05);
     filter: saturate(1) brightness(1);
   }
-  .vsl-ig-gallery__caption {
-    position: relative;
-    z-index: 2;
-    margin-top: clamp(16px, 2.5vw, 24px);
-    padding-left: 4px;
-  }
-  .vsl-ig-gallery__caption p {
-    margin: 0;
+  .vsl-ig-gallery__cell figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: clamp(14px, 2vw, 22px) clamp(12px, 1.6vw, 18px) clamp(12px, 1.6vw, 16px);
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 10, 14, 0.82) 70%);
+    color: var(--white);
     font-family: var(--font-display);
-    font-size: clamp(1.2rem, 0.85rem + 1vw, 1.65rem);
+    font-size: clamp(1.05rem, 0.85rem + 0.7vw, 1.35rem);
     font-style: italic;
     font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--white);
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    pointer-events: none;
   }
-  .vsl-ig-gallery__caption span {
+  .vsl-ig-gallery__cell figcaption span {
     display: block;
-    margin-top: 0.35rem;
+    margin-top: 0.3rem;
     font-family: var(--font-body);
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-style: normal;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--amber-dim);
+    color: var(--amber);
+  }
+  .vsl-ig-gallery__cell:not(.vsl-ig-gallery__cell--feature) figcaption {
+    font-size: clamp(0.95rem, 0.8rem + 0.4vw, 1.15rem);
+    padding: 12px 12px 10px;
   }
 
   /* ═══ Menu — spine + scroll panels ═══ */
@@ -1182,10 +1168,12 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-menu__head .vsl-ig-section-sub {
     margin: 0.75rem auto 0;
+    color: var(--silver);
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.2rem);
   }
   .vsl-ig-menu__layout {
     display: grid;
-    grid-template-columns: minmax(148px, 200px) 1fr;
+    grid-template-columns: minmax(160px, 220px) 1fr;
     gap: clamp(28px, 5vw, 56px);
     align-items: start;
   }
@@ -1206,13 +1194,13 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-menu__spine a {
     display: block;
     position: relative;
-    padding: 0.7rem 0 0.7rem 26px;
-    font-size: 0.66rem;
+    padding: 0.75rem 0 0.75rem 28px;
+    font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--slate);
+    color: var(--mist);
     transition: color 0.3s ease;
   }
   .vsl-ig-menu__spine a::before {
@@ -1224,13 +1212,13 @@ Velocity Sim Racing Lounge — Ignition
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    border: 1px solid rgba(178, 174, 191, 0.4);
+    border: 1px solid rgba(178, 174, 191, 0.55);
     background: var(--oxblood);
     transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
   }
   .vsl-ig-menu__spine a:hover,
   .vsl-ig-menu__spine a:focus-visible {
-    color: var(--mist);
+    color: var(--white);
     outline: none;
   }
   .vsl-ig-menu__spine a:hover::before,
@@ -1251,13 +1239,13 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-menu__panel {
     background:
-      linear-gradient(165deg, rgba(30, 15, 21, 0.92) 0%, rgba(18, 10, 14, 0.98) 100%);
-    border: 1px solid rgba(232, 180, 90, 0.15);
+      linear-gradient(165deg, rgba(36, 18, 26, 0.96) 0%, rgba(18, 10, 14, 0.99) 100%);
+    border: 1px solid rgba(232, 180, 90, 0.22);
     border-radius: 2px;
     padding: clamp(28px, 4vw, 48px);
     box-shadow:
       0 32px 80px rgba(0, 0, 0, 0.45),
-      inset 0 1px 0 rgba(232, 180, 90, 0.12),
+      inset 0 1px 0 rgba(232, 180, 90, 0.14),
       inset 0 0 120px rgba(238, 38, 95, 0.03);
     position: relative;
   }
@@ -1291,22 +1279,22 @@ Velocity Sim Racing Lounge — Ignition
     border-top: 1px solid rgba(95, 87, 130, 0.35);
   }
   .vsl-ig-menu__block-title {
-    margin: 0 0 1.25rem;
+    margin: 0 0 1.35rem;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 1rem + 1.2vw, 2rem);
+    font-size: clamp(1.75rem, 1.15rem + 1.4vw, 2.35rem);
     font-weight: 500;
     font-style: italic;
     letter-spacing: 0.04em;
-    color: var(--amber);
+    color: #f3d59a;
   }
   .vsl-ig-menu__item {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 0 clamp(14px, 2vw, 20px);
+    gap: 0 clamp(16px, 2.2vw, 24px);
     align-items: center;
-    padding: 1.1rem 0.65rem;
-    margin: 0 -0.65rem;
-    border-bottom: 1px solid rgba(95, 87, 130, 0.18);
+    padding: 1.25rem 0.75rem;
+    margin: 0 -0.75rem;
+    border-bottom: 1px solid rgba(178, 174, 191, 0.22);
     border-radius: var(--soft);
     transition: background 0.25s ease;
   }
@@ -1316,14 +1304,14 @@ Velocity Sim Racing Lounge — Ignition
   }
   /* Per-item photo — small arch echoing the Ignition motif */
   .vsl-ig-menu__item-photo {
-    width: clamp(96px, 12vw, 132px);
+    width: clamp(112px, 14vw, 148px);
     aspect-ratio: 4 / 5;
     flex: 0 0 auto;
     border-radius: 50% 50% 6px 6px / 34% 34% 6px 6px;
     overflow: hidden;
     position: relative;
     isolation: isolate;
-    border: 1px solid rgba(232, 180, 90, 0.28);
+    border: 1px solid rgba(232, 180, 90, 0.35);
     box-shadow:
       0 6px 18px rgba(0, 0, 0, 0.4),
       inset 0 0 24px rgba(193, 20, 50, 0.12);
@@ -1358,38 +1346,39 @@ Velocity Sim Racing Lounge — Ignition
     min-width: 0;
   }
   .vsl-ig-menu__item-leader {
-    border-bottom: 1px dotted rgba(232, 180, 90, 0.28);
+    border-bottom: 1px dotted rgba(232, 180, 90, 0.4);
     margin-bottom: 5px;
     min-width: 24px;
   }
   .vsl-ig-menu__item-name {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.05rem, 0.85rem + 0.55vw, 1.35rem);
+    font-size: clamp(1.25rem, 1rem + 0.75vw, 1.65rem);
     font-weight: 500;
     letter-spacing: 0.02em;
-    color: var(--white);
+    color: #f5f2f0;
     white-space: normal;
     line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
   }
   .vsl-ig-menu__item-desc em {
     font-style: italic;
-    color: var(--amber);
-    opacity: 0.9;
+    color: #f3d59a;
+    opacity: 1;
   }
   .vsl-ig-menu__item-price {
     margin: 0;
-    font-size: 0.95rem;
+    font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.25rem);
     font-weight: 700;
-    color: var(--amber);
+    color: #f3d59a;
     white-space: nowrap;
   }
   .vsl-ig-menu__item-desc {
     grid-column: 1 / -1;
-    margin: 0.35rem 0 0;
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: var(--mist);
+    margin: 0.45rem 0 0;
+    font-size: clamp(1rem, 0.92rem + 0.3vw, 1.12rem);
+    line-height: 1.55;
+    color: var(--silver);
   }
   .vsl-ig-menu__listgrid {
     display: grid;
@@ -1417,9 +1406,9 @@ Velocity Sim Racing Lounge — Ignition
   }
   .vsl-ig-menu__note {
     margin: clamp(24px, 4vw, 40px) 0 0;
-    font-size: 0.82rem;
+    font-size: 0.92rem;
     font-style: italic;
-    color: var(--slate);
+    color: var(--mist);
     text-align: center;
   }
 
@@ -1526,29 +1515,29 @@ Velocity Sim Racing Lounge — Ignition
   .vsl-ig-menu-lightbox__name {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 1rem + 1vw, 1.85rem);
+    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.1rem);
     font-weight: 500;
     letter-spacing: 0.02em;
-    color: var(--white);
+    color: #f5f2f0;
     line-height: 1.2;
   }
   .vsl-ig-menu-lightbox__price {
     margin: 0;
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--amber);
+    color: #f3d59a;
     white-space: nowrap;
   }
   .vsl-ig-menu-lightbox__desc {
     margin: 0;
-    font-size: 0.98rem;
-    line-height: 1.65;
-    color: var(--mist);
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: var(--silver);
   }
   .vsl-ig-menu-lightbox__desc em {
     font-style: italic;
-    color: var(--amber);
-    opacity: 0.9;
+    color: #f3d59a;
+    opacity: 1;
   }
 
   /* ═══ Visit — passage timeline ═══ */
@@ -1816,7 +1805,18 @@ Velocity Sim Racing Lounge — Ignition
       background: rgba(238, 38, 95, 0.08);
     }
     .vsl-ig-menu__listgrid { grid-template-columns: 1fr; }
-    .vsl-ig-gallery__slide { flex-basis: clamp(240px, 82vw, 420px); }
+    .vsl-ig-gallery__mosaic {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: minmax(200px, 28vh) minmax(120px, 16vh) minmax(120px, 16vh) minmax(120px, 16vh);
+    }
+    .vsl-ig-gallery__cell--feature {
+      grid-column: 1 / span 2;
+      grid-row: 1;
+    }
+    .vsl-ig-gallery__cell--wide {
+      grid-column: 1 / span 2;
+      grid-row: 4;
+    }
   }
   @media (max-width: 640px) {
     .vsl-ig-portal {
@@ -1832,7 +1832,7 @@ Velocity Sim Racing Lounge — Ignition
       object-position: center calc(42% + var(--ig-portal-p) * 2%);
     }
     body:has(.vsl-navbar) .vsl-ig-portal {
-      --ig-nav-offset: var(--vsl-navbar-height, 72px);
+      --ig-nav-offset: var(--vsl-navbar-height, 0px);
     }
     .vsl-ig-portal__caption .vsl-ig-eyebrow {
       font-size: clamp(0.72rem, 2.8vw, 0.85rem);
@@ -1880,9 +1880,12 @@ Velocity Sim Racing Lounge — Ignition
     .vsl-ig-story__beat-num { font-size: 2.75rem; margin-bottom: 0.4rem; }
     .vsl-ig-story__quote { padding: 36px 22px; margin-top: 28px; }
 
-    .vsl-ig-gallery { padding: 44px 0 48px; }
-    .vsl-ig-gallery__slide { padding-top: 48px; }
-    .vsl-ig-gallery__frame { max-height: 64vh; }
+    .vsl-ig-gallery { padding: 44px var(--page-margin) 48px; }
+    .vsl-ig-gallery__mosaic {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: minmax(180px, 26vh) minmax(110px, 14vh) minmax(110px, 14vh) minmax(110px, 14vh);
+      gap: 8px;
+    }
 
     .vsl-ig-menu { padding: 52px var(--page-margin); }
     .vsl-ig-menu__head { margin-bottom: 28px; }
@@ -2102,10 +2105,8 @@ Velocity Sim Racing Lounge — Ignition
     .vsl-ig-story__beat-visual img { transform: none !important; }
     .vsl-ig-reveal { opacity: 1; transform: none; transition: none; }
     .vsl-ig-reveal-title { letter-spacing: 0.06em; transition: none; }
-    .vsl-ig-gallery__frame img { transition: none; }
-    .vsl-ig-gallery__hint span { animation: none; }
-    .vsl-ig-gallery__slide.is-centered .vsl-ig-gallery__frame img,
-    .vsl-ig-gallery__frame img { transform: none; filter: none; }
+    .vsl-ig-gallery__cell img { transition: none; }
+    .vsl-ig-gallery__cell:hover img { transform: scale(1.02); filter: saturate(0.94) brightness(0.96); }
     .vsl-ig-btn { transition: color 0.22s ease, background-color 0.22s ease; }
   }
 </style>
@@ -2163,86 +2164,41 @@ Velocity Sim Racing Lounge — Ignition
       </div>
     </section>
 
-    <!-- ═══════ GALLERY — horizontal film strip ═══════ -->
-    <section class="vsl-ig-gallery" id="ig-gallery" aria-labelledby="ig-gallery-heading" data-vsl-gallery>
-      <div class="vsl-ig-gallery__head">
-        <div>
-          <p class="vsl-ig-eyebrow vsl-ig-reveal">The Space</p>
-          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-gallery-heading">Inside <em>Ignition</em></h2>
-        </div>
-        <p class="vsl-ig-gallery__hint vsl-ig-reveal">Drag the corridor <span aria-hidden="true">&rarr;</span></p>
-      </div>
-      <div class="vsl-ig-gallery__scroll" tabindex="0" role="region" aria-label="Ignition photo gallery">
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">01</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+    <!-- ═══════ THE SPACE — static mosaic ═══════ -->
+    <section class="vsl-ig-gallery" id="ig-gallery" aria-labelledby="ig-gallery-heading">
+      <div class="vsl-ig-gallery__inner">
+        <header class="vsl-ig-gallery__head vsl-ig-reveal">
+          <p class="vsl-ig-eyebrow">The Space</p>
+          <h2 class="vsl-ig-section-title vsl-ig-reveal-title" id="ig-gallery-heading">Eight sims. <em>One room.</em></h2>
+          <p class="vsl-ig-section-sub">Pro racing rigs under neon arches — with the bar and lounge in the same glow.</p>
+        </header>
+
+        <div class="vsl-ig-gallery__mosaic vsl-ig-reveal" role="list" aria-label="Ignition space photos">
+          <figure class="vsl-ig-gallery__cell vsl-ig-gallery__cell--feature" role="listitem">
             <img data-vsl-img="gallery1" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-rigs.webp" alt="Ignition racing simulator with triple screens under the glowing arch" width="1600" height="1064" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>Neon arches &amp; eight sim rigs</p>
-            <span>Cocktails meet the grid</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">02</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery2" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-bar.webp" alt="Ignition cocktail bar with arched bottle displays" width="1600" height="1064" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>The bar &amp; backlit details</p>
-            <span>Pours between heats</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">03</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery3" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-room.webp" alt="Ignition lounge seating and simulator row" width="1600" height="1064" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>Atmosphere after dark</p>
-            <span>When the room comes alive</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">04</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery4" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-drinks-lineup.webp" alt="Lineup of Ignition craft cocktails on the bar" width="1600" height="1067" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>The Ignition pour</p>
-            <span>Cocktails built for the night</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">05</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <figcaption>The simulators<span>Eight pro rigs on the grid</span></figcaption>
+          </figure>
+          <figure class="vsl-ig-gallery__cell" role="listitem">
             <img data-vsl-img="gallery5" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-racing.webp" alt="Guest racing on an Ignition simulator" width="1600" height="1064" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>On the grid</p>
-            <span>Pro rigs, ready to launch</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">06</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
-            <img data-vsl-img="gallery6" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-booth.webp" alt="Curved velvet booth beneath the Ignition screen" width="1600" height="1064" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>Settle into the booth</p>
-            <span>Atmosphere after dark</span>
-          </figcaption>
-        </figure>
-        <figure class="vsl-ig-gallery__slide vsl-ig-reveal" data-gallery-slide>
-          <span class="vsl-ig-gallery__index" aria-hidden="true">07</span>
-          <div class="vsl-ig-gallery__frame vsl-ig-arch">
+            <figcaption>On the grid</figcaption>
+          </figure>
+          <figure class="vsl-ig-gallery__cell" role="listitem">
             <img data-vsl-img="gallery7" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-sim-screen.webp" alt="Ignition branding across a triple-screen simulator" width="1600" height="1067" loading="lazy" decoding="async">
-          </div>
-          <figcaption class="vsl-ig-gallery__caption">
-            <p>Ignition on screen</p>
-            <span>Every detail branded</span>
-          </figcaption>
-        </figure>
+            <figcaption>Triple screens</figcaption>
+          </figure>
+          <figure class="vsl-ig-gallery__cell" role="listitem">
+            <img data-vsl-img="gallery2" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-bar.webp" alt="Ignition cocktail bar with arched bottle displays" width="1600" height="1064" loading="lazy" decoding="async">
+            <figcaption>The bar</figcaption>
+          </figure>
+          <figure class="vsl-ig-gallery__cell" role="listitem">
+            <img data-vsl-img="gallery6" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-booth.webp" alt="Curved velvet booth beneath the Ignition screen" width="1600" height="1064" loading="lazy" decoding="async">
+            <figcaption>The booth</figcaption>
+          </figure>
+          <figure class="vsl-ig-gallery__cell vsl-ig-gallery__cell--wide" role="listitem">
+            <img data-vsl-img="gallery3" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-space-room.webp" alt="Ignition lounge seating and simulator row" width="1600" height="1064" loading="lazy" decoding="async">
+            <figcaption>The full room<span>Sims, seating, and the pour — together</span></figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
@@ -2694,6 +2650,11 @@ var cfg = {};
 
     function syncPortalNavOffset() {
       if (!portal) return;
+      /* Ignition hides the Velocity navbar — keep the portal full-bleed. */
+      if (document.querySelector('.vsl-ignition')) {
+        portal.style.setProperty('--ig-nav-offset', '0px');
+        return;
+      }
       /* Prefer the navbar's published height — live sticky overlap flips from
          ~0 to full nav height the moment the portal sticks, which shoved the
          arch down and felt like a snap. */
@@ -2935,22 +2896,6 @@ var cfg = {};
         window.addEventListener('scroll', onPortalScroll, { passive: true });
         window.addEventListener('resize', updatePortalScroll);
         updatePortalScroll();
-      }
-    }
-
-    /* Gallery — highlight centered slide */
-    var gallery = root.querySelector('[data-vsl-gallery]');
-    if (gallery && 'IntersectionObserver' in window) {
-      var galleryScroll = gallery.querySelector('.vsl-ig-gallery__scroll');
-      var gallerySlides = gallery.querySelectorAll('[data-gallery-slide]');
-      if (galleryScroll && gallerySlides.length) {
-        var galleryIo = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            entry.target.classList.toggle('is-centered', entry.isIntersecting && entry.intersectionRatio >= 0.55);
-          });
-        }, { root: galleryScroll, threshold: [0.45, 0.55, 0.7] });
-        gallerySlides.forEach(function(slide) { galleryIo.observe(slide); });
-        if (gallerySlides[0]) gallerySlides[0].classList.add('is-centered');
       }
     }
 
