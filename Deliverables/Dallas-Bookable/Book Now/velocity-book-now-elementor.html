@@ -3034,32 +3034,6 @@
         media.appendChild(chip);
       }
     });
-    /* Temporary: Dallas RoverD booking not live yet — Coming Soon on book cards,
-       except Full Private Room (partyChampion) which uses Tripleseat inquire. */
-    root.querySelectorAll('a.vsl-bn-card[data-l]').forEach(function(el) {
-      if (el.getAttribute('data-l') === 'partyChampion') return;
-      el.classList.add('vsl-bn-card--soon');
-      el.removeAttribute('href');
-      el.removeAttribute('target');
-      el.removeAttribute('rel');
-      el.setAttribute('aria-disabled', 'true');
-      el.setAttribute('tabindex', '-1');
-      var media = el.querySelector('.vsl-bn-card__media');
-      if (!media) return;
-      if (media.querySelector('.vsl-bn-card__badge--coming-soon')) return;
-      var badge = document.createElement('span');
-      badge.className = 'vsl-bn-card__badge vsl-bn-card__badge--coming-soon';
-      badge.textContent = 'Coming Soon';
-      var stack = media.querySelector('.vsl-bn-card__badge-stack');
-      if (stack) {
-        stack.appendChild(badge);
-      } else {
-        var name = media.querySelector('.vsl-bn-card__overlay-name');
-        if (name) media.insertBefore(badge, name);
-        else media.appendChild(badge);
-      }
-    });
-
     function isMenuRacesMode() {
       try {
         var params = new URLSearchParams(window.location.search);
