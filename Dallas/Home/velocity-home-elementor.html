@@ -1941,6 +1941,15 @@
       border-color 0.35s ease;
     cursor: default;
   }
+  a.vsl-home-step {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  a.vsl-home-step:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
   .vsl-home-step:nth-child(1) { --vsl-step-accent: var(--red); }
   .vsl-home-step:nth-child(2) { --vsl-step-accent: var(--yellow); }
   .vsl-home-step:nth-child(3) { --vsl-step-accent: var(--electric-blue); }
@@ -2617,9 +2626,9 @@
         </div>
         <div class="vsl-home-how__steps">
 
-          <div class="vsl-home-step">
+          <a class="vsl-home-step" href="https://velocitysimlounge.com/dallas/book-now/" data-vsl-cta-key="book" aria-label="Step 1: Book Online — Book a simulator">
             <div class="vsl-home-step__media">
-              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/book_online-e1777680071473.webp?w=800&#038;ssl=1" alt="Book online at Velocity" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-book-online" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw">
+              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/book_online-e1777680071473.webp?w=800&#038;ssl=1" alt="" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-book-online" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw">
               <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
               <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">1</span></div>
               <div class="vsl-home-step__media-icon" aria-hidden="true">
@@ -2627,14 +2636,14 @@
               </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title" aria-label="Step 1: Book Online"><span class="vsl-home-step__title-label">Book Online</span></h3>
+              <h3 class="vsl-home-step__title"><span class="vsl-home-step__title-label">Book Online</span></h3>
               <p class="vsl-home-step__text">Reserve a simulator for you and your crew. Walk-ins welcome, but online booking is the fastest way to lock in your seat.</p>
             </div>
-          </div>
+          </a>
 
-          <div class="vsl-home-step">
+          <a class="vsl-home-step" href="https://velocitysimlounge.com/dallas/food-and-drink/" data-vsl-cta-key="menu" aria-label="Step 2: Eat &amp; Drink — View our menu">
             <div class="vsl-home-step__media">
-              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink.webp?resize=800%2C500&#038;ssl=1" alt="Eat and drink at Velocity" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-eat-drink" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1536x960.webp 1536w">
+              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink.webp?resize=800%2C500&#038;ssl=1" alt="" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-eat-drink" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1536x960.webp 1536w">
               <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
               <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">2</span></div>
               <div class="vsl-home-step__media-icon" aria-hidden="true">
@@ -2642,14 +2651,14 @@
               </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title" aria-label="Step 2: Eat &amp; Drink"><span class="vsl-home-step__title-label">Eat &amp; Drink</span></h3>
+              <h3 class="vsl-home-step__title"><span class="vsl-home-step__title-label">Eat &amp; Drink</span></h3>
               <p class="vsl-home-step__text">From wagyu sliders to craft cocktails, fuel up about an hour before your session so you're ready when the green flag drops.</p>
             </div>
-          </div>
+          </a>
 
-          <div class="vsl-home-step">
+          <a class="vsl-home-step" href="https://velocitysimlounge.com/dallas/book-now/" data-vsl-cta-key="book" aria-label="Step 3: Choose Your Ride — Browse sim experiences">
             <div class="vsl-home-step__media">
-              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo.webp?resize=800%2C500&#038;ssl=1" alt="Choose your ride at Velocity" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-choose-ride" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1536x960.webp 1536w">
+              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo.webp?resize=800%2C500&#038;ssl=1" alt="" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-choose-ride" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Choose-Your-Ride22-card-photo-1536x960.webp 1536w">
               <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
               <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">3</span></div>
               <div class="vsl-home-step__media-icon" aria-hidden="true">
@@ -2657,14 +2666,14 @@
               </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title" aria-label="Step 3: Choose Your Ride"><span class="vsl-home-step__title-label">Choose Your Ride</span></h3>
+              <h3 class="vsl-home-step__title"><span class="vsl-home-step__title-label">Choose Your Ride</span></h3>
               <p class="vsl-home-step__text">Pick from a selection of cars, tracks, and experiences — including a <span data-vsl-city-variant data-houston="virtual Houston 610 loop" data-dallas="virtual Dallas circuit">virtual Houston 610 loop</span>. Race solo or go head-to-head.</p>
             </div>
-          </div>
+          </a>
 
-          <div class="vsl-home-step">
+          <a class="vsl-home-step" href="https://velocitysimlounge.com/dallas/promotions/" data-vsl-cta-key="promotions" aria-label="Step 4: Race &amp; Win — View promotions and challenges">
             <div class="vsl-home-step__media">
-              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp?resize=800%2C500&#038;ssl=1" alt="Race and win at Velocity" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-race-win" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x960.webp 1536w">
+              <img data-recalc-dims="1" class="vsl-home-step__media-img" src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956.webp?resize=800%2C500&#038;ssl=1" alt="" width="800" height="500" loading="eager" fetchpriority="low" decoding="async" data-asset-key="home-step-race-win" sizes="(max-width: 560px) 100vw, (max-width: 900px) 50vw, 25vw" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1200x750.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x960.webp 1536w">
               <div class="vsl-home-step__media-stripes" aria-hidden="true"></div>
               <div class="vsl-home-step__badge" aria-hidden="true"><span class="vsl-home-step__badge-num">4</span></div>
               <div class="vsl-home-step__media-icon" aria-hidden="true">
@@ -2672,10 +2681,10 @@
               </div>
             </div>
             <div class="vsl-home-step__body">
-              <h3 class="vsl-home-step__title" aria-label="Step 4: Race &amp; Win"><span class="vsl-home-step__title-label">Race &amp; Win</span></h3>
+              <h3 class="vsl-home-step__title"><span class="vsl-home-step__title-label">Race &amp; Win</span></h3>
               <p class="vsl-home-step__text">Hit the track and compete. Join monthly leaderboard challenges for bragging rights, prizes, and the top spot on our boards.</p>
             </div>
-          </div>
+          </a>
 
         </div>
 
@@ -2905,6 +2914,8 @@
       ctas: {
         book: 'https://velocitysimlounge.com/dallas/book-now/',
         events: 'https://velocitysimlounge.com/dallas/group-events/',
+        menu: 'https://velocitysimlounge.com/dallas/food-and-drink/',
+        promotions: 'https://velocitysimlounge.com/dallas/promotions/',
         reviews: 'https://velocitysimlounge.com/dallas/'
       }
     };

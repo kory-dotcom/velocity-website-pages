@@ -105,7 +105,7 @@ function transformPartyPacks(html) {
   out = out.replace(/function vslPPApplyLocation[\s\S]*?vslPPApplyLocation\(vslPPReadLocation\(\)\);[\s\S]*?}\s*}\s*\n/g, '');
   out = out.replace(/vslPPIsRoverdBookingUrl[\s\S]*?return u\.hostname === 'book\.velocitysimlounge\.com';/,
     "vslPPIsRoverdBookingUrl(href) {\n    if (!href || href.charAt(0) === '#') return false;\n    try {\n      var u = new URL(href, window.location.href);\n      return u.hostname === 'book.velocitysimlounge.com' || u.hostname === 'book-dtx.velocitysimlounge.com';");
-  out = out.replace(/class="vsl-partypack"/, 'class="vsl-partypack vsl-partypack--dallas"');
+  /* Keep Dallas packs bookable; do not add --dallas (that class used to hide the pack grid as "coming soon") */
   return out;
 }
 

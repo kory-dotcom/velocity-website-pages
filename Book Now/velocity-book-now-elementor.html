@@ -1372,6 +1372,11 @@
     margin: 0 0 clamp(20px, 3vh, 32px);
     flex-wrap: wrap;
   }
+  a.vsl-bn-membership__tier,
+  a.vsl-bn-membership__tier:visited {
+    text-decoration: none;
+    color: inherit;
+  }
   .vsl-bn-membership__tier {
     display: flex;
     flex-direction: column;
@@ -1384,7 +1389,7 @@
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    cursor: default;
+    cursor: pointer;
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-bn-membership__tier:hover {
@@ -2143,305 +2148,6 @@
     #vsl-bn-modal .vsl-bn-modal__window {
       animation-duration: 0.16s;
     }
-    .vsl-bn-mem-modal .vsl-bn-modal__backdrop {
-      animation-duration: 0.12s;
-    }
-    .vsl-bn-mem-modal__window {
-      animation-duration: 0.18s;
-    }
-  }
-
-  .vsl-bn-mem-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 99999;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(16px, 3vw, 40px);
-  }
-  .vsl-bn-mem-modal[aria-hidden="false"] {
-    display: flex;
-  }
-  .vsl-bn-mem-modal .vsl-bn-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(16,24,43,0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    animation: vsl-modal-fadeIn 0.25s ease;
-    cursor: pointer;
-  }
-  .vsl-bn-mem-modal__window {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 1020px;
-    max-height: min(92vh, 720px);
-    overflow-y: auto;
-    background: linear-gradient(168deg, var(--c1) 0%, var(--c0) 100%);
-    border-radius: 22px;
-    box-shadow:
-      0 32px 80px rgba(0,0,0,0.45),
-      0 0 0 1px rgba(255,255,255,0.06) inset;
-    animation: vsl-modal-slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 48px);
-  }
-  .vsl-bn-mem-modal__close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    appearance: none;
-    -webkit-appearance: none;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 2;
-    transition: background 0.18s ease, transform 0.14s ease;
-    font-size: 24px;
-    font-weight: 300;
-    line-height: 1;
-    font-family: Arial, sans-serif;
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
-  }
-  .vsl-bn-mem-modal__close:hover {
-    background: var(--c2);
-    border-color: var(--c2);
-    transform: scale(1.08);
-  }
-  .vsl-bn-mem-modal__close:active { transform: scale(0.95); }
-  .vsl-bn-mem-modal__close:focus-visible {
-    outline: 3px solid var(--c4);
-    outline-offset: 2px;
-  }
-  .vsl-bn-mem-modal__header {
-    text-align: center;
-    margin-bottom: clamp(24px, 3.5vh, 36px);
-  }
-  .vsl-bn-mem-modal__eyebrow {
-    display: inline-block;
-    margin: 0 0 12px;
-    padding: 5px 16px;
-    font-family: var(--f0);
-    font-size: 0.78rem;
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #fff;
-    background: linear-gradient(135deg, var(--c3) 0%, var(--c1) 100%);
-    border-radius: 0;
-  }
-  .vsl-bn-mem-modal__title {
-    margin: 0 0 0.25em;
-    font-family: var(--f0);
-    font-size: clamp(1.6rem, 0.9rem + 3vw, 2.5rem);
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    line-height: 1.08;
-    letter-spacing: 0.03em;
-    color: #fff;
-  }
-  .vsl-bn-mem-modal__title em {
-    font-style: italic;
-    color: var(--c4);
-  }
-  .vsl-bn-mem-modal__subtitle {
-    margin: 0;
-    font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1.05rem);
-    color: var(--c8);
-    font-weight: 400;
-    line-height: 1.5;
-  }
-  .vsl-bn-mem-modal__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .vsl-bn-mem-tier {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--c0);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-bn-mem-tier:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.22);
-      z-index: 2;
-    }
-  }
-  .vsl-bn-mem-tier:active {
-    transform: translateY(-2px) scale(1.005);
-  }
-  .vsl-bn-mem-tier:focus-visible {
-    outline: 3px solid var(--c4);
-    outline-offset: 3px;
-  }
-  .vsl-bn-mem-tier__accent {
-    height: 5px;
-    flex-shrink: 0;
-  }
-  .vsl-bn-mem-tier:nth-child(1) .vsl-bn-mem-tier__accent { background: var(--c3); }
-  .vsl-bn-mem-tier:nth-child(2) .vsl-bn-mem-tier__accent { background: var(--c2); }
-  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__accent { background: var(--c4); }
-  .vsl-bn-mem-tier__body {
-    padding: clamp(20px, 2.5vw, 28px) clamp(18px, 2.5vw, 26px) clamp(22px, 2.5vw, 28px);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    text-align: center;
-  }
-  .vsl-bn-mem-tier__name {
-    margin: 0 0 6px;
-    font-family: var(--f0);
-    font-size: clamp(1.05rem, 0.8rem + 1vw, 1.3rem);
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--c0);
-  }
-  .vsl-bn-mem-tier__price {
-    margin: 0 0 6px;
-    font-size: clamp(1.8rem, 1.2rem + 2.5vw, 2.4rem);
-    font-weight: 700;
-    color: var(--c2);
-    line-height: 1.1;
-  }
-  .vsl-bn-mem-tier__price span {
-    font-size: 0.45em;
-    font-weight: 600;
-    color: var(--c9);
-  }
-  .vsl-bn-mem-tier__tag {
-    margin: 0 0 14px;
-    font-size: 0.82rem;
-    font-weight: 500;
-    font-style: italic;
-    color: var(--c9);
-    line-height: 1.35;
-  }
-  .vsl-bn-mem-tier__rule {
-    display: block;
-    height: 1px;
-    background: rgba(16,24,43,0.1);
-    border: 0;
-    margin: 0 0 14px;
-    flex-shrink: 0;
-  }
-  .vsl-bn-mem-tier__list {
-    margin: 0 0 18px;
-    padding: 0;
-    list-style: none;
-    font-size: clamp(0.82rem, 0.78rem + 0.2vw, 0.9rem);
-    color: var(--c9);
-    line-height: 1.4;
-    text-align: left;
-    flex: 1;
-  }
-  .vsl-bn-mem-tier__list li {
-    display: flex !important;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 0.5em;
-  }
-  .vsl-bn-mem-tier__list li::before {
-    content: '';
-    flex-shrink: 0;
-    width: 16px;
-    height: 16px;
-    margin-top: 2px;
-    background: var(--c3);
-    mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 13l4 4L19 7' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    mask-size: contain;
-    -webkit-mask-size: contain;
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-  }
-  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__list li::before {
-    background: var(--c4);
-  }
-  .vsl-bn-mem-tier__btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 46px;
-    padding: 12px 20px;
-    font-family: var(--f0);
-    font-size: 0.88rem;
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--c2);
-    border: 2px solid var(--c2);
-    border-radius: 10px;
-    background: transparent;
-    transition: background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
-    margin-top: auto;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-bn-mem-tier:hover .vsl-bn-mem-tier__btn {
-      background: var(--c2);
-      color: #fff;
-      box-shadow: 0 6px 20px rgba(238,38,95,0.25);
-    }
-  }
-  .vsl-bn-mem-tier:nth-child(3) .vsl-bn-mem-tier__btn {
-    color: var(--c0);
-    border-color: var(--c4);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-bn-mem-tier:nth-child(3):hover .vsl-bn-mem-tier__btn {
-      background: var(--c4);
-      color: var(--c0);
-      box-shadow: 0 6px 20px rgba(253,199,12,0.3);
-    }
-  }
-  .vsl-bn-mem-modal__footer {
-    text-align: center;
-    margin-top: clamp(16px, 2.5vh, 24px);
-  }
-  .vsl-bn-mem-modal__footer a {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--c8);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    transition: color 0.2s ease;
-  }
-  .vsl-bn-mem-modal__footer a:hover {
-    color: #fff;
-  }
-  @media (max-width: 768px) {
-    .vsl-bn-mem-modal__grid {
-      grid-template-columns: 1fr;
-      max-width: 380px;
-      margin-inline: auto;
-    }
-    .vsl-bn-mem-modal__window {
-      max-height: 100vh;
-      border-radius: 0;
-    }
-    .vsl-bn-mem-modal { padding: 0; }
   }
 </style>
 <script>(function(){var o=new MutationObserver(function(m){m.forEach(function(r){r.addedNodes.forEach(function(n){if(n.querySelectorAll){n.querySelectorAll('img[data-s]').forEach(function(i){try{i.src=atob(i.getAttribute('data-s'));}catch(e){}});}});});});o.observe(document,{childList:true,subtree:true});})();</script>
@@ -2459,13 +2165,13 @@
     "bookNow":        "https://velocitysimlounge.com/book-now/"
   },
   "linksDallas": {
-    "quickRace":      "https://book-dtx.velocitysimlounge.com/book/grand-prix-approx-30-mins/1#rvrd-1",
+    "quickRace":      "https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1#rvrd-1",
     "doubleRace":     "https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1",
-    "leaderboard":    "https://book-dtx.velocitysimlounge.com/book/monthly-hot-lap-challenge-30-mins/6#rvrd-1",
+    "leaderboard":    "https://book-dtx.velocitysimlounge.com/book/leaderboard-challenge-30-mins/6#rvrd-1",
     "twoSeaterQuick": "https://book-dtx.velocitysimlounge.com/book/2-seater-quick-race/22",
     "twoSeaterDouble":"https://book-dtx.velocitysimlounge.com/book/2-seater-double-race/23",
-    "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/19",
-    "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-6-rigs/24"
+    "partyRacer":     "https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27",
+    "partyPro":       "https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28"
   },
   "images": {
     "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
@@ -2727,18 +2433,18 @@
               Monthly races, food &amp; drink discounts, priority booking, members-only events, and exclusive perks — starting at just $99/mo.
             </p>
             <div class="vsl-bn-membership__tiers">
-              <div class="vsl-bn-membership__tier">
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Racer</span>
                 <span class="vsl-bn-membership__tier-price">$99<span>/mo</span></span>
-              </div>
-              <div class="vsl-bn-membership__tier">
+              </a>
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Pro</span>
                 <span class="vsl-bn-membership__tier-price">$169<span>/mo</span></span>
-              </div>
-              <div class="vsl-bn-membership__tier">
+              </a>
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Ultimate</span>
                 <span class="vsl-bn-membership__tier-price">$299<span>/mo</span></span>
-              </div>
+              </a>
             </div>
             <a class="vsl-bn-membership__cta" href="https://velocitysimlounge.com/membership/">
               View Memberships
@@ -2865,83 +2571,6 @@
             <div class="vsl-bn-modal__spinner"></div>
           </div>
           <iframe class="vsl-bn-modal__iframe" id="vsl-bn-modal-iframe" title="Booking page"></iframe>
-        </div>
-      </div>
-    </div>
-
-    <div class="vsl-bn-mem-modal" id="vsl-bn-mem-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Velocity Memberships">
-      <div class="vsl-bn-modal__backdrop" data-xm></div>
-      <div class="vsl-bn-mem-modal__window">
-        <button class="vsl-bn-mem-modal__close" data-xm aria-label="Close memberships">&times;</button>
-
-        <div class="vsl-bn-mem-modal__header">
-          <span class="vsl-bn-mem-modal__eyebrow">Members Club</span>
-          <h2 class="vsl-bn-mem-modal__title">Race More, <em>Pay Less</em></h2>
-          <p class="vsl-bn-mem-modal__subtitle">Monthly races, discounts, exclusive events — pick your tier.</p>
-        </div>
-
-        <div class="vsl-bn-mem-modal__grid">
-
-          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=45fb8e9b-357c-43fa-31b3-08de7364d6fd&product=prod_U2IhFrfWjxEnaQ" target="_blank" rel="noopener noreferrer">
-            <div class="vsl-bn-mem-tier__accent"></div>
-            <div class="vsl-bn-mem-tier__body">
-              <p class="vsl-bn-mem-tier__name">Racer</p>
-              <p class="vsl-bn-mem-tier__price">$99<span>/mo</span></p>
-              <p class="vsl-bn-mem-tier__tag">Drive more, save more.</p>
-              <hr class="vsl-bn-mem-tier__rule">
-              <ul class="vsl-bn-mem-tier__list">
-                <li>4 races per month</li>
-                <li>Monday – Friday</li>
-                <li>Racer sim only</li>
-                <li>10% off additional bookings</li>
-                <li>Members-only events</li>
-              </ul>
-              <span class="vsl-bn-mem-tier__btn">Join Now</span>
-            </div>
-          </a>
-
-          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=95225a4b-1747-4c49-31b4-08de7364d6fd&product=prod_U2J7KuCQDlrbLq" target="_blank" rel="noopener noreferrer">
-            <div class="vsl-bn-mem-tier__accent"></div>
-            <div class="vsl-bn-mem-tier__body">
-              <p class="vsl-bn-mem-tier__name">Pro</p>
-              <p class="vsl-bn-mem-tier__price">$169<span>/mo</span></p>
-              <p class="vsl-bn-mem-tier__tag">Can't get enough? We've got you.</p>
-              <hr class="vsl-bn-mem-tier__rule">
-              <ul class="vsl-bn-mem-tier__list">
-                <li>6 races per month</li>
-                <li>Sunday – Friday</li>
-                <li>Pro or Racer sim</li>
-                <li>10% off additional bookings</li>
-                <li>10% off food &amp; non-alcoholic drinks</li>
-                <li>10% off competition fees</li>
-              </ul>
-              <span class="vsl-bn-mem-tier__btn">Join Now</span>
-            </div>
-          </a>
-
-          <a class="vsl-bn-mem-tier" href="https://members.velocitysimlounge.com/login?type=subscription&id=d676ceb4-f587-48e9-31b5-08de7364d6fd&product=prod_U2J9JjlIBUf6kn" target="_blank" rel="noopener noreferrer">
-            <div class="vsl-bn-mem-tier__accent"></div>
-            <div class="vsl-bn-mem-tier__body">
-              <p class="vsl-bn-mem-tier__name">Ultimate</p>
-              <p class="vsl-bn-mem-tier__price">$299<span>/mo</span></p>
-              <p class="vsl-bn-mem-tier__tag"><em>Everything in Pro, dialed to eleven.</em></p>
-              <hr class="vsl-bn-mem-tier__rule">
-              <ul class="vsl-bn-mem-tier__list">
-                <li>8 races per month</li>
-                <li>Any day, any location</li>
-                <li>Any sim</li>
-                <li>15% off additional bookings</li>
-                <li>10% off food &amp; non-alcoholic drinks</li>
-                <li>Early access &amp; VIP events</li>
-              </ul>
-              <span class="vsl-bn-mem-tier__btn">Join Now</span>
-            </div>
-          </a>
-
-        </div>
-
-        <div class="vsl-bn-mem-modal__footer">
-          <a href="https://velocitysimlounge.com/membership/" target="_blank" rel="noopener noreferrer">View full membership details →</a>
         </div>
       </div>
     </div>
@@ -3393,64 +3022,6 @@
       e.stopImmediatePropagation();
       openBookingCard(card);
     }, true);
-
-    var memModal = root.querySelector('#vsl-bn-mem-modal');
-    var memLastFocused = null;
-    if (memModal) {
-      memModal.querySelectorAll('a').forEach(function(a) {
-        a.setAttribute('data-elementor-open-lightbox', 'no');
-      });
-    }
-
-    function openMemModal() {
-      if (!memModal) return;
-      if (memModal.parentNode !== document.body) {
-        document.body.appendChild(memModal);
-      }
-      memLastFocused = document.activeElement;
-      memModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      if (!isCoarsePointer) {
-        setTimeout(function() {
-          var closeBtn = memModal.querySelector('.vsl-bn-mem-modal__close');
-          if (closeBtn) closeBtn.focus();
-        }, 80);
-      }
-    }
-
-    function closeMemModal() {
-      if (!memModal) return;
-      memModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (memLastFocused) { try { memLastFocused.focus(); } catch(e){} }
-    }
-
-    if (memModal) {
-      memModal.querySelectorAll('[data-xm]').forEach(function(el) {
-        el.addEventListener('click', closeMemModal);
-      });
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && memModal.getAttribute('aria-hidden') === 'false') {
-          closeMemModal();
-        }
-      });
-    }
-
-    var membershipCta = root.querySelector('.vsl-bn-membership__cta');
-    if (membershipCta) {
-      membershipCta.setAttribute('data-elementor-open-lightbox', 'no');
-      membershipCta.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        openMemModal();
-      });
-    }
-
-    root.querySelectorAll('.vsl-bn-membership__tier:not(.vsl-bn-membership__tier--vip)').forEach(function(tier) {
-      tier.style.cursor = 'pointer';
-      tier.addEventListener('click', function() { openMemModal(); });
-    });
 
     var vipEgg = document.getElementById('vsl-vip-egg');
     if (vipEgg) {

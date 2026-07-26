@@ -317,9 +317,9 @@ contact: {
     },
     {
       name: "Velocity Dallas",
-      address: "",
-      phone: "",
-      email: "",
+      address: "9830 N Central Expy #400\nDallas, TX 75231",
+      phone: "972-209-5215",
+      email: "dtxinfo@velocitysimlounge.com",
       hours: "Coming Summer 2026",
       mapEmbed: ""
     }

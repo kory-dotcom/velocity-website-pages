@@ -688,9 +688,9 @@
   }
   .vsl-pp-pack-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--gutter);
-    max-width: min(1040px, 100%);
+    max-width: min(1200px, 100%);
     margin-inline: auto;
     align-items: stretch;
     margin-top: clamp(3.5rem, 7vh, 5.5rem);
@@ -727,11 +727,12 @@
     line-height: 1.55;
     color: rgba(234, 234, 234, 0.88);
   }
+  /* Dallas Party Packs are live — keep pack grid visible even if --dallas is present */
   .vsl-partypack--dallas .vsl-pp-pack-grid {
-    display: none;
+    display: grid;
   }
   .vsl-partypack--dallas .vsl-pp-dallas-soon {
-    display: block;
+    display: none;
   }
   .vsl-pp-pack-card {
     --card-mx: 0.5;
@@ -1419,7 +1420,7 @@
   }
 </style>
 
-<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27","proPack":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
+<div class="vsl-partypack" data-vsl-config='{"links":{"racerPack":"https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-racer-rigs-semi-private/19","proPack":"https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-pro-rigs-semi-private/24","championPack":"https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4341","allEvents":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"racerPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp","proPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp","championPack":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"heroVideo":"https://velocitysimlounge.com/wp-content/uploads/2026/05/party-pack-hero.webp","elementorColumnOutdentPx":0}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1457,7 +1458,7 @@
         <div class="vsl-pp-pack-grid">
 
           <!-- Racer Party Pack -->
-          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
+          <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="racerPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Racer Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async" style="transform: scale(1.15); transform-origin: center;">
@@ -1465,7 +1466,7 @@
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Racer Party Pack</h3>
               <div class="vsl-pp-pack-card__pricing">
-                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $599</p>
+                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $499</p>
               </div>
               <p class="vsl-pp-pack-card__meta">5 Racer rigs &bull; Semi-private space</p>
               <hr class="vsl-pp-pack-card__rule">
@@ -1476,12 +1477,12 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-racer-rigs-semi-private/19">Book Now</a>
             </div>
           </article>
 
           <!-- Pro Party Pack -->
-          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
+          <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="proPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Pro Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
@@ -1489,7 +1490,7 @@
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Pro Party Pack</h3>
               <div class="vsl-pp-pack-card__pricing">
-                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $699</p>
+                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $725</p>
               </div>
               <p class="vsl-pp-pack-card__meta">5 Pro rigs &bull; Semi-private space</p>
               <hr class="vsl-pp-pack-card__rule">
@@ -1500,7 +1501,27 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-pro-rigs-semi-private/24">Book Now</a>
+            </div>
+          </article>
+
+          <!-- Full Private Room -->
+          <article class="vsl-pp-pack-card">
+            <div class="vsl-pp-pack-card__accent"></div>
+            <figure class="vsl-pp-pack-card__media">
+              <img data-vsl-pp-img="championPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Full Private Room party pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-pp-pack-card__body">
+              <h3 class="vsl-pp-pack-card__name">Full Private Room</h3>
+              <p class="vsl-pp-pack-card__meta">10 rigs &bull; Full private space</p>
+              <hr class="vsl-pp-pack-card__rule">
+              <ul class="vsl-pp-pack-card__list">
+                <li>For groups of 30+</li>
+                <li>Enhanced catering options</li>
+                <li>Dedicated Pit Crew</li>
+                <li>Upgrades available</li>
+              </ul>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="championPack" href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/4341" target="_blank" rel="noopener noreferrer">Inquire Now</a>
             </div>
           </article>
 
@@ -1747,7 +1768,7 @@
     var nameEl = card && card.querySelector ? card.querySelector('.vsl-pp-pack-card__name') : null;
     if (nameEl && nameEl.textContent.trim()) return nameEl.textContent.trim();
     var key = a.getAttribute('data-vsl-pp-link');
-    var map = { racerPack: 'Racer Party Pack', proPack: 'Pro Party Pack' };
+    var map = { racerPack: 'Racer Party Pack', proPack: 'Pro Party Pack', championPack: 'Full Private Room' };
     if (key && map[key]) return map[key];
     return (a.textContent || '').trim() || 'Book Now';
   }

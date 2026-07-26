@@ -809,11 +809,14 @@ if (!window.VSL_LOCATION) {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #fff;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.88);
+  background: linear-gradient(135deg, #ff3d6e 0%, var(--magenta) 55%, #c81d4c 100%);
+  border: 2px solid transparent;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 calc(4px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.32);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 .vsl-navbar__loc-change svg {
   width: calc(14px * var(--vsl-ui-scale));
@@ -824,8 +827,13 @@ if (!window.VSL_LOCATION) {
 }
 .vsl-navbar__loc-change:hover,
 .vsl-navbar__loc-change:focus-visible {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #fff;
+  color: #fff;
+  background: linear-gradient(135deg, #ff4f7c 0%, #f22a63 55%, #d21f50 100%);
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 calc(6px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.45);
+  transform: translateY(-1px);
 }
 .vsl-navbar__loc-panel-view[hidden] {
   display: none !important;
@@ -2937,10 +2945,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <li data-day="Mon,Tue,Wed,Thu"><span class="vsl-day">Mon – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
               <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
               <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
-              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 12AM</span></li>
+              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
             </ul>
             <div class="vsl-navbar__loc-detail-contact">
               <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 9830 N Central Expy #400, Dallas in Google Maps">9830 N Central Expy #400<br>Dallas, TX 75231</a>
+              <a href="tel:+19722095215" class="vsl-navbar__loc-detail-phone">972-209-5215</a>
               <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
             </div>
             <div class="vsl-navbar__loc-detail-links">

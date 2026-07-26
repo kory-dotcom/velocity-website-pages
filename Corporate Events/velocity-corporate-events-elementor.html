@@ -101,10 +101,48 @@
       padding-block: 0;
     }
     .elementor-widget-html .elementor-widget-container:has(> .vsl-corporate) {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+    }
+    /* Kill Elementor section/column top padding that shows as a white gap under the navbar */
+    .elementor-section:has(.vsl-corporate),
+    .elementor-container:has(.vsl-corporate),
+    .elementor-column:has(.vsl-corporate),
+    .elementor-column-wrap:has(.vsl-corporate),
+    .elementor-widget-wrap:has(.vsl-corporate),
+    .elementor-widget:has(.vsl-corporate) {
+      flex-shrink: 0 !important;
+      padding: 0 !important;
       padding-top: 0 !important;
-      padding-bottom: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
       margin-top: 0 !important;
-      margin-bottom: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: auto !important;
+    }
+    .e-con:has(.vsl-corporate),
+    .e-con-inner:has(.vsl-corporate),
+    .e-con-inner > .elementor-widget:has(.vsl-corporate),
+    .elementor-element:has(> .elementor-widget-container > .vsl-corporate) {
+      flex-shrink: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      padding-top: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: auto !important;
     }
     .vsl-corporate *,
     .vsl-corporate *::before,

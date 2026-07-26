@@ -59,8 +59,8 @@
     --vsl-bleed-bottom: 0px;
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     --vsl-hero-finish-h: clamp(31px, 5.6vw + 17px, 78px);
-    /* Hero <img> framing: horizontal %, vertical % (object-position; tweak here to pan) */
-    --vsl-hero-photo-position: 48% 60%;
+    /* Hero framing: X% Y% for object-position + transform-origin (higher Y = subjects sit higher in frame) */
+    --vsl-hero-photo-position: 48% 100%;
     --vsl-card-body: clamp(0.95rem, 0.88rem + 0.38vw, 1.06rem);
 
     font-family: var(--font-body);
@@ -194,9 +194,9 @@
     object-fit: cover;
     object-position: var(--vsl-hero-photo-position) !important;
     pointer-events: none;
-    transform: scale(1.1);
-    /* Pin zoom slightly above center so faces read closer to replica framing */
-    transform-origin: 48% 42%;
+    /* Light zoom so object-position pan still reads; keep origin in sync with position */
+    transform: scale(1.03);
+    transform-origin: var(--vsl-hero-photo-position) !important;
   }
   .vsl-promo-hero::before {
     content: '';
@@ -1555,7 +1555,7 @@
   }
 </style>
 
-<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/dallas/book-now/","springBundles":"https://velocitysimlounge.com/dallas/promotions/","partyPacks":"https://velocitysimlounge.com/dallas/party-packs/","events":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 60%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
+<div class="vsl-promo" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/dallas/book-now/","springBundles":"https://velocitysimlounge.com/dallas/promotions/","partyPacks":"https://velocitysimlounge.com/dallas/party-packs/","events":"https://velocitysimlounge.com/dallas/group-events/"},"images":{"heroPhoto":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1920x1080.webp","heroPhotoPosition":"48% 100%","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","crosslinkPartyPacks":"https://velocitysimlounge.com/wp-content/uploads/2026/01/Velocity_3_T-1024x683.webp","crosslinkEvents":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp","blackFriday":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp","ladiesNight":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp"}}'>
   <main>
 
     <!-- ▸ Hero -->
@@ -1685,7 +1685,7 @@
       </div>
     </section>
 
-    <!-- ▸ Ladies Night -->
+    <!-- HIDDEN 2026-07 — re-enable when Ladies Night launches in Dallas
     <section class="vsl-promo-ladies" id="promo-ladies" aria-labelledby="ladies-heading">
       <div class="vsl-promo-grid">
         <div class="vsl-promo-ladies__inner">
@@ -1717,6 +1717,7 @@
         </div>
       </div>
     </section>
+    -->
 
     <!-- HIDDEN per Viet 2026-04 — re-enable near holidays: On the Calendar + Seasonal Promotions
     <section class="vsl-promo-spotlight" id="promo-spotlight" aria-labelledby="spotlight-heading">

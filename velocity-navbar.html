@@ -1,6 +1,6 @@
 <!-- Velocity Sim Racing Lounge — Global Navbar Component (Elementor Custom HTML ready) -->
 <!-- Location helper inlined below — paste this navbar only; no separate vsl-location.js upload -->
-<!-- vsl-navbar build: 20260713b — bump when pasting to WordPress so caches pick up the change -->
+<!-- vsl-navbar build: 20260720b — bump when pasting to WordPress so caches pick up the change -->
 <script>
 if (!window.VSL_LOCATION) {
 (function (global) {
@@ -170,10 +170,9 @@ if (!window.VSL_LOCATION) {
    * Preference priority:
    * 1) explicit ?loc=
    * 2) /dallas/... URL (commit Dallas)
-   * 3) stored preference (localStorage + cookie) — survives browser restart
-   * 4) Houston path with no stored preference → infer Houston (do not persist)
-   *
-   * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
+   * 3) Houston path → Houston (overrides a stale saved Dallas choice)
+   * 4) stored preference (localStorage + cookie) — survives browser restart
+   * 5) default Houston
    */
   function readLocation() {
     var fromUrl = readFromUrlParam();
@@ -192,10 +191,16 @@ if (!window.VSL_LOCATION) {
       return 'dallas';
     }
 
-    if (stored) return stored;
+    if (fromPath === 'houston') {
+      /* URL is authoritative — switch off Dallas when viewing a Houston page */
+      if (stored === 'dallas') {
+        writeStoredLocation('houston');
+        markLocationChosen();
+      }
+      return 'houston';
+    }
 
-    /* Infer Houston for links/copy — do not persist until the user chooses */
-    if (fromPath === 'houston') return 'houston';
+    if (stored) return stored;
 
     return 'houston';
   }
@@ -319,7 +324,9 @@ if (!window.VSL_LOCATION) {
       setPreferredLocation('dallas', { source: 'bootstrap' });
       return;
     }
-    /* Houston path alone: never auto-persist — welcome chooser handles first visit */
+    if (fromPath === 'houston' && readStoredLocation() === 'dallas') {
+      setPreferredLocation('houston', { source: 'bootstrap' });
+    }
   }
 
   function bindLocationSync(applyFn) {
@@ -958,7 +965,7 @@ if (!window.VSL_LOCATION) {
   width: fit-content;
   max-width: 100%;
   flex: 0 0 auto;
-  padding: calc(8px * var(--vsl-ui-scale)) calc(12px * var(--vsl-ui-scale));
+  padding: calc(8px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale));
   font-family: var(--font-head);
   font-weight: 700;
   font-size: calc(11px * var(--vsl-ui-scale));
@@ -966,13 +973,15 @@ if (!window.VSL_LOCATION) {
   text-transform: uppercase;
   letter-spacing: 0.07em;
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.72);
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  background: linear-gradient(135deg, #ff3d6e 0%, var(--magenta) 55%, #c81d4c 100%);
+  border: 1px solid transparent;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: none;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 calc(4px * var(--vsl-ui-scale)) calc(14px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.32);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 .vsl-navbar__loc-change svg {
   width: calc(14px * var(--vsl-ui-scale));
@@ -984,9 +993,12 @@ if (!window.VSL_LOCATION) {
 .vsl-navbar__loc-change:hover,
 .vsl-navbar__loc-change:focus-visible {
   color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(238, 38, 95, 0.5);
-  box-shadow: none;
+  background: linear-gradient(135deg, #ff4f7c 0%, #f22a63 55%, #d21f50 100%);
+  border-color: transparent;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    0 calc(6px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale)) rgba(238, 38, 95, 0.45);
+  transform: translateY(-1px);
 }
 .vsl-navbar__loc-panel-view[hidden] {
   display: none !important;
@@ -1752,11 +1764,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   letter-spacing: 0.05em !important;
 }
 .vsl-navbar__geo-panel--welcome .vsl-navbar__geo-text {
-  font-size: 14px !important;
-  line-height: 1.55 !important;
-  max-width: 30ch !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  display: none !important;
+}
+.vsl-navbar__geo-panel--welcome .vsl-navbar__geo-picks {
+  margin-top: 14px !important;
 }
 .vsl-navbar__geo-pick:hover,
 .vsl-navbar__geo-pick:focus-visible {
@@ -3534,10 +3545,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <li data-day="Mon,Tue,Wed,Thu"><span class="vsl-day">Mon – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
               <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
               <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
-              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 12AM</span></li>
+              <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
             </ul>
             <div class="vsl-navbar__loc-detail-contact">
               <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 9830 N Central Expy #400, Dallas in Google Maps">9830 N Central Expy #400<br>Dallas, TX 75231</a>
+              <a href="tel:+19722095215" class="vsl-navbar__loc-detail-phone">972-209-5215</a>
               <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
             </div>
             <div class="vsl-navbar__loc-detail-links">
@@ -3740,11 +3752,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     <div class="vsl-navbar__geo-picks" role="group" aria-label="Select city">
       <button class="vsl-navbar__geo-pick" type="button" data-location-pick="houston">
         <span class="vsl-navbar__geo-pick__city">Houston</span>
-        <span class="vsl-navbar__geo-pick__sub">Original lounge</span>
+        <span class="vsl-navbar__geo-pick__sub">Sawyer Yards</span>
       </button>
       <button class="vsl-navbar__geo-pick" type="button" data-location-pick="dallas">
         <span class="vsl-navbar__geo-pick__city">Dallas</span>
-        <span class="vsl-navbar__geo-pick__sub">DFW metro</span>
+        <span class="vsl-navbar__geo-pick__sub">The Rim</span>
       </button>
     </div>
     <button class="vsl-navbar__geo-dismiss" type="button" data-location-dismiss>Skip for now</button>
@@ -4399,6 +4411,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       locationBackdrop.hidden = true;
       locationBackdrop.classList.remove('vsl-navbar__geo-backdrop--welcome');
     }
+    if (locationText) locationText.hidden = false;
     restoreLocationPromptToNavbar();
     setLocationPromptAria(false);
   }
@@ -4408,7 +4421,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       locationTitle.textContent = 'Where do you want to race?';
     }
     if (locationText) {
-      locationText.textContent = 'Velocity has sim lounges in Houston and Dallas. Pick your location and we\u2019ll show the right booking links and hours.';
+      locationText.textContent = '';
+      locationText.hidden = true;
     }
     openLocationPrompt({ welcome: true });
   }

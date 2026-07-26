@@ -727,11 +727,12 @@
     line-height: 1.55;
     color: rgba(234, 234, 234, 0.88);
   }
+  /* Dallas Party Packs are live — keep pack grid visible even if --dallas is present */
   .vsl-partypack--dallas .vsl-pp-pack-grid {
-    display: none;
+    display: grid;
   }
   .vsl-partypack--dallas .vsl-pp-dallas-soon {
-    display: block;
+    display: none;
   }
   .vsl-pp-pack-card {
     --card-mx: 0.5;
@@ -1457,7 +1458,7 @@
         <div class="vsl-pp-pack-grid">
 
           <!-- Racer Party Pack -->
-          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
+          <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="racerPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Racer Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async" style="transform: scale(1.15); transform-origin: center;">
@@ -1465,7 +1466,7 @@
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Racer Party Pack</h3>
               <div class="vsl-pp-pack-card__pricing">
-                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $599</p>
+                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $499</p>
               </div>
               <p class="vsl-pp-pack-card__meta">5 Racer rigs &bull; Semi-private space</p>
               <hr class="vsl-pp-pack-card__rule">
@@ -1476,12 +1477,12 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="racerPack" href="https://book-dtx.velocitysimlounge.com/book/racer-party-pack-5-rigs/27">Book Now</a>
             </div>
           </article>
 
           <!-- Pro Party Pack -->
-          <article class="vsl-pp-pack-card vsl-pp-pack-card--soon" aria-disabled="true">
+          <article class="vsl-pp-pack-card">
             <div class="vsl-pp-pack-card__accent"></div>
             <figure class="vsl-pp-pack-card__media">
               <img data-vsl-pp-img="proPack" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1024.webp 1536w" sizes="(max-width: 900px) 92vw, (max-width: 1100px) 46vw, 30vw" alt="Pro Party Pack at Velocity Sim Racing Lounge Dallas" width="1024" height="683" loading="lazy" decoding="async">
@@ -1489,7 +1490,7 @@
             <div class="vsl-pp-pack-card__body">
               <h3 class="vsl-pp-pack-card__name">Pro Party Pack</h3>
               <div class="vsl-pp-pack-card__pricing">
-                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $699</p>
+                <p class="vsl-pp-pack-card__price"><span class="vsl-pp-pack-card__price-from">from</span> $725</p>
               </div>
               <p class="vsl-pp-pack-card__meta">5 Pro rigs &bull; Semi-private space</p>
               <hr class="vsl-pp-pack-card__rule">
@@ -1500,7 +1501,7 @@
                 <li>Dedicated Pit Crew</li>
                 <li>Upgrades available</li>
               </ul>
-              <span class="vsl-pp-pack-card__cta" aria-disabled="true">Coming Soon</span>
+              <a class="vsl-pp-pack-card__cta" data-vsl-pp-link="proPack" href="https://book-dtx.velocitysimlounge.com/book/pro-party-pack-5-rigs/28">Book Now</a>
             </div>
           </article>
 

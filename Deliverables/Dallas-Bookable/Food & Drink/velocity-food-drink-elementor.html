@@ -71,14 +71,27 @@
       font-family: var(--font-body);
       color: var(--navy);
       box-sizing: border-box;
-      width: calc(100% + 2 * var(--vsl-outdent));
-      max-width: none;
-      margin-left: calc(-1 * var(--vsl-outdent));
-      margin-right: calc(-1 * var(--vsl-outdent));
+      position: relative;
+      /* Full-bleed past Elementor boxed containers.
+         Do NOT switch to width:100% / outdent:0 on mobile — that leaves white side gutters. */
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
       margin-top: 0;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+    @media (max-width: 800px) {
+      .vsl-fooddrink {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc((100% - 100vw) / 2) !important;
+        margin-right: calc((100% - 100vw) / 2) !important;
+      }
     }
     .vsl-fooddrink:has(> main > section.vsl-fooddrink-hero:first-of-type) {
       margin-top: var(--vsl-hero-bleed-top);
@@ -1266,6 +1279,23 @@
   (function () {
     var root = document.querySelector('.vsl-fooddrink');
     if (!root) return;
+
+    function fixAncestorScrollTraps(el) {
+      var p = el.parentElement;
+      while (p && p !== document.documentElement && p !== document.body) {
+        var cs = getComputedStyle(p);
+        if (cs.overflowX === 'hidden') p.style.setProperty('overflow-x', 'clip', 'important');
+        if (cs.overflowY === 'hidden') p.style.setProperty('overflow-y', 'clip', 'important');
+        var cls = typeof p.className === 'string' ? p.className : '';
+        if (/elementor|e-con/.test(cls)) {
+          if ((parseFloat(cs.paddingLeft) || 0) > 0) p.style.setProperty('padding-left', '0', 'important');
+          if ((parseFloat(cs.paddingRight) || 0) > 0) p.style.setProperty('padding-right', '0', 'important');
+        }
+        p = p.parentElement;
+      }
+    }
+    fixAncestorScrollTraps(root);
+
     function setRealViewportHeight() {
       var vh = window.innerHeight * 0.01;
       root.style.setProperty('--vsl-vh', vh + 'px');

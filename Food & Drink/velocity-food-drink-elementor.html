@@ -71,15 +71,28 @@
       font-family: var(--font-body);
       color: var(--navy);
       box-sizing: border-box;
-      width: calc(100% + 2 * var(--vsl-outdent));
-      max-width: none;
-      margin-left: calc(-1 * var(--vsl-outdent));
-      margin-right: calc(-1 * var(--vsl-outdent));
+      position: relative;
+      /* Full-bleed past Elementor boxed containers (same pattern as Party Packs / About).
+         Do NOT switch to width:100% / outdent:0 on mobile — that leaves white side gutters. */
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
       margin-top: 0;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
       overflow-x: clip;
+      overflow-y: visible;
+    }
+    /* Reinforce full-bleed on phones (overrides any stale WP paste that zeroed outdent) */
+    @media (max-width: 800px) {
+      .vsl-fooddrink {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc((100% - 100vw) / 2) !important;
+        margin-right: calc((100% - 100vw) / 2) !important;
+      }
     }
     .vsl-fooddrink:has(> main > section.vsl-fooddrink-hero:first-of-type) {
       margin-top: var(--vsl-hero-bleed-top);
@@ -92,37 +105,50 @@
       padding-block-start: 0;
       padding-block-end: 0;
     }
+    .elementor-widget-html .elementor-widget-container:has(> .vsl-fooddrink) {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+    }
     .elementor-section:has(.vsl-fooddrink),
+    .elementor-container:has(.vsl-fooddrink),
     .elementor-column:has(.vsl-fooddrink),
+    .elementor-column-wrap:has(.vsl-fooddrink),
     .elementor-widget-wrap:has(.vsl-fooddrink),
-    .elementor-widget-html:has(.vsl-fooddrink),
-    .elementor-widget-container:has(.vsl-fooddrink),
-    .e-con:has(.vsl-fooddrink),
-    .e-con-inner:has(.vsl-fooddrink) {
+    .elementor-widget:has(.vsl-fooddrink) {
+      padding: 0 !important;
+      padding-top: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-top: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
       overflow: visible !important;
       height: auto !important;
       max-height: none !important;
-      min-height: 0 !important;
+      min-height: auto !important;
     }
-    .elementor-widget-html .elementor-widget-container:has(> .vsl-fooddrink) {
+    .e-con:has(.vsl-fooddrink),
+    .e-con-inner:has(.vsl-fooddrink),
+    .e-con-inner > .elementor-widget:has(.vsl-fooddrink),
+    .elementor-element:has(> .elementor-widget-container > .vsl-fooddrink) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       padding-top: 0 !important;
-      padding-bottom: 0 !important;
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: auto !important;
     }
     .vsl-fooddrink *,
     .vsl-fooddrink *::before,
     .vsl-fooddrink *::after { box-sizing: border-box; }
-
-    @media (max-width: 800px) {
-      .vsl-fooddrink {
-        --vsl-outdent: 0px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-      }
-    }
 
     html:has(.vsl-fooddrink),
     body:has(.vsl-fooddrink) {
@@ -1118,7 +1144,7 @@
       }
     }
 </style>
-<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/","menuPdf":"https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":12}'>
+<div class="vsl-fooddrink" data-vsl-config='{"links":{"bookNow":"https://velocitysimlounge.com/book-now/","events":"https://velocitysimlounge.com/group-events/","menuPdf":"https://drive.google.com/file/d/1RS-OObqK_8nTY0AlC7LasWNmE8qZ7nbf/view"},"images":{"heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png","heroBackground":"https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_SummerMenu_QUITNGUYEN_DSCF2248-2048x1365.webp"},"photosAlbum":"https://photos.google.com/share/AF1QipMo_i-BHkrWq3lTQ9Y8FgUnRxWMIGk3grv1wUbo9vWuXWeyK0ZgNSrZ-l43W033vw?key=M0c2TzRWbzZBa2hGeEl0LWl3Z0N0QVF0aGU1VzN3","elementorColumnOutdentPx":0}'>
   <main id="primary-content">
     <section class="vsl-fooddrink-hero" id="food-hero" aria-labelledby="food-hero-heading">
       <div class="vsl-fooddrink-hero__bg" role="presentation" aria-hidden="true"></div>
@@ -1283,6 +1309,24 @@
   (function () {
     var root = document.querySelector('.vsl-fooddrink');
     if (!root) return;
+
+    /* Elementor/theme overflow:hidden on ancestors clips 100vw full-bleed and shows white sides */
+    function fixAncestorScrollTraps(el) {
+      var p = el.parentElement;
+      while (p && p !== document.documentElement && p !== document.body) {
+        var cs = getComputedStyle(p);
+        if (cs.overflowX === 'hidden') p.style.setProperty('overflow-x', 'clip', 'important');
+        if (cs.overflowY === 'hidden') p.style.setProperty('overflow-y', 'clip', 'important');
+        var cls = typeof p.className === 'string' ? p.className : '';
+        if (/elementor|e-con/.test(cls)) {
+          if ((parseFloat(cs.paddingLeft) || 0) > 0) p.style.setProperty('padding-left', '0', 'important');
+          if ((parseFloat(cs.paddingRight) || 0) > 0) p.style.setProperty('padding-right', '0', 'important');
+        }
+        p = p.parentElement;
+      }
+    }
+    fixAncestorScrollTraps(root);
+
     function setRealViewportHeight() {
       var vh = window.innerHeight * 0.01;
       root.style.setProperty('--vsl-vh', vh + 'px');
