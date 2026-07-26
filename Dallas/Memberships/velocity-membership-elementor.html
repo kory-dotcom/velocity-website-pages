@@ -1,9 +1,9 @@
 <script>
   window.VSL_CONFIG = {
     joinLinks: {
-      racer: 'https://members.velocitysimlounge.com/login?type=subscription&id=45fb8e9b-357c-43fa-31b3-08de7364d6fd&product=prod_U2IhFrfWjxEnaQ',
-      pro: 'https://members.velocitysimlounge.com/login?type=subscription&id=95225a4b-1747-4c49-31b4-08de7364d6fd&product=prod_U2J7KuCQDlrbLq',
-      ultimate: 'https://members.velocitysimlounge.com/login?type=subscription&id=d676ceb4-f587-48e9-31b5-08de7364d6fd&product=prod_U2J9JjlIBUf6kn'
+      racer: 'https://members.velocitysimlounge.com/signup?tier=racer',
+      pro: 'https://members.velocitysimlounge.com/signup?tier=pro',
+      ultimate: 'https://members.velocitysimlounge.com/signup?tier=ultimate'
     },
     images: {
       benefit1: 'https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x683.webp',
@@ -38,14 +38,18 @@
   .elementor-widget-html a[class*="vsl-"][class*="btn"],
   .elementor-widget-html a[class*="vsl-"][class*="__cta"],
   .elementor-widget-html a[class*="vsl-"][class*="-card"],
-  .elementor-widget-html a[class*="mem-tier"] {
+  .elementor-widget-html a[class*="mem-tier"],
+  .elementor-widget-html a.vsl-tier,
+  .elementor-widget-html a.vsl-tier * {
     text-decoration: none !important;
     text-decoration-line: none !important;
   }
   .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
   .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
   .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
-  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+  .elementor-widget-html a[class*="mem-tier"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a.vsl-tier:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a.vsl-tier:is(:hover, :focus, :focus-visible, :visited, :active) * {
     text-decoration: none !important;
     text-decoration-line: none !important;
   }
@@ -89,10 +93,13 @@
       font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
       color: var(--navy);
       box-sizing: border-box;
-      width: calc(100% + 2 * var(--vsl-outdent));
-      max-width: none;
-      margin-left: calc(-1 * var(--vsl-outdent));
-      margin-right: calc(-1 * var(--vsl-outdent));
+      position: relative;
+      /* Full-bleed past Elementor boxed containers (same pattern as Food & Drink / Party Packs).
+         Do NOT switch to width:100% / outdent:0 on mobile — that leaves white side gutters. */
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc((100% - 100vw) / 2);
+      margin-right: calc((100% - 100vw) / 2);
       margin-top: 0;
       margin-bottom: 0;
       padding-top: 0;
@@ -111,24 +118,59 @@
       padding-block-start: 0;
       padding-block-end: 0;
     }
-    /* Elementor: remove vertical padding on the HTML widget wrapper (white hairlines top + bottom) */
+    /* Elementor: kill section/column/widget padding that shows as white gaps above the hero */
     .elementor-widget-html .elementor-widget-container:has(> .vsl-membership) {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+    }
+    .elementor-section:has(.vsl-membership),
+    .elementor-container:has(.vsl-membership),
+    .elementor-column:has(.vsl-membership),
+    .elementor-column-wrap:has(.vsl-membership),
+    .elementor-widget-wrap:has(.vsl-membership),
+    .elementor-widget:has(.vsl-membership) {
+      padding: 0 !important;
       padding-top: 0 !important;
-      padding-bottom: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
       margin-top: 0 !important;
-      margin-bottom: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: auto !important;
+    }
+    .e-con:has(.vsl-membership),
+    .e-con-inner:has(.vsl-membership),
+    .e-con-inner > .elementor-widget:has(.vsl-membership),
+    .elementor-element:has(> .elementor-widget-container > .vsl-membership) {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      padding-top: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: none !important;
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: auto !important;
     }
     .vsl-membership *,
     .vsl-membership *::before,
     .vsl-membership *::after { box-sizing: border-box; }
 
+    /* Reinforce full-bleed on phones (overrides any stale WP paste that zeroed outdent) */
     @media (max-width: 800px) {
       .vsl-membership {
-        --vsl-outdent: 0px !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: calc((100% - 100vw) / 2) !important;
+        margin-right: calc((100% - 100vw) / 2) !important;
       }
     }
 
@@ -658,10 +700,16 @@
       display: flex;
       flex-direction: column;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      text-decoration: none;
+      text-decoration: none !important;
+      text-decoration-line: none !important;
       color: inherit;
       cursor: pointer;
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+    }
+    .vsl-tier:is(:hover, :focus, :focus-visible, :visited, :active),
+    .vsl-tier :is(p, span, li, em, strong, ul, hr) {
+      text-decoration: none !important;
+      text-decoration-line: none !important;
     }
     @media (hover: hover) and (pointer: fine) {
       .vsl-pricing__grid .vsl-tier:hover {
@@ -1244,7 +1292,7 @@
               <span class="vsl-faq__chev" aria-hidden="true"></span>
             </button>
             <div class="vsl-faq__panel" id="vsl-faq-panel-12" role="region" aria-labelledby="vsl-faq-btn-12" hidden>
-              <p class="vsl-faq__answer">To cancel your membership, please call Velocity (832-627-4981) or visit us in store.</p>
+              <p class="vsl-faq__answer">To cancel your membership, please call Velocity (972-209-5215) or visit us in store.</p>
             </div>
           </li>
         </ul>
@@ -1256,9 +1304,30 @@
   <script>
     (function () {
       var root = document.querySelector('.vsl-membership');
+      if (!root) return;
+
+      /* Elementor/theme overflow/padding on ancestors clips full-bleed and leaves white gaps */
+      function fixAncestorScrollTraps(el) {
+        var p = el.parentElement;
+        while (p && p !== document.documentElement && p !== document.body) {
+          var cs = getComputedStyle(p);
+          if (cs.overflowX === 'hidden') p.style.setProperty('overflow-x', 'clip', 'important');
+          if (cs.overflowY === 'hidden') p.style.setProperty('overflow-y', 'clip', 'important');
+          var cls = typeof p.className === 'string' ? p.className : '';
+          if (/elementor|e-con/.test(cls)) {
+            if ((parseFloat(cs.paddingLeft) || 0) > 0) p.style.setProperty('padding-left', '0', 'important');
+            if ((parseFloat(cs.paddingRight) || 0) > 0) p.style.setProperty('padding-right', '0', 'important');
+            if ((parseFloat(cs.paddingTop) || 0) > 0) p.style.setProperty('padding-top', '0', 'important');
+            if ((parseFloat(cs.marginTop) || 0) > 0) p.style.setProperty('margin-top', '0', 'important');
+          }
+          p = p.parentElement;
+        }
+      }
+      fixAncestorScrollTraps(root);
+
       var cfg = window.VSL_CONFIG || {};
       var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
-      if (root && px > 0) {
+      if (px > 0) {
         root.style.setProperty('--vsl-outdent', px + 'px');
       }
       var map = cfg.images || {};
