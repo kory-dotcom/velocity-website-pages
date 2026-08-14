@@ -1,6 +1,6 @@
 <!-- Velocity Sim Racing Lounge — Global Navbar Component (Elementor Custom HTML ready) -->
 <!-- Location helper inlined below — paste this navbar only; no separate vsl-location.js upload -->
-<!-- vsl-navbar build: 20260720b — bump when pasting to WordPress so caches pick up the change -->
+<!-- vsl-navbar build: 20260814f — bump when pasting to WordPress so caches pick up the change -->
 <script>
 if (!window.VSL_LOCATION) {
 (function (global) {
@@ -137,11 +137,24 @@ if (!window.VSL_LOCATION) {
     return p;
   }
 
+  function isLocationHub() {
+    try {
+      if (global.__VSL_SITE_REPLICA__) {
+        var p = new URLSearchParams(global.location.search).get('p') || 'home';
+        return p === 'home';
+      }
+      return normalizePathname(global.location.pathname) === '/';
+    } catch (_) {}
+    return false;
+  }
+
   function readFromPath() {
     try {
       var path = normalizePathname(global.location.pathname);
       if (/^\/dallas(\/|$)/.test(path)) return 'dallas';
-      if (path === '/' || INTERNAL_PATH_SLUGS[path]) return 'houston';
+      /* `/` is a routing hub, not Houston, for persistence */
+      if (path === '/') return null;
+      if (INTERNAL_PATH_SLUGS[path]) return 'houston';
     } catch (_) {}
     return null;
   }
@@ -161,18 +174,18 @@ if (!window.VSL_LOCATION) {
       if (!global.__VSL_SITE_REPLICA__) return null;
       var p = new URLSearchParams(global.location.search).get('p') || 'home';
       if (p.indexOf('dallas-') === 0 || p === 'dallas-home') return 'dallas';
+      if (p === 'home') return null;
       return 'houston';
     } catch (_) {}
     return null;
   }
 
   /**
-   * Preference priority:
-   * 1) explicit ?loc=
-   * 2) /dallas/... URL (commit Dallas)
-   * 3) Houston path → Houston (overrides a stale saved Dallas choice)
-   * 4) stored preference (localStorage + cookie) — survives browser restart
-   * 5) default Houston
+   * On-screen city follows the URL. Storage is a separate last-choice.
+   * 1) explicit ?loc= — commit and show
+   * 2) /dallas/... — show Dallas, do not write storage
+   * 3) Houston service URL — show Houston, do not write storage
+   * 4) hub `/` — show Houston (bootstrap may send an explicit Dallas pick to /dallas/)
    */
   function readLocation() {
     var fromUrl = readFromUrlParam();
@@ -183,25 +196,12 @@ if (!window.VSL_LOCATION) {
     }
 
     var fromPath = readFromPath() || readFromStagingPageKey();
-    var stored = readStoredLocation();
 
     if (fromPath === 'dallas') {
-      writeStoredLocation('dallas');
-      markLocationChosen();
       return 'dallas';
     }
 
-    if (fromPath === 'houston') {
-      /* URL is authoritative — switch off Dallas when viewing a Houston page */
-      if (stored === 'dallas') {
-        writeStoredLocation('houston');
-        markLocationChosen();
-      }
-      return 'houston';
-    }
-
-    if (stored) return stored;
-
+    /* Houston service URL or hub: display Houston. Do not clobber storage. */
     return 'houston';
   }
 
@@ -313,6 +313,19 @@ if (!window.VSL_LOCATION) {
     return loc;
   }
 
+  function hubRedirectUrl() {
+    if (global.__VSL_SITE_REPLICA__) {
+      try {
+        var u = new URL(global.location.href);
+        u.searchParams.set('p', 'dallas-home');
+        return u.pathname + u.search + (u.hash || '');
+      } catch (_) {
+        return 'index.html?p=dallas-home';
+      }
+    }
+    return DALLAS_PAGE;
+  }
+
   function bootstrap() {
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
@@ -321,11 +334,12 @@ if (!window.VSL_LOCATION) {
     }
     var fromPath = readFromPath() || readFromStagingPageKey();
     if (fromPath === 'dallas') {
-      setPreferredLocation('dallas', { source: 'bootstrap' });
       return;
     }
-    if (fromPath === 'houston' && readStoredLocation() === 'dallas') {
-      setPreferredLocation('houston', { source: 'bootstrap' });
+    /* Hub only: send an explicit Dallas pick to the Dallas home. */
+    if (isLocationHub() && readStoredLocation() === 'dallas') {
+      try { global.location.replace(hubRedirectUrl()); } catch (_) {}
+      return;
     }
   }
 
@@ -412,6 +426,7 @@ if (!window.VSL_LOCATION) {
     DALLAS_PAGES: DALLAS_PAGES,
     normalize: normalize,
     readFromPath: readFromPath,
+    isLocationHub: isLocationHub,
     readLocation: readLocation,
     readStoredLocation: readStoredLocation,
     hasChosenLocation: hasChosenLocation,
@@ -448,7 +463,7 @@ if (!window.VSL_LOCATION) {
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp" media="(max-width: 1024px)">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp" media="(max-width: 1024px)">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" media="(max-width: 1024px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg" media="(max-width: 1024px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp" media="(max-width: 1024px)">
 <script>
   /* Immediate image warmup (no waiting for DOMContentLoaded) — viewport-aware to avoid wasting mobile bandwidth */
   (function() {
@@ -459,14 +474,14 @@ if (!window.VSL_LOCATION) {
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
-      'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg'
+      'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
     ] : [
       'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
-      'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg'
+      'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
     ];
     urls.forEach(function(u) {
       var img = new Image();
@@ -1800,6 +1815,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   transition: color 0.2s ease !important;
   padding: 4px 8px !important;
 }
+.vsl-navbar__geo-panel--welcome .vsl-navbar__geo-dismiss {
+  display: none !important;
+}
 .vsl-navbar__geo-dismiss:hover,
 .vsl-navbar__geo-dismiss:focus-visible {
   color: #fff !important;
@@ -1912,6 +1930,61 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__overlay-menu--sub-open .vsl-navbar__overlay-item--explore-cards {
   opacity: 1;
   pointer-events: auto;
+}
+.vsl-navbar__overlay-item--member-login {
+  border-bottom: none;
+  padding: calc(14px * var(--vsl-ui-scale)) 0 calc(10px * var(--vsl-ui-scale));
+}
+.vsl-navbar__overlay-member-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(10px * var(--vsl-ui-scale));
+  width: 100%;
+  min-height: calc(48px * var(--vsl-ui-scale));
+  padding: calc(12px * var(--vsl-ui-scale)) calc(18px * var(--vsl-ui-scale));
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: calc(17px * var(--vsl-ui-scale));
+  font-style: italic;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: calc(8px * var(--vsl-ui-scale));
+  background: linear-gradient(105deg, #EE265F 0%, #c9184a 100%);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  transition: filter 0.18s ease, transform 0.14s ease, border-color 0.18s ease;
+}
+.vsl-navbar__overlay-member-login:hover,
+.vsl-navbar__overlay-member-login:focus-visible {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  filter: brightness(1.06);
+  border-color: rgba(255, 255, 255, 0.38);
+}
+.vsl-navbar__overlay-member-login:active {
+  filter: brightness(0.94);
+  transform: translateY(1px);
+}
+.vsl-navbar__overlay-member-login svg {
+  width: calc(18px * var(--vsl-ui-scale));
+  height: calc(18px * var(--vsl-ui-scale));
+  flex-shrink: 0;
+  fill: currentColor;
+}
+.vsl-navbar__overlay-member-login svg:last-child {
+  width: calc(14px * var(--vsl-ui-scale));
+  height: calc(14px * var(--vsl-ui-scale));
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .vsl-navbar__overlay-link {
   display: flex;
@@ -2177,9 +2250,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   background-repeat: no-repeat;
   border-color: rgba(210,32,38,0.35);
 }
-.vsl-navbar__overlay-card--contact {
-  background-color: #1a1d3a;
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-768x432.jpg');
+.vsl-navbar__overlay-card--ignition {
+  background-color: #1a1210;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2606,7 +2679,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   position: relative;
   z-index: 1;
 }
-.vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--contact):not(.vsl-navbar__mega-card--promos):hover {
+.vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--ignition):not(.vsl-navbar__mega-card--promos):hover {
   z-index: 2;
   background: rgba(72,92,204,0.3);
   border-color: rgba(238,38,95,0.62);
@@ -2650,10 +2723,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
-.vsl-navbar__mega-card--contact {
-  background-color: #1e2338;
+.vsl-navbar__mega-card--ignition {
+  background-color: #1a1210;
 }
-.vsl-navbar__mega-card--contact:hover {
+.vsl-navbar__mega-card--ignition:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
   transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
@@ -3463,7 +3536,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 </style>
 
-<nav class="vsl-navbar" data-vsl-build="20260713b" role="navigation" aria-label="Main navigation">
+<nav class="vsl-navbar" data-vsl-build="20260814f" role="navigation" aria-label="Main navigation">
   <div class="vsl-navbar__stripe" aria-hidden="true"></div>
   <div class="vsl-navbar__bar">
     <a href="https://velocitysimlounge.com/" class="vsl-navbar__logo" data-nav-home aria-label="Velocity Sim Racing Lounge — Home">
@@ -3475,7 +3548,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__link">Group Events</a>
       </li>
       <li class="vsl-navbar__item">
-        <a href="https://velocitysimlounge.com/food-and-drink/" class="vsl-navbar__link">Our Menu</a>
+        <a href="https://velocitysimlounge.com/food-and-drink/" class="vsl-navbar__link">Food &amp; Drink</a>
       </li>
       <li class="vsl-navbar__item">
         <button class="vsl-navbar__link vsl-navbar__race-trigger" type="button" data-race-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-mega-panel">
@@ -3550,7 +3623,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
             <div class="vsl-navbar__loc-detail-contact">
               <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer" class="vsl-navbar__loc-detail-address" aria-label="Open 9830 N Central Expy #400, Dallas in Google Maps">9830 N Central Expy #400<br>Dallas, TX 75231</a>
               <a href="tel:+19722095215" class="vsl-navbar__loc-detail-phone">972-209-5215</a>
-              <a href="mailto:dtxinfo@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">dtxinfo@velocitysimlounge.com</a>
+              <a href="mailto:infodtx@velocitysimlounge.com" class="vsl-navbar__loc-detail-email">infodtx@velocitysimlounge.com</a>
             </div>
             <div class="vsl-navbar__loc-detail-links">
               <a href="https://velocitysimlounge.com/dallas/group-events/" class="vsl-navbar__loc-detail-action vsl-navbar__loc-detail-action--event">
@@ -3660,10 +3733,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         <span class="vsl-navbar__mega-card__sub">Discounts, happy hour, and specials</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
-      <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__mega-card vsl-navbar__mega-card--contact">
-        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg" alt="" decoding="async" fetchpriority="high">
-        <span class="vsl-navbar__mega-card__title">Contact</span>
-        <span class="vsl-navbar__mega-card__sub">Hours, address, and help</span>
+      <a href="https://velocitysimlounge.com/ignition/" class="vsl-navbar__mega-card vsl-navbar__mega-card--ignition" data-nav-ignition target="_blank" rel="noopener noreferrer">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp" alt="" decoding="async" fetchpriority="high">
+        <span class="vsl-navbar__mega-card__title">Ignition</span>
+        <span class="vsl-navbar__mega-card__sub">Houston's hidden cocktail lounge</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
     </div>
@@ -3675,6 +3748,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       <a href="https://velocitysimlounge.com/blog/" class="vsl-navbar__mega-util">
         <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         Velocity News
+      </a>
+      <a href="https://members.velocitysimlounge.com/dashboard" class="vsl-navbar__mega-util" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        Member Login
       </a>
     </div>
   </div>
@@ -3704,12 +3781,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <span class="vsl-navbar__overlay-card__title">Promotions</span>
               <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
             </a>
-            <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--contact">
-              <span class="vsl-navbar__overlay-card__title">Contact</span>
+            <a href="https://velocitysimlounge.com/ignition/" class="vsl-navbar__overlay-card vsl-navbar__overlay-card--ignition" data-nav-ignition target="_blank" rel="noopener noreferrer">
+              <span class="vsl-navbar__overlay-card__title">Ignition</span>
               <span class="vsl-navbar__overlay-card__arrow"><svg viewBox="0 0 24 24"><path d="M10 6l6 6-6 6"/></svg></span>
             </a>
           </div>
         </div>
+      </li>
+      <li class="vsl-navbar__overlay-item vsl-navbar__overlay-item--member-login">
+        <a href="https://members.velocitysimlounge.com/dashboard" class="vsl-navbar__overlay-member-login" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          Member Login
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6"/></svg>
+        </a>
       </li>
       <li class="vsl-navbar__overlay-item">
         <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__overlay-link" data-mobile-overlay-events>Group Events</a>
@@ -3717,11 +3801,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       <li class="vsl-navbar__overlay-item">
         <a href="https://velocitysimlounge.com/corporate-events/" class="vsl-navbar__overlay-link">Corporate Events</a>
       </li>
-      <li class="vsl-navbar__overlay-item">
-        <a href="https://velocitysimlounge.com/contact/" class="vsl-navbar__overlay-link" data-mobile-overlay-contact>Contact</a>
-      </li>
       <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
-        <button class="vsl-navbar__overlay-link">Our Menu
+        <button class="vsl-navbar__overlay-link">Food &amp; Drink
           <svg class="vsl-navbar__overlay-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="vsl-navbar__overlay-sub">
@@ -3942,7 +4023,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   var primaryCtaLocation = navbar.querySelector('[data-book-now-location]');
   var mobileBarBook = navbar.querySelector('[data-mobile-bar-book]');
   var mobileBarEvents = navbar.querySelector('[data-mobile-bar-events]');
-  var mobileOverlayContact = navbar.querySelector('[data-mobile-overlay-contact]');
   var mobileOverlayEvents = navbar.querySelector('[data-mobile-overlay-events]');
   var mobileExploreBtn = navbar.querySelector('[data-mobile-explore]');
   var mobileDock = navbar.querySelector('.vsl-navbar__mcta');
@@ -4205,11 +4285,6 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     if (mobileOverlayEvents) {
       mobileOverlayEvents.href = resolveGroupEventsUrl(normalized);
     }
-    if (mobileOverlayContact) {
-      var contactHref = resolveContactUrl(normalized);
-      mobileOverlayContact.href = contactHref;
-      mobileOverlayContact.setAttribute('aria-label', 'Contact ' + config.label);
-    }
     navHomeLinks.forEach(function(link) {
       link.href = resolveHomeUrl(normalized);
     });
@@ -4412,8 +4487,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       locationBackdrop.classList.remove('vsl-navbar__geo-backdrop--welcome');
     }
     if (locationText) locationText.hidden = false;
+    if (dismissBtn) dismissBtn.hidden = false;
     restoreLocationPromptToNavbar();
     setLocationPromptAria(false);
+  }
+
+  function isWelcomePromptOpen() {
+    return !!(locationPanel && !locationPanel.hidden && locationPanel.classList.contains('vsl-navbar__geo-panel--welcome'));
   }
 
   function openWelcomeLocationPrompt() {
@@ -4424,13 +4504,32 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       locationText.textContent = '';
       locationText.hidden = true;
     }
+    if (dismissBtn) dismissBtn.hidden = true;
     openLocationPrompt({ welcome: true });
+  }
+
+  function applyIgnitionExploreLinks(loc) {
+    loc = normalizeLocation(loc);
+    var href = loc === 'dallas'
+      ? (window.__VSL_SITE_REPLICA__ ? 'index.html?p=dallas-contact' : 'https://velocitysimlounge.com/dallas/contact/')
+      : (window.__VSL_SITE_REPLICA__ ? 'index.html?p=ignition' : 'https://velocitysimlounge.com/ignition/');
+    navbar.querySelectorAll('[data-nav-ignition]').forEach(function(a) {
+      a.setAttribute('href', href);
+      if (loc === 'dallas') {
+        a.removeAttribute('target');
+        a.removeAttribute('rel');
+      } else {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
   }
 
   function applyNavLinks(loc) {
     loc = normalizeLocation(loc);
     if (window.__VSL_SITE_REPLICA__ && typeof window.VSL_REPLICA_APPLY_NAV_LINKS === 'function') {
       window.VSL_REPLICA_APPLY_NAV_LINKS(loc);
+      applyIgnitionExploreLinks(loc);
       return;
     }
     if (!window.VSL_LOCATION || !window.VSL_LOCATION.rewriteInternalHref) return;
@@ -4452,6 +4551,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     });
     var dallasLearn = navbar.querySelector('a[href="https://velocitysimlounge.com/dallas"]');
     if (dallasLearn) dallasLearn.setAttribute('href', 'https://velocitysimlounge.com/dallas/');
+    applyIgnitionExploreLinks(loc);
   }
 
   function getContactFaqUrl(loc) {
@@ -4505,7 +4605,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   function openLocationPicker(mode) {
     mode = mode || 'choose';
-    if (canUseIntegratedLocSwitcher()) {
+    if (locWrap && locInfoPanel) {
       openLocDropdown();
       showLocPanelSwitcher(mode);
       return;
@@ -4520,6 +4620,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     }
     openLocationPrompt();
   }
+
+  window.VSL_OPEN_LOCATION_PICKER = function(mode) {
+    openLocationPicker(mode || 'change');
+  };
 
   function handleLocationChoice(key, shouldPersist, options) {
     options = options || {};
@@ -4681,7 +4785,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
-    'https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_610Launch_QUITNGUYEN_DSCF3971-1024x683.jpg'
+    'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
   ];
   var megaImagesPromise = null;
 
@@ -5033,6 +5137,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   if (dismissBtn) {
     dismissBtn.addEventListener('click', function() {
+      if (isWelcomePromptOpen()) return;
       dismissForSession();
       closeLocationPrompt();
     });
@@ -5040,6 +5145,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 
   if (locationBackdrop) {
     locationBackdrop.addEventListener('click', function() {
+      if (isWelcomePromptOpen()) return;
       dismissForSession();
       closeLocationPrompt();
     });
@@ -5078,6 +5184,19 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   });
 
   document.addEventListener('click', function(e) {
+    var changeBtn = e.target.closest('[data-vsl-change-location]');
+    if (!changeBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (typeof window.VSL_OPEN_LOCATION_PICKER === 'function') {
+      window.VSL_OPEN_LOCATION_PICKER('change');
+      return;
+    }
+    var other = currentLocation === 'dallas' ? 'houston' : 'dallas';
+    handleLocationChoice(other, true);
+  });
+
+  document.addEventListener('click', function(e) {
     var inLocationUi =
       (locationPanel && locationPanel.contains(e.target)) ||
       (locationBackdrop && !locationBackdrop.hidden && locationBackdrop.contains(e.target));
@@ -5086,9 +5205,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       (locationBackdrop && !locationBackdrop.hidden && locationBackdrop.contains(e.target));
     var inMega = megaPanel && megaPanel.contains(e.target);
     var inRaceToggle = raceToggle && raceToggle.contains(e.target);
+    if (e.target.closest('[data-vsl-change-location]')) return;
     if (!navbar.contains(e.target) && !inMega) {
       closeAllDesktop();
-      if (locationPanel && !locationPanel.hidden && !clickInsideOpenPrompt) {
+      if (locationPanel && !locationPanel.hidden && !clickInsideOpenPrompt && !isWelcomePromptOpen()) {
         dismissForSession();
         closeLocationPrompt();
       }
@@ -5097,7 +5217,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     }
     if (locWrap && !locWrap.contains(e.target) && !inMega && !inRaceToggle) {
       closeLocDropdown();
-      if (locationPanel && !locationPanel.hidden && !inLocationUi) {
+      if (locationPanel && !locationPanel.hidden && !inLocationUi && !isWelcomePromptOpen()) {
         dismissForSession();
         closeLocationPrompt();
       }
@@ -5113,6 +5233,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         return;
       }
       if (locationPanel && !locationPanel.hidden) {
+        if (isWelcomePromptOpen()) return;
         dismissForSession();
         closeLocationPrompt();
         return;

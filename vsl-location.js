@@ -138,11 +138,24 @@
     return p;
   }
 
+  function isLocationHub() {
+    try {
+      if (global.__VSL_SITE_REPLICA__) {
+        var p = new URLSearchParams(global.location.search).get('p') || 'home';
+        return p === 'home';
+      }
+      return normalizePathname(global.location.pathname) === '/';
+    } catch (_) {}
+    return false;
+  }
+
   function readFromPath() {
     try {
       var path = normalizePathname(global.location.pathname);
       if (/^\/dallas(\/|$)/.test(path)) return 'dallas';
-      if (path === '/' || INTERNAL_PATH_SLUGS[path]) return 'houston';
+      /* `/` is a routing hub, not Houston, for persistence */
+      if (path === '/') return null;
+      if (INTERNAL_PATH_SLUGS[path]) return 'houston';
     } catch (_) {}
     return null;
   }
@@ -162,19 +175,18 @@
       if (!global.__VSL_SITE_REPLICA__) return null;
       var p = new URLSearchParams(global.location.search).get('p') || 'home';
       if (p.indexOf('dallas-') === 0 || p === 'dallas-home') return 'dallas';
+      if (p === 'home') return null;
       return 'houston';
     } catch (_) {}
     return null;
   }
 
   /**
-   * Preference priority:
-   * 1) explicit ?loc=
-   * 2) /dallas/... URL (commit Dallas)
-   * 3) stored preference (localStorage + cookie) — survives browser restart
-   * 4) Houston path with no stored preference → infer Houston (do not persist)
-   *
-   * Important: a plain Houston URL must NOT overwrite a saved Dallas choice.
+   * On-screen city follows the URL. Storage is a separate last-choice.
+   * 1) explicit ?loc= — commit and show
+   * 2) /dallas/... — show Dallas, do not write storage
+   * 3) Houston service URL — show Houston, do not write storage
+   * 4) hub `/` — show Houston (bootstrap may send an explicit Dallas pick to /dallas/)
    */
   function readLocation() {
     var fromUrl = readFromUrlParam();
@@ -185,19 +197,12 @@
     }
 
     var fromPath = readFromPath() || readFromStagingPageKey();
-    var stored = readStoredLocation();
 
     if (fromPath === 'dallas') {
-      writeStoredLocation('dallas');
-      markLocationChosen();
       return 'dallas';
     }
 
-    if (stored) return stored;
-
-    /* Infer Houston for links/copy — do not persist until the user chooses */
-    if (fromPath === 'houston') return 'houston';
-
+    /* Houston service URL or hub: display Houston. Do not clobber storage. */
     return 'houston';
   }
 
@@ -309,6 +314,19 @@
     return loc;
   }
 
+  function hubRedirectUrl() {
+    if (global.__VSL_SITE_REPLICA__) {
+      try {
+        var u = new URL(global.location.href);
+        u.searchParams.set('p', 'dallas-home');
+        return u.pathname + u.search + (u.hash || '');
+      } catch (_) {
+        return 'index.html?p=dallas-home';
+      }
+    }
+    return DALLAS_PAGE;
+  }
+
   function bootstrap() {
     var fromUrl = readFromUrlParam();
     if (fromUrl) {
@@ -317,10 +335,14 @@
     }
     var fromPath = readFromPath() || readFromStagingPageKey();
     if (fromPath === 'dallas') {
-      setPreferredLocation('dallas', { source: 'bootstrap' });
       return;
     }
-    /* Houston path alone: never auto-persist — welcome chooser handles first visit */
+    /* Hub only: send an explicit Dallas pick to the Dallas home. */
+    if (isLocationHub() && readStoredLocation() === 'dallas') {
+      try { global.location.replace(hubRedirectUrl()); } catch (_) {}
+      return;
+    }
+    /* Houston service URLs: show Houston, leave stored preference alone */
   }
 
   function bindLocationSync(applyFn) {
@@ -406,6 +428,7 @@
     DALLAS_PAGES: DALLAS_PAGES,
     normalize: normalize,
     readFromPath: readFromPath,
+    isLocationHub: isLocationHub,
     readLocation: readLocation,
     readStoredLocation: readStoredLocation,
     hasChosenLocation: hasChosenLocation,

@@ -161,7 +161,7 @@
     buyout: { houston: "buyout", dallas: "dallas-buyout" },
     about: { houston: "about", dallas: "dallas-home" },
     membership: { houston: "membership", dallas: "dallas-home" },
-    ignition: { houston: "ignition", dallas: "dallas-home" },
+    ignition: { houston: "ignition", dallas: "dallas-contact" },
     "summer-special": { houston: "summer-special", dallas: "dallas-home" },
     "fathers-day": { houston: "fathers-day", dallas: "dallas-home" }
   };
