@@ -464,12 +464,14 @@
 
   /* Phone: full-bleed reel, stacked CTAs */
   @media (max-width: 640px) {
+    /* Phones: follow the reel's own 9:16 shape so we show (almost) the whole frame
+       instead of a zoomed-in center crop; cap it so the next section still peeks. */
     .vsl-home-hero {
-      --vsl-hero-h: clamp(430px, calc((100vh - var(--vsl-nav-offset, 0px)) * 0.68), 640px);
+      --vsl-hero-h: clamp(430px, min(calc(100vw * 16 / 9), calc((100vh - var(--vsl-nav-offset, 0px)) * 0.9)), 720px);
     }
     @supports (height: 1svh) {
       .vsl-home-hero {
-        --vsl-hero-h: clamp(430px, calc((100svh - var(--vsl-nav-offset, 0px)) * 0.68), 640px);
+        --vsl-hero-h: clamp(430px, min(calc(100vw * 16 / 9), calc((100svh - var(--vsl-nav-offset, 0px)) * 0.9)), 720px);
       }
     }
     .vsl-home-hero__backdrop { display: none; }

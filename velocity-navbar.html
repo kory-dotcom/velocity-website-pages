@@ -600,6 +600,7 @@ if (!window.VSL_LOCATION) {
 .vsl-navbar__mcta-book,
 .vsl-navbar__mcta-events {
   display: inline-flex;
+  box-sizing: border-box; /* <a> defaults to content-box; keeps width:100% + padding inside the grid cell */
   align-items: center;
   justify-content: center;
   gap: 4px;
