@@ -3,6 +3,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
+<!-- Hero sizzler poster — this is the LCP element, fetch it first. Swap to the WordPress URL with the video (see HERO VIDEO note in the markup) -->
+<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v1-poster.webp" fetchpriority="high">
+
 <!-- Racers step card photos + “Our simulators” tier cards: early preload; low priority so hero LCP stays first -->
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-e1777680071473.webp" fetchpriority="low">
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/eat-and-drink-1024x640.webp" fetchpriority="low">
@@ -87,7 +90,7 @@
     overflow-x: clip;
     overflow-y: visible;
   }
-  .vsl-home:has(> main > .vsl-home-edr:first-of-type) {
+  .vsl-home:has(> main > .vsl-home-hero:first-of-type) {
     margin-top: var(--vsl-bleed-top);
     margin-bottom: var(--vsl-bleed-bottom);
   }
@@ -136,7 +139,7 @@
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
   }
-  .vsl-home a.vsl-home-promo-card__cta {
+  .vsl-home a.vsl-home-upcoming__card {
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
   }
@@ -152,1251 +155,373 @@
     display: block !important; visibility: visible !important; opacity: 1 !important;
   }
   .vsl-home, .vsl-home main, .vsl-home section,
-  .vsl-home-promo-card, .vsl-home-promo-card__body,
-  .vsl-home-edr, .vsl-home-btn {
+  .vsl-home-upcoming__card, .vsl-home-upcoming__track,
+  .vsl-home-hero, .vsl-home-btn {
     pointer-events: auto !important;
   }
-  #home-hero, #home-promos, #home-how-it-works, #home-built-for, #home-reviews {
+  #home-hero, #home-upcoming, #home-how-it-works, #home-built-for, #home-reviews {
     scroll-margin-top: 5rem;
   }
 
-  /* ── HERO: Eat. Drink. Race. animated triptych ── */
-  .vsl-home-edr {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - var(--vsl-nav-offset, 0px));
-    height: calc(100svh - var(--vsl-nav-offset, 0px));
-    max-height: calc(100vh - var(--vsl-nav-offset, 0px));
-    max-height: calc(100svh - var(--vsl-nav-offset, 0px));
-    overflow-x: clip;
-    overflow-y: visible;
-    isolation: isolate;
-    background: var(--navy);
+  /* ── HERO: sizzler video band ──────────────────────────────────────────────
+     Topgolf-style first screen: the portrait (9:16) sizzle reel owns the top
+     ~60% of the viewport and “What’s Coming Up” starts right underneath it.
+       • Phone (≤640px): the reel fills the band edge to edge (center crop);
+         kicker, EAT. DRINK. RACE. and the stacked CTAs sit over a navy scrim.
+       • Tablet + desktop (≥641px): the sharp reel is a centered 4:5 column at
+         full band height (center crop of the 9:16 frame) whose edges feather
+         into a blurred, dimmed copy of the same clip — the whole band reads as
+         one full-width video wall. Copy + CTAs are centered over it.
+     Video + poster URLs live in the markup — see the “HERO VIDEO” note there. ── */
+  .vsl-home-hero {
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
-    padding-bottom: var(--vsl-hero-finish-h);
-  }
-  .vsl-home-edr > * {
+    --vsl-hero-h: clamp(460px, calc((100vh - var(--vsl-nav-offset, 0px)) * 0.62), 720px);
+    --vsl-hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
-    z-index: 1;
-  }
-  .vsl-home-edr__eyebrow {
+    display: block;
+    width: 100%;
+    height: var(--vsl-hero-h);
     margin: 0;
-    padding: clamp(10px, 1.6vh, 18px) clamp(16px, 3vw, 28px) clamp(6px, 1vh, 12px);
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 0.82rem + 1.85vw, 2.55rem);
-    font-weight: 800;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    padding: 0;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--navy);
     color: #fff;
-    text-align: center;
-    line-height: 1.15;
-    background: transparent;
+  }
+  @supports (height: 1svh) {
+    .vsl-home-hero {
+      --vsl-hero-h: clamp(460px, calc((100svh - var(--vsl-nav-offset, 0px)) * 0.62), 720px);
+    }
+  }
+
+  /* Blurred video wall behind the sharp column (tablet + desktop) */
+  .vsl-home-hero__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .vsl-home-hero__backdrop-still,
+  .vsl-home-hero__backdrop-video {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 26%;
+    height: 26%;
+    transform: translate(-50%, -50%) scale(4.3);
+    object-fit: cover;
+    filter: blur(14px) saturate(1.35) brightness(0.5);
+    will-change: transform;
+    pointer-events: none;
+  }
+  .vsl-home-hero__backdrop-still:not([src]) { display: none; }
+  .vsl-home-hero__backdrop-video {
     opacity: 0;
-    transform: translateY(-8px);
+    transition: opacity 0.9s ease;
+  }
+  .vsl-home-hero.is-backdrop-ready .vsl-home-hero__backdrop-video { opacity: 1; }
+  .vsl-home-hero__glow {
+    position: absolute;
+    inset: -12%;
+    z-index: 1;
+    background:
+      radial-gradient(38% 55% at 14% 28%, rgba(238,38,95,0.34), transparent 70%),
+      radial-gradient(34% 52% at 86% 72%, rgba(41,56,147,0.60), transparent 70%),
+      radial-gradient(28% 40% at 70% 12%, rgba(253,199,12,0.12), transparent 70%);
+    mix-blend-mode: screen;
+    animation: vsl-hero-glow-drift 18s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes vsl-hero-glow-drift {
+    from { transform: translate3d(-2%, -1.5%, 0) rotate(-1deg); }
+    to   { transform: translate3d(2%, 1.5%, 0) rotate(1deg); }
+  }
+  .vsl-home-hero__vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(110% 90% at 50% 45%, transparent 45%, rgba(16,24,43,0.62) 100%);
+    pointer-events: none;
+  }
+
+  /* Sharp reel: 4:5 center crop of the 9:16 clip, feathered into the blur */
+  .vsl-home-hero__stage {
+    position: absolute;
+    inset: 0 0 var(--vsl-hero-finish-h) 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    pointer-events: none;
+  }
+  .vsl-home-hero__frame {
+    position: relative;
+    height: 100%;
+    width: calc((var(--vsl-hero-h) - var(--vsl-hero-finish-h)) * 0.8);
+    max-width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
+    opacity: 0;
+    transform: scale(1.03);
+    transition: opacity 0.7s var(--vsl-hero-ease), transform 1.2s var(--vsl-hero-ease);
+  }
+  .vsl-home-hero.is-in-view .vsl-home-hero__frame {
+    opacity: 1;
+    transform: none;
+  }
+  .vsl-home-hero__media {
+    position: absolute;
+    inset: 0;
+    background: var(--navy);
+  }
+  .vsl-home-hero__video {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    display: block !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    background: var(--navy);
+  }
+
+  /* Legibility scrim — every breakpoint */
+  .vsl-home-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(16,24,43,0.40) 0%,
+      rgba(16,24,43,0.00) 22%,
+      rgba(16,24,43,0.28) 42%,
+      rgba(16,24,43,0.82) 64%,
+      rgba(16,24,43,0.97) 100%
+    );
+  }
+
+  /* Copy: centered, weighted to the lower half so faces in the reel stay clear */
+  .vsl-home-hero__inner {
+    position: absolute;
+    inset: 0 0 var(--vsl-hero-finish-h) 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: clamp(16px, 3vh, 32px) clamp(20px, 4.5vw, 72px) clamp(24px, 4.6vh, 48px);
+    text-align: center;
+    pointer-events: none;
+  }
+  .vsl-home-hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(10px, 1.6vh, 18px);
+    width: 100%;
+    max-width: 980px;
+    pointer-events: auto;
+    position: relative;
+    isolation: isolate;
+  }
+  .vsl-home-hero__reveal {
+    opacity: 0;
+    transform: translateY(16px);
     transition:
-      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.15s,
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+      opacity 0.65s var(--vsl-hero-ease) var(--vsl-hero-d, 0s),
+      transform 0.65s var(--vsl-hero-ease) var(--vsl-hero-d, 0s);
   }
-  .vsl-home-edr__eyebrow-white {
-    color: #fff;
+  .vsl-home-hero.is-in-view .vsl-home-hero__reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .vsl-home-hero__kicker {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(1rem, 0.82rem + 0.7vw, 1.5rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    color: #fff !important;
     -webkit-text-fill-color: #fff;
+    text-shadow: 0 0 2px rgba(0,0,0,0.95), 0 1px 2px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7), 0 6px 22px rgba(16,24,43,0.9);
   }
-  .vsl-home-edr__eyebrow-accent {
+  .vsl-home-hero__kicker-accent {
     color: var(--magenta);
     -webkit-text-fill-color: var(--magenta);
   }
-  .vsl-home-edr__eyebrow-mark {
+  .vsl-home-hero__title {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 0.28em;
+    row-gap: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: clamp(2.7rem, 1.1rem + 5.4vw, 6.6rem);
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     color: #fff;
-    -webkit-text-fill-color: #fff;
-    text-decoration: underline;
-    text-decoration-color: var(--magenta);
-    text-decoration-thickness: 0.11em;
-    text-underline-offset: 0.18em;
-    text-decoration-skip-ink: none;
+    text-shadow: 0 0 2px rgba(0,0,0,0.95), 0 2px 3px rgba(0,0,0,0.9), 0 4px 10px rgba(0,0,0,0.65), 0 10px 34px rgba(16,24,43,0.9);
   }
-  .vsl-home-edr__eyebrow-tx {
-    color: var(--yellow);
-    -webkit-text-fill-color: var(--yellow);
-    white-space: nowrap;
-  }
-  .vsl-home-edr__eyebrow-tx-star {
+  .vsl-home a.vsl-home-hero__word {
     display: inline-block;
-    margin-right: 0.22em;
-    font-size: 0.85em;
-    line-height: 1;
-    vertical-align: 0.05em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease, -webkit-text-fill-color 0.3s ease, transform 0.35s var(--vsl-hero-ease);
   }
-  .vsl-home-edr.is-in-view .vsl-home-edr__eyebrow {
-    opacity: 0.95;
-    transform: translateY(0);
-  }
-  .vsl-home-edr__row {
-    position: relative;
-    flex: 1 1 65%;
-    min-height: clamp(200px, 38vh, 520px);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(4px, 0.8vw, 8px);
-    padding: clamp(14px, 2.2vh, 28px) clamp(8px, 1.2vw, 20px) clamp(4px, 0.8vh, 12px);
-    align-items: stretch;
-  }
-  .vsl-home-edr__col {
-    position: relative;
-    margin: 0;
-    border-radius: clamp(8px, 1vw, 14px);
-    overflow: hidden;
-    min-height: 0;
-    z-index: 1;
-    transition:
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: transform;
-  }
-  /* Anchor / compete variant of the hero column tile (Eat / Drink / Race) */
-  a.vsl-home-edr__col,
-  .vsl-home-edr__col--compete {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    cursor: pointer;
-  }
-  .vsl-home-edr__media {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: clamp(140px, 28vh, 420px);
-    background:
-      repeating-linear-gradient(
-        -28deg,
-        rgba(255,255,255,0.04) 0 2px,
-        transparent 2px 14px
-      ),
-      linear-gradient(145deg, var(--deep-indigo) 0%, var(--navy) 55%, #0a0f1f 100%);
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.75s cubic-bezier(0.65, 0.05, 0.2, 1);
-    will-change: clip-path;
-  }
-  .vsl-home-edr__media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse 70% 65% at 50% 50%,
-      rgba(0, 0, 0, 0.22) 0%,
-      rgba(0, 0, 0, 0.55) 100%
-    );
-    opacity: 0.85;
-    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .vsl-home-edr__media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transform: scale(1);
-    transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 0;
-  }
-  /* EAT: show more of the table / food (WP crop was too high on faces) */
-  .vsl-home-edr__col:first-child .vsl-home-edr__media img {
-    object-position: center 64%;
-  }
-  /* Hero tile hover — not gated on pointer:fine (staging iframes + Elementor preview) */
-  .vsl-home-edr__col:hover {
-    z-index: 5;
-    transform: translateY(-8px) scale(1.02);
-    box-shadow:
-      0 32px 64px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(255, 255, 255, 0.14),
-      0 0 72px rgba(238, 38, 95, 0.28),
-      0 0 120px rgba(41, 56, 147, 0.2);
-  }
-  .vsl-home-edr__col:hover .vsl-home-edr__media img {
-    transform: scale(1.05);
-  }
-  .vsl-home-edr__col:hover .vsl-home-edr__media::after {
-    opacity: 0.5;
-  }
-  .vsl-home-edr__col:hover .vsl-home-edr__word {
-    text-shadow:
-      0 2px 24px rgba(0, 0, 0, 0.88),
-      0 0 40px rgba(238, 38, 95, 0.7),
-      0 0 72px rgba(238, 38, 95, 0.4);
-  }
-  .vsl-home-edr__col:hover .vsl-home-edr__word-text,
-  .vsl-home-edr__col:hover .vsl-home-edr__dot {
-    color: var(--magenta) !important;
-    -webkit-text-fill-color: var(--magenta) !important;
-  }
-  /* Race tile: same lift/grow as Eat/Drink, keep gold glow */
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow:
-      0 0 0 2px rgba(253, 199, 12, 0.98),
-      0 32px 64px rgba(0, 0, 0, 0.55),
-      0 0 72px rgba(253, 199, 12, 0.62),
-      0 0 112px rgba(238, 38, 95, 0.42);
-  }
-  .vsl-home-edr__word {
-    position: absolute;
-    inset: 0;
-    z-index: 12;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: clamp(10%, 8vh, 24%);
-    padding-inline: clamp(6px, 1.5vw, 14px);
-    pointer-events: none;
-    white-space: nowrap;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-style: italic;
-    font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem);
-    letter-spacing: -0.01em;
-    line-height: 1;
-    text-transform: uppercase;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.55), 0 1px 0 rgba(0,0,0,0.4);
-    opacity: 0;
-    transform: translateY(22px);
-    transition:
-      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .vsl-home-edr__word-text {
-    color: #fff;
-    -webkit-text-fill-color: #fff;
-    transition: color 0.45s ease, -webkit-text-fill-color 0.45s ease;
-  }
-  .vsl-home-edr__dot {
-    display: inline;
-    color: #fff;
-    -webkit-text-fill-color: #fff;
-    transition: color 0.45s ease, -webkit-text-fill-color 0.45s ease;
-  }
-  .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
-    font-size: clamp(1.35rem, 0.82rem + 3.8vw, 4.75rem);
-  }
-  @media (min-width: 1025px) {
-    .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
-      font-size: clamp(2rem, 1.1rem + 5.5vw, 5.5rem);
-    }
-  }
-
-  /* ── Race column: Velocity Competitions (seasonal in-card promo) ── */
-  .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__compete-badge,
-  .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__compete-panel {
-    display: none !important;
-  }
-  .vsl-home-edr__compete-badge {
-    display: none;
-  }
-  .vsl-home-edr__compete-panel {
-    container-type: size;
-    container-name: vsl-compete;
-    --vsl-compete-word-band: clamp(calc(12% + 2rem), calc(10cqh + 1.5rem), calc(26% + 3.75rem));
-    --vsl-compete-pad-top: clamp(0.45rem, 6.5cqh, 1.85rem);
-    --vsl-compete-gap: clamp(2px, 1.2cqh, 9px);
-    position: absolute;
-    inset: 0;
-    z-index: 11;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: var(--vsl-compete-gap, clamp(5px, 0.85vh, 9px));
-    padding: clamp(6px, 1.2vw, 12px);
-    padding-top: var(--vsl-compete-pad-top, clamp(10%, 6vh, 16%));
-    padding-bottom: var(--vsl-compete-word-band, clamp(18%, 14vh, 32%));
-    text-align: center;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0.45s;
-    background: transparent;
-  }
-  /* Scrim: headline + buttons only — nothing below the word band */
-  .vsl-home-edr__compete-panel::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: var(--vsl-compete-word-band);
-    z-index: 0;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(16, 24, 43, 0.82) 0%,
-      rgba(16, 24, 43, 0.62) 42%,
-      rgba(16, 24, 43, 0.4) 100%
-    );
-  }
-  .vsl-home-edr__compete-kicker,
-  .vsl-home-edr__compete-title,
-  .vsl-home-edr__compete-sub,
-  .vsl-home-edr__compete-urgency,
-  .vsl-home-edr__compete-btns {
-    position: relative;
-    z-index: 1;
-    min-width: 0;
-  }
-  .vsl-home-edr__compete-kicker,
-  .vsl-home-edr__compete-title,
-  .vsl-home-edr__compete-sub,
-  .vsl-home-edr__compete-urgency {
-    flex-shrink: 1;
-  }
-  /* Photo vignette: top half only on the Race column */
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__media::after {
-    opacity: 1;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.24) 48%,
-      rgba(0, 0, 0, 0.06) 68%,
-      transparent 78%
-    );
-  }
-  /* Fade in with the Race column — same beat as the third-card word reveal */
-  .vsl-home-edr--compete-active.is-in-view .vsl-home-edr__compete-panel {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transition-delay: 1.2s;
-  }
-  /* Periodic gleam sweep — full Race card (photo + promo + word band) */
-  .vsl-home-edr--compete-active.is-in-view .vsl-home-edr__col--compete::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 12;
-    width: 42%;
-    height: 100%;
-    left: -90%;
-    background: linear-gradient(
-      118deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.08) 35%,
-      rgba(255, 255, 255, 0.28) 50%,
-      rgba(255, 255, 255, 0.08) 65%,
-      transparent 100%
-    );
-    transform: skewX(-22deg);
-    pointer-events: none;
-    animation: vsl-compete-gleam 4.2s ease-in-out infinite;
-    animation-delay: 1.2s;
-  }
-  /* Steady gold glow — waits for Race column wipe (delay 1.05s + duration 0.75s) */
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete {
-    box-shadow: none;
-  }
-  .vsl-home-edr--compete-active.is-in-view .vsl-home-edr__col--compete {
-    box-shadow:
-      0 0 0 2px rgba(253, 199, 12, 0.85),
-      0 12px 32px rgba(0, 0, 0, 0.42),
-      0 0 56px rgba(253, 199, 12, 0.45),
-      0 0 88px rgba(238, 38, 95, 0.28);
-    transition:
-      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1) 1.65s;
-  }
-  @keyframes vsl-compete-gleam {
-    0%, 72% { left: -90%; opacity: 0; }
-    78% { opacity: 1; }
-    100% { left: 130%; opacity: 0; }
-  }
-  @keyframes vsl-compete-race-word-in {
-    from {
-      clip-path: inset(100% 0 0 0);
-      opacity: 0;
-      transform: translateY(22px);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  /* Compete promo: RACE word clipped hidden until third-card stagger (animation, not transition) */
-  .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-    clip-path: inset(100% 0 0 0);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(22px);
-    animation: none;
-  }
-  .vsl-home-edr--compete-active.is-in-view .vsl-home-edr__col--compete .vsl-home-edr__word {
-    visibility: visible;
-    animation: vsl-compete-race-word-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
-  }
-  .vsl-home-edr__compete-kicker {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(0.72rem, 6.2cqi, 1.35rem);
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.95);
-    line-height: 1.12;
-    text-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.9),
-      0 2px 10px rgba(0, 0, 0, 0.65);
-    -webkit-font-smoothing: antialiased;
-  }
-  .vsl-home-edr__compete-title {
-    margin: 0 0 clamp(3px, 0.5cqh, 10px);
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 11.5cqi, 2.55rem);
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: var(--yellow);
-    line-height: 1.06;
-    text-shadow:
-      0 2px 14px rgba(253, 199, 12, 0.4),
-      0 1px 3px rgba(0, 0, 0, 0.9),
-      0 2px 12px rgba(0, 0, 0, 0.75);
-    -webkit-font-smoothing: antialiased;
-  }
-  .vsl-home-edr__compete-sub,
-  .vsl-home-edr__compete-urgency {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: clamp(0.68rem, 5.2cqi, 0.98rem);
-    font-weight: 600;
-    font-style: normal;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    line-height: 1.25;
-    -webkit-font-smoothing: antialiased;
-    text-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.92),
-      0 2px 8px rgba(0, 0, 0, 0.6);
-  }
-  .vsl-home-edr__compete-sub {
-    color: rgba(255, 255, 255, 0.94);
-  }
-  .vsl-home-edr__compete-urgency {
+  .vsl-home-hero__dot {
     color: var(--magenta);
-    font-weight: 700;
-    font-size: clamp(0.72rem, 5.6cqi, 1.05rem);
-    margin-bottom: clamp(4px, 0.6cqh, 8px);
-    text-shadow:
-      0 1px 3px rgba(0, 0, 0, 0.92),
-      0 0 12px rgba(238, 38, 95, 0.35);
+    -webkit-text-fill-color: var(--magenta);
+    transition: color 0.3s ease, -webkit-text-fill-color 0.3s ease;
   }
-  .vsl-home-edr__compete-btns {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: stretch;
-    gap: clamp(4px, 2.5cqi, 10px);
-    width: 100%;
-    margin-top: clamp(4px, 0.6cqh, 8px);
-    flex-shrink: 0;
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-home a.vsl-home-hero__word:hover {
+      color: var(--magenta) !important;
+      -webkit-text-fill-color: var(--magenta) !important;
+      transform: translateY(-4px);
+    }
+    .vsl-home a.vsl-home-hero__word:hover .vsl-home-hero__dot {
+      color: #fff;
+      -webkit-text-fill-color: #fff;
+    }
   }
-  .vsl-home-edr__compete-btn {
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
+  .vsl-home a.vsl-home-hero__word:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .vsl-home-hero__ctas {
     display: flex;
-    flex: none;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: clamp(1px, 0.4cqh, 3px);
-    border: 2px solid rgba(255, 255, 255, 0.28);
-    border-radius: clamp(6px, 2cqi, 12px);
-    padding: clamp(0.35rem, 1.4cqh, 0.75rem) clamp(0.2rem, 1.5cqi, 0.55rem);
-    min-height: clamp(2.55rem, 15cqh, 4rem);
-    max-height: clamp(2.75rem, 17cqh, 4.35rem);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: #fff;
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-    line-height: 1.1;
-    transition:
-      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.22s ease,
-      filter 0.22s ease,
-      border-color 0.22s ease,
-      background 0.22s ease;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      0 8px 22px rgba(0, 0, 0, 0.38);
+    gap: clamp(10px, 1.4vw, 16px);
+    margin-top: clamp(4px, 0.8vh, 10px);
   }
-  .vsl-home-edr__compete-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.16) 0%,
-      rgba(255, 255, 255, 0.04) 38%,
-      transparent 100%
-    );
-    opacity: 0.55;
-    pointer-events: none;
-    transition: opacity 0.22s ease;
+  .vsl-home-hero .vsl-home-btn { min-height: 48px; }
+  .vsl-home-hero .vsl-home-btn--secondary {
+    background: rgba(16,24,43,0.45);
+    border-color: rgba(255,255,255,0.28);
+    -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
   }
-  .vsl-home-edr__compete-btn::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 55%;
-    height: 100%;
-    background: linear-gradient(
-      105deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.12) 42%,
-      rgba(255, 255, 255, 0.42) 50%,
-      rgba(255, 255, 255, 0.12) 58%,
-      transparent 100%
-    );
-    transform: skewX(-18deg);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.22s ease;
-  }
-  .vsl-home-edr__compete-btn-title,
-  .vsl-home-edr__compete-btn-meta {
-    position: relative;
-    z-index: 1;
-    -webkit-font-smoothing: antialiased;
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.85),
-      0 2px 10px rgba(0, 0, 0, 0.55);
-  }
-  .vsl-home-edr__compete-btn-title {
-    font-size: clamp(0.72rem, 7.5cqi, 1.18rem);
-    line-height: 1.12;
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    text-wrap: balance;
-    letter-spacing: 0.04em;
-  }
-  .vsl-home-edr__compete-btn-meta {
-    font-family: var(--font-body, Inter, system-ui, sans-serif);
-    font-size: clamp(0.58rem, 5.2cqi, 0.85rem);
-    font-weight: 600;
-    font-style: normal;
-    letter-spacing: 0.05em;
-    opacity: 1;
-    line-height: 1.18;
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    text-transform: none;
-  }
-  /* Scale promo content down when the Race tile gets tight (zoom / short viewports) */
-  @container vsl-compete (max-height: 380px) {
-    .vsl-home-edr__compete-kicker { font-size: clamp(0.65rem, 5.6cqi, 1.15rem); }
-    .vsl-home-edr__compete-title { font-size: clamp(0.88rem, 10cqi, 1.85rem); }
-    .vsl-home-edr__compete-sub { font-size: clamp(0.6rem, 4.8cqi, 0.88rem); }
-    .vsl-home-edr__compete-urgency { font-size: clamp(0.64rem, 5cqi, 0.92rem); }
-    .vsl-home-edr__compete-btn {
-      min-height: clamp(1.95rem, 11cqh, 2.85rem);
-      max-height: clamp(2.1rem, 13cqh, 3rem);
-    }
-    .vsl-home-edr__compete-btn-title { font-size: clamp(0.62rem, 6.2cqi, 1rem); }
-    .vsl-home-edr__compete-btn-meta { font-size: clamp(0.52rem, 4.6cqi, 0.78rem); }
-  }
-  @container vsl-compete (max-height: 300px) {
-    .vsl-home-edr__compete-kicker { font-size: clamp(0.6rem, 5cqi, 1rem); letter-spacing: 0.05em; }
-    .vsl-home-edr__compete-title { font-size: clamp(0.82rem, 9cqi, 1.55rem); margin-bottom: 0; }
-    .vsl-home-edr__compete-sub { font-size: clamp(0.56rem, 4.4cqi, 0.8rem); }
-    .vsl-home-edr__compete-urgency { font-size: clamp(0.6rem, 4.6cqi, 0.85rem); margin-bottom: 0; }
-    .vsl-home-edr__compete-btn {
-      min-height: clamp(1.75rem, 9.5cqh, 2.45rem);
-      max-height: clamp(1.9rem, 11cqh, 2.65rem);
-      padding-block: clamp(0.22rem, 1cqh, 0.45rem);
-    }
-    .vsl-home-edr__compete-btn-title { font-size: clamp(0.58rem, 5.8cqi, 0.92rem); }
-    .vsl-home-edr__compete-btn-meta { font-size: clamp(0.5rem, 4.4cqi, 0.72rem); }
-  }
-  @container vsl-compete (max-height: 260px) {
-    .vsl-home-edr__compete-sub { display: none; }
-    .vsl-home-edr__compete-btns {
-      grid-template-columns: 1fr;
-      gap: clamp(2px, 0.8cqh, 5px);
-    }
-  }
-  @supports not (width: 1cqi) {
-    .vsl-home-edr__compete-panel {
-      --vsl-compete-word-band: clamp(calc(10% + 2.4rem), calc(8vh + 2rem), calc(24% + 3.75rem));
-      --vsl-compete-pad-top: clamp(10%, 6vh, 16%);
-      --vsl-compete-gap: clamp(5px, 0.85vh, 9px);
-    }
-    .vsl-home-edr__compete-kicker { font-size: clamp(0.95rem, 0.68rem + 0.72vw, 1.35rem); }
-    .vsl-home-edr__compete-title { font-size: clamp(1.55rem, 1.05rem + 1.85vw, 2.55rem); }
-    .vsl-home-edr__compete-sub { font-size: clamp(0.72rem, 0.52rem + 0.38vw, 0.98rem); }
-    .vsl-home-edr__compete-urgency { font-size: clamp(0.78rem, 0.56rem + 0.42vw, 1.05rem); }
-    .vsl-home-edr__compete-btn {
-      min-height: clamp(58px, 11vh, 84px);
-      max-height: none;
-      padding: clamp(10px, 1.6vh, 14px) clamp(6px, 0.8vw, 10px);
-    }
-    .vsl-home-edr__compete-btn-title { font-size: clamp(0.82rem, 0.58rem + 0.62vw, 1.12rem); }
-    .vsl-home-edr__compete-btn-meta { font-size: clamp(0.62rem, 0.44rem + 0.28vw, 0.78rem); }
+  .vsl-home-hero .vsl-home-btn--secondary:hover {
+    background: rgba(41,56,147,0.6);
+    border-color: rgba(255,255,255,0.45);
   }
 
-  /* Stacked only: promo fills tile — hide RACE word on phone/tablet */
-  @media (max-width: 1024px) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
-      --vsl-compete-word-band: clamp(0.45rem, 1.5cqh, 0.9rem);
-      justify-content: flex-start;
-      padding-bottom: clamp(0.45rem, 1.5cqh, 0.9rem);
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel::before {
-      bottom: 0;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-btns {
-      margin-top: auto;
-    }
-  }
-  /* Desktop: RACE word band like Eat/Drink; slightly larger promo headline */
-  @media (min-width: 1025px) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete {
-      container-type: size;
-      container-name: vsl-race-col;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-      display: flex;
-      pointer-events: none;
-      font-size: min(
-        clamp(2rem, 1.1rem + 5.5vw, 5.5rem),
-        28cqh
-      );
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-kicker {
-      font-size: clamp(0.82rem, 6.8cqi, 1.5rem);
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-title {
-      font-size: clamp(1.15rem, 12.5cqi, 2.85rem);
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-sub {
-      font-size: clamp(0.75rem, 5.8cqi, 1.08rem);
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-urgency {
-      font-size: clamp(0.82rem, 6.2cqi, 1.15rem);
-    }
-    /* Tile too short (zoom / short viewport): drop RACE so promo stays readable */
-    @container vsl-race-col (max-height: 340px) {
-      .vsl-home-edr__word {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-      .vsl-home-edr__compete-panel {
-        --vsl-compete-word-band: clamp(0.45rem, 1.5cqh, 0.9rem);
-        justify-content: flex-start;
-        padding-bottom: clamp(0.45rem, 1.5cqh, 0.9rem);
-      }
-      .vsl-home-edr__compete-panel::before {
-        bottom: 0;
-      }
-      .vsl-home-edr__compete-btns {
-        margin-top: auto;
-      }
-    }
-  }
-  @supports not (width: 1cqi) {
-    @media (min-width: 1025px) and (max-height: 720px) {
-      .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
-        --vsl-compete-word-band: clamp(0.45rem, 1.5vh, 0.9rem);
-        justify-content: flex-start;
-        padding-bottom: clamp(0.45rem, 1.5vh, 0.9rem);
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-panel::before {
-        bottom: 0;
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-btns {
-        margin-top: auto;
-      }
-    }
-  }
-  .vsl-home-edr__compete-btn--primary {
-    background: linear-gradient(135deg, #F23E72 0%, var(--magenta) 100%);
-  }
-  .vsl-home-edr__compete-btn--secondary {
-    background: linear-gradient(135deg, #34419E 0%, var(--blue) 100%);
-  }
-  .vsl-home-edr__compete-btn:focus-visible {
+  /* Autoplay-blocked play button (center) */
+  .vsl-home-hero__play:focus-visible {
     outline: 2px solid var(--yellow);
     outline-offset: 3px;
   }
-  .vsl-home-edr__compete-btn:active {
-    transform: translateY(0) scale(0.97);
-    filter: brightness(0.94);
-    border-color: rgba(255, 255, 255, 0.45);
+  .vsl-home-hero__play {
+    position: absolute;
+    left: 50%;
+    top: 33%;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 76px;
+    height: 76px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--magenta);
+    color: #fff;
+    box-shadow: 0 10px 40px rgba(238,38,95,0.45);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
   }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-home-edr__compete-btn:hover {
-      transform: scale(1.04);
-      filter: brightness(1.14) saturate(1.1);
-      border-color: rgba(255, 255, 255, 0.82);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        0 0 0 2px rgba(253, 199, 12, 0.75),
-        0 16px 36px rgba(0, 0, 0, 0.48),
-        0 0 32px rgba(255, 255, 255, 0.16);
-    }
-    .vsl-home-edr__compete-btn--primary:hover {
-      background: linear-gradient(135deg, #ff5a8a 0%, #ff2d6f 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        0 0 0 2px rgba(253, 199, 12, 0.85),
-        0 18px 40px rgba(238, 38, 95, 0.55),
-        0 0 48px rgba(238, 38, 95, 0.42);
-    }
-    .vsl-home-edr__compete-btn--secondary:hover {
-      background: linear-gradient(135deg, #4a5fd4 0%, #3d52c4 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.42),
-        0 0 0 2px rgba(253, 199, 12, 0.85),
-        0 18px 40px rgba(41, 56, 147, 0.62),
-        0 0 48px rgba(100, 130, 255, 0.38);
-    }
-    .vsl-home-edr__compete-btn:hover::before {
-      opacity: 1;
-    }
-    .vsl-home-edr__compete-btn:hover::after {
-      opacity: 1;
-      animation: vsl-compete-btn-shine 0.65s ease forwards;
-    }
-    @keyframes vsl-compete-btn-shine {
-      from { left: -120%; }
-      to { left: 140%; }
-    }
-    /* Race hover: faster full-card gleam — lift/grow comes from shared col:hover rules */
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete:hover::after {
-      animation-duration: 2.2s;
-    }
-  }
-  /* Stacked hero (phone + tablet): compete panel fills the Race card */
+  .vsl-home-hero__play svg { width: 34px; height: 34px; fill: currentColor; margin-left: 4px; }
+  .vsl-home-hero.is-autoplay-blocked .vsl-home-hero__play { display: inline-flex; }
+
+  /* Tablet + phone: the navbar's mobile dock owns the checkered finish (it hides
+     every *__finish at ≤1024), so drop its reserved height and use the navbar var */
   @media (max-width: 1024px) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete {
-      min-height: 0;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
-      --vsl-compete-word-band: clamp(0.25rem, 0.8cqh, 0.5rem);
-      --vsl-compete-pad-top: clamp(0.25rem, 2.5cqh, 0.75rem);
-      --vsl-compete-gap: clamp(2px, 0.8cqh, 8px);
-      padding-bottom: clamp(0.25rem, 0.8cqh, 0.55rem);
-      justify-content: flex-start;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-kicker,
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-title,
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-sub,
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-urgency {
-      flex-shrink: 1;
-      min-height: 0;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__compete-btns {
-      margin-top: auto;
-      flex-shrink: 0;
-      padding-top: clamp(2px, 0.6cqh, 8px);
-    }
-    .vsl-home-edr__compete-kicker {
-      font-size: clamp(0.68rem, 5cqi, 1rem);
-      letter-spacing: 0.05em;
-    }
-    .vsl-home-edr__compete-title {
-      font-size: clamp(0.95rem, 10cqi, 2rem);
-      margin-bottom: clamp(2px, 0.35cqh, 6px);
-      line-height: 1.04;
-    }
-    .vsl-home-edr__compete-sub {
-      font-size: clamp(0.62rem, 4.8cqi, 0.95rem);
-      line-height: 1.2;
-    }
-    .vsl-home-edr__compete-urgency {
-      font-size: clamp(0.66rem, 5cqi, 1rem);
-      margin-bottom: clamp(2px, 0.35cqh, 5px);
-    }
-    .vsl-home-edr__compete-btns {
-      gap: clamp(4px, 2cqi, 10px);
-    }
-    .vsl-home-edr__compete-btn {
-      min-height: clamp(2.1rem, 12cqh, 3.25rem);
-      max-height: clamp(2.85rem, 14cqh, 3.75rem);
-      padding: clamp(0.35rem, 1.2cqh, 0.6rem) clamp(0.22rem, 1.4cqi, 0.5rem);
-      border-width: 2.5px;
-      border-color: rgba(255, 255, 255, 0.42);
-      touch-action: manipulation;
-      cursor: pointer;
-      -webkit-tap-highlight-color: rgba(253, 199, 12, 0.35);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.28),
-        0 3px 0 rgba(0, 0, 0, 0.32),
-        0 8px 20px rgba(0, 0, 0, 0.42);
-    }
-    .vsl-home-edr__compete-btn:active {
-      transform: scale(0.97) translateY(2px);
-      box-shadow:
-        inset 0 2px 4px rgba(0, 0, 0, 0.28),
-        0 0 0 3px rgba(253, 199, 12, 0.72),
-        0 4px 12px rgba(0, 0, 0, 0.38);
-    }
-    .vsl-home-edr__compete-btn-title {
-      font-size: clamp(0.62rem, 5.8cqi, 1rem);
-      letter-spacing: 0.05em;
-    }
-    .vsl-home-edr__compete-btn-meta {
-      font-size: clamp(0.52rem, 4.4cqi, 0.76rem);
-      font-weight: 700;
-    }
-    /* Phone: stack promo buttons full-width — avoid cqh max-height caps that scrunch two-line labels */
-    @media (max-width: 640px) {
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-panel {
-        --vsl-compete-pad-top: clamp(0.2rem, 2cqh, 0.6rem);
-        --vsl-compete-gap: clamp(1px, 0.6cqh, 5px);
-      }
-      .vsl-home-edr__compete-btns {
-        grid-template-columns: 1fr;
-        gap: clamp(6px, 1.2cqh, 10px);
-      }
-      .vsl-home-edr__compete-title {
-        font-size: clamp(0.82rem, 8.5cqi, 1.75rem);
-        line-height: 1.02;
-      }
-      .vsl-home-edr__compete-sub {
-        display: none;
-        font-size: clamp(0.56rem, 4.2cqi, 0.88rem);
-      }
-      .vsl-home-edr__compete-urgency {
-        font-size: clamp(0.58rem, 4.5cqi, 0.92rem);
-        margin-bottom: clamp(2px, 0.35cqh, 4px);
-      }
-      .vsl-home-edr__compete-btn {
-        min-height: 3.125rem;
-        max-height: none;
-        padding-block: 0.5rem;
-        gap: 0.2rem;
-        border-width: 3px;
-        border-color: rgba(255, 255, 255, 0.55);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.35),
-          0 4px 0 rgba(0, 0, 0, 0.38),
-          0 10px 24px rgba(0, 0, 0, 0.48),
-          0 0 0 1px rgba(253, 199, 12, 0.35);
-      }
-      .vsl-home-edr__compete-btn-title {
-        font-size: clamp(0.68rem, 6cqi, 0.95rem);
-        line-height: 1.15;
-      }
-      .vsl-home-edr__compete-btn-meta {
-        font-size: clamp(0.58rem, 4.8cqi, 0.78rem);
-        line-height: 1.2;
-      }
-      .vsl-home-edr__compete-btn--primary {
-        background: linear-gradient(135deg, #ff4d82 0%, #ff1a6a 100%);
-      }
-      .vsl-home-edr__compete-btn--secondary {
-        background: linear-gradient(135deg, #4255c8 0%, #34419E 100%);
-      }
-      @container vsl-compete (max-height: 300px) {
-        .vsl-home-edr__compete-btn {
-          min-height: 2.875rem;
-          max-height: none;
-          padding-block: 0.42rem;
-        }
-      }
-    }
-    /* Tablet: larger stacked mobile — bigger type, wider gutters */
-    @media (min-width: 641px) {
-      .vsl-home-edr__compete-kicker {
-        font-size: clamp(0.88rem, 4.2cqi, 1.35rem);
-      }
-      .vsl-home-edr__compete-title {
-        font-size: clamp(1.35rem, 8.5cqi, 2.85rem);
-      }
-      .vsl-home-edr__compete-sub {
-        font-size: clamp(0.82rem, 4.5cqi, 1.2rem);
-      }
-      .vsl-home-edr__compete-urgency {
-        font-size: clamp(0.88rem, 4.8cqi, 1.28rem);
-      }
-      .vsl-home-edr__compete-btn {
-        min-height: clamp(2.65rem, 11cqh, 4rem);
-        max-height: clamp(2.9rem, 13cqh, 4.5rem);
-      }
-      .vsl-home-edr__compete-btn-title {
-        font-size: clamp(0.78rem, 4cqi, 1.15rem);
-      }
-      .vsl-home-edr__compete-btn-meta {
-        font-size: clamp(0.62rem, 3.4cqi, 0.88rem);
-      }
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete.is-tapped {
-      z-index: 5;
-      transform: translateY(-6px) scale(1.015);
-      box-shadow:
-        0 0 0 2px rgba(253, 199, 12, 0.98),
-        0 26px 52px rgba(0, 0, 0, 0.55),
-        0 0 72px rgba(253, 199, 12, 0.62),
-        0 0 112px rgba(238, 38, 95, 0.42);
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete.is-tapped .vsl-home-edr__media img {
-      transform: scale(1.05);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete::after {
-      animation: none !important;
-    }
-    .vsl-home-edr__compete-btn:hover::after {
-      animation: none !important;
+    .vsl-home-hero {
+      --vsl-nav-offset: var(--vsl-navbar-height, 101px);
+      --vsl-hero-finish-h: 0px;
     }
   }
 
-  .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(1) .vsl-home-edr__media {
-    clip-path: inset(0 0 0 0);
-    transition-delay: 0.6s;
-  }
-  .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(2) .vsl-home-edr__media {
-    clip-path: inset(0 0 0 0);
-    transition-delay: 0.95s;
-  }
-  .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(3) .vsl-home-edr__media {
-    clip-path: inset(0 0 0 0);
-    transition-delay: 1.3s;
-  }
-  .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(1) .vsl-home-edr__word {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.75s;
-  }
-  .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(2) .vsl-home-edr__word {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 1.1s;
-  }
-  /* Race word when competitions promo is off — compete-active uses animation above */
-  .vsl-home-edr:not(.vsl-home-edr--compete-active).is-in-view .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 1.45s;
-  }
-  .vsl-home-edr__ctas {
-    position: relative;
-    z-index: 4;
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: clamp(14px, 2.2vh, 24px) clamp(16px, 4vw, 32px) clamp(18px, 2.8vh, 32px);
-    max-width: 480px;
-    width: 100%;
-    margin-inline: auto;
-  }
-  .vsl-home-edr__ctas .vsl-home-btn {
-    width: min(360px, 100%);
-    justify-content: center;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(8px);
-    transition:
-      opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .vsl-home-edr__cta-events {
-    padding: 0.95em 2.4em;
-    font-size: clamp(0.98rem, 0.88rem + 0.35vw, 1.12rem);
-  }
-  /* Stagger by DOM order so top CTA always appears first after color swap */
-  .vsl-home-edr__ctas .vsl-home-btn:nth-child(1) {
-    transition-delay: 1.65s;
-  }
-  .vsl-home-edr__ctas .vsl-home-btn:nth-child(2) {
-    transition-delay: 1.73s;
-  }
-  .vsl-home-edr.is-in-view .vsl-home-edr__ctas .vsl-home-btn {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  /* Stacked hero (phone + tablet): one viewport; checkered finish on mobile dock */
-  @media (max-width: 1024px) {
-    .vsl-home-edr {
-      --vsl-nav-offset: var(--vsl-navbar-height, 101px);
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      height: calc(100svh - var(--vsl-nav-offset, 0px));
-      max-height: calc(100svh - var(--vsl-nav-offset, 0px));
-      min-height: 0;
-      overflow: hidden;
-      padding-bottom: 0;
+  /* Phone: full-bleed reel, stacked CTAs */
+  @media (max-width: 640px) {
+    .vsl-home-hero {
+      --vsl-hero-h: clamp(430px, calc((100vh - var(--vsl-nav-offset, 0px)) * 0.68), 640px);
     }
-    .vsl-home-edr__ctas {
-      display: none !important;
-    }
-    .vsl-home-edr__eyebrow {
-      position: relative;
-      z-index: 3;
-      flex-shrink: 0;
-      padding: clamp(8px, 1.4svh, 14px) clamp(12px, 4vw, 20px) clamp(14px, 2.2svh, 22px);
-      font-size: clamp(1.28rem, 0.9rem + 3.1vw, 1.85rem);
-      line-height: 1.08;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.5);
-    }
-    .vsl-home-edr__eyebrow-white,
-    .vsl-home-edr__eyebrow-accent {
-      display: block;
-      white-space: nowrap;
-    }
-    .vsl-home-edr__row {
-      position: relative;
-      z-index: 1;
-      grid-template-columns: 1fr;
-      grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-      min-height: 0;
-      gap: clamp(5px, 0.9svh, 8px);
-      margin-top: clamp(-20px, -2.4svh, -12px);
-      padding: 0 clamp(12px, 4vw, 20px) clamp(4px, 0.6svh, 8px);
-      overflow: hidden;
-    }
-    .vsl-home-edr__col {
-      min-height: 0;
-      height: 100%;
-    }
-    .vsl-home-edr__media {
-      min-height: 0;
-      height: 100%;
-      clip-path: inset(100% 0 0 0);
-    }
-    .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(1) .vsl-home-edr__media,
-    .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(2) .vsl-home-edr__media,
-    .vsl-home-edr.is-in-view .vsl-home-edr__col:nth-child(3) .vsl-home-edr__media {
-      clip-path: inset(0 0 0 0);
-    }
-    .vsl-home-edr__word {
-      font-size: clamp(1.35rem, 0.85rem + 5vw, 2.25rem);
-      padding-bottom: clamp(6%, 4svh, 14%);
-    }
-    /* Mobile: third card ("Race.") — only when competitions promo is off */
-    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__word-text,
-    .vsl-home-edr:not(.vsl-home-edr--compete-active) .vsl-home-edr__col:nth-child(3) .vsl-home-edr__dot {
-      color: var(--magenta) !important;
-      -webkit-text-fill-color: var(--magenta) !important;
-    }
-    /* Touch: suppress sticky :hover — .is-tapped handles lift/grow */
-    .vsl-home-edr__col:hover {
-      z-index: auto;
-      transform: none;
-      box-shadow: none;
-    }
-    .vsl-home-edr__col:hover .vsl-home-edr__media img {
-      transform: none;
-    }
-    .vsl-home-edr__col:hover .vsl-home-edr__media::after {
-      opacity: 0.85;
-    }
-    /* Mobile tap state — same look as desktop hover, sticky until another tile is tapped */
-    .vsl-home-edr__col {
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .vsl-home-edr__col.is-tapped {
-      z-index: 5;
-      transform: translateY(-6px) scale(1.015);
-      box-shadow:
-        0 26px 52px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.14),
-        0 0 56px rgba(238, 38, 95, 0.32),
-        0 0 100px rgba(41, 56, 147, 0.22);
-    }
-    .vsl-home-edr__col.is-tapped .vsl-home-edr__media img {
-      transform: scale(1.05);
-    }
-    .vsl-home-edr__col.is-tapped .vsl-home-edr__media::after {
-      opacity: 0.5;
-    }
-    .vsl-home-edr__col.is-tapped .vsl-home-edr__word {
-      text-shadow:
-        0 2px 24px rgba(0, 0, 0, 0.88),
-        0 0 40px rgba(238, 38, 95, 0.7),
-        0 0 72px rgba(238, 38, 95, 0.4);
-    }
-    .vsl-home-edr__col.is-tapped .vsl-home-edr__word-text,
-    .vsl-home-edr__col.is-tapped .vsl-home-edr__dot {
-      color: var(--magenta) !important;
-      -webkit-text-fill-color: var(--magenta) !important;
-    }
-    /* RACE column flips to brand gold when it's the tapped tile, with a matching gold glow */
-    .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__word-text,
-    .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__dot {
-      color: var(--yellow) !important;
-      -webkit-text-fill-color: var(--yellow) !important;
-    }
-    .vsl-home-edr__col:nth-child(3).is-tapped .vsl-home-edr__word {
-      text-shadow:
-        0 2px 24px rgba(0, 0, 0, 0.88),
-        0 0 40px rgba(253, 199, 12, 0.7),
-        0 0 72px rgba(253, 199, 12, 0.4);
-    }
-    .vsl-home-edr__ctas {
-      flex-shrink: 0;
-      gap: clamp(6px, 1svh, 10px);
-      padding: clamp(6px, 1svh, 10px) clamp(16px, 4vw, 32px) clamp(6px, 0.9svh, 10px);
-    }
-    .vsl-home-edr__ctas .vsl-home-btn {
-      padding-top: 0.72em;
-      padding-bottom: 0.72em;
-      font-size: clamp(0.82rem, 0.75rem + 0.8vw, 0.95rem);
-    }
-    /* Tablet: larger stacked mobile */
-    @media (min-width: 641px) {
-      .vsl-home-edr__eyebrow {
-        font-size: clamp(1.15rem, 0.88rem + 1.2vw, 1.75rem);
-        padding: clamp(8px, 1.2svh, 16px) clamp(24px, 5vw, 56px) clamp(6px, 0.8svh, 12px);
-      }
-      .vsl-home-edr__row {
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        gap: clamp(8px, 1.1svh, 12px);
-        padding-inline: clamp(24px, 5vw, 56px);
-      }
-      .vsl-home-edr__word {
-        font-size: clamp(1.65rem, 1rem + 3vw, 2.85rem);
-      }
-      .vsl-home-edr__ctas {
-        max-width: min(540px, 100%);
-        gap: clamp(8px, 1.1svh, 14px);
-        padding: clamp(8px, 1.1svh, 14px) clamp(24px, 5vw, 56px) clamp(8px, 1svh, 12px);
-      }
-      .vsl-home-edr__ctas .vsl-home-btn {
-        padding-top: 0.85em;
-        padding-bottom: 0.85em;
-        font-size: clamp(0.95rem, 0.85rem + 0.45vw, 1.12rem);
+    @supports (height: 1svh) {
+      .vsl-home-hero {
+        --vsl-hero-h: clamp(430px, calc((100svh - var(--vsl-nav-offset, 0px)) * 0.68), 640px);
       }
     }
-    /* Extra-tight scaling on short phones so nothing clips above the dock */
-    @media (max-height: 740px) {
-      .vsl-home-edr__eyebrow {
-        font-size: clamp(1.02rem, 0.72rem + 2.4vw, 1.45rem);
-        padding-block: clamp(5px, 0.8svh, 9px) clamp(9px, 1.5svh, 15px);
-      }
-      .vsl-home-edr__row {
-        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-        gap: clamp(4px, 0.7svh, 6px);
-        margin-top: clamp(-14px, -1.8svh, -8px);
-      }
-      .vsl-home-edr__word {
-        font-size: clamp(1.15rem, 0.75rem + 4vw, 1.85rem);
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-title {
-        font-size: clamp(0.78rem, 7.5cqi, 1.55rem);
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-sub {
-        font-size: clamp(0.52rem, 3.8cqi, 0.82rem);
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-urgency {
-        font-size: clamp(0.54rem, 4cqi, 0.85rem);
-      }
-      .vsl-home-edr--compete-active .vsl-home-edr__compete-btn {
-        min-height: clamp(1.85rem, 10cqh, 2.65rem);
-        max-height: clamp(2rem, 12cqh, 2.85rem);
-      }
-      @media (max-width: 640px) {
-        .vsl-home-edr--compete-active .vsl-home-edr__compete-sub {
-          display: none;
-        }
-        .vsl-home-edr--compete-active .vsl-home-edr__compete-btn {
-          min-height: 3.125rem;
-          max-height: none;
-          padding-block: 0.5rem;
-        }
-      }
-      .vsl-home-edr__ctas {
-        display: none !important;
-      }
-      .vsl-home-edr__ctas .vsl-home-btn {
-        padding-top: 0.62em;
-        padding-bottom: 0.62em;
-        font-size: clamp(0.78rem, 0.7rem + 0.6vw, 0.88rem);
-      }
+    .vsl-home-hero__backdrop { display: none; }
+    .vsl-home-hero__frame {
+      width: 100%;
+      -webkit-mask-image: none;
+              mask-image: none;
+    }
+    .vsl-home-hero__inner {
+      padding: 16px clamp(16px, 5vw, 24px) clamp(18px, 3.5vh, 28px);
+    }
+    .vsl-home-hero__copy { gap: 10px; }
+    .vsl-home-hero__copy > .vsl-home-hero__reveal { width: 100%; }
+    .vsl-home-hero__kicker { letter-spacing: 0.1em !important; }
+    .vsl-home-hero__title {
+      font-size: clamp(2.6rem, 0.9rem + 9.5vw, 3.9rem);
+      column-gap: 0.22em;
+    }
+    .vsl-home-hero__ctas {
+      width: 100%;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .vsl-home-hero__ctas .vsl-home-btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .vsl-home-hero__play {
+      top: 30%;
+      width: 68px;
+      height: 68px;
     }
   }
+  @media (max-width: 640px) and (max-height: 640px) {
+    .vsl-home-hero__title { font-size: clamp(2.2rem, 0.8rem + 8vw, 3rem); }
+    .vsl-home-hero__ctas { flex-direction: row; }
+    .vsl-home-hero__ctas .vsl-home-btn { width: auto; flex: 1 1 0; padding-inline: 1.2em; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .vsl-home-edr__media {
-      clip-path: inset(0 0 0 0) !important;
-      transition: none !important;
+    .vsl-home-hero__reveal,
+    .vsl-home-hero__frame {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
-    .vsl-home-edr__word,
-    .vsl-home-edr__eyebrow,
-    .vsl-home-edr__ctas .vsl-home-btn {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-    .vsl-home-edr--compete-active .vsl-home-edr__col--compete .vsl-home-edr__word {
-      animation: none !important;
-      clip-path: inset(0 0 0 0) !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: none !important;
-    }
-    .vsl-home-edr__col,
-    .vsl-home-edr__col:hover {
-      transform: none !important;
-      box-shadow: none !important;
-    }
-    .vsl-home-edr--compete-active.is-in-view .vsl-home-edr__col--compete {
-      box-shadow:
-        0 0 0 2px rgba(253, 199, 12, 0.85),
-        0 12px 32px rgba(0, 0, 0, 0.42),
-        0 0 56px rgba(253, 199, 12, 0.45),
-        0 0 88px rgba(238, 38, 95, 0.28) !important;
-      transition: none !important;
-    }
-    .vsl-home-edr__col:hover .vsl-home-edr__media img,
-    .vsl-home-edr__media img {
-      transform: none !important;
-      transition: none !important;
-    }
-    .vsl-home-edr__col:hover .vsl-home-edr__media::after,
-    .vsl-home-edr__media::after {
-      opacity: 0.85 !important;
-      transition: none !important;
-    }
+    .vsl-home-hero__glow { animation: none; }
+    .vsl-home a.vsl-home-hero__word,
+    .vsl-home-hero__dot { transition: none; }
   }
+
   .vsl-home-btn {
     display: inline-flex;
     align-items: center;
@@ -1456,380 +581,335 @@
     pointer-events: none;
   }
 
-  /* ── PROMO CARDS: Topgolf-inspired horizontally scrolling cards ── */
-  .vsl-home-promos {
+  /* ── WHAT’S COMING UP: per-lounge cards right under the hero ──────────────
+     Cards are plain HTML in the markup (see the “COMING UP” note there). Each
+     <li> carries data-vsl-city="houston" | "dallas" | "both" and the page only
+     shows the cards for its own lounge. Row scrolls sideways (snap) with arrow
+     buttons on hover-capable screens when it overflows. ── */
+  .vsl-home-upcoming {
     position: relative;
     background: var(--navy);
-    padding: clamp(48px, 8vw, 80px) 0 clamp(56px, 8vw, 88px);
+    color: var(--circuit-white);
+    padding: clamp(28px, 4.5vh, 44px) 0 clamp(40px, 6vw, 64px);
     overflow: visible;
   }
-  .vsl-home-promos__header {
-    text-align: center;
+  .vsl-home-upcoming__inner {
+    max-width: 1440px;
+    margin: 0 auto;
     padding: 0 clamp(20px, 5vw, var(--page-margin));
-    margin-bottom: clamp(28px, 4vw, 48px);
   }
-  .vsl-home-promos__title {
-    margin: 0 0 0.4em;
+  .vsl-home-upcoming__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px 24px;
+    margin-bottom: clamp(16px, 2.6vh, 26px);
+  }
+  .vsl-home-upcoming__eyebrow {
+    margin: 0 0 4px;
     font-family: var(--font-display);
-    font-size: var(--text-section);
+    font-size: clamp(0.8rem, 0.72rem + 0.3vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .vsl-home-upcoming__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1rem + 2.6vw, 2.9rem);
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
+    line-height: 1.05;
     color: #fff;
-    line-height: 1.1;
   }
-  .vsl-home-promos__title em {
+  .vsl-home-upcoming__title em {
     font-style: italic;
     display: inline-block;
     padding: 0 0.04em;
-    margin: 0 -0.02em;
     color: transparent;
     background: linear-gradient(90deg, var(--red), var(--magenta));
-    background-size: 100% 100%;
     -webkit-background-clip: text;
-    background-clip: text;
+            background-clip: text;
     -webkit-text-fill-color: transparent;
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
-  .vsl-home-promos__sub {
-    margin: 0;
-    font-size: var(--text-section-sub);
-    color: var(--mist);
-    max-width: 40em;
-    margin-inline: auto;
-    line-height: 1.55;
-  }
-  .vsl-home-promos__carousel {
-    position: relative;
-    padding: 0 clamp(48px, 6vw, 80px);
-  }
-  .vsl-home-promos__viewport {
-    position: relative;
-    z-index: 1;
-    overflow: clip;
-    border-radius: 4px;
-  }
-  .vsl-home-promos__track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: clamp(260px, 80vw, 360px);
-    gap: var(--gutter);
-    padding: 20px 12px;
-    transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
-  }
-  .vsl-home-promos__arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 20;
-    width: clamp(44px, 5vw, 56px);
-    height: clamp(44px, 5vw, 56px);
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
-    background: var(--magenta);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-  }
-  .vsl-home-promos__arrow svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-  }
-  .vsl-home-promos__arrow--prev {
-    left: clamp(4px, 1vw, 16px);
-    transform: translateY(-50%);
-  }
-  .vsl-home-promos__arrow--next {
-    right: clamp(4px, 1vw, 16px);
-    transform: translateY(-50%);
-  }
-  .vsl-home-promos__arrow--prev svg { transform: rotate(180deg); }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-home-promos__arrow:hover:not(:disabled) {
-      background: #EE265F;
-      border-color: rgba(255,255,255,0.5);
-      box-shadow: 0 6px 24px rgba(238,38,95,0.45);
-    }
-  }
-  .vsl-home-promos__arrow--prev:hover:not(:disabled) {
-    transform: translateY(-50%) scale(1.08);
-  }
-  .vsl-home-promos__arrow--next:hover:not(:disabled) {
-    transform: translateY(-50%) scale(1.08);
-  }
-  .vsl-home-promos__arrow:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-  /* Mobile: shorter cards, wider slide, full-width CTAs — avoid min-height trap */
-  @media (max-width: 640px) {
-    .vsl-home-promos {
-      padding: clamp(36px, 8vw, 52px) 0 clamp(44px, 9vw, 64px);
-    }
-    .vsl-home-promos__header {
-      margin-bottom: clamp(18px, 5vw, 28px);
-      padding-inline: clamp(16px, 4vw, 24px);
-    }
-    .vsl-home-promos__carousel {
-      padding: 0 clamp(32px, 9vw, 44px);
-    }
-    .vsl-home-promos__viewport {
-      border-radius: 8px;
-    }
-    .vsl-home-promos__track {
-      grid-auto-columns: min(88vw, 340px);
-      gap: clamp(14px, 3vw, 20px);
-      padding: 8px 10px 16px;
-    }
-    .vsl-home-promos__arrow {
-      width: 40px;
-      height: 40px;
-    }
-    .vsl-home-promos__arrow--prev { left: 2px; }
-    .vsl-home-promos__arrow--next { right: 2px; }
-    .vsl-home-promo-card {
-      min-height: 0;
-      border-radius: 14px;
-    }
-    .vsl-home-promo-card__media {
-      aspect-ratio: 4 / 3;
-    }
-    .vsl-home-promo-card__body {
-      padding: 14px 16px 16px;
-    }
-    .vsl-home-promo-card__name {
-      font-size: clamp(1.05rem, 0.88rem + 1.1vw, 1.3rem);
-      line-height: 1.12;
-    }
-    .vsl-home-promo-card__desc {
-      font-size: 0.9375rem;
-      line-height: 1.55;
-    }
-    .vsl-home-promo-card__cta {
-      width: 100%;
-      min-height: 44px;
-      box-sizing: border-box;
-      padding: 0.75em 1.15em;
-      font-size: clamp(0.78rem, 0.7rem + 0.35vw, 0.88rem);
-    }
-    .vsl-home-promo-card__badge {
-      font-size: 0.72rem;
-      padding: 6px 11px;
-      letter-spacing: 0.08em;
-      bottom: 10px;
-      left: 10px;
-      border-radius: 8px;
-    }
-  }
-
-  /* Individual Promo Card */
-  .vsl-home-promo-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border-radius: 16px;
-    overflow: clip;
-    background: #fff;
-    min-height: clamp(560px, 72vh, 760px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15), 0 1px 0 rgba(255,255,255,0.08) inset;
-    transition: box-shadow 0.35s ease;
-    scroll-snap-align: start;
-    transform-origin: center center;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-home-promo-card:hover {
-      z-index: 3;
-      box-shadow:
-        0 20px 50px rgba(16,24,43,0.25),
-        0 1px 0 rgba(255,255,255,0.9) inset;
-    }
-  }
-  .vsl-home-promo-card--touch-active {
-    z-index: 3;
-    box-shadow:
-      0 20px 50px rgba(16,24,43,0.25),
-      0 1px 0 rgba(255,255,255,0.9) inset;
-  }
-  @media (pointer: coarse) {
-    .vsl-home-promo-card {
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .vsl-home-promo-card--touch-active {
-      transform: scale(1.03) !important;
-    }
-  }
-
-  .vsl-home-promo-card__accent { display: none; }
-  .vsl-home-promo-card { border-top: 8px solid var(--magenta); }
-  .vsl-home-promo-card:nth-child(1) { border-top-color: var(--magenta); }
-  .vsl-home-promo-card:nth-child(2) { border-top-color: var(--blue); }
-  .vsl-home-promo-card:nth-child(3) { border-top-color: var(--yellow); }
-  .vsl-home-promo-card:nth-child(4) { border-top-color: var(--red); }
-  .vsl-home-promo-card:nth-child(5) { border-top-color: var(--magenta); }
-
-  .vsl-home-promo-card__media {
-    position: relative;
-    margin: 0;
-    flex-shrink: 0;
-    aspect-ratio: 4 / 5;
-    overflow: clip;
-    background: rgba(16,24,43,0.06);
-  }
-  .vsl-home-promo-card__media img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
-    transition: transform 0.5s ease;
-  }
-  .vsl-home-promo-card__badge {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    top: auto;
-    z-index: 3;
+  .vsl-home a.vsl-home-upcoming__more {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 8px 16px;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 0.92rem;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #fff;
-    border-radius: 10px;
-    line-height: 1;
-  }
-  .vsl-home-promo-card__badge--hot {
-    background: linear-gradient(135deg, var(--red), var(--magenta));
-  }
-  .vsl-home-promo-card__badge--new {
-    background: var(--blue);
-  }
-  .vsl-home-promo-card__badge--seasonal {
-    background: linear-gradient(135deg, var(--deep-indigo), var(--blue));
-  }
-  .vsl-home-promo-card__body {
-    padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 24px) clamp(18px, 2.2vw, 24px);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .vsl-home-promo-card__name {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: var(--text-card-title);
-    font-weight: 700;
-    font-style: italic;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    line-height: 1.15;
-    color: var(--navy);
-  }
-  .vsl-home-promo-card__desc {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: var(--text-card-body);
-    color: var(--slate-violet);
-    line-height: 1.5;
-    flex: 1;
-  }
-  .vsl-home-promo-card__cta {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     gap: 0.4em;
-    margin-top: auto;
-    padding: 0.7em 1.4em;
+    padding: 6px 0;
     font-family: var(--font-display);
+    font-size: clamp(0.85rem, 0.8rem + 0.2vw, 1rem);
     font-weight: 700;
-    font-size: clamp(0.8rem, 0.75rem + 0.2vw, 0.9rem);
     font-style: italic;
-    text-transform: uppercase;
     letter-spacing: 0.08em;
-    line-height: 1;
-    color: #fff;
-    background: var(--magenta);
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    transition: filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease, padding 0.25s ease;
-    text-decoration: none;
-    box-shadow: 0 4px 16px rgba(238,38,95,0.22);
-    overflow: clip;
+    text-transform: uppercase;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    text-decoration: none !important;
   }
-  /* Gleam streak that sweeps across the CTA periodically */
-  .vsl-home-promo-card__cta::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    left: -60%;
-    width: 40%;
-    height: 140%;
-    background: linear-gradient(
-      105deg,
-      transparent 20%,
-      rgba(255,255,255,0.08) 35%,
-      rgba(255,255,255,0.25) 48%,
-      rgba(255,255,255,0.35) 50%,
-      rgba(255,255,255,0.25) 52%,
-      rgba(255,255,255,0.08) 65%,
-      transparent 80%
-    );
-    pointer-events: none;
-    animation: vsl-cta-gleam 4.5s ease-in-out infinite;
-  }
-  @keyframes vsl-cta-gleam {
-    0%   { left: -60%; opacity: 0; }
-    8%   { opacity: 1; }
-    45%  { left: 120%; opacity: 1; }
-    55%  { opacity: 0; }
-    100% { left: 120%; opacity: 0; }
-  }
-  /* Card hover: make the CTA pop */
-  @media (hover: hover) and (pointer: fine) {
-    .vsl-home-promo-card:hover .vsl-home-promo-card__cta {
-      filter: brightness(1.1) saturate(1.08);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.18),
-        0 0 20px rgba(255, 80, 140, 0.35),
-        0 0 36px rgba(210, 32, 38, 0.25);
-      transform: translateY(-2px);
-      padding: 0.7em 1.8em;
-    }
-    .vsl-home-promo-card:hover .vsl-home-promo-card__cta svg {
-      transform: translateX(3px);
-    }
-  }
-  .vsl-home-promo-card__cta svg {
-    width: 14px; height: 14px; fill: currentColor;
+  .vsl-home a.vsl-home-upcoming__more svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
     transition: transform 0.25s ease;
   }
-  /* Direct CTA hover (stronger than card hover) */
+  .vsl-home a.vsl-home-upcoming__more:hover svg { transform: translateX(4px); }
+  .vsl-home a.vsl-home-upcoming__more:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+  }
+
+  .vsl-home-upcoming__carousel { position: relative; }
+  .vsl-home-upcoming__track {
+    display: flex;
+    gap: clamp(14px, 1.6vw, 22px);
+    margin: -8px 0 -16px;
+    padding: 8px 0 16px;               /* room for the hover lift + shadow */
+    list-style: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vsl-home-upcoming__track::-webkit-scrollbar { display: none; }
+  .vsl-home-upcoming__item {
+    flex: 0 0 auto;
+    width: clamp(240px, 21vw, 300px);
+    margin: 0;
+    padding: 0;
+    scroll-snap-align: start;
+  }
+  .vsl-home-upcoming__item[hidden] { display: none !important; }
+
+  .vsl-home a.vsl-home-upcoming__card {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 125%;              /* 4:5 card */
+    border-radius: 16px;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--deep-indigo);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+  }
+  .vsl-home-upcoming__card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .vsl-home-upcoming__card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      rgba(16,24,43,0.96) 0%,
+      rgba(16,24,43,0.62) 38%,
+      rgba(16,24,43,0.06) 66%,
+      rgba(16,24,43,0.22) 100%
+    );
+    pointer-events: none;
+  }
+  .vsl-home-upcoming__tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    background: var(--magenta);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+  }
+  .vsl-home-upcoming__tag--blue   { background: var(--blue); }
+  .vsl-home-upcoming__tag--red    { background: var(--red); }
+  .vsl-home-upcoming__tag--yellow { background: var(--yellow); color: var(--navy); -webkit-text-fill-color: var(--navy); }
+  .vsl-home-upcoming__body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 18px 18px;
+  }
+  .vsl-home-upcoming__when {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+  }
+  .vsl-home-upcoming__name {
+    margin: 0 !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.35rem, 1.1rem + 0.7vw, 1.7rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: 0.03em;
+    line-height: 1.05 !important;
+    text-transform: uppercase;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff;
+  }
+  .vsl-home-upcoming__desc {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: rgba(234,234,234,0.85);
+    -webkit-text-fill-color: rgba(234,234,234,0.85);
+  }
+  .vsl-home-upcoming__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    -webkit-text-fill-color: var(--magenta);
+  }
+  .vsl-home-upcoming__cta svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    transition: transform 0.25s ease;
+  }
   @media (hover: hover) and (pointer: fine) {
-    .vsl-home-promo-card__cta:hover {
-      filter: brightness(1.14) saturate(1.1);
-      box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.28),
-        0 0 24px rgba(255, 80, 140, 0.4),
-        0 0 42px rgba(210, 32, 38, 0.35);
-      transform: translateY(-3px) scale(1.03);
+    .vsl-home a.vsl-home-upcoming__card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
     }
-    .vsl-home-promo-card__cta:hover svg {
-      transform: translateX(5px);
+    .vsl-home a.vsl-home-upcoming__card:hover img { transform: scale(1.06); }
+    .vsl-home a.vsl-home-upcoming__card:hover .vsl-home-upcoming__cta svg { transform: translateX(4px); }
+  }
+  .vsl-home a.vsl-home-upcoming__card:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
+
+  /* Arrows: hover-capable screens only, and only when the row overflows */
+  .vsl-home-upcoming__arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    width: 48px;
+    height: 48px;
+    margin-top: -24px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(16,24,43,0.85);
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+  .vsl-home-upcoming__arrow svg { width: 20px; height: 20px; fill: currentColor; }
+  .vsl-home-upcoming__arrow--prev { left: -24px; }
+  .vsl-home-upcoming__arrow--prev svg { transform: rotate(180deg); }
+  .vsl-home-upcoming__arrow--next { right: -24px; }
+  .vsl-home-upcoming__arrow:disabled { opacity: 0; pointer-events: none; }
+  .vsl-home-upcoming__arrow:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 3px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-home-upcoming.has-overflow .vsl-home-upcoming__arrow { display: inline-flex; }
+    .vsl-home-upcoming__arrow:hover:not(:disabled) {
+      background: var(--magenta);
+      border-color: rgba(255,255,255,0.5);
     }
   }
-  .vsl-home-promo-card__cta:active {
-    filter: brightness(0.93);
-    transform: scale(0.99);
+
+  /* Empty state — only when no card matches this lounge */
+  .vsl-home-upcoming__empty {
+    display: none;
+    margin: 0;
+    padding: clamp(22px, 3vw, 32px);
+    border-radius: 16px;
+    border: 1px dashed rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.04);
+    color: var(--mist);
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .vsl-home .vsl-home-upcoming__empty a {
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    font-weight: 600;
+  }
+  .vsl-home-upcoming.is-empty .vsl-home-upcoming__empty { display: block; }
+  .vsl-home-upcoming.is-empty .vsl-home-upcoming__carousel { display: none; }
+
+  @media (max-width: 1024px) {
+    .vsl-home-upcoming__item { width: clamp(230px, 34vw, 300px); }
+  }
+  @media (max-width: 640px) {
+    .vsl-home-upcoming { padding: 22px 0 36px; }
+    .vsl-home-upcoming__inner { padding: 0; }
+    .vsl-home-upcoming__header {
+      padding: 0 clamp(16px, 5vw, 24px);
+      margin-bottom: 14px;
+    }
+    .vsl-home-upcoming__track {
+      gap: 12px;
+      margin: -4px 0 -12px;
+      padding: 4px clamp(16px, 5vw, 24px) 12px;
+      scroll-padding-inline: clamp(16px, 5vw, 24px);
+    }
+    .vsl-home-upcoming__item { width: min(72vw, 300px); }
+    .vsl-home-upcoming__body { padding: 14px 14px 16px; }
+    .vsl-home-upcoming__empty { margin: 0 clamp(16px, 5vw, 24px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-home a.vsl-home-upcoming__card,
+    .vsl-home-upcoming__card img,
+    .vsl-home-upcoming__cta svg { transition: none; }
+    .vsl-home a.vsl-home-upcoming__card:hover { transform: none; }
+    .vsl-home a.vsl-home-upcoming__card:hover img { transform: none; }
   }
 
   /* ── HOW IT WORKS: 3-step horizontal ── */
@@ -2518,8 +1598,6 @@
       transition-duration: 0.01ms !important;
       animation-duration: 0.01ms !important;
     }
-    .vsl-home-promo-card { transition: none; }
-    .vsl-home-promo-card:hover { transform: none; }
   }
   @media (prefers-reduced-motion: no-preference) {
     html { scroll-behavior: smooth; }
@@ -2528,123 +1606,156 @@
 
 <div class="vsl-home">
   <main>
-    <!-- ═══════ HERO: Eat. Drink. Race. ═══════ -->
-    <section class="vsl-home-edr vsl-home-edr--compete-active" id="home-hero" aria-labelledby="vsl-home-edr-eyebrow">
-      <script>
-        (function () {
-          var hero = document.getElementById('home-hero');
-          if (!hero) return;
-          if (Date.now() >= new Date('2026-07-04T11:00:00-05:00').getTime()) {
-            hero.classList.remove('vsl-home-edr--compete-active');
-          }
-        })();
-      </script>
-      <p class="vsl-home-edr__eyebrow" id="vsl-home-edr-eyebrow"><span class="vsl-home-edr__eyebrow-white"><span class="vsl-home-edr__eyebrow-city" data-vsl-city-name>Houston</span>'s Premier</span> <span class="vsl-home-edr__eyebrow-accent">Sim Racing Lounge</span></p>
-      <div class="vsl-home-edr__row">
-        <a href="https://velocitysimlounge.com/food-and-drink/#entrees" class="vsl-home-edr__col" aria-label="Eat — View food menu (entrees)">
-          <div class="vsl-home-edr__media">
-            <img data-recalc-dims="1" fetchpriority="high"
-              data-edr-img="eat"
-              src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/EAT.webp?resize=800%2C1000&#038;ssl=1"
-              srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-480x600.webp 480w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-600x750.webp 600w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-768x960.webp 768w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-800x1000.webp 800w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-1024x1280.webp 1024w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-1200x1500.webp 1200w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-1536x1920.webp 1536w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-2048x2560.webp 2048w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-2400x3000.webp 2400w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/EAT-2560x3200.webp 2560w"
-              sizes="(max-width: 1024px) 92vw, 33vw"
-              alt="Food and dining at Velocity Sim Racing Lounge"
-              width="800"
-              height="1000"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            >
+    <!-- ═══════ HERO: sizzler video band ═══════
+         HERO VIDEO — the reel is a web-optimized cut of Velocity-sizzle-reel-v1.mp4
+         (720×1280, ~7 MB). The 65 MB original in the Media Library is too heavy to
+         autoplay, so upload these two files (wp-admin → Media → Add New), both in
+         Home/assets/wordpress-upload/:
+             Velocity-sizzle-reel-v1-web.mp4   and   Velocity-sizzle-reel-v1-poster.webp
+         then swap the three URLs below to the WordPress “File URL”s:
+           1. <link rel="preload" … href="…poster.webp">   near the top of this file
+           2. <video … poster="…poster.webp">              (below)
+           3. <source src="…web.mp4">                      (below)
+         Re-cutting the reel? Export H.264 MP4, 1080×1920 or 720×1280, ≤3 Mbps, 15–30 s,
+         “fast start”, plus a matching .webp still for the poster. The reel plays muted
+         and the file has no audio track — there is no sound control by design. -->
+    <section class="vsl-home-hero" id="home-hero" aria-labelledby="vsl-home-hero-title">
+      <div class="vsl-home-hero__backdrop" aria-hidden="true">
+        <img class="vsl-home-hero__backdrop-still" alt="" decoding="async" loading="eager" data-vsl-hero-still>
+        <video class="vsl-home-hero__backdrop-video" data-vsl-hero-backdrop muted loop playsinline preload="none" tabindex="-1" disablepictureinpicture disableremoteplayback></video>
+        <div class="vsl-home-hero__glow"></div>
+        <div class="vsl-home-hero__vignette"></div>
+      </div>
+
+      <div class="vsl-home-hero__stage" aria-hidden="true">
+        <div class="vsl-home-hero__frame">
+          <div class="vsl-home-hero__media">
+            <video class="vsl-home-hero__video" data-vsl-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback
+              poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v1-poster.webp">
+              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v1-web.mp4" type="video/mp4">
+            </video>
           </div>
-          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Eat</span><span class="vsl-home-edr__dot">.</span></div>
-        </a>
-        <a href="https://velocitysimlounge.com/food-and-drink/#cocktails" class="vsl-home-edr__col" aria-label="Drink — View cocktails and bar menu">
-          <div class="vsl-home-edr__media">
-            <img data-recalc-dims="1"
-              data-edr-img="drink"
-              src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/DRINK.webp?resize=800%2C1000&#038;ssl=1"
-              srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-480x600.webp 480w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-600x750.webp 600w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-768x960.webp 768w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-800x1000.webp 800w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-1024x1280.webp 1024w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-1200x1500.webp 1200w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-1536x1920.webp 1536w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-2048x2560.webp 2048w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-2400x3000.webp 2400w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/DRINK-2560x3200.webp 2560w"
-              sizes="(max-width: 1024px) 92vw, 33vw"
-              alt="Drinks and bar at Velocity Sim Racing Lounge"
-              width="800"
-              height="1000"
-              loading="eager"
-              decoding="async"
-              fetchpriority="low"
-            >
-          </div>
-          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Drink</span><span class="vsl-home-edr__dot">.</span></div>
-        </a>
-        <div class="vsl-home-edr__col vsl-home-edr__col--compete" data-vsl-compete data-vsl-book-fallback="https://velocitysimlounge.com/book-now/" role="button" tabindex="0" aria-label="Race — Upcoming Velocity Competitions">
-          <div class="vsl-home-edr__media">
-            <img data-recalc-dims="1"
-              data-edr-img="race"
-              src="https://i0.wp.com/velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22.webp?resize=800%2C1000&#038;ssl=1"
-              srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-480x600.webp 480w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-600x750.webp 600w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-768x960.webp 768w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-800x1000.webp 800w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x1280.webp 1024w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1200x1500.webp 1200w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1536x1920.webp 1536w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2048x2560.webp 2048w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2400x3000.webp 2400w,
-                https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-2560x3200.webp 2560w"
-              sizes="(max-width: 1024px) 92vw, 33vw"
-              alt="Sim racing at Velocity Sim Racing Lounge"
-              width="800"
-              height="1000"
-              loading="eager"
-              decoding="async"
-              fetchpriority="low"
-            >
-          </div>
-          <span class="vsl-home-edr__compete-badge">Registration Open</span>
-          <div class="vsl-home-edr__compete-panel">
-            <p class="vsl-home-edr__compete-kicker">Upcoming Velocity</p>
-            <p class="vsl-home-edr__compete-title">Competitions</p>
-            <p class="vsl-home-edr__compete-sub">Great For All Levels Of Experience</p>
-            <p class="vsl-home-edr__compete-urgency">Limited Spots &mdash; Sign Up Today!</p>
-            <div class="vsl-home-edr__compete-btns">
-              <button type="button" class="vsl-home-edr__compete-btn vsl-home-edr__compete-btn--primary" data-vsl-compete-url="https://form.jotform.com/261647113297157">
-                <span class="vsl-home-edr__compete-btn-title">Champions League</span>
-                <span class="vsl-home-edr__compete-btn-meta">6 Weeks of Racing</span>
-              </button>
-              <button type="button" class="vsl-home-edr__compete-btn vsl-home-edr__compete-btn--secondary" data-vsl-compete-url="https://form.jotform.com/261725770505155">
-                <span class="vsl-home-edr__compete-btn-title">July 4th Race</span>
-                <span class="vsl-home-edr__compete-btn-meta">NASCAR Oval Race</span>
-              </button>
-            </div>
-          </div>
-          <div class="vsl-home-edr__word"><span class="vsl-home-edr__word-text">Race</span><span class="vsl-home-edr__dot">.</span></div>
         </div>
       </div>
-      <div class="vsl-home-edr__ctas">
-        <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary vsl-home-edr__cta-events" data-vsl-cta-key="book">Book Now</a>
-        <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary" data-vsl-cta-key="events">Book a Private Event</a>
+
+      <div class="vsl-home-hero__scrim" aria-hidden="true"></div>
+
+      <div class="vsl-home-hero__inner">
+        <div class="vsl-home-hero__copy">
+          <div class="vsl-home-hero__reveal" style="--vsl-hero-d: 0.15s;">
+            <h1 class="vsl-home-hero__kicker" id="vsl-home-hero-title"><span data-vsl-city-name>Houston</span>&rsquo;s Premier <span class="vsl-home-hero__kicker-accent">Sim Racing Lounge</span></h1>
+          </div>
+          <div class="vsl-home-hero__reveal" style="--vsl-hero-d: 0.28s;">
+            <p class="vsl-home-hero__title">
+              <a class="vsl-home-hero__word" href="https://velocitysimlounge.com/food-and-drink/#entrees" aria-label="Eat — view the food menu">Eat<span class="vsl-home-hero__dot" aria-hidden="true">.</span></a>
+              <a class="vsl-home-hero__word" href="https://velocitysimlounge.com/food-and-drink/#cocktails" aria-label="Drink — view cocktails and the bar menu">Drink<span class="vsl-home-hero__dot" aria-hidden="true">.</span></a>
+              <a class="vsl-home-hero__word" href="https://velocitysimlounge.com/book-now/" aria-label="Race — book a simulator">Race<span class="vsl-home-hero__dot" aria-hidden="true">.</span></a>
+            </p>
+          </div>
+          <div class="vsl-home-hero__reveal" style="--vsl-hero-d: 0.42s;">
+            <div class="vsl-home-hero__ctas">
+              <a href="https://velocitysimlounge.com/book-now/" class="vsl-home-btn vsl-home-btn--primary" data-vsl-cta-key="book">Book Now</a>
+              <a href="https://velocitysimlounge.com/group-events/" class="vsl-home-btn vsl-home-btn--secondary" data-vsl-cta-key="events">Book a Private Event</a>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <button type="button" class="vsl-home-hero__play" data-vsl-hero-play aria-label="Play video">
+        <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      </button>
       <div class="vsl-home-hero__finish" aria-hidden="true"></div>
     </section>
 
-    <!-- ═══════ PROMO CARDS — temporarily removed; CSS + carousel JS kept for easy restore ═══════ -->
+    <!-- ═══════ WHAT’S COMING UP — per-lounge cards right under the hero ═══════
+         COMING UP — HOW TO EDIT: copy one <li class="vsl-home-upcoming__item"> block, then
+         change its image, tag, date line, title, blurb, button text and link.
+           • data-vsl-city="houston"  → shows on the Houston homepage only
+           • data-vsl-city="dallas"   → shows on the Dallas homepage only
+           • data-vsl-city="both"     → shows on both
+         The same block lives in Home/ and Dallas/Home/ — keep the two identical; each page
+         filters for its own lounge. Card order = the order below; delete a card by deleting
+         its <li>. If nothing matches, the dashed “nothing on the calendar” note shows instead.
+         Images: 4:5 or squarer crops look best (≈800×1000). Tag colours: default magenta, or
+         add vsl-home-upcoming__tag--blue / --yellow / --red. -->
+    <section class="vsl-home-upcoming" id="home-upcoming" data-vsl-upcoming-city="houston" aria-labelledby="vsl-home-upcoming-title">
+      <div class="vsl-home-upcoming__inner">
+        <div class="vsl-home-upcoming__header">
+          <div>
+            <p class="vsl-home-upcoming__eyebrow">Coming up</p>
+            <h2 class="vsl-home-upcoming__title" id="vsl-home-upcoming-title">What&rsquo;s On in <em><span data-vsl-city-name>Houston</span></em></h2>
+          </div>
+          <a class="vsl-home-upcoming__more" href="https://velocitysimlounge.com/promotions/" data-vsl-cta-key="promotions">All deals &amp; promotions <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
+        </div>
+
+        <div class="vsl-home-upcoming__carousel">
+          <button type="button" class="vsl-home-upcoming__arrow vsl-home-upcoming__arrow--prev" data-vsl-upcoming-prev aria-label="Scroll back" disabled>
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </button>
+          <ul class="vsl-home-upcoming__track" data-vsl-upcoming-track>
+
+            <li class="vsl-home-upcoming__item" data-vsl-city="both">
+              <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/holiday-parties/">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/09/velocity-holiday-party-2026-ad.webp" alt="" loading="lazy" decoding="async">
+                <span class="vsl-home-upcoming__tag vsl-home-upcoming__tag--yellow">Early bird</span>
+                <div class="vsl-home-upcoming__body">
+                  <span class="vsl-home-upcoming__when">Book by Oct 31</span>
+                  <h3 class="vsl-home-upcoming__name">Holiday Parties 2026</h3>
+                  <p class="vsl-home-upcoming__desc">Company parties, team nights and full buyouts &mdash; book early and get a free Velocity YETI swag bag.</p>
+                  <span class="vsl-home-upcoming__cta">Plan your party <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                </div>
+              </a>
+            </li>
+
+            <li class="vsl-home-upcoming__item" data-vsl-city="dallas">
+              <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/leagues/">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" alt="" loading="lazy" decoding="async">
+                <span class="vsl-home-upcoming__tag vsl-home-upcoming__tag--blue">New</span>
+                <div class="vsl-home-upcoming__body">
+                  <span class="vsl-home-upcoming__when">Mondays &middot; Oct 19 &ndash; Nov 23</span>
+                  <h3 class="vsl-home-upcoming__name">6-Week GT3 League</h3>
+                  <p class="vsl-home-upcoming__desc">Six race nights, Rookies and Pro classes, 42 seats. $225 + tax &mdash; lights out Oct 19.</p>
+                  <span class="vsl-home-upcoming__cta">Claim a seat <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                </div>
+              </a>
+            </li>
+
+            <li class="vsl-home-upcoming__item" data-vsl-city="both">
+              <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/promotions/" data-vsl-cta-key="promotions">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Velocity_Spring_QUITNGUYEN_DSCF7809-1024x682.webp" alt="" loading="lazy" decoding="async">
+                <span class="vsl-home-upcoming__tag">Weekly</span>
+                <div class="vsl-home-upcoming__body">
+                  <span class="vsl-home-upcoming__when">Every Wednesday &middot; 6&ndash;11 PM</span>
+                  <h3 class="vsl-home-upcoming__name">Ladies Night</h3>
+                  <p class="vsl-home-upcoming__desc">One free race for the ladies, every Wednesday night. No reservation needed &mdash; just walk in.</p>
+                  <span class="vsl-home-upcoming__cta">See the deal <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                </div>
+              </a>
+            </li>
+
+            <li class="vsl-home-upcoming__item" data-vsl-city="both">
+              <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/gift-cards/">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/03/Velocity_VitolEvent_QUITNGUYEN_DSCF5845-1024x683.webp" alt="" loading="lazy" decoding="async">
+                <span class="vsl-home-upcoming__tag vsl-home-upcoming__tag--red">Gifting</span>
+                <div class="vsl-home-upcoming__body">
+                  <span class="vsl-home-upcoming__when">Any occasion</span>
+                  <h3 class="vsl-home-upcoming__name">Velocity Gift Cards</h3>
+                  <p class="vsl-home-upcoming__desc">Give the gift of speed &mdash; from $50, delivered by email in minutes.</p>
+                  <span class="vsl-home-upcoming__cta">Send one <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                </div>
+              </a>
+            </li>
+
+          </ul>
+          <button type="button" class="vsl-home-upcoming__arrow vsl-home-upcoming__arrow--next" data-vsl-upcoming-next aria-label="Scroll forward">
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </button>
+        </div>
+
+        <p class="vsl-home-upcoming__empty" data-vsl-upcoming-empty>Nothing on the calendar right now &mdash; follow <a href="https://www.instagram.com/velocitysimlounge/" target="_blank" rel="noopener">@velocitysimlounge</a> for the next drop.</p>
+      </div>
+    </section>
+
 
     <!-- ═══════ HOW IT WORKS ═══════ -->
     <section class="vsl-home-how" id="home-how-it-works">
@@ -2899,7 +2010,7 @@
   fixAncestorScrollTraps(root);
 
   function syncHeroNavOffset() {
-    var hero = root.querySelector('.vsl-home-edr');
+    var hero = root.querySelector('.vsl-home-hero');
     if (!hero) return;
     var navEl = document.querySelector('.vsl-navbar') || document.querySelector('[class*="preview-bar"]');
     var navH = navEl ? Math.round(navEl.getBoundingClientRect().height) : 0;
@@ -2985,98 +2096,169 @@
     }
     vslHomeApplyLocation('houston');
 
-    /* ── Eat. Drink. Race. hero: trigger staggered reveal when in view ── */
-    var hero = root.querySelector('.vsl-home-edr');
+    /* ── Hero: vertical sizzler video — reveal, muted autoplay, blurred backdrop, pause off-screen ── */
+    var hero = root.querySelector('.vsl-home-hero');
     if (hero) {
+      var heroReduceMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+      var heroBackdropMql = window.matchMedia ? window.matchMedia('(min-width: 641px)') : { matches: true };
+      var heroConn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+      var heroSaveData = !!heroConn.saveData;
+      var heroVideo = hero.querySelector('[data-vsl-hero-video]');
+      var heroBackdrop = hero.querySelector('[data-vsl-hero-backdrop]');
+      var heroStill = hero.querySelector('[data-vsl-hero-still]');
+      var heroPlayBtn = hero.querySelector('[data-vsl-hero-play]');
+
+      var revealHero = function () {
+        if (!hero.classList.contains('is-in-view')) hero.classList.add('is-in-view');
+      };
       if ('IntersectionObserver' in window) {
-        var revealHero = function () {
-          if (!hero.classList.contains('is-in-view')) {
-            hero.classList.add('is-in-view');
-          }
-        };
-        var edrIo = new IntersectionObserver(function(entries) {
-          entries.forEach(function(e) {
+        var heroIo = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
             if (e.isIntersecting) {
-              edrIo.disconnect();
-              /* Defer reveal so first paint always uses hidden word styles */
+              heroIo.disconnect();
+              /* Defer so first paint always uses the hidden reveal styles */
               setTimeout(revealHero, 50);
             }
           });
         }, { threshold: 0.15, rootMargin: '0px' });
-        edrIo.observe(hero);
+        heroIo.observe(hero);
       } else {
-        hero.classList.add('is-in-view');
+        revealHero();
       }
 
-      /* ── Mobile sticky tap-state: tap a tile to highlight; stays until another tap ── */
-      var competeEnd = new Date('2026-07-04T11:00:00-05:00');
-      var competeActive = Date.now() < competeEnd.getTime();
-      var competeCol = hero.querySelector('[data-vsl-compete]');
-      if (competeActive) {
-        hero.classList.add('vsl-home-edr--compete-active');
-      } else {
-        hero.classList.remove('vsl-home-edr--compete-active');
-      }
-      if (competeCol) {
-        competeCol.querySelectorAll('[data-vsl-compete-url]').forEach(function(btn) {
-          function openCompeteSignup(e) {
-            var url = btn.getAttribute('data-vsl-compete-url');
-            if (!url) return;
-            if (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
-            window.open(url, '_blank', 'noopener,noreferrer');
-          }
-          btn.addEventListener('click', openCompeteSignup, true);
-          btn.addEventListener('touchend', function(e) {
-            openCompeteSignup(e);
-          }, { passive: false, capture: true });
-        });
-        function goToBookFromRace(e) {
-          if (e && e.target.closest('[data-vsl-compete-url]')) return;
-          if (e) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-          var url = competeCol.getAttribute('data-vsl-book-fallback') || 'https://velocitysimlounge.com/book-now/';
-          window.location.assign(url);
-        }
-        competeCol.addEventListener('click', goToBookFromRace);
-        competeCol.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter' || e.key === ' ') goToBookFromRace(e);
-        });
-      }
+      var safePlay = function (v) {
+        try {
+          var p = v.play();
+          if (p && typeof p.catch === 'function') return p;
+        } catch (_) {}
+        return null;
+      };
 
-      var edrCols = hero.querySelectorAll('.vsl-home-edr__col');
-      if (edrCols.length) {
-        var edrTouchMql = (window.matchMedia && window.matchMedia('(hover: none), (max-width: 1024px)')) || null;
-        var isTouchView = function() {
-          return edrTouchMql ? edrTouchMql.matches : (window.innerWidth <= 640);
+      if (heroVideo) {
+        /* innerHTML-injected <video muted> does not always set the muted *property* (Chrome) — set it before autoplay */
+        heroVideo.muted = true;
+        heroVideo.defaultMuted = true;
+        heroVideo.playsInline = true;
+        heroVideo.setAttribute('muted', '');
+
+        var heroPosterUrl = heroVideo.getAttribute('poster') || '';
+        var heroSourceEl = heroVideo.querySelector('source');
+        var heroSrcUrl = function () {
+          return heroVideo.currentSrc || (heroSourceEl && heroSourceEl.getAttribute('src')) || heroVideo.getAttribute('src') || '';
         };
-        edrCols.forEach(function(col) {
-          col.addEventListener('click', function(e) {
-            if (!isTouchView()) return;
-            if (competeActive && col.hasAttribute('data-vsl-compete') && e.target.closest('[data-vsl-compete-url]')) {
-              return;
-            }
-            edrCols.forEach(function(other) {
-              if (other !== col) other.classList.remove('is-tapped');
+
+        heroVideo.addEventListener('playing', function () {
+          hero.classList.remove('is-autoplay-blocked');
+          hero.classList.add('is-playing');
+        });
+        heroVideo.addEventListener('pause', function () {
+          hero.classList.remove('is-playing');
+        });
+
+        var resumeHero = function (e) {
+          if (e) { e.preventDefault(); e.stopPropagation(); }
+          var p = safePlay(heroVideo);
+          if (p) p.catch(function () {});
+          if (heroBackdrop && heroBackdrop.getAttribute('src')) {
+            var bp = safePlay(heroBackdrop);
+            if (bp) bp.catch(function () {});
+          }
+        };
+        if (heroPlayBtn) heroPlayBtn.addEventListener('click', resumeHero);
+
+        if (heroReduceMotion.matches || heroSaveData) {
+          /* Reduced motion / data saver: no autoplay — poster + play button instead */
+          heroVideo.removeAttribute('autoplay');
+          heroVideo.autoplay = false;
+          if (heroSaveData) heroVideo.preload = 'metadata';
+          try { heroVideo.pause(); } catch (_) {}
+          hero.classList.add('is-autoplay-blocked');
+        } else {
+          var heroStart = safePlay(heroVideo);
+          if (heroStart) {
+            heroStart.catch(function () {
+              /* Autoplay blocked (e.g. iOS Low Power Mode) — poster stays, show the play button */
+              if (heroVideo.paused) hero.classList.add('is-autoplay-blocked');
             });
-            col.classList.add('is-tapped');
-          });
-        });
-        var clearEdrTaps = function() {
-          if (isTouchView()) return;
-          edrCols.forEach(function(c) { c.classList.remove('is-tapped'); });
-        };
-        if (edrTouchMql) {
-          if (typeof edrTouchMql.addEventListener === 'function') {
-            edrTouchMql.addEventListener('change', clearEdrTaps);
-          } else if (typeof edrTouchMql.addListener === 'function') {
-            edrTouchMql.addListener(clearEdrTaps);
           }
         }
+
+        /* Blurred backdrop (tablet + desktop only): poster still first, then the same clip once it plays */
+        if (heroStill && heroPosterUrl && heroBackdropMql.matches) {
+          heroStill.setAttribute('src', heroPosterUrl);
+        }
+        var heroBackdropArmed = false;
+        var armHeroBackdrop = function () {
+          if (heroBackdropArmed || !heroBackdrop) return;
+          if (!heroBackdropMql.matches || heroReduceMotion.matches || heroSaveData) return;
+          var src = heroSrcUrl();
+          if (!src) return;
+          heroBackdropArmed = true;
+          if (heroStill && heroPosterUrl && !heroStill.getAttribute('src')) heroStill.setAttribute('src', heroPosterUrl);
+          heroBackdrop.muted = true;
+          heroBackdrop.defaultMuted = true;
+          heroBackdrop.loop = true;
+          heroBackdrop.playsInline = true;
+          heroBackdrop.setAttribute('muted', '');
+          heroBackdrop.addEventListener('playing', function () { hero.classList.add('is-backdrop-ready'); });
+          var syncBackdropTime = function () {
+            try {
+              if (Math.abs(heroBackdrop.currentTime - heroVideo.currentTime) > 0.5) {
+                heroBackdrop.currentTime = heroVideo.currentTime;
+              }
+            } catch (_) {}
+          };
+          heroVideo.addEventListener('play', function () {
+            syncBackdropTime();
+            var p = safePlay(heroBackdrop);
+            if (p) p.catch(function () {});
+          });
+          heroVideo.addEventListener('pause', function () {
+            try { heroBackdrop.pause(); } catch (_) {}
+          });
+          heroVideo.addEventListener('seeked', syncBackdropTime);
+          heroVideo.addEventListener('timeupdate', syncBackdropTime);
+          heroBackdrop.src = src;
+          if (!heroVideo.paused) {
+            var bp0 = safePlay(heroBackdrop);
+            if (bp0) bp0.catch(function () {});
+          }
+        };
+        armHeroBackdrop();
+        if (typeof heroBackdropMql.addEventListener === 'function') {
+          heroBackdropMql.addEventListener('change', armHeroBackdrop);
+        } else if (typeof heroBackdropMql.addListener === 'function') {
+          heroBackdropMql.addListener(armHeroBackdrop);
+        }
+
+        /* Battery / CPU: pause when the hero scrolls out of view or the tab is hidden; resume when back */
+        var heroWasPlaying = false;
+        var heroInView = true;
+        var pauseHeroForIdle = function () {
+          if (!heroVideo.paused) {
+            heroWasPlaying = true;
+            try { heroVideo.pause(); } catch (_) {}
+          }
+        };
+        var resumeHeroFromIdle = function () {
+          if (heroWasPlaying && heroInView && !document.hidden) {
+            heroWasPlaying = false;
+            var p = safePlay(heroVideo);
+            if (p) p.catch(function () {});
+          }
+        };
+        if ('IntersectionObserver' in window) {
+          var heroVisIo = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              heroInView = en.isIntersecting;
+              if (en.isIntersecting) resumeHeroFromIdle(); else pauseHeroForIdle();
+            });
+          }, { threshold: 0.05 });
+          heroVisIo.observe(hero);
+        }
+        document.addEventListener('visibilitychange', function () {
+          if (document.hidden) pauseHeroForIdle(); else resumeHeroFromIdle();
+        });
       }
     }
 
@@ -3114,178 +2296,55 @@
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    /* ── Promo carousel arrows (translate-based for overflow:hidden on desktop) ── */
-    var promoTrack = root.querySelector('[data-promos-track]');
-    var promoPrev = root.querySelector('[data-promos-prev]');
-    var promoNext = root.querySelector('[data-promos-next]');
-    if (promoTrack && promoPrev && promoNext) {
-      var promoOffset = 0;
-
-      function promoCardWidth() {
-        var card = promoTrack.querySelector('.vsl-home-promo-card');
-        if (!card) return 320;
-        var style = getComputedStyle(promoTrack);
-        var gap = parseFloat(style.columnGap) || parseFloat(style.gap) || 24;
-        return card.offsetWidth + gap;
-      }
-      function promoMaxOffset() {
-        var viewport = promoTrack.parentElement;
-        var viewW = viewport ? viewport.clientWidth : promoTrack.clientWidth;
-        var cards = promoTrack.querySelectorAll('.vsl-home-promo-card');
-        if (!cards.length) return 0;
-        var cw = promoCardWidth();
-        var totalW = (cw * cards.length) - (cw - cards[0].offsetWidth);
-        return Math.max(0, totalW - viewW);
-      }
-      function applyPromoOffset(smooth) {
-        promoTrack.style.transition = smooth ? '' : 'none';
-        promoTrack.style.transform = 'translateX(' + (-promoOffset) + 'px)';
-        updatePromoArrows();
-      }
-      function updatePromoArrows() {
-        var max = promoMaxOffset();
-        promoPrev.disabled = promoOffset <= 1;
-        promoNext.disabled = promoOffset >= max - 1;
-      }
-      promoPrev.addEventListener('click', function() {
-        promoOffset = Math.max(0, promoOffset - promoCardWidth());
-        applyPromoOffset(!reduceMotion.matches);
+    /* ── What's Coming Up: show this lounge's cards; arrows when the row overflows ── */
+    var upcoming = root.querySelector('.vsl-home-upcoming');
+    if (upcoming) {
+      var upCity = String(upcoming.getAttribute('data-vsl-upcoming-city') || 'houston').toLowerCase();
+      var upTrack = upcoming.querySelector('[data-vsl-upcoming-track]');
+      var upShown = 0;
+      upcoming.querySelectorAll('.vsl-home-upcoming__item').forEach(function (li) {
+        var city = String(li.getAttribute('data-vsl-city') || 'both').toLowerCase();
+        var show = city === 'both' || city === upCity;
+        li.hidden = !show;
+        if (show) upShown++;
       });
-      promoNext.addEventListener('click', function() {
-        promoOffset = Math.min(promoMaxOffset(), promoOffset + promoCardWidth());
-        applyPromoOffset(!reduceMotion.matches);
-      });
+      upcoming.classList.toggle('is-empty', upShown === 0);
 
-      /* Touch swipe: detect horizontal drag, let vertical scroll pass through */
-      var touchStartX = 0, touchStartY = 0, touchDragging = false, touchStartOffset = 0;
-      promoTrack.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchStartOffset = promoOffset;
-        touchDragging = false;
-        promoTrack.style.transition = 'none';
-      }, { passive: true });
-      promoTrack.addEventListener('touchmove', function(e) {
-        var dx = touchStartX - e.touches[0].clientX;
-        var dy = touchStartY - e.touches[0].clientY;
-        if (!touchDragging) {
-          if (Math.abs(dy) > Math.abs(dx)) return;
-          if (Math.abs(dx) < 8) return;
-          touchDragging = true;
-        }
-        if (touchDragging) {
-          e.preventDefault();
-          promoOffset = Math.max(0, Math.min(promoMaxOffset(), touchStartOffset + dx));
-          promoTrack.style.transform = 'translateX(' + (-promoOffset) + 'px)';
-        }
-      }, { passive: false });
-      promoTrack.addEventListener('touchend', function() {
-        if (touchDragging) {
-          var snapTo = Math.round(promoOffset / promoCardWidth()) * promoCardWidth();
-          promoOffset = Math.max(0, Math.min(promoMaxOffset(), snapTo));
-          applyPromoOffset(true);
-        }
-        touchDragging = false;
-      }, { passive: true });
-
-      window.addEventListener('resize', function() {
-        promoOffset = Math.min(promoOffset, promoMaxOffset());
-        applyPromoOffset(false);
-      });
-      updatePromoArrows();
+      var upPrev = upcoming.querySelector('[data-vsl-upcoming-prev]');
+      var upNext = upcoming.querySelector('[data-vsl-upcoming-next]');
+      if (upTrack && upPrev && upNext) {
+        var upStep = function () {
+          var first = upTrack.querySelector('.vsl-home-upcoming__item:not([hidden])');
+          if (!first) return upTrack.clientWidth;
+          var cs = getComputedStyle(upTrack);
+          var gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 0;
+          return first.getBoundingClientRect().width + gap;
+        };
+        var upSync = function () {
+          var max = upTrack.scrollWidth - upTrack.clientWidth;
+          upcoming.classList.toggle('has-overflow', max > 4);
+          upPrev.disabled = upTrack.scrollLeft <= 2;
+          upNext.disabled = upTrack.scrollLeft >= max - 2;
+        };
+        var upScroll = function (dir) {
+          var step = upStep();
+          var perPage = Math.max(1, Math.floor(upTrack.clientWidth / step));
+          var delta = dir * step * perPage;
+          try {
+            upTrack.scrollBy({ left: delta, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+          } catch (_) {
+            upTrack.scrollLeft += delta;
+          }
+        };
+        upPrev.addEventListener('click', function () { upScroll(-1); });
+        upNext.addEventListener('click', function () { upScroll(1); });
+        upTrack.addEventListener('scroll', upSync, { passive: true });
+        window.addEventListener('resize', upSync);
+        if ('ResizeObserver' in window) new ResizeObserver(upSync).observe(upTrack);
+        upSync();
+        setTimeout(upSync, 400);
+      }
     }
-
-    /* ── Touch support for promo cards ── */
-    var isCoarse = window.matchMedia('(pointer: coarse)').matches;
-    root.querySelectorAll('.vsl-home-promo-card').forEach(function(card) {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function(e) {
-        if (e.target.closest('a')) return;
-        var cta = card.querySelector('.vsl-home-promo-card__cta');
-        if (cta) cta.click();
-      });
-
-      if (isCoarse) {
-        var touchTimer;
-        card.addEventListener('touchstart', function() {
-          touchTimer = setTimeout(function() {
-            card.classList.add('vsl-home-promo-card--touch-active');
-          }, 80);
-        }, { passive: true });
-        card.addEventListener('touchend', function() {
-          clearTimeout(touchTimer);
-          card.classList.remove('vsl-home-promo-card--touch-active');
-        }, { passive: true });
-        card.addEventListener('touchcancel', function() {
-          clearTimeout(touchTimer);
-          card.classList.remove('vsl-home-promo-card--touch-active');
-        }, { passive: true });
-      }
-    });
-
-    /* ── 3D tilt + fluid flow on promo cards ── */
-    if (reduceMotion.matches) return;
-    if (isCoarse) return;
-
-    root.querySelectorAll('.vsl-home-promo-card').forEach(function(card) {
-      if (card._vslTiltBound) return;
-      card._vslTiltBound = true;
-
-      var TILT = 6, SCALE_UP = 1.035, LERP_POS = 0.09, LERP_SCALE = 0.1;
-      var raf = null;
-      var target = { mx: 0.5, my: 0.5, scale: 1 };
-      var current = { mx: 0.5, my: 0.5, scale: 1 };
-      var active = false;
-
-      function lerp(a, b, t) { return a + (b - a) * t; }
-
-      function tick() {
-        current.mx = lerp(current.mx, target.mx, LERP_POS);
-        current.my = lerp(current.my, target.my, LERP_POS);
-        current.scale = lerp(current.scale, target.scale, LERP_SCALE);
-        var rx = (current.my - 0.5) * -TILT;
-        var ry = (current.mx - 0.5) * TILT;
-        var lift = (current.scale - 1) * -115;
-        card.style.transform =
-          'perspective(800px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) scale(' + current.scale.toFixed(4) + ') translateY(' + lift.toFixed(1) + 'px)';
-        var settled =
-          Math.abs(current.mx - target.mx) < 0.0005 &&
-          Math.abs(current.my - target.my) < 0.0005 &&
-          Math.abs(current.scale - target.scale) < 0.0005;
-        if (!settled) {
-          raf = requestAnimationFrame(tick);
-        } else {
-          if (!active) card.style.transform = '';
-          raf = null;
-        }
-      }
-
-      function engage() {
-        active = true;
-        target.scale = SCALE_UP;
-        if (!raf) raf = requestAnimationFrame(tick);
-      }
-      function move(cx, cy) {
-        var rect = card.getBoundingClientRect();
-        var mx = Math.max(0, Math.min(1, (cx - rect.left) / rect.width));
-        var my = Math.max(0, Math.min(1, (cy - rect.top) / rect.height));
-        /* Keep edge cards from over-tilting and nudging scroll bounds */
-        target.mx = Math.max(0.08, Math.min(0.92, mx));
-        target.my = Math.max(0.08, Math.min(0.92, my));
-        if (!raf) raf = requestAnimationFrame(tick);
-      }
-      function release() {
-        active = false;
-        target.mx = 0.5;
-        target.my = 0.5;
-        target.scale = 1;
-        if (!raf) raf = requestAnimationFrame(tick);
-      }
-
-      card.addEventListener('mouseenter', engage);
-      card.addEventListener('mousemove', function(e) { move(e.clientX, e.clientY); });
-      card.addEventListener('mouseleave', release);
-    });
   }
 
   function tryInit() {
