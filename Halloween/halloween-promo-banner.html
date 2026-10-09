@@ -5,7 +5,7 @@
      /halloween/spookeasy/ (Ignition, Houston only).
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.3.0 · 20261009d -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.3.1 · 20261009e -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -24,6 +24,11 @@
 		   mobile menu overlay (--z-overlay: 10000). */
 		--hwp-banner-z: 9000;
 	}
+
+	#hw-promo-card,
+	#hw-promo-card *,
+	#hw-promo-minimized,
+	#hw-promo-minimized * { box-sizing: border-box; }
 
 	#hw-promo-card {
 		display: none;
@@ -408,7 +413,9 @@
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		box-shadow:
+			0 6px 14px rgba(238, 38, 95, 0.22),
+			inset 0 1px 0 rgba(255, 255, 255, 0.28);
 		border: none;
 		cursor: pointer;
 		touch-action: manipulation;
@@ -416,7 +423,6 @@
 		text-align: center;
 		-webkit-appearance: none;
 		appearance: none;
-		animation: hwp-btn-pulse 2.4s infinite;
 	}
 	.hwp-btn-title { font-size: 23px; font-weight: 700; font-style: italic; line-height: 1.1; }
 	.hwp-btn-meta { font-size: 12px; font-weight: 500; font-style: normal; letter-spacing: 0.08em; opacity: 0.88; margin-top: 2px; }
@@ -433,9 +439,11 @@
 		pointer-events: none;
 	}
 	.hwp-card-btn:hover {
-		transform: translateY(-2px) scale(1.02);
+		transform: translateY(-1px);
 		background: linear-gradient(135deg, #FF4F80 0%, #d41e53 100%);
-		box-shadow: 0 16px 32px rgba(238, 38, 95, 0.45);
+		box-shadow:
+			0 8px 16px rgba(238, 38, 95, 0.28),
+			inset 0 1px 0 rgba(255, 255, 255, 0.28);
 		color: white;
 	}
 	.hwp-card-btn:hover::after { left: 130%; }
@@ -541,11 +549,6 @@
 		to { opacity: 1; transform: translateX(-50%) scale(1); }
 	}
 	@keyframes hwp-bounce-in { 0% { transform: scale(0); } 100% { transform: scale(1); } }
-	@keyframes hwp-btn-pulse {
-		0% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0.4); }
-		70% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 14px rgba(238, 38, 95, 0); }
-		100% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0); }
-	}
 	@keyframes hwp-float {
 		0%, 100% { transform: translateY(0) rotate(0deg); }
 		50% { transform: translateY(-4px) rotate(-2deg); }
@@ -558,7 +561,7 @@
 	}
 	@keyframes hwp-shimmer { 0%, 55% { left: -60%; } 100% { left: 140%; } }
 	@media (prefers-reduced-motion: reduce) {
-		#hw-promo-card, .hwp-card-btn, .hwp-pumpkin-icon, .hwp-bat, #hw-promo-minimized { animation: none !important; }
+		#hw-promo-card, .hwp-pumpkin-icon, .hwp-bat, #hw-promo-minimized { animation: none !important; }
 		.hwp-card-btn::after, .hwp-deal::after { display: none; }
 	}
 </style>
