@@ -385,6 +385,7 @@
   var params = new URLSearchParams(window.location.search);
   var pageKey = params.get("p") || "home";
   if (pageKey === "spring-bundles") pageKey = "fathers-day";
+  if (pageKey === "millionlaps") pageKey = "million-laps";
   var forcedLoc = params.get("loc");
   var revealObserver = null;
   var moduleCache = Object.create(null);
