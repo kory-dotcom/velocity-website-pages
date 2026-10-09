@@ -1,0 +1,938 @@
+<!-- Halloween at Velocity — home-page popup. Shows on the Houston and Dallas home pages.
+     Free main-floor party Sat Oct 31, 7–10pm: $25 sim racing tournament, 50% off in costume,
+     WALK-INS ONLY (no online entry). Main CTA (both lounges) goes to the Fast & Frightening
+     page at /halloween/; Houston also gets a text link to the $45 21+ Spookeasy checkout at
+     /halloween/spookeasy/ (Ignition, Houston only).
+     Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
+     Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
+     Paste once: navbar HTML widget or the snippet plugin. v1.2.0 · 20261009c -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
+
+	:root {
+		--hwp-navy: #10182B;
+		--hwp-indigo: #191B4D;
+		--hwp-magenta: #EE265F;
+		--hwp-blue: #293893;
+		--hwp-yellow: #FDC70C;
+		--hwp-mist: #B2AEBF;
+		--hwp-slate: #5F5782;
+		/* Seasonal accent, this popup only (not a brand palette colour). */
+		--hwp-pumpkin: #FF7A1A;
+		--hwp-pumpkin-deep: #E85D04;
+		/* Above page content, BELOW the Velocity navbar (--z-navbar: 9999) and its
+		   mobile menu overlay (--z-overlay: 10000). */
+		--hwp-banner-z: 9000;
+	}
+
+	#hw-promo-card {
+		display: none;
+		position: fixed;
+		top: calc(var(--hwp-nav-h, 96px) + 16px);
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		max-width: 540px;
+		z-index: var(--hwp-banner-z);
+		background: white;
+		border-radius: 24px;
+		overflow: hidden;
+		box-shadow:
+			0 30px 70px rgba(16, 24, 43, 0.55),
+			0 10px 24px rgba(16, 24, 43, 0.3),
+			0 0 0 1px rgba(255, 255, 255, 0.08);
+		text-align: center;
+		font-family: 'Khand', system-ui, sans-serif;
+		animation: hwp-card-entry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	#hw-promo-minimized {
+		display: none;
+		position: fixed;
+		bottom: calc(30px + var(--hwp-dock-h, 0px));
+		right: calc(30px + env(safe-area-inset-right, 0px));
+		z-index: var(--hwp-banner-z);
+		background: linear-gradient(135deg, var(--hwp-pumpkin) 0%, var(--hwp-pumpkin-deep) 100%);
+		color: var(--hwp-navy);
+		padding: 11px 24px 11px 16px;
+		border-radius: 50px;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		font-family: 'Khand', system-ui, sans-serif;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 17px;
+		letter-spacing: 0.5px;
+		box-shadow: 0 10px 20px rgba(255, 122, 26, 0.35);
+		transition: transform 0.2s;
+		animation: hwp-bounce-in 0.5s;
+		align-items: center;
+		gap: 9px;
+	}
+	#hw-promo-minimized.hwp-mini--on { display: flex; }
+	#hw-promo-minimized svg {
+		width: 26px;
+		height: 24px;
+		flex-shrink: 0;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+	}
+	#hw-promo-minimized:hover { transform: scale(1.08); }
+
+	/* ── Card header: Halloween night — orange moon glow, bats, speed lines ── */
+	.hwp-card-header {
+		background:
+			radial-gradient(110% 80% at 50% -10%, rgba(255, 122, 26, 0.38) 0%, rgba(255, 122, 26, 0) 55%),
+			radial-gradient(120% 90% at 50% 110%, rgba(238, 38, 95, 0.42) 0%, rgba(238, 38, 95, 0) 58%),
+			radial-gradient(90% 80% at 90% 40%, rgba(41, 56, 147, 0.55) 0%, rgba(41, 56, 147, 0) 60%),
+			linear-gradient(162deg, var(--hwp-indigo) 0%, var(--hwp-navy) 100%);
+		padding: 30px 24px 24px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+	.hwp-card-header::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: repeating-linear-gradient(
+			115deg,
+			rgba(255, 255, 255, 0.05) 0px,
+			rgba(255, 255, 255, 0.05) 2px,
+			transparent 2px,
+			transparent 16px
+		);
+		pointer-events: none;
+	}
+	/* Harvest moon tucked behind the headline */
+	.hwp-moon {
+		position: absolute;
+		right: -48px;
+		top: -58px;
+		width: 190px;
+		height: 190px;
+		border-radius: 50%;
+		background: radial-gradient(circle at 40% 38%, #ffd98f 0%, #ffb24d 38%, var(--hwp-pumpkin) 70%, var(--hwp-pumpkin-deep) 100%);
+		box-shadow: 0 0 50px rgba(255, 122, 26, 0.45), 0 0 120px rgba(255, 122, 26, 0.3);
+		opacity: 0.55;
+		pointer-events: none;
+	}
+	.hwp-bat {
+		position: absolute;
+		width: 34px;
+		height: auto;
+		fill: #05070f;
+		opacity: 0.9;
+		pointer-events: none;
+		animation: hwp-flap 7s ease-in-out infinite;
+	}
+	.hwp-pumpkin-icon {
+		width: 74px;
+		height: 70px;
+		margin-bottom: 8px;
+		position: relative;
+		z-index: 1;
+		filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 18px rgba(255, 122, 26, 0.45));
+		animation: hwp-float 3.4s ease-in-out infinite;
+	}
+	.hwp-eyebrow {
+		display: inline-block;
+		padding: 6px 20px;
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #fff;
+		background: linear-gradient(135deg, var(--hwp-pumpkin-deep) 0%, var(--hwp-pumpkin) 100%);
+		border-radius: 5px;
+		margin-bottom: 12px;
+		position: relative;
+		z-index: 1;
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+	}
+	.hwp-headline {
+		font-size: 40px;
+		line-height: 0.98;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		color: white;
+		letter-spacing: 0.02em;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+	.hwp-headline small {
+		display: block;
+		font-size: 0.42em;
+		letter-spacing: 0.16em;
+		font-weight: 600;
+		color: rgba(234, 234, 234, 0.92);
+		margin-bottom: 4px;
+	}
+	.hwp-headline span {
+		color: var(--hwp-pumpkin);
+		text-shadow: 0 2px 22px rgba(255, 122, 26, 0.6);
+	}
+	.hwp-header-sub {
+		margin: 12px 0 0;
+		position: relative;
+		z-index: 1;
+		font-size: 15px;
+		font-weight: 600;
+		font-style: italic;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(234, 234, 234, 0.88);
+	}
+
+	/* Checkered finish-line strip between header and body */
+	.hwp-finish-line {
+		height: 12px;
+		background-image:
+			linear-gradient(45deg, var(--hwp-navy) 25%, transparent 25%, transparent 75%, var(--hwp-navy) 75%),
+			linear-gradient(45deg, var(--hwp-navy) 25%, transparent 25%, transparent 75%, var(--hwp-navy) 75%);
+		background-size: 12px 12px;
+		background-position: 0 0, 6px 6px;
+		background-color: #fff;
+	}
+
+	.hwp-card-body {
+		padding: 20px 30px 26px;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		border-radius: 0 0 24px 24px;
+	}
+
+	/* 50% off badge — the hero of the body */
+	.hwp-deal {
+		position: relative;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 10px 26px 9px;
+		border-radius: 14px;
+		background:
+			linear-gradient(160deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 40%),
+			linear-gradient(135deg, #FFA659 0%, var(--hwp-pumpkin) 45%, var(--hwp-pumpkin-deep) 100%);
+		box-shadow:
+			0 10px 26px rgba(255, 122, 26, 0.35),
+			inset 0 1px 0 rgba(255, 255, 255, 0.5);
+		overflow: hidden;
+		margin: 2px 0 4px;
+		color: var(--hwp-navy);
+	}
+	.hwp-deal::after {
+		content: "";
+		position: absolute;
+		top: -20%;
+		left: -60%;
+		width: 45%;
+		height: 140%;
+		background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+		transform: skewX(-22deg);
+		animation: hwp-shimmer 3.4s ease-in-out infinite;
+		pointer-events: none;
+	}
+	.hwp-deal-amount {
+		font-size: 44px;
+		line-height: 1;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.01em;
+	}
+	.hwp-deal-label {
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		opacity: 0.85;
+		margin-top: 2px;
+	}
+
+	.hwp-prices {
+		display: flex;
+		width: 100%;
+		max-width: 22rem;
+		gap: 8px;
+		justify-content: center;
+		margin: 2px 0 4px;
+	}
+	.hwp-price {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 8px 8px 7px;
+		border-radius: 12px;
+		background: rgba(41, 56, 147, 0.06);
+		border: 1px solid rgba(41, 56, 147, 0.14);
+	}
+	.hwp-price span {
+		font-size: 30px;
+		line-height: 1;
+		font-weight: 700;
+		font-style: italic;
+		color: var(--hwp-navy);
+	}
+	.hwp-price small {
+		font-size: 12px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--hwp-slate);
+		margin-top: 2px;
+	}
+	.hwp-price--hot { background: var(--hwp-navy); border-color: var(--hwp-navy); }
+	.hwp-price--hot span { color: var(--hwp-pumpkin); }
+	.hwp-price--hot small { color: rgba(234, 234, 234, 0.85); }
+
+	.hwp-subtitle {
+		font-size: 21px;
+		text-transform: uppercase;
+		color: var(--hwp-navy);
+		font-weight: 600;
+		font-style: italic;
+		margin: 0;
+		line-height: 1.2;
+		letter-spacing: 0.02em;
+	}
+	.hwp-subtitle span { color: var(--hwp-pumpkin-deep); font-weight: 700; }
+
+	.hwp-valid {
+		display: inline-block;
+		margin: 2px 0 4px;
+		padding: 7px 16px 8px;
+		border-radius: 8px;
+		background: var(--hwp-navy);
+		color: #fff;
+		font-size: 20px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		line-height: 1;
+	}
+
+	.hwp-facts {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 6px 8px;
+		margin: 4px 0 2px;
+		padding: 0;
+		list-style: none;
+	}
+	.hwp-facts li {
+		font-size: 12px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--hwp-blue);
+		background: rgba(41, 56, 147, 0.08);
+		border: 1px solid rgba(41, 56, 147, 0.16);
+		border-radius: 999px;
+		padding: 4px 11px;
+		line-height: 1.2;
+	}
+	.hwp-facts li[hidden] { display: none; }
+
+	.hwp-urgency {
+		font-size: 14px;
+		text-transform: uppercase;
+		color: var(--hwp-magenta);
+		font-weight: 700;
+		font-style: italic;
+		margin: 4px 0 8px;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+	}
+	.hwp-urgency b {
+		display: inline-block;
+		padding: 2px 9px;
+		border-radius: 999px;
+		background: var(--hwp-magenta);
+		color: #fff;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		font-size: 12px;
+		vertical-align: 1px;
+	}
+	.hwp-urgency--deal b {
+		display: block;
+		margin: 0;
+		padding: 8px 18px 9px;
+		border-radius: 10px;
+		font-size: 28px;
+		letter-spacing: 0.06em;
+		line-height: 1;
+		box-shadow: 0 10px 24px rgba(238, 38, 95, 0.4);
+	}
+
+	.hwp-card-cta-row {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+		width: 100%;
+		max-width: 22rem;
+		margin-top: 2px;
+	}
+	.hwp-card-btn {
+		position: relative;
+		overflow: hidden;
+		background: linear-gradient(135deg, #F23E72 0%, var(--hwp-magenta) 100%);
+		color: white;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		border-radius: 14px;
+		padding: 12px 22px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		border: none;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		text-align: center;
+		-webkit-appearance: none;
+		appearance: none;
+		animation: hwp-btn-pulse 2.4s infinite;
+	}
+	.hwp-btn-title { font-size: 23px; font-weight: 700; font-style: italic; line-height: 1.1; }
+	.hwp-btn-meta { font-size: 12px; font-weight: 500; font-style: normal; letter-spacing: 0.08em; opacity: 0.88; margin-top: 2px; }
+	.hwp-card-btn::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -120%;
+		width: 60%;
+		height: 100%;
+		background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+		transform: skewX(-20deg);
+		transition: left 0.6s ease;
+		pointer-events: none;
+	}
+	.hwp-card-btn:hover {
+		transform: translateY(-2px) scale(1.02);
+		background: linear-gradient(135deg, #FF4F80 0%, #d41e53 100%);
+		box-shadow: 0 16px 32px rgba(238, 38, 95, 0.45);
+		color: white;
+	}
+	.hwp-card-btn:hover::after { left: 130%; }
+	.hwp-card-btn[hidden] { display: none; }
+	.hwp-card-link {
+		display: block;
+		font-family: 'Khand', system-ui, sans-serif;
+		font-size: 15px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		text-align: center;
+		color: var(--hwp-navy);
+		text-decoration: underline;
+		text-decoration-color: var(--hwp-pumpkin);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
+	}
+	.hwp-card-link:hover { color: var(--hwp-magenta); text-decoration-color: var(--hwp-magenta); }
+	.hwp-card-link[hidden] { display: none; }
+
+	.hwp-fineprint {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		color: var(--hwp-slate);
+		margin: 8px 0 0;
+		line-height: 1.35;
+	}
+
+	.hwp-controls { position: absolute; top: 14px; right: 18px; z-index: 10; }
+	.hwp-control-btn {
+		cursor: pointer;
+		font-size: 22px;
+		padding: 11px;
+		margin: -11px;
+		color: rgba(255,255,255,0.55);
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		transition: all 0.2s;
+		font-family: Arial, sans-serif;
+		line-height: 1;
+	}
+	.hwp-control-btn:hover { color: white; transform: rotate(90deg); }
+
+	@media (max-width: 1024px) {
+		#hw-promo-minimized {
+			bottom: calc(12px + var(--hwp-dock-h, var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h, 80px))));
+			right: calc(16px + env(safe-area-inset-right, 0px));
+		}
+	}
+	@media (max-width: 768px) {
+		#hw-promo-card { max-width: 380px; border-radius: 20px; }
+		.hwp-card-header { padding: 20px 20px 16px; }
+		.hwp-card-body { padding: 14px 18px 16px; border-radius: 0 0 20px 20px; gap: 4px; }
+		.hwp-pumpkin-icon { width: 52px; height: 49px; margin-bottom: 4px; }
+		.hwp-moon { width: 150px; height: 150px; right: -44px; top: -50px; }
+		.hwp-eyebrow { padding: 5px 16px; font-size: 11px; margin-bottom: 10px; }
+		.hwp-headline { font-size: 31px; }
+		.hwp-header-sub { font-size: 12.5px; letter-spacing: 0.08em; }
+		.hwp-deal { padding: 8px 22px 7px; }
+		.hwp-deal-amount { font-size: 36px; }
+		.hwp-deal-label { font-size: 11.5px; }
+		.hwp-price span { font-size: 26px; }
+		.hwp-price small { font-size: 11px; }
+		.hwp-subtitle { font-size: 18px; }
+		.hwp-valid { font-size: 17px; padding: 6px 12px 7px; }
+		.hwp-facts li { font-size: 11px; padding: 3px 9px; }
+		.hwp-urgency { font-size: 13px; }
+		.hwp-urgency--deal b { font-size: 24px; padding: 7px 14px 8px; }
+		.hwp-btn-title { font-size: 20px; }
+		.hwp-btn-meta { font-size: 11px; }
+		.hwp-card-btn { padding: 11px 18px; border-radius: 12px; }
+		.hwp-fineprint { font-size: 11px; }
+		.hwp-controls { top: 10px; right: 12px; }
+		.hwp-control-btn { font-size: 24px; }
+		#hw-promo-minimized { padding: 10px 18px 10px 14px; font-size: 15px; }
+		#hw-promo-minimized svg { width: 22px; height: 20px; }
+	}
+	@media (max-width: 400px) {
+		.hwp-headline { font-size: 28px; }
+		.hwp-subtitle { font-size: 16px; }
+		.hwp-valid { font-size: 15px; }
+		.hwp-urgency { font-size: 12px; }
+		.hwp-urgency b { font-size: 11px; }
+		.hwp-urgency--deal b { font-size: 21px; }
+		.hwp-prices { gap: 6px; }
+		.hwp-price { padding: 7px 4px 6px; border-radius: 10px; }
+		.hwp-price span { font-size: 23px; }
+		.hwp-price small { font-size: 10px; letter-spacing: 0.06em; }
+	}
+	/* Short phones: let the card scroll instead of running under the dock */
+	@media (max-height: 700px) {
+		#hw-promo-card { overflow-y: auto; }
+		.hwp-moon { display: none; }
+	}
+
+	@keyframes hwp-card-entry {
+		from { opacity: 0; transform: translateX(-50%) scale(0.97); }
+		to { opacity: 1; transform: translateX(-50%) scale(1); }
+	}
+	@keyframes hwp-bounce-in { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+	@keyframes hwp-btn-pulse {
+		0% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 14px rgba(238, 38, 95, 0); }
+		100% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0); }
+	}
+	@keyframes hwp-float {
+		0%, 100% { transform: translateY(0) rotate(0deg); }
+		50% { transform: translateY(-4px) rotate(-2deg); }
+	}
+	@keyframes hwp-flap {
+		0%, 100% { transform: translate(0, 0) scaleY(1); }
+		25% { transform: translate(6px, -4px) scaleY(0.7); }
+		50% { transform: translate(0, -8px) scaleY(1); }
+		75% { transform: translate(-6px, -3px) scaleY(0.7); }
+	}
+	@keyframes hwp-shimmer { 0%, 55% { left: -60%; } 100% { left: 140%; } }
+	@media (prefers-reduced-motion: reduce) {
+		#hw-promo-card, .hwp-card-btn, .hwp-pumpkin-icon, .hwp-bat, #hw-promo-minimized { animation: none !important; }
+		.hwp-card-btn::after, .hwp-deal::after { display: none; }
+	}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+	<defs>
+		<radialGradient id="hwp-pk-body" cx="38%" cy="30%" r="80%">
+			<stop offset="0" stop-color="#FFA659"/>
+			<stop offset="0.42" stop-color="#FA7A1E"/>
+			<stop offset="0.78" stop-color="#DB5A0A"/>
+			<stop offset="1" stop-color="#A94307"/>
+		</radialGradient>
+		<radialGradient id="hwp-pk-face" cx="50%" cy="55%" r="65%">
+			<stop offset="0" stop-color="#FFF7D6"/>
+			<stop offset="0.55" stop-color="#FFE08A"/>
+			<stop offset="1" stop-color="#FFBF45"/>
+		</radialGradient>
+		<linearGradient id="hwp-pk-stem" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#6AA544"/>
+			<stop offset="1" stop-color="#2F5E22"/>
+		</linearGradient>
+		<filter id="hwp-pk-candle" x="-25%" y="-25%" width="150%" height="150%">
+			<feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="b"/>
+			<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+		</filter>
+		<!-- Classic jack-o'-lantern (same art as the Halloween page) -->
+		<symbol id="hwp-sym-pumpkin" viewBox="0 0 120 112">
+			<path d="M57 24c-3-9 1-16 9-20 3 7 1 14-4 20z" fill="url(#hwp-pk-stem)"/>
+			<ellipse cx="60" cy="66" rx="52" ry="42" fill="url(#hwp-pk-body)"/>
+			<g fill="none" stroke="#4A1800" stroke-opacity="0.16" stroke-width="2.4">
+				<ellipse cx="60" cy="66" rx="22" ry="41.5"/>
+				<ellipse cx="60" cy="66" rx="38" ry="41"/>
+			</g>
+			<ellipse cx="44" cy="42" rx="15" ry="8" fill="#fff" fill-opacity="0.11" transform="rotate(-24 44 42)"/>
+			<g fill="url(#hwp-pk-face)" filter="url(#hwp-pk-candle)">
+				<path d="M38 56l12 9H28z"/>
+				<path d="M82 56L70 65h20z"/>
+				<path d="M60 68l5 7H55z"/>
+				<path d="M32 78q28 20 56 0l-6 10h-9l-5-5-5 5h-10l-5-5-5 5h-9z"/>
+			</g>
+		</symbol>
+		<symbol id="hwp-sym-bat" viewBox="0 0 64 32">
+			<path d="M32 10c-2-5-6-8-11-8 1 3 0 6-2 8-4-3-9-4-15-2 5 2 8 6 9 11-3-1-6 0-8 2 5 0 9 2 12 6 2-3 5-5 9-5 1 3 3 5 6 6 3-1 5-3 6-6 4 0 7 2 9 5 3-4 7-6 12-6-2-2-5-3-8-2 1-5 4-9 9-11-6-2-11-1-15 2-2-2-3-5-2-8-5 0-9 3-11 8z"/>
+		</symbol>
+	</defs>
+</svg>
+
+<div id="hw-promo-card" role="dialog" aria-label="Halloween at Velocity">
+	<div class="hwp-controls">
+		<div id="hw-btn-minimize" class="hwp-control-btn" title="Close" role="button" aria-label="Close">&#10005;</div>
+	</div>
+
+	<div class="hwp-card-header">
+		<div class="hwp-moon" aria-hidden="true"></div>
+		<svg class="hwp-bat" style="right:9%;top:12%" aria-hidden="true" focusable="false"><use href="#hwp-sym-bat"/></svg>
+		<svg class="hwp-bat" style="right:20%;top:26%;width:22px;animation-delay:-3s" aria-hidden="true" focusable="false"><use href="#hwp-sym-bat"/></svg>
+		<svg class="hwp-bat" style="left:9%;top:22%;width:26px;animation-delay:-5s" aria-hidden="true" focusable="false"><use href="#hwp-sym-bat"/></svg>
+		<svg class="hwp-pumpkin-icon" viewBox="0 0 120 112" aria-hidden="true" focusable="false"><use href="#hwp-sym-pumpkin"/></svg>
+		<div class="hwp-eyebrow">Saturday &bull; October 31</div>
+		<h2 class="hwp-headline"><small>Halloween at Velocity</small>Fast &amp;<br><span>Frightening</span></h2>
+		<p class="hwp-header-sub">Free &bull; All ages &bull; 7&ndash;10pm</p>
+	</div>
+
+	<div class="hwp-finish-line"></div>
+
+	<div class="hwp-card-body">
+		<div class="hwp-deal" aria-label="50% off tournament entry in costume">
+			<span class="hwp-deal-amount">50% off</span>
+			<span class="hwp-deal-label">when you race in costume</span>
+		</div>
+		<div class="hwp-prices" aria-label="Tournament entry prices">
+			<div class="hwp-price"><span>$25</span><small>Tournament entry</small></div>
+			<div class="hwp-price hwp-price--hot"><span>$12.50</span><small>In costume</small></div>
+		</div>
+		<div class="hwp-subtitle">Sim racing <span>tournament</span> for all guests</div>
+		<p class="hwp-valid">Walk-ins only</p>
+		<ul class="hwp-facts" aria-label="Party details">
+			<li>Free admission</li>
+			<li>Spooky drinks</li>
+			<li>Candy station</li>
+			<li data-hwp-only="houston" hidden>GTR vs Supra meet &bull; 10am&ndash;1pm</li>
+			
+		</ul>
+		<p class="hwp-urgency" id="hw-urgency"><b id="hw-countdown">Saturday, October 31</b></p>
+
+		<div class="hwp-card-cta-row">
+			<!-- Both lounges land on the Fast & Frightening page; it follows the navbar's saved lounge. -->
+			<a class="hwp-card-btn" href="https://velocitysimlounge.com/halloween/">
+				<span class="hwp-btn-title">See the full lineup</span>
+				<span class="hwp-btn-meta">Costume contest &bull; 10-pack prizes &bull; spooky drinks</span>
+			</a>
+			<!-- Houston (and no saved lounge): the 21+ Spookeasy in Ignition is Houston only. -->
+			<a class="hwp-card-link" data-hwp-only="houston" href="https://velocitysimlounge.com/halloween/spookeasy/">21+? Spookeasy after-party tickets &middot; $45 &rarr;</a>
+			<a class="hwp-card-link" data-hwp-only="none" hidden href="https://velocitysimlounge.com/halloween/spookeasy/">21+? Spookeasy after-party in Houston &middot; $45 &rarr;</a>
+		</div>
+
+		<p class="hwp-fineprint">Tournament entry is paid at the front desk on the night &mdash; no online sign-up. Costumes are checked at check-in.</p>
+	</div>
+</div>
+
+<div id="hw-promo-minimized" role="button" aria-label="Open Halloween party details">
+	<svg viewBox="0 0 120 112" aria-hidden="true" focusable="false"><use href="#hwp-sym-pumpkin"/></svg>
+	Halloween at Velocity
+</div>
+
+<script>
+(function() {
+	/* Navbar + snippet plugin may both paste this module. First copy wins. */
+	var HW_IDS = ['hw-promo-card', 'hw-promo-minimized'];
+	if (window.__vslHwPromoBooted && document.querySelector('#hw-promo-card[data-hw-live="1"]')) {
+		try {
+			HW_IDS.forEach(function(id) {
+				var nodes = document.querySelectorAll('#' + id);
+				for (var i = 0; i < nodes.length; i++) {
+					if (nodes[i].getAttribute('data-hw-live') !== '1' && nodes[i].parentNode) {
+						nodes[i].parentNode.removeChild(nodes[i]);
+					}
+				}
+			});
+		} catch (e0) {}
+		return;
+	}
+	/* A previous boot's card is gone (staging swapped the page). Drop leftovers. */
+	if (window.__vslHwPromoBooted) {
+		try {
+			HW_IDS.forEach(function(id) {
+				var nodes = document.querySelectorAll('#' + id);
+				for (var i = nodes.length - 1; i >= 0; i--) {
+					if (nodes[i].getAttribute('data-hw-live') === '1' && nodes[i].parentNode) {
+						nodes[i].parentNode.removeChild(nodes[i]);
+					}
+				}
+			});
+		} catch (eStale) {}
+	}
+	window.__vslHwPromoBooted = true;
+
+	function hwRead(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+	function hwWrite(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+	function hwRemove(key) { try { localStorage.removeItem(key); } catch (e) {} }
+
+	function hwPickOwn(id) {
+		var nodes = document.querySelectorAll('#' + id);
+		var el = nodes.length ? nodes[nodes.length - 1] : null;
+		if (el) el.setAttribute('data-hw-live', '1');
+		return el;
+	}
+	var card = hwPickOwn('hw-promo-card');
+	var mini = hwPickOwn('hw-promo-minimized');
+
+	function hwRemoveAll() {
+		try {
+			if (card && card.parentNode) card.parentNode.removeChild(card);
+			if (mini && mini.parentNode) mini.parentNode.removeChild(mini);
+		} catch (e) {}
+	}
+
+	/* Halloween is Saturday, October 31, 2026. Hide after that day in Chicago. */
+	var PARTY_DAY = new Date(2026, 9, 31);
+	var endDate = new Date('2026-11-01T00:00:00-05:00');
+	if (Date.now() >= endDate.getTime()) {
+		hwRemove('hwCardMin');
+		hwRemove('hwPromoVersion');
+		hwRemoveAll();
+		return;
+	}
+
+	var version = 'vsl-hw-2026-10-31';
+	if (hwRead('hwPromoVersion') !== version) {
+		hwRemove('hwCardMin');
+		hwWrite('hwPromoVersion', version);
+	}
+
+	function hwPathInfo() {
+		var qs = new URLSearchParams(window.location.search);
+		var pageKey = (qs.get('p') || '').toLowerCase();
+		var path = window.location.pathname.toLowerCase().replace(/\/index\.php$/, '').replace(/\/+$/, '');
+		return { pageKey: pageKey, path: path };
+	}
+
+	function hwIsHalloweenPage() {
+		try {
+			var u = hwPathInfo();
+			if (u.pageKey === 'halloween') return true;
+			return u.path === '/halloween';
+		} catch (e) { return false; }
+	}
+
+	/* Houston and Dallas home pages only (plus the staging preview key). */
+	function hwIsAllowedPage() {
+		if (hwIsHalloweenPage()) return false;
+		try {
+			var u = hwPathInfo();
+			if (u.pageKey) return u.pageKey === 'home' || u.pageKey === 'dallas-home' || u.pageKey === 'halloween-banner';
+			if (u.path === '' || u.path === '/dallas') return true;
+			var bc = document.body && document.body.className || '';
+			if (/\bhome\b/.test(bc)) return true;
+		} catch (e) {}
+		return false;
+	}
+
+	if (!hwIsAllowedPage()) {
+		hwRemoveAll();
+		return;
+	}
+
+	/* Elementor often nests HTML inside columns with transform or overflow. That
+	   traps position:fixed and can hide or clip the popup — move nodes to body. */
+	function hwAttachToBody() {
+		try {
+			[card, mini].forEach(function(el) {
+				if (el && el.parentNode && el.parentNode !== document.body) document.body.appendChild(el);
+			});
+		} catch (err) {}
+	}
+	hwAttachToBody();
+
+	/* Lounge-specific copy: data-hwp-only="houston|dallas|none". */
+	function hwLocation() {
+		try {
+			if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readLocation === 'function') {
+				var shown = window.VSL_LOCATION.readLocation();
+				if (shown === 'dallas' || shown === 'houston') return shown;
+			}
+		} catch (e0) {}
+		try {
+			var ls = window.localStorage.getItem('vslPreferredLocation');
+			if (ls === 'dallas' || ls === 'houston') return ls;
+		} catch (e1) {}
+		try {
+			if (hwPathInfo().pageKey === 'dallas-home' || hwPathInfo().path === '/dallas') return 'dallas';
+			if (hwPathInfo().pageKey === 'home' || hwPathInfo().path === '') return 'houston';
+		} catch (e2) {}
+		return '';
+	}
+	function hwApplyLocation() {
+		var loc = hwLocation();
+		[card, mini].forEach(function(scope) {
+			if (!scope) return;
+			scope.querySelectorAll('[data-hwp-only]').forEach(function(el) {
+				var want = el.getAttribute('data-hwp-only');
+				el.hidden = loc ? want !== loc : want !== 'none';
+			});
+		});
+	}
+	hwApplyLocation();
+	window.addEventListener('_vslLocationChanged', hwApplyLocation);
+	setTimeout(hwApplyLocation, 400);
+
+	function hwIsMobileChrome() {
+		try { return window.matchMedia('(max-width: 1024px)').matches; } catch (e) { return false; }
+	}
+	function hwReadCssPx(el, name) {
+		if (!el) return 0;
+		try {
+			var raw = window.getComputedStyle(el).getPropertyValue(name).trim();
+			var n = parseFloat(raw);
+			return isFinite(n) && n > 0 ? n : 0;
+		} catch (e) { return 0; }
+	}
+	function hwHeaderBottomPx() {
+		var bottom = 0;
+		var stripe = document.querySelector('.vsl-navbar__stripe');
+		var bar = document.querySelector('.vsl-navbar__bar');
+		if (stripe) { var rs = stripe.getBoundingClientRect(); if (rs.height > 0) bottom = Math.max(bottom, rs.bottom); }
+		if (bar) { var rb = bar.getBoundingClientRect(); if (rb.height > 0) bottom = Math.max(bottom, rb.bottom); }
+		return Math.max(0, Math.round(bottom));
+	}
+
+	/* Keep the close button below the navbar; centre the card between the
+	   header and the bottom dock; cap its height so short phones can scroll it. */
+	function hwPlaceCard(dockH) {
+		if (!card || card.style.display === 'none') return;
+		var navH = hwHeaderBottomPx();
+		if (!navH) navH = 96;
+		var gap = 16;
+		var viewH = window.innerHeight;
+		try {
+			if (window.visualViewport && window.visualViewport.height) viewH = Math.round(window.visualViewport.height);
+		} catch (e) {}
+		var availTop = navH + gap;
+		var availBottom = viewH - (dockH || 0) - gap;
+		card.style.setProperty('--hwp-nav-h', navH + 'px');
+		card.style.maxHeight = Math.max(240, availBottom - availTop) + 'px';
+		var cardH = card.offsetHeight;
+		var top = availTop + Math.max(0, (availBottom - availTop - cardH) / 2);
+		if (top < availTop) top = availTop;
+		card.style.top = Math.round(top) + 'px';
+		card.style.bottom = 'auto';
+		card.style.left = '50%';
+		card.style.transform = 'translateX(-50%)';
+	}
+
+	function hwSyncNavOffsets() {
+		try {
+			var dockH = 0;
+			var dock = document.querySelector('.vsl-navbar__mcta');
+			if (dock) {
+				var rd = dock.getBoundingClientRect();
+				var st = window.getComputedStyle(dock);
+				if (st.display !== 'none' && st.visibility !== 'hidden' && rd.height > 0 && st.position === 'fixed') dockH = rd.height;
+			}
+			if (dockH <= 0 && hwIsMobileChrome()) {
+				dockH = hwReadCssPx(document.documentElement, '--vsl-mobile-dock-height') ||
+					hwReadCssPx(document.documentElement, '--vsl-mobile-dock-h') ||
+					hwReadCssPx(document.body, '--vsl-mobile-dock-h') ||
+					80;
+			}
+			var px = Math.round(dockH) + 'px';
+			if (mini) mini.style.setProperty('--hwp-dock-h', px);
+			if (card) card.style.setProperty('--hwp-dock-h', px);
+			hwPlaceCard(dockH);
+		} catch (e) {}
+	}
+	var hwNavRaf = null;
+	function hwQueueNavSync() {
+		if (hwNavRaf) return;
+		hwNavRaf = window.requestAnimationFrame(function() { hwNavRaf = null; hwSyncNavOffsets(); });
+	}
+	hwSyncNavOffsets();
+	window.addEventListener('resize', hwQueueNavSync);
+	window.addEventListener('orientationchange', hwQueueNavSync);
+	try { if (window.visualViewport) window.visualViewport.addEventListener('resize', hwQueueNavSync); } catch (eVp) {}
+	setTimeout(hwSyncNavOffsets, 300);
+	setTimeout(hwSyncNavOffsets, 1200);
+	try {
+		if (typeof MutationObserver !== 'undefined') {
+			var hwDockWatch = new MutationObserver(hwQueueNavSync);
+			hwDockWatch.observe(document.documentElement, { childList: true, subtree: true });
+			setTimeout(function() { try { hwDockWatch.disconnect(); } catch (e2) {} }, 4000);
+		}
+	} catch (e3) {}
+
+	/* Countdown chip: date, days out, Tomorrow, or Tonight. */
+	(function() {
+		var chip = document.getElementById('hw-countdown');
+		var urgency = document.getElementById('hw-urgency');
+		if (!chip || !urgency) return;
+		var now = new Date();
+		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+		var diffDays = Math.round((PARTY_DAY - today) / 86400000);
+		urgency.classList.remove('hwp-urgency--deal');
+		if (diffDays > 7) {
+			/* Eyebrow already says the date — the chip only earns space in the last week. */
+			urgency.hidden = true;
+		} else if (diffDays > 1) {
+			chip.textContent = diffDays + ' days out';
+		} else if (diffDays === 1) {
+			chip.textContent = 'Tomorrow night';
+			urgency.classList.add('hwp-urgency--deal');
+		} else if (diffDays === 0) {
+			chip.textContent = 'Tonight';
+			urgency.classList.add('hwp-urgency--deal');
+		} else {
+			urgency.hidden = true;
+		}
+	})();
+
+	function showCard() {
+		if (card) card.style.display = 'block';
+		if (mini) mini.classList.remove('hwp-mini--on');
+		hwWrite('hwCardMin', 'false');
+		hwSyncNavOffsets();
+	}
+	function hideCard() {
+		if (card) card.style.display = 'none';
+		if (mini) mini.classList.add('hwp-mini--on');
+		hwWrite('hwCardMin', 'true');
+		hwSyncNavOffsets();
+	}
+
+	hwRead('hwCardMin') === 'true' ? hideCard() : showCard();
+
+	var btnMin = document.getElementById('hw-btn-minimize');
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (mini) mini.addEventListener('click', showCard);
+})();
+</script>

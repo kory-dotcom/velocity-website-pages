@@ -11,11 +11,20 @@
     ignition: { title: "Ignition", modulePath: "../Ignition/velocity-ignition-elementor.html" },
     "menu-2025": { title: "Menu 2025", modulePath: "../Food & Drink/velocity-menu-2025.html" },
     membership: { title: "Membership", modulePath: "../Membership Page/velocity-membership-elementor.html" },
+    "gift-cards": { title: "Gift Cards", modulePath: "../Gift Cards/velocity-gift-cards-elementor.html" },
+    "holiday-parties": { title: "Holiday Parties", modulePath: "../Holiday Parties/velocity-holiday-parties-elementor.html" },
+    "million-laps": { title: "Million Lap Monday", modulePath: "../Million Laps/velocity-million-laps-elementor.html" },
+    halloween: { title: "Fast & Frightening Halloween Party", modulePath: "../Halloween/velocity-halloween-elementor.html" },
+    spookeasy: { title: "Spookeasy Halloween Party (tickets)", modulePath: "../Halloween/velocity-spookeasy-elementor.html" },
     "parties-events": { title: "Group Events", modulePath: "../Parties & Events/velocity-parties-events-elementor.html" },
     "party-packs": { title: "Party Packs", modulePath: "../Party Packs/velocity-party-packs-elementor.html" },
     "semi-private": { title: "Semi-Private", modulePath: "../Semi-Private/velocity-semi-private-elementor.html" },
     "fathers-day": { title: "Father's Day Bundles", modulePath: "../Bundles Page/velocity-fathers-day-elementor.html" },
     "summer-special": { title: "Student Summer Special", modulePath: "../Summer Special/velocity-summer-special-elementor.html" },
+    "laborday-banner": { title: "Labor Day Banner (home popup preview)", modulePath: "../Labor Day/laborday-promo-banner.html" },
+    "roc-banner": { title: "Race of Champions Banner (home popup preview)", modulePath: "../Race of Champions/race-of-champions-promo-banner.html" },
+    "league-banner": { title: "Dallas League Banner (home popup preview)", modulePath: "../Dallas/Leagues/league-promo-banner.html" },
+    "halloween-banner": { title: "Halloween Banner (home popup preview)", modulePath: "../Halloween/halloween-promo-banner.html" },
     "promotions": { title: "Promotions", modulePath: "../Promotions/velocity-promotions-elementor.html" },
     "buyout": { title: "Full Venue Buyout", modulePath: "../Buyout/velocity-buyout-elementor.html" },
     "dallas-home": { title: "Dallas Home", modulePath: "../Dallas/Home/velocity-home-elementor.html" },
@@ -27,7 +36,9 @@
     "dallas-party-packs": { title: "Dallas Party Packs", modulePath: "../Dallas/Party Packs/velocity-party-packs-elementor.html" },
     "dallas-semi-private": { title: "Dallas Semi-Private", modulePath: "../Dallas/Semi-Private/velocity-semi-private-elementor.html" },
     "dallas-promotions": { title: "Dallas Promotions", modulePath: "../Dallas/Promotions/velocity-promotions-elementor.html" },
-    "dallas-buyout": { title: "Dallas Buyout", modulePath: "../Dallas/Buyout/velocity-buyout-elementor.html" }
+    "dallas-buyout": { title: "Dallas Buyout", modulePath: "../Dallas/Buyout/velocity-buyout-elementor.html" },
+    "dallas-leagues": { title: "Dallas Leagues", modulePath: "../Dallas/Leagues/velocity-leagues-elementor.html" },
+    "dallas-membership": { title: "Dallas Membership", modulePath: "../Dallas/Memberships/velocity-membership-elementor.html" }
   };
 
   var NAV_PATH_MAP = {
@@ -40,6 +51,16 @@
     "/contact": "index.html?p=contact",
     "/membership/": "index.html?p=membership",
     "/membership": "index.html?p=membership",
+    "/gift-cards/": "index.html?p=gift-cards",
+    "/gift-cards": "index.html?p=gift-cards",
+    "/holiday-parties/": "index.html?p=holiday-parties",
+    "/holiday-parties": "index.html?p=holiday-parties",
+    "/million-laps/": "index.html?p=million-laps",
+    "/million-laps": "index.html?p=million-laps",
+    "/halloween/": "index.html?p=halloween",
+    "/halloween": "index.html?p=halloween",
+    "/halloween/spookeasy/": "index.html?p=spookeasy",
+    "/halloween/spookeasy": "index.html?p=spookeasy",
     "/food-and-drink/": "index.html?p=food-drink",
     "/food-and-drink": "index.html?p=food-drink",
     "/ignition/": "index.html?p=ignition",
@@ -87,7 +108,16 @@
     "/dallas/promotions/": "index.html?p=dallas-promotions",
     "/dallas/promotions": "index.html?p=dallas-promotions",
     "/dallas/buyout/": "index.html?p=dallas-buyout",
-    "/dallas/buyout": "index.html?p=dallas-buyout"
+    "/dallas/buyout": "index.html?p=dallas-buyout",
+    "/dallas/leagues/": "index.html?p=dallas-leagues",
+    "/dallas/leagues": "index.html?p=dallas-leagues",
+    "/dallas/membership/": "index.html?p=membership",
+    "/dallas/membership": "index.html?p=membership",
+    "/dallas/memberships/": "index.html?p=membership",
+    "/dallas/memberships": "index.html?p=membership",
+    /* Houston has no leagues page yet — route to the Dallas league until it exists */
+    "/leagues/": "index.html?p=dallas-leagues",
+    "/leagues": "index.html?p=dallas-leagues"
   };
   var EXTERNAL_LOCAL_MAP = {
     /* book.velocitysimlounge.com (Roverd) must keep real https URLs — the Book Now page
@@ -139,14 +169,21 @@
   /* Keep in sync with velocity-navbar.html HOUSTON_ONLY_SLUGS */
   var HOUSTON_ONLY_SLUGS = {
     about: 1,
-    membership: 1,
     ignition: 1,
     "summer-special": 1,
     "fathers-day": 1,
     "spring-bundles": 1,
     "menu-2025": 1,
+    "gift-cards": 1,
+    "holiday-parties": 1,
+    "million-laps": 1,
+    halloween: 1,
+    spookeasy: 1,
     blog: 1
   };
+
+  /* One URL serves both lounges; arriving here must not overwrite the visitor's saved city. */
+  var SHARED_LOCATION_PAGE_KEYS = { "gift-cards": 1, "holiday-parties": 1, "million-laps": 1, halloween: 1, membership: 1 };
 
   var REPLICA_SLUG_PAGE_KEYS = {
     home: { houston: "home", dallas: "dallas-home" },
@@ -159,8 +196,15 @@
     "semi-private": { houston: "semi-private", dallas: "dallas-semi-private" },
     promotions: { houston: "promotions", dallas: "dallas-promotions" },
     buyout: { houston: "buyout", dallas: "dallas-buyout" },
+    /* Houston league page not built yet; both locations resolve to the Dallas module */
+    leagues: { houston: "dallas-leagues", dallas: "dallas-leagues" },
     about: { houston: "about", dallas: "dallas-home" },
-    membership: { houston: "membership", dallas: "dallas-home" },
+    membership: { houston: "membership", dallas: "membership" },
+    "gift-cards": { houston: "gift-cards", dallas: "gift-cards" },
+    "holiday-parties": { houston: "holiday-parties", dallas: "holiday-parties" },
+    "million-laps": { houston: "million-laps", dallas: "million-laps" },
+    halloween: { houston: "halloween", dallas: "halloween" },
+    spookeasy: { houston: "spookeasy", dallas: "spookeasy" },
     ignition: { houston: "ignition", dallas: "dallas-contact" },
     "summer-special": { houston: "summer-special", dallas: "dallas-home" },
     "fathers-day": { houston: "fathers-day", dallas: "dallas-home" }
@@ -170,7 +214,7 @@
     loc = loc === "dallas" ? "dallas" : "houston";
     /* Houston-only pages always resolve to Houston replica keys (matches production nav rewrite). */
     if (HOUSTON_ONLY_SLUGS[slug]) loc = "houston";
-    var dallasPages = ["home", "party-packs", "book-now", "contact", "group-events", "corporate-events", "food-and-drink", "semi-private", "promotions", "buyout"];
+    var dallasPages = ["home", "party-packs", "book-now", "contact", "group-events", "corporate-events", "food-and-drink", "semi-private", "promotions", "buyout", "leagues"];
     if (loc === "dallas" && dallasPages.indexOf(slug) === -1) slug = "home";
     var map = REPLICA_SLUG_PAGE_KEYS[slug];
     var key = map ? map[loc] : (loc === "dallas" ? "dallas-home" : "home");
@@ -187,6 +231,11 @@
     ignition: "ignition",
     "menu-2025": "menu-2025",
     membership: "membership",
+    "gift-cards": "gift-cards",
+    "holiday-parties": "holiday-parties",
+    "million-laps": "million-laps",
+    halloween: "halloween",
+    spookeasy: "spookeasy",
     "parties-events": "group-events",
     "party-packs": "party-packs",
     "semi-private": "semi-private",
@@ -204,7 +253,9 @@
     "dallas-semi-private": "semi-private",
     "dallas-corporate-events": "corporate-events",
     "dallas-promotions": "promotions",
-    "dallas-buyout": "buyout"
+    "dallas-buyout": "buyout",
+    "dallas-leagues": "leagues",
+    "dallas-membership": "membership"
   };
 
   function replicaSlugFromNavHref(href) {
@@ -596,6 +647,7 @@
 
   function resolveLocationFromPageKey(key) {
     key = String(key || pageKey || "home");
+    if (SHARED_LOCATION_PAGE_KEYS[key]) return null;
     if (window.VSL_LOCATION && window.VSL_LOCATION.locationFromPageKey) {
       return window.VSL_LOCATION.locationFromPageKey(key);
     }
@@ -621,7 +673,9 @@
   }
 
   function setLocationFromPageKey() {
-    syncLocationState(resolveLocationFromPageKey(pageKey), "replica-page-key");
+    var loc = resolveLocationFromPageKey(pageKey);
+    if (loc !== "dallas" && loc !== "houston") return;
+    syncLocationState(loc, "replica-page-key");
   }
 
   function replicaTargetPageKey(loc, slug) {
@@ -766,6 +820,12 @@
       '<li><a href="index.html?p=semi-private">Semi-Private</a></li>' +
       '<li><a href="index.html?p=party-packs">Party Packs</a></li>' +
       '<li><a href="index.html?p=membership">Membership</a></li>' +
+      '<li><a href="index.html?p=gift-cards">Gift Cards</a></li>' +
+      '<li><a href="index.html?p=holiday-parties">Holiday Parties</a></li>' +
+      '<li><a href="index.html?p=million-laps">Million Lap Monday</a></li>' +
+      '<li><a href="index.html?p=halloween">Fast &amp; Frightening Halloween Party</a></li>' +
+      '<li><a href="index.html?p=spookeasy">Spookeasy Halloween Party (tickets)</a></li>' +
+      '<li><a href="index.html?p=halloween-banner">Halloween home popup (preview)</a></li>' +
       '<li><a href="index.html?p=fathers-day">Father\'s Day Bundles</a></li>' +
       '<li><a href="index.html?p=summer-special">Student Summer Special</a></li>' +
       '<li><a href="index.html?p=promotions">Promotions</a></li>' +
@@ -784,6 +844,8 @@
       '<li><a href="index.html?p=dallas-semi-private">Dallas Semi-Private</a></li>' +
       '<li><a href="index.html?p=dallas-promotions">Dallas Promotions</a></li>' +
       '<li><a href="index.html?p=dallas-buyout">Dallas Buyout</a></li>' +
+      '<li><a href="index.html?p=dallas-leagues">Dallas Leagues</a></li>' +
+      '<li><a href="index.html?p=dallas-membership">Dallas Membership</a></li>' +
       "</ul>" +
       "</div>" +
       "</section>"
@@ -875,6 +937,7 @@
     return loadModulePage({ token: token }).then(function () {
       if (options.scrollTop !== false) window.scrollTo(0, 0);
       ensureVisibleReveals();
+      loadPromoBanner();
     });
   }
 
@@ -905,14 +968,64 @@
   }
 
   function loadPromoBanner() {
-    /* Competitions promo lives in the home hero Race column — keep promo root empty. */
+    /* The Dallas league banner is retired (league cancelled Oct 2026) and only
+       loads on its own preview key. The Halloween popup owns the Houston and
+       Dallas home pages until Oct 31 (its script hides it after). ROC stays on
+       Book Now (its own script hides it after Sept 19). Nodes are moved to
+       <body>, so drop any previous copy before injecting the page's banner. */
     var promoRoot = document.getElementById("replica-promo-root");
+    [
+      "roc-promo-card", "roc-promo-minimized", "roc-promo-strip", "roc-promo-strip-spacer",
+      "sb-promo-card", "sb-promo-minimized", "sb-promo-strip", "sb-promo-strip-spacer",
+      "dlg-promo-card", "dlg-promo-minimized", "dlg-promo-strip", "dlg-promo-strip-spacer",
+      "hw-promo-card", "hw-promo-minimized"
+    ].forEach(function (id) {
+      var nodes = document.querySelectorAll("#" + id);
+      for (var i = nodes.length - 1; i >= 0; i--) {
+        if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+      }
+    });
     if (promoRoot) promoRoot.innerHTML = "";
-    return Promise.resolve();
+    if (!promoRoot) return Promise.resolve();
+    if (pageKey === "league-banner") {
+      return fetchReplicaText("../Dallas/Leagues/league-promo-banner.html", "league banner")
+        .then(function (html) {
+          promoRoot.innerHTML = html;
+          executeInlineScripts(promoRoot);
+        })
+        .catch(function (err) {
+          if (window.console && console.warn) console.warn("[Staging] League banner load failed:", err.message);
+        });
+    }
+    if (pageKey === "home" || pageKey === "dallas-home" || pageKey === "halloween-banner") {
+      return fetchReplicaText("../Halloween/halloween-promo-banner.html", "Halloween banner")
+        .then(function (html) {
+          promoRoot.innerHTML = html;
+          executeInlineScripts(promoRoot);
+        })
+        .catch(function (err) {
+          if (window.console && console.warn) console.warn("[Staging] Halloween banner load failed:", err.message);
+        });
+    }
+    if (
+      pageKey !== "book-now" &&
+      pageKey !== "dallas-book-now" &&
+      pageKey !== "roc-banner"
+    ) {
+      return Promise.resolve();
+    }
+    return fetchReplicaText("../Race of Champions/race-of-champions-promo-banner.html", "promo banner")
+      .then(function (html) {
+        promoRoot.innerHTML = html;
+        executeInlineScripts(promoRoot);
+      })
+      .catch(function (err) {
+        if (window.console && console.warn) console.warn("[Staging] Promo banner load failed:", err.message);
+      });
   }
 
   function loadVslLocation() {
-    return fetchReplicaText("../vsl-location.js", "vsl-location.js")
+    return fetchReplicaText("../vsl-location.js?v=20260929a", "vsl-location.js")
       .then(function (js) {
         var s = document.createElement("script");
         s.textContent = js;
@@ -923,7 +1036,7 @@
   loadVslLocation()
     .catch(function () {})
     .then(function () {
-      return fetchReplicaText("../velocity-navbar.html?v=20260713b", "navbar");
+      return fetchReplicaText("../velocity-navbar.html?v=20261001a", "navbar");
     })
     .then(function (html) {
       navbarRoot.innerHTML = html;

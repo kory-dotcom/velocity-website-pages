@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spookeasy Halloween Party — Preview</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: #fff; min-height: 100vh; overflow-x: hidden; }
+  </style>
+</head>
+<body>
+  <!--
+    Loads an Elementor module exactly as pasted. Defaults to the Spookeasy
+    checkout page; add ?page=party for the Fast & Frightening party page.
+    Add ?api=http://localhost:3123 to point checkout at a local members dev
+    server (preserves the /api path). Add ?loc=dallas to preview Dallas copy.
+  -->
+  <div id="elementor-mock" class="elementor-widget-html">
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var api = params.get('api');
+        var file = params.get('page') === 'party' ? 'velocity-halloween-elementor.html' : 'velocity-spookeasy-elementor.html';
+        fetch(file + '?v=' + Date.now())
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            if (api) html = html.split('https://members.velocitysimlounge.com').join(api.replace(/\/$/, ''));
+            var mock = document.getElementById('elementor-mock');
+            mock.innerHTML = html;
+            mock.querySelectorAll('script').forEach(function (s) {
+              var ns = document.createElement('script');
+              if (s.src) ns.src = s.src; else ns.textContent = s.textContent;
+              document.body.appendChild(ns);
+            });
+          });
+      })();
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1626 @@
+<!--
+Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dallas)
+  Elementor Custom HTML module  ·  v4.0.1  ·  build 20261009c
+  (v1.x–v3.x history: this file was the Spookeasy ticket page. v4.0.0 splits it:
+   this page is the free main-floor costume party for BOTH lounges; the Houston-only
+   21+ Spookeasy checkout moved to Halloween/velocity-spookeasy-elementor.html at
+   /halloween/spookeasy/.)
+
+  ── SEO Handoff ──
+  Meta title:    Fast & Frightening Halloween Party | Velocity Sim Racing Lounge
+  Meta desc:     Halloween at Velocity, Saturday October 31, 7–10pm in Houston and Dallas. Free, all ages: a $25 sim racing tournament (50% off in costume), a costume contest with Velocity 10-pack prizes, spooky drinks and a candy station. Walk-ins only.
+  Canonical:     https://velocitysimlounge.com/halloween/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg
+  Robots:        noindex after October 31, 2026 (one-night event)
+  Schema:        Event (free, all ages, two locations: Velocity Houston + Velocity Dallas; sub-event: Spookeasy, Houston, $45) — add at page level via Rank Math.
+
+  ── How it works ──
+  No checkout on this page — the tournament is walk-in and paid at the front desk.
+  The page follows the navbar's saved lounge (VSL_LOCATION.readLocation(), then
+  localStorage vslPreferredLocation, then ?loc=): "Book a rig" links point at that
+  lounge's Book Now page, that lounge's card is highlighted, and elements with
+  data-hw-only="houston|dallas" show only for that lounge (the GTR vs Supra meet
+  and the Spookeasy after-party are Houston only). With no saved lounge the page
+  shows the Houston extras. Re-applies on _vslLocationChanged.
+
+  ── CONFIRM before launch (search "CONFIRM") ──
+  · GTR vs Supra Halloween Meet (10am–1pm) is shown as Houston only, matching the
+    home-page popup. Flip data-hw-only on that tile if Dallas hosts one too.
+  · Costume contest winners are announced at 10:30pm (per Kelci) even though the
+    free party is listed 7–10pm — copy says "stick around".
+
+  ── ASSET ──
+  Photos are existing Media Library assets (event photo + Ignition). If a
+  dedicated Halloween graphic is produced, swap the hero <img> and OG image.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
+<link rel="preconnect" href="https://members.velocitysimlounge.com" crossorigin>
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  .elementor-widget-html a[class*="vsl-hw"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  /* ── Page shell: full-bleed like the other Velocity modules ──────────── */
+  .vsl-halloween {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --silver: #DFDFDE;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --ink: #393452;
+    --muted: #574E76;
+    /* Seasonal accent for this page only (not part of the brand 60-30-10 palette). */
+    --pumpkin: #FF7A1A;
+    --pumpkin-deep: #E85D04;
+    --pumpkin-rgb: 255, 122, 26;
+    --glow-rgb: 238, 38, 95;
+    --page-margin: 64px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .vsl-halloween *,
+  .vsl-halloween *::before,
+  .vsl-halloween *::after { box-sizing: border-box; }
+  :where(.vsl-halloween) :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure) {
+    margin: 0;
+    padding: 0;
+  }
+  .vsl-halloween ul, .vsl-halloween ol { list-style: none; }
+  /* In-page anchors (What's included, Get tickets) land below the fixed navbar. */
+  .vsl-halloween [id^="hw-"] { scroll-margin-top: 6rem; }
+  .vsl-halloween button { font: inherit; }
+  .vsl-halloween svg { display: block; }
+  .vsl-halloween > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-halloween) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-halloween),
+  .elementor-container:has(.vsl-halloween),
+  .elementor-column:has(.vsl-halloween),
+  .elementor-column-wrap:has(.vsl-halloween),
+  .elementor-widget-wrap:has(.vsl-halloween),
+  .elementor-widget:has(.vsl-halloween),
+  .e-con:has(.vsl-halloween),
+  .e-con-inner:has(.vsl-halloween) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  html:has(.vsl-halloween),
+  body:has(.vsl-halloween) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  .vsl-hw-grid {
+    position: relative;
+    z-index: 2;
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-hw-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--circuit-white);
+  }
+  .vsl-hw-section-title em { font-style: italic; color: var(--magenta); }
+  .vsl-hw-section-title .vsl-hw-moon-text { color: var(--pumpkin); }
+  .vsl-hw-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.55;
+    max-width: 58ch;
+    color: rgba(234,234,234,0.78);
+  }
+  .vsl-hw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 30px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vsl-hw-btn:hover { background-color: #d41e52; border-color: #d41e52; box-shadow: 0 8px 28px rgba(238,38,95,0.35); }
+  .vsl-hw-btn:active { transform: scale(0.98); }
+  .vsl-hw-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-hw-btn--ghost {
+    background: transparent;
+    border-color: rgba(234,234,234,0.35);
+    box-shadow: none;
+  }
+  .vsl-hw-btn--ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(234,234,234,0.6); box-shadow: none; }
+  .vsl-hw-btn--moon {
+    background: var(--pumpkin);
+    border-color: var(--pumpkin);
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+    box-shadow: 0 4px 16px rgba(var(--pumpkin-rgb), 0.3);
+  }
+  .vsl-hw-btn--moon:hover { background: var(--pumpkin-deep); border-color: var(--pumpkin-deep); box-shadow: 0 8px 28px rgba(var(--pumpkin-rgb), 0.4); }
+
+  /* ── Halloween decorations ───────────────────────────────────────────── */
+  .vsl-hw-bat {
+    position: absolute;
+    z-index: 2;
+    width: var(--bat-w, 54px);
+    height: auto;
+    color: #05070f;
+    fill: currentColor;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+    animation: vsl-hw-float var(--bat-dur, 7s) ease-in-out infinite alternate;
+    animation-delay: var(--bat-delay, 0s);
+  }
+  .vsl-hw-web {
+    position: absolute;
+    z-index: 2;
+    width: clamp(120px, 16vw, 220px);
+    height: auto;
+    color: rgba(234,234,234,0.3);
+    pointer-events: none;
+  }
+  .vsl-hw-web--tl { top: 0; left: 0; }
+  .vsl-hw-web--tr { top: 0; right: 0; transform: scaleX(-1); }
+  .vsl-hw-web--bl { bottom: 0; left: 0; transform: scaleY(-1); }
+  .vsl-hw-web--br { bottom: 0; right: 0; transform: scale(-1); }
+  .vsl-hw-fog {
+    position: absolute;
+    left: 0; right: 0;
+    height: clamp(60px, 10vw, 140px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .vsl-hw-fog--top { top: 0; background: linear-gradient(180deg, rgba(234,234,234,0.1) 0%, transparent 100%); }
+  .vsl-hw-fog--bottom { bottom: 0; background: linear-gradient(0deg, rgba(234,234,234,0.1) 0%, transparent 100%); }
+
+  /* Jack-o'-lanterns */
+  .vsl-hw-pumpkin {
+    position: absolute;
+    z-index: 2;
+    width: var(--pk-w, 120px);
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,0.5));
+  }
+  .vsl-hw-pumpkin--glow { filter: drop-shadow(0 10px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 22px rgba(var(--pumpkin-rgb), 0.45)); }
+  .vsl-hw-pumpkin--flip { transform: scaleX(-1); }
+  .vsl-hw-patch {
+    position: absolute;
+    z-index: 2;
+    left: 0; right: 0;
+    bottom: calc(var(--vsl-hero-finish-h) - 6px);
+    height: 0;
+    pointer-events: none;
+  }
+  .vsl-hw-patch .vsl-hw-pumpkin { bottom: 0; }
+
+  /* Spider on a thread */
+  .vsl-hw-spider {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    /* Sits in the gap between the copy and the panel on desktop. */
+    left: var(--sp-left, calc(50% - 12px));
+    width: 2px;
+    height: var(--sp-drop, 180px);
+    background: linear-gradient(180deg, rgba(234,234,234,0.6), rgba(234,234,234,0.25));
+    transform-origin: top center;
+    animation: vsl-hw-swing 5.5s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  .vsl-hw-spider svg {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.5));
+  }
+
+  /* Candy-corn stripe divider */
+  .vsl-hw-candy {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 8px;
+    z-index: 3;
+    background: repeating-linear-gradient(90deg, var(--pumpkin) 0 28px, var(--yellow) 28px 56px, #fff 56px 84px);
+    pointer-events: none;
+  }
+
+  @keyframes vsl-hw-float {
+    0%   { transform: translate3d(0, 0, 0) rotate(-4deg); }
+    50%  { transform: translate3d(10px, -14px, 0) rotate(3deg); }
+    100% { transform: translate3d(-8px, -6px, 0) rotate(-2deg); }
+  }
+  @keyframes vsl-hw-flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; text-shadow: 0 0 6px rgba(var(--glow-rgb), 0.7), 0 0 18px rgba(var(--glow-rgb), 0.55), 0 0 42px rgba(var(--glow-rgb), 0.35); }
+    20%, 24%, 55% { opacity: 0.78; text-shadow: none; }
+  }
+  @keyframes vsl-hw-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(0, -10px, 0); }
+  }
+  @keyframes vsl-hw-swing {
+    from { transform: rotate(-4deg); }
+    to   { transform: rotate(4deg); }
+  }
+  @keyframes vsl-hw-pulse {
+    0%, 100% { filter: drop-shadow(0 10px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 14px rgba(var(--pumpkin-rgb), 0.35)); }
+    50%      { filter: drop-shadow(0 10px 18px rgba(0,0,0,0.5)) drop-shadow(0 0 30px rgba(var(--pumpkin-rgb), 0.6)); }
+  }
+
+  /* ── Hero ────────────────────────────────────────────────────────────── */
+  .vsl-hw-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    isolation: isolate;
+    width: 100%;
+    min-height: 72vh;
+    min-height: 72svh;
+    background-color: var(--navy);
+    color: var(--circuit-white);
+  }
+  .vsl-hw-hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--navy);
+  }
+  .vsl-hw-hero__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+    transform: scale(1.04);
+    filter: saturate(0.7);
+  }
+  .vsl-hw-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(16,24,43,0.55) 0%, rgba(16,24,43,0.92) 100%),
+      linear-gradient(90deg, rgba(16,24,43,0.7) 0%, rgba(16,24,43,0.2) 55%, rgba(16,24,43,0.45) 100%),
+      radial-gradient(ellipse 55% 45% at 80% 12%, rgba(var(--pumpkin-rgb), 0.3) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 30% at 50% 100%, rgba(var(--pumpkin-rgb), 0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 40% at 10% 90%, rgba(238,38,95,0.2) 0%, transparent 70%);
+  }
+  /* The harvest moon */
+  .vsl-hw-hero__moon {
+    position: absolute;
+    z-index: 1;
+    top: clamp(28px, 6vw, 70px);
+    right: clamp(6%, 10vw, 14%);
+    width: clamp(90px, 13vw, 180px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 38% 36%, #ffe3a8 0%, #ffb24d 45%, var(--pumpkin) 78%, var(--pumpkin-deep) 100%);
+    box-shadow:
+      0 0 30px rgba(var(--pumpkin-rgb), 0.6),
+      0 0 90px rgba(var(--pumpkin-rgb), 0.4),
+      0 0 180px rgba(var(--pumpkin-rgb), 0.22);
+    opacity: 0.95;
+  }
+  .vsl-hw-hero__moon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 62% 58%, rgba(16,24,43,0.12) 0 10%, transparent 11%),
+      radial-gradient(circle at 30% 64%, rgba(16,24,43,0.1) 0 7%, transparent 8%),
+      radial-gradient(circle at 70% 28%, rgba(16,24,43,0.1) 0 5%, transparent 6%);
+  }
+  .vsl-hw-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+    align-items: center;
+    gap: clamp(28px, 4vw, 56px);
+    padding: clamp(56px, 12vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 7vw, 64px);
+    width: min(1480px, 100%);
+    margin: 0 auto;
+  }
+  .vsl-hw-hero__copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .vsl-hw-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 20px;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 0.7rem + 0.9vw, 1.1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--pumpkin-deep) 0%, var(--pumpkin) 100%);
+  }
+  .vsl-hw-hero__title {
+    margin: 0 0 0.3em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: #fff;
+  }
+  .vsl-hw-hero__title-line {
+    display: block;
+    font-size: clamp(3rem, 1rem + 8.6vw, 6.4rem);
+    text-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .vsl-hw-hero__title-amp {
+    display: block;
+    font-size: clamp(1.4rem, 0.7rem + 3vw, 2.4rem);
+    letter-spacing: 0.3em;
+    color: var(--yellow);
+    padding-left: 0.1em;
+  }
+  .vsl-hw-hero__title-line--fright {
+    --glow-rgb: var(--pumpkin-rgb);
+    color: var(--pumpkin);
+    animation: vsl-hw-flicker 9s linear infinite;
+  }
+  .vsl-hw-hero__title-line--small {
+    font-size: clamp(1.6rem, 0.8rem + 3.4vw, 3rem);
+    letter-spacing: 0.08em;
+    color: var(--circuit-white);
+    margin-top: 0.1em;
+  }
+  .vsl-hw-hero__sub {
+    margin: 0 0 1.4rem;
+    font-size: clamp(1.02rem, 0.94rem + 0.4vw, 1.18rem);
+    line-height: 1.6;
+    color: rgba(234,234,234,0.9);
+    max-width: 50ch;
+  }
+  .vsl-hw-hero__sub strong { color: #fff; font-weight: 700; }
+  .vsl-hw-stats {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 10px;
+    margin: 0 0 1.5rem;
+  }
+  .vsl-hw-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(234,234,234,0.06);
+    border: 1px solid rgba(234,234,234,0.16);
+    backdrop-filter: blur(6px);
+  }
+  .vsl-hw-stats span {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-hw-stats strong {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .vsl-hw-stats li.is-pumpkin { border-color: rgba(var(--pumpkin-rgb), 0.5); background: rgba(var(--pumpkin-rgb), 0.12); }
+  .vsl-hw-stats li.is-pumpkin strong { color: var(--pumpkin); }
+  .vsl-hw-hero__actions { display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: center; }
+
+  /* Hero poster visual */
+  .vsl-hw-hero__visual { display: flex; justify-content: center; align-items: center; min-width: 0; position: relative; }
+  .vsl-hw-poster {
+    --tk-check: 20px;
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    border-radius: 24px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 70% 55% at 18% -4%, rgba(255,255,255,0.10) 0%, transparent 62%),
+      linear-gradient(135deg, #222567 0%, var(--deep-indigo) 42%, var(--navy) 100%);
+    border: 1px solid rgba(234,234,234,0.16);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.18), 0 26px 60px rgba(0,0,0,0.4);
+    color: #fff;
+    transform: rotate(2deg);
+  }
+  .vsl-hw-poster::before,
+  .vsl-hw-poster::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: var(--tk-check);
+    background: repeating-conic-gradient(rgba(255,255,255,0.92) 0 25%, transparent 0 50%);
+    background-size: var(--tk-check) var(--tk-check);
+    z-index: 1;
+  }
+  .vsl-hw-poster::before { top: 0; }
+  .vsl-hw-poster::after { bottom: 0; }
+  .vsl-hw-poster__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: calc(var(--tk-check) + 20px) 28px 0;
+  }
+  .vsl-hw-poster__logo {
+    display: block;
+    height: 40px;
+    width: calc(40px * 230 / 48);
+    background-color: #fff;
+    -webkit-mask-image: url("https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png");
+    mask-image: url("https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png");
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: left center; mask-position: left center;
+    -webkit-mask-size: contain; mask-size: contain;
+  }
+  .vsl-hw-poster__tag {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--pumpkin);
+    white-space: nowrap;
+  }
+  .vsl-hw-poster__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 12px;
+    padding: 14px 28px 0;
+  }
+  .vsl-hw-poster__mascots { display: flex; align-items: flex-end; gap: 2px; }
+  .vsl-hw-poster__mascots .vsl-hw-pumpkin {
+    position: static;
+    width: clamp(64px, 7vw, 92px);
+    margin-bottom: -4px;
+    animation: vsl-hw-pulse 3.6s ease-in-out infinite;
+  }
+  .vsl-hw-poster__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 1.1rem + 1.8vw, 2.6rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+  }
+  .vsl-hw-poster__title em { font-style: italic; color: var(--pumpkin); }
+  .vsl-hw-poster__date {
+    margin-top: 10px;
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-hw-ghost {
+    width: clamp(84px, 9vw, 120px);
+    height: auto;
+    filter: drop-shadow(0 14px 24px rgba(0,0,0,0.45));
+    animation: vsl-hw-drift 3.2s ease-in-out infinite alternate;
+  }
+  .vsl-hw-poster__rows {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 20px 28px calc(var(--tk-check) + 24px);
+  }
+  .vsl-hw-poster__rows li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(234,234,234,0.06);
+    border: 1px solid rgba(234,234,234,0.14);
+  }
+  .vsl-hw-poster__rows strong {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: #fff;
+  }
+  .vsl-hw-poster__rows span {
+    font-size: 0.95rem;
+    color: var(--mist);
+    line-height: 1.35;
+  }
+  .vsl-hw-poster__rows .vsl-hw-poster__price {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--pumpkin);
+  }
+  .vsl-hw-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: 1px solid #000;
+  }
+
+  /* ── Lineup (light section) ─────────────────────────────────────────── */
+  .vsl-hw-lineup {
+    position: relative;
+    background: #F4F5F9;
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: var(--navy);
+    overflow: hidden;
+  }
+  .vsl-hw-lineup .vsl-hw-section-title { color: var(--navy); }
+  .vsl-hw-lineup .vsl-hw-section-sub { color: var(--muted); }
+  .vsl-hw-lineup .vsl-hw-web { color: rgba(16,24,43,0.16); }
+  .vsl-hw-tiles {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: clamp(16px, 2.4vw, 24px);
+  }
+  .vsl-hw-tile {
+    position: relative;
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 26px 24px 24px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid rgba(41,56,147,0.12);
+    box-shadow: 0 16px 40px -28px rgba(16,24,43,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vsl-hw-tile:hover { transform: translateY(-3px); box-shadow: 0 22px 44px -26px rgba(16,24,43,0.5); }
+  .vsl-hw-tile--wide { grid-column: span 4; }
+  /* Six tiles on a 6-unit grid: 3 singles · specialty (2) + entertainment (4) · contest full width.
+     The full-width contest tile puts the podium beside the copy instead of stretching it. */
+  .vsl-hw-tile--contest {
+    grid-column: span 6;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "icon podium"
+      "time podium"
+      "title podium"
+      "list podium"
+      "text podium";
+    grid-template-rows: auto auto auto auto 1fr;
+    column-gap: clamp(24px, 4vw, 56px);
+    row-gap: 10px;
+    align-items: start;
+  }
+  .vsl-hw-tile--contest > .vsl-hw-tile__icon { grid-area: icon; }
+  .vsl-hw-tile--contest > .vsl-hw-tile__time { grid-area: time; justify-self: start; }
+  .vsl-hw-tile--contest > .vsl-hw-tile__title { grid-area: title; }
+  .vsl-hw-tile--contest > .vsl-hw-tile__list { grid-area: list; }
+  .vsl-hw-tile--contest > .vsl-hw-tile__text { grid-area: text; }
+  .vsl-hw-tile--contest > .vsl-hw-podium { grid-area: podium; align-self: center; margin-top: 0; }
+  .vsl-hw-tile__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--navy);
+    color: var(--pumpkin);
+  }
+  .vsl-hw-tile .vsl-hw-tile__icon--pumpkin { background: transparent; width: 64px; height: 60px; margin-left: -6px; }
+  .vsl-hw-tile .vsl-hw-tile__icon--pumpkin svg { width: 64px; height: 60px; stroke: none; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3)); }
+  .vsl-hw-tile__icon svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .vsl-hw-tile__time {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(var(--pumpkin-rgb), 0.14);
+    color: var(--pumpkin-deep);
+  }
+  .vsl-halloween h3.vsl-hw-tile__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 1.1rem + 0.8vw, 1.75rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--navy);
+  }
+  .vsl-hw-tile__price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    align-self: flex-start;
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: var(--magenta);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .vsl-hw-tile__price small {
+    font-size: 0.5em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+  .vsl-hw-tile__text { font-size: 1rem; line-height: 1.55; color: var(--muted); }
+  .vsl-hw-tile__text strong { color: var(--navy); }
+  .vsl-hw-tile__list { display: flex; flex-direction: column; gap: 6px; font-size: 1rem; color: var(--muted); }
+  .vsl-hw-tile__list li { display: flex; gap: 10px; align-items: baseline; line-height: 1.45; }
+  .vsl-hw-tile__list li::before { content: ''; flex: 0 0 8px; width: 8px; height: 8px; border-radius: 2px; background: var(--pumpkin); transform: translateY(-1px) rotate(45deg); }
+  .vsl-hw-tile__list strong { color: var(--navy); }
+  /* "Label + description" rows: keep both inline so the label never becomes a narrow column. */
+  .vsl-hw-tile__list li > strong + span { display: contents; }
+  .vsl-hw-tile__list li:has(> strong + span) { display: block; padding-left: 18px; position: relative; }
+  .vsl-hw-tile__list li:has(> strong + span)::before { position: absolute; left: 1px; top: 0.55em; transform: rotate(45deg); }
+
+  /* Costume contest podium */
+  .vsl-hw-podium {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    align-items: end;
+    margin-top: 6px;
+  }
+  .vsl-hw-podium li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    padding: 14px 8px 12px;
+    border-radius: 12px 12px 4px 4px;
+    text-align: center;
+    background: var(--navy);
+    color: #fff;
+    min-height: 92px;
+  }
+  .vsl-hw-podium li[data-place="1"] { order: 2; min-height: 124px; background: linear-gradient(180deg, #222567 0%, var(--deep-indigo) 100%); border-top: 4px solid var(--pumpkin); }
+  .vsl-hw-podium li[data-place="2"] { order: 1; min-height: 108px; border-top: 4px solid var(--silver); }
+  .vsl-hw-podium li[data-place="3"] { order: 3; border-top: 4px solid var(--magenta); }
+  .vsl-hw-podium__place {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-hw-podium__prize {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: #fff;
+  }
+  .vsl-hw-podium li[data-place="1"] .vsl-hw-podium__prize { color: var(--pumpkin); font-size: 1.35rem; }
+  .vsl-hw-podium__sub { font-size: 0.82rem; color: var(--mist); line-height: 1.2; }
+
+  /* ── Spookeasy band ─────────────────────────────────────────────────── */
+  .vsl-hw-spook {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(64px, 9vh, 112px) 0;
+    color: var(--circuit-white);
+    background: var(--navy);
+  }
+  .vsl-hw-spook__photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .vsl-hw-spook__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    filter: saturate(0.6);
+  }
+  .vsl-hw-spook::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(16,24,43,0.96) 0%, rgba(16,24,43,0.88) 48%, rgba(25,27,77,0.72) 100%),
+      radial-gradient(ellipse 50% 60% at 85% 50%, rgba(238,38,95,0.28) 0%, transparent 65%);
+  }
+  .vsl-hw-spook__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+  .vsl-hw-spook__kicker {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 8px 18px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+  }
+  .vsl-hw-spook .vsl-hw-section-title { text-align: left; margin-left: 0; }
+  .vsl-hw-spook__neon {
+    display: block;
+    font-size: clamp(3rem, 1.4rem + 7vw, 5.6rem);
+    line-height: 0.9;
+    color: var(--magenta);
+    animation: vsl-hw-flicker 7s linear infinite;
+  }
+  .vsl-hw-spook__room {
+    display: block;
+    margin-top: 0.1em;
+    font-size: clamp(1.3rem, 0.9rem + 1.6vw, 2rem);
+    letter-spacing: 0.18em;
+    color: var(--circuit-white);
+  }
+  .vsl-hw-spook .vsl-hw-section-sub { text-align: left; margin-left: 0; max-width: 54ch; margin-bottom: 1.4rem; }
+  .vsl-hw-spook .vsl-hw-stats { grid-template-columns: repeat(4, auto); margin-bottom: 1.6rem; }
+  .vsl-hw-spook__id {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 54ch;
+    margin-top: 1.2rem;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(238,38,95,0.4);
+    background: rgba(238,38,95,0.1);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: rgba(234,234,234,0.9);
+  }
+  .vsl-hw-spook__id strong { color: #fff; }
+  .vsl-hw-spook__actions { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: 12px 14px; }
+
+  .vsl-hw-spook__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: clamp(22px, 3vw, 32px);
+    border-radius: 20px;
+    background: rgba(234,234,234,0.04);
+    border: 1px solid rgba(234,234,234,0.16);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 26px 60px rgba(0,0,0,0.4);
+  }
+  .vsl-hw-spook__panel-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+  }
+  .vsl-hw-spook__panel-title .vsl-hw-spook__panel-price {
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--pumpkin);
+  }
+  .vsl-hw-spook__list { display: flex; flex-direction: column; gap: 12px; }
+  .vsl-hw-spook__list li { display: flex; gap: 12px; align-items: flex-start; }
+  .vsl-hw-spook__list svg { flex: 0 0 24px; width: 24px; height: 24px; margin-top: 1px; fill: none; stroke: var(--pumpkin); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .vsl-hw-spook__list strong { display: block; font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.05; color: #fff; }
+  .vsl-hw-spook__list span { display: block; margin-top: 2px; font-size: 0.95rem; line-height: 1.45; color: rgba(234,234,234,0.78); }
+  .vsl-hw-spook__list a { color: var(--pumpkin); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .vsl-hw-spook__divider {
+    height: 1px;
+    background: rgba(234,234,234,0.14);
+  }
+  .vsl-hw-spook__h4 {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+
+  /* ── Good to know ────────────────────────────────────────────────────── */
+  .vsl-hw-faq { position: relative; background: #F4F5F9; padding: clamp(56px, 8vh, 96px) 0; color: var(--navy); overflow: hidden; }
+  .vsl-hw-faq .vsl-hw-section-title { color: var(--navy); }
+  .vsl-hw-faq .vsl-hw-section-sub { color: var(--muted); }
+  .vsl-hw-faq .vsl-hw-web { color: rgba(16,24,43,0.16); }
+  .vsl-hw-faq dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 22px); max-width: 1040px; margin-inline: auto; }
+  .vsl-hw-faq__item { padding: 22px 24px; border-radius: 14px; background: #fff; border: 1px solid rgba(41,56,147,0.12); box-shadow: 0 16px 40px -28px rgba(16,24,43,0.4); }
+  .vsl-hw-faq dt {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--navy);
+  }
+  .vsl-hw-faq dd { margin-top: 8px; font-size: 1rem; line-height: 1.55; color: var(--muted); }
+
+  /* ── Closing CTA ─────────────────────────────────────────────────────── */
+  .vsl-hw-cta {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 80% at 10% 50%, rgba(var(--pumpkin-rgb), 0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(238,38,95,0.22) 0%, transparent 60%),
+      linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(56px, 8vh, 96px) 0 clamp(72px, 10vh, 120px);
+    color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(234,234,234,0.1);
+  }
+  .vsl-hw-cta .vsl-hw-pumpkin { bottom: -8px; }
+  .vsl-hw-cta::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 10px;
+    background: repeating-conic-gradient(rgba(255,255,255,0.85) 0 25%, transparent 0 50%);
+    background-size: 10px 10px;
+    opacity: 0.8;
+  }
+  .vsl-hw-cta .vsl-hw-section-sub { margin-bottom: 1.6rem; }
+  .vsl-hw-cta__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 14px; }
+
+  /* GTR vs Supra meet: full-width row, icon beside the copy */
+  .vsl-hw-tile--meet { grid-column: span 6; flex-direction: row; align-items: center; gap: 22px; }
+  .vsl-hw-tile--meet .vsl-hw-tile__body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .vsl-hw-tile--meet .vsl-hw-tile__icon { flex: 0 0 52px; }
+  .vsl-hw-tile__text a { color: var(--magenta); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── Two lounges ─────────────────────────────────────────────────────── */
+  .vsl-hw-lounges-sec { position: relative; background: var(--navy); padding: clamp(56px, 8vh, 96px) 0; color: var(--circuit-white); overflow: hidden; }
+  .vsl-hw-lounges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 24px); max-width: 1040px; margin-inline: auto; }
+  .vsl-hw-lounge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 26px 26px 24px;
+    border-radius: 18px;
+    background: rgba(234,234,234,0.04);
+    border: 1px solid rgba(234,234,234,0.16);
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vsl-hw-lounge.is-current { border-color: rgba(var(--pumpkin-rgb), 0.8); box-shadow: 0 0 0 1px rgba(var(--pumpkin-rgb), 0.5), 0 22px 50px -24px rgba(var(--pumpkin-rgb), 0.5); }
+  .vsl-hw-lounge__you {
+    position: absolute;
+    top: 18px; right: 18px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--pumpkin);
+    color: var(--navy);
+  }
+  .vsl-hw-lounge__kicker { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; font-style: italic; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pumpkin); }
+  .vsl-halloween h3.vsl-hw-lounge__title { font-family: var(--font-display); font-size: clamp(1.6rem, 1.2rem + 1.2vw, 2.1rem); font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; color: #fff; }
+  .vsl-hw-lounge__addr { font-size: 1rem; line-height: 1.5; color: rgba(234,234,234,0.8); }
+  .vsl-hw-lounge__addr a { color: #fff; text-decoration: none; font-weight: 700; }
+  .vsl-hw-lounge__facts { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .vsl-hw-lounge__facts li { display: flex; gap: 10px; align-items: flex-start; font-size: 1rem; line-height: 1.45; color: rgba(234,234,234,0.9); }
+  .vsl-hw-lounge__facts li::before { content: ''; flex: 0 0 8px; width: 8px; height: 8px; margin-top: 0.5em; border-radius: 2px; background: var(--pumpkin); transform: rotate(45deg); }
+  .vsl-hw-lounge__facts strong { color: #fff; }
+  .vsl-hw-lounge__actions { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-top: auto; padding-top: 10px; }
+  .vsl-hw-lounge__actions .vsl-hw-btn { padding-inline: 22px; }
+
+  /* Spookeasy teaser: the band's panel doubles as "what the $45 covers" */
+  .vsl-hw-spook .vsl-hw-section-sub a { color: var(--pumpkin); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .vsl-hw-faq dd a { color: var(--magenta); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+  .vsl-halloween [hidden] { display: none !important; }
+
+  /* The site reveal script shifts sections with translateX(-40px) until an
+     observer fires. On mobile that observer can miss, so the page loads
+     sitting off to the left. Keep every section in place. */
+  .vsl-halloween [class*="vsl-reveal"],
+  .vsl-halloween [class*="vsl-reveal"] [data-vsl-stagger] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 1100px) {
+    .vsl-hw-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vsl-hw-tile { grid-column: span 1; }
+    .vsl-hw-tile--wide { grid-column: span 2; }
+    .vsl-hw-tile--contest { column-gap: 32px; }
+  }
+  @media (max-width: 860px) {
+    /* Stack the contest tile like the others; podium goes back under the copy. */
+    .vsl-hw-tile--contest { display: flex; }
+    .vsl-hw-tile--contest > .vsl-hw-podium { margin-top: 6px; }
+    .vsl-hw-tile--meet { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .vsl-hw-lounges { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  }
+  @media (max-width: 1024px) {
+    .vsl-hw-hero__inner { grid-template-columns: minmax(0, 1fr); }
+    .vsl-hw-hero__visual { display: none; }
+    .vsl-hw-hero__copy { max-width: 640px; }
+    .vsl-hw-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vsl-hw-spook__inner { grid-template-columns: minmax(0, 1fr); }
+    .vsl-hw-spook .vsl-hw-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vsl-hw-spider { --sp-left: 90%; }
+    .vsl-hw-spook .vsl-hw-stats li { align-items: flex-start; text-align: left; }
+  }
+  @media (max-width: 860px) {
+    .vsl-hw-faq dl { grid-template-columns: minmax(0, 1fr); }
+    .vsl-hw-bat { --bat-w: 38px; }
+    .vsl-hw-patch .vsl-hw-pumpkin { --pk-w: 72px; }
+    .vsl-hw-patch .vsl-hw-pumpkin--sm { display: none; }
+    .vsl-hw-cta .vsl-hw-pumpkin { --pk-w: 70px; }
+    .vsl-hw-spider { --sp-drop: 110px; }
+  }
+  @media (max-width: 720px) {
+    .vsl-hw-tiles { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
+    /* Every tile is a single full-width row here; without this the span-2 wide
+       tiles create an implicit second column and squeeze the contest tile. */
+    .vsl-hw-tile, .vsl-hw-tile--wide, .vsl-hw-tile--contest, .vsl-hw-tile--meet { grid-column: span 1; }
+  }
+  @media (max-width: 640px) {
+    .vsl-hw-hero { min-height: 0; }
+    .vsl-hw-hero__inner { padding-top: 64px; padding-bottom: 96px; }
+    .vsl-hw-patch .vsl-hw-pumpkin { --pk-w: 64px; }
+    .vsl-hw-cta .vsl-hw-pumpkin { --pk-w: 54px; }
+    .vsl-hw-hero__actions .vsl-hw-btn,
+    .vsl-hw-cta__actions .vsl-hw-btn,
+    .vsl-hw-spook__actions .vsl-hw-btn { width: 100%; }
+    .vsl-hw-hero__moon { right: 6%; top: 18px; width: 72px; }
+    .vsl-hw-web { width: 90px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-halloween * { transition: none !important; animation: none !important; }
+    .vsl-hw-hero__title-line--fright { text-shadow: 0 0 18px rgba(var(--pumpkin-rgb), 0.55); }
+    .vsl-hw-spook__neon { text-shadow: 0 0 18px rgba(238,38,95,0.55); }
+  }
+</style>
+
+<div class="vsl-halloween">
+  <main id="primary-content">
+
+    <!-- Reusable SVG symbols -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <symbol id="vsl-hw-sym-bat" viewBox="0 0 64 32">
+          <path d="M32 5c-1.6 4.6-4.4 7.6-8.6 8.8-3.2-3.8-7.6-5.6-13.2-5 3.8 2 5.8 4.9 6 8.8-5.4-.8-10.4 1-15.2 5.4 6.2-2.4 11.4-1.6 15.4 2.6 2-3 5-4.6 8.8-4.6 1 3 2.9 5.4 5.8 7 2.9-1.6 4.8-4 5.8-7 3.8 0 6.8 1.6 8.8 4.6 4-4.2 9.2-5 15.4-2.6-4.8-4.4-9.8-6.2-15.2-5.4.2-3.9 2.2-6.8 6-8.8-5.6-.6-10 1.2-13.2 5C36.4 12.6 33.6 9.6 32 5z"/>
+        </symbol>
+        <symbol id="vsl-hw-sym-web" viewBox="0 0 200 200">
+          <g fill="none" stroke="currentColor" stroke-width="1.3">
+            <path d="M0 0L200 200M0 0L200 82M0 0L82 200M0 0L200 0M0 0L0 200"/>
+            <path d="M50 0Q46 24 35 35Q24 46 0 50"/>
+            <path d="M95 0Q88 46 67 67Q46 88 0 95"/>
+            <path d="M140 0Q130 68 99 99Q68 130 0 140"/>
+            <path d="M185 0Q172 90 131 131Q90 172 0 185"/>
+          </g>
+        </symbol>
+        <!-- Pumpkin paint: soft radial shading instead of flat bands so the skin blends -->
+        <radialGradient id="vsl-hw-pk-body" cx="38%" cy="30%" r="80%">
+          <stop offset="0" stop-color="#FFA659"/>
+          <stop offset="0.42" stop-color="#FA7A1E"/>
+          <stop offset="0.78" stop-color="#DB5A0A"/>
+          <stop offset="1" stop-color="#A94307"/>
+        </radialGradient>
+        <radialGradient id="vsl-hw-pk-body-b" cx="40%" cy="28%" r="82%">
+          <stop offset="0" stop-color="#FFB86B"/>
+          <stop offset="0.4" stop-color="#FF8A2E"/>
+          <stop offset="0.78" stop-color="#E0620E"/>
+          <stop offset="1" stop-color="#AE4808"/>
+        </radialGradient>
+        <radialGradient id="vsl-hw-pk-face" cx="50%" cy="55%" r="65%">
+          <stop offset="0" stop-color="#FFF7D6"/>
+          <stop offset="0.55" stop-color="#FFE08A"/>
+          <stop offset="1" stop-color="#FFBF45"/>
+        </radialGradient>
+        <linearGradient id="vsl-hw-pk-stem" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#6AA544"/>
+          <stop offset="1" stop-color="#2F5E22"/>
+        </linearGradient>
+        <!-- Candle glow bleeding out of the carved shapes -->
+        <filter id="vsl-hw-pk-candle" x="-25%" y="-25%" width="150%" height="150%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="vsl-hw-pk-candle-md" x="-25%" y="-25%" width="150%" height="150%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="vsl-hw-pk-haze" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="9"/>
+        </filter>
+
+        <!-- Pumpkin A: classic triangle-eyed jack-o'-lantern -->
+        <symbol id="vsl-hw-sym-pumpkin" viewBox="0 0 120 112">
+          <path d="M57 24c-3-9 1-16 9-20 3 7 1 14-4 20z" fill="url(#vsl-hw-pk-stem)"/>
+          <ellipse cx="60" cy="66" rx="52" ry="42" fill="url(#vsl-hw-pk-body)"/>
+          <g fill="none" stroke="#4A1800" stroke-opacity="0.16" stroke-width="2.4">
+            <ellipse cx="60" cy="66" rx="22" ry="41.5"/>
+            <ellipse cx="60" cy="66" rx="38" ry="41"/>
+          </g>
+          <ellipse cx="44" cy="42" rx="15" ry="8" fill="#fff" fill-opacity="0.11" transform="rotate(-24 44 42)"/>
+          <g fill="url(#vsl-hw-pk-face)" filter="url(#vsl-hw-pk-candle)">
+            <path d="M38 56l12 9H28z"/>
+            <path d="M82 56L70 65h20z"/>
+            <path d="M60 68l5 7H55z"/>
+            <path d="M32 78q28 20 56 0l-6 10h-9l-5-5-5 5h-10l-5-5-5 5h-9z"/>
+          </g>
+        </symbol>
+        <!-- Pumpkin B: squat, round-eyed, gap-toothed grin with a curling vine -->
+        <symbol id="vsl-hw-sym-pumpkin-b" viewBox="0 0 120 112">
+          <path d="M66 22c6-7 15-8 22-4" fill="none" stroke="#4E8A33" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M86 16c5 0 8 4 8 8-5 0-8-3-8-8z" fill="#5E9A3C"/>
+          <path d="M57 36c-2-9 2-16 10-19 2 6 0 13-4 19z" fill="url(#vsl-hw-pk-stem)"/>
+          <ellipse cx="60" cy="72" rx="54" ry="36" fill="url(#vsl-hw-pk-body-b)"/>
+          <g fill="none" stroke="#4A1800" stroke-opacity="0.16" stroke-width="2.4">
+            <ellipse cx="60" cy="72" rx="18" ry="35.5"/>
+            <ellipse cx="60" cy="72" rx="37" ry="35"/>
+          </g>
+          <ellipse cx="42" cy="50" rx="16" ry="7.5" fill="#fff" fill-opacity="0.11" transform="rotate(-18 42 50)"/>
+          <g fill="url(#vsl-hw-pk-face)" filter="url(#vsl-hw-pk-candle)">
+            <circle cx="42" cy="64" r="7"/>
+            <circle cx="78" cy="64" r="7"/>
+            <path d="M60 72l4 6h-8z"/>
+            <path d="M32 82q28 18 56 0-4 15-28 15T32 82z"/>
+          </g>
+          <path d="M50 86h7v7h-7zM66 91h7v6h-7z" fill="#E0620E"/>
+        </symbol>
+        <!-- Pumpkin V: Velocity helmet mark carved into the face -->
+        <symbol id="vsl-hw-sym-pumpkin-helmet" viewBox="0 0 120 112">
+          <path d="M57 24c-3-9 1-16 9-20 3 7 1 14-4 20z" fill="url(#vsl-hw-pk-stem)"/>
+          <ellipse cx="60" cy="66" rx="52" ry="42" fill="url(#vsl-hw-pk-body)"/>
+          <g fill="none" stroke="#4A1800" stroke-opacity="0.16" stroke-width="2.4">
+            <ellipse cx="60" cy="66" rx="22" ry="41.5"/>
+            <ellipse cx="60" cy="66" rx="38" ry="41"/>
+          </g>
+          <ellipse cx="44" cy="42" rx="15" ry="8" fill="#fff" fill-opacity="0.11" transform="rotate(-24 44 42)"/>
+          <ellipse cx="60" cy="70" rx="26" ry="22" fill="#FFC247" fill-opacity="0.45" filter="url(#vsl-hw-pk-haze)"/>
+          <!-- Helmet silhouette from Deliverables/Logos/SVG/LogoAsset 181.svg (bbox x48.5 y0 w122.9 h114.5), scaled 0.5 and centred on the face -->
+          <g transform="translate(5.1 39.4) scale(0.5)" fill="#FFF1C2" stroke="#FFF1C2" stroke-width="2.5" stroke-linejoin="round" filter="url(#vsl-hw-pk-candle-md)">
+            <path d="m171.31,51.88c0-.25,0-.54-.03-.79,0-.44-.03-.89-.06-1.33,0-.16-.03-.35-.03-.54-.03-.28-.06-.6-.06-.89-.03-.25-.06-.47-.09-.7,0-.22-.03-.41-.06-.6-.03-.32-.06-.6-.09-.92-.03-.19-.06-.41-.09-.6-.03-.22-.06-.44-.09-.66,0-.03,0-.09-.03-.13-.03-.19-.03-.38-.06-.57-.03-.19-.09-.38-.13-.57,0-.09-.03-.22-.06-.32-.03-.19-.06-.35-.09-.51-.09-.51-.19-1.01-.32-1.52-.03-.16-.06-.35-.09-.51-.06-.25-.13-.47-.19-.7-.03-.22-.09-.44-.16-.66-.06-.22-.13-.44-.19-.66-.13-.41-.22-.79-.35-1.2-.22-.7-.44-1.36-.66-2.02-.06-.16-.13-.32-.19-.51-.09-.25-.19-.47-.28-.73-.03-.16-.09-.28-.16-.41-.06-.19-.13-.35-.19-.51s-.13-.32-.19-.47c-.06-.16-.13-.32-.22-.47-.09-.25-.19-.47-.32-.73-.06-.16-.13-.32-.22-.47-.06-.16-.13-.32-.19-.47-.06-.13-.13-.22-.19-.35-.06-.13-.13-.25-.19-.38-.47-1.01-1.01-1.96-1.55-2.91-.19-.35-.41-.7-.6-1.04-.06-.09-.13-.19-.19-.28-.19-.35-.41-.66-.63-1.01-.13-.19-.25-.38-.38-.57-.13-.19-.25-.38-.38-.57-.28-.41-.6-.82-.89-1.23-.13-.16-.22-.28-.35-.44-.13-.19-.28-.35-.41-.54-.13-.19-.28-.35-.41-.54-.16-.19-.32-.38-.47-.57-.03-.03-.06-.09-.09-.13l7.69-12.97h-23.63c-2.97-1.58-6.14-2.94-9.43-4.02-.22-.09-.44-.16-.66-.22-.35-.13-.66-.22-1.01-.32-.03,0-.06-.03-.06-.03-.41-.13-.79-.22-1.2-.35-.6-.16-1.2-.32-1.8-.44-.22-.06-.41-.09-.6-.16-.16-.03-.28-.06-.41-.09-.22-.03-.44-.09-.66-.13-.16-.03-.32-.06-.47-.09-.32-.06-.6-.13-.92-.19-.22-.03-.44-.09-.66-.13-.7-.13-1.39-.22-2.12-.35-.22-.03-.47-.06-.7-.09-.25-.03-.47-.06-.73-.09-.44-.03-.95-.09-1.42-.16-.76-.06-1.55-.13-2.34-.19-.16,0-.35,0-.54-.03-.19,0-.41,0-.63-.03h-.19c-.19,0-.41,0-.63-.03h-.89c-.44-.03-.89-.03-1.33-.03-28.06,0-51.4,17.4-56.15,43.49l-3.19,13.76,40.77.03c2.02,0,3.92,1.11,4.87,2.91l7.69,14.11c.22.41.63.6,1.04.6.38,0,.79-.19,1.01-.6l30.97-54.41h3.89l-32.17,56.56c-.82,1.46-2.28,2.18-3.73,2.18s-2.94-.76-3.73-2.25l-2.06-3.76c-2.34-4.27-6.77-6.8-11.42-6.8-1.14,0-2.31.16-3.48.47l-38.18,10.6-1.17,5.03c-4.52,19.55,11.32,32.55,11.32,32.55l31.85-8.35,66.81-17.56c7.59-9.68,12.12-21.89,12.12-35.14,0-.54-.03-1.04-.03-1.55Zm-15.31,31.89l-64.97,17.05-28.88,7.59c-3.54-3.76-10.44-12.97-7.59-25.24l.44-1.87,35.05-9.71c.66-.19,1.36-.28,2.02-.28,2.75,0,5.28,1.52,6.61,3.92l2.06,3.8c1.71,3.13,5,5.09,8.54,5.09s6.77-1.9,8.48-4.93l32.17-56.59,4.3-7.56h-16.48l-1.23,2.15-27.14,47.73-3.99-7.34c-1.93-3.54-5.63-5.76-9.68-5.76l-33.88-.03,1.68-7.31c4.18-22.96,25.05-39,50.77-39,.41,0,.82,0,1.23.03h.89l.44.03h.25l.63.03.44.03c.73.03,1.42.09,2.12.19.44.03.89.06,1.3.13l.66.09.66.09c.63.06,1.27.19,1.93.28l.57.13.92.16.38.09.6.13.09.03h.06l.25.06.51.13c.54.13,1.11.25,1.68.41.35.09.7.22,1.04.32l.19.06.16.03.73.22.54.19c2.97.98,5.85,2.21,8.54,3.64l1.2.66h15.85l-4.9,8.38,2.18,2.59.06.13.03.03c.13.13.25.28.41.47l.38.51.38.47.16.22.09.13c.28.38.54.76.85,1.2l.35.51.28.44c.19.28.38.6.57.89l.16.25c.19.32.38.63.54.92.51.85.95,1.71,1.39,2.63l.19.35.16.38.22.44.09.22.03.06.03.09c.09.16.16.35.28.63l.16.38.09.22.09.22.19.44.13.32.22.66.19.47c.19.57.41,1.17.6,1.8.09.38.22.73.28,1.04l.19.63.16.6.13.6.06.22.06.25c.09.41.19.85.28,1.39l.09.44.03.22.03.16.06.41.06.44.03.09v.03l.03.16.06.47.06.54c.03.25.06.54.13.89l.03.51.06.63.06.73.03.51c.03.41.06.79.06,1.23l.03.66c0,.47.03.95.03,1.42,0,11.04-3.42,21.48-9.87,30.34Z"/>
+          </g>
+        </symbol>
+        <!-- Spider -->
+        <symbol id="vsl-hw-sym-spider" viewBox="0 0 60 60">
+          <g fill="none" stroke="#05070f" stroke-width="2.4" stroke-linecap="round">
+            <path d="M30 34L12 22M30 34L7 32M30 34L10 46M30 34L17 54M30 34l18-12M30 34l23-2M30 34l20 12M30 34l13 20"/>
+          </g>
+          <circle cx="30" cy="36" r="11" fill="#05070f"/>
+          <circle cx="30" cy="21" r="6.5" fill="#05070f"/>
+          <circle cx="27.4" cy="20" r="1.5" fill="#FF7A1A"/>
+          <circle cx="32.6" cy="20" r="1.5" fill="#FF7A1A"/>
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="vsl-hw-hero" id="hw-hero" aria-labelledby="hw-hero-title">
+      <div class="vsl-hw-hero__photo" aria-hidden="true">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" alt="" width="1600" height="1000" decoding="async" fetchpriority="high">
+      </div>
+      <div class="vsl-hw-hero__moon" aria-hidden="true"></div>
+      <svg class="vsl-hw-bat" style="top:12%;left:58%;--bat-w:64px;--bat-dur:8s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="top:22%;left:70%;--bat-w:40px;--bat-dur:6s;--bat-delay:-2s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="top:8%;left:84%;--bat-w:30px;--bat-dur:9s;--bat-delay:-4s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-web vsl-hw-web--tl" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <div class="vsl-hw-patch" aria-hidden="true">
+        <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow" style="right:clamp(16px,4vw,64px);--pk-w:clamp(96px,11vw,164px)"><use href="#vsl-hw-sym-pumpkin-helmet"/></svg>
+        <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--sm" style="right:clamp(110px,14.5vw,220px);--pk-w:clamp(60px,6.5vw,96px)"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
+        <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--sm" style="left:clamp(12px,3vw,48px);--pk-w:clamp(56px,6vw,88px)"><use href="#vsl-hw-sym-pumpkin"/></svg>
+      </div>
+      <div class="vsl-hw-hero__inner">
+        <div class="vsl-hw-hero__copy">
+          <span class="vsl-hw-hero__eyebrow">Houston &amp; Dallas &middot; Sat Oct 31</span>
+          <h1 class="vsl-hw-hero__title" id="hw-hero-title">
+            <span class="vsl-hw-hero__title-line">Fast</span>
+            <span class="vsl-hw-hero__title-amp">&amp;</span>
+            <span class="vsl-hw-hero__title-line vsl-hw-hero__title-line--fright">Frightening</span>
+          </h1>
+          <p class="vsl-hw-hero__sub">
+            A free, family-friendly Halloween party on the main floor at <strong>both locations</strong>.
+            Race in the $25 sim racing tournament (half price if you come in costume), enter the costume
+            contest for Velocity 10-packs, grab a spooky drink and hit the candy station.
+            <strong>Walk-ins only &mdash; just show up.</strong>
+          </p>
+          <ul class="vsl-hw-stats" aria-label="Event details">
+            <li><span>Date</span><strong>Sat, Oct 31</strong></li>
+            <li><span>Time</span><strong>7&ndash;10pm</strong></li>
+            <li><span>Who</span><strong>All ages</strong></li>
+            <li class="is-pumpkin"><span>Admission</span><strong>Free</strong></li>
+          </ul>
+          <div class="vsl-hw-hero__actions">
+            <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-lineup" data-hw-scroll>See the lineup</a>
+            <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/" data-hw-book>Book a rig<span data-hw-city></span></a>
+            <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/" data-hw-only="houston">21+ Spookeasy tickets</a>
+          </div>
+        </div>
+        <div class="vsl-hw-hero__visual" aria-hidden="true">
+          <div class="vsl-hw-poster">
+            <div class="vsl-hw-poster__top">
+              <span class="vsl-hw-poster__logo"></span>
+              <span class="vsl-hw-poster__tag">Free &middot; All ages</span>
+            </div>
+            <div class="vsl-hw-poster__body">
+              <div>
+                <p class="vsl-hw-poster__title">Fast &amp; <em>Frightening</em></p>
+                <p class="vsl-hw-poster__date">October 31, 2026 &middot; Houston &amp; Dallas</p>
+              </div>
+              <div class="vsl-hw-poster__mascots">
+              <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin"/></svg>
+              <svg class="vsl-hw-ghost" viewBox="0 0 120 150" aria-hidden="true">
+                <defs>
+                  <pattern id="vsl-hw-check" width="14" height="14" patternUnits="userSpaceOnUse">
+                    <rect width="7" height="7" fill="#10182B"/>
+                    <rect x="7" y="7" width="7" height="7" fill="#10182B"/>
+                  </pattern>
+                  <clipPath id="vsl-hw-ghost-clip">
+                    <path d="M60 8C33 8 17 30 17 58v78l14-12 14.5 12 14.5-12 14.5 12 14.5-12 14 12V58C103 30 87 8 60 8z"/>
+                  </clipPath>
+                </defs>
+                <path d="M60 8C33 8 17 30 17 58v78l14-12 14.5 12 14.5-12 14.5 12 14.5-12 14 12V58C103 30 87 8 60 8z" fill="#fff"/>
+                <rect x="10" y="96" width="100" height="60" fill="url(#vsl-hw-check)" clip-path="url(#vsl-hw-ghost-clip)"/>
+                <ellipse cx="46" cy="58" rx="7" ry="10" fill="#10182B"/>
+                <ellipse cx="74" cy="58" rx="7" ry="10" fill="#10182B"/>
+                <ellipse cx="60" cy="80" rx="6" ry="8" fill="#10182B"/>
+                <circle cx="48.5" cy="55" r="2" fill="#fff"/>
+                <circle cx="76.5" cy="55" r="2" fill="#fff"/>
+              </svg>
+              </div>
+            </div>
+            <ul class="vsl-hw-poster__rows">
+              <li>
+                <strong>Tournament entry</strong>
+                <span>$12.50 in costume &middot; walk-ins only</span>
+                <span class="vsl-hw-poster__price">$25</span>
+              </li>
+              <li>
+                <strong>Costume contest</strong>
+                <span>Best Couple &middot; Most Creative</span>
+                <span class="vsl-hw-poster__price">10-packs</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="vsl-hw-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ═══════ LINEUP ═══════ -->
+    <section class="vsl-hw-lineup" id="hw-lineup" aria-labelledby="hw-lineup-title">
+      <div class="vsl-hw-candy" aria-hidden="true"></div>
+      <svg class="vsl-hw-web vsl-hw-web--tr" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <div class="vsl-hw-grid">
+        <h2 class="vsl-hw-section-title" id="hw-lineup-title">The <span class="vsl-hw-moon-text">lineup</span></h2>
+        <p class="vsl-hw-section-sub">Free to get in, all ages, 7 to 10pm. Here&rsquo;s what&rsquo;s happening on the main floor at Velocity Houston and Velocity Dallas.</p>
+        <div class="vsl-hw-tiles">
+
+          <article class="vsl-hw-tile vsl-hw-tile--meet" data-hw-only="houston">
+            <span class="vsl-hw-tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 14l2-5h14l2 5"/><path d="M3 14h18v4H3z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M8 9l1.5-3h5L16 9"/></svg>
+            </span>
+            <div class="vsl-hw-tile__body">
+              <span class="vsl-hw-tile__time">10am&ndash;1pm &middot; Houston</span>
+              <h3 class="vsl-hw-tile__title">GTR vs Supra Halloween Meet</h3>
+              <p class="vsl-hw-tile__text">Start the day early in the lot at Velocity Houston. Nissan GTR and Toyota Supra owners (and anyone who loves them) meet before the party. Bring the car, bring the costume.</p>
+            </div>
+          </article>
+
+          <article class="vsl-hw-tile">
+            <span class="vsl-hw-tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 21V4"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg>
+            </span>
+            <span class="vsl-hw-tile__time">7&ndash;10pm &middot; Walk-ins only</span>
+            <h3 class="vsl-hw-tile__title">Sim racing tournament</h3>
+            <span class="vsl-hw-tile__price">$25 <small>&middot; $12.50 in costume</small></span>
+            <p class="vsl-hw-tile__text">Open to every guest, all ages. Entry is paid at the front desk on the night &mdash; no online sign-up. <strong>Come in costume and race for half price.</strong></p>
+          </article>
+
+          <article class="vsl-hw-tile">
+            <span class="vsl-hw-tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 3h8v4l-2 3v9a2 2 0 0 1-4 0v-9L8 7V3z"/><path d="M8 5h8"/></svg>
+            </span>
+            <span class="vsl-hw-tile__time">Made for the night</span>
+            <h3 class="vsl-hw-tile__title">Spooky drinks</h3>
+            <ul class="vsl-hw-tile__list">
+              <li><strong>1 Halloween cocktail</strong></li>
+              <li><strong>1 Halloween mocktail</strong></li>
+            </ul>
+            <p class="vsl-hw-tile__text">A specialty menu poured at the bar all party long, so the grown-ups and the designated drivers both get something spooky.</p>
+          </article>
+
+          <article class="vsl-hw-tile">
+            <span class="vsl-hw-tile__icon vsl-hw-tile__icon--pumpkin" aria-hidden="true">
+              <svg viewBox="0 0 120 112"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
+            </span>
+            <span class="vsl-hw-tile__time">All ages</span>
+            <h3 class="vsl-hw-tile__title">Candy &amp; trick-or-treat station</h3>
+            <p class="vsl-hw-tile__text">Bring the kids, bring a bag. The station stays stocked from 7 to 10, and costumes are very much encouraged.</p>
+          </article>
+
+          <article class="vsl-hw-tile vsl-hw-tile--wide vsl-hw-tile--contest">
+            <span class="vsl-hw-tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9L9.5 8z"/></svg>
+            </span>
+            <span class="vsl-hw-tile__time">Winners announced 10:30pm</span>
+            <h3 class="vsl-hw-tile__title">Costume contest</h3>
+            <ul class="vsl-hw-tile__list">
+              <li><strong>Best Couple Costume</strong></li>
+              <li><strong>Most Creative Costume</strong></li>
+            </ul>
+            <p class="vsl-hw-tile__text">Judged during the party at both locations, with winners announced at 10:30pm. Prizes are Velocity 10-packs &mdash; ten races on us &mdash; so stick around.</p>
+            <ol class="vsl-hw-podium" aria-label="Costume contest prizes">
+              <li data-place="1"><span class="vsl-hw-podium__place">1st place</span><span class="vsl-hw-podium__prize">10-pack Ultimate</span></li>
+              <li data-place="2"><span class="vsl-hw-podium__place">2nd place</span><span class="vsl-hw-podium__prize">10-pack Pro</span></li>
+              <li data-place="3"><span class="vsl-hw-podium__place">3rd place</span><span class="vsl-hw-podium__prize">10-pack Racer</span></li>
+            </ol>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ TWO LOUNGES ═══════ -->
+    <section class="vsl-hw-lounges-sec" id="hw-lounges" aria-labelledby="hw-lounges-title">
+      <svg class="vsl-hw-bat" style="top:8%;left:6%;--bat-w:40px;--bat-dur:7s;--bat-delay:-2.5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="top:16%;right:8%;--bat-w:30px;--bat-dur:9s;--bat-delay:-5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <div class="vsl-hw-grid">
+        <h2 class="vsl-hw-section-title" id="hw-lounges-title">Two locations, <span class="vsl-hw-moon-text">one night</span></h2>
+        <p class="vsl-hw-section-sub">Houston and Dallas each host their own Halloween night. Both start at 7pm. The tournament is walk-in only. Book ahead if you want a guaranteed rig for the rest of the night.</p>
+        <ul class="vsl-hw-lounges">
+          <li class="vsl-hw-lounge" data-hw-lounge="houston">
+            <span class="vsl-hw-lounge__you" data-hw-you hidden>Your location</span>
+            <span class="vsl-hw-lounge__kicker">Velocity Houston</span>
+            <h3 class="vsl-hw-lounge__title">Sawyer Yards</h3>
+            <p class="vsl-hw-lounge__addr">2110 Edwards St, Houston, TX 77007<br><a href="tel:+18326274981">832-627-4981</a></p>
+            <ul class="vsl-hw-lounge__facts">
+              <li><strong>Free party</strong> &middot; 7&ndash;10pm &middot; all ages</li>
+              <li><strong>GTR vs Supra meet</strong> &middot; 10am&ndash;1pm in the lot</li>
+              <li><strong>21+ Spookeasy after-party</strong> &middot; Ignition &middot; $45 ticket</li>
+            </ul>
+            <div class="vsl-hw-lounge__actions">
+              <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/">Book a rig</a>
+              <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/">Spookeasy tickets</a>
+            </div>
+          </li>
+          <li class="vsl-hw-lounge" data-hw-lounge="dallas">
+            <span class="vsl-hw-lounge__you" data-hw-you hidden>Your location</span>
+            <span class="vsl-hw-lounge__kicker">Velocity Dallas</span>
+            <h3 class="vsl-hw-lounge__title">The Hill</h3>
+            <p class="vsl-hw-lounge__addr">9830 N Central Expy #400, Dallas, TX 75231<br><a href="tel:+19722095215">972-209-5215</a></p>
+            <ul class="vsl-hw-lounge__facts">
+              <li><strong>Free party</strong> &middot; 7&ndash;10pm &middot; all ages</li>
+              <li><strong>$25 tournament</strong> &middot; $12.50 in costume &middot; walk-ins only</li>
+              <li><strong>Costume contest</strong> &middot; winners announced 10:30pm</li>
+            </ul>
+            <div class="vsl-hw-lounge__actions">
+              <a class="vsl-hw-btn" href="https://velocitysimlounge.com/dallas/book-now/">Book a rig</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════ SPOOKEASY (Houston only) ═══════ -->
+    <section class="vsl-hw-spook" id="hw-spookeasy" aria-labelledby="hw-spook-title" data-hw-only="houston">
+      <div class="vsl-hw-spook__photo" aria-hidden="true">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+      </div>
+      <svg class="vsl-hw-web vsl-hw-web--tr" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <div class="vsl-hw-spider" style="--sp-drop:clamp(90px,14vw,200px)" aria-hidden="true"><svg viewBox="0 0 60 60"><use href="#vsl-hw-sym-spider"/></svg></div>
+      <svg class="vsl-hw-bat" style="bottom:12%;right:8%;--bat-w:48px;--bat-dur:8s;--bat-delay:-5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <div class="vsl-hw-grid">
+        <div class="vsl-hw-spook__inner">
+          <div>
+            <span class="vsl-hw-spook__kicker">Houston only &middot; 21+ after-party</span>
+            <h2 class="vsl-hw-section-title" id="hw-spook-title">
+              <span class="vsl-hw-spook__neon">Spookeasy</span>
+              <span class="vsl-hw-spook__room">in Ignition</span>
+            </h2>
+            <p class="vsl-hw-section-sub">
+              Ignition goes full speakeasy for one night. From 7pm to 1am it&rsquo;s a ticketed, 21+ party
+              with elevated decor, spooky drinks, unlimited sim racing, a live DJ, a strolling magician,
+              and a costume contest of its own. Tickets are $45 and limited.
+            </p>
+            <ul class="vsl-hw-stats" aria-label="Spookeasy details">
+              <li><span>Date</span><strong>Sat, Oct 31</strong></li>
+              <li><span>Time</span><strong>7pm&ndash;1am</strong></li>
+              <li><span>Who</span><strong>21+ only</strong></li>
+              <li><span>Admission</span><strong>$45</strong></li>
+            </ul>
+            <p class="vsl-hw-spook__id">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:0 0 22px;margin-top:2px;color:#EE265F"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.2"/><path d="M14 10h4M14 14h4M5.5 17c.6-1.6 1.9-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg>
+              <span><strong>Valid ID required at the door.</strong> The Spookeasy is strictly 21+ and happens at Velocity Houston only &mdash; 2110 Edwards St, Sawyer Yards.</span>
+            </p>
+            <div class="vsl-hw-spook__actions">
+              <a class="vsl-hw-btn" href="https://velocitysimlounge.com/halloween/spookeasy/">Get Spookeasy tickets &middot; $45</a>
+            </div>
+          </div>
+
+          <aside class="vsl-hw-spook__panel" aria-label="What the Spookeasy ticket covers">
+            <p class="vsl-hw-spook__panel-title"><span>Your $45 covers</span><span class="vsl-hw-spook__panel-price">$45</span></p>
+            <ul class="vsl-hw-spook__list">
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h10l-1 6a4 4 0 0 1-8 0L7 3z"/><path d="M12 13v6M8.5 21h7M7.5 6h9"/></svg>
+                <div><strong>1 welcome cocktail</strong><span>A pre-batched Halloween drink waiting for you at the door.</span></div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/><circle cx="12" cy="12" r="2.5"/></svg>
+                <div><strong>Unlimited sim racing &amp; light bites</strong><span>Race as often as you like until 1am, with bites passed and stationed all night.</span></div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="1.5"/><path d="M12 4a8 8 0 0 1 8 8"/></svg>
+                <div><strong>Live DJ &amp; strolling magician</strong><span>Close-up magic table to table from <a href="https://hebertmagic.com/" target="_blank" rel="noopener">Hebert Magic</a>.</span></div>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9L9.5 8z"/></svg>
+                <div><strong>Spookeasy costume contest</strong><span>Most Creative and Funniest, with prizes announced on the night.</span></div>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ GOOD TO KNOW ═══════ -->
+    <section class="vsl-hw-faq" id="hw-faq" aria-labelledby="hw-faq-title">
+      <svg class="vsl-hw-web vsl-hw-web--bl" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <div class="vsl-hw-grid">
+        <h2 class="vsl-hw-section-title" id="hw-faq-title">Good to know</h2>
+        <p class="vsl-hw-section-sub">The short version of the fine print.</p>
+        <dl>
+          <div class="vsl-hw-faq__item">
+            <dt>Is it really free?</dt>
+            <dd>Yes. Admission is free and the party is open to the public, all ages, 7 to 10pm at both locations. The only thing with a price is the sim racing tournament &mdash; $25 a racer, paid at the front desk.</dd>
+          </div>
+          <div class="vsl-hw-faq__item">
+            <dt>How does the costume discount work?</dt>
+            <dd>Show up in costume and tournament entry drops to $12.50. Costumes are checked when you pay at the desk &mdash; a hat alone won&rsquo;t cut it, but you don&rsquo;t need to win the contest to get the discount.</dd>
+          </div>
+          <div class="vsl-hw-faq__item">
+            <dt>Do I need to book?</dt>
+            <dd>Not for the party or the tournament &mdash; both are walk-in only. If you want a guaranteed rig for the rest of the night, <a href="https://velocitysimlounge.com/book-now/" data-hw-book>book a regular session</a> and come early for the festivities.</dd>
+          </div>
+          <div class="vsl-hw-faq__item">
+            <dt>How does the costume contest work?</dt>
+            <dd>Two categories &mdash; Best Couple Costume and Most Creative Costume &mdash; judged during the party. Winners are announced at 10:30pm and the podium takes home Velocity 10-packs: Ultimate, Pro, and Racer.</dd>
+          </div>
+          <div class="vsl-hw-faq__item">
+            <dt>Is it at Houston and Dallas?</dt>
+            <dd>Both. Velocity Houston (2110 Edwards St, Sawyer Yards) and Velocity Dallas (9830 N Central Expy #400, The Hill) each host their own night. The GTR vs Supra morning meet and the 21+ Spookeasy are Houston only.</dd>
+          </div>
+          <div class="vsl-hw-faq__item">
+            <dt>Is there anything for the 21+ crowd?</dt>
+            <dd>In Houston, yes &mdash; the <a href="https://velocitysimlounge.com/halloween/spookeasy/">Spookeasy</a> in Ignition is a ticketed 21+ party from 7pm to 1am with a welcome cocktail, unlimited racing, light bites, a live DJ and a strolling magician. $45, limited tickets. Dallas guests are welcome, but it&rsquo;s at the Houston location only.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ═══════ CTA ═══════ -->
+    <section class="vsl-hw-cta" aria-labelledby="hw-cta-title">
+      <svg class="vsl-hw-bat" style="top:18%;left:10%;--bat-w:46px;--bat-dur:8s;--bat-delay:-1.5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="top:30%;right:12%;--bat-w:36px;--bat-dur:6.5s;--bat-delay:-4s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow" style="left:clamp(12px,4vw,72px);--pk-w:clamp(70px,9vw,140px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-helmet"/></svg>
+      <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow vsl-hw-pumpkin--flip" style="right:clamp(12px,4vw,72px);--pk-w:clamp(70px,9vw,140px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
+      <div class="vsl-hw-grid">
+        <h2 class="vsl-hw-section-title" id="hw-cta-title">Dress up. <span class="vsl-hw-moon-text">Drive fast.</span></h2>
+        <p class="vsl-hw-section-sub">Saturday, October 31, 7&ndash;10pm on the main floor at Velocity Houston and Velocity Dallas. Free to get in &mdash; see you in costume.</p>
+        <div class="vsl-hw-cta__actions">
+          <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/" data-hw-book>Book a rig<span data-hw-city></span></a>
+          <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-lineup" data-hw-scroll>See the lineup</a>
+          <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/" data-hw-only="houston">21+ Spookeasy tickets</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var BOOK = {
+    houston: 'https://velocitysimlounge.com/book-now/',
+    dallas: 'https://velocitysimlounge.com/dallas/book-now/'
+  };
+  var CITY = { houston: 'Houston', dallas: 'Dallas' };
+
+  /* Same lookup order as the home-page popup: the navbar's saved lounge, then
+     the localStorage key it writes, then ?loc= for previews. */
+  function readLocation() {
+    try {
+      if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readLocation === 'function') {
+        var shown = window.VSL_LOCATION.readLocation();
+        if (shown === 'dallas' || shown === 'houston') return shown;
+      }
+    } catch (e0) {}
+    try {
+      var ls = window.localStorage.getItem('vslPreferredLocation');
+      if (ls === 'dallas' || ls === 'houston') return ls;
+    } catch (e1) {}
+    try {
+      var q = new URLSearchParams(window.location.search).get('loc');
+      if (q === 'dallas' || q === 'houston') return q;
+    } catch (e2) {}
+    return '';
+  }
+
+  function init() {
+    var root = document.querySelector('.vsl-halloween');
+    if (!root || root._vslHalloweenInit) return;
+    root._vslHalloweenInit = true;
+
+    function apply() {
+      var known = readLocation();
+      var loc = known || 'houston';
+      root.querySelectorAll('[data-hw-only]').forEach(function (el) {
+        el.hidden = el.getAttribute('data-hw-only') !== loc;
+      });
+      root.querySelectorAll('[data-hw-book]').forEach(function (a) { a.setAttribute('href', BOOK[loc]); });
+      root.querySelectorAll('[data-hw-city]').forEach(function (s) { s.textContent = known ? ' \u00b7 ' + CITY[loc] : ''; });
+      root.querySelectorAll('[data-hw-lounge]').forEach(function (li) {
+        var current = !!known && li.getAttribute('data-hw-lounge') === loc;
+        li.classList.toggle('is-current', current);
+        var tag = li.querySelector('[data-hw-you]');
+        if (tag) tag.hidden = !current;
+      });
+    }
+    apply();
+    window.addEventListener('_vslLocationChanged', apply);
+    setTimeout(apply, 400);
+
+    /* Smooth-scroll the in-page CTAs (offset for the fixed navbar). */
+    root.querySelectorAll('[data-hw-scroll]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = root.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 84;
+        try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, top); }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
