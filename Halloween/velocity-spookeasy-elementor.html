@@ -1,6 +1,6 @@
 <!--
 Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ignition · Houston)
-  Elementor Custom HTML module  ·  v1.0.2  ·  build 20261009c
+  Elementor Custom HTML module  ·  v1.0.3  ·  build 20261009d
   Split out of Halloween/velocity-halloween-elementor.html (v3.x). That page is
   now the free Fast & Frightening costume party for both lounges; this page is
   the short Houston-only Spookeasy checkout it links to.
@@ -1117,6 +1117,7 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
     .vsl-hw-hero__actions .vsl-hw-btn,
     .vsl-hw-cta__actions .vsl-hw-btn,
     .vsl-hw-spook__actions .vsl-hw-btn { width: 100%; }
+    .vsl-hw-hero__actions { margin-top: 28px; }
     .vsl-hw-hero__moon { right: 6%; top: 18px; width: 72px; }
     .vsl-hw-offer { grid-template-columns: minmax(0, 1fr) auto; }
     .vsl-hw-offer .vsl-hw-stepper { grid-column: 1 / -1; justify-content: flex-end; }
@@ -1280,7 +1281,7 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
           </ul>
           <div class="vsl-hw-hero__actions">
             <a class="vsl-hw-btn" href="#hw-tickets" data-hw-scroll data-hw-add="spookeasy">Get tickets &middot; $45</a>
-            <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-includes" data-hw-scroll>What&rsquo;s included</a>
+            <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-covers" data-hw-scroll>What&rsquo;s included</a>
           </div>
         </div>
         <div class="vsl-hw-hero__visual" aria-hidden="true">
@@ -1371,7 +1372,7 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
             </div>
           </div>
 
-          <aside class="vsl-hw-spook__panel" aria-label="The night at a glance">
+          <aside class="vsl-hw-spook__panel" id="hw-covers" aria-label="The night at a glance">
             <p class="vsl-hw-spook__panel-title"><span>Your $45 covers</span><span class="vsl-hw-spook__panel-price">$45</span></p>
             <ul class="vsl-hw-spook__list">
               <li>
@@ -1588,7 +1589,14 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
           counts[add] = 1;
           render();
         }
-        var top = target.getBoundingClientRect().top + window.pageYOffset - 84;
+        var nav = document.querySelector('.vsl-navbar, header');
+        var navH = nav ? Math.round(nav.getBoundingClientRect().height) : 72;
+        var dock = document.querySelector('.vsl-navbar__mcta');
+        var dockH = (dock && window.innerWidth <= 720) ? Math.round(dock.getBoundingClientRect().height) : 0;
+        /* Phones have a bottom bar. Land the ticket form a little further down
+           so the name field isn't tucked under it. */
+        var extra = (dockH && a.getAttribute('href') === '#hw-tickets') ? 36 : 0;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 16 + extra;
         try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, top); }
       });
     });
