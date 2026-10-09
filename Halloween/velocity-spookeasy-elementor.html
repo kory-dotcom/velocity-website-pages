@@ -1,6 +1,6 @@
 <!--
 Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ignition · Houston)
-  Elementor Custom HTML module  ·  v1.0.1  ·  build 20261009b
+  Elementor Custom HTML module  ·  v1.0.2  ·  build 20261009c
   Split out of Halloween/velocity-halloween-elementor.html (v3.x). That page is
   now the free Fast & Frightening costume party for both lounges; this page is
   the short Houston-only Spookeasy checkout it links to.
@@ -1281,7 +1281,6 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
           <div class="vsl-hw-hero__actions">
             <a class="vsl-hw-btn" href="#hw-tickets" data-hw-scroll data-hw-add="spookeasy">Get tickets &middot; $45</a>
             <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-includes" data-hw-scroll>What&rsquo;s included</a>
-            <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/">Free party &rarr;</a>
           </div>
         </div>
         <div class="vsl-hw-hero__visual" aria-hidden="true">
@@ -1381,7 +1380,7 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
               </li>
               <li>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3"/><circle cx="12" cy="12" r="2.5"/></svg>
-                <div><strong>Unlimited sim racing</strong><span>Jump on a rig as often as you like, all night. No time slots, no add-ons.</span></div>
+                <div><strong>Unlimited sim racing</strong><span>Jump on a sim as often as you like, all night. No time slots, no add-ons.</span></div>
               </li>
               <li>
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13h16M6 13a6 6 0 0 1 12 0"/><path d="M3 17h18M12 7V5"/></svg>
@@ -1464,7 +1463,6 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
         <div data-hw-closed hidden>
           <div class="vsl-hw-closed">
             Spookeasy ticket sales have ended. The free Fast &amp; Frightening party is still on at both locations &mdash; see you on the track.
-            <br><a href="https://velocitysimlounge.com/halloween/">Halloween at Velocity</a> &middot; <a href="https://velocitysimlounge.com/book-now/">Book a race</a>
           </div>
         </div>
       </div>
@@ -1599,10 +1597,7 @@ Velocity Sim Racing Lounge — Spookeasy Halloween Party · ticket checkout (Ign
       form.hidden = true;
       closed.hidden = false;
       root.querySelectorAll('[data-hw-scroll][href="#hw-tickets"]').forEach(function (a) {
-        a.setAttribute('href', 'https://velocitysimlounge.com/book-now/');
-        a.removeAttribute('data-hw-scroll');
-        a.removeAttribute('data-hw-add');
-        a.textContent = 'Book a race';
+        a.hidden = true;
       });
     }
 

@@ -1,6 +1,6 @@
 <!--
 Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dallas)
-  Elementor Custom HTML module  ·  v4.0.2  ·  build 20261009d
+  Elementor Custom HTML module  ·  v4.0.3  ·  build 20261009e
   (v1.x–v3.x history: this file was the Spookeasy ticket page. v4.0.0 splits it:
    this page is the free main-floor costume party for BOTH lounges; the Houston-only
    21+ Spookeasy checkout moved to Halloween/velocity-spookeasy-elementor.html at
@@ -17,8 +17,8 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
   ── How it works ──
   No checkout on this page — the tournament is walk-in and paid at the front desk.
   The page follows the navbar's saved lounge (VSL_LOCATION.readLocation(), then
-  localStorage vslPreferredLocation, then ?loc=): "Book a rig" links point at that
-  lounge's Book Now page, that lounge's card is highlighted, and elements with
+  localStorage vslPreferredLocation, then ?loc=): that lounge's card is highlighted,
+  and elements with
   data-hw-only="houston|dallas" show only for that lounge (the GTR vs Supra meet
   and the Spookeasy after-party are Houston only). With no saved lounge the page
   shows the Houston extras. Re-applies on _vslLocationChanged.
@@ -1268,7 +1268,6 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
           </ul>
           <div class="vsl-hw-hero__actions">
             <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-lineup" data-hw-scroll>See the lineup</a>
-            <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/" data-hw-book>Book a rig<span data-hw-city></span></a>
             <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/" data-hw-only="houston">21+ Spookeasy tickets</a>
           </div>
         </div>
@@ -1403,7 +1402,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
       <svg class="vsl-hw-bat" style="top:16%;right:8%;--bat-w:30px;--bat-dur:9s;--bat-delay:-5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
       <div class="vsl-hw-grid">
         <h2 class="vsl-hw-section-title" id="hw-lounges-title">Two locations, <span class="vsl-hw-moon-text">one night</span></h2>
-        <p class="vsl-hw-section-sub">Houston and Dallas each host their own Halloween night. Both start at 7pm. The tournament is walk-in only. Book ahead if you want a guaranteed rig for the rest of the night.</p>
+        <p class="vsl-hw-section-sub">Houston and Dallas each host their own Halloween night. Both start at 7pm. The tournament is walk-in only. Book ahead if you want a guaranteed simulator for the rest of the night.</p>
         <ul class="vsl-hw-lounges">
           <li class="vsl-hw-lounge" data-hw-lounge="houston">
             <span class="vsl-hw-lounge__you" data-hw-you hidden>Your location</span>
@@ -1416,7 +1415,6 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
               <li><strong>21+ Spookeasy after-party</strong> &middot; Ignition &middot; $45 ticket</li>
             </ul>
             <div class="vsl-hw-lounge__actions">
-              <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/">Book a rig</a>
               <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/">Spookeasy tickets</a>
             </div>
           </li>
@@ -1430,9 +1428,6 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
               <li><strong>$25 tournament</strong> &middot; $12.50 in costume &middot; walk-ins only</li>
               <li><strong>Costume contest</strong> &middot; winners announced 10:30pm</li>
             </ul>
-            <div class="vsl-hw-lounge__actions">
-              <a class="vsl-hw-btn" href="https://velocitysimlounge.com/dallas/book-now/">Book a rig</a>
-            </div>
           </li>
         </ul>
       </div>
@@ -1516,7 +1511,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
           </div>
           <div class="vsl-hw-faq__item">
             <dt>Do I need to book?</dt>
-            <dd>Not for the party or the tournament &mdash; both are walk-in only. If you want a guaranteed rig for the rest of the night, <a href="https://velocitysimlounge.com/book-now/" data-hw-book>book a regular session</a> and come early for the festivities.</dd>
+            <dd>Not for the party or the tournament &mdash; both are walk-in only. If you want a guaranteed simulator for the rest of the night, <a href="https://velocitysimlounge.com/book-now/" data-hw-book>book a regular session</a> and come early for the festivities.</dd>
           </div>
           <div class="vsl-hw-faq__item">
             <dt>How does the costume contest work?</dt>
@@ -1544,7 +1539,6 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
         <h2 class="vsl-hw-section-title" id="hw-cta-title">Dress up. <span class="vsl-hw-moon-text">Drive fast.</span></h2>
         <p class="vsl-hw-section-sub">Saturday, October 31, 7&ndash;10pm on the main floor at Velocity Houston and Velocity Dallas. Free to get in &mdash; see you in costume.</p>
         <div class="vsl-hw-cta__actions">
-          <a class="vsl-hw-btn" href="https://velocitysimlounge.com/book-now/" data-hw-book>Book a rig<span data-hw-city></span></a>
           <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-lineup" data-hw-scroll>See the lineup</a>
           <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/" data-hw-only="houston">21+ Spookeasy tickets</a>
         </div>
