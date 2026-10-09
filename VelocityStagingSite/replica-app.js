@@ -13,7 +13,6 @@
     membership: { title: "Membership", modulePath: "../Membership Page/velocity-membership-elementor.html" },
     "gift-cards": { title: "Gift Cards", modulePath: "../Gift Cards/velocity-gift-cards-elementor.html" },
     "holiday-parties": { title: "Holiday Parties", modulePath: "../Holiday Parties/velocity-holiday-parties-elementor.html" },
-    "million-laps": { title: "Million Lap Monday", modulePath: "../Million Laps/velocity-million-laps-elementor.html" },
     lemans: { title: "3-Hour Le Mans Endurance", modulePath: "../Le Mans Endurance/velocity-le-mans-elementor.html" },
     halloween: { title: "Fast & Frightening Halloween Party", modulePath: "../Halloween/velocity-halloween-elementor.html" },
     spookeasy: { title: "Spookeasy Halloween Party (tickets)", modulePath: "../Halloween/velocity-spookeasy-elementor.html" },
@@ -56,10 +55,10 @@
     "/gift-cards": "index.html?p=gift-cards",
     "/holiday-parties/": "index.html?p=holiday-parties",
     "/holiday-parties": "index.html?p=holiday-parties",
-    "/million-laps/": "index.html?p=million-laps",
-    "/million-laps": "index.html?p=million-laps",
-    "/millionlaps/": "index.html?p=million-laps",
-    "/millionlaps": "index.html?p=million-laps",
+    "/million-laps/": "index.html?p=home",
+    "/million-laps": "index.html?p=home",
+    "/millionlaps/": "index.html?p=home",
+    "/millionlaps": "index.html?p=home",
     "/lemans/": "index.html?p=lemans",
     "/lemans": "index.html?p=lemans",
     "/halloween/": "index.html?p=halloween",
@@ -181,8 +180,6 @@
     "menu-2025": 1,
     "gift-cards": 1,
     "holiday-parties": 1,
-    "million-laps": 1,
-    millionlaps: 1,
     lemans: 1,
     halloween: 1,
     spookeasy: 1,
@@ -190,7 +187,7 @@
   };
 
   /* One URL serves both lounges; arriving here must not overwrite the visitor's saved city. */
-  var SHARED_LOCATION_PAGE_KEYS = { "gift-cards": 1, "holiday-parties": 1, "million-laps": 1, lemans: 1, halloween: 1, membership: 1 };
+  var SHARED_LOCATION_PAGE_KEYS = { "gift-cards": 1, "holiday-parties": 1, lemans: 1, halloween: 1, membership: 1 };
 
   var REPLICA_SLUG_PAGE_KEYS = {
     home: { houston: "home", dallas: "dallas-home" },
@@ -209,8 +206,6 @@
     membership: { houston: "membership", dallas: "membership" },
     "gift-cards": { houston: "gift-cards", dallas: "gift-cards" },
     "holiday-parties": { houston: "holiday-parties", dallas: "holiday-parties" },
-    "million-laps": { houston: "million-laps", dallas: "million-laps" },
-    millionlaps: { houston: "million-laps", dallas: "million-laps" },
     lemans: { houston: "lemans", dallas: "lemans" },
     halloween: { houston: "halloween", dallas: "halloween" },
     spookeasy: { houston: "spookeasy", dallas: "spookeasy" },
@@ -242,7 +237,6 @@
     membership: "membership",
     "gift-cards": "gift-cards",
     "holiday-parties": "holiday-parties",
-    "million-laps": "millionlaps",
     lemans: "lemans",
     halloween: "halloween",
     spookeasy: "spookeasy",
@@ -385,7 +379,7 @@
   var params = new URLSearchParams(window.location.search);
   var pageKey = params.get("p") || "home";
   if (pageKey === "spring-bundles") pageKey = "fathers-day";
-  if (pageKey === "millionlaps") pageKey = "million-laps";
+  if (pageKey === "millionlaps" || pageKey === "million-laps") pageKey = "home";
   var forcedLoc = params.get("loc");
   var revealObserver = null;
   var moduleCache = Object.create(null);
@@ -405,7 +399,7 @@
 
   function normalizePageKey(key) {
     if (!key || key === "spring-bundles") return "fathers-day";
-    if (key === "millionlaps") key = "million-laps";
+    if (key === "millionlaps" || key === "million-laps") return "home";
     return REPLICA_PAGES[key] ? key : "home";
   }
 
@@ -834,7 +828,6 @@
       '<li><a href="index.html?p=membership">Membership</a></li>' +
       '<li><a href="index.html?p=gift-cards">Gift Cards</a></li>' +
       '<li><a href="index.html?p=holiday-parties">Holiday Parties</a></li>' +
-      '<li><a href="index.html?p=million-laps">Million Lap Monday</a></li>' +
       '<li><a href="index.html?p=lemans">3-Hour Le Mans Endurance</a></li>' +
       '<li><a href="index.html?p=halloween">Fast &amp; Frightening Halloween Party</a></li>' +
       '<li><a href="index.html?p=spookeasy">Spookeasy Halloween Party (tickets)</a></li>' +
