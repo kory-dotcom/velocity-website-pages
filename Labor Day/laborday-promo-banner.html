@@ -1,0 +1,1266 @@
+<!-- CSS for the Labor Day 2026 book-ahead promo floating popup (Desktop + Mobile) -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
+
+	:root {
+		--sb-navy: #10182B;
+		--sb-indigo: #191B4D;
+		--sb-magenta: #EE265F;
+		--sb-blue: #293893;
+		--sb-yellow: #FDC70C;
+		--sb-mist: #B2AEBF;
+		--sb-slate: #5F5782;
+		/* Sits above page content but BELOW the Velocity navbar (--z-navbar: 9999)
+		   and its mobile menu overlay (--z-overlay: 10000) on desktop and mobile. */
+		--sb-banner-z: 9000;
+	}
+
+	#sb-promo-card {
+		display: none;
+		position: fixed;
+		/* Nudged slightly below center so it clears the hero headline */
+		top: 54%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 520px;
+		/* Short screens (landscape phones, small devices): scroll inside the card
+		   instead of clipping off-screen. svh ignores the mobile URL bar.
+		   --sb-dock-h = height of the site's fixed bottom CTA dock (set by JS). */
+		max-height: calc(100vh - var(--sb-dock-h, 0px) - 24px);
+		max-height: calc(100svh - var(--sb-dock-h, 0px) - 24px);
+		z-index: var(--sb-banner-z);
+		background: white;
+		border-radius: 24px;
+		overflow: hidden;
+		overflow-y: auto;
+		box-shadow:
+			0 30px 70px rgba(16, 24, 43, 0.5),
+			0 10px 24px rgba(16, 24, 43, 0.28),
+			0 0 0 1px rgba(255, 255, 255, 0.08);
+		text-align: center;
+		font-family: 'Khand', system-ui, sans-serif;
+		animation: sb-card-entry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	#sb-promo-minimized {
+		display: none;
+		position: fixed;
+		/* --sb-dock-h is the measured mobile dock height (already includes the
+		   home-indicator inset). Desktop stays at the 30px corner offset. */
+		bottom: calc(30px + var(--sb-dock-h, 0px));
+		right: calc(30px + env(safe-area-inset-right, 0px));
+		z-index: var(--sb-banner-z);
+		background: var(--sb-magenta);
+		color: white;
+		padding: 12px 28px;
+		border-radius: 50px;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		font-family: 'Khand', system-ui, sans-serif;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 17px;
+		letter-spacing: 0.5px;
+		box-shadow: 0 10px 20px rgba(238, 38, 95, 0.35);
+		transition: transform 0.2s;
+		animation: sb-bounce-in 0.5s;
+	}
+
+	#sb-promo-minimized:hover {
+		transform: scale(1.1);
+	}
+
+	/* Slim reminder strip — shown on Book Now pages instead of the card so the
+	   deal stays visible without covering the booking flow. */
+	#sb-promo-strip {
+		display: none;
+		position: fixed;
+		bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+		left: 50%;
+		transform: translateX(-50%);
+		width: min(660px, calc(100% - 24px));
+		z-index: var(--sb-banner-z);
+		background:
+			radial-gradient(120% 170% at 6% 50%, rgba(238, 38, 95, 0.24) 0%, rgba(238, 38, 95, 0) 55%),
+			linear-gradient(162deg, var(--sb-indigo) 0%, var(--sb-navy) 100%);
+		border: 1px solid rgba(234, 234, 234, 0.12);
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow:
+			0 18px 44px rgba(16, 24, 43, 0.45),
+			0 6px 16px rgba(16, 24, 43, 0.3);
+		font-family: 'Khand', system-ui, sans-serif;
+		color: white;
+		animation: sb-strip-entry 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	/* Mini checkered finish-line along the strip's top edge */
+	#sb-promo-strip::before {
+		content: "";
+		display: block;
+		height: 6px;
+		background-image:
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%),
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%);
+		background-size: 6px 6px;
+		background-position: 0 0, 3px 3px;
+		background-color: #fff;
+		opacity: 0.85;
+	}
+
+	.sb-strip-row {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 11px 14px 12px 18px;
+	}
+
+	.sb-strip-flag {
+		width: 30px;
+		height: 30px;
+		flex-shrink: 0;
+		filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+	}
+
+	.sb-strip-text {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+		line-height: 1.18;
+	}
+
+	.sb-strip-title {
+		font-size: 18px;
+		font-weight: 700;
+		font-style: italic;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: white;
+	}
+
+	.sb-strip-title b {
+		font-weight: 700;
+		color: var(--sb-yellow);
+	}
+
+	.sb-strip-sub {
+		font-size: 14px;
+		font-weight: 500;
+		font-style: italic;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--sb-mist);
+	}
+
+	.sb-strip-sub em {
+		font-style: italic;
+		font-weight: 700;
+		color: var(--sb-magenta);
+		/* keep "free appetizer" on one line when the sub wraps */
+		white-space: nowrap;
+	}
+
+	.sb-strip-close {
+		cursor: pointer;
+		flex-shrink: 0;
+		/* 44px touch target without inflating the slim strip */
+		padding: 13px;
+		margin: -9px -7px -9px -9px;
+		font-size: 18px;
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.55);
+		font-family: Arial, sans-serif;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		transition: color 0.2s, transform 0.2s;
+	}
+
+	.sb-strip-close:hover {
+		color: white;
+		transform: rotate(90deg);
+	}
+
+	/* Mobile Book Now: real position:fixed so the browser keeps the bar still.
+	   Follow the navbar with a translate only — never rewrite top from scrollY
+	   (that fight is what made the bar jitter / "recenter" while scrolling). */
+	#sb-promo-strip.sb-strip--top {
+		position: fixed !important;
+		top: 0 !important;
+		bottom: auto !important;
+		left: 0 !important;
+		right: 0 !important;
+		height: auto !important;
+		max-height: 88px !important;
+		transform: translate3d(0, var(--sb-pin-y, 0px), 0) !important;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		width: 100% !important;
+		max-width: none !important;
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+		animation: none;
+		z-index: var(--sb-banner-z);
+	}
+
+	#sb-promo-strip-spacer {
+		display: none;
+		width: 100%;
+		height: 58px;
+		max-height: 72px;
+		overflow: hidden;
+		background: transparent;
+		pointer-events: none;
+	}
+
+	#sb-promo-strip-spacer.sb-strip-spacer--on {
+		display: block;
+	}
+
+	@media (max-width: 1024px) {
+		#sb-promo-strip {
+			width: calc(100% - 16px);
+			border-radius: 14px;
+		}
+		#sb-promo-strip.sb-strip--top {
+			width: 100%;
+			border-radius: 0;
+		}
+		.sb-strip-row {
+			gap: 10px;
+			padding: 9px 10px 10px 14px;
+		}
+		.sb-strip-flag {
+			width: 26px;
+			height: 26px;
+		}
+		.sb-strip-title {
+			font-size: 16px;
+		}
+		.sb-strip-sub {
+			font-size: 12.5px;
+		}
+		#sb-promo-minimized {
+			/* Sit just above the bottom mobile dock, not behind it */
+			bottom: calc(12px + var(--sb-dock-h, var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h, 80px))));
+			right: calc(16px + env(safe-area-inset-right, 0px));
+		}
+	}
+
+	@keyframes sb-strip-entry {
+		from { opacity: 0; transform: translate(-50%, 14px); }
+		to { opacity: 1; transform: translate(-50%, 0); }
+	}
+
+	.sb-card-header {
+		background:
+			radial-gradient(120% 90% at 50% -10%, rgba(238, 38, 95, 0.4) 0%, rgba(238, 38, 95, 0) 55%),
+			radial-gradient(90% 80% at 85% 120%, rgba(41, 56, 147, 0.55) 0%, rgba(41, 56, 147, 0) 60%),
+			radial-gradient(70% 55% at 50% 100%, rgba(253, 199, 12, 0.08) 0%, rgba(253, 199, 12, 0) 60%),
+			linear-gradient(162deg, var(--sb-indigo) 0%, var(--sb-navy) 100%);
+		padding: 34px 24px 28px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	/* Subtle diagonal speed lines behind the headline */
+	.sb-card-header::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: repeating-linear-gradient(
+			115deg,
+			rgba(255, 255, 255, 0.045) 0px,
+			rgba(255, 255, 255, 0.045) 2px,
+			transparent 2px,
+			transparent 16px
+		);
+		pointer-events: none;
+	}
+
+	/* Oval circuit rings — same track-energy motif as the promo pages */
+	.sb-card-header::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		top: 62%;
+		width: 150%;
+		aspect-ratio: 2.35 / 1;
+		transform: translate(-50%, -50%) rotate(-12deg);
+		border: 1px solid rgba(234, 234, 234, 0.09);
+		border-radius: 50%;
+		box-shadow: 0 0 0 26px rgba(41, 56, 147, 0.1);
+		pointer-events: none;
+	}
+
+	.sb-flag-icon {
+		width: 40px;
+		height: 40px;
+		margin-bottom: 10px;
+		position: relative;
+		z-index: 1;
+		filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+		animation: sb-flag-wave 2.6s ease-in-out infinite;
+		transform-origin: 10% 50%;
+	}
+
+	/* Yellow date pill — matches the hero eyebrow treatment on current promo pages */
+	.sb-eyebrow {
+		display: inline-block;
+		padding: 6px 20px;
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #0d1221;
+		background: var(--sb-yellow);
+		border-radius: 5px;
+		margin-bottom: 12px;
+		position: relative;
+		z-index: 1;
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+	}
+
+	.sb-headline {
+		font-size: 42px;
+		line-height: 1.02;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		color: white;
+		letter-spacing: 0.02em;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	.sb-headline span {
+		color: var(--sb-magenta);
+		text-shadow: 0 2px 18px rgba(238, 38, 95, 0.45);
+	}
+
+	.sb-header-sub {
+		margin: 10px 0 0;
+		position: relative;
+		z-index: 1;
+		font-size: 15px;
+		font-weight: 600;
+		font-style: italic;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(234, 234, 234, 0.85);
+	}
+
+	/* Checkered finish-line strip between header and body */
+	.sb-finish-line {
+		height: 12px;
+		background-image:
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%),
+			linear-gradient(45deg, var(--sb-navy) 25%, transparent 25%, transparent 75%, var(--sb-navy) 75%);
+		background-size: 12px 12px;
+		background-position: 0 0, 6px 6px;
+		background-color: #fff;
+	}
+
+	.sb-card-body {
+		padding: 22px 32px 28px;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		border-radius: 0 0 24px 24px;
+	}
+
+	.sb-subtitle {
+		font-size: 21px;
+		text-transform: uppercase;
+		color: var(--sb-navy);
+		font-weight: 600;
+		font-style: italic;
+		margin: 0;
+		line-height: 1.2;
+		letter-spacing: 0.02em;
+	}
+
+	.sb-subtitle span {
+		color: var(--sb-magenta);
+		font-weight: 700;
+	}
+
+	.sb-urgency {
+		font-size: 14px;
+		text-transform: uppercase;
+		color: var(--sb-magenta);
+		font-weight: 700;
+		font-style: italic;
+		margin: 0 0 8px;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+	}
+
+	.sb-card-cta-row {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+		width: 100%;
+		max-width: 22rem;
+		margin-top: 2px;
+	}
+
+	.sb-card-btn {
+		position: relative;
+		overflow: hidden;
+		background: linear-gradient(135deg, #F23E72 0%, var(--sb-magenta) 100%);
+		color: white;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		border-radius: 14px;
+		padding: 11px 22px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		border: none;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		text-align: center;
+		-webkit-appearance: none;
+		appearance: none;
+		animation: sb-btn-pulse 2.4s infinite;
+	}
+
+	.sb-btn-title {
+		font-size: 22px;
+		font-weight: 700;
+		font-style: italic;
+		line-height: 1.1;
+	}
+
+	.sb-btn-meta {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		letter-spacing: 0.08em;
+		opacity: 0.85;
+		margin-top: 2px;
+	}
+
+	/* Animated shine sweep */
+	.sb-card-btn::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -120%;
+		width: 60%;
+		height: 100%;
+		background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+		transform: skewX(-20deg);
+		transition: left 0.6s ease;
+		pointer-events: none;
+	}
+
+	.sb-card-btn--secondary {
+		background: linear-gradient(135deg, #34419E 0%, var(--sb-blue) 100%);
+		box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35);
+		animation: sb-btn-pulse-blue 2.4s infinite;
+	}
+
+	button.sb-card-btn::-moz-focus-inner {
+		border: 0;
+		padding: 0;
+	}
+
+	.sb-card-btn:hover {
+		transform: translateY(-2px) scale(1.02);
+		background: linear-gradient(135deg, #FF4F80 0%, #d41e53 100%);
+		box-shadow: 0 16px 32px rgba(238, 38, 95, 0.45);
+		color: white;
+	}
+
+	.sb-card-btn--secondary:hover {
+		background: linear-gradient(135deg, #3D4BB5 0%, #1f2b6e 100%);
+		box-shadow: 0 16px 32px rgba(41, 56, 147, 0.45);
+	}
+
+	.sb-card-btn:hover::after {
+		left: 130%;
+	}
+
+	.sb-fineprint {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		color: var(--sb-slate);
+		margin: 8px 0 0;
+		line-height: 1.35;
+	}
+
+	.sb-controls {
+		position: absolute;
+		top: 14px;
+		right: 18px;
+		z-index: 10;
+	}
+
+	.sb-control-btn {
+		cursor: pointer;
+		font-size: 22px;
+		/* 44px touch target; negative margin keeps the ✕ visually in the corner */
+		padding: 11px;
+		margin: -11px;
+		color: rgba(255,255,255,0.55);
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		transition: all 0.2s;
+		font-family: Arial, sans-serif;
+		line-height: 1;
+	}
+
+	.sb-control-btn:hover { color: white; transform: rotate(90deg); }
+
+	@media (max-width: 768px) {
+		#sb-promo-card {
+			max-width: 380px;
+			border-radius: 20px;
+			/* Recenter within the space above the site's bottom CTA dock */
+			top: calc(52% - (var(--sb-dock-h, 0px) / 2));
+		}
+		.sb-card-header {
+			padding: 28px 20px 24px;
+		}
+		.sb-card-body {
+			padding: 20px 22px 24px;
+			border-radius: 0 0 20px 20px;
+		}
+		.sb-flag-icon {
+			width: 34px;
+			height: 34px;
+			margin-bottom: 10px;
+		}
+		.sb-eyebrow {
+			padding: 5px 16px;
+			font-size: 11px;
+			margin-bottom: 12px;
+		}
+		.sb-headline {
+			font-size: 32px;
+		}
+		.sb-header-sub {
+			font-size: 13px;
+		}
+		.sb-subtitle {
+			font-size: 18px;
+		}
+		.sb-urgency {
+			font-size: 13px;
+		}
+		.sb-btn-title {
+			font-size: 19px;
+		}
+		.sb-btn-meta {
+			font-size: 11px;
+		}
+		.sb-card-btn {
+			padding: 11px 18px;
+			border-radius: 12px;
+		}
+		.sb-fineprint {
+			font-size: 11px;
+		}
+		.sb-controls {
+			top: 10px;
+			right: 12px;
+		}
+		.sb-control-btn {
+			font-size: 24px;
+		}
+		#sb-promo-minimized {
+			bottom: calc(12px + var(--sb-dock-h, var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h, 80px))));
+			right: calc(16px + env(safe-area-inset-right, 0px));
+			/* ~44px tall tap target */
+			padding: 12px 24px;
+			font-size: 15px;
+		}
+	}
+
+	/* Narrow phones: tighten the copy so both banner styles hold clean line breaks */
+	@media (max-width: 400px) {
+		.sb-subtitle {
+			font-size: 15px;
+		}
+		.sb-urgency {
+			font-size: 12px;
+		}
+		.sb-strip-row {
+			gap: 9px;
+			padding: 8px 8px 9px 12px;
+		}
+		.sb-strip-flag {
+			width: 24px;
+			height: 24px;
+		}
+		.sb-strip-title {
+			font-size: 15px;
+			letter-spacing: 0.03em;
+		}
+		.sb-strip-sub {
+			font-size: 12px;
+		}
+	}
+
+	/* Short viewports (landscape phones): center the card fully — combined with
+	   max-height it scrolls internally instead of clipping. */
+	@media (max-height: 620px) {
+		#sb-promo-card {
+			top: 50%;
+		}
+	}
+
+	@keyframes sb-card-entry {
+		from { opacity: 0; transform: translate(-50%, -46%) scale(0.97); }
+		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	}
+	@keyframes sb-bounce-in {
+		0% { transform: scale(0); }
+		100% { transform: scale(1); }
+	}
+	@keyframes sb-btn-pulse {
+		0% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 14px rgba(238, 38, 95, 0); }
+		100% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0); }
+	}
+	@keyframes sb-btn-pulse-blue {
+		0% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 0 rgba(41, 56, 147, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 14px rgba(41, 56, 147, 0); }
+		100% { box-shadow: 0 10px 25px rgba(41, 56, 147, 0.35), 0 0 0 0 rgba(41, 56, 147, 0); }
+	}
+	@keyframes sb-flag-wave {
+		0%, 100% { transform: rotate(0deg); }
+		25% { transform: rotate(-6deg); }
+		75% { transform: rotate(6deg); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		#sb-promo-card,
+		.sb-card-btn,
+		.sb-flag-icon,
+		#sb-promo-minimized,
+		#sb-promo-strip,
+		#sb-promo-strip.sb-strip--top {
+			animation: none !important;
+		}
+		.sb-card-btn::after { display: none; }
+	}
+</style>
+
+<!-- data-sb-location: "auto" (default) picks Houston/Dallas from the page URL
+     (/dallas/... → Dallas, everything else → Houston). Set to "houston", "dallas",
+     or "both" to force a mode when pasting into WordPress. -->
+<div id="sb-promo-card" data-sb-location="auto">
+	<div class="sb-controls">
+		<div id="sb-btn-minimize" class="sb-control-btn" title="Close">&#10005;</div>
+	</div>
+
+	<div class="sb-card-header">
+		<svg class="sb-flag-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<rect x="6" y="4" width="3" height="40" rx="1.5" fill="#FFFFFF"/>
+			<path d="M11 7 H40 V27 H11 Z" fill="#FFFFFF"/>
+			<g fill="#10182B">
+				<rect x="11" y="7" width="7.25" height="5" />
+				<rect x="25.5" y="7" width="7.25" height="5" />
+				<rect x="18.25" y="12" width="7.25" height="5" />
+				<rect x="32.75" y="12" width="7.25" height="5" />
+				<rect x="11" y="17" width="7.25" height="5" />
+				<rect x="25.5" y="17" width="7.25" height="5" />
+				<rect x="18.25" y="22" width="7.25" height="5" />
+				<rect x="32.75" y="22" width="7.25" height="5" />
+			</g>
+		</svg>
+		<div class="sb-eyebrow">Monday &bull; September 7</div>
+		<div class="sb-headline">We&rsquo;re Open<br><span>Labor Day</span></div>
+		<p class="sb-header-sub" id="sb-loc-sub">Houston &amp; Dallas</p>
+	</div>
+
+	<div class="sb-finish-line"></div>
+
+	<div class="sb-card-body">
+		<div class="sb-subtitle">Book online on Labor Day<br>&amp; get a <span>free appetizer</span></div>
+		<p class="sb-urgency" id="sb-urgency">Limited availability, book today!</p>
+
+		<div class="sb-card-cta-row">
+			<button type="button" class="sb-card-btn" data-sb-loc="houston" data-sb-url="https://velocitysimlounge.com/book-now/" data-sb-shell="book-now">
+				<span class="sb-btn-title">Book Houston</span>
+				<span class="sb-btn-meta">Labor Day &middot; 2PM &ndash; 11PM</span>
+			</button>
+			<button type="button" class="sb-card-btn sb-card-btn--secondary" data-sb-loc="dallas" data-sb-url="https://velocitysimlounge.com/dallas/book-now/" data-sb-shell="dallas-book-now">
+				<span class="sb-btn-title">Book Dallas</span>
+				<span class="sb-btn-meta">Labor Day &middot; 12PM &ndash; 11PM</span>
+			</button>
+		</div>
+
+		<p class="sb-fineprint" id="sb-fineprint">Valid on Labor Day only &mdash; one appetizer per online booking, from a select menu that varies by location.</p>
+	</div>
+</div>
+
+<div id="sb-promo-minimized">
+	Book Labor Day
+</div>
+
+<!-- Slim reminder strip — replaces the card on Book Now pages -->
+<div id="sb-promo-strip" role="status" aria-label="Labor Day promo reminder">
+	<div class="sb-strip-row">
+		<svg class="sb-strip-flag" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<rect x="6" y="4" width="3" height="40" rx="1.5" fill="#FFFFFF"/>
+			<path d="M11 7 H40 V27 H11 Z" fill="#FFFFFF"/>
+			<g fill="#10182B">
+				<rect x="11" y="7" width="7.25" height="5" />
+				<rect x="25.5" y="7" width="7.25" height="5" />
+				<rect x="18.25" y="12" width="7.25" height="5" />
+				<rect x="32.75" y="12" width="7.25" height="5" />
+				<rect x="11" y="17" width="7.25" height="5" />
+				<rect x="25.5" y="17" width="7.25" height="5" />
+				<rect x="18.25" y="22" width="7.25" height="5" />
+				<rect x="32.75" y="22" width="7.25" height="5" />
+			</g>
+		</svg>
+		<div class="sb-strip-text">
+			<span class="sb-strip-title">We&rsquo;re open Labor Day <b>&bull; Sept 7</b></span>
+			<span class="sb-strip-sub">Book online &amp; get a <em>free appetizer</em></span>
+		</div>
+		<div id="sb-strip-close" class="sb-strip-close" title="Close" role="button" aria-label="Close reminder">&#10005;</div>
+	</div>
+</div>
+<div id="sb-promo-strip-spacer" aria-hidden="true"></div>
+
+<script>
+(function() {
+	/* Navbar + snippet plugin may both paste this module. First copy wins;
+	   extra copies (duplicate ids) are removed so Book Now still works when
+	   the snippet plugin does not inject into Elementor Theme Builder pages. */
+	if (window.__sbLaborDayPromoBooted) {
+		try {
+			['sb-promo-card', 'sb-promo-minimized', 'sb-promo-strip', 'sb-promo-strip-spacer'].forEach(function(id) {
+				var nodes = document.querySelectorAll('#' + id);
+				for (var i = 1; i < nodes.length; i++) {
+					if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+				}
+			});
+		} catch (e0) {}
+		return;
+	}
+	window.__sbLaborDayPromoBooted = true;
+
+	/* Minimized state lives in localStorage (not sessionStorage) so it follows the
+	   visitor across pages, tabs, and return visits — minimize once, stays minimized.
+	   Guarded because storage can throw (private mode, blocked cookies). */
+	function sbRead(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+	function sbWrite(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+	function sbRemove(key) { try { localStorage.removeItem(key); } catch (e) {} }
+
+	/* Hide automatically after Monday, September 7, 2026 at 11:00 PM Central (Houston close). */
+	var endDate = new Date('2026-09-07T23:00:00-05:00');
+	if (Date.now() >= endDate.getTime()) {
+		sbRemove('sbCardMin');
+		sbRemove('sbStripMin');
+		sbRemove('sbPromoVersion');
+		return;
+	}
+
+	var version = "sb-laborday-2026-v10";
+
+	if (sbRead('sbPromoVersion') !== version) {
+		sbRemove('sbCardMin');
+		sbRemove('sbStripMin');
+		try {
+			/* Older banner versions kept state in sessionStorage — clear those too. */
+			sessionStorage.removeItem('sbMobileMin');
+			sessionStorage.removeItem('sbDesktopMin');
+			sessionStorage.removeItem('sbCardMin');
+			sessionStorage.removeItem('sbPromoVersion');
+		} catch (e) {}
+		sbWrite('sbPromoVersion', version);
+	}
+
+	var card = document.getElementById("sb-promo-card");
+	var mini = document.getElementById("sb-promo-minimized");
+	var strip = document.getElementById("sb-promo-strip");
+	var spacer = document.getElementById("sb-promo-strip-spacer");
+
+	/* Injected site-wide by a code snippet plugin, so gate by URL: show ONLY on the
+	   home pages (velocitysimlounge.com/ and /dallas/) and the Book Now pages
+	   (/book-now/ and /dallas/book-now/). Everywhere else it removes itself. */
+	function sbIsAllowedPage() {
+		try {
+			/* Staging shell: the ?p= page key identifies the page. */
+			var qs = new URLSearchParams(window.location.search);
+			var pageKey = (qs.get('p') || '').toLowerCase();
+			if (pageKey) {
+				return pageKey === 'home' || pageKey === 'dallas-home' || pageKey === 'laborday-banner' ||
+					pageKey === 'book-now' || pageKey === 'dallas-book-now';
+			}
+			/* Live site: exact paths only. */
+			var path = window.location.pathname.toLowerCase().replace(/\/index\.php$/, '').replace(/\/+$/, '');
+			if (path === '' || path === '/dallas') return true;
+			if (/\/book-now$/.test(path)) return true;
+			/* Elementor Theme Builder book-now pages (ids from live WP). */
+			try {
+				var bc = document.body && document.body.className || '';
+				if (/\bpage-id-7268\b/.test(bc) || /\belementor-page-7268\b/.test(bc)) return true; /* Houston Book Now */
+				if (/\bpage-id-7955\b/.test(bc) || /\belementor-page-7955\b/.test(bc)) return true; /* Dallas Book Now */
+			} catch (e2) {}
+			return false;
+		} catch (e) {
+			return false; /* when in doubt, stay hidden */
+		}
+	}
+
+	if (!sbIsAllowedPage()) {
+		try {
+			if (card && card.parentNode) card.parentNode.removeChild(card);
+			if (mini && mini.parentNode) mini.parentNode.removeChild(mini);
+			if (strip && strip.parentNode) strip.parentNode.removeChild(strip);
+			if (spacer && spacer.parentNode) spacer.parentNode.removeChild(spacer);
+		} catch (e) {}
+		return;
+	}
+
+	/* Canonical key for the page we're on — matches the CTA buttons' data-sb-shell
+	   keys so "is this CTA pointing at the page I'm already on?" is a string compare. */
+	function sbCurrentPageKey() {
+		try {
+			var qs = new URLSearchParams(window.location.search);
+			var pageKey = (qs.get('p') || '').toLowerCase();
+			if (pageKey) return pageKey;
+			var path = window.location.pathname.toLowerCase().replace(/\/index\.php$/, '').replace(/\/+$/, '');
+			if (path === '/book-now') return 'book-now';
+			if (path === '/dallas/book-now') return 'dallas-book-now';
+			if (path === '/dallas') return 'dallas-home';
+			if (path === '') return 'home';
+		} catch (e) {}
+		return '';
+	}
+
+	function sbIsBookNowPage() {
+		var k = sbCurrentPageKey();
+		return k === 'book-now' || k === 'dallas-book-now';
+	}
+
+	/* Elementor (and similar builders) often nest HTML inside columns with transform or overflow.
+	   That traps position:fixed and can hide or clip the popup on mobile—moving nodes to body fixes it. */
+	function sbAttachPromoToBody() {
+		try {
+			if (card && card.parentNode && card.parentNode !== document.body) {
+				document.body.appendChild(card);
+			}
+			if (mini && mini.parentNode && mini.parentNode !== document.body) {
+				document.body.appendChild(mini);
+			}
+			if (strip && strip.parentNode && strip.parentNode !== document.body) {
+				document.body.appendChild(strip);
+			}
+			if (spacer && spacer.parentNode && spacer.parentNode !== document.body) {
+				document.body.appendChild(spacer);
+			}
+		} catch (err) {}
+	}
+	sbAttachPromoToBody();
+
+	/* Matches the navbar's mobile breakpoint — that's when the bottom CTA dock
+	   appears and the top bar becomes the compact header. */
+	function sbIsMobileChrome() {
+		try { return window.matchMedia('(max-width: 1024px)').matches; } catch (e) { return false; }
+	}
+
+	function sbReadCssPx(el, name) {
+		if (!el) return 0;
+		try {
+			var raw = window.getComputedStyle(el).getPropertyValue(name).trim();
+			var n = parseFloat(raw);
+			return isFinite(n) && n > 0 ? n : 0;
+		} catch (e) { return 0; }
+	}
+
+	function sbHeaderBottomPx() {
+		var bottom = 0;
+		var stripe = document.querySelector('.vsl-navbar__stripe');
+		var bar = document.querySelector('.vsl-navbar__bar');
+		if (stripe) {
+			var rs = stripe.getBoundingClientRect();
+			if (rs.height > 0) bottom = Math.max(bottom, rs.bottom);
+		}
+		if (bar) {
+			var rb = bar.getBoundingClientRect();
+			if (rb.height > 0) bottom = Math.max(bottom, rb.bottom);
+		}
+		return Math.max(0, Math.round(bottom));
+	}
+
+	function sbStripContentHeight() {
+		var row = strip && strip.querySelector('.sb-strip-row');
+		var h = (row ? row.offsetHeight : 52) + 6;
+		if (!isFinite(h) || h < 44) h = 58;
+		return Math.min(72, Math.round(h));
+	}
+
+	function sbAfterHeaderNode() {
+		var header = document.querySelector('.elementor-location-header') ||
+			document.querySelector('[data-elementor-type="header"]');
+		if (header) return header;
+		var nav = document.querySelector('.vsl-navbar');
+		if (!nav) return null;
+		var el = nav;
+		while (el.parentElement && el.parentElement !== document.body && el.parentElement !== document.documentElement) {
+			el = el.parentElement;
+		}
+		return el;
+	}
+
+	function sbPlaceSpacer() {
+		if (!spacer) return;
+		var h = sbStripContentHeight();
+		spacer.style.height = h + 'px';
+		spacer.style.maxHeight = '72px';
+		spacer.classList.add('sb-strip-spacer--on');
+		var after = sbAfterHeaderNode();
+		if (after && after.parentNode) {
+			if (spacer.previousElementSibling !== after) {
+				after.parentNode.insertBefore(spacer, after.nextSibling);
+			}
+		}
+	}
+
+	function sbHideSpacer() {
+		if (!spacer) return;
+		spacer.classList.remove('sb-strip-spacer--on');
+		spacer.style.height = '0px';
+		if (spacer.parentNode !== document.body) document.body.appendChild(spacer);
+	}
+
+	function sbClearStripPinStyles() {
+		if (!strip) return;
+		['position', 'top', 'bottom', 'left', 'right', 'width', 'height', 'max-height', 'transform'].forEach(function(prop) {
+			strip.style.removeProperty(prop);
+		});
+		strip.style.removeProperty('--sb-pin-top');
+		strip.style.removeProperty('--sb-pin-y');
+	}
+
+	/* Viewport-relative offset only (navbar bottom, already in CSS pixels).
+	   Do not add scrollY — that recenters the bar every frame and looks jittery. */
+	function sbPinStripToViewport() {
+		if (!strip || !strip.classList.contains('sb-strip--top')) return;
+		if (strip.parentNode !== document.body) document.body.appendChild(strip);
+		strip.style.setProperty('--sb-pin-y', sbHeaderBottomPx() + 'px');
+	}
+
+	var sbPinRaf = null;
+	function sbQueuePin() {
+		if (sbPinRaf) return;
+		sbPinRaf = window.requestAnimationFrame(function() {
+			sbPinRaf = null;
+			sbPinStripToViewport();
+		});
+	}
+
+	function sbPlaceStrip() {
+		if (!strip) return;
+		var showTop = sbIsBookNowPage() && sbIsMobileChrome() && strip.style.display === 'block';
+		try {
+			if (strip.parentNode !== document.body) document.body.appendChild(strip);
+			if (showTop) {
+				strip.classList.add('sb-strip--top');
+				sbClearStripPinStyles();
+				sbPinStripToViewport();
+				sbPlaceSpacer();
+			} else {
+				strip.classList.remove('sb-strip--top');
+				sbClearStripPinStyles();
+				sbHideSpacer();
+			}
+		} catch (e) {}
+	}
+
+	/* --sb-dock-h: height of the site's fixed bottom CTA dock (.vsl-navbar__mcta).
+	   Measure the dock itself (not the whole .vsl-navbar wrapper — that can
+	   stretch to the page bottom and swallow the dock). */
+	function sbSyncNavOffsets() {
+		try {
+			var dockH = 0;
+			var dock = document.querySelector('.vsl-navbar__mcta');
+			if (dock) {
+				var rd = dock.getBoundingClientRect();
+				var st = window.getComputedStyle(dock);
+				if (st.display !== 'none' && st.visibility !== 'hidden' && rd.height > 0 && st.position === 'fixed') {
+					dockH = rd.height;
+				}
+			}
+			if (dockH <= 0 && sbIsMobileChrome()) {
+				dockH = sbReadCssPx(document.documentElement, '--vsl-mobile-dock-height') ||
+					sbReadCssPx(document.documentElement, '--vsl-mobile-dock-h') ||
+					sbReadCssPx(document.body, '--vsl-mobile-dock-h') ||
+					80;
+			}
+			var px = Math.round(dockH) + 'px';
+			if (mini) mini.style.setProperty('--sb-dock-h', px);
+			if (card) card.style.setProperty('--sb-dock-h', px);
+			if (strip) strip.style.setProperty('--sb-dock-h', px);
+			sbPlaceStrip();
+		} catch (e) {}
+	}
+
+	var sbNavRaf = null;
+	function sbQueueNavSync() {
+		if (sbNavRaf) return;
+		sbNavRaf = window.requestAnimationFrame(function() {
+			sbNavRaf = null;
+			sbSyncNavOffsets();
+		});
+	}
+	sbSyncNavOffsets();
+	window.addEventListener('scroll', sbQueuePin, { passive: true });
+	window.addEventListener('resize', sbQueueNavSync);
+	window.addEventListener('orientationchange', sbQueueNavSync);
+	try {
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', sbQueueNavSync);
+		}
+	} catch (eVp) {}
+	/* The navbar module may initialize (or portal its dock to <body>) after this
+	   snippet runs — re-measure a few times to catch late layout. */
+	setTimeout(sbSyncNavOffsets, 300);
+	setTimeout(sbSyncNavOffsets, 1200);
+	try {
+		if (typeof MutationObserver !== 'undefined') {
+			var sbDockWatch = new MutationObserver(sbQueueNavSync);
+			sbDockWatch.observe(document.documentElement, { childList: true, subtree: true });
+			setTimeout(function() { try { sbDockWatch.disconnect(); } catch (e2) {} }, 4000);
+		}
+	} catch (e3) {}
+
+	/* Location-specific mode: the same module is pasted on both home pages and
+	   auto-detects which one it's on. Houston home ("/") shows only the Houston CTA,
+	   Dallas home ("/dallas/") shows only the Dallas CTA. Force with
+	   data-sb-location="houston|dallas|both" on the card, or ?sbloc= for previews. */
+	(function() {
+		if (!card) return;
+
+		function resolveLocation() {
+			try {
+				var qs = new URLSearchParams(window.location.search);
+				var forced = (qs.get('sbloc') || '').toLowerCase();
+				if (forced === 'houston' || forced === 'dallas' || forced === 'both') return forced;
+
+				var attr = (card.getAttribute('data-sb-location') || 'auto').toLowerCase();
+				if (attr === 'houston' || attr === 'dallas' || attr === 'both') return attr;
+
+				/* Staging shell: location comes from the ?p= page key. */
+				var pageKey = (qs.get('p') || '').toLowerCase();
+				if (pageKey === 'laborday-banner') return 'both'; /* generic preview page */
+				if (pageKey) return pageKey.indexOf('dallas') === 0 ? 'dallas' : 'houston';
+
+				/* Live site: /dallas/... is the Dallas home, everything else is Houston. */
+				return /^\/dallas(\/|$)/i.test(window.location.pathname) ? 'dallas' : 'houston';
+			} catch (e) {
+				return 'both';
+			}
+		}
+
+		var loc = resolveLocation();
+		if (loc !== 'houston' && loc !== 'dallas') return;
+
+		var buttons = card.querySelectorAll('.sb-card-btn[data-sb-loc]');
+		for (var i = 0; i < buttons.length; i++) {
+			if (buttons[i].getAttribute('data-sb-loc') !== loc) buttons[i].style.display = 'none';
+		}
+
+		var sub = document.getElementById('sb-loc-sub');
+		if (sub) sub.textContent = loc === 'dallas' ? 'Velocity Dallas' : 'Velocity Houston';
+
+		var fine = document.getElementById('sb-fineprint');
+		if (fine) fine.textContent = 'Valid on Labor Day only \u2014 one appetizer per online booking, from our select menu.';
+	})();
+
+	/* Urgency line: "Limited availability, book today!" until Labor Day, then a
+	   same-day nudge on Monday, September 7 itself. */
+	(function() {
+		var urgency = document.getElementById('sb-urgency');
+		if (!urgency) return;
+		var now = new Date();
+		var promo = new Date(2026, 8, 7); /* Sep 7, 2026 local */
+		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+		var diffDays = Math.round((promo - today) / 86400000);
+		if (diffDays === 0) {
+			urgency.textContent = 'Limited availability, book now \u2014 today only!';
+		}
+	})();
+
+	function sbIsReplicaShellPage() {
+		try {
+			if (window.__VSL_SITE_REPLICA__ === true) return true;
+			if (
+				document.getElementById('replica-page-root') &&
+				document.getElementById('replica-navbar-root')
+			) {
+				return true;
+			}
+		} catch (e) {}
+		return false;
+	}
+
+	/** Same-origin shell URL with ?p=<pageKey> (matches replica-app.js path + query normalization). */
+	function sbShellHref(pageKey) {
+		try {
+			var u = new URL(window.location.href);
+			u.pathname = u.pathname.replace(/\/index\.html$/i, '/');
+			if (!u.pathname.endsWith('/')) u.pathname += '/';
+			var cur = new URLSearchParams(window.location.search);
+			var next = new URLSearchParams();
+			next.set('p', pageKey);
+			var env = cur.get('env');
+			if (env) next.set('env', env);
+			u.search = next.toString();
+			u.hash = '';
+			return u.pathname + u.search + u.hash;
+		} catch (e2) {
+			return '';
+		}
+	}
+
+	function sbCtaUrl(btn) {
+		var shellKey = btn.getAttribute('data-sb-shell');
+		if (shellKey && sbIsReplicaShellPage()) {
+			var shell = sbShellHref(shellKey);
+			if (shell) return shell;
+		}
+		return btn.getAttribute('data-sb-url') || '';
+	}
+
+	/* True when this CTA points at the booking page we're already on. */
+	function sbCtaTargetsCurrentPage(btn) {
+		var shellKey = (btn.getAttribute('data-sb-shell') || '').toLowerCase();
+		return !!shellKey && shellKey === sbCurrentPageKey();
+	}
+
+	/* Booking pages are internal — navigate same-tab. Button (not <a>) avoids WP
+	   “external links → new tab” mutations; touch handler beats late scripts on phones.
+	   Every CTA click also minimizes the card (persisted), so the booking page —
+	   and every page after it — loads with just the small pill. */
+	function sbGoCtaSameTab(btn, e) {
+		if (btn.getAttribute('data-sb-nav-pending') === '1') {
+			if (e && e.preventDefault) e.preventDefault();
+			return;
+		}
+		var url = sbCtaUrl(btn);
+		if (!url) return;
+		/* Already on this booking page — just get out of the way, no pointless reload. */
+		if (sbCtaTargetsCurrentPage(btn)) {
+			if (e && e.preventDefault) {
+				e.preventDefault();
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+			}
+			hideCard();
+			return;
+		}
+		if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)) {
+			window.open(url, '_blank', 'noopener,noreferrer');
+			if (e.preventDefault) e.preventDefault();
+			hideCard();
+			return;
+		}
+		if (e && typeof e.button === 'number' && e.button !== 0) return;
+		btn.setAttribute('data-sb-nav-pending', '1');
+		if (e && e.preventDefault) {
+			e.preventDefault();
+			e.stopPropagation();
+			e.stopImmediatePropagation();
+		}
+		hideCard();
+		window.location.assign(url);
+	}
+
+	function sbBindCta(btn) {
+		if (!btn) return;
+		btn.addEventListener('click', function(e) { sbGoCtaSameTab(btn, e); }, true);
+		btn.addEventListener(
+			'touchend',
+			function(e) {
+				if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+				sbGoCtaSameTab(btn, e);
+			},
+			{ passive: false, capture: true }
+		);
+	}
+
+	if (card) {
+		var ctaButtons = card.querySelectorAll('.sb-card-btn[data-sb-url]');
+		for (var i = 0; i < ctaButtons.length; i++) {
+			sbBindCta(ctaButtons[i]);
+		}
+	}
+
+	var btnMin = document.getElementById("sb-btn-minimize");
+	var stripClose = document.getElementById("sb-strip-close");
+
+	/* Two surfaces, one pill. Home pages show the full card; Book Now pages show
+	   the slim reminder strip instead (never the card — it would cover the booking
+	   flow). Each surface remembers its own dismissal (sbCardMin / sbStripMin), so
+	   closing one keeps it closed on every page that uses that style. */
+	function showCard() {
+		if (card) card.style.display = "block";
+		if (strip) strip.style.display = "none";
+		if (mini) mini.style.display = "none";
+		sbWrite('sbCardMin', 'false');
+	}
+	function hideCard() {
+		if (card) card.style.display = "none";
+		if (mini) mini.style.display = "block";
+		sbWrite('sbCardMin', 'true');
+		sbSyncNavOffsets();
+	}
+	function showStrip() {
+		if (card) card.style.display = "none";
+		if (strip) strip.style.display = "block";
+		if (mini) mini.style.display = "none";
+		sbWrite('sbStripMin', 'false');
+		sbSyncNavOffsets();
+	}
+	function hideStrip() {
+		if (strip) strip.style.display = "none";
+		if (mini) mini.style.display = "block";
+		sbWrite('sbStripMin', 'true');
+		sbSyncNavOffsets();
+	}
+
+	if (sbIsBookNowPage()) {
+		sbRead('sbStripMin') === 'true' ? hideStrip() : showStrip();
+	} else {
+		sbRead('sbCardMin') === 'true' ? hideCard() : showCard();
+	}
+
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (stripClose) stripClose.addEventListener('click', hideStrip);
+	if (mini) mini.addEventListener('click', function() {
+		sbIsBookNowPage() ? showStrip() : showCard();
+	});
+})();
+</script>

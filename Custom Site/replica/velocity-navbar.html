@@ -424,7 +424,7 @@ if (!window.VSL_LOCATION) {
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp" media="(max-width: 900px)">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp" media="(max-width: 900px)">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp" media="(max-width: 900px)">
-<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" media="(max-width: 900px)">
+<link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-768x432.webp" media="(max-width: 900px)">
 <link rel="preload" as="image" fetchpriority="high" href="https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp" media="(max-width: 900px)">
 <script>
   /* Immediate image warmup (no waiting for DOMContentLoaded) — viewport-aware to avoid wasting mobile bandwidth */
@@ -435,14 +435,14 @@ if (!window.VSL_LOCATION) {
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x432.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-768x432.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-768x432.webp',
-      'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
+      'https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-768x432.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
     ] : [
       'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
-      'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
+      'https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1024x576.webp',
       'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
     ];
     urls.forEach(function(u) {
@@ -1999,7 +1999,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 .vsl-navbar__overlay-card--promos {
   background-color: #2a1520;
-  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp');
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-768x432.webp');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2008,6 +2008,13 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__overlay-card--ignition {
   background-color: #1a1210;
   background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.vsl-navbar__overlay-card--contact {
+  background-color: #151820;
+  background-image: url('https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -2434,7 +2441,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   position: relative;
   z-index: 1;
 }
-.vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--ignition):not(.vsl-navbar__mega-card--promos):hover {
+.vsl-navbar__mega-card:not(.vsl-navbar__mega-card--book):not(.vsl-navbar__mega-card--events):not(.vsl-navbar__mega-card--membership):not(.vsl-navbar__mega-card--corp):not(.vsl-navbar__mega-card--how):not(.vsl-navbar__mega-card--ignition):not(.vsl-navbar__mega-card--contact):not(.vsl-navbar__mega-card--promos):hover {
   z-index: 2;
   background: rgba(72,92,204,0.3);
   border-color: rgba(238,38,95,0.62);
@@ -2467,10 +2474,12 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     0 calc(12px * var(--vsl-ui-scale)) calc(32px * var(--vsl-ui-scale)) rgba(0,0,0,0.36),
     0 0 calc(24px * var(--vsl-ui-scale)) rgba(210,32,38,0.2);
 }
-.vsl-navbar__mega-card--membership {
+.vsl-navbar__mega-card--membership,
+.vsl-navbar__mega-card--corp {
   background-color: #1e2338;
 }
-.vsl-navbar__mega-card--membership:hover {
+.vsl-navbar__mega-card--membership:hover,
+.vsl-navbar__mega-card--corp:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
   transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
@@ -2481,7 +2490,11 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 .vsl-navbar__mega-card--ignition {
   background-color: #1a1210;
 }
-.vsl-navbar__mega-card--ignition:hover {
+.vsl-navbar__mega-card--contact {
+  background-color: #151820;
+}
+.vsl-navbar__mega-card--ignition:hover,
+.vsl-navbar__mega-card--contact:hover {
   z-index: 2;
   border-color: rgba(210,32,38,0.55);
   transform: translateY(calc(-4px * var(--vsl-ui-scale))) scale(1.04);
@@ -2941,6 +2954,129 @@ a.vsl-navbar__loc-detail-address:focus-visible {
 }
 </style>
 
+<!-- SEO structured data — the navbar ships on every page, so every page carries Organization +
+     both lounge locations (Houston & Dallas) for local search. Descriptions/keywords target
+     "things to do in Houston/Dallas" and corporate / group event searches.
+     Keep addresses, phones, and hours in sync with the location panel markup below. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://velocitysimlounge.com/#organization",
+      "name": "Velocity | Sim Racing Lounge",
+      "url": "https://velocitysimlounge.com/",
+      "logo": "https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png",
+      "slogan": "Eat. Drink. Race.",
+      "sameAs": [
+        "https://www.instagram.com/velocitysimlounge/",
+        "https://www.facebook.com/VelocitySimLounge/",
+        "https://www.tiktok.com/@velocitysimlounge"
+      ],
+      "location": [
+        { "@id": "https://velocitysimlounge.com/#houston-lounge" },
+        { "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge" }
+      ]
+    },
+    {
+      "@type": ["EntertainmentBusiness", "BarOrPub"],
+      "@id": "https://velocitysimlounge.com/#houston-lounge",
+      "name": "Velocity | Sim Racing Lounge — Houston",
+      "parentOrganization": { "@id": "https://velocitysimlounge.com/#organization" },
+      "url": "https://velocitysimlounge.com/",
+      "image": "https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg",
+      "description": "Velocity is Houston's premium sim racing lounge at Sawyer Yards — full-motion racing simulators plus a full bar and kitchen. One of the top things to do in Houston for date nights, birthdays, bachelor parties, group outings, team building, and corporate events.",
+      "keywords": "things to do in Houston, corporate event ideas Houston, corporate event venues Houston, team building activities Houston, group event venues Houston, birthday party ideas Houston, sim racing Houston, racing simulator experience Houston",
+      "telephone": "+1-281-829-1516",
+      "priceRange": "$$",
+      "servesCuisine": "American",
+      "menu": "https://velocitysimlounge.com/food-and-drink/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2110 Edwards St",
+        "addressLocality": "Houston",
+        "addressRegion": "TX",
+        "postalCode": "77007",
+        "addressCountry": "US"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 29.7711351, "longitude": -95.3804141 },
+      "hasMap": "https://maps.app.goo.gl/B9jCNecVWwU5HsVo6",
+      "areaServed": { "@type": "City", "name": "Houston" },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Wednesday", "Thursday"], "opens": "14:00", "closes": "23:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "12:00", "closes": "00:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:00", "closes": "00:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "22:00" }
+      ],
+      "makesOffer": [
+        { "@type": "Offer", "name": "Sim racing sessions", "url": "https://velocitysimlounge.com/book-now/" },
+        { "@type": "Offer", "name": "Corporate events & team building", "url": "https://velocitysimlounge.com/corporate-events/" },
+        { "@type": "Offer", "name": "Group events & private parties", "url": "https://velocitysimlounge.com/group-events/" },
+        { "@type": "Offer", "name": "Party packs for groups of 5–18", "url": "https://velocitysimlounge.com/party-packs/" },
+        { "@type": "Offer", "name": "Memberships", "url": "https://velocitysimlounge.com/membership/" }
+      ]
+    },
+    {
+      "@type": ["EntertainmentBusiness", "BarOrPub"],
+      "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge",
+      "name": "Velocity | Sim Racing Lounge — Dallas",
+      "parentOrganization": { "@id": "https://velocitysimlounge.com/#organization" },
+      "url": "https://velocitysimlounge.com/dallas/",
+      "image": "https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp",
+      "description": "Velocity's Dallas sim racing lounge at The Hill — full-motion racing simulators, a full bar, and private event space off N Central Expressway. A standout pick for things to do in Dallas: birthdays, group outings, happy hours, team building, and corporate events.",
+      "keywords": "things to do in Dallas, corporate event ideas Dallas, corporate event venues Dallas, team building activities Dallas, group event venues Dallas, birthday party ideas Dallas, sim racing Dallas, racing simulator experience Dallas",
+      "telephone": "+1-972-209-5215",
+      "email": "infodtx@velocitysimlounge.com",
+      "priceRange": "$$",
+      "servesCuisine": "American",
+      "menu": "https://velocitysimlounge.com/dallas/food-and-drink/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "9830 N Central Expy #400",
+        "addressLocality": "Dallas",
+        "addressRegion": "TX",
+        "postalCode": "75231",
+        "addressCountry": "US"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 32.8818879, "longitude": -96.7684727 },
+      "hasMap": "https://maps.app.goo.gl/teXX8C3U46jsjQNk6",
+      "areaServed": { "@type": "City", "name": "Dallas" },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday"], "opens": "12:00", "closes": "22:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday", "Thursday"], "opens": "12:00", "closes": "23:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "12:00", "closes": "00:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "11:00", "closes": "00:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "11:00", "closes": "22:00" }
+      ],
+      "makesOffer": [
+        { "@type": "Offer", "name": "Sim racing sessions", "url": "https://velocitysimlounge.com/dallas/book-now/" },
+        { "@type": "Offer", "name": "Corporate events & team building", "url": "https://velocitysimlounge.com/dallas/corporate-events/" },
+        { "@type": "Offer", "name": "Group events & private parties", "url": "https://velocitysimlounge.com/dallas/group-events/" },
+        { "@type": "Offer", "name": "Party packs for groups of 5–18", "url": "https://velocitysimlounge.com/dallas/party-packs/" },
+        { "@type": "Offer", "name": "Memberships", "url": "https://velocitysimlounge.com/dallas/membership/" }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://velocitysimlounge.com/#site-navigation",
+      "name": "Velocity Sim Racing Lounge site navigation",
+      "itemListElement": [
+        { "@type": "SiteNavigationElement", "position": 1, "name": "Group Events & Parties in Houston", "url": "https://velocitysimlounge.com/group-events/" },
+        { "@type": "SiteNavigationElement", "position": 2, "name": "Corporate Events in Houston", "url": "https://velocitysimlounge.com/corporate-events/" },
+        { "@type": "SiteNavigationElement", "position": 3, "name": "Houston Food & Drink Menu", "url": "https://velocitysimlounge.com/food-and-drink/" },
+        { "@type": "SiteNavigationElement", "position": 4, "name": "Book Sim Racing in Houston", "url": "https://velocitysimlounge.com/book-now/" },
+        { "@type": "SiteNavigationElement", "position": 5, "name": "Membership", "url": "https://velocitysimlounge.com/membership/" },
+        { "@type": "SiteNavigationElement", "position": 6, "name": "Velocity Dallas — Sim Racing Lounge", "url": "https://velocitysimlounge.com/dallas/" },
+        { "@type": "SiteNavigationElement", "position": 7, "name": "Group Events & Parties in Dallas", "url": "https://velocitysimlounge.com/dallas/group-events/" },
+        { "@type": "SiteNavigationElement", "position": 8, "name": "Corporate Events in Dallas", "url": "https://velocitysimlounge.com/dallas/corporate-events/" },
+        { "@type": "SiteNavigationElement", "position": 9, "name": "Book Sim Racing in Dallas", "url": "https://velocitysimlounge.com/dallas/book-now/" }
+      ]
+    }
+  ]
+}
+</script>
+
 <nav class="vsl-navbar" role="navigation" aria-label="Main navigation">
   <div class="vsl-navbar__stripe" aria-hidden="true"></div>
   <div class="vsl-navbar__bar">
@@ -2956,9 +3092,12 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       </li>
       <li class="vsl-navbar__item">
         <button class="vsl-navbar__link vsl-navbar__race-trigger" type="button" data-race-toggle aria-haspopup="true" aria-expanded="false" aria-controls="vsl-mega-panel">
-          Explore
+          Activities
           <svg class="vsl-navbar__arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
+      </li>
+      <li class="vsl-navbar__item">
+        <a href="https://velocitysimlounge.com/membership/" class="vsl-navbar__link">Membership</a>
       </li>
     </ul>
     <div class="vsl-navbar__actions">
@@ -3007,7 +3146,8 @@ a.vsl-navbar__loc-detail-address:focus-visible {
               <span class="vsl-navbar__loc-detail-venue">(The Hill)</span>
             </div>
             <ul class="vsl-navbar__loc-detail-hours-list" data-loc-hours aria-label="Dallas hours">
-              <li data-day="Mon,Tue,Wed,Thu"><span class="vsl-day">Mon – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
+              <li data-day="Mon,Tue"><span class="vsl-day">Mon – Tue</span><span class="vsl-time">12PM – 10PM</span></li>
+              <li data-day="Wed,Thu"><span class="vsl-day">Wed – Thu</span><span class="vsl-time">12PM – 11PM</span></li>
               <li data-day="Fri"><span class="vsl-day">Fri</span><span class="vsl-time">12PM – 12AM</span></li>
               <li data-day="Sat"><span class="vsl-day">Sat</span><span class="vsl-time">11AM – 12AM</span></li>
               <li data-day="Sun"><span class="vsl-day">Sun</span><span class="vsl-time">11AM – 10PM</span></li>
@@ -3110,14 +3250,14 @@ a.vsl-navbar__loc-detail-address:focus-visible {
         <span class="vsl-navbar__mega-card__sub">Your first visit explained</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
-      <a href="https://velocitysimlounge.com/membership/" class="vsl-navbar__mega-card vsl-navbar__mega-card--membership">
-        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp" alt="" decoding="async" fetchpriority="high">
-        <span class="vsl-navbar__mega-card__title">Membership</span>
-        <span class="vsl-navbar__mega-card__sub">Exclusive perks &amp; unlimited racing</span>
+      <a href="https://velocitysimlounge.com/corporate-events/" class="vsl-navbar__mega-card vsl-navbar__mega-card--corp">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" alt="" decoding="async" fetchpriority="high">
+        <span class="vsl-navbar__mega-card__title">Corporate Events</span>
+        <span class="vsl-navbar__mega-card__sub">Team building, offsites &amp; company parties</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
       </a>
       <a href="https://velocitysimlounge.com/promotions/" class="vsl-navbar__mega-card vsl-navbar__mega-card--promos">
-        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp" alt="" decoding="async" fetchpriority="high">
+        <img class="vsl-navbar__mega-card__bg" src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1024x576.webp" alt="" decoding="async" fetchpriority="high">
         <span class="vsl-navbar__mega-card__title">Deals &amp; Promotions</span>
         <span class="vsl-navbar__mega-card__sub">Discounts, happy hour, and specials</span>
         <span class="vsl-navbar__mega-card__arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></span>
@@ -3159,7 +3299,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     </div>
     <ul class="vsl-navbar__overlay-menu">
       <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
-        <button class="vsl-navbar__overlay-link">Explore
+        <button class="vsl-navbar__overlay-link">Activities
           <svg class="vsl-navbar__overlay-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="vsl-navbar__overlay-sub vsl-navbar__overlay-sub--cards">
@@ -3200,6 +3340,9 @@ a.vsl-navbar__loc-detail-address:focus-visible {
       </li>
       <li class="vsl-navbar__overlay-item">
         <a href="https://velocitysimlounge.com/group-events/" class="vsl-navbar__overlay-link">Group Events</a>
+      </li>
+      <li class="vsl-navbar__overlay-item">
+        <a href="https://velocitysimlounge.com/corporate-events/" class="vsl-navbar__overlay-link">Corporate Events</a>
       </li>
       <li class="vsl-navbar__overlay-item" data-mobile-dropdown>
         <button class="vsl-navbar__overlay-link">Food &amp; Drink
@@ -3339,7 +3482,7 @@ a.vsl-navbar__loc-detail-address:focus-visible {
   function updateNavbarActiveLink() {
     var currentSlug = window.VSL_LOCATION && window.VSL_LOCATION.getPageSlug
       ? window.VSL_LOCATION.getPageSlug() : '';
-    var topNavSlugs = { 'group-events': true, 'food-and-drink': true };
+    var topNavSlugs = { 'group-events': true, 'food-and-drink': true, 'membership': true };
     navbar.querySelectorAll('.vsl-navbar__menu .vsl-navbar__link[href]').forEach(function(a) {
       a.classList.remove('vsl-navbar__link--active');
       if (!topNavSlugs[currentSlug]) return;
@@ -3709,14 +3852,31 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     setLocationPromptAria(false);
   }
 
+  var IGNITION_EXPLORE_IMG = 'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp';
+  var CONTACT_EXPLORE_IMG = 'https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg';
+
   function applyIgnitionExploreLinks(loc) {
     loc = normalizeLocation(loc);
-    var href = loc === 'dallas'
+    var isDallas = loc === 'dallas';
+    var href = isDallas
       ? (window.__VSL_SITE_REPLICA__ ? 'index.html?p=dallas-contact' : 'https://velocitysimlounge.com/dallas/contact/')
       : (window.__VSL_SITE_REPLICA__ ? 'index.html?p=ignition' : 'https://velocitysimlounge.com/ignition/');
+    var img = isDallas ? CONTACT_EXPLORE_IMG : IGNITION_EXPLORE_IMG;
     navbar.querySelectorAll('[data-nav-ignition]').forEach(function(a) {
+      var isMega = a.classList.contains('vsl-navbar__mega-card');
+      var isOverlay = a.classList.contains('vsl-navbar__overlay-card');
       a.setAttribute('href', href);
-      if (loc === 'dallas') {
+      a.classList.toggle('vsl-navbar__mega-card--ignition', isMega && !isDallas);
+      a.classList.toggle('vsl-navbar__mega-card--contact', isMega && isDallas);
+      a.classList.toggle('vsl-navbar__overlay-card--ignition', isOverlay && !isDallas);
+      a.classList.toggle('vsl-navbar__overlay-card--contact', isOverlay && isDallas);
+      var title = a.querySelector('.vsl-navbar__mega-card__title, .vsl-navbar__overlay-card__title');
+      if (title) title.textContent = isDallas ? 'Contact' : 'Ignition';
+      var sub = a.querySelector('.vsl-navbar__mega-card__sub');
+      if (sub) sub.textContent = isDallas ? 'Hours, location, and get in touch' : "Houston's hidden cocktail lounge";
+      var bg = a.querySelector('.vsl-navbar__mega-card__bg');
+      if (bg) bg.setAttribute('src', img);
+      if (isDallas) {
         a.removeAttribute('target');
         a.removeAttribute('rel');
       } else {
@@ -3968,9 +4128,10 @@ a.vsl-navbar__loc-detail-address:focus-visible {
     'https://velocitysimlounge.com/wp-content/uploads/2026/01/premium-motion-sim-racing-simulator-1024x576.jpg',
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x576.webp',
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/how_it_works-1024x576.webp',
-    'https://velocitysimlounge.com/wp-content/uploads/2026/04/memberships-1024x576.webp',
     'https://velocitysimlounge.com/wp-content/uploads/2026/04/Corp-page.webp',
-    'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp'
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/Deals-Promotions-hero-background-photo-1024x576.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/07/ignition-hero-bar.webp',
+    'https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg'
   ];
   var megaImagesPromise = null;
 

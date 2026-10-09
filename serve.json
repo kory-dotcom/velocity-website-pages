@@ -1,3 +1,7 @@
 {
-  "cleanUrls": false
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/VelocityStagingSite", "destination": "/VelocityStagingSite/index.html" },
+    { "source": "/VelocityStagingSite/", "destination": "/VelocityStagingSite/index.html" }
+  ]
 }

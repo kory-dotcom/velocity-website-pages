@@ -1,0 +1,1882 @@
+<!--
+Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
+  Elementor Custom HTML module  ·  v1.2.0  ·  build 20261009b
+
+  ── SEO Handoff ──
+  Meta title:    3-Hour Le Mans Endurance | Velocity Sim Racing Lounge
+  Meta desc:     Race a 3-hour Le Mans endurance in an Oreca 07 LMP2 at Velocity Houston or Dallas on November 15, 2026. Solo $85, teams from $110. Practice included.
+  Canonical:     https://velocitysimlounge.com/lemans/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg
+  Robots:        noindex after November 15, 2026 (race day)
+
+  Schema (page level, SEO plugin):
+  Event + FAQPage.
+  Event name "3-Hour Le Mans Endurance", startDate 2026-11-15 (no clock time;
+  start time is confirmed to entrants only), eventAttendanceMode Offline,
+  location two Places:
+    Velocity Houston, 2110 Edwards St, Houston, TX 77007
+    Velocity Dallas, 9830 N Central Expy #400, Dallas, TX 75231
+  Three Offer nodes (priceCurrency USD, availability InStock, validThrough 2026-11-14):
+    Solo Driver, 85
+    2-Driver Team, 110
+    3-Driver Team, 120
+  FAQPage with the seven questions in the Good to know section.
+
+  ── How it works ──
+  One page for both lounges (like Million Lap Monday). The lounge toggle follows
+  ?loc=, then window.VSL_LOCATION.readLocation(), then localStorage
+  vslPreferredLocation. Copy marked data-lm-only="houston|dallas|none" swaps
+  with the city. Picking an entry and a team name happens here. "Continue to
+  payment" POSTs to the members app (config.api), which creates a Stripe
+  Checkout on that lounge's own Stripe account (8.25% sales tax is added as a
+  Stripe tax rate). This page redirects to the returned url. If the call
+  fails, the error stays on this page.
+
+  The captain pays for the whole car. Teammates are NOT collected here: after
+  payment the captain gets a members-app account (Endurance event access
+  through Nov 22) and invites drivers by email from their dashboard. Each
+  driver who accepts gets the same event access.
+
+  Capacity is 23 cars in Houston and 20 in Dallas. On load (and when the lounge changes) the
+  page GETs config.availability; a lounge with 0 remaining shows "Sold out"
+  and the pay button is disabled. The checkout API also returns
+  409 { "error", "soldOut": true } if the last car went while they typed.
+
+  ── Config (data-vsl-config on .vsl-lemans) ──
+  api           POST endpoint on the members app.
+  availability  GET endpoint; ?location=houston|dallas → { remaining, cap, sold, saleOpen }.
+                Without ?location → { locations: { houston: {...}, dallas: {...} } }.
+  saleEnds      Last calendar day entries are sold (Chicago time). After this the
+                form is replaced with "Entries have closed".
+  cancelUrl     Where Stripe's back arrow returns. Defaults to this page's URL.
+
+  POST JSON body:
+  {
+    "location": "houston" | "dallas",
+    "entry": "solo" | "duo" | "trio",
+    "teamName": string,        // 2–60 chars; the driver's own name for solo
+    "cancelUrl": string
+  }
+  Success: 2xx { "url": "<stripe checkout url>" }.
+  Errors:  4xx { "error": string, "soldOut"?: true }.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
+<link rel="preconnect" href="https://members.velocitysimlounge.com" crossorigin>
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  .elementor-widget-html .vsl-lemans a.vsl-lm-btn {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+
+  /* ── Page shell: full-bleed like the other Velocity modules ──────────── */
+  .vsl-lemans {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --ink: #393452;
+    --muted: #574E76;
+    --page-margin: 64px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --lm-hero: url("https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg");
+    --lm-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --lm-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+    --soft: var(--red);
+    --medium: var(--yellow);
+    --hard: var(--circuit-white);
+
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: var(--navy);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .vsl-lemans *,
+  .vsl-lemans *::before,
+  .vsl-lemans *::after { box-sizing: border-box; }
+  :where(.vsl-lemans) :where(h1, h2, h3, p, ul, ol, dl, dd) {
+    margin: 0;
+    padding: 0;
+  }
+  .vsl-lemans ul,
+  .vsl-lemans ol { list-style: none; }
+  .vsl-lemans button,
+  .vsl-lemans input { font: inherit; }
+  .vsl-lemans > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-lemans) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-lemans),
+  .elementor-container:has(.vsl-lemans),
+  .elementor-column:has(.vsl-lemans),
+  .elementor-column-wrap:has(.vsl-lemans),
+  .elementor-widget-wrap:has(.vsl-lemans),
+  .elementor-widget:has(.vsl-lemans),
+  .e-con:has(.vsl-lemans),
+  .e-con-inner:has(.vsl-lemans) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  html:has(.vsl-lemans),
+  body:has(.vsl-lemans) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  .vsl-lemans .vsl-lm-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-lemans #lm-format,
+  .vsl-lemans #lm-entry,
+  .vsl-lemans #lm-loc { scroll-margin-top: 96px; }
+
+  .vsl-lemans .vsl-lm-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--circuit-white);
+  }
+  .vsl-lemans .vsl-lm-section-title em { font-style: italic; color: var(--magenta); }
+  .vsl-lemans .vsl-lm-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.45;
+    max-width: 52ch;
+    color: rgba(234, 234, 234, 0.78);
+  }
+
+  .vsl-lemans .vsl-lm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 30px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238, 38, 95, 0.25);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vsl-lemans .vsl-lm-btn:hover {
+    background-color: #d41e52;
+    border-color: #d41e52;
+    box-shadow: 0 8px 28px rgba(238, 38, 95, 0.35);
+  }
+  .vsl-lemans .vsl-lm-btn:active { transform: scale(0.98); }
+  .vsl-lemans .vsl-lm-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-lemans .vsl-lm-btn--ghost {
+    background: transparent;
+    border-color: rgba(234, 234, 234, 0.35);
+    box-shadow: none;
+    color: #fff;
+  }
+  .vsl-lemans .vsl-lm-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(234, 234, 234, 0.6);
+    box-shadow: none;
+  }
+
+  /* ── Hero ────────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    isolation: isolate;
+    width: 100%;
+    min-height: 68vh;
+    min-height: 68svh;
+    color: var(--circuit-white);
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(165deg, rgba(16, 24, 43, 0.88) 0%, rgba(16, 24, 43, 0.72) 42%, rgba(25, 27, 77, 0.9) 100%),
+      var(--lm-hero);
+    background-repeat: no-repeat;
+    background-position: center 42%;
+    background-size: cover;
+  }
+  .vsl-lemans .vsl-lm-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+    align-items: center;
+    gap: clamp(28px, 4vw, 56px);
+    padding: clamp(56px, 12vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 7vw, 64px);
+    width: min(1480px, 100%);
+    margin: 0 auto;
+  }
+  .vsl-lemans .vsl-lm-hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+  .vsl-lemans .vsl-lm-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 20px;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 0.7rem + 0.9vw, 1.1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, #D22026, #EE265F);
+    border-radius: 999px;
+  }
+  .vsl-lemans .vsl-lm-hero__title {
+    margin: 0 0 0.4em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: #fff;
+  }
+  .vsl-lemans .vsl-lm-hero__kicker {
+    display: block;
+    font-size: clamp(3.2rem, 1.1rem + 8.4vw, 6.4rem);
+    letter-spacing: 0.01em;
+  }
+  .vsl-lemans .vsl-lm-hero__name {
+    display: block;
+    margin-top: 0.08em;
+    font-size: clamp(1.7rem, 0.7rem + 4.2vw, 3.35rem);
+    letter-spacing: 0.08em;
+  }
+  .vsl-lemans .vsl-lm-hero__sub {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.02rem, 0.94rem + 0.4vw, 1.18rem);
+    line-height: 1.55;
+    color: rgba(234, 234, 234, 0.9);
+    max-width: 42ch;
+  }
+  .vsl-lemans .vsl-lm-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 14px;
+    align-items: center;
+  }
+
+  .vsl-lemans .vsl-lm-loc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin: 0 0 1.5rem;
+  }
+  .vsl-lemans .vsl-lm-loc__label {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(234, 234, 234, 0.78);
+  }
+  .vsl-lemans .vsl-lm-loc__seg {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(234, 234, 234, 0.22);
+  }
+  .vsl-lemans .vsl-lm-loc__btn {
+    min-height: 40px;
+    padding: 6px 22px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(234, 234, 234, 0.85);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  .vsl-lemans .vsl-lm-loc__btn[aria-checked="true"] {
+    background: var(--magenta);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(238, 38, 95, 0.4);
+  }
+  .vsl-lemans .vsl-lm-loc__btn:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+
+  /* Pit wall strategy card */
+  .vsl-lemans .vsl-lm-pitwall {
+    width: 100%;
+    max-width: 640px;
+    margin-inline: auto;
+    padding: 22px 22px 18px;
+    border-radius: 20px;
+    color: var(--circuit-white);
+    border: 1px solid rgba(234, 234, 234, 0.16);
+    background-color: var(--navy);
+    background-image:
+      linear-gradient(rgba(234, 234, 234, 0.04), rgba(234, 234, 234, 0.04)),
+      linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18), 0 26px 60px rgba(0, 0, 0, 0.35);
+  }
+  .vsl-lemans .vsl-lm-pitwall__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .vsl-lemans .vsl-lm-pitwall__head span:first-child { font-size: 1.35rem; color: #fff; }
+  .vsl-lemans .vsl-lm-pitwall__head span:last-child {
+    font-size: 1.55rem;
+    color: var(--mist);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+  .vsl-lemans .vsl-lm-bar__segs {
+    display: flex;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgba(16, 24, 43, 0.45);
+  }
+  .vsl-lemans .vsl-lm-seg {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .vsl-lemans .vsl-lm-seg + .vsl-lm-seg { box-shadow: inset 1px 0 0 rgba(16, 24, 43, 0.35); }
+  .vsl-lemans .vsl-lm-seg--s { background: var(--soft); color: #fff; }
+  .vsl-lemans .vsl-lm-seg--m { background: var(--medium); color: var(--navy); }
+  .vsl-lemans .vsl-lm-seg--h { background: var(--hard); color: var(--navy); }
+  .vsl-lemans .vsl-lm-bar__ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--mist);
+    font-variant-numeric: tabular-nums;
+  }
+  .vsl-lemans .vsl-lm-compounds {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .vsl-lemans .vsl-lm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    padding: 4px 12px 4px 8px;
+    border-radius: 999px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.16);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--circuit-white);
+  }
+  .vsl-lemans .vsl-lm-chip i {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--soft);
+  }
+  .vsl-lemans .vsl-lm-chip--m i { background: var(--medium); }
+  .vsl-lemans .vsl-lm-chip--h i {
+    background: var(--hard);
+    box-shadow: inset 0 0 0 1px rgba(16, 24, 43, 0.35);
+  }
+  .vsl-lemans .vsl-lm-flags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .vsl-lemans .vsl-lm-flags li {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.14);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--lm-finish-h);
+    background-color: var(--navy);
+    background-image: var(--lm-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: 1px solid #000;
+  }
+
+  /* ── Shared light / dark sections ────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-why,
+  .vsl-lemans .vsl-lm-tyres,
+  .vsl-lemans .vsl-lm-entry,
+  .vsl-lemans .vsl-lm-faq {
+    background: #F4F5F9;
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-why .vsl-lm-section-title,
+  .vsl-lemans .vsl-lm-tyres .vsl-lm-section-title,
+  .vsl-lemans .vsl-lm-entry .vsl-lm-section-title,
+  .vsl-lemans .vsl-lm-faq .vsl-lm-section-title { color: var(--navy); }
+  .vsl-lemans .vsl-lm-why .vsl-lm-section-sub,
+  .vsl-lemans .vsl-lm-tyres .vsl-lm-section-sub,
+  .vsl-lemans .vsl-lm-entry .vsl-lm-section-sub,
+  .vsl-lemans .vsl-lm-faq .vsl-lm-section-sub { color: var(--muted); }
+
+  .vsl-lemans .vsl-lm-spec,
+  .vsl-lemans .vsl-lm-timeline {
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: var(--circuit-white);
+  }
+  .vsl-lemans .vsl-lm-spec { background: var(--navy); }
+  .vsl-lemans .vsl-lm-timeline {
+    background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--blue) 100%);
+  }
+
+  .vsl-lemans .vsl-lm-pillars,
+  .vsl-lemans .vsl-lm-plans,
+  .vsl-lemans .vsl-lm-tyre-grid,
+  .vsl-lemans .vsl-lm-rail,
+  .vsl-lemans .vsl-lm-faq dl,
+  .vsl-lemans .vsl-lm-spec__list {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  /* ── Why ─────────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-pillar {
+    grid-column: span 4;
+    padding: 28px 24px 26px;
+    border-radius: 16px;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    border: 1px solid rgba(41, 56, 147, 0.12);
+    box-shadow: 0 16px 40px -28px rgba(16, 24, 43, 0.45);
+  }
+  .vsl-lemans .vsl-lm-pillar__index {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--magenta);
+  }
+  .vsl-lemans .vsl-lm-pillar h3,
+  .vsl-lemans .vsl-lm-plan h3,
+  .vsl-lemans .vsl-lm-tyre-tile h3,
+  .vsl-lemans .vsl-lm-node h3 {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-pillar p {
+    margin-top: 10px;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* ── Spec sheet ──────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-spec__list { gap: 14px 24px; }
+  .vsl-lemans .vsl-lm-spec__row {
+    grid-column: span 6;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.12);
+  }
+  .vsl-lemans .vsl-lm-spec dt {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-spec dd {
+    margin-top: 6px;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: #fff;
+  }
+  .vsl-lemans .vsl-lm-spec__addr {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.95rem;
+    color: var(--mist);
+  }
+
+  /* ── Tyres ───────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-tyre-tile {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 28px 26px;
+    border-radius: 16px;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    border: 1px solid rgba(41, 56, 147, 0.12);
+  }
+  .vsl-lemans .vsl-lm-ring-row {
+    display: flex;
+    gap: 10px;
+  }
+  .vsl-lemans .vsl-lm-ring {
+    --ring: var(--circuit-white);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--navy);
+    box-shadow:
+      inset 0 0 0 7px var(--ring),
+      inset 0 0 0 12px var(--navy),
+      inset 0 0 0 19px var(--ink);
+  }
+  .vsl-lemans .vsl-lm-ring--soft { --ring: var(--red); }
+  .vsl-lemans .vsl-lm-ring--medium { --ring: var(--yellow); }
+  .vsl-lemans .vsl-lm-ring--hard { --ring: var(--circuit-white); }
+  .vsl-lemans .vsl-lm-tyre-tile__num {
+    margin-top: 16px;
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 2rem + 3vw, 4.6rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-tyre-tile__num span {
+    font-size: 0.38em;
+    letter-spacing: 0.08em;
+    margin-left: 0.15em;
+  }
+  .vsl-lemans .vsl-lm-compounds--light { margin-top: 22px; }
+  .vsl-lemans .vsl-lm-compounds--light .vsl-lm-chip {
+    background-color: #fff;
+    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    border-color: rgba(41, 56, 147, 0.16);
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-tyres__note {
+    margin-top: 22px;
+    max-width: 68ch;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ── Timeline ────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-node {
+    grid-column: span 6;
+    position: relative;
+    padding: 56px 24px 24px;
+    border-radius: 16px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.14);
+  }
+  .vsl-lemans .vsl-lm-node::before {
+    content: '';
+    position: absolute;
+    top: 22px;
+    left: 24px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--magenta);
+    box-shadow: 0 0 0 4px rgba(16, 24, 43, 0.35);
+  }
+  .vsl-lemans .vsl-lm-node h3 { color: #fff; margin-top: 0; }
+  .vsl-lemans .vsl-lm-node__lead {
+    margin-top: 8px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .vsl-lemans .vsl-lm-node ul { margin-top: 14px; }
+  .vsl-lemans .vsl-lm-node li {
+    position: relative;
+    padding-left: 16px;
+    margin-top: 8px;
+    font-size: 1rem;
+    line-height: 1.45;
+    color: rgba(234, 234, 234, 0.86);
+  }
+  .vsl-lemans .vsl-lm-node li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--circuit-white);
+  }
+  .vsl-lemans .vsl-lm-node__foot {
+    margin-top: 14px;
+    font-size: 0.95rem;
+    color: var(--mist);
+  }
+
+  /* ── Entry cards ─────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-plan {
+    grid-column: span 4;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 100%;
+    padding: 22px 22px 20px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid rgba(16, 24, 43, 0.12);
+    box-shadow: 0 16px 40px -28px rgba(16, 24, 43, 0.45);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  .vsl-lemans .vsl-lm-plan:hover { border-color: rgba(238, 38, 95, 0.55); }
+  .vsl-lemans .vsl-lm-plan.is-selected {
+    background: var(--navy);
+    border-color: var(--navy);
+    box-shadow: 0 18px 40px rgba(16, 24, 43, 0.18);
+  }
+  .vsl-lemans .vsl-lm-plan:focus-within {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
+  .vsl-lemans .vsl-lm-plan__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .vsl-lemans .vsl-lm-plan__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .vsl-lemans .vsl-lm-plan__seats {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .vsl-lemans .vsl-lm-seat {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-seat { background: var(--magenta); }
+  .vsl-lemans .vsl-lm-plan h3 { margin-top: 16px; }
+  .vsl-lemans .vsl-lm-plan.is-selected h3 { color: #fff; }
+  .vsl-lemans .vsl-lm-plan__line {
+    margin-top: 6px;
+    max-width: 28ch;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__line { color: var(--mist); }
+  .vsl-lemans .vsl-lm-plan__cost {
+    width: 100%;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(16, 24, 43, 0.08);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__cost {
+    border-top-color: rgba(234, 234, 234, 0.16);
+  }
+  .vsl-lemans .vsl-lm-plan__price {
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__price { color: #fff; }
+  .vsl-lemans .vsl-lm-plan__per {
+    margin-top: 4px;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: var(--muted);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__per { color: var(--mist); }
+
+  /* ── Checkout ────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-checkout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: clamp(20px, 3vw, 40px);
+    margin-top: clamp(28px, 4vh, 40px);
+    padding: clamp(22px, 3vw, 36px);
+    border-radius: 20px;
+    background: #fff;
+    color: var(--navy);
+    box-shadow: 0 26px 60px rgba(16, 24, 43, 0.12);
+  }
+  .vsl-lemans .vsl-lm-checkout__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-checkout__note {
+    margin-top: 8px;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .vsl-lemans .vsl-lm-field { margin-top: 18px; }
+  .vsl-lemans .vsl-lm-field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-violet);
+  }
+  .vsl-lemans .vsl-lm-field input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    min-height: 52px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(41, 56, 147, 0.28);
+    background: #F6F7FB;
+    color: var(--navy);
+    font-size: 1.05rem;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .vsl-lemans .vsl-lm-field input:focus {
+    border-color: var(--magenta);
+    box-shadow: 0 0 0 3px rgba(238, 38, 95, 0.18);
+    background: #fff;
+  }
+  .vsl-lemans .vsl-lm-invite-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(41, 56, 147, 0.08);
+    border: 1px solid rgba(41, 56, 147, 0.18);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-invite-note[hidden] { display: none; }
+  .vsl-lemans .vsl-lm-soldout {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--magenta);
+    color: #fff;
+  }
+  .vsl-lemans .vsl-lm-soldout[hidden] { display: none; }
+  .vsl-lemans[data-lm-soldout="true"] .vsl-lm-plans { opacity: 0.55; }
+  .vsl-lemans .vsl-lm-lounge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 14px;
+    margin-top: 18px;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+  .vsl-lemans .vsl-lm-lounge strong {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .vsl-lemans a.vsl-lm-change {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--magenta);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .vsl-lemans a.vsl-lm-change:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
+  .vsl-lemans .vsl-lm-summary {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 22px;
+    border-radius: 14px;
+    background-color: var(--navy);
+    background-image: linear-gradient(rgba(234, 234, 234, 0.04), rgba(234, 234, 234, 0.04));
+    color: var(--circuit-white);
+    min-height: 100%;
+  }
+  .vsl-lemans .vsl-lm-summary__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-summary__empty {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px dashed rgba(234, 234, 234, 0.3);
+    border-radius: 10px;
+    color: var(--mist);
+    font-size: 0.98rem;
+  }
+  .vsl-lemans .vsl-lm-summary__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(234, 234, 234, 0.18);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .vsl-lemans .vsl-lm-summary__row span:first-child { font-size: 1.05rem; color: #fff; }
+  .vsl-lemans .vsl-lm-summary__row span:last-child {
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--yellow);
+    font-variant-numeric: tabular-nums;
+  }
+  .vsl-lemans .vsl-lm-summary__meta {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-status {
+    margin-top: 12px;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-error {
+    margin-top: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(238, 38, 95, 0.5);
+    background: rgba(238, 38, 95, 0.14);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+  .vsl-lemans .vsl-lm-pay {
+    margin-top: 18px;
+    width: 100%;
+    min-height: 56px;
+    font-size: 1.1rem;
+  }
+  .vsl-lemans .vsl-lm-pay:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+  .vsl-lemans .vsl-lm-pay:disabled:hover {
+    background-color: var(--magenta);
+    border-color: var(--magenta);
+    box-shadow: none;
+  }
+  .vsl-lemans .vsl-lm-fine {
+    margin-top: 12px;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--mist);
+  }
+
+  .vsl-lemans .vsl-lm-closed {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 32px 26px;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--navy);
+    text-align: center;
+  }
+  .vsl-lemans .vsl-lm-closed h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+  .vsl-lemans .vsl-lm-closed p {
+    margin-top: 12px;
+    font-size: 1.1rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .vsl-lemans .vsl-lm-closed a {
+    display: inline-flex;
+    margin-top: 18px;
+  }
+
+  /* ── FAQ ─────────────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-faq__item {
+    grid-column: span 6;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    border: 1px solid rgba(41, 56, 147, 0.12);
+  }
+  .vsl-lemans .vsl-lm-faq dt {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-faq dd {
+    margin-top: 8px;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .vsl-lemans .vsl-lm-faq a {
+    color: var(--magenta);
+    font-weight: 700;
+    text-underline-offset: 2px;
+  }
+  .vsl-lemans .vsl-lm-faq a:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+  }
+
+  /* ── Closing CTA ─────────────────────────────────────────────────────── */
+  .vsl-lemans .vsl-lm-cta {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--magenta);
+    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: #fff;
+    text-align: center;
+  }
+  .vsl-lemans .vsl-lm-cta .vsl-lm-section-title { color: #fff; }
+  .vsl-lemans .vsl-lm-cta .vsl-lm-section-sub {
+    margin-bottom: 1.6rem;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .vsl-lemans .vsl-lm-cta .vsl-lm-btn {
+    background-color: var(--navy);
+    border-color: var(--navy);
+    box-shadow: none;
+  }
+  .vsl-lemans .vsl-lm-cta .vsl-lm-btn:hover {
+    background-color: var(--deep-indigo);
+    border-color: var(--deep-indigo);
+    box-shadow: none;
+  }
+
+  /* The site reveal script shifts sections until an observer fires. On mobile
+     that observer can miss, so the page loads sitting off to the left. */
+  .vsl-lemans [hidden] { display: none !important; }
+  .vsl-lemans [class*="vsl-reveal"],
+  .vsl-lemans [class*="vsl-reveal"] [data-vsl-stagger] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  @media (max-width: 1024px) {
+    .vsl-lemans .vsl-lm-hero__inner { grid-template-columns: minmax(0, 1fr); }
+    .vsl-lemans .vsl-lm-pitwall { display: none; }
+    .vsl-lemans .vsl-lm-hero__copy { align-items: center; text-align: center; }
+    .vsl-lemans .vsl-lm-hero__sub { margin-inline: auto; }
+    .vsl-lemans .vsl-lm-loc,
+    .vsl-lemans .vsl-lm-hero__actions { justify-content: center; }
+    .vsl-lemans .vsl-lm-checkout { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 860px) {
+    .vsl-lemans .vsl-lm-pillar,
+    .vsl-lemans .vsl-lm-plan,
+    .vsl-lemans .vsl-lm-tyre-tile,
+    .vsl-lemans .vsl-lm-node,
+    .vsl-lemans .vsl-lm-spec__row,
+    .vsl-lemans .vsl-lm-faq__item { grid-column: span 12; }
+    .vsl-lemans .vsl-lm-pillars,
+    .vsl-lemans .vsl-lm-plans,
+    .vsl-lemans .vsl-lm-tyre-grid { max-width: 560px; margin-inline: auto; }
+  }
+  @media (max-width: 640px) {
+    .vsl-lemans .vsl-lm-hero { min-height: 0; }
+    .vsl-lemans .vsl-lm-hero__inner { padding-top: 64px; }
+    .vsl-lemans .vsl-lm-hero__name { letter-spacing: 0.05em; }
+    .vsl-lemans .vsl-lm-hero__actions { width: 100%; }
+    .vsl-lemans .vsl-lm-hero__actions .vsl-lm-btn,
+    .vsl-lemans .vsl-lm-cta .vsl-lm-btn { width: 100%; }
+    .vsl-lemans .vsl-lm-loc__btn { padding: 6px 16px; }
+    .vsl-lemans .vsl-lm-plan__price { font-size: 2.2rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-lemans *,
+    .vsl-lemans *::before,
+    .vsl-lemans *::after {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
+
+<div class="vsl-lemans" data-vsl-config='{"api":"https://members.velocitysimlounge.com/api/lemans/checkout","availability":"https://members.velocitysimlounge.com/api/lemans/availability","saleEnds":"2026-11-14","cancelUrl":"https://velocitysimlounge.com/lemans/"}'>
+  <main id="primary-content">
+
+    <section class="vsl-lm-hero" id="lm-hero" aria-labelledby="lm-hero-title">
+      <div class="vsl-lm-hero__inner">
+        <div class="vsl-lm-hero__copy">
+          <span class="vsl-lm-hero__eyebrow">Endurance Series · Nov 15, 2026</span>
+          <h1 class="vsl-lm-hero__title" id="lm-hero-title">
+            <span class="vsl-lm-hero__kicker">3-Hour</span>
+            <span class="vsl-lm-hero__name">Le Mans Endurance</span>
+          </h1>
+          <p class="vsl-lm-hero__sub">Shorter, accessible endurance with real strategy. Race solo or as a team.</p>
+          <div class="vsl-lm-loc" id="lm-loc" role="radiogroup" aria-labelledby="lm-loc-label">
+            <span class="vsl-lm-loc__label" id="lm-loc-label">Racing at</span>
+            <span class="vsl-lm-loc__seg">
+              <button type="button" class="vsl-lm-loc__btn" role="radio" aria-checked="false" tabindex="0" data-lm-loc="houston">Houston</button>
+              <button type="button" class="vsl-lm-loc__btn" role="radio" aria-checked="false" tabindex="-1" data-lm-loc="dallas">Dallas</button>
+            </span>
+          </div>
+          <div class="vsl-lm-hero__actions">
+            <a class="vsl-lm-btn" href="#lm-entry" data-lm-scroll>Enter the race</a>
+            <a class="vsl-lm-btn vsl-lm-btn--ghost" href="#lm-format" data-lm-scroll>See the format</a>
+          </div>
+        </div>
+        <aside class="vsl-lm-pitwall" aria-hidden="true">
+          <p class="vsl-lm-pitwall__head"><span>Pit wall ·</span><span>3h00</span></p>
+          <div class="vsl-lm-bar">
+            <div class="vsl-lm-bar__segs">
+              <span class="vsl-lm-seg vsl-lm-seg--s">S</span>
+              <span class="vsl-lm-seg vsl-lm-seg--m">M</span>
+              <span class="vsl-lm-seg vsl-lm-seg--h">H</span>
+              <span class="vsl-lm-seg vsl-lm-seg--m">M</span>
+            </div>
+            <div class="vsl-lm-bar__ticks">
+              <span>0:00</span>
+              <span>1:00</span>
+              <span>2:00</span>
+              <span>3:00</span>
+            </div>
+          </div>
+          <ul class="vsl-lm-compounds">
+            <li class="vsl-lm-chip"><i></i> Soft</li>
+            <li class="vsl-lm-chip vsl-lm-chip--m"><i></i> Medium</li>
+            <li class="vsl-lm-chip vsl-lm-chip--h"><i></i> Hard</li>
+          </ul>
+          <ul class="vsl-lm-flags">
+            <li>Fuel ON</li>
+            <li>Tyre wear ON</li>
+            <li>Damage ON</li>
+          </ul>
+        </aside>
+      </div>
+      <div class="vsl-lm-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <section class="vsl-lm-why" id="lm-why" aria-labelledby="lm-why-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-why-title">Endurance, without the all-nighter</h2>
+        <p class="vsl-lm-section-sub">A full endurance race that fits an evening. Solo or with a team.</p>
+        <div class="vsl-lm-pillars">
+          <article class="vsl-lm-pillar">
+            <span class="vsl-lm-pillar__index">01</span>
+            <h3>3 hours, not 24</h3>
+            <p>Circuit de la Sarthe in one evening. The race is short enough to finish the same night, and long enough that the plan still matters.</p>
+          </article>
+          <article class="vsl-lm-pillar">
+            <span class="vsl-lm-pillar__index">02</span>
+            <h3>Solo entries welcome</h3>
+            <p>Drive the whole three hours yourself, or share an Oreca 07 with one or two teammates. You do not need a full crew to enter.</p>
+          </article>
+          <article class="vsl-lm-pillar">
+            <span class="vsl-lm-pillar__index">03</span>
+            <h3>Real strategy</h3>
+            <p>Fuel, tyre wear, and damage are enabled. Pit stops, compound choice, and when you come in are part of the race.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-lm-spec" id="lm-format" aria-labelledby="lm-format-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-format-title">Race format</h2>
+        <p class="vsl-lm-section-sub">Oreca 07 LMP2 at Circuit de la Sarthe. Same race in Houston and Dallas.</p>
+        <dl class="vsl-lm-spec__list">
+          <div class="vsl-lm-spec__row">
+            <dt>Car</dt>
+            <dd>Oreca 07 LMP2</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Circuit</dt>
+            <dd>Circuit de la Sarthe, Le Mans</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Duration</dt>
+            <dd>3 hours</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Race day</dt>
+            <dd>Sunday, Nov 15, 2026 (start time confirmed to entrants)</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Entries</dt>
+            <dd>Solo, 2-driver or 3-driver teams</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Simulation</dt>
+            <dd>Fuel, tyre wear and damage enabled</dd>
+          </div>
+          <div class="vsl-lm-spec__row">
+            <dt>Lounge</dt>
+            <dd>
+              <span data-lm-only="none">Houston &amp; Dallas</span><span data-lm-only="houston" hidden>Velocity Houston · Sawyer Yards</span><span data-lm-only="dallas" hidden>Velocity Dallas · The Hill</span>
+              <span class="vsl-lm-spec__addr" data-lm-only="none">2110 Edwards St, Houston, TX 77007 · 9830 N Central Expy #400, Dallas, TX 75231</span>
+              <span class="vsl-lm-spec__addr" data-lm-only="houston" hidden>2110 Edwards St, Houston, TX 77007</span>
+              <span class="vsl-lm-spec__addr" data-lm-only="dallas" hidden>9830 N Central Expy #400, Dallas, TX 75231</span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="vsl-lm-tyres" id="lm-tyres" aria-labelledby="lm-tyres-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-tyres-title">Tyre allocation</h2>
+        <p class="vsl-lm-section-sub">Qualifying is one set. The race gives you three. Compounds are your call.</p>
+        <div class="vsl-lm-tyre-grid">
+          <article class="vsl-lm-tyre-tile">
+            <div class="vsl-lm-ring-row" aria-hidden="true"><div class="vsl-lm-ring vsl-lm-ring--hard"></div></div>
+            <p class="vsl-lm-tyre-tile__num">1 <span>set</span></p>
+            <h3>Qualifying</h3>
+          </article>
+          <article class="vsl-lm-tyre-tile">
+            <div class="vsl-lm-ring-row" aria-hidden="true"><div class="vsl-lm-ring vsl-lm-ring--soft"></div><div class="vsl-lm-ring vsl-lm-ring--medium"></div><div class="vsl-lm-ring vsl-lm-ring--hard"></div></div>
+            <p class="vsl-lm-tyre-tile__num">3 <span>sets</span></p>
+            <h3>Race</h3>
+          </article>
+        </div>
+        <ul class="vsl-lm-compounds vsl-lm-compounds--light">
+          <li class="vsl-lm-chip"><i></i> Soft</li>
+          <li class="vsl-lm-chip vsl-lm-chip--m"><i></i> Medium</li>
+          <li class="vsl-lm-chip vsl-lm-chip--h"><i></i> Hard</li>
+        </ul>
+        <p class="vsl-lm-tyres__note">Manage Soft, Medium, and Hard across your stints. Tyre management is a key part of strategy.</p>
+      </div>
+    </section>
+
+    <section class="vsl-lm-timeline" id="lm-timeline" aria-labelledby="lm-timeline-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-timeline-title">Race weekend</h2>
+        <p class="vsl-lm-section-sub">Practice is included with every entry. Race day is Sunday, November 15.</p>
+        <ol class="vsl-lm-rail">
+          <li class="vsl-lm-node">
+            <h3>Tue Oct 27, 2026 · 7:00 PM</h3>
+            <p class="vsl-lm-node__lead">Complimentary 3-hour practice</p>
+            <ul>
+              <li>Work on setups</li>
+              <li>Practice driver changes</li>
+              <li>Develop race strategy</li>
+            </ul>
+            <p class="vsl-lm-node__foot">Included with every entry.</p>
+          </li>
+          <li class="vsl-lm-node">
+            <h3>Sun Nov 15, 2026</h3>
+            <p class="vsl-lm-node__lead">Race day</p>
+            <ul>
+              <li>Qualifying on 1 set</li>
+              <li>Then the 3-hour race</li>
+            </ul>
+            <p class="vsl-lm-node__foot">Start time confirmed to entrants.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <form data-lm-form novalidate>
+      <section class="vsl-lm-entry" id="lm-entry" aria-labelledby="lm-entry-title">
+        <div class="vsl-lm-grid">
+          <h2 class="vsl-lm-section-title" id="lm-entry-title">Pick your entry <span class="vsl-lm-soldout" data-lm-soldout-badge hidden>Sold out</span></h2>
+          <p class="vsl-lm-section-sub">One payment for the car, plus sales tax. Practice is included. 23 cars in Houston, 20 in Dallas.</p>
+          <div class="vsl-lm-plans" role="radiogroup" aria-labelledby="lm-entry-title">
+            <label class="vsl-lm-plan" data-lm-plan="solo">
+              <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="solo" id="lm-entry-solo">
+              <span class="vsl-lm-plan__top">
+                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span></span>
+              </span>
+              <div class="vsl-lm-plan__copy">
+                <h3>Solo Driver</h3>
+                <p class="vsl-lm-plan__line">You drive all three hours.</p>
+              </div>
+              <div class="vsl-lm-plan__cost">
+                <p class="vsl-lm-plan__price">$85</p>
+                <p class="vsl-lm-plan__per">Full race</p>
+              </div>
+            </label>
+            <label class="vsl-lm-plan" data-lm-plan="duo">
+              <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="duo" id="lm-entry-duo">
+              <span class="vsl-lm-plan__top">
+                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span><span class="vsl-lm-seat">2</span></span>
+              </span>
+              <div class="vsl-lm-plan__copy">
+                <h3>2-Driver Team</h3>
+                <p class="vsl-lm-plan__line">Share the stints on one car.</p>
+              </div>
+              <div class="vsl-lm-plan__cost">
+                <p class="vsl-lm-plan__price">$110</p>
+                <p class="vsl-lm-plan__per">$55 each</p>
+              </div>
+            </label>
+            <label class="vsl-lm-plan" data-lm-plan="trio">
+              <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="trio" id="lm-entry-trio">
+              <span class="vsl-lm-plan__top">
+                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span><span class="vsl-lm-seat">2</span><span class="vsl-lm-seat">3</span></span>
+              </span>
+              <div class="vsl-lm-plan__copy">
+                <h3>3-Driver Team</h3>
+                <p class="vsl-lm-plan__line">Three drivers, one checkout.</p>
+              </div>
+              <div class="vsl-lm-plan__cost">
+                <p class="vsl-lm-plan__price">$120</p>
+                <p class="vsl-lm-plan__per">$40 each</p>
+              </div>
+            </label>
+          </div>
+
+          <div class="vsl-lm-checkout" data-lm-checkout hidden>
+            <div>
+              <p class="vsl-lm-checkout__title" data-lm-checkout-title>Your name</p>
+              <p class="vsl-lm-checkout__note" data-lm-checkout-note>This name goes on the entry.</p>
+              <div class="vsl-lm-field">
+                <label for="vsl-lm-team" data-lm-team-label>Team name (or your name for solo)</label>
+                <input id="vsl-lm-team" type="text" minlength="2" maxlength="60" autocomplete="name" autocapitalize="words" required aria-required="true" placeholder="Your name" data-lm-team>
+              </div>
+              <p class="vsl-lm-invite-note" data-lm-invite-note hidden>After payment you&rsquo;ll invite your drivers by email from your Velocity account. Each driver gets event access through November 22.</p>
+              <div class="vsl-lm-lounge">
+                <p>Racing at <strong data-lm-city>Pick Houston or Dallas</strong></p>
+                <a class="vsl-lm-change" href="#lm-loc" data-lm-scroll>Change</a>
+              </div>
+            </div>
+            <aside class="vsl-lm-summary" aria-label="Order summary">
+              <p class="vsl-lm-summary__title">Your entry</p>
+              <p class="vsl-lm-summary__empty" data-lm-summary-empty>Select an entry to see the total.</p>
+              <p class="vsl-lm-summary__row" data-lm-summary-row hidden>
+                <span data-lm-summary-label></span>
+                <span data-lm-summary-total></span>
+              </p>
+              <p class="vsl-lm-summary__meta" data-lm-summary-meta hidden></p>
+              <p class="vsl-lm-status" data-lm-status>Select an entry to continue.</p>
+              <p class="vsl-lm-error" role="alert" data-lm-error hidden></p>
+              <button type="submit" class="vsl-lm-btn vsl-lm-pay" data-lm-pay disabled>
+                <span data-lm-pay-label>Continue to payment</span>
+              </button>
+              <p class="vsl-lm-fine">You will finish payment on a secure checkout page for the lounge you picked. Texas sales tax (8.25%) is added at checkout.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <section class="vsl-lm-entry" data-lm-closed hidden aria-labelledby="lm-closed-title">
+      <div class="vsl-lm-grid">
+        <div class="vsl-lm-closed">
+          <h2 id="lm-closed-title">Entries have closed</h2>
+          <p>The window for the 3-hour Le Mans endurance has ended. Regular bookings are open.</p>
+          <a class="vsl-lm-btn" href="https://velocitysimlounge.com/book-now/">Book a race</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="vsl-lm-faq" id="lm-faq" aria-labelledby="lm-faq-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-faq-title">Good to know</h2>
+        <p class="vsl-lm-section-sub">The short version before you lock in a stint.</p>
+        <dl>
+          <div class="vsl-lm-faq__item">
+            <dt>Can I race solo?</dt>
+            <dd>Yes. A solo entry is $85. You drive the whole 3 hours and manage your own fuel and tyre stops.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>How do I add my teammates?</dt>
+            <dd>One person pays for the car and becomes the captain. After checkout you get a Velocity Members account; from your dashboard you invite each driver by email and they claim their seat. Everyone on the car gets event access through November 22.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>How do driver swaps work for teams?</dt>
+            <dd>Teams swap drivers at pit stops during the race. Use the October 27 practice to rehearse those changes.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>Do I need endurance experience?</dt>
+            <dd>No. The complimentary practice session is included, and staff will brief you before the race.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>What&rsquo;s included in the practice session?</dt>
+            <dd>A 3-hour session on Tuesday, October 27, 2026 at 7:00 PM for setups, driver changes, and race strategy. It is included with every entry.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>Which rigs/sims?</dt>
+            <dd>You race on the pro sim rigs at the lounge you pick. Your confirmation email has the seating details.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>When should I arrive?</dt>
+            <dd>Arrive early for the briefing. The exact start time is emailed to entrants.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>Can I get a refund?</dt>
+            <dd>Contact your lounge and they will help with the entry.
+              <span data-lm-only="none">Houston <a href="tel:+18326274981">832-627-4981</a> · Dallas <a href="tel:+19722095215">972-209-5215</a></span><span data-lm-only="houston" hidden>Houston <a href="tel:+18326274981">832-627-4981</a></span><span data-lm-only="dallas" hidden>Dallas <a href="tel:+19722095215">972-209-5215</a></span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="vsl-lm-cta" id="lm-cta" aria-labelledby="lm-cta-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-cta-title">Lock in your stint</h2>
+        <p class="vsl-lm-section-sub">Solo or team, the grid is the same three hours.</p>
+        <a class="vsl-lm-btn" href="#lm-entry" data-lm-scroll>Enter the race</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var ENTRIES = {
+    solo: {
+      label: 'Solo Driver', total: 85, size: 1,
+      title: 'Your name',
+      note: 'This name goes on the entry. You drive the full three hours.',
+      teamLabel: 'Your name',
+      teamPlaceholder: 'Your name',
+      meta: 'Plus sales tax. Practice on Oct 27 is included.'
+    },
+    duo: {
+      label: '2-Driver Team', total: 110, size: 2,
+      title: 'Name the team',
+      note: 'One payment covers the car. You\u2019ll invite your teammate after checkout.',
+      teamLabel: 'Team name',
+      teamPlaceholder: 'Team name',
+      meta: '$55 per driver, plus sales tax. Practice on Oct 27 is included.'
+    },
+    trio: {
+      label: '3-Driver Team', total: 120, size: 3,
+      title: 'Name the team',
+      note: 'One payment covers the car. You\u2019ll invite your teammates after checkout.',
+      teamLabel: 'Team name',
+      teamPlaceholder: 'Team name',
+      meta: '$40 per driver, plus sales tax. Practice on Oct 27 is included.'
+    }
+  };
+  var CITY = { houston: 'Houston', dallas: 'Dallas' };
+
+  function capitalizeAsTyped(raw) {
+    var out = '', start = true, ch, i;
+    for (i = 0; i < raw.length; i++) {
+      ch = raw.charAt(i);
+      out += start ? ch.toUpperCase() : ch;
+      start = ch === ' ' || ch === '-' || ch === "'";
+    }
+    return out;
+  }
+  function capitalizeName(raw) {
+    return capitalizeAsTyped(String(raw || '').trim().replace(/\s+/g, ' '));
+  }
+  function money(dollars) { return '$' + dollars + ' + tax'; }
+
+  function chicagoToday() {
+    try {
+      return new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).format(new Date());
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+  }
+
+  function init() {
+    var root = document.querySelector('.vsl-lemans');
+    if (!root || root._vslLemansInit) return;
+    root._vslLemansInit = true;
+
+    var config = {};
+    try { config = JSON.parse(root.getAttribute('data-vsl-config') || '{}') || {}; } catch (e) { config = {}; }
+    var API = config.api || '';
+    var AVAILABILITY = config.availability || '';
+    var SALE_ENDS = config.saleEnds || '2026-11-14';
+    var CANCEL_URL = config.cancelUrl || (window.location.origin + window.location.pathname);
+
+    var form = root.querySelector('[data-lm-form]');
+    var closed = root.querySelector('[data-lm-closed]');
+    var location = null;
+    var entry = '';
+    var submitting = false;
+    var locked = false;
+    var checkoutReady = false;
+    /** remaining cars by lounge; null until the availability call answers. */
+    var remaining = { houston: null, dallas: null };
+    /** cars per lounge; defaults match the members app, overwritten by the availability call. */
+    var cap = { houston: 23, dallas: 20 };
+
+    function soldOutHere() {
+      return !!location && remaining[location] === 0;
+    }
+
+    function loadAvailability() {
+      if (!AVAILABILITY || typeof window.fetch !== 'function') return;
+      window.fetch(AVAILABILITY, { method: 'GET' }).then(function (res) {
+        return res.ok ? res.json() : null;
+      }).then(function (data) {
+        var locs = data && data.locations;
+        if (!locs) return;
+        ['houston', 'dallas'].forEach(function (slug) {
+          var a = locs[slug];
+          if (a && typeof a.remaining === 'number') remaining[slug] = a.remaining;
+          if (a && typeof a.cap === 'number') cap[slug] = a.cap;
+        });
+        if (checkoutReady) render();
+      }).catch(function () { /* leave the form usable; the API still enforces the cap */ });
+    }
+
+    function applyLocationCopy() {
+      root.querySelectorAll('[data-lm-only]').forEach(function (el) {
+        var want = el.getAttribute('data-lm-only');
+        var show = location ? want === location : want === 'none';
+        el.hidden = !show;
+      });
+    }
+
+    function paintLocation() {
+      var buttons = root.querySelectorAll('[data-lm-loc]');
+      var any = false;
+      buttons.forEach(function (btn) {
+        var on = !!location && btn.getAttribute('data-lm-loc') === location;
+        if (on) any = true;
+        btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        btn.tabIndex = on ? 0 : -1;
+      });
+      if (!any && buttons[0]) buttons[0].tabIndex = 0;
+      root.querySelectorAll('[data-lm-city]').forEach(function (el) {
+        el.textContent = location ? CITY[location] : 'Pick Houston or Dallas';
+      });
+      if (location) root.setAttribute('data-lm-location', location);
+      else root.removeAttribute('data-lm-location');
+      applyLocationCopy();
+    }
+
+    function setLocation(loc) {
+      if (loc !== 'houston' && loc !== 'dallas') return;
+      location = loc;
+      paintLocation();
+      if (checkoutReady) render();
+    }
+
+    function persistLocation(loc) {
+      try {
+        if (window.VSL_LOCATION && typeof window.VSL_LOCATION.setPreferredLocation === 'function') {
+          window.VSL_LOCATION.setPreferredLocation(loc, { source: 'lemans' });
+          return;
+        }
+      } catch (e0) {}
+      try { window.localStorage.setItem('vslPreferredLocation', loc); } catch (e1) {}
+    }
+
+    root.querySelectorAll('[data-lm-scroll]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (!a.hasAttribute('data-lm-scroll')) return;
+        var href = a.getAttribute('href') || '';
+        if (href.charAt(0) !== '#') return;
+        var target = root.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 84;
+        try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, top); }
+      });
+    });
+
+    root.querySelectorAll('[data-lm-loc]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        locked = true;
+        var loc = btn.getAttribute('data-lm-loc');
+        persistLocation(loc);
+        setLocation(loc);
+      });
+      btn.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+        var buttons = Array.prototype.slice.call(root.querySelectorAll('[data-lm-loc]'));
+        var idx = buttons.indexOf(btn);
+        if (idx < 0) return;
+        e.preventDefault();
+        var delta = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+        var next = buttons[(idx + delta + buttons.length) % buttons.length];
+        next.focus();
+        next.click();
+      });
+    });
+
+    var q = '';
+    try { q = new URLSearchParams(window.location.search).get('loc') || ''; } catch (e2) {}
+    if (q === 'dallas' || q === 'houston') setLocation(q);
+    else {
+      var fromStore = '';
+      try {
+        if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readLocation === 'function') {
+          fromStore = window.VSL_LOCATION.readLocation() || '';
+        }
+      } catch (e3) {}
+      if (fromStore !== 'dallas' && fromStore !== 'houston') {
+        try { fromStore = window.localStorage.getItem('vslPreferredLocation') || ''; } catch (e4) { fromStore = ''; }
+      }
+      if (fromStore === 'dallas' || fromStore === 'houston') setLocation(fromStore);
+      else paintLocation();
+    }
+
+    window.addEventListener('_vslLocationChanged', function (e) {
+      if (locked) return;
+      var loc = e && e.detail && (e.detail.location || e.detail);
+      if (loc === 'dallas' || loc === 'houston') setLocation(loc);
+    });
+
+    if (chicagoToday() > SALE_ENDS) {
+      if (form) form.hidden = true;
+      if (closed) closed.hidden = false;
+      root.querySelectorAll('[data-lm-scroll][href="#lm-entry"]').forEach(function (a) {
+        a.setAttribute('href', 'https://velocitysimlounge.com/book-now/');
+        a.removeAttribute('data-lm-scroll');
+        a.textContent = 'Book a race';
+      });
+      return;
+    }
+
+    var teamInput = root.querySelector('[data-lm-team]');
+    var teamLabel = root.querySelector('[data-lm-team-label]');
+    var inviteNote = root.querySelector('[data-lm-invite-note]');
+    var soldOutBadge = root.querySelector('[data-lm-soldout-badge]');
+    var checkoutEl = root.querySelector('[data-lm-checkout]');
+    var checkoutTitle = root.querySelector('[data-lm-checkout-title]');
+    var checkoutNote = root.querySelector('[data-lm-checkout-note]');
+    var errorEl = root.querySelector('[data-lm-error]');
+    var payBtn = root.querySelector('[data-lm-pay]');
+    var payLabel = root.querySelector('[data-lm-pay-label]');
+    var statusEl = root.querySelector('[data-lm-status]');
+    var summaryEmpty = root.querySelector('[data-lm-summary-empty]');
+    var summaryRow = root.querySelector('[data-lm-summary-row]');
+    var summaryLabel = root.querySelector('[data-lm-summary-label]');
+    var summaryTotal = root.querySelector('[data-lm-summary-total]');
+    var summaryMeta = root.querySelector('[data-lm-summary-meta]');
+
+    function bindCapitalize(input) {
+      input.addEventListener('input', function () {
+        var pos = input.selectionStart;
+        var next = capitalizeAsTyped(input.value);
+        if (next !== input.value) {
+          input.value = next;
+          try { input.setSelectionRange(pos, pos); } catch (err) {}
+        }
+        showError('');
+        render();
+      });
+      input.addEventListener('blur', function () {
+        input.value = capitalizeName(input.value);
+        render();
+      });
+    }
+
+    function showError(msg) {
+      errorEl.textContent = msg || '';
+      errorEl.hidden = !msg;
+    }
+
+    function render() {
+      var offer = ENTRIES[entry] || null;
+      var opening = !!offer && checkoutEl.hidden;
+      root.querySelectorAll('.vsl-lm-plan').forEach(function (card) {
+        card.classList.toggle('is-selected', card.getAttribute('data-lm-plan') === entry);
+      });
+      checkoutEl.hidden = !offer;
+      summaryEmpty.hidden = !!offer;
+      summaryRow.hidden = !offer;
+      summaryMeta.hidden = !offer;
+      if (offer) {
+        checkoutTitle.textContent = offer.title;
+        checkoutNote.textContent = offer.note;
+        teamLabel.textContent = offer.teamLabel;
+        teamInput.placeholder = offer.teamPlaceholder;
+        teamInput.autocomplete = offer.size === 1 ? 'name' : 'organization';
+        summaryLabel.textContent = offer.label;
+        summaryTotal.textContent = money(offer.total);
+        summaryMeta.textContent = offer.meta;
+      }
+      if (inviteNote) inviteNote.hidden = !offer || offer.size < 2;
+
+      var soldOut = soldOutHere();
+      root.setAttribute('data-lm-soldout', soldOut ? 'true' : 'false');
+      if (soldOutBadge) soldOutBadge.hidden = !soldOut;
+
+      var teamName = capitalizeName(teamInput.value);
+      var ready = !!offer && teamName.length >= 2 && !!location && !soldOut;
+      payBtn.disabled = !ready || submitting;
+      payLabel.textContent = submitting ? 'Starting checkout\u2026'
+        : soldOut ? (CITY[location] + ' is sold out')
+        : 'Continue to payment';
+      statusEl.hidden = ready || submitting;
+      statusEl.textContent = soldOut ? ('All ' + cap[location] + ' cars in ' + CITY[location] + ' are taken. Try the other lounge.')
+        : !offer ? 'Select an entry to continue.'
+        : !location ? 'Pick Houston or Dallas.'
+        : (offer.size === 1 ? 'Add your name.' : 'Add a team name (2+ characters).');
+      if (opening) {
+        var reduce = false;
+        try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (err) {}
+        checkoutEl.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+      }
+    }
+
+    bindCapitalize(teamInput);
+    form.addEventListener('change', function (e) {
+      var t = e.target;
+      if (!t || t.name !== 'lm-entry') return;
+      if (!ENTRIES[t.value]) return;
+      entry = t.value;
+      showError('');
+      render();
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      showError('');
+      var offer = ENTRIES[entry];
+      var teamName = capitalizeName(teamInput.value);
+      teamInput.value = teamName;
+      if (!offer) { showError('Select an entry.'); return; }
+      if (!location) { showError('Pick Houston or Dallas.'); return; }
+      if (soldOutHere()) { showError(CITY[location] + ' is sold out. Try the other lounge.'); return; }
+      if (teamName.length < 2) { showError(offer.size === 1 ? 'Add your name.' : 'Add a team name (2+ characters).'); return; }
+      if (submitting) return;
+
+      if (!API || typeof window.fetch !== 'function') {
+        showError('Checkout is temporarily unavailable. Ask the front desk.');
+        return;
+      }
+
+      var payload = {
+        location: location,
+        entry: entry,
+        teamName: teamName,
+        cancelUrl: CANCEL_URL
+      };
+
+      submitting = true;
+      render();
+
+      var status = 0;
+      window.fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        status = res.status;
+        return res.json().catch(function () { return {}; });
+      }).then(function (data) {
+        if (status >= 200 && status < 300 && data && data.url) {
+          window.location.assign(data.url);
+          return;
+        }
+        submitting = false;
+        if (status === 409 && data && data.soldOut && location) {
+          remaining[location] = 0;
+        }
+        render();
+        showError((data && data.error) || 'Checkout is temporarily unavailable. Ask the front desk.');
+      }).catch(function () {
+        submitting = false;
+        render();
+        showError('Checkout is temporarily unavailable. Ask the front desk.');
+      });
+    });
+
+    checkoutReady = true;
+    render();
+    loadAvailability();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

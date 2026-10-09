@@ -643,7 +643,14 @@
     grid-template-columns: repeat(3, 1fr);
   }
   .vsl-events-card-grid--4 {
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .vsl-events-card-grid--4 > .vsl-events-card {
+    flex: 1 1 calc((100% - 2 * var(--gutter)) / 3);
+    max-width: calc((100% - 2 * var(--gutter)) / 3);
   }
 
   /* ── EVENT CARD (taller, more visual) ── */
@@ -689,7 +696,8 @@
   .vsl-events-card:nth-child(1) .vsl-events-card__accent { background: var(--magenta); }
   .vsl-events-card:nth-child(2) .vsl-events-card__accent { background: var(--yellow); }
   .vsl-events-card:nth-child(3) .vsl-events-card__accent { background: var(--blue); }
-  .vsl-events-card:nth-child(4) .vsl-events-card__accent { background: var(--magenta); }
+  .vsl-events-card:nth-child(4) .vsl-events-card__accent { background: var(--yellow); }
+  .vsl-events-card:nth-child(5) .vsl-events-card__accent { background: var(--magenta); }
 
   .vsl-events-card figure.vsl-events-card__media {
     margin: 0 !important;
@@ -1325,8 +1333,9 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .vsl-events-card-grid--4 {
-      grid-template-columns: repeat(2, 1fr);
+    .vsl-events-card-grid--4 > .vsl-events-card {
+      flex-basis: calc((100% - var(--gutter)) / 2);
+      max-width: calc((100% - var(--gutter)) / 2);
     }
     .vsl-events-card-grid--3 {
       grid-template-columns: 1fr;
@@ -1347,10 +1356,9 @@
       min-height: max(320px, 52vh);
       min-height: max(320px, 52svh);
     }
-    .vsl-events-card-grid--4 {
-      grid-template-columns: 1fr;
+    .vsl-events-card-grid--4 > .vsl-events-card {
+      flex-basis: 100%;
       max-width: min(540px, 100%);
-      margin-inline: auto;
     }
     .vsl-events-section-title { line-height: 1.2; }
     .vsl-events-types { padding: 48px 0 72px; }
@@ -1502,15 +1510,33 @@
             </div>
           </article>
 
+          <!-- Birthdays (same product as Party Packs) -->
+          <article class="vsl-events-card">
+            <div class="vsl-events-card__accent"></div>
+            <figure class="vsl-events-card__media">
+              <img data-vsl-events-img="partyPacks" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 18vw" alt="Birthday party celebration at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
+            </figure>
+            <div class="vsl-events-card__body">
+              <h3 class="vsl-events-card__name">Birthdays</h3>
+              <p class="vsl-events-card__desc">Booked as a Party Pack. Dedicated simulators, reserved seating, and dinner and drinks for the birthday group.</p>
+              <p class="vsl-events-card__meta">Groups of 5&ndash;16</p>
+              <hr class="vsl-events-card__rule">
+              <div class="vsl-events-card__cta-row">
+                <a class="vsl-events-card__cta" data-vsl-events-link="partyPackCards" href="https://velocitysimlounge.com/party-packs/">Book now</a>
+                <a class="vsl-events-card__cta vsl-events-card__cta--outline" data-vsl-events-link="partyPacks" href="https://velocitysimlounge.com/party-packs/">See party packs</a>
+              </div>
+            </div>
+          </article>
+
           <!-- Party Packs -->
           <article class="vsl-events-card">
             <div class="vsl-events-card__accent"></div>
             <figure class="vsl-events-card__media">
-              <img data-vsl-events-img="partyPacks" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 23vw" alt="Birthday party celebration at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
+              <img data-vsl-events-img="partyPacks" data-vsl-events-dynamic-city-alt src="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp" srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-600x400.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-768x512.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1024x683.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1200x800.webp 1200w, https://velocitysimlounge.com/wp-content/uploads/2026/04/party_packs_hero-1536x1024.webp 1536w" sizes="(max-width: 768px) 92vw, (max-width: 1100px) 46vw, 18vw" alt="Party pack celebration at Velocity Sim Racing Lounge Houston" width="1024" height="683" loading="lazy" decoding="async">
             </figure>
             <div class="vsl-events-card__body">
               <h3 class="vsl-events-card__name">Party Packs</h3>
-              <p class="vsl-events-card__desc">Birthdays, bachelor/bachelorette, and graduations. Dedicated simulators, reserved seating, and the full dinner-and-drinks experience.</p>
+              <p class="vsl-events-card__desc">Bachelor and bachelorette parties, graduations, and other celebrations. Dedicated simulators, reserved seating, and the full dinner-and-drinks experience.</p>
               <p class="vsl-events-card__meta">Groups of 5&ndash;16</p>
               <hr class="vsl-events-card__rule">
               <div class="vsl-events-card__cta-row">

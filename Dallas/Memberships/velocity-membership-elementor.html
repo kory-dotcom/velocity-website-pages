@@ -1,11 +1,11 @@
 <!-- Velocity Membership Landing — VSL 1.0.0 (members-app era) -->
-<!-- Paste into an Elementor HTML widget on /dallas/membership/ (Dallas). Houston copy lives at Membership Page/ and differs only in data-vsl-config + the H1 lounge name. -->
+<!-- Paste into an Elementor HTML widget on /membership/. One page for Houston and Dallas. /dallas/membership/ redirects here. -->
 <!-- Config lives in data-vsl-config on .vsl-membership: lounge, join/login links, contact, tier numbers, "New" pill label for app features. -->
 <!--
   ── SEO Handoff (set in Yoast on this WordPress page; this widget cannot set the document title) ──
-  Meta title:    Velocity Dallas Membership | Plans from $99/mo
-  Meta desc:     Join a Velocity Dallas membership from $99 a month. Monthly race credits, member pricing, a digital membership card, and the members app for booking, leaderboards, and badges.
-  Canonical:     https://velocitysimlounge.com/dallas/membership/
+  Meta title:    Velocity Membership | Plans from $99/mo
+  Meta desc:     Join a Velocity membership from $99 a month. Monthly race credits, member pricing, a digital membership card, and the members app for booking, leaderboards, and badges.
+  Canonical:     https://velocitysimlounge.com/membership/
   OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp
 
   JSON-LD in this widget already covers the WebPage, breadcrumbs, three membership offers, and the FAQ.
@@ -318,6 +318,56 @@
   .vsl-mb-section--light .vsl-mb-textlink { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; border-color: rgba(41, 56, 147, 0.35); }
   .vsl-mb-section--light .vsl-mb-textlink:hover { color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; border-color: var(--navy); }
   .vsl-mb-textlink svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Home location: follows the navbar, and can be confirmed or changed here */
+  .vsl-mb-home {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.85rem;
+    margin: 0 0 1.15rem;
+  }
+  .vsl-mb-hero .vsl-mb-home { margin-top: 1.65rem; }
+  .vsl-mb-tiers__head .vsl-mb-home { margin-top: 1.15rem; }
+  .vsl-mb-home__label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+  }
+  .vsl-mb-home__select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-height: 44px;
+    padding: 0.45rem 2.15rem 0.45rem 0.9rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background-color: var(--yellow);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310182B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.65rem center;
+    background-size: 14px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 10.5rem;
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+  .vsl-mb-home__select:focus-visible {
+    outline: 3px solid var(--circuit-white);
+    outline-offset: 3px;
+  }
 
   /* ── HERO ── */
   .vsl-mb-hero {
@@ -1314,7 +1364,7 @@
   }
 </style>
 
-<div class="vsl-membership" data-vsl-config='{"location":"dallas","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps?location=dallas","bookNow":"https://velocitysimlounge.com/dallas/book-now/","contact":"https://velocitysimlounge.com/dallas/contact/","leagues":"https://velocitysimlounge.com/dallas/leagues/"},"contact":{"phone":"972-209-5215","phoneHref":"+19722095215","email":"infodtx@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
+<div class="vsl-membership" data-vsl-config='{"location":"houston","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps","bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","leagues":"https://velocitysimlounge.com/leagues/"},"contact":{"phone":"832-627-4981","phoneHref":"+18326274981","email":"info@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
 
   <main id="primary-content">
 
@@ -1332,7 +1382,7 @@
               <span aria-hidden="true">·</span>
               <span>Houston &amp; Dallas</span>
             </p>
-            <h1 class="vsl-mb-hero__title" id="membership-hero-heading">Velocity <span data-vsl-mb-loc>Dallas</span> <span class="vsl-mb-hero__accent">Membership</span></h1>
+            <h1 class="vsl-mb-hero__title" id="membership-hero-heading">Velocity <span class="vsl-mb-hero__accent">Membership</span></h1>
             <p class="vsl-mb-hero__tag">Race more. Pay less. Climb the boards.</p>
             <p class="vsl-mb-hero__sub">Monthly racing sessions, member pricing on everything else, and a members app that puts your digital membership card, bookings, leaderboards and badges in your pocket. Plans at <strong>Velocity Sim Racing Lounge</strong> start at <strong>$<span data-vsl-mb-price="racer">99</span>/month</strong>.</p>
             <div class="vsl-mb-hero__ctas">
@@ -1340,6 +1390,13 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
               <a class="vsl-mb-btn vsl-mb-btn--outline" data-vsl-mb-link="dashboard" href="https://members.velocitysimlounge.com/dashboard" target="_blank" rel="noopener noreferrer">Member login</a>
+            </div>
+            <div class="vsl-mb-home">
+              <label class="vsl-mb-home__label" for="vsl-mb-home-hero">Home location</label>
+              <select class="vsl-mb-home__select" id="vsl-mb-home-hero" data-vsl-mb-home>
+                <option value="houston">Houston</option>
+                <option value="dallas">Dallas</option>
+              </select>
             </div>
             <ul class="vsl-mb-hero__facts" aria-label="Membership at a glance" data-vsl-mb-facts>
               <li class="vsl-mb-fact"><span class="vsl-mb-fact__k">$<span data-vsl-count="99">99</span><small>/mo</small></span><span class="vsl-mb-fact__v">Starting price <small>Racer plan, cancel anytime</small></span></li>
@@ -1364,7 +1421,7 @@
                 <div class="vsl-mb-pass" data-vsl-mb-pass>
                   <div class="vsl-mb-pass__top"><span class="vsl-mb-pass__tier">Pro</span><span class="vsl-mb-pass__status">Active</span></div>
                   <div class="vsl-mb-pass__name">Velocity Member</div>
-                  <div class="vsl-mb-pass__meta"><span>Home location · <span data-vsl-mb-loc>Dallas</span></span><span>Renews Nov 2</span></div>
+                  <div class="vsl-mb-pass__meta"><span>Home location · <span data-vsl-mb-home-name>Houston</span></span><span>Renews Nov 2</span></div>
                   <div class="vsl-mb-pass__qr">
                     <svg viewBox="0 0 21 21" shape-rendering="crispEdges">
                       <!-- finder patterns -->
@@ -1556,7 +1613,7 @@
             <a class="vsl-mb-btn vsl-mb-btn--outline" data-vsl-mb-link="laps" href="https://members.velocitysimlounge.com/laps" target="_blank" rel="noopener noreferrer">See the live lap counter
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
-            <a class="vsl-mb-textlink" data-vsl-mb-link="leagues" href="https://velocitysimlounge.com/dallas/leagues/">Race in a league
+            <a class="vsl-mb-textlink" data-vsl-mb-link="leagues" href="https://velocitysimlounge.com/leagues/">Race in a league
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
           </div>
@@ -1591,6 +1648,13 @@
           <p class="vsl-mb-kicker">Plans &amp; pricing</p>
           <h2 class="vsl-mb-h2" id="pricing-heading">Choose your <em>membership</em></h2>
           <p class="vsl-mb-sub">Three plans, one app. Every plan includes member pricing at the bar and kitchen, live watch parties and members-only events. Pick how much seat time you want each month.</p>
+          <div class="vsl-mb-home">
+            <label class="vsl-mb-home__label" for="vsl-mb-home-plans">Confirm home location</label>
+            <select class="vsl-mb-home__select" id="vsl-mb-home-plans" data-vsl-mb-home>
+              <option value="houston">Houston</option>
+              <option value="dallas">Dallas</option>
+            </select>
+          </div>
         </div>
         <div class="vsl-mb-tiers__grid">
 
@@ -1603,7 +1667,7 @@
             <hr class="vsl-mb-tier__rule">
             <ul class="vsl-mb-tier__list">
               <li><strong><span data-vsl-mb-sessions="racer">4</span> Quick Race credits</strong> every month</li>
-              <li>Monday – Friday at your home location</li>
+              <li>Monday – Friday in <span data-vsl-mb-home-name>Houston</span></li>
               <li>Racer simulators</li>
               <li><strong><span data-vsl-mb-discount="racer">10</span>% off</strong> additional sessions</li>
               <li>Member pricing at the bar &amp; kitchen</li>
@@ -1626,7 +1690,7 @@
             <hr class="vsl-mb-tier__rule">
             <ul class="vsl-mb-tier__list">
               <li><strong><span data-vsl-mb-sessions="pro">6</span> Quick Race credits</strong> every month</li>
-              <li>Sunday – Friday at your home location</li>
+              <li>Sunday – Friday in <span data-vsl-mb-home-name>Houston</span></li>
               <li>Racer <strong>and Pro</strong> simulators</li>
               <li><strong><span data-vsl-mb-discount="pro">15</span>% off</strong> additional sessions</li>
               <li><strong>10% off</strong> league &amp; competition fees</li>
@@ -1688,8 +1752,9 @@
             <a class="vsl-mb-textlink" data-vsl-mb-link="forgot" href="https://members.velocitysimlounge.com/forgot-password" target="_blank" rel="noopener noreferrer">Forgot your password?</a>
           </div>
           <ul class="vsl-mb-contact" aria-label="Membership help">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span><a data-vsl-mb-phone href="tel:+19722095215">972-209-5215</a><small>Questions about your plan? Call or text the lounge.</small></span></li>
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg><span><a data-vsl-mb-email href="mailto:infodtx@velocitysimlounge.com">infodtx@velocitysimlounge.com</a><small>Billing, account and group membership questions.</small></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span><a href="tel:+18326274981">832-627-4981</a><small>Houston lounge</small></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span><a href="tel:+19722095215">972-209-5215</a><small>Dallas lounge</small></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg><span><a data-vsl-mb-email href="mailto:info@velocitysimlounge.com">info@velocitysimlounge.com</a><small>Billing, account and group membership questions.</small></span></li>
           </ul>
         </div>
         <aside class="vsl-mb-members__card" aria-labelledby="membership-dayone-heading">
@@ -1767,7 +1832,7 @@
             </li>
             <li class="vsl-mb-faq__item">
               <button type="button" class="vsl-mb-faq__trigger" id="vsl-faq-btn-14" aria-expanded="false" aria-controls="vsl-faq-panel-14"><span class="vsl-mb-faq__label">How do I update my card or cancel my membership?</span><span class="vsl-mb-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-mb-faq__panel" id="vsl-faq-panel-14" role="region" aria-labelledby="vsl-faq-btn-14" hidden><p>Update your payment method any time from <strong>Account → Billing</strong> in the app. To cancel, call the lounge at <a data-vsl-mb-phone href="tel:+19722095215">972-209-5215</a> or visit us in store and we'll take care of it. You're welcome back on the grid any time.</p></div>
+              <div class="vsl-mb-faq__panel" id="vsl-faq-panel-14" role="region" aria-labelledby="vsl-faq-btn-14" hidden><p>Update your payment method any time from <strong>Account → Billing</strong> in the app. To cancel, call Houston at <a href="tel:+18326274981">832-627-4981</a> or Dallas at <a href="tel:+19722095215">972-209-5215</a>, or visit us in store and we'll take care of it. You're welcome back on the grid any time.</p></div>
             </li>
           </ul>
         </div>
@@ -1780,7 +1845,7 @@
         <div class="vsl-mb-cta__inner">
           <div>
             <h2 class="vsl-mb-h2" id="membership-cta-heading">Ready to <em class="vsl-mb-em--yellow">join the grid?</em></h2>
-            <p class="vsl-mb-cta__p">Pick a plan, create your account, and book your first race tonight. From $<span data-vsl-mb-price="racer">99</span> a month at Velocity <span data-vsl-mb-loc>Dallas</span>.</p>
+            <p class="vsl-mb-cta__p">Pick a plan, create your account, and book your first race tonight. From $<span data-vsl-mb-price="racer">99</span> a month at Houston or Dallas.</p>
           </div>
           <div class="vsl-mb-cta__btns">
             <a class="vsl-mb-btn" data-vsl-join="pro" href="https://members.velocitysimlounge.com/signup?tier=pro" target="_blank" rel="noopener noreferrer">Join now
@@ -1811,13 +1876,13 @@
   "@graph": [
     {
       "@type": "WebPage",
-      "@id": "https://velocitysimlounge.com/dallas/membership/#webpage",
-      "url": "https://velocitysimlounge.com/dallas/membership/",
-      "name": "Velocity Dallas Membership | Plans from $99/mo",
-      "description": "Join a Velocity Dallas membership from $99 a month. Monthly race credits, member pricing at the bar and kitchen, a digital membership card, and the Velocity Members app for booking, leaderboards, and badges.",
+      "@id": "https://velocitysimlounge.com/membership/#webpage",
+      "url": "https://velocitysimlounge.com/membership/",
+      "name": "Velocity Membership | Plans from $99/mo",
+      "description": "Join a Velocity membership from $99 a month. Monthly race credits, member pricing at the bar and kitchen, a digital membership card, and the Velocity Members app for booking, leaderboards, and badges.",
       "inLanguage": "en-US",
       "about": {
-        "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge"
+        "@id": "https://velocitysimlounge.com/#organization"
       },
       "primaryImageOfPage": "https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp",
       "significantLink": [
@@ -1829,7 +1894,7 @@
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://velocitysimlounge.com/dallas/membership/#breadcrumb",
+      "@id": "https://velocitysimlounge.com/membership/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -1841,7 +1906,7 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Membership",
-          "item": "https://velocitysimlounge.com/dallas/membership/"
+          "item": "https://velocitysimlounge.com/membership/"
         }
       ]
     },
@@ -1871,7 +1936,7 @@
           }
         },
         "seller": {
-          "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge"
+          "@id": "https://velocitysimlounge.com/#organization"
         }
       }
     },
@@ -1901,7 +1966,7 @@
           }
         },
         "seller": {
-          "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge"
+          "@id": "https://velocitysimlounge.com/#organization"
         }
       }
     },
@@ -1931,13 +1996,13 @@
           }
         },
         "seller": {
-          "@id": "https://velocitysimlounge.com/dallas/#dallas-lounge"
+          "@id": "https://velocitysimlounge.com/#organization"
         }
       }
     },
     {
       "@type": "FAQPage",
-      "@id": "https://velocitysimlounge.com/dallas/membership/#faq",
+      "@id": "https://velocitysimlounge.com/membership/#faq",
       "mainEntity": [
         {
           "@type": "Question",
@@ -2048,7 +2113,7 @@
           "name": "How do I update my card or cancel my membership?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Update your payment method any time from Account → Billing in the app. To cancel, call the lounge at 972-209-5215 or visit us in store and we'll take care of it. You're welcome back on the grid any time."
+            "text": "Update your payment method any time from Account → Billing in the app. To cancel, call Houston at 832-627-4981 or Dallas at 972-209-5215, or visit us in store and we'll take care of it. You're welcome back on the grid any time."
           }
         }
       ]
@@ -2123,11 +2188,6 @@
     root.querySelectorAll(sel).forEach(function (el) { el.textContent = String(val); });
   }
 
-  /* Lounge name */
-  var loc = (cfg.location || 'houston').toLowerCase() === 'dallas' ? 'dallas' : 'houston';
-  root.setAttribute('data-vsl-mb-location', loc);
-  setText('[data-vsl-mb-loc]', loc === 'dallas' ? 'Dallas' : 'Houston');
-
   /* Join links: data-vsl-config.links.join{Racer,Pro,Ultimate} (or legacy VSL_CONFIG.joinLinks) */
   var joinMap = {
     racer: isUrl(links.joinRacer) ? links.joinRacer : (legacy.joinLinks && legacy.joinLinks.racer),
@@ -2148,6 +2208,65 @@
     if (!isUrl(v)) return;
     root.querySelectorAll('a[data-vsl-mb-link="' + k + '"]').forEach(function (a) { a.setAttribute('href', v.trim()); });
   });
+
+  /* Home location defaults to the navbar city. Changing it here does not change the navbar. */
+  var homeLounge = 'houston';
+  function readNavLounge() {
+    try {
+      if (window.VSL_LOCATION && window.VSL_LOCATION.readLocation) {
+        var loc = window.VSL_LOCATION.readLocation();
+        if (loc === 'dallas' || loc === 'houston') return loc;
+      }
+    } catch (e) {}
+    return 'houston';
+  }
+  function applyNavLinks(loc) {
+    if (loc !== 'dallas' && loc !== 'houston') loc = 'houston';
+    if (window.VSL_LOCATION && window.VSL_LOCATION.rewriteInternalHref) {
+      ['bookNow', 'contact'].forEach(function (k) {
+        root.querySelectorAll('a[data-vsl-mb-link="' + k + '"]').forEach(function (a) {
+          var next = window.VSL_LOCATION.rewriteInternalHref(a.getAttribute('href'), loc);
+          if (next) a.setAttribute('href', next);
+        });
+      });
+    }
+    root.querySelectorAll('a[data-vsl-mb-link="laps"]').forEach(function (a) {
+      try {
+        var lapsUrl = new URL(a.getAttribute('href'), window.location.href);
+        lapsUrl.searchParams.set('location', loc);
+        a.setAttribute('href', lapsUrl.toString());
+      } catch (e3) {}
+    });
+  }
+  function applyHome(loc) {
+    if (loc !== 'dallas' && loc !== 'houston') loc = 'houston';
+    homeLounge = loc;
+    root.setAttribute('data-vsl-mb-location', loc);
+    var label = loc === 'dallas' ? 'Dallas' : 'Houston';
+    root.querySelectorAll('[data-vsl-mb-home-name]').forEach(function (el) { el.textContent = label; });
+    root.querySelectorAll('[data-vsl-mb-home]').forEach(function (sel) {
+      if (sel.value !== loc) sel.value = loc;
+    });
+    root.querySelectorAll('a[data-vsl-join]').forEach(function (a) {
+      try {
+        var joinUrl = new URL(a.getAttribute('href'), window.location.href);
+        joinUrl.searchParams.set('lounge', loc);
+        a.setAttribute('href', joinUrl.toString());
+      } catch (e2) {}
+    });
+  }
+  root.querySelectorAll('[data-vsl-mb-home]').forEach(function (sel) {
+    sel.addEventListener('change', function () { applyHome(sel.value); });
+  });
+  window.addEventListener('_vslLocationChanged', function (e) {
+    if (!e.detail) return;
+    if (e.detail.location === 'houston' || e.detail.location === 'dallas') {
+      applyHome(e.detail.location);
+      applyNavLinks(e.detail.location);
+    }
+  });
+  applyHome(readNavLounge());
+  applyNavLinks(readNavLounge());
 
   /* Contact */
   if (contact.phone) {

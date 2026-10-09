@@ -1,0 +1,541 @@
+<!--
+  Velocity Sim Racing Lounge — Blog / Velocity News
+  Elementor Custom HTML module  ·  v1.0.0
+
+  ── WordPress install ──
+  1. Elementor → Templates → Theme Builder → Archive (Posts) → Edit.
+  2. Add a full-width HTML widget as the FIRST block; paste this entire file.
+  3. Keep your existing Archive Posts widget below (dynamic post list stays in Elementor).
+  4. Keep Hero then Articles only — no extra heading section between them.
+  5. Clear Elementor + WP Rocket cache after publishing.
+
+  ── SEO Handoff (Yoast / RankMath on the Posts page or archive) ──
+  Meta title:    Velocity News | Sim Racing Lounge Houston & Dallas
+  Meta desc:     Guides, tips, and news from Velocity Sim Racing Lounge — sim racing, events, date nights, and things to do in Houston.
+  Canonical:     https://velocitysimlounge.com/blog/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* vsl-elementor-no-underline-buttons */
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  .vsl-blog {
+    --red: #D22026;
+    --magenta: #EE265F;
+    --yellow: #FDC70C;
+    --blue: #293893;
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --circuit-white: #EAEAEA;
+    --slate-violet: #5F5782;
+    --page-margin: 64px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --vsl-outdent: 0px;
+    --vsl-hero-bleed-top: -12px;
+    --vsl-hero-bleed-bottom: 0px;
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    color: var(--navy);
+    box-sizing: border-box;
+    width: calc(100% + 2 * var(--vsl-outdent));
+    max-width: none;
+    margin-left: calc(-1 * var(--vsl-outdent));
+    margin-right: calc(-1 * var(--vsl-outdent));
+    margin-top: 0;
+    margin-bottom: var(--vsl-hero-bleed-bottom);
+  }
+  .vsl-blog:has(> .vsl-blog-hero:first-child) {
+    margin-top: var(--vsl-hero-bleed-top);
+  }
+  .vsl-blog *,
+  .vsl-blog *::before,
+  .vsl-blog *::after { box-sizing: border-box; }
+
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-blog) {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .elementor-section:has(.vsl-blog),
+  .elementor-container:has(.vsl-blog),
+  .elementor-column:has(.vsl-blog),
+  .elementor-widget-wrap:has(.vsl-blog),
+  .elementor-widget:has(.vsl-blog),
+  .e-con:has(.vsl-blog),
+  .e-con-inner:has(.vsl-blog) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    background-color: var(--navy) !important;
+  }
+
+  /* ═══ Hero ═══ */
+  .vsl-blog-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(162deg, var(--deep-indigo) 0%, var(--navy) 48%, #0d1322 100%);
+    color: var(--circuit-white);
+    overflow: hidden;
+    isolation: isolate;
+    min-height: clamp(320px, 52svh, 520px);
+  }
+  .vsl-blog-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .vsl-blog-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    opacity: 0.22;
+  }
+  .vsl-blog-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 88%, rgba(253,199,12,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 55% 45% at 72% 22%, rgba(238,38,95,0.14) 0%, transparent 70%),
+      radial-gradient(ellipse 48% 52% at 14% 68%, rgba(41,56,147,0.2) 0%, transparent 68%);
+  }
+  .vsl-blog-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: clamp(14px, 2.5vw, 22px);
+    padding: clamp(48px, 12vw, 96px) clamp(20px, 5vw, var(--page-margin)) clamp(36px, 7vw, 56px);
+    max-width: 56rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .vsl-blog-hero__title {
+    margin: 0;
+    padding: 10px 14px;
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 1.75rem + 5vw, 5rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-wrap: balance;
+    background: rgba(4, 7, 18, 0.72);
+    border-radius: 10px;
+  }
+  .vsl-blog-hero__title em { color: var(--magenta); font-style: italic; }
+  .vsl-blog-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: clamp(1px, 0.2vw, 2px) solid #000;
+  }
+
+  /* ═══ Archive theming — tokens on archive root (cards are siblings of .vsl-blog, not inside it) ═══ */
+  body .elementor-location-archive.vsl-blog-themed,
+  body .elementor-location-archive:has(.vsl-blog) {
+    --red: #D22026;
+    --magenta: #EE265F;
+    --yellow: #FDC70C;
+    --blue: #293893;
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --circuit-white: #EAEAEA;
+    --slate-violet: #5F5782;
+    --page-margin: 64px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    background-color: #10182B !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts {
+    display: block;
+    margin-top: clamp(32px, 5vw, 56px) !important;
+    background: #fafafa;
+    padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, var(--page-margin)) clamp(64px, 10vw, 112px);
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-widget-container,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-widget-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  /* Elementor post-23.css: Articles block margin-top 12% + thumbnail padding-bottom 80% */
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-25ff00f4,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-25ff00f4,
+  body .elementor-location-archive.vsl-blog-themed .e-con:has(.elementor-widget-archive-posts),
+  body .elementor-location-archive:has(.vsl-blog) .e-con:has(.elementor-widget-archive-posts) {
+    margin-top: 0 !important;
+    --margin-top: 0px !important;
+    padding-top: 0 !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-heading,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-heading {
+    display: none !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts::after,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-posts-container.elementor-grid,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-posts-container.elementor-grid {
+    display: grid !important;
+    align-items: stretch !important;
+    grid-auto-rows: 1fr;
+    gap: clamp(20px, 3vw, 28px) !important;
+    --grid-row-gap: clamp(20px, 3vw, 28px) !important;
+    --grid-column-gap: clamp(20px, 3vw, 28px) !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post.elementor-grid-item,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post.elementor-grid-item {
+    position: relative;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    align-self: stretch !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(16, 24, 43, 0.09) !important;
+    box-shadow: 0 4px 20px rgba(16, 24, 43, 0.06);
+    transition: box-shadow 0.24s ease, transform 0.24s ease;
+    outline: none !important;
+    float: none !important;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(16, 24, 43, 0.09) !important;
+      box-shadow:
+        0 14px 36px rgba(16, 24, 43, 0.11),
+        0 0 0 1px rgba(238, 38, 95, 0.07);
+    }
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__thumbnail__link,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__thumbnail__link {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    flex-shrink: 0;
+    line-height: 0;
+    float: none !important;
+    text-decoration: none !important;
+    outline: none !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts.elementor-posts--thumbnail-top .elementor-post__thumbnail__link,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts.elementor-posts--thumbnail-top .elementor-post__thumbnail__link {
+    margin-bottom: 0 !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__thumbnail,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__thumbnail,
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-posts-container .elementor-post__thumbnail,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-posts-container .elementor-post__thumbnail {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-bottom: 62.5% !important;
+    overflow: hidden !important;
+    background: var(--navy);
+    float: none !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__thumbnail img,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__thumbnail img,
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-posts-container .elementor-post__thumbnail img,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-posts-container .elementor-post__thumbnail img {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    object-fit: cover !important;
+    object-position: center center;
+    display: block !important;
+    transform: none !important;
+    transition: transform 0.4s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover .elementor-post__thumbnail img,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover .elementor-post__thumbnail img {
+      transform: scale(1.03) !important;
+      transform-origin: center center;
+    }
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-post__title,
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-post__title a,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-post__title,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-post__title a {
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-post__excerpt p,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-post__excerpt p {
+    color: #5F5782 !important;
+    -webkit-text-fill-color: #5F5782 !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__text,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__text {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    gap: 0.65rem;
+    width: 100% !important;
+    min-height: 0;
+    margin: 0 !important;
+    padding: clamp(16px, 2.2vw, 20px) clamp(16px, 2.2vw, 20px) clamp(18px, 2.5vw, 22px) !important;
+    background: #fff !important;
+    float: none !important;
+    color: #10182B !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-post__title,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-post__title {
+    margin-bottom: 0 !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-element-290a7291 .elementor-post__excerpt,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-element-290a7291 .elementor-post__excerpt {
+    margin-bottom: 0 !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__title,
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__title a,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__title,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__title a {
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__title,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__title {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: var(--font-display) !important;
+    font-size: clamp(0.8125rem, 0.76rem + 0.18vw, 0.90625rem) !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    line-height: 1.22 !important;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    min-height: calc(4 * 1.22em);
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    text-wrap: balance;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__title a,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__title a {
+    display: block;
+    text-decoration: none !important;
+    transition: color 0.18s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__title a:hover,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__title a:hover {
+      color: #EE265F !important;
+      -webkit-text-fill-color: #EE265F !important;
+    }
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__excerpt,
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__excerpt p,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__excerpt,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__excerpt p {
+    color: #5F5782 !important;
+    -webkit-text-fill-color: #5F5782 !important;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__excerpt,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__excerpt {
+    margin: 0 !important;
+    flex: 1 1 auto;
+    font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif !important;
+    font-size: clamp(0.875rem, 0.84rem + 0.15vw, 0.96875rem) !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    min-height: calc(3 * 1.5em);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__excerpt p,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__excerpt p {
+    margin: 0 !important;
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__read-more,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__read-more {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch !important;
+    width: 100%;
+    margin: auto 0 0 !important;
+    padding: 11px 16px !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.6875rem !important;
+    font-weight: 700 !important;
+    font-style: italic !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-decoration: none !important;
+    background: #EE265F !important;
+    border: 2px solid #EE265F !important;
+    border-radius: 8px;
+    box-shadow: none !important;
+    transition: filter 0.2s ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__read-more:hover,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__read-more:hover {
+      filter: brightness(1.06);
+      color: #fff !important;
+    }
+  }
+
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-pagination,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-pagination {
+    margin-top: clamp(32px, 5vw, 48px);
+    text-align: center;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-pagination .page-numbers,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    margin: 0 4px;
+    padding: 0 10px;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy) !important;
+    text-decoration: none !important;
+    border: 2px solid rgba(16, 24, 43, 0.12);
+    border-radius: 8px;
+    background: #fff;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  }
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-pagination .page-numbers.current,
+  body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-pagination .page-numbers:hover,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-pagination .page-numbers.current,
+  body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-pagination .page-numbers:hover {
+    background: var(--magenta);
+    border-color: var(--magenta);
+    color: #fff !important;
+  }
+
+  @media (max-width: 639px) {
+    .vsl-blog-hero__title { font-size: clamp(2.25rem, 1.5rem + 6vw, 3.25rem); line-height: 1.02; }
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post.elementor-grid-item,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post.elementor-grid-item,
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post__thumbnail img,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post__thumbnail img {
+      transition: none;
+    }
+    body .elementor-location-archive.vsl-blog-themed .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover,
+    body .elementor-location-archive:has(.vsl-blog) .elementor-widget-archive-posts .elementor-post.elementor-grid-item:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<div class="vsl-blog" data-vsl-config='{"elementorColumnOutdentPx":12}'>
+  <header class="vsl-blog-hero" id="blog-hero" aria-labelledby="blog-hero-heading">
+    <div class="vsl-blog-hero__bg" aria-hidden="true">
+      <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Lounge2.jpg"
+           alt="" width="2400" height="1600" loading="eager" decoding="async">
+    </div>
+    <div class="vsl-blog-hero__inner">
+      <h1 class="vsl-blog-hero__title" id="blog-hero-heading">Velocity <em>News</em></h1>
+    </div>
+    <div class="vsl-blog-hero__finish" role="presentation" aria-hidden="true"></div>
+  </header>
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('.vsl-blog');
+  if (!root) return;
+  var cfg;
+  try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }
+  var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+  if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+  var archive = document.querySelector('.elementor-location-archive');
+  if (archive) {
+    archive.classList.add('vsl-blog-themed');
+  }
+  document.querySelectorAll('.elementor-widget-archive-posts').forEach(function (el) {
+    el.classList.add('vsl-blog-posts');
+  });
+})();
+</script>

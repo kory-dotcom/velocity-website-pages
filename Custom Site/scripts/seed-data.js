@@ -100,7 +100,7 @@ promotions: {
 },
 
 membership: {
-  hero: { heading: "Become a *member* and take your Velocity experience to the next level", subcopy: "Memberships start at {{price:membership.racer}}/month and offer unbeatable value", ctaText: "Learn more" },
+  hero: { heading: "Become a *member* and take your Velocity experience to the next level", subcopy: "Memberships start at {{price:membership.racer}}/month and offer unbeatable value", ctaText: "Member Login" },
   benefits: { heading: "What\u2019s included in your membership", cards: [
     { image: "", frontTitle: "Monthly races", backTitle: "Monthly races", backDescription: "Membership includes monthly races as well as exclusive members-only leagues, competitions, and social events." },
     { image: "", frontTitle: "Members only events", backTitle: "Members only events", backDescription: "League nights, car rallies, and track experiences reserved for members." },
@@ -319,7 +319,7 @@ contact: {
       name: "Velocity Dallas",
       address: "9830 N Central Expy #400\nDallas, TX 75231",
       phone: "972-209-5215",
-      email: "dtxinfo@velocitysimlounge.com",
+      email: "infodtx@velocitysimlounge.com",
       hours: "Coming Summer 2026",
       mapEmbed: ""
     }

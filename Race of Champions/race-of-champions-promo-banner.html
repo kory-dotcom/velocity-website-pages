@@ -1,0 +1,1347 @@
+<!-- CSS for the Texas Race of Champions 2026 promo floating popup (Desktop + Mobile) -->
+<!-- Built from the Labor Day promo module: same card / pill / Book Now strip behavior,
+     new roc- ids + storage keys so it never collides with older banners. -->
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
+
+	:root {
+		--roc-navy: #10182B;
+		--roc-indigo: #191B4D;
+		--roc-magenta: #EE265F;
+		--roc-blue: #293893;
+		--roc-yellow: #FDC70C;
+		--roc-gold: #FFD84A;
+		--roc-gold-deep: #E09A00;
+		--roc-mist: #B2AEBF;
+		--roc-slate: #5F5782;
+		/* Sits above page content but BELOW the Velocity navbar (--z-navbar: 9999)
+		   and its mobile menu overlay (--z-overlay: 10000) on desktop and mobile. */
+		--roc-banner-z: 9000;
+	}
+
+	#roc-promo-card {
+		display: none;
+		position: fixed;
+		/* Nudged slightly below center so it clears the hero headline */
+		top: 54%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 90%;
+		max-width: 540px;
+		/* Short screens: scroll inside the card instead of clipping off-screen.
+		   --roc-dock-h = height of the site's fixed bottom CTA dock (set by JS). */
+		max-height: calc(100vh - var(--roc-dock-h, 0px) - 24px);
+		max-height: calc(100svh - var(--roc-dock-h, 0px) - 24px);
+		z-index: var(--roc-banner-z);
+		background: white;
+		border-radius: 24px;
+		overflow: hidden;
+		overflow-y: auto;
+		box-shadow:
+			0 30px 70px rgba(16, 24, 43, 0.55),
+			0 10px 24px rgba(16, 24, 43, 0.3),
+			0 0 0 1px rgba(255, 255, 255, 0.08);
+		text-align: center;
+		font-family: 'Khand', system-ui, sans-serif;
+		animation: roc-card-entry 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	#roc-promo-minimized {
+		display: none;
+		position: fixed;
+		bottom: calc(30px + var(--roc-dock-h, 0px));
+		right: calc(30px + env(safe-area-inset-right, 0px));
+		z-index: var(--roc-banner-z);
+		background: linear-gradient(135deg, #F23E72 0%, var(--roc-magenta) 100%);
+		color: white;
+		padding: 12px 26px 12px 20px;
+		border-radius: 50px;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		font-family: 'Khand', system-ui, sans-serif;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 17px;
+		letter-spacing: 0.5px;
+		box-shadow: 0 10px 20px rgba(238, 38, 95, 0.35);
+		transition: transform 0.2s;
+		animation: roc-bounce-in 0.5s;
+		display: none;
+		align-items: center;
+		gap: 9px;
+	}
+
+	#roc-promo-minimized.roc-mini--on {
+		display: flex;
+	}
+
+	#roc-promo-minimized svg {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+	}
+
+	#roc-promo-minimized:hover {
+		transform: scale(1.08);
+	}
+
+	/* Slim reminder strip — shown on Book Now pages instead of the card so the
+	   competition stays visible without covering the booking flow. */
+	#roc-promo-strip {
+		display: none;
+		position: fixed;
+		bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+		left: 50%;
+		transform: translateX(-50%);
+		width: min(700px, calc(100% - 24px));
+		z-index: var(--roc-banner-z);
+		background:
+			radial-gradient(120% 170% at 4% 50%, rgba(253, 199, 12, 0.22) 0%, rgba(253, 199, 12, 0) 52%),
+			radial-gradient(90% 160% at 96% 50%, rgba(238, 38, 95, 0.26) 0%, rgba(238, 38, 95, 0) 55%),
+			linear-gradient(162deg, var(--roc-indigo) 0%, var(--roc-navy) 100%);
+		border: 1px solid rgba(234, 234, 234, 0.12);
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow:
+			0 18px 44px rgba(16, 24, 43, 0.45),
+			0 6px 16px rgba(16, 24, 43, 0.3);
+		font-family: 'Khand', system-ui, sans-serif;
+		color: white;
+		animation: roc-strip-entry 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+
+	/* Mini checkered finish-line along the strip's top edge */
+	#roc-promo-strip::before {
+		content: "";
+		display: block;
+		height: 6px;
+		background-image:
+			linear-gradient(45deg, var(--roc-navy) 25%, transparent 25%, transparent 75%, var(--roc-navy) 75%),
+			linear-gradient(45deg, var(--roc-navy) 25%, transparent 25%, transparent 75%, var(--roc-navy) 75%);
+		background-size: 6px 6px;
+		background-position: 0 0, 3px 3px;
+		background-color: #fff;
+		opacity: 0.85;
+	}
+
+	.roc-strip-row {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		padding: 11px 14px 12px 18px;
+	}
+
+	.roc-strip-trophy {
+		width: 32px;
+		height: 32px;
+		flex-shrink: 0;
+		filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.35));
+	}
+
+	.roc-strip-text {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+		line-height: 1.18;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.roc-strip-title {
+		font-size: 18px;
+		font-weight: 700;
+		font-style: italic;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: white;
+	}
+
+	.roc-strip-title b {
+		font-weight: 700;
+		color: var(--roc-yellow);
+	}
+
+	.roc-strip-sub {
+		font-size: 14px;
+		font-weight: 500;
+		font-style: italic;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--roc-mist);
+	}
+
+	.roc-strip-sub em {
+		font-style: italic;
+		font-weight: 700;
+		color: var(--roc-gold);
+		white-space: nowrap;
+	}
+
+	.roc-strip-cta {
+		flex-shrink: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px 16px;
+		border-radius: 999px;
+		background: linear-gradient(135deg, #F23E72 0%, var(--roc-magenta) 100%);
+		color: #fff;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		font-weight: 700;
+		font-style: italic;
+		font-size: 14px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		box-shadow: 0 6px 16px rgba(238, 38, 95, 0.4);
+		transition: transform 0.2s, box-shadow 0.2s;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.roc-strip-cta:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 10px 22px rgba(238, 38, 95, 0.5);
+		color: #fff;
+	}
+
+	.roc-strip-close {
+		cursor: pointer;
+		flex-shrink: 0;
+		/* 44px touch target without inflating the slim strip */
+		padding: 13px;
+		margin: -9px -7px -9px -9px;
+		font-size: 18px;
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.55);
+		font-family: Arial, sans-serif;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		transition: color 0.2s, transform 0.2s;
+	}
+
+	.roc-strip-close:hover {
+		color: white;
+		transform: rotate(90deg);
+	}
+
+	/* Mobile Book Now: real position:fixed so the browser keeps the bar still.
+	   Follow the navbar with a translate only — never rewrite top from scrollY. */
+	#roc-promo-strip.roc-strip--top {
+		position: fixed !important;
+		top: 0 !important;
+		bottom: auto !important;
+		left: 0 !important;
+		right: 0 !important;
+		height: auto !important;
+		max-height: 88px !important;
+		transform: translate3d(0, var(--roc-pin-y, 0px), 0) !important;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		width: 100% !important;
+		max-width: none !important;
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+		animation: none;
+		z-index: var(--roc-banner-z);
+	}
+
+	#roc-promo-strip-spacer {
+		display: none;
+		width: 100%;
+		height: 58px;
+		max-height: 72px;
+		overflow: hidden;
+		background: transparent;
+		pointer-events: none;
+	}
+
+	#roc-promo-strip-spacer.roc-strip-spacer--on {
+		display: block;
+	}
+
+	@media (max-width: 1024px) {
+		#roc-promo-strip {
+			width: calc(100% - 16px);
+			border-radius: 14px;
+		}
+		#roc-promo-strip.roc-strip--top {
+			width: 100%;
+			border-radius: 0;
+		}
+		.roc-strip-row {
+			gap: 10px;
+			padding: 9px 10px 10px 14px;
+		}
+		.roc-strip-trophy {
+			width: 26px;
+			height: 26px;
+		}
+		.roc-strip-title {
+			font-size: 16px;
+		}
+		.roc-strip-sub {
+			font-size: 12.5px;
+		}
+		.roc-strip-cta {
+			padding: 7px 12px;
+			font-size: 12.5px;
+		}
+		#roc-promo-minimized {
+			/* Sit just above the bottom mobile dock, not behind it */
+			bottom: calc(12px + var(--roc-dock-h, var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h, 80px))));
+			right: calc(16px + env(safe-area-inset-right, 0px));
+		}
+	}
+
+	@keyframes roc-strip-entry {
+		from { opacity: 0; transform: translate(-50%, 14px); }
+		to { opacity: 1; transform: translate(-50%, 0); }
+	}
+
+	/* ── Card header: night-race energy — magenta + gold glow, speed lines, circuit ring ── */
+	.roc-card-header {
+		background:
+			radial-gradient(110% 80% at 50% -10%, rgba(253, 199, 12, 0.32) 0%, rgba(253, 199, 12, 0) 55%),
+			radial-gradient(120% 90% at 50% 110%, rgba(238, 38, 95, 0.5) 0%, rgba(238, 38, 95, 0) 58%),
+			radial-gradient(90% 80% at 90% 40%, rgba(41, 56, 147, 0.55) 0%, rgba(41, 56, 147, 0) 60%),
+			linear-gradient(162deg, var(--roc-indigo) 0%, var(--roc-navy) 100%);
+		padding: 32px 24px 26px;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	/* Diagonal speed lines behind the headline */
+	.roc-card-header::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background-image: repeating-linear-gradient(
+			115deg,
+			rgba(255, 255, 255, 0.05) 0px,
+			rgba(255, 255, 255, 0.05) 2px,
+			transparent 2px,
+			transparent 16px
+		);
+		pointer-events: none;
+	}
+
+	/* Oval circuit rings — same track-energy motif as the promo pages */
+	.roc-card-header::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		top: 60%;
+		width: 150%;
+		aspect-ratio: 2.35 / 1;
+		transform: translate(-50%, -50%) rotate(-12deg);
+		border: 1px solid rgba(234, 234, 234, 0.1);
+		border-radius: 50%;
+		box-shadow: 0 0 0 26px rgba(41, 56, 147, 0.12);
+		pointer-events: none;
+	}
+
+	/* Slow rotating spotlight behind the trophy */
+	.roc-spotlight {
+		position: absolute;
+		left: 50%;
+		top: 22%;
+		width: 320px;
+		height: 320px;
+		margin: -160px 0 0 -160px;
+		background: conic-gradient(
+			from 0deg,
+			rgba(253, 199, 12, 0) 0deg,
+			rgba(253, 199, 12, 0.22) 30deg,
+			rgba(253, 199, 12, 0) 60deg,
+			rgba(238, 38, 95, 0) 180deg,
+			rgba(238, 38, 95, 0.2) 210deg,
+			rgba(238, 38, 95, 0) 240deg,
+			rgba(253, 199, 12, 0) 360deg
+		);
+		border-radius: 50%;
+		filter: blur(6px);
+		animation: roc-spin 14s linear infinite;
+		pointer-events: none;
+	}
+
+	.roc-trophy-icon {
+		width: 54px;
+		height: 54px;
+		margin-bottom: 10px;
+		position: relative;
+		z-index: 1;
+		filter: drop-shadow(0 6px 14px rgba(253, 199, 12, 0.45));
+		animation: roc-trophy-float 3.2s ease-in-out infinite;
+	}
+
+	/* Yellow date pill — matches the hero eyebrow treatment on current promo pages */
+	.roc-eyebrow {
+		display: inline-block;
+		padding: 6px 20px;
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: #0d1221;
+		background: var(--roc-yellow);
+		border-radius: 5px;
+		margin-bottom: 12px;
+		position: relative;
+		z-index: 1;
+		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+	}
+
+	.roc-headline {
+		font-size: 40px;
+		line-height: 0.98;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-style: italic;
+		color: white;
+		letter-spacing: 0.02em;
+		margin: 0;
+		position: relative;
+		z-index: 1;
+	}
+
+	.roc-headline small {
+		display: block;
+		font-size: 0.5em;
+		letter-spacing: 0.16em;
+		font-weight: 600;
+		color: rgba(234, 234, 234, 0.92);
+		margin-bottom: 4px;
+	}
+
+	.roc-headline span {
+		color: var(--roc-magenta);
+		text-shadow: 0 2px 22px rgba(238, 38, 95, 0.55);
+	}
+
+	.roc-header-sub {
+		margin: 12px 0 0;
+		position: relative;
+		z-index: 1;
+		font-size: 15px;
+		font-weight: 600;
+		font-style: italic;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgba(234, 234, 234, 0.88);
+	}
+
+	/* Checkered finish-line strip between header and body */
+	.roc-finish-line {
+		height: 12px;
+		background-image:
+			linear-gradient(45deg, var(--roc-navy) 25%, transparent 25%, transparent 75%, var(--roc-navy) 75%),
+			linear-gradient(45deg, var(--roc-navy) 25%, transparent 25%, transparent 75%, var(--roc-navy) 75%);
+		background-size: 12px 12px;
+		background-position: 0 0, 6px 6px;
+		background-color: #fff;
+	}
+
+	.roc-card-body {
+		padding: 20px 30px 26px;
+		background: white;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		border-radius: 0 0 24px 24px;
+	}
+
+	/* ── $2,000 prize pool badge — gold shimmer, the hero of the body ── */
+	.roc-prize {
+		position: relative;
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 10px 26px 9px;
+		border-radius: 14px;
+		background:
+			linear-gradient(160deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 40%),
+			linear-gradient(135deg, #FFE27A 0%, var(--roc-yellow) 45%, var(--roc-gold-deep) 100%);
+		box-shadow:
+			0 10px 26px rgba(253, 199, 12, 0.35),
+			inset 0 1px 0 rgba(255, 255, 255, 0.6);
+		overflow: hidden;
+		margin: 2px 0 4px;
+	}
+
+	.roc-prize::after {
+		content: "";
+		position: absolute;
+		top: -20%;
+		left: -60%;
+		width: 45%;
+		height: 140%;
+		background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.7) 50%, transparent 100%);
+		transform: skewX(-22deg);
+		animation: roc-shimmer 3.4s ease-in-out infinite;
+		pointer-events: none;
+	}
+
+	.roc-prize-amount {
+		font-size: 44px;
+		line-height: 1;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.01em;
+		color: #0d1221;
+	}
+
+	.roc-prize-label {
+		font-size: 13px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: rgba(13, 18, 33, 0.82);
+		margin-top: 2px;
+	}
+
+	.roc-subtitle {
+		font-size: 21px;
+		text-transform: uppercase;
+		color: var(--roc-navy);
+		font-weight: 600;
+		font-style: italic;
+		margin: 0;
+		line-height: 1.2;
+		letter-spacing: 0.02em;
+	}
+
+	.roc-subtitle span {
+		color: var(--roc-magenta);
+		font-weight: 700;
+	}
+
+	/* Quick facts row: classes / drivers / cities */
+	.roc-facts {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 6px 8px;
+		margin: 4px 0 2px;
+		padding: 0;
+		list-style: none;
+	}
+
+	.roc-facts li {
+		font-size: 12px;
+		font-weight: 700;
+		font-style: italic;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--roc-blue);
+		background: rgba(41, 56, 147, 0.08);
+		border: 1px solid rgba(41, 56, 147, 0.16);
+		border-radius: 999px;
+		padding: 4px 11px;
+		line-height: 1.2;
+	}
+
+	.roc-urgency {
+		font-size: 14px;
+		text-transform: uppercase;
+		color: var(--roc-magenta);
+		font-weight: 700;
+		font-style: italic;
+		margin: 4px 0 8px;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+	}
+
+	.roc-urgency b {
+		display: inline-block;
+		margin-left: 6px;
+		padding: 2px 9px;
+		border-radius: 999px;
+		background: var(--roc-magenta);
+		color: #fff;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		font-size: 12px;
+		vertical-align: 1px;
+	}
+
+	.roc-card-cta-row {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+		width: 100%;
+		max-width: 22rem;
+		margin-top: 2px;
+	}
+
+	.roc-card-btn {
+		position: relative;
+		overflow: hidden;
+		background: linear-gradient(135deg, #F23E72 0%, var(--roc-magenta) 100%);
+		color: white;
+		text-decoration: none;
+		font-family: 'Khand', system-ui, sans-serif;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		border-radius: 14px;
+		padding: 12px 22px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+		box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35);
+		border: none;
+		cursor: pointer;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		text-align: center;
+		-webkit-appearance: none;
+		appearance: none;
+		animation: roc-btn-pulse 2.4s infinite;
+	}
+
+	.roc-btn-title {
+		font-size: 23px;
+		font-weight: 700;
+		font-style: italic;
+		line-height: 1.1;
+	}
+
+	.roc-btn-meta {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		letter-spacing: 0.08em;
+		opacity: 0.88;
+		margin-top: 2px;
+	}
+
+	/* Animated shine sweep */
+	.roc-card-btn::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -120%;
+		width: 60%;
+		height: 100%;
+		background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+		transform: skewX(-20deg);
+		transition: left 0.6s ease;
+		pointer-events: none;
+	}
+
+	.roc-card-btn:hover {
+		transform: translateY(-2px) scale(1.02);
+		background: linear-gradient(135deg, #FF4F80 0%, #d41e53 100%);
+		box-shadow: 0 16px 32px rgba(238, 38, 95, 0.45);
+		color: white;
+	}
+
+	.roc-card-btn:hover::after {
+		left: 130%;
+	}
+
+	.roc-fineprint {
+		font-size: 12px;
+		font-weight: 500;
+		font-style: normal;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		color: var(--roc-slate);
+		margin: 8px 0 0;
+		line-height: 1.35;
+	}
+
+	.roc-controls {
+		position: absolute;
+		top: 14px;
+		right: 18px;
+		z-index: 10;
+	}
+
+	.roc-control-btn {
+		cursor: pointer;
+		font-size: 22px;
+		/* 44px touch target; negative margin keeps the ✕ visually in the corner */
+		padding: 11px;
+		margin: -11px;
+		color: rgba(255,255,255,0.55);
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+		transition: all 0.2s;
+		font-family: Arial, sans-serif;
+		line-height: 1;
+	}
+
+	.roc-control-btn:hover { color: white; transform: rotate(90deg); }
+
+	@media (max-width: 768px) {
+		#roc-promo-card {
+			max-width: 380px;
+			border-radius: 20px;
+			/* Recenter within the space above the site's bottom CTA dock */
+			top: calc(52% - (var(--roc-dock-h, 0px) / 2));
+		}
+		.roc-card-header {
+			padding: 26px 20px 22px;
+		}
+		.roc-card-body {
+			padding: 18px 20px 22px;
+			border-radius: 0 0 20px 20px;
+		}
+		.roc-trophy-icon {
+			width: 44px;
+			height: 44px;
+			margin-bottom: 8px;
+		}
+		.roc-spotlight {
+			width: 240px;
+			height: 240px;
+			margin: -120px 0 0 -120px;
+		}
+		.roc-eyebrow {
+			padding: 5px 16px;
+			font-size: 11px;
+			margin-bottom: 10px;
+		}
+		.roc-headline {
+			font-size: 31px;
+		}
+		.roc-header-sub {
+			font-size: 12.5px;
+			letter-spacing: 0.08em;
+		}
+		.roc-prize {
+			padding: 8px 22px 7px;
+		}
+		.roc-prize-amount {
+			font-size: 36px;
+		}
+		.roc-prize-label {
+			font-size: 11.5px;
+		}
+		.roc-subtitle {
+			font-size: 18px;
+		}
+		.roc-facts li {
+			font-size: 11px;
+			padding: 3px 9px;
+		}
+		.roc-urgency {
+			font-size: 13px;
+		}
+		.roc-btn-title {
+			font-size: 20px;
+		}
+		.roc-btn-meta {
+			font-size: 11px;
+		}
+		.roc-card-btn {
+			padding: 11px 18px;
+			border-radius: 12px;
+		}
+		.roc-fineprint {
+			font-size: 11px;
+		}
+		.roc-controls {
+			top: 10px;
+			right: 12px;
+		}
+		.roc-control-btn {
+			font-size: 24px;
+		}
+		#roc-promo-minimized {
+			bottom: calc(12px + var(--roc-dock-h, var(--vsl-mobile-dock-height, var(--vsl-mobile-dock-h, 80px))));
+			right: calc(16px + env(safe-area-inset-right, 0px));
+			/* ~44px tall tap target */
+			padding: 11px 20px 11px 16px;
+			font-size: 15px;
+		}
+		#roc-promo-minimized svg {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	/* Narrow phones: tighten the copy so both banner styles hold clean line breaks */
+	@media (max-width: 400px) {
+		.roc-headline {
+			font-size: 28px;
+		}
+		.roc-subtitle {
+			font-size: 16px;
+		}
+		.roc-urgency {
+			font-size: 12px;
+		}
+		.roc-urgency b {
+			font-size: 11px;
+		}
+		.roc-strip-row {
+			gap: 9px;
+			padding: 8px 8px 9px 12px;
+		}
+		.roc-strip-trophy {
+			width: 24px;
+			height: 24px;
+		}
+		.roc-strip-title {
+			font-size: 15px;
+			letter-spacing: 0.03em;
+		}
+		.roc-strip-sub {
+			font-size: 12px;
+		}
+		/* Text is already a link on phones — drop the pill to save room */
+		.roc-strip-cta {
+			display: none;
+		}
+	}
+
+	/* Short viewports (landscape phones): center the card fully — combined with
+	   max-height it scrolls internally instead of clipping. */
+	@media (max-height: 620px) {
+		#roc-promo-card {
+			top: 50%;
+		}
+	}
+
+	@keyframes roc-card-entry {
+		from { opacity: 0; transform: translate(-50%, -46%) scale(0.97); }
+		to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+	}
+	@keyframes roc-bounce-in {
+		0% { transform: scale(0); }
+		100% { transform: scale(1); }
+	}
+	@keyframes roc-btn-pulse {
+		0% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0.4); }
+		70% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 14px rgba(238, 38, 95, 0); }
+		100% { box-shadow: 0 10px 25px rgba(238, 38, 95, 0.35), 0 0 0 0 rgba(238, 38, 95, 0); }
+	}
+	@keyframes roc-trophy-float {
+		0%, 100% { transform: translateY(0) rotate(0deg); }
+		50% { transform: translateY(-4px) rotate(-2deg); }
+	}
+	@keyframes roc-spin {
+		to { transform: rotate(360deg); }
+	}
+	@keyframes roc-shimmer {
+		0%, 55% { left: -60%; }
+		100% { left: 140%; }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		#roc-promo-card,
+		.roc-card-btn,
+		.roc-trophy-icon,
+		.roc-spotlight,
+		#roc-promo-minimized,
+		#roc-promo-strip,
+		#roc-promo-strip.roc-strip--top {
+			animation: none !important;
+		}
+		.roc-card-btn::after,
+		.roc-prize::after { display: none; }
+	}
+</style>
+
+<div id="roc-promo-card" role="dialog" aria-label="Texas Race of Champions — enter now">
+	<div class="roc-controls">
+		<div id="roc-btn-minimize" class="roc-control-btn" title="Close" role="button" aria-label="Close">&#10005;</div>
+	</div>
+
+	<div class="roc-card-header">
+		<div class="roc-spotlight" aria-hidden="true"></div>
+		<svg class="roc-trophy-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<defs>
+				<linearGradient id="roc-gold-grad" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0" stop-color="#FFE27A"/>
+					<stop offset="0.55" stop-color="#FDC70C"/>
+					<stop offset="1" stop-color="#E09A00"/>
+				</linearGradient>
+			</defs>
+			<!-- handles -->
+			<path d="M14 14H8v6c0 6.6 5.4 12 12 12h1" stroke="url(#roc-gold-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M50 14h6v6c0 6.6-5.4 12-12 12h-1" stroke="url(#roc-gold-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+			<!-- cup -->
+			<path d="M16 8h32v14c0 8.8-7.2 16-16 16S16 30.8 16 22V8z" fill="url(#roc-gold-grad)"/>
+			<!-- highlight -->
+			<path d="M22 12h4v14c0 2.5.6 4.6 1.5 6.3C24 30 22 26.3 22 22V12z" fill="#fff" opacity="0.35"/>
+			<!-- stem + base -->
+			<rect x="29" y="38" width="6" height="8" rx="1" fill="url(#roc-gold-grad)"/>
+			<path d="M20 52c0-2.2 1.8-4 4-4h16c2.2 0 4 1.8 4 4v2H20v-2z" fill="url(#roc-gold-grad)"/>
+			<rect x="17" y="54" width="30" height="4" rx="1.5" fill="#E09A00"/>
+			<!-- checkered flag emblem on the cup -->
+			<g transform="translate(26 15)">
+				<rect x="0" y="0" width="12" height="9" fill="#fff"/>
+				<g fill="#10182B">
+					<rect x="0" y="0" width="3" height="3"/>
+					<rect x="6" y="0" width="3" height="3"/>
+					<rect x="3" y="3" width="3" height="3"/>
+					<rect x="9" y="3" width="3" height="3"/>
+					<rect x="0" y="6" width="3" height="3"/>
+					<rect x="6" y="6" width="3" height="3"/>
+				</g>
+			</g>
+		</svg>
+		<div class="roc-eyebrow">Saturday &bull; September 19</div>
+		<h2 class="roc-headline"><small>Texas</small>Race of<br><span>Champions</span></h2>
+		<p class="roc-header-sub">The largest sim racing competition in Texas</p>
+	</div>
+
+	<div class="roc-finish-line"></div>
+
+	<div class="roc-card-body">
+		<div class="roc-prize" aria-label="$2,000 cash prize pool">
+			<span class="roc-prize-amount">$2,000</span>
+			<span class="roc-prize-label">Cash prize pool</span>
+		</div>
+		<div class="roc-subtitle">Enter now for your <span>chance to win</span></div>
+		<ul class="roc-facts" aria-label="Event details">
+			<li>Houston &amp; Dallas</li>
+			<li>3 Classes</li>
+			<li>132 Drivers</li>
+		</ul>
+		<p class="roc-urgency" id="roc-urgency">Limited availability &mdash; sign up today!<b id="roc-countdown" hidden></b></p>
+
+		<div class="roc-card-cta-row">
+			<a class="roc-card-btn" id="roc-cta" href="https://pci.jotform.com/form/262285920242152" target="_blank" rel="noopener noreferrer">
+				<span class="roc-btn-title">Enter Now</span>
+				<span class="roc-btn-meta">$65 entry &middot; includes 30-min qualifier</span>
+			</a>
+		</div>
+
+		<p class="roc-fineprint">Open qualifying through Sept 18 &middot; McLaren 720S GT3 at Barcelona &middot; Trophies + cash for every podium.</p>
+	</div>
+</div>
+
+<div id="roc-promo-minimized" role="button" aria-label="Open Race of Champions details">
+	<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+		<path d="M14 14H8v6c0 6.6 5.4 12 12 12h1" stroke="#FDC70C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M50 14h6v6c0 6.6-5.4 12-12 12h-1" stroke="#FDC70C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M16 8h32v14c0 8.8-7.2 16-16 16S16 30.8 16 22V8z" fill="#FDC70C"/>
+		<rect x="29" y="38" width="6" height="8" rx="1" fill="#FDC70C"/>
+		<path d="M20 52c0-2.2 1.8-4 4-4h16c2.2 0 4 1.8 4 4v2H20v-2z" fill="#FDC70C"/>
+		<rect x="17" y="54" width="30" height="4" rx="1.5" fill="#E09A00"/>
+	</svg>
+	Race of Champions
+</div>
+
+<!-- Slim reminder strip — replaces the card on Book Now pages -->
+<div id="roc-promo-strip" role="status" aria-label="Texas Race of Champions reminder">
+	<div class="roc-strip-row">
+		<svg class="roc-strip-trophy" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+			<path d="M14 14H8v6c0 6.6 5.4 12 12 12h1" stroke="#FDC70C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M50 14h6v6c0 6.6-5.4 12-12 12h-1" stroke="#FDC70C" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M16 8h32v14c0 8.8-7.2 16-16 16S16 30.8 16 22V8z" fill="#FDC70C"/>
+			<rect x="29" y="38" width="6" height="8" rx="1" fill="#FDC70C"/>
+			<path d="M20 52c0-2.2 1.8-4 4-4h16c2.2 0 4 1.8 4 4v2H20v-2z" fill="#FDC70C"/>
+			<rect x="17" y="54" width="30" height="4" rx="1.5" fill="#E09A00"/>
+		</svg>
+		<a class="roc-strip-text" href="https://pci.jotform.com/form/262285920242152" target="_blank" rel="noopener noreferrer" data-roc-cta>
+			<span class="roc-strip-title">Texas Race of Champions <b>&bull; Sept 19</b></span>
+			<span class="roc-strip-sub"><em>$2,000</em> cash prize pool &mdash; limited spots, enter now</span>
+		</a>
+		<a class="roc-strip-cta" href="https://pci.jotform.com/form/262285920242152" target="_blank" rel="noopener noreferrer" data-roc-cta>Enter</a>
+		<div id="roc-strip-close" class="roc-strip-close" title="Close" role="button" aria-label="Close reminder">&#10005;</div>
+	</div>
+</div>
+<div id="roc-promo-strip-spacer" aria-hidden="true"></div>
+
+<script>
+(function() {
+	/* Navbar + snippet plugin may both paste this module. First copy wins;
+	   extra copies (duplicate ids) are removed so Book Now still works when
+	   the snippet plugin does not inject into Elementor Theme Builder pages. */
+	var ROC_IDS = ['roc-promo-card', 'roc-promo-minimized', 'roc-promo-strip', 'roc-promo-strip-spacer'];
+	if (window.__vslRocPromoBooted) {
+		try {
+			/* Keep the copy that booted (tagged data-roc-live) — it may have been
+			   moved to the end of <body>, so DOM order is not a safe tiebreaker. */
+			ROC_IDS.forEach(function(id) {
+				var nodes = document.querySelectorAll('#' + id);
+				for (var i = 0; i < nodes.length; i++) {
+					if (nodes[i].getAttribute('data-roc-live') !== '1' && nodes[i].parentNode) {
+						nodes[i].parentNode.removeChild(nodes[i]);
+					}
+				}
+			});
+		} catch (e0) {}
+		return;
+	}
+	window.__vslRocPromoBooted = true;
+
+	/* Minimized state lives in localStorage so it follows the visitor across
+	   pages, tabs, and return visits — minimize once, stays minimized. */
+	function rocRead(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+	function rocWrite(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+	function rocRemove(key) { try { localStorage.removeItem(key); } catch (e) {} }
+
+	/* This copy's nodes are the last of each id in document order at boot time
+	   (the script runs right after its own markup). Tag them as the live set. */
+	function rocPickOwn(id) {
+		var nodes = document.querySelectorAll('#' + id);
+		var el = nodes.length ? nodes[nodes.length - 1] : null;
+		if (el) el.setAttribute('data-roc-live', '1');
+		return el;
+	}
+	var card = rocPickOwn("roc-promo-card");
+	var mini = rocPickOwn("roc-promo-minimized");
+	var strip = rocPickOwn("roc-promo-strip");
+	var spacer = rocPickOwn("roc-promo-strip-spacer");
+
+	function rocRemoveAll() {
+		try {
+			if (card && card.parentNode) card.parentNode.removeChild(card);
+			if (mini && mini.parentNode) mini.parentNode.removeChild(mini);
+			if (strip && strip.parentNode) strip.parentNode.removeChild(strip);
+			if (spacer && spacer.parentNode) spacer.parentNode.removeChild(spacer);
+		} catch (e) {}
+	}
+
+	/* Race day is Saturday, September 19, 2026. Qualifying results publish the
+	   evening of Sept 18, so entries close then — hide the banner after midnight
+	   Central going into race day. */
+	var RACE_DAY = new Date(2026, 8, 19); /* Sep 19, 2026 local */
+	var endDate = new Date('2026-09-19T00:00:00-05:00');
+	if (Date.now() >= endDate.getTime()) {
+		rocRemove('rocCardMin');
+		rocRemove('rocStripMin');
+		rocRemove('rocPromoVersion');
+		rocRemoveAll();
+		return;
+	}
+
+	var version = "vsl-roc-2026-v1";
+
+	if (rocRead('rocPromoVersion') !== version) {
+		rocRemove('rocCardMin');
+		rocRemove('rocStripMin');
+		rocWrite('rocPromoVersion', version);
+	}
+
+	/* Injected site-wide by a code snippet plugin, so gate by URL: show ONLY on the
+	   home pages (velocitysimlounge.com/ and /dallas/) and the Book Now pages
+	   (/book-now/ and /dallas/book-now/). Everywhere else it removes itself. */
+	function rocIsAllowedPage() {
+		try {
+			/* Staging shell: the ?p= page key identifies the page. */
+			var qs = new URLSearchParams(window.location.search);
+			var pageKey = (qs.get('p') || '').toLowerCase();
+			if (pageKey) {
+				return pageKey === 'home' || pageKey === 'dallas-home' || pageKey === 'roc-banner' ||
+					pageKey === 'book-now' || pageKey === 'dallas-book-now';
+			}
+			/* Live site: exact paths only. */
+			var path = window.location.pathname.toLowerCase().replace(/\/index\.php$/, '').replace(/\/+$/, '');
+			if (path === '' || path === '/dallas') return true;
+			if (/\/book-now$/.test(path)) return true;
+			/* Elementor Theme Builder book-now pages (ids from live WP). */
+			try {
+				var bc = document.body && document.body.className || '';
+				if (/\bpage-id-7268\b/.test(bc) || /\belementor-page-7268\b/.test(bc)) return true; /* Houston Book Now */
+				if (/\bpage-id-7955\b/.test(bc) || /\belementor-page-7955\b/.test(bc)) return true; /* Dallas Book Now */
+			} catch (e2) {}
+			return false;
+		} catch (e) {
+			return false; /* when in doubt, stay hidden */
+		}
+	}
+
+	if (!rocIsAllowedPage()) {
+		rocRemoveAll();
+		return;
+	}
+
+	function rocCurrentPageKey() {
+		try {
+			var qs = new URLSearchParams(window.location.search);
+			var pageKey = (qs.get('p') || '').toLowerCase();
+			if (pageKey) return pageKey;
+			var path = window.location.pathname.toLowerCase().replace(/\/index\.php$/, '').replace(/\/+$/, '');
+			if (path === '/book-now') return 'book-now';
+			if (path === '/dallas/book-now') return 'dallas-book-now';
+			if (path === '/dallas') return 'dallas-home';
+			if (path === '') return 'home';
+		} catch (e) {}
+		return '';
+	}
+
+	function rocIsBookNowPage() {
+		var k = rocCurrentPageKey();
+		if (k === 'book-now' || k === 'dallas-book-now') return true;
+		try {
+			var bc = document.body && document.body.className || '';
+			if (/\bpage-id-(7268|7955)\b/.test(bc) || /\belementor-page-(7268|7955)\b/.test(bc)) return true;
+		} catch (e) {}
+		return false;
+	}
+
+	/* Elementor often nests HTML inside columns with transform or overflow. That
+	   traps position:fixed and can hide or clip the popup on mobile — moving nodes
+	   to body fixes it. */
+	function rocAttachPromoToBody() {
+		try {
+			[card, mini, strip, spacer].forEach(function(el) {
+				if (el && el.parentNode && el.parentNode !== document.body) document.body.appendChild(el);
+			});
+		} catch (err) {}
+	}
+	rocAttachPromoToBody();
+
+	/* Matches the navbar's mobile breakpoint — that's when the bottom CTA dock
+	   appears and the top bar becomes the compact header. */
+	function rocIsMobileChrome() {
+		try { return window.matchMedia('(max-width: 1024px)').matches; } catch (e) { return false; }
+	}
+
+	function rocReadCssPx(el, name) {
+		if (!el) return 0;
+		try {
+			var raw = window.getComputedStyle(el).getPropertyValue(name).trim();
+			var n = parseFloat(raw);
+			return isFinite(n) && n > 0 ? n : 0;
+		} catch (e) { return 0; }
+	}
+
+	function rocHeaderBottomPx() {
+		var bottom = 0;
+		var stripe = document.querySelector('.vsl-navbar__stripe');
+		var bar = document.querySelector('.vsl-navbar__bar');
+		if (stripe) {
+			var rs = stripe.getBoundingClientRect();
+			if (rs.height > 0) bottom = Math.max(bottom, rs.bottom);
+		}
+		if (bar) {
+			var rb = bar.getBoundingClientRect();
+			if (rb.height > 0) bottom = Math.max(bottom, rb.bottom);
+		}
+		return Math.max(0, Math.round(bottom));
+	}
+
+	function rocStripContentHeight() {
+		var row = strip && strip.querySelector('.roc-strip-row');
+		var h = (row ? row.offsetHeight : 52) + 6;
+		if (!isFinite(h) || h < 44) h = 58;
+		return Math.min(72, Math.round(h));
+	}
+
+	function rocAfterHeaderNode() {
+		var header = document.querySelector('.elementor-location-header') ||
+			document.querySelector('[data-elementor-type="header"]');
+		if (header) return header;
+		var nav = document.querySelector('.vsl-navbar');
+		if (!nav) return null;
+		var el = nav;
+		while (el.parentElement && el.parentElement !== document.body && el.parentElement !== document.documentElement) {
+			el = el.parentElement;
+		}
+		return el;
+	}
+
+	function rocPlaceSpacer() {
+		if (!spacer) return;
+		var h = rocStripContentHeight();
+		spacer.style.height = h + 'px';
+		spacer.style.maxHeight = '72px';
+		spacer.classList.add('roc-strip-spacer--on');
+		var after = rocAfterHeaderNode();
+		if (after && after.parentNode) {
+			if (spacer.previousElementSibling !== after) {
+				after.parentNode.insertBefore(spacer, after.nextSibling);
+			}
+		}
+	}
+
+	function rocHideSpacer() {
+		if (!spacer) return;
+		spacer.classList.remove('roc-strip-spacer--on');
+		spacer.style.height = '0px';
+		if (spacer.parentNode !== document.body) document.body.appendChild(spacer);
+	}
+
+	function rocClearStripPinStyles() {
+		if (!strip) return;
+		['position', 'top', 'bottom', 'left', 'right', 'width', 'height', 'max-height', 'transform'].forEach(function(prop) {
+			strip.style.removeProperty(prop);
+		});
+		strip.style.removeProperty('--roc-pin-y');
+	}
+
+	/* Viewport-relative offset only (navbar bottom, already in CSS pixels).
+	   Do not add scrollY — that recenters the bar every frame and looks jittery. */
+	function rocPinStripToViewport() {
+		if (!strip || !strip.classList.contains('roc-strip--top')) return;
+		if (strip.parentNode !== document.body) document.body.appendChild(strip);
+		strip.style.setProperty('--roc-pin-y', rocHeaderBottomPx() + 'px');
+	}
+
+	var rocPinRaf = null;
+	function rocQueuePin() {
+		if (rocPinRaf) return;
+		rocPinRaf = window.requestAnimationFrame(function() {
+			rocPinRaf = null;
+			rocPinStripToViewport();
+		});
+	}
+
+	function rocPlaceStrip() {
+		if (!strip) return;
+		var showTop = rocIsBookNowPage() && rocIsMobileChrome() && strip.style.display === 'block';
+		try {
+			if (strip.parentNode !== document.body) document.body.appendChild(strip);
+			if (showTop) {
+				strip.classList.add('roc-strip--top');
+				rocClearStripPinStyles();
+				rocPinStripToViewport();
+				rocPlaceSpacer();
+			} else {
+				strip.classList.remove('roc-strip--top');
+				rocClearStripPinStyles();
+				rocHideSpacer();
+			}
+		} catch (e) {}
+	}
+
+	/* --roc-dock-h: height of the site's fixed bottom CTA dock (.vsl-navbar__mcta). */
+	function rocSyncNavOffsets() {
+		try {
+			var dockH = 0;
+			var dock = document.querySelector('.vsl-navbar__mcta');
+			if (dock) {
+				var rd = dock.getBoundingClientRect();
+				var st = window.getComputedStyle(dock);
+				if (st.display !== 'none' && st.visibility !== 'hidden' && rd.height > 0 && st.position === 'fixed') {
+					dockH = rd.height;
+				}
+			}
+			if (dockH <= 0 && rocIsMobileChrome()) {
+				dockH = rocReadCssPx(document.documentElement, '--vsl-mobile-dock-height') ||
+					rocReadCssPx(document.documentElement, '--vsl-mobile-dock-h') ||
+					rocReadCssPx(document.body, '--vsl-mobile-dock-h') ||
+					80;
+			}
+			var px = Math.round(dockH) + 'px';
+			if (mini) mini.style.setProperty('--roc-dock-h', px);
+			if (card) card.style.setProperty('--roc-dock-h', px);
+			if (strip) strip.style.setProperty('--roc-dock-h', px);
+			rocPlaceStrip();
+		} catch (e) {}
+	}
+
+	var rocNavRaf = null;
+	function rocQueueNavSync() {
+		if (rocNavRaf) return;
+		rocNavRaf = window.requestAnimationFrame(function() {
+			rocNavRaf = null;
+			rocSyncNavOffsets();
+		});
+	}
+	rocSyncNavOffsets();
+	window.addEventListener('scroll', rocQueuePin, { passive: true });
+	window.addEventListener('resize', rocQueueNavSync);
+	window.addEventListener('orientationchange', rocQueueNavSync);
+	try {
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener('resize', rocQueueNavSync);
+		}
+	} catch (eVp) {}
+	/* The navbar module may initialize (or portal its dock to <body>) after this
+	   snippet runs — re-measure a few times to catch late layout. */
+	setTimeout(rocSyncNavOffsets, 300);
+	setTimeout(rocSyncNavOffsets, 1200);
+	try {
+		if (typeof MutationObserver !== 'undefined') {
+			var rocDockWatch = new MutationObserver(rocQueueNavSync);
+			rocDockWatch.observe(document.documentElement, { childList: true, subtree: true });
+			setTimeout(function() { try { rocDockWatch.disconnect(); } catch (e2) {} }, 4000);
+		}
+	} catch (e3) {}
+
+	/* Live countdown chip: "9 days out" → "Tomorrow" → "Race day". */
+	(function() {
+		var chip = document.getElementById('roc-countdown');
+		var urgency = document.getElementById('roc-urgency');
+		if (!chip || !urgency) return;
+		var now = new Date();
+		var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+		var diffDays = Math.round((RACE_DAY - today) / 86400000);
+		if (diffDays > 1) {
+			chip.textContent = diffDays + ' days out';
+			chip.hidden = false;
+		} else if (diffDays === 1) {
+			chip.textContent = 'Race day tomorrow';
+			chip.hidden = false;
+		} else if (diffDays === 0) {
+			chip.textContent = 'Race day';
+			chip.hidden = false;
+		}
+	})();
+
+	var btnMin = document.getElementById("roc-btn-minimize");
+	var stripClose = document.getElementById("roc-strip-close");
+
+	/* Two surfaces, one pill. Home pages show the full card; Book Now pages show
+	   the slim reminder strip instead (never the card — it would cover the booking
+	   flow). Each surface remembers its own dismissal (rocCardMin / rocStripMin). */
+	function showCard() {
+		if (card) card.style.display = "block";
+		if (strip) strip.style.display = "none";
+		if (mini) mini.classList.remove('roc-mini--on');
+		rocWrite('rocCardMin', 'false');
+	}
+	function hideCard() {
+		if (card) card.style.display = "none";
+		if (mini) mini.classList.add('roc-mini--on');
+		rocWrite('rocCardMin', 'true');
+		rocSyncNavOffsets();
+	}
+	function showStrip() {
+		if (card) card.style.display = "none";
+		if (strip) strip.style.display = "block";
+		if (mini) mini.classList.remove('roc-mini--on');
+		rocWrite('rocStripMin', 'false');
+		rocSyncNavOffsets();
+	}
+	function hideStrip() {
+		if (strip) strip.style.display = "none";
+		if (mini) mini.classList.add('roc-mini--on');
+		rocWrite('rocStripMin', 'true');
+		rocSyncNavOffsets();
+	}
+
+	if (rocIsBookNowPage()) {
+		rocRead('rocStripMin') === 'true' ? hideStrip() : showStrip();
+	} else {
+		rocRead('rocCardMin') === 'true' ? hideCard() : showCard();
+	}
+
+	/* Entry form is external (JotForm) — opens in a new tab; the card tucks
+	   away into the pill so the site stays usable when they come back. */
+	var cta = document.getElementById('roc-cta');
+	if (cta) cta.addEventListener('click', function() { hideCard(); });
+
+	if (btnMin) btnMin.addEventListener('click', hideCard);
+	if (stripClose) stripClose.addEventListener('click', hideStrip);
+	if (mini) mini.addEventListener('click', function() {
+		rocIsBookNowPage() ? showStrip() : showCard();
+	});
+})();
+</script>

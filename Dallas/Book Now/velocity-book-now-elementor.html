@@ -53,6 +53,7 @@
     --text-section: clamp(2.2rem, 1rem + 5.5vw, 3.8rem);
     --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
     --text-card-price: clamp(1.7rem, 1.05rem + 2.6vw, 2.5rem);
+    --text-pack-price: clamp(1.7rem, 1rem + 2.85vw, 2.65rem);
     --text-card-name: clamp(1.3rem, 0.85rem + 1.7vw, 1.75rem);
     --vsl-outdent: 0px;
     --vsl-bleed-top: 0px;
@@ -243,6 +244,14 @@
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
     background: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-card__pack-price {
+    color: var(--c2) !important;
+    -webkit-text-fill-color: var(--c2) !important;
+  }
+  .vsl-booknow .vsl-bn-card__pack-price-from {
+    color: var(--c0) !important;
+    -webkit-text-fill-color: var(--c0) !important;
   }
   .vsl-booknow .vsl-bn-card__ticket {
     color: #1a1a1a !important;
@@ -652,6 +661,19 @@
     gap: 10px;
     margin-bottom: clamp(1rem, 2vh, 1.5rem);
   }
+  /* Tabs row — wraps the experience tabs */
+  .vsl-bn-tabs-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px 14px;
+    margin-bottom: clamp(1rem, 2vh, 1.5rem);
+  }
+  .vsl-bn-tabs-row .vsl-bn-tabs {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+  }
   button.vsl-bn-tab,
   .vsl-bn-tab {
     appearance: none !important;
@@ -699,6 +721,21 @@
     background-size: 200% 200% !important;
     box-shadow: 0 6px 24px rgba(238,38,95,0.3), 0 0 0 1px rgba(238,38,95,0.1) !important;
     transform: translateY(-1px);
+    isolation: isolate;
+  }
+  /* Animated gradient lives on a 2x-wide ::after moved with transform (compositor-only)
+     instead of animating background-position, which repainted the tab every frame */
+  button.vsl-bn-tab[aria-selected="true"]::after,
+  .vsl-bn-tab[aria-selected="true"]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--c2) 0%, var(--c5) 50%, #c91f55 100%);
     animation: vsl-tab-gradient 3s ease infinite;
   }
   button.vsl-bn-tab[aria-selected="true"]:hover,
@@ -707,8 +744,8 @@
     -webkit-text-fill-color: #fff !important;
   }
   @keyframes vsl-tab-gradient {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-50%); }
   }
   .vsl-bn-tab:active {
     transform: translateY(0) scale(0.97);
@@ -784,6 +821,7 @@
   }
 
   /* In-store food menu QR — ?menu=races shows Quick + Double Race only */
+  .vsl-booknow--menu-races .vsl-bn-tabs-row,
   .vsl-booknow--menu-races #bn-tabs,
   .vsl-booknow--menu-races #panel-2seater,
   .vsl-booknow--menu-races #panel-party,
@@ -1183,6 +1221,28 @@
     letter-spacing: 0.06em;
     opacity: 0.85;
   }
+  .vsl-bn-card__pack-pricing {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+  }
+  .vsl-bn-card__pack-price {
+    margin: 0;
+    font-size: var(--text-pack-price);
+    font-weight: 700;
+    color: var(--c2);
+    line-height: 1.15;
+  }
+  .vsl-bn-card__pack-price-from {
+    font-size: 0.48em;
+    font-weight: 700;
+    color: var(--c0);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    vertical-align: 0.15em;
+  }
   .vsl-bn-card__was {
     font-size: 0.85rem;
     font-weight: 500;
@@ -1326,6 +1386,10 @@
     background: linear-gradient(162deg, var(--c1) 0%, var(--c0) 48%, #0d1322 100%);
     padding: clamp(56px, 8vh, 96px) 0;
     color: var(--c6);
+    /* Clip the scaled ::after glow — otherwise it pokes past the viewport on mobile,
+       creating horizontal page overflow that makes the fixed bottom dock jitter on iOS */
+    overflow: hidden;
+    overflow: clip;
   }
   .vsl-bn-membership::before {
     content: '';
@@ -1350,6 +1414,14 @@
   @keyframes vsl-mem-glow {
     0% { opacity: 0.4; transform: scale(1); }
     100% { opacity: 1; transform: scale(1.05); }
+  }
+  /* Ambient animations only run while their section is on screen (JS toggles .vsl-offscreen) */
+  .vsl-bn-membership.vsl-offscreen::after,
+  .vsl-bn-membership.vsl-offscreen .vsl-bn-membership__media img,
+  .vsl-bn-membership.vsl-offscreen .vsl-bn-membership__eyebrow::after,
+  .vsl-bn-membership.vsl-offscreen .vsl-bn-membership__cta::after,
+  .vsl-bn-tabs.vsl-offscreen .vsl-bn-tab[aria-selected="true"]::after {
+    animation-play-state: paused;
   }
   .vsl-bn-membership__inner {
     position: relative;
@@ -1418,15 +1490,17 @@
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    left: 0;
     width: 60%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    /* Animate transform (not `left`) so the shimmer runs on the compositor with no per-frame layout */
+    transform: translateX(-167%);
     animation: vsl-eyebrow-shimmer 3s ease-in-out infinite;
   }
   @keyframes vsl-eyebrow-shimmer {
-    0% { left: -100%; }
-    50%, 100% { left: 150%; }
+    0% { transform: translateX(-167%); }
+    50%, 100% { transform: translateX(250%); }
   }
   .vsl-bn-membership__title {
     margin: 0 0 0.35em;
@@ -1471,8 +1545,7 @@
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 12px;
     min-width: 110px;
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    /* No backdrop-filter: it re-blurred every frame over the animated glow for no visible gain */
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     cursor: pointer;
   }
@@ -1580,11 +1653,23 @@
     background: var(--c4);
     box-shadow: 0 6px 24px rgba(253,199,12,0.22);
     transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.18s ease;
+    isolation: isolate;
+  }
+  /* Pulse = opacity fade of a pre-rendered glow layer (compositor-only) instead of animating box-shadow */
+  .vsl-bn-membership__cta::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    z-index: -1;
+    pointer-events: none;
+    box-shadow: 0 6px 32px rgba(253,199,12,0.45), 0 0 0 6px rgba(253,199,12,0.08);
+    opacity: 0;
     animation: vsl-mem-cta-pulse 2.5s ease-in-out infinite;
   }
   @keyframes vsl-mem-cta-pulse {
-    0%, 100% { box-shadow: 0 6px 24px rgba(253,199,12,0.22); }
-    50% { box-shadow: 0 6px 32px rgba(253,199,12,0.45), 0 0 0 6px rgba(253,199,12,0.08); }
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
   }
   @media (hover: hover) and (pointer: fine) {
     .vsl-bn-membership__cta:hover {
@@ -1593,6 +1678,10 @@
       box-shadow: 0 12px 36px rgba(253,199,12,0.4);
       transform: translateY(-3px);
       animation: none;
+    }
+    .vsl-bn-membership__cta:hover::after {
+      animation: none;
+      opacity: 0;
     }
   }
   .vsl-bn-membership__cta:active {
@@ -2008,6 +2097,12 @@
     }
     .vsl-bn-tab__full { display: none; }
     .vsl-bn-tab__short { display: inline; }
+    .vsl-bn-tabs-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+    .vsl-bn-tabs-row .vsl-bn-tabs { width: 100%; }
     .vsl-bn-features { padding: 10px 0; }
     .vsl-bn-features__row { flex-wrap: wrap; gap: 20px; justify-content: center; }
     .vsl-bn-cta { padding: 40px 0 48px; }
@@ -2033,6 +2128,11 @@
     .vsl-bn-tab:hover { transform: none; }
     .vsl-bn-tab:active { transform: none; }
     .vsl-bn-tab[aria-selected="true"] { animation: none; }
+    .vsl-bn-tab[aria-selected="true"]::after { animation: none; }
+    .vsl-bn-membership::after,
+    .vsl-bn-membership__media img,
+    .vsl-bn-membership__eyebrow::after,
+    .vsl-bn-membership__cta::after { animation: none; }
     .vsl-bn-card__cta-hint svg { transition: none; }
     .vsl-bn-card:hover .vsl-bn-card__cta-hint svg { transform: none; }
   }
@@ -2259,11 +2359,11 @@
   },
   "bookNow": "https://velocitysimlounge.com/dallas/book-now/",
   "images": {
-    "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race.webp",
-    "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race.webp",
-    "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard-e1777680352239.webp",
-    "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM.png",
-    "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM.png",
+    "quickRace":      "https://velocitysimlounge.com/wp-content/uploads/2026/04/quick_race-1024x683.webp",
+    "doubleRace":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/double_race-1024x683.webp",
+    "leaderboard":    "https://velocitysimlounge.com/wp-content/uploads/2026/04/leaderboard-e1777680352239-1024x739.webp",
+    "twoSeaterQuick": "https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.25.20-PM-1024x553.png",
+    "twoSeaterDouble":"https://velocitysimlounge.com/wp-content/uploads/2026/02/Screenshot-2026-02-16-at-3.27.33-PM-1024x612.png",
     "partyRacer":     "https://velocitysimlounge.com/wp-content/uploads/2026/04/racer_card-1024x683.webp",
     "partyPro":       "https://velocitysimlounge.com/wp-content/uploads/2026/04/Untitled_design-22-1024x683.webp",
     "partyChampion":  "https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp",
@@ -2293,10 +2393,12 @@
           </div>
         </div>
 
-        <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
-          <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true"><span class="vsl-bn-tab__full">Main Experiences</span><span class="vsl-bn-tab__short">Main</span></button>
-          <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false"><span class="vsl-bn-tab__full">2-Seater Experiences</span><span class="vsl-bn-tab__short">2-Seater</span></button>
-          <button class="vsl-bn-tab" role="tab" id="tab-party" aria-controls="panel-party" aria-selected="false"><span class="vsl-bn-tab__full">Party Packs</span><span class="vsl-bn-tab__short">Party Packs</span></button>
+        <div class="vsl-bn-tabs-row">
+          <div id="bn-tabs" class="vsl-bn-tabs" role="tablist" aria-label="Experience categories">
+            <button class="vsl-bn-tab" role="tab" id="tab-main" aria-controls="panel-main" aria-selected="true"><span class="vsl-bn-tab__full">Main Experiences</span><span class="vsl-bn-tab__short">Main</span></button>
+            <button class="vsl-bn-tab" role="tab" id="tab-party" aria-controls="panel-party" aria-selected="false"><span class="vsl-bn-tab__full">Party Packs</span><span class="vsl-bn-tab__short">Party Packs</span></button>
+            <button class="vsl-bn-tab" role="tab" id="tab-2seater" aria-controls="panel-2seater" aria-selected="false"><span class="vsl-bn-tab__full">2-Seater Experiences</span><span class="vsl-bn-tab__short">2-Seater</span></button>
+          </div>
         </div>
 
         <div class="vsl-bn-panel" id="panel-main" role="tabpanel" aria-labelledby="tab-main" aria-hidden="false">
@@ -2304,7 +2406,7 @@
 
             <a class="vsl-bn-card" data-l="quickRace" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcXVpY2tfcmFjZS53ZWJw" alt="Quick Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="sync" fetchpriority="high">
+                <img data-i="quickRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvcXVpY2tfcmFjZS0xMDI0eDY4My53ZWJw" alt="Quick Race experience at Velocity Sim Lounge" width="1024" height="683" loading="eager" decoding="sync" fetchpriority="high">
                 <h3 class="vsl-bn-card__overlay-name">Quick Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2322,7 +2424,7 @@
 
             <a class="vsl-bn-card vsl-bn-card--badged" data-l="doubleRace" href="https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvZG91YmxlX3JhY2Uud2VicA==" alt="Double Race experience at Velocity Sim Lounge" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high">
+                <img data-i="doubleRace" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvZG91YmxlX3JhY2UtMTAyNHg2ODMud2VicA==" alt="Double Race experience at Velocity Sim Lounge" width="1024" height="683" loading="eager" decoding="async" fetchpriority="high">
                 <div class="vsl-bn-card__badge-stack">
                   <span class="vsl-bn-card__badge vsl-bn-card__badge--popular">Most Popular</span>
                   <span class="vsl-bn-card__badge vsl-bn-card__badge--value">Save Over 20%</span>
@@ -2344,7 +2446,7 @@
 
             <a class="vsl-bn-card" data-l="leaderboard" href="https://book-dtx.velocitysimlounge.com/book/leaderboard-challenge-30-mins/6#rvrd-1" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvbGVhZGVyYm9hcmQtZTE3Nzc2ODAzNTIyMzkud2VicA==" alt="Leaderboard Challenge competitive time-attack at Velocity" width="3450" height="2490" loading="eager" decoding="async">
+                <img data-i="leaderboard" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvbGVhZGVyYm9hcmQtZTE3Nzc2ODAzNTIyMzktMTAyNHg3Mzkud2VicA==" alt="Leaderboard Challenge competitive time-attack at Velocity" width="1024" height="739" loading="eager" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">Leaderboard Challenge</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2368,7 +2470,7 @@
 
             <a class="vsl-bn-card" data-l="twoSeaterQuick" href="https://book-dtx.velocitysimlounge.com/book/2-seater-quick-race/22" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="twoSeaterQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjUuMjAtUE0ucG5n" alt="2-Seater Quick Race side-by-side simulator" width="1200" height="649" loading="lazy" decoding="async">
+                <img data-i="twoSeaterQuick" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjUuMjAtUE0tMTAyNHg1NTMucG5n" alt="2-Seater Quick Race side-by-side simulator" width="1024" height="553" loading="lazy" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">2-Seater Quick Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2386,7 +2488,7 @@
 
             <a class="vsl-bn-card" data-l="twoSeaterDouble" href="https://book-dtx.velocitysimlounge.com/book/2-seater-double-race/23" target="_blank" rel="noopener noreferrer">
               <div class="vsl-bn-card__media">
-                <img data-i="twoSeaterDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjcuMzMtUE0ucG5n" alt="2-Seater Double Race on famous tracks" width="1200" height="717" loading="lazy" decoding="async">
+                <img data-i="twoSeaterDouble" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDIvU2NyZWVuc2hvdC0yMDI2LTAyLTE2LWF0LTMuMjcuMzMtUE0tMTAyNHg2MTIucG5n" alt="2-Seater Double Race on famous tracks" width="1024" height="612" loading="lazy" decoding="async">
                 <h3 class="vsl-bn-card__overlay-name">2-Seater Double Race</h3>
               </div>
               <div class="vsl-bn-card__body">
@@ -2415,10 +2517,14 @@
                 <h3 class="vsl-bn-card__overlay-name">Racer Party Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__pack-pricing">
+                  <p class="vsl-bn-card__pack-price"><span class="vsl-bn-card__pack-price-from">from</span> $450</p>
+                </div>
                 <ul class="vsl-bn-card__features">
                   <li>5 Racer rigs &bull; Semi-private space</li>
                   <li>Great for groups of 5&ndash;10 drivers</li>
                   <li>2 hours of racing</li>
+                  <li>Two flatbreads included</li>
                   <li>Dedicated Pit Crew</li>
                   <li>Upgrades available</li>
                 </ul>
@@ -2432,10 +2538,14 @@
                 <h3 class="vsl-bn-card__overlay-name">Pro Party Pack</h3>
               </div>
               <div class="vsl-bn-card__body">
+                <div class="vsl-bn-card__pack-pricing">
+                  <p class="vsl-bn-card__pack-price"><span class="vsl-bn-card__pack-price-from">from</span> $599</p>
+                </div>
                 <ul class="vsl-bn-card__features">
                   <li>5 Pro rigs &bull; Semi-private space</li>
                   <li>Ideal for groups of 5&ndash;15 drivers</li>
                   <li>2 hours of racing</li>
+                  <li>Two flatbreads included</li>
                   <li>Dedicated Pit Crew</li>
                   <li>Upgrades available</li>
                 </ul>
@@ -2502,9 +2612,9 @@
       <div class="vsl-bn-grid">
         <div class="vsl-bn-membership__inner">
           <div class="vsl-bn-membership__media">
-            <img data-asset-key="booknow-photo-10-members-large-left" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLWxhcmdlLWxlZnQtcGhvdG8tZTE3Nzc2ODA1NDU4NDAud2VicA==" alt="Members racing at Velocity Sim Lounge" width="3220" height="4000" loading="lazy" decoding="async">
-            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjI3NTUud2VicA==" alt="Velocity member event" width="1200" height="800" loading="lazy" decoding="async">
-            <img data-asset-key="booknow-photo-11-members-flatbreads" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLXBob3RvLWJvdHRvbS1yaWdodC1zbWFsbC1waG90by53ZWJw" alt="Members enjoying food and racing" width="1200" height="800" loading="lazy" decoding="async">
+            <img data-asset-key="booknow-photo-10-members-large-left" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLWxhcmdlLWxlZnQtcGhvdG8tZTE3Nzc2ODA1NDU4NDAtODI0eDEwMjQud2VicA==" alt="Members racing at Velocity Sim Lounge" width="824" height="1024" loading="lazy" decoding="async">
+            <img src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDMvVmVsb2NpdHlfNjEwTGF1bmNoX1FVSVROR1VZRU5fRFNDRjI3NTUtMTAyNHg2ODMud2VicA==" alt="Velocity member event" width="1024" height="683" loading="lazy" decoding="async">
+            <img data-asset-key="booknow-photo-11-members-flatbreads" src="" data-s="aHR0cHM6Ly92ZWxvY2l0eXNpbWxvdW5nZS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjYvMDQvTWVtYmVycy1DbHViLXBob3RvLWJvdHRvbS1yaWdodC1zbWFsbC1waG90by0xMDI0eDY4My53ZWJw" alt="Members enjoying food and racing" width="1024" height="683" loading="lazy" decoding="async">
           </div>
           <div class="vsl-bn-membership__content">
             <span class="vsl-bn-membership__eyebrow">Members Club</span>
@@ -2515,20 +2625,20 @@
               Monthly races, food &amp; drink discounts, priority booking, members-only events, and exclusive perks — starting at just $99/mo.
             </p>
             <div class="vsl-bn-membership__tiers">
-              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/dallas/membership/">
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Racer</span>
                 <span class="vsl-bn-membership__tier-price">$99<span>/mo</span></span>
               </a>
-              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/dallas/membership/">
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Pro</span>
                 <span class="vsl-bn-membership__tier-price">$169<span>/mo</span></span>
               </a>
-              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/dallas/membership/">
+              <a class="vsl-bn-membership__tier" href="https://velocitysimlounge.com/membership/">
                 <span class="vsl-bn-membership__tier-name">Ultimate</span>
                 <span class="vsl-bn-membership__tier-price">$299<span>/mo</span></span>
               </a>
             </div>
-            <a class="vsl-bn-membership__cta" href="https://velocitysimlounge.com/dallas/membership/">
+            <a class="vsl-bn-membership__cta" href="https://velocitysimlounge.com/membership/">
               View Memberships
               <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
@@ -2667,6 +2777,19 @@
     var root = document.querySelector('.vsl-booknow');
     if (!root || root._vslInitDone) return;
     root._vslInitDone = true;
+
+    // Pause ambient CSS animations (membership glow/float/shimmer/pulse, tab gradient) while off-screen
+    if (typeof IntersectionObserver !== 'undefined') {
+      var animGated = root.querySelectorAll('.vsl-bn-membership, .vsl-bn-tabs');
+      if (animGated.length) {
+        var animGateIO = new IntersectionObserver(function(entries) {
+          entries.forEach(function(en) {
+            en.target.classList.toggle('vsl-offscreen', !en.isIntersecting);
+          });
+        }, { rootMargin: '120px 0px' });
+        animGated.forEach(function(el) { animGateIO.observe(el); });
+      }
+    }
 
     function openLoungePopup() {
       if (typeof window.VSL_OPEN_LOCATION_PICKER === 'function') {

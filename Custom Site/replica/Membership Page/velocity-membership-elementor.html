@@ -292,7 +292,7 @@
       -webkit-text-fill-color: var(--magenta) !important;
     }
     .vsl-membership-hero__sub {
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.75rem;
       padding: 6px 12px;
       font-size: clamp(1.0625rem, 0.92rem + 0.65vw, 1.25rem);
       font-weight: 500;
@@ -304,61 +304,152 @@
       background: rgba(4, 7, 18, 0.68);
       border-radius: 8px;
     }
-    /* Match .vsl-tier__btn (pricing “Join now”): outline, fill on hover, shadow — not full width */
+    /* Returning-member access: compact pit-lane strip under the join pitch */
+    .vsl-membership-hero__access {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      width: min(100%, 26rem);
+      margin: 0 auto;
+      padding: 1.15rem 1.25rem 1.25rem;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(16, 24, 43, 0.55) 0%, rgba(8, 12, 24, 0.72) 100%);
+      border: 1px solid rgba(234, 234, 234, 0.14);
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .vsl-membership-hero__access::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 14%;
+      right: 14%;
+      height: 2px;
+      border-radius: 0 0 2px 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--magenta) 35%, #ff6b8a 50%, var(--magenta) 65%, transparent 100%);
+    }
+    .vsl-membership-hero__access-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-style: italic;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(234, 234, 234, 0.72) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.72) !important;
+    }
+    .vsl-membership-hero__access-label::before,
+    .vsl-membership-hero__access-label::after {
+      content: '';
+      width: 1.1rem;
+      height: 1px;
+      background: rgba(238, 38, 95, 0.55);
+    }
+    .vsl-membership-hero__login-note {
+      margin: 0;
+      max-width: 28ch;
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1rem + 0.55vw, 1.4rem);
+      font-weight: 600;
+      font-style: italic;
+      line-height: 1.2;
+      letter-spacing: 0.02em;
+      color: #fff !important;
+      -webkit-text-fill-color: #fff !important;
+      text-wrap: balance;
+    }
+    .vsl-membership-hero__login-note span {
+      display: block;
+      margin-top: 0.35rem;
+      font-family: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+      font-size: 0.92rem;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.01em;
+      line-height: 1.35;
+      color: rgba(234, 234, 234, 0.78) !important;
+      -webkit-text-fill-color: rgba(234, 234, 234, 0.78) !important;
+    }
     .vsl-membership-hero__cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 12px 28px;
-      font-family: inherit;
-      font-size: 0.8rem;
+      gap: 0.55rem;
+      min-height: 46px;
+      padding: 12px 22px 12px 26px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
       font-weight: 700;
-      font-style: normal;
-      letter-spacing: 0.1em;
+      font-style: italic;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       text-align: center;
       text-decoration: none;
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
       cursor: pointer;
-      border: 2px solid var(--magenta);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 8px;
-      background: var(--magenta);
-      box-shadow: 0 4px 16px rgba(238, 38, 95, 0.25);
+      background: linear-gradient(105deg, var(--magenta) 0%, #c9184a 100%);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
       transition:
         color 0.22s ease,
-        background-color 0.22s ease,
+        background 0.22s ease,
         border-color 0.22s ease,
         box-shadow 0.22s ease,
         transform 0.14s ease,
         filter 0.14s ease;
     }
+    .vsl-membership-hero__cta svg {
+      width: 0.95rem;
+      height: 0.95rem;
+      flex-shrink: 0;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s ease;
+    }
     .vsl-membership-hero__cta:hover {
       color: #fff !important;
       -webkit-text-fill-color: #fff !important;
-      filter: brightness(1.08);
-      box-shadow: 0 8px 28px rgba(238, 38, 95, 0.35);
+      filter: brightness(1.06);
+      border-color: rgba(255, 255, 255, 0.38);
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.3);
+      transform: translateY(-1px);
+    }
+    .vsl-membership-hero__cta:hover svg {
+      transform: translateX(3px);
     }
     .vsl-membership-hero__cta:active {
-      filter: brightness(0.93);
-      transform: scale(0.99);
-      box-shadow: 0 3px 14px rgba(238, 38, 95, 0.2);
+      filter: brightness(0.94);
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
     }
     .vsl-membership-hero__cta:focus-visible {
       outline: 3px solid var(--yellow);
       outline-offset: 4px;
     }
     @media (prefers-reduced-motion: reduce) {
-      .vsl-membership-hero__cta {
-        transition:
-          color 0.22s ease,
-          background-color 0.22s ease,
-          border-color 0.22s ease,
-          box-shadow 0.22s ease,
-          filter 0.14s ease;
+      .vsl-membership-hero__cta,
+      .vsl-membership-hero__cta svg {
+        transition: none;
       }
+      .vsl-membership-hero__cta:hover,
       .vsl-membership-hero__cta:active {
+        transform: none;
+      }
+      .vsl-membership-hero__cta:hover svg {
         transform: none;
       }
     }
@@ -1020,7 +1111,14 @@
       <div class="vsl-membership-hero__inner">
         <h1 class="vsl-membership-hero__title" id="membership-hero-heading">Become a <span class="vsl-membership-hero__accent">member</span> and take your Velocity experience to the next level</h1>
         <p class="vsl-membership-hero__sub">Memberships start at $99/month and offer unbeatable value</p>
-        <a class="vsl-membership-hero__cta" data-vsl-soft-scroll href="#membership-benefits">Learn more</a>
+        <div class="vsl-membership-hero__access">
+          <p class="vsl-membership-hero__access-label">Member access</p>
+          <p class="vsl-membership-hero__login-note">Already a member?<span>Sign in to book sessions and manage your membership.</span></p>
+          <a class="vsl-membership-hero__cta" href="https://members.velocitysimlounge.com/dashboard" target="_blank" rel="noopener noreferrer">
+            Member Login
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
       </div>
       <div class="vsl-membership-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>

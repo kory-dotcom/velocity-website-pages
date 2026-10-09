@@ -1,0 +1,1984 @@
+<!-- Velocity Holiday Parties Landing — VSM 1.0.0
+     One URL for both lounges (like Gift Cards). Location toggle swaps Tripleseat links and venue stats.
+     FORM: Tripleseat dynamic lead forms are embedded as iframes in #holiday-inquire — Houston 6077, Dallas 6075 (URLs live in
+           data-vsl-config "inquiry"). Only the selected lounge's form loads. Their colors come from each form's Theme tab in
+           Tripleseat, not this file (set background to #10182B / panel #FFFFFF / primary #EE265F to match).
+     ASSET: upload "Holiday Parties/assets/wordpress-upload/velocity-holiday-party-2026-ad.webp" to WP Media (hero poster; URL assumes 2026/09).
+     CONFIRM BEFORE LAUNCH (search "CONFIRM"): offer deadline, minimum spend, buyout bonus, fine print. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
+<link rel="preconnect" href="https://velocitysimlounge.com" crossorigin>
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* vsl-elementor-no-underline-buttons */
+  .elementor-widget-button .elementor-button,
+  .elementor-widget-button .elementor-button .elementor-button-text,
+  .elementor-widget-button .elementor-button-content-wrapper,
+  a.elementor-button,
+  .elementor-button-wrapper .elementor-button {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-button .elementor-button:is(:hover, :focus, :focus-visible, :visited, :active),
+  a.elementor-button:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-"][class*="-card"],
+  .elementor-widget-html a[class*="vsl-"][class*="poster"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="-card"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-"][class*="poster"]:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  html { scrollbar-gutter: stable; }
+
+  /* ═══════════════════════════════════════════════
+     ROOT — scoped to .vsl-holiday
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --silver: #DFDFDE;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: clamp(22px, 2.8vw, 36px);
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+    --vsl-hero-photo-position: 50% 40%;
+    /* Holiday accent: the one allowed red → magenta gradient. Yellow plays "gold" on dark surfaces only. */
+    --holiday-grad: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+    /* Snow tile — circuit-white flakes, low opacity. Inline SVG so no upload is needed. */
+    --holiday-snow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cg id='f' fill='none' stroke='%23EAEAEA' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v20M9.7 4.6L12 7l2.3-2.4M9.7 19.4L12 17l2.3 2.4'/%3E%3Cpath d='M12 2v20M9.7 4.6L12 7l2.3-2.4M9.7 19.4L12 17l2.3 2.4' transform='rotate(60 12 12)'/%3E%3Cpath d='M12 2v20M9.7 4.6L12 7l2.3-2.4M9.7 19.4L12 17l2.3 2.4' transform='rotate(120 12 12)'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23f' transform='translate(18 26) scale(1.7)' opacity='.6'/%3E%3Cuse href='%23f' transform='translate(132 16) scale(0.9)' opacity='.4'/%3E%3Cuse href='%23f' transform='translate(146 118) scale(1.35)' opacity='.55'/%3E%3Cuse href='%23f' transform='translate(58 142) scale(0.75)' opacity='.35'/%3E%3Cuse href='%23f' transform='translate(100 82) scale(0.55)' opacity='.3'/%3E%3C/svg%3E");
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .vsl-holiday *,
+  .vsl-holiday *::before,
+  .vsl-holiday *::after { box-sizing: border-box; }
+  .vsl-holiday p { margin-top: 0; margin-bottom: 0; }
+  .vsl-holiday ul { margin: 0; padding: 0; list-style: none; }
+  .vsl-holiday > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .vsl-holiday h1, .vsl-holiday h2, .vsl-holiday h3 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  #holiday-hero, #holiday-offer, #holiday-buyout, #holiday-perfect, #holiday-quotes, #holiday-inquire, #holiday-cta { scroll-margin-top: 5rem; }
+
+  /* ── Elementor container overrides ── */
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-holiday) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-holiday),
+  .elementor-container:has(.vsl-holiday),
+  .elementor-column:has(.vsl-holiday),
+  .elementor-column-wrap:has(.vsl-holiday),
+  .elementor-widget-wrap:has(.vsl-holiday),
+  .elementor-widget:has(.vsl-holiday),
+  .e-con:has(.vsl-holiday),
+  .e-con-inner:has(.vsl-holiday) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  html:has(.vsl-holiday),
+  body:has(.vsl-holiday) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* ── Shared primitives ── */
+  .vsl-holiday-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-holiday-eyebrow {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 20px;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 0.7rem + 0.9vw, 1.1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: #fff;
+    background: var(--holiday-grad);
+  }
+  .vsl-holiday-eyebrow--navy { background: var(--navy); color: #fff; }
+  .vsl-holiday-eyebrow--ghost {
+    background: transparent;
+    padding: 0;
+    color: var(--yellow);
+    letter-spacing: 0.18em;
+  }
+  .vsl-holiday-section-title {
+    margin: 0 0 0.35em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.08;
+    text-align: left;
+    text-wrap: balance;
+    color: var(--circuit-white);
+  }
+  .vsl-holiday-section-title em {
+    font-style: italic;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+  }
+  .vsl-holiday-section-title--center { text-align: center; margin-inline: auto; }
+  .vsl-holiday .vsl-holiday-section-sub {
+    margin: 0 0 1.75rem;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.6;
+    max-width: 56ch;
+    color: rgba(234,234,234,0.82);
+  }
+  .vsl-holiday .vsl-holiday-section-sub--center { text-align: center; margin-inline: auto; }
+  .vsl-holiday-section-sub strong { color: #fff; font-weight: 700; }
+
+  .vsl-holiday-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 28px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    line-height: 1.1;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease, filter 0.14s ease, color 0.22s ease;
+  }
+  .vsl-holiday-btn:hover {
+    background-color: #d41e52;
+    border-color: #d41e52;
+    box-shadow: 0 8px 28px rgba(238,38,95,0.35);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-holiday-btn:active { filter: brightness(0.9); transform: scale(0.98); }
+  .vsl-holiday-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-holiday-btn svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* Ghost (dark surfaces) */
+  .vsl-holiday-btn--ghost {
+    background-color: transparent;
+    border-color: rgba(234,234,234,0.55);
+    box-shadow: none;
+  }
+  .vsl-holiday-btn--ghost:hover {
+    background-color: rgba(234,234,234,0.1);
+    border-color: #fff;
+    box-shadow: none;
+  }
+  /* Navy solid + white outline (for the red offer block — magenta would vanish on red) */
+  .vsl-holiday-btn--navy {
+    background-color: var(--navy);
+    border-color: var(--navy);
+    box-shadow: 0 8px 24px rgba(16,24,43,0.35);
+  }
+  .vsl-holiday-btn--navy:hover {
+    background-color: #060a14;
+    border-color: #060a14;
+    box-shadow: 0 10px 30px rgba(16,24,43,0.45);
+  }
+  .vsl-holiday-btn--navy:focus-visible { outline-color: #fff; }
+  .vsl-holiday-btn--white {
+    background-color: transparent;
+    border-color: rgba(255,255,255,0.9);
+    box-shadow: none;
+  }
+  .vsl-holiday-btn--white:hover {
+    background-color: #fff;
+    border-color: #fff;
+    color: var(--red) !important;
+    -webkit-text-fill-color: var(--red) !important;
+    box-shadow: 0 8px 24px rgba(16,24,43,0.2);
+  }
+  .vsl-holiday-btn--white:focus-visible { outline-color: #fff; }
+  .vsl-holiday-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 14px;
+    align-items: center;
+  }
+
+  /* Location toggle (same pattern as Gift Cards) */
+  .vsl-holiday-loc {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+  }
+  .vsl-holiday-loc__label {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(234,234,234,0.78);
+  }
+  .vsl-holiday-loc__seg {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(234,234,234,0.22);
+    background: rgba(16,24,43,0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .vsl-holiday-loc__btn {
+    appearance: none;
+    border: 0;
+    margin: 0;
+    min-height: 40px;
+    padding: 8px 22px;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(234,234,234,0.85);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .vsl-holiday-loc__btn:hover { color: #fff; }
+  .vsl-holiday-loc__btn[aria-checked="true"] {
+    background: var(--magenta);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(238,38,95,0.35);
+  }
+  .vsl-holiday-loc__btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+  /* Location-gated content */
+  .vsl-holiday [data-holiday-loc-show] { display: none; }
+  .vsl-holiday[data-holiday-location="houston"] [data-holiday-loc-show="houston"],
+  .vsl-holiday[data-holiday-location="dallas"] [data-holiday-loc-show="dallas"] { display: revert; }
+  .vsl-holiday[data-holiday-location="houston"] .vsl-holiday-stats[data-holiday-loc-show="houston"],
+  .vsl-holiday[data-holiday-location="dallas"] .vsl-holiday-stats[data-holiday-loc-show="dallas"] { display: grid; }
+  .vsl-holiday[data-holiday-location="houston"] .vsl-holiday-form__slot[data-holiday-loc-show="houston"],
+  .vsl-holiday[data-holiday-location="dallas"] .vsl-holiday-form__slot[data-holiday-loc-show="dallas"] { display: block; }
+
+  /* ═══════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    isolation: isolate;
+    width: 100%;
+    min-height: 68vh;
+    min-height: 68svh;
+    background-color: var(--navy);
+    color: var(--circuit-white);
+  }
+  .vsl-holiday-hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--navy);
+  }
+  .vsl-holiday-hero__photo-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--vsl-hero-photo-position);
+    transform: scale(1.04);
+    transform-origin: var(--vsl-hero-photo-position);
+  }
+  .vsl-holiday-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(16,24,43,0.5) 0%, rgba(16,24,43,0.82) 100%),
+      linear-gradient(90deg, rgba(16,24,43,0.62) 0%, rgba(16,24,43,0.18) 55%, rgba(16,24,43,0.42) 100%),
+      radial-gradient(ellipse 55% 45% at 78% 18%, rgba(210,32,38,0.26) 0%, transparent 70%);
+  }
+  .vsl-holiday-hero__snow {
+    position: absolute;
+    inset: -200px 0 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image: var(--holiday-snow), var(--holiday-snow);
+    background-size: 340px 340px, 210px 210px;
+    background-position: 0 0, 120px 60px;
+    opacity: 0.55;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+    animation: vsl-holiday-snow 90s linear infinite;
+  }
+  @keyframes vsl-holiday-snow {
+    to { background-position: 60px 340px, 40px 210px; }
+  }
+  .vsl-holiday-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 72px);
+    padding: clamp(56px, 12vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 7vw, 64px);
+    width: min(1320px, 100%);
+    margin: 0 auto;
+  }
+  .vsl-holiday-hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+  }
+  .vsl-holiday-hero__title {
+    margin: 0 0 0.35em;
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 1.2rem + 6.4vw, 5rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: 0.03em;
+    color: #fff;
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  .vsl-holiday-hero__accent {
+    color: var(--magenta);
+    -webkit-text-fill-color: var(--magenta);
+  }
+  .vsl-holiday .vsl-holiday-hero__sub {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.02rem, 0.94rem + 0.4vw, 1.18rem);
+    line-height: 1.6;
+    color: rgba(234,234,234,0.9);
+    max-width: 46ch;
+  }
+  .vsl-holiday-hero__sub strong { color: var(--yellow); font-weight: 700; }
+  .vsl-holiday-hero .vsl-holiday-loc { margin: 0 0 1.5rem; }
+
+  /* Campaign poster — the ad creative, framed as a Velocity card with a deadline plate
+     (the creative itself carries no date). Mirrors the reference hero's photo card. */
+  .vsl-holiday-hero__visual {
+    position: relative;
+    justify-self: end;
+    width: min(100%, 440px);
+    padding: 18px 12px 26px;
+  }
+  .vsl-holiday-poster {
+    --poster-check-h: 12px;
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(234,234,234,0.18);
+    background: linear-gradient(135deg, #222567 0%, var(--deep-indigo) 42%, var(--navy) 100%);
+    color: #fff;
+    text-decoration: none !important;
+    overflow: hidden;
+    isolation: isolate;
+    transform: rotate(-3deg);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .vsl-holiday-poster::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 3;
+    height: 7px;
+    background: var(--holiday-grad);
+  }
+  .vsl-holiday-poster:hover,
+  .vsl-holiday-poster:focus-visible {
+    transform: rotate(-1.5deg) translateY(-8px);
+    box-shadow: 0 34px 70px rgba(0,0,0,0.6);
+  }
+  .vsl-holiday-poster:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-holiday-poster__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 819 / 1024;
+    object-fit: cover;
+    background: var(--navy);
+  }
+  .vsl-holiday-poster__plate {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label note"
+      "date  more"
+      "cta   cta";
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 2px;
+    padding: 12px 18px calc(12px + var(--poster-check-h));
+    border-top: 1px solid rgba(234,234,234,0.14);
+    background:
+      radial-gradient(ellipse 70% 80% at 0% 0%, rgba(255,255,255,0.08) 0%, transparent 60%),
+      linear-gradient(135deg, #222567 0%, var(--deep-indigo) 42%, var(--navy) 100%);
+  }
+  .vsl-holiday-poster__plate::after {
+    /* Racing stripe, like the gift-card face */
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(112deg,
+      transparent 74%,
+      rgba(238,38,95,0.45) 74%, rgba(238,38,95,0.45) 80%,
+      transparent 80%, transparent 84%,
+      rgba(210,32,38,0.4) 84%, rgba(210,32,38,0.4) 87%,
+      transparent 87%);
+  }
+  .vsl-holiday-poster__plate > * { position: relative; z-index: 2; }
+  .vsl-holiday-poster__label {
+    grid-area: label;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: rgba(234,234,234,0.78);
+  }
+  .vsl-holiday-poster__date {
+    grid-area: date;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1rem + 1.1vw, 1.7rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+    text-shadow: 0 2px 0 rgba(0,0,0,0.18);
+  }
+  .vsl-holiday-poster__note {
+    grid-area: note;
+    justify-self: end;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
+    color: rgba(234,234,234,0.7);
+  }
+  .vsl-holiday-poster__more {
+    grid-area: more;
+    justify-self: end;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    white-space: nowrap;
+    color: var(--magenta);
+    -webkit-text-fill-color: var(--magenta);
+    text-decoration: none;
+  }
+  .vsl-holiday-poster__more:hover { text-decoration: underline; }
+  .vsl-holiday-poster__cta {
+    grid-area: cta;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .vsl-holiday-poster__check {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: var(--poster-check-h);
+    z-index: 1;
+    pointer-events: none;
+    background: repeating-conic-gradient(rgba(255,255,255,0.9) 0 25%, transparent 0 50%);
+    background-size: var(--poster-check-h) var(--poster-check-h);
+    -webkit-mask-image: linear-gradient(90deg, #000 48%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 48%, transparent 100%);
+  }
+  .vsl-holiday-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: 1px solid #000;
+  }
+
+  /* ═══════════════════════════════════════════════
+     OFFER — "Book early. Get rewarded." (red → magenta block)
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-offer {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    padding: clamp(56px, 8vh, 96px) 0;
+    background: var(--holiday-grad);
+    color: #fff;
+  }
+  .vsl-holiday-offer::before {
+    /* 7% navy overlay over red/magenta (brand opacity rule) + a soft sheen */
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(100deg, rgba(16,24,43,0.07) 0%, rgba(16,24,43,0.07) 100%),
+      radial-gradient(ellipse 60% 70% at 100% 0%, rgba(255,255,255,0.12) 0%, transparent 60%);
+  }
+  .vsl-holiday-offer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: var(--holiday-snow);
+    background-size: 300px 300px;
+    opacity: 0.28;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 35%, #000 100%);
+  }
+  .vsl-holiday-offer__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  /* Ornament: circular photo in concentric rings with a metallic cap + hook (brand neutrals),
+     finished with a checkered-flag chip. The Velocity take on the reference's circular photo. */
+  .vsl-holiday-offer__media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: min(100%, 560px);
+    margin-left: clamp(-140px, -9vw, -24px);
+  }
+  .vsl-holiday-offer__cap {
+    position: absolute;
+    left: 50%;
+    top: -18px;
+    z-index: 2;
+    width: 66px;
+    height: 42px;
+    transform: translateX(-50%);
+    border-radius: 9px 9px 5px 5px;
+    background:
+      repeating-linear-gradient(90deg, rgba(16,24,43,0.16) 0 2px, transparent 2px 10px),
+      linear-gradient(90deg, var(--mist) 0%, var(--circuit-white) 38%, var(--silver) 60%, var(--mist) 100%);
+    box-shadow: 0 8px 18px rgba(16,24,43,0.35), inset 0 -3px 0 rgba(16,24,43,0.18);
+  }
+  .vsl-holiday-offer__cap::before {
+    /* hook loop */
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -24px;
+    width: 28px;
+    height: 28px;
+    transform: translateX(-50%);
+    border: 4px solid var(--silver);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(16,24,43,0.3);
+  }
+  .vsl-holiday-offer__cap::after {
+    /* collar where the cap meets the ring */
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 82px;
+    height: 12px;
+    transform: translateX(-50%);
+    border-radius: 0 0 8px 8px;
+    background: var(--mist);
+    box-shadow: 0 4px 10px rgba(16,24,43,0.25);
+  }
+  .vsl-holiday-offer__ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: clamp(16px, 2.2vw, 26px) solid rgba(16,24,43,0.16);
+    pointer-events: none;
+  }
+  .vsl-holiday-offer__ring--inner {
+    inset: clamp(20px, 2.8vw, 34px);
+    border: 3px solid rgba(255,255,255,0.4);
+  }
+  .vsl-holiday-offer__photo {
+    position: absolute;
+    inset: clamp(34px, 4.6vw, 56px);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(16,24,43,0.35);
+    background: var(--navy);
+  }
+  .vsl-holiday-offer__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Framing is baked into the square crop, so the circle is not scaled up. */
+  }
+  .vsl-holiday-offer__flag {
+    /* Checkered chip pinned to the lower-right rim of the circle.
+       right/bottom on the square lands in the empty corner, off the ornament. */
+    position: absolute;
+    left: 84%;
+    top: 76%;
+    z-index: 3;
+    width: 84px;
+    height: 34px;
+    border-radius: 6px;
+    background: repeating-conic-gradient(#fff 0 25%, var(--navy) 0 50%);
+    background-size: 17px 17px;
+    box-shadow: 0 10px 24px rgba(16,24,43,0.35);
+    transform: translate(-50%, -50%) rotate(-14deg);
+  }
+  .vsl-holiday-offer__copy { min-width: 0; }
+  .vsl-holiday-offer .vsl-holiday-section-title { color: #fff; }
+  .vsl-holiday-offer .vsl-holiday-section-title em {
+    color: #fff;
+    -webkit-text-fill-color: #fff;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.55);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.12em;
+  }
+  .vsl-holiday .vsl-holiday-offer__lead {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.06rem, 0.98rem + 0.4vw, 1.22rem);
+    line-height: 1.55;
+    font-weight: 500;
+    color: #fff;
+    max-width: 54ch;
+  }
+  .vsl-holiday-offer__lead strong { font-weight: 700; }
+  .vsl-holiday-offer .vsl-holiday-actions { margin-bottom: 1.6rem; }
+  .vsl-holiday .vsl-holiday-offer__body {
+    margin: 0 0 1.4rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+    max-width: 58ch;
+  }
+  .vsl-holiday .vsl-holiday-includes__title {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .vsl-holiday-includes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 22px;
+    max-width: 640px;
+  }
+  .vsl-holiday-includes li {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    column-gap: 10px;
+    align-items: start;
+    font-size: 1rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: #fff;
+  }
+  .vsl-holiday-includes svg {
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vsl-holiday .vsl-holiday-fine {
+    margin: 1.4rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    font-style: italic;
+    color: rgba(255,255,255,0.78);
+    max-width: 62ch;
+  }
+
+  /* ═══════════════════════════════════════════════
+     BUYOUT — "Buyouts get even more" (navy)
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-buyout {
+    position: relative;
+    padding: clamp(56px, 8vh, 96px) 0;
+    background: linear-gradient(180deg, var(--navy) 0%, var(--deep-indigo) 100%);
+    color: var(--circuit-white);
+  }
+  .vsl-holiday-buyout__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  .vsl-holiday-buyout__media {
+    position: relative;
+    order: 2;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    border: 1px solid rgba(234,234,234,0.14);
+  }
+  .vsl-holiday-buyout__media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .vsl-holiday-buyout__media::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 14px;
+    background: repeating-conic-gradient(rgba(255,255,255,0.92) 0 25%, transparent 0 50%);
+    background-size: 14px 14px;
+    -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 40%, transparent 100%);
+  }
+  .vsl-holiday-buyout__copy { order: 1; min-width: 0; }
+  .vsl-holiday-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 1.5rem;
+    max-width: 560px;
+  }
+  .vsl-holiday-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(234,234,234,0.04);
+    border: 1px solid rgba(234,234,234,0.14);
+    border-left: 3px solid var(--yellow);
+  }
+  .vsl-holiday-stat__num {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1.2rem + 1.4vw, 2.3rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+  }
+  .vsl-holiday-stat__label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-holiday-buyout .vsl-holiday-fine { color: var(--mist); }
+
+  /* ═══════════════════════════════════════════════
+     PERFECT FOR (light section)
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-perfect {
+    padding: clamp(56px, 8vh, 96px) 0;
+    background: var(--circuit-white);
+    color: var(--navy);
+  }
+  .vsl-holiday-perfect .vsl-holiday-section-title { color: var(--navy); }
+  .vsl-holiday-perfect .vsl-holiday-section-title em { color: var(--red); -webkit-text-fill-color: var(--red); }
+  .vsl-holiday-perfect .vsl-holiday-section-sub { color: var(--slate-violet); }
+  .vsl-holiday-perfect__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .vsl-holiday-perfect-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 22px 26px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid rgba(16,24,43,0.07);
+    box-shadow: 0 10px 30px rgba(16,24,43,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .vsl-holiday-perfect-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(16,24,43,0.1);
+  }
+  .vsl-holiday-perfect-card__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(16,24,43,0.07);
+  }
+  .vsl-holiday-perfect-card__icon svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: var(--blue);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .vsl-holiday-perfect-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1rem + 0.9vw, 1.55rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+    color: var(--navy);
+  }
+  .vsl-holiday-perfect-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--slate-violet);
+  }
+
+  /* ═══════════════════════════════════════════════
+     QUOTES (deep indigo, white cards — echoes the reference)
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-quotes {
+    padding: clamp(56px, 8vh, 96px) 0;
+    background: linear-gradient(180deg, var(--deep-indigo) 0%, var(--blue) 100%);
+    color: var(--circuit-white);
+  }
+  .vsl-holiday-quotes__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-bottom: clamp(1.5rem, 3vh, 2.25rem);
+  }
+  .vsl-holiday-quotes__head .vsl-holiday-section-title { margin-bottom: 0; }
+  .vsl-holiday-rating {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+  }
+  .vsl-holiday-rating__stars {
+    display: inline-flex;
+    gap: 3px;
+  }
+  .vsl-holiday-rating__stars svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--yellow);
+  }
+  .vsl-holiday-rating__num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: #fff;
+  }
+  .vsl-holiday-rating__link {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--circuit-white);
+    text-decoration: underline;
+    text-decoration-color: rgba(234,234,234,0.4);
+    text-underline-offset: 3px;
+  }
+  .vsl-holiday-rating__link:hover { color: #fff; text-decoration-color: #fff; }
+  .vsl-holiday-quotes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .vsl-holiday-quote {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 26px 26px;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--navy);
+    box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+  }
+  .vsl-holiday-quote__mark {
+    font-family: var(--font-display);
+    font-size: 3.2rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 0.6;
+    color: var(--magenta);
+    -webkit-text-fill-color: var(--magenta);
+  }
+  .vsl-holiday-quote p {
+    font-size: 1.1rem;
+    line-height: 1.55;
+    font-weight: 500;
+    color: var(--navy);
+    max-width: 62ch;
+  }
+  .vsl-holiday-quote footer {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .vsl-holiday-quote__author {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+  }
+  .vsl-holiday-quote__meta {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  /* ═══════════════════════════════════════════════
+     INQUIRE — Tripleseat form home
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-inquire {
+    position: relative;
+    padding: clamp(56px, 8vh, 96px) 0;
+    background: var(--navy);
+    color: var(--circuit-white);
+  }
+  .vsl-holiday-inquire__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: clamp(32px, 5vw, 72px);
+  }
+  .vsl-holiday-inquire__copy { min-width: 0; }
+  .vsl-holiday-inquire .vsl-holiday-loc { margin: 0 0 1.75rem; }
+  .vsl-holiday-steps {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+  .vsl-holiday-step {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    column-gap: 16px;
+    align-items: start;
+    padding: 16px 18px;
+    border-radius: 14px;
+    background: rgba(234,234,234,0.04);
+    border: 1px solid rgba(234,234,234,0.14);
+  }
+  .vsl-holiday-step__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+  }
+  .vsl-holiday-step h3 {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .vsl-holiday-step p {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--mist);
+  }
+
+  .vsl-holiday-form {
+    position: relative;
+    border-radius: 18px;
+    border: 1px solid rgba(234,234,234,0.16);
+    background: linear-gradient(160deg, rgba(25,27,77,0.9) 0%, rgba(16,24,43,0.85) 100%);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+  }
+  .vsl-holiday-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--holiday-grad);
+  }
+  .vsl-holiday-form__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 24px 26px 0;
+  }
+  .vsl-holiday-form__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1rem + 1vw, 1.6rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+  .vsl-holiday-form__pill {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .vsl-holiday-form__body { padding: 18px 26px 26px; }
+  .vsl-holiday-form__slot { display: none; }
+  /* Tripleseat form (cross-origin iframe). The frame can't report its own height, so heights are
+     fixed per breakpoint (see --ts-frame-h below). It scrolls internally if validation messages
+     or an extra field push the form taller. */
+  .vsl-holiday-form__embed {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--navy); /* matches the recommended Tripleseat theme background */
+    box-shadow: inset 0 0 0 1px rgba(234,234,234,0.12);
+  }
+  .vsl-holiday-form__embed::before {
+    content: 'Loading the inquiry form\2026';
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--mist);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+  .vsl-holiday-form__embed.is-loaded::before { display: none; }
+  .vsl-holiday-form__frame {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: var(--ts-frame-h, 1600px);
+    border: 0;
+    background: transparent;
+  }
+  /* The form's height is a step function of the frame's width (Sep 2026, Houston + Dallas):
+       frame ≥570px → 1577px · 481–569px → 1601px · 373–480px → 1663px (Tripleseat bumps input
+       font-size at ≤480px) · ≤372px → 1684px.
+     Frame width follows the page layout: two columns down to 981px, one column to 761px, then
+     edge to edge. Each step below is the form height + ~25px. Re-measure if fields change. */
+  @media (max-width: 1329px) { .vsl-holiday { --ts-frame-h: 1625px; } }  /* frame 481–569 */
+  @media (max-width: 1143px) { .vsl-holiday { --ts-frame-h: 1690px; } }  /* frame 405–480 */
+  @media (max-width: 980px)  { .vsl-holiday { --ts-frame-h: 1600px; } }  /* frame 631–828 */
+  @media (max-width: 569px)  { .vsl-holiday { --ts-frame-h: 1625px; } }  /* frame = viewport */
+  @media (max-width: 480px)  { .vsl-holiday { --ts-frame-h: 1690px; } }
+  @media (max-width: 372px)  { .vsl-holiday { --ts-frame-h: 1710px; } }
+  .vsl-holiday-form__fallback {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(234,234,234,0.12);
+    font-size: 0.95rem;
+    color: var(--mist);
+  }
+  .vsl-holiday-form__fallback a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--yellow);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .vsl-holiday-form__fallback a:hover { text-decoration: underline; }
+  .vsl-holiday-form__fallback svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ═══════════════════════════════════════════════
+     BOTTOM CTA
+     ═══════════════════════════════════════════════ */
+  .vsl-holiday-cta {
+    background: var(--navy);
+    padding: 0 0 clamp(56px, 8vh, 96px);
+  }
+  .vsl-holiday-cta__panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    max-width: min(1080px, 100%);
+    margin: 0 auto;
+    padding: 30px 36px;
+    border: 1px solid rgba(234,234,234,0.14);
+    border-top: 3px solid var(--yellow);
+    border-radius: 14px;
+    background:
+      linear-gradient(105deg, rgba(25,27,77,0.85) 0%, rgba(16,24,43,0.55) 62%, rgba(16,24,43,0.35) 100%);
+    text-align: left;
+  }
+  .vsl-holiday-cta__copy { display: flex; flex-direction: column; gap: 6px; }
+  .vsl-holiday-cta__eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-holiday-cta__panel h2 {
+    margin: 0;
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 1.15rem + 2.2vw, 2.75rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 0.98;
+    color: #fff;
+  }
+  .vsl-holiday-cta__panel h2 em {
+    font-style: italic;
+    color: var(--yellow);
+    -webkit-text-fill-color: var(--yellow);
+  }
+  .vsl-holiday-cta__panel .vsl-holiday-btn { flex-shrink: 0; }
+
+  /* ═══════════════════════════════════════════════
+     RESPONSIVE
+     ═══════════════════════════════════════════════ */
+  @media (max-width: 1100px) {
+    .vsl-holiday-perfect__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 980px) {
+    .vsl-holiday-hero__inner { grid-template-columns: minmax(0, 1fr); }
+    /* Flatten the copy so the poster can sit between the intro and the buttons. */
+    .vsl-holiday-hero__copy { display: contents; }
+    .vsl-holiday-hero__visual { order: 1; }
+    .vsl-holiday-hero__actions { order: 2; width: 100%; flex-direction: column; align-items: stretch; }
+    .vsl-holiday-hero__actions .vsl-holiday-btn { width: 100%; }
+    .vsl-holiday-hero__visual {
+      justify-self: stretch;
+      width: 100%;
+      max-width: 420px;
+      margin-inline: auto;
+      padding: 4px 0 0;
+    }
+    .vsl-holiday-poster { transform: none; }
+    .vsl-holiday-poster:hover, .vsl-holiday-poster:focus-visible { transform: none; }
+    .vsl-holiday-poster__cta,
+    .vsl-holiday-poster__more { display: none; }
+    .vsl-holiday-offer__inner,
+    .vsl-holiday-buyout__inner,
+    .vsl-holiday-inquire__inner { grid-template-columns: minmax(0, 1fr); }
+    .vsl-holiday-offer__media {
+      width: min(100%, 440px);
+      margin-left: 0;
+      margin-inline: auto;
+      margin-top: 30px; /* room for the ornament hook above the ring */
+    }
+    .vsl-holiday-buyout__media { order: 1; max-width: 640px; }
+    .vsl-holiday-buyout__copy { order: 2; }
+    .vsl-holiday-quotes__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .vsl-holiday { --page-margin: 20px; }
+    .vsl-holiday-hero { min-height: 0; }
+    .vsl-holiday-hero__inner {
+      padding: 32px 20px 24px;
+      width: 100%;
+      gap: 28px;
+    }
+    .vsl-holiday-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 7px 12px;
+      white-space: normal;
+    }
+    .vsl-holiday-hero__title { font-size: 3rem; max-width: none; }
+    .vsl-holiday .vsl-holiday-hero__sub { font-size: 1.02rem; margin-bottom: 1.25rem; }
+    .vsl-holiday-hero .vsl-holiday-loc { margin-bottom: 1.1rem; }
+    .vsl-holiday-actions { width: 100%; }
+    .vsl-holiday-actions .vsl-holiday-btn { width: 100%; }
+    .vsl-holiday-hero__visual { width: 100%; max-width: none; }
+    .vsl-holiday-poster__plate {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "label"
+        "date"
+        "note"
+        "cta"
+        "more";
+      row-gap: 4px;
+      padding: 14px 16px calc(14px + var(--poster-check-h));
+    }
+    .vsl-holiday-poster__note,
+    .vsl-holiday-poster__more { justify-self: start; }
+    .vsl-holiday-poster__date { font-size: 1.4rem; }
+    .vsl-holiday-poster__cta { margin-top: 8px; }
+    .vsl-holiday-offer,
+    .vsl-holiday-buyout,
+    .vsl-holiday-perfect,
+    .vsl-holiday-quotes,
+    .vsl-holiday-inquire { padding: 44px 0; }
+    .vsl-holiday-offer__media { width: min(100%, 320px); }
+    .vsl-holiday-offer__flag { width: 64px; height: 26px; background-size: 13px 13px; }
+    .vsl-holiday-includes { grid-template-columns: minmax(0, 1fr); }
+    .vsl-holiday-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .vsl-holiday-stat { padding: 10px 10px; }
+    .vsl-holiday-stat__label { font-size: 0.68rem; letter-spacing: 0.05em; }
+    .vsl-holiday-perfect__grid { grid-template-columns: minmax(0, 1fr); }
+    .vsl-holiday-quotes__head { align-items: flex-start; flex-direction: column; }
+    /* The Tripleseat form has a hard ~364px minimum (its reCAPTCHA), so on phones the panel and
+       frame run edge to edge instead of sitting inside the page margins. */
+    .vsl-holiday-form {
+      margin-inline: calc(-1 * clamp(20px, 5vw, var(--page-margin)));
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+    .vsl-holiday-form__head { padding: 20px 18px 0; flex-wrap: wrap; }
+    .vsl-holiday-form__body { padding: 14px 18px 20px; }
+    .vsl-holiday-form__embed { margin-inline: -18px; border-radius: 0; }
+    .vsl-holiday-cta { padding-bottom: 44px; }
+    .vsl-holiday-cta__panel {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px 18px;
+    }
+    .vsl-holiday-cta__panel h2 { font-size: 2rem; max-width: none; }
+    .vsl-holiday-cta__panel .vsl-holiday-btn { width: 100%; }
+  }
+  @media (max-width: 639px) {
+    .vsl-holiday-loc__btn { padding: 8px 16px; font-size: 0.92rem; }
+    .vsl-holiday-stats { grid-template-columns: minmax(0, 1fr); }
+    .vsl-holiday-stat { flex-direction: row; align-items: baseline; gap: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-holiday-hero__snow { animation: none; }
+    .vsl-holiday-poster, .vsl-holiday-btn, .vsl-holiday-perfect-card, .vsl-holiday-loc__btn { transition: none; }
+    .vsl-holiday-poster:hover, .vsl-holiday-poster:focus-visible { transform: none; }
+    .vsl-holiday-perfect-card:hover { transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) and (min-width: 981px) {
+    .vsl-holiday-poster { transform: rotate(-3deg); }
+  }
+</style>
+
+<div class="vsl-holiday" data-holiday-location="houston" data-vsl-config='{
+  "default": "houston",
+  "offer": {
+    "deadline": "October 31, 2026",
+    "deadlineShort": "10/31/26",
+    "gift": "Velocity YETI swag bag"
+  },
+  "locations": {
+    "houston": {
+      "label": "Houston",
+      "inquiry": "https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/6077?hide_banner=1",
+      "groupEvents": "https://velocitysimlounge.com/group-events/",
+      "buyout": "https://velocitysimlounge.com/buyout/",
+      "corporate": "https://velocitysimlounge.com/corporate-events/"
+    },
+    "dallas": {
+      "label": "Dallas",
+      "inquiry": "https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/6075?hide_banner=1",
+      "groupEvents": "https://velocitysimlounge.com/dallas/group-events/",
+      "buyout": "https://velocitysimlounge.com/dallas/buyout/",
+      "corporate": "https://velocitysimlounge.com/dallas/corporate-events/"
+    }
+  }
+}'>
+  <main id="primary-content">
+
+    <!-- ============================================================== -->
+    <!-- HERO                                                           -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-hero" id="holiday-hero" aria-labelledby="holiday-hero-title">
+      <div class="vsl-holiday-hero__photo" aria-hidden="true">
+        <img
+          class="vsl-holiday-hero__photo-img"
+          src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Corporate-Events-hero-photo.webp"
+          alt=""
+          width="1600"
+          height="900"
+          decoding="async"
+          fetchpriority="high"
+        >
+      </div>
+      <div class="vsl-holiday-hero__snow" aria-hidden="true"></div>
+      <div class="vsl-holiday-hero__inner">
+        <div class="vsl-holiday-hero__copy">
+          <span class="vsl-holiday-eyebrow">Houston &amp; Dallas &middot; Holiday season 2026</span>
+          <h1 class="vsl-holiday-hero__title" id="holiday-hero-title">
+            Holiday <span class="vsl-holiday-hero__accent">Parties</span>
+          </h1>
+          <p class="vsl-holiday-hero__sub">
+            Company parties, team celebrations, and full-venue buyouts &mdash; with wheel-to-wheel sim racing, chef-crafted food, and a full bar. Book early and get a <strong>free Velocity YETI swag bag</strong>.
+          </p>
+          <div class="vsl-holiday-loc" role="radiogroup" aria-label="Choose your lounge" data-holiday-loc-group>
+            <span class="vsl-holiday-loc__label">Celebrating in</span>
+            <span class="vsl-holiday-loc__seg">
+              <button type="button" class="vsl-holiday-loc__btn" role="radio" aria-checked="true" data-holiday-loc="houston">Houston</button>
+              <button type="button" class="vsl-holiday-loc__btn" role="radio" aria-checked="false" data-holiday-loc="dallas">Dallas</button>
+            </span>
+          </div>
+          <div class="vsl-holiday-actions vsl-holiday-hero__actions">
+            <a class="vsl-holiday-btn" href="#holiday-inquire">
+              Start planning your holiday party
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="vsl-holiday-btn vsl-holiday-btn--ghost" href="#holiday-offer">See the early-bird bonus</a>
+          </div>
+        </div>
+
+        <div class="vsl-holiday-hero__visual">
+          <!-- Campaign creative. Upload "Holiday Parties/assets/wordpress-upload/velocity-holiday-party-2026-ad.webp" to WP Media
+               (URL below assumes a 2026/09 upload — adjust the month if it lands later). Until it is live, staging falls back to the repo copy. -->
+          <div class="vsl-holiday-poster">
+            <img
+              class="vsl-holiday-poster__img"
+              src="https://velocitysimlounge.com/wp-content/uploads/2026/09/velocity-holiday-party-2026-ad.webp"
+              data-vsl-local-src="../Holiday Parties/assets/wordpress-upload/velocity-holiday-party-2026-ad.webp"
+              alt="Velocity holiday party ad: guests celebrating with trophies and checkered flags beside the message &ldquo;Book your holiday party early and get a free swag bag,&rdquo; with a green YETI bag"
+              width="819"
+              height="1024"
+              decoding="async"
+              fetchpriority="high"
+            >
+            <div class="vsl-holiday-poster__plate">
+              <span class="vsl-holiday-poster__label">Early-bird deadline</span>
+              <span class="vsl-holiday-poster__date" data-holiday-deadline>October 31, 2026</span>
+              <span class="vsl-holiday-poster__note">Minimum spend applies</span>
+              <a class="vsl-holiday-poster__more" href="#holiday-offer">See the bonus</a>
+              <a class="vsl-holiday-btn vsl-holiday-poster__cta" href="#holiday-inquire">
+                Start planning your holiday party
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <span class="vsl-holiday-poster__check" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vsl-holiday-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- OFFER — Book early. Get rewarded.                              -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-offer" id="holiday-offer" aria-labelledby="holiday-offer-heading">
+      <div class="vsl-holiday-grid vsl-holiday-offer__inner">
+        <div class="vsl-holiday-offer__media">
+          <span class="vsl-holiday-offer__cap" aria-hidden="true"></span>
+          <span class="vsl-holiday-offer__ring" aria-hidden="true"></span>
+          <span class="vsl-holiday-offer__ring vsl-holiday-offer__ring--inner" aria-hidden="true"></span>
+          <div class="vsl-holiday-offer__photo">
+            <img
+              src="https://velocitysimlounge.com/wp-content/uploads/2026/10/velocity-holiday-party-group-circle.webp"
+              data-vsl-local-src="../Holiday Parties/assets/wordpress-upload/velocity-holiday-party-group-circle.webp"
+              alt="A large group of guests pose with trophies in front of the Velocity checkered backdrop at a company event"
+              width="640" height="640" loading="lazy" decoding="async">
+          </div>
+          <span class="vsl-holiday-offer__flag" aria-hidden="true"></span>
+        </div>
+
+        <div class="vsl-holiday-offer__copy">
+          <span class="vsl-holiday-eyebrow vsl-holiday-eyebrow--navy">Limited-time bonus</span>
+          <h2 class="vsl-holiday-section-title" id="holiday-offer-heading">Book early. <em>Get rewarded.</em></h2>
+          <!-- CONFIRM: deadline, gift, minimum spend -->
+          <p class="vsl-holiday-offer__lead">
+            Lock in your holiday party by <strong data-holiday-deadline>October 31, 2026</strong> and receive a free <strong>Velocity YETI swag bag</strong> when you book an eligible event. Minimum spend applies.
+          </p>
+          <div class="vsl-holiday-actions">
+            <a class="vsl-holiday-btn vsl-holiday-btn--navy" href="#holiday-inquire">
+              Start planning your holiday party
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+          <p class="vsl-holiday-offer__body">
+            December fills up fast. Book early and our events team handles the rest &mdash; race formats, food and drink, timing, and setup &mdash; so all you have to do is show up and take the podium. Company parties, friend groups, and full-venue buyouts welcome.
+          </p>
+          <p class="vsl-holiday-includes__title">Every holiday party includes</p>
+          <ul class="vsl-holiday-includes">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>Dedicated racing simulators reserved for your group</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>Reserved seating or a private event space</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>Chef-crafted food &amp; drink packages for groups</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>Race formats with live leaderboards &mdash; or open free-driving</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>A dedicated event manager from planning to podium</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.6 2.6L16 9.6"/></svg><span>No experience needed &mdash; we coach every guest</span></li>
+          </ul>
+          <!-- CONFIRM: fine print -->
+          <p class="vsl-holiday-fine">
+            Swag bag offer valid on eligible holiday party bookings confirmed by <span data-holiday-deadline>October 31, 2026</span>. Minimum spend applies and varies by lounge. Excludes tax, admin fee, and gratuity. One swag bag per booking; while supplies last.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- BUYOUT — Buyouts get even more                                 -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-buyout" id="holiday-buyout" aria-labelledby="holiday-buyout-heading">
+      <div class="vsl-holiday-grid vsl-holiday-buyout__inner">
+        <div class="vsl-holiday-buyout__media">
+          <img
+            src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Full-Buyout-card-photo-1024x683.webp"
+            alt="A full-venue buyout at Velocity with a catered spread and guests filling the lounge"
+            width="1024" height="683" loading="lazy" decoding="async">
+        </div>
+        <div class="vsl-holiday-buyout__copy">
+          <span class="vsl-holiday-eyebrow vsl-holiday-eyebrow--ghost">Full-venue buyouts</span>
+          <h2 class="vsl-holiday-section-title" id="holiday-buyout-heading">Buyouts get <em>even more</em></h2>
+          <!-- CONFIRM: buyout bonus -->
+          <p class="vsl-holiday-section-sub">
+            Take over the whole lounge. Book a full-venue holiday buyout by <strong data-holiday-deadline>October 31, 2026</strong> and we&rsquo;ll add a complimentary podium ceremony with custom trophies for your top three finishers.
+          </p>
+
+          <div class="vsl-holiday-stats" data-holiday-loc-show="houston" aria-label="Houston venue capacity">
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">214</span><span class="vsl-holiday-stat__label">Guests indoors</span></div>
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">60</span><span class="vsl-holiday-stat__label">Outdoor patio</span></div>
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">16+</span><span class="vsl-holiday-stat__label">Racing simulators</span></div>
+          </div>
+          <div class="vsl-holiday-stats" data-holiday-loc-show="dallas" aria-label="Dallas venue capacity">
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">400</span><span class="vsl-holiday-stat__label">Guest capacity</span></div>
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">32</span><span class="vsl-holiday-stat__label">Racing simulators</span></div>
+            <div class="vsl-holiday-stat"><span class="vsl-holiday-stat__num">10K+</span><span class="vsl-holiday-stat__label">Square feet</span></div>
+          </div>
+
+          <div class="vsl-holiday-actions">
+            <a class="vsl-holiday-btn" href="#holiday-inquire">
+              Secure your date
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="vsl-holiday-btn vsl-holiday-btn--ghost" href="https://velocitysimlounge.com/buyout/" data-holiday-link="buyout">Explore full buyouts</a>
+          </div>
+          <p class="vsl-holiday-fine">
+            Buyout bonus applies to full-venue holiday buyouts confirmed by <span data-holiday-deadline>October 31, 2026</span>. Minimum spend applies. Party must take place by December 31, 2026.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- PERFECT FOR                                                    -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-perfect" id="holiday-perfect" aria-labelledby="holiday-perfect-heading">
+      <div class="vsl-holiday-grid">
+        <h2 class="vsl-holiday-section-title vsl-holiday-section-title--center" id="holiday-perfect-heading">Built for every <em>holiday crowd</em></h2>
+        <p class="vsl-holiday-section-sub vsl-holiday-section-sub--center">From the office party to the group chat that finally picked a date &mdash; a holiday party in Houston or Dallas that nobody has to be talked into.</p>
+        <div class="vsl-holiday-perfect__grid">
+          <article class="vsl-holiday-perfect-card">
+            <span class="vsl-holiday-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 3v6a7 7 0 0 0 14 0V3"/><path d="M5 3h14"/><path d="M9 21h6"/><path d="M12 16v5"/><path d="M5 5H3a3 3 0 0 0 3 3"/><path d="M19 5h2a3 3 0 0 1-3 3"/></svg>
+            </span>
+            <h3>Company holiday parties</h3>
+            <p>Trade the banquet hall for a racetrack. Open bar, live leaderboards, and a podium for the office champion.</p>
+          </article>
+          <article class="vsl-holiday-perfect-card">
+            <span class="vsl-holiday-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <h3>Team &amp; department celebrations</h3>
+            <p>Year-end wins deserve more than a lunch. Mixed-skill races keep everyone in the fight &mdash; no experience required.</p>
+          </article>
+          <article class="vsl-holiday-perfect-card">
+            <span class="vsl-holiday-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </span>
+            <h3>Client appreciation</h3>
+            <p>Skip the steakhouse. Wheel-to-wheel racing and craft cocktails your clients will still be talking about in January.</p>
+          </article>
+          <article class="vsl-holiday-perfect-card">
+            <span class="vsl-holiday-perfect-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </span>
+            <h3>Friends &amp; family</h3>
+            <p>Friendsmas, family reunions, and everyone home for the holidays &mdash; semi-private party packs make it easy.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- QUOTES                                                         -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-quotes" id="holiday-quotes" aria-labelledby="holiday-quotes-heading">
+      <div class="vsl-holiday-grid">
+        <div class="vsl-holiday-quotes__head">
+          <h2 class="vsl-holiday-section-title" id="holiday-quotes-heading">Companies that <em>raced with us</em></h2>
+          <div class="vsl-holiday-rating">
+            <span class="vsl-holiday-rating__stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+            </span>
+            <span class="vsl-holiday-rating__num">4.9</span>
+            <a class="vsl-holiday-rating__link" href="https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0" target="_blank" rel="noopener noreferrer">Read our Google reviews</a>
+          </div>
+        </div>
+        <!-- Google reviews from corporate hosts, attributed by company (no individual names). -->
+        <div class="vsl-holiday-quotes__grid">
+          <blockquote class="vsl-holiday-quote">
+            <span class="vsl-holiday-quote__mark" aria-hidden="true">&ldquo;</span>
+            <p>Hosting our Q1 team building event here was an absolute highlight for our team. The experience was seamlessly executed, and the trophy ceremony on the podium was a truly memorable touch. No one was in a rush to step off that podium!</p>
+            <footer><span class="vsl-holiday-quote__author">Piping Technology</span><span class="vsl-holiday-quote__meta">Team building event &middot; Google review</span></footer>
+          </blockquote>
+          <blockquote class="vsl-holiday-quote">
+            <span class="vsl-holiday-quote__mark" aria-hidden="true">&ldquo;</span>
+            <p>Had a private event here and the entire team was beyond helpful and so informative. Great team bonding event if you want laughs, competitiveness, etc. Come check them out!</p>
+            <footer><span class="vsl-holiday-quote__author">Houston Texans</span><span class="vsl-holiday-quote__meta">Private event &middot; Google review</span></footer>
+          </blockquote>
+          <blockquote class="vsl-holiday-quote">
+            <span class="vsl-holiday-quote__mark" aria-hidden="true">&ldquo;</span>
+            <p>We recently hosted our team builder at Velocity and had an absolutely fantastic experience. The feedback from all of our attendees has been overwhelmingly positive and everyone had a great time! They personalized our experience by engraving trophies and putting company banners on the track. The entire experience was well organized, engaging, and a lot of fun. Definitely recommend it!</p>
+            <footer><span class="vsl-holiday-quote__author">Wood PLC</span><span class="vsl-holiday-quote__meta">Team builder &middot; Google review</span></footer>
+          </blockquote>
+          <blockquote class="vsl-holiday-quote">
+            <span class="vsl-holiday-quote__mark" aria-hidden="true">&ldquo;</span>
+            <p>Great for company events, especially if you have a competitive team! The staff is incredibly personable, the atmosphere is fun and easy to get everyone engaged and the food was really good. They were able to accommodate food allergies and preferences. Highly recommended!</p>
+            <footer><span class="vsl-holiday-quote__author">Tekmetric</span><span class="vsl-holiday-quote__meta">Company event &middot; Google review</span></footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- INQUIRE — Tripleseat form                                      -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-inquire" id="holiday-inquire" aria-labelledby="holiday-inquire-heading">
+      <div class="vsl-holiday-grid vsl-holiday-inquire__inner">
+        <div class="vsl-holiday-inquire__copy">
+          <span class="vsl-holiday-eyebrow">Start planning</span>
+          <h2 class="vsl-holiday-section-title" id="holiday-inquire-heading">Let&rsquo;s plan your <em>holiday party</em></h2>
+          <p class="vsl-holiday-section-sub">Tell us a little about your group and our events team will follow up with packages, menus, and available dates. Book by <strong data-holiday-deadline>October 31, 2026</strong> to claim your swag bag.</p>
+          <div class="vsl-holiday-loc" role="radiogroup" aria-label="Choose your lounge" data-holiday-loc-group>
+            <span class="vsl-holiday-loc__label">Celebrating in</span>
+            <span class="vsl-holiday-loc__seg">
+              <button type="button" class="vsl-holiday-loc__btn" role="radio" aria-checked="true" data-holiday-loc="houston">Houston</button>
+              <button type="button" class="vsl-holiday-loc__btn" role="radio" aria-checked="false" data-holiday-loc="dallas">Dallas</button>
+            </span>
+          </div>
+          <div class="vsl-holiday-steps">
+            <article class="vsl-holiday-step">
+              <span class="vsl-holiday-step__num">1</span>
+              <div><h3>Tell us about your party</h3><p>Date, headcount, and the vibe you&rsquo;re going for. Two minutes, tops.</p></div>
+            </article>
+            <article class="vsl-holiday-step">
+              <span class="vsl-holiday-step__num">2</span>
+              <div><h3>We build your package</h3><p>Racing format, food and drink, and the right space &mdash; semi-private or the whole lounge.</p></div>
+            </article>
+            <article class="vsl-holiday-step">
+              <span class="vsl-holiday-step__num">3</span>
+              <div><h3>Lock in your date</h3><p>Confirm by the deadline and the YETI swag bag is yours. Then show up and race.</p></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="vsl-holiday-form" id="holiday-form">
+          <div class="vsl-holiday-form__head">
+            <h3 class="vsl-holiday-form__title">Holiday party inquiry</h3>
+            <span class="vsl-holiday-form__pill"><span data-holiday-loc-name>Houston</span></span>
+          </div>
+          <div class="vsl-holiday-form__body">
+
+            <!-- ── TRIPLESEAT FORMS ────────────────────────────────────────────
+                 One Tripleseat dynamic lead form per lounge. The script sets each iframe's src from
+                 data-src the first time its lounge is selected, so only one form (and one reCAPTCHA)
+                 loads. Form fields, colors and the thank-you message are managed inside Tripleseat. -->
+            <div class="vsl-holiday-form__slot" data-holiday-ts-slot="houston" data-holiday-loc-show="houston">
+              <div class="vsl-holiday-form__embed">
+                <iframe class="vsl-holiday-form__frame" title="Houston holiday party inquiry form"
+                  data-src="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/6077?hide_banner=1"
+                  loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </div>
+            <div class="vsl-holiday-form__slot" data-holiday-ts-slot="dallas" data-holiday-loc-show="dallas">
+              <div class="vsl-holiday-form__embed">
+                <iframe class="vsl-holiday-form__frame" title="Dallas holiday party inquiry form"
+                  data-src="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/6075?hide_banner=1"
+                  loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+              </div>
+            </div>
+
+            <div class="vsl-holiday-form__fallback">
+              <span>Form not loading?</span>
+              <a href="https://velocitysimracinglounge.tripleseat.com/dynamic_party_request/6077?hide_banner=1" data-holiday-link="inquiry" target="_blank" rel="noopener noreferrer">
+                Open the <span data-holiday-loc-name>Houston</span> form in a new tab
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- BOTTOM CTA                                                     -->
+    <!-- ============================================================== -->
+    <section class="vsl-holiday-cta" aria-labelledby="holiday-cta-heading">
+      <div class="vsl-holiday-grid">
+        <div class="vsl-holiday-cta__panel">
+          <div class="vsl-holiday-cta__copy">
+            <span class="vsl-holiday-cta__eyebrow">What are you waiting for?</span>
+            <h2 id="holiday-cta-heading">Let&rsquo;s get your party <em>on track</em></h2>
+          </div>
+          <a class="vsl-holiday-btn" href="#holiday-inquire">
+            Get started
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "name": "Holiday Parties | Velocity Sim Racing Lounge — Houston & Dallas",
+      "url": "https://velocitysimlounge.com/holiday-parties/",
+      "description": "Book your company holiday party or full-venue buyout at Velocity Sim Racing Lounge in Houston or Dallas. Book early and get a free Velocity YETI swag bag. Sim racing, chef-crafted food, and a full bar.",
+      "primaryImageOfPage": "https://velocitysimlounge.com/wp-content/uploads/2026/09/velocity-holiday-party-2026-ad.webp"
+    },
+    {
+      "@type": "Offer",
+      "name": "Early-bird holiday party bonus — free Velocity YETI swag bag",
+      "description": "Book an eligible holiday party at Velocity Sim Racing Lounge by October 31, 2026 and receive a free Velocity YETI swag bag. Minimum spend applies.",
+      "image": "https://velocitysimlounge.com/wp-content/uploads/2026/09/velocity-holiday-party-2026-ad.webp",
+      "url": "https://velocitysimlounge.com/holiday-parties/",
+      "validThrough": "2026-10-31",
+      "availability": "https://schema.org/LimitedAvailability",
+      "areaServed": [
+        { "@type": "City", "name": "Houston" },
+        { "@type": "City", "name": "Dallas" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://velocitysimlounge.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Group Events", "item": "https://velocitysimlounge.com/group-events/" },
+        { "@type": "ListItem", "position": 3, "name": "Holiday Parties", "item": "https://velocitysimlounge.com/holiday-parties/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  function init() {
+    var root = document.querySelector('.vsl-holiday');
+    if (!root || root._vslHolidayInit) return;
+    root._vslHolidayInit = true;
+
+    var config = {};
+    try { config = JSON.parse(root.getAttribute('data-vsl-config') || '{}') || {}; } catch (e) { config = {}; }
+    var LOCATIONS = config.locations || {};
+    var OFFER = config.offer || {};
+    var currentLoc = null;
+
+    function normLoc(v) { return v === 'dallas' ? 'dallas' : 'houston'; }
+
+    /* Offer deadline is config-driven so one edit updates every mention. */
+    if (OFFER.deadline) {
+      root.querySelectorAll('[data-holiday-deadline]').forEach(function (el) { el.textContent = OFFER.deadline; });
+    }
+
+    /* One URL for both lounges. Open on the navbar's city. ?loc= is an explicit override.
+       The toggles on this page do not write the navbar's saved city. */
+    function initialLocation() {
+      try {
+        var q = new URLSearchParams(window.location.search).get('loc');
+        if (q === 'dallas' || q === 'houston') return q;
+      } catch (e) {}
+      try {
+        if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readLocation === 'function') {
+          var shown = window.VSL_LOCATION.readLocation();
+          if (shown === 'dallas' || shown === 'houston') return shown;
+        }
+      } catch (e0) {}
+      try {
+        if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readStoredLocation === 'function') {
+          var stored = window.VSL_LOCATION.readStoredLocation();
+          if (stored === 'dallas' || stored === 'houston') return stored;
+        }
+      } catch (e1) {}
+      try {
+        var ls = window.localStorage.getItem('vslPreferredLocation');
+        if (ls === 'dallas' || ls === 'houston') return ls;
+      } catch (e2) {}
+      return normLoc(config['default']);
+    }
+
+    function setLocation(loc) {
+      loc = normLoc(loc);
+      var cfg = LOCATIONS[loc];
+      if (!cfg) return;
+      currentLoc = loc;
+      root.setAttribute('data-holiday-location', loc);
+      root.querySelectorAll('[data-holiday-loc-name]').forEach(function (el) { el.textContent = cfg.label || loc; });
+      root.querySelectorAll('[data-holiday-link]').forEach(function (a) {
+        var key = a.getAttribute('data-holiday-link');
+        if (cfg[key]) a.setAttribute('href', cfg[key]);
+      });
+      root.querySelectorAll('[data-holiday-loc]').forEach(function (btn) {
+        var on = btn.getAttribute('data-holiday-loc') === loc;
+        btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        btn.tabIndex = on ? 0 : -1;
+      });
+      activateForm(loc);
+    }
+
+    /* Page toggles stay on this page. They do not write the navbar's saved city.
+       Once a visitor picks here, later navbar changes no longer override this page. */
+    var holidayLocLocked = false;
+    function pick(loc) {
+      holidayLocLocked = true;
+      setLocation(loc);
+    }
+
+    root.querySelectorAll('[data-holiday-loc]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        pick(btn.getAttribute('data-holiday-loc'));
+      });
+      btn.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        e.preventDefault();
+        var next = currentLoc === 'houston' ? 'dallas' : 'houston';
+        pick(next);
+        var target = btn.parentElement && btn.parentElement.querySelector('[data-holiday-loc="' + next + '"]');
+        if (target) target.focus();
+      });
+    });
+    window.addEventListener('_vslLocationChanged', function (e) {
+      if (holidayLocLocked) return;
+      if (!e || !e.detail || !e.detail.location) return;
+      setLocation(e.detail.location);
+    });
+
+    /* Tripleseat forms: load the selected lounge's iframe the first time it's shown (from data-src),
+       so the other lounge's form and reCAPTCHA never download unless the visitor switches. */
+    function activateForm(loc) {
+      var slot = root.querySelector('[data-holiday-ts-slot="' + loc + '"]');
+      var frame = slot && slot.querySelector('iframe[data-src]');
+      if (!frame || frame.getAttribute('src')) return;
+      frame.addEventListener('load', function () {
+        if (frame.parentElement) frame.parentElement.classList.add('is-loaded');
+        setTimeout(forceParentHeight, 50);
+      });
+      frame.setAttribute('src', frame.getAttribute('data-src'));
+    }
+
+    setLocation(initialLocation());
+
+    /* Campaign creative: WP URL first, repo copy as staging fallback (same convention as Food & Drink).
+       If neither loads, drop the poster rather than show a broken image. */
+    root.querySelectorAll('img[data-vsl-local-src]').forEach(function (img) {
+      function onFail() {
+        var local = img.getAttribute('data-vsl-local-src');
+        if (local && img.getAttribute('src') !== local) {
+          img.setAttribute('src', local);
+          return;
+        }
+        var wrap = img.closest('.vsl-holiday-hero__visual');
+        if (wrap) wrap.hidden = true;
+        setTimeout(forceParentHeight, 50);
+      }
+      img.addEventListener('error', onFail);
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) onFail();
+    });
+
+    /* Elementor sometimes pins the widget's height; keep parents sized to content. */
+    function forceParentHeight() {
+      var el = root.parentElement;
+      var rootH = root.scrollHeight + 'px';
+      while (el && el !== document.body) {
+        el.style.setProperty('height', rootH, 'important');
+        el.style.setProperty('min-height', rootH, 'important');
+        el.style.setProperty('max-height', 'none', 'important');
+        el.style.setProperty('overflow', 'visible', 'important');
+        el = el.parentElement;
+      }
+    }
+    forceParentHeight();
+    setTimeout(forceParentHeight, 200);
+    setTimeout(forceParentHeight, 800);
+    window.addEventListener('resize', function () { setTimeout(forceParentHeight, 50); });
+
+    /* Smooth in-page anchors (CTAs → #holiday-inquire / #holiday-offer). */
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.setAttribute('data-elementor-open-lightbox', 'no');
+      a.addEventListener('click', function (e) {
+        var id = (a.getAttribute('href') || '').slice(1);
+        var target = id && document.getElementById(id);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        /* Land focus on the form so keyboard users continue from the right place. */
+        if (id === 'holiday-inquire') {
+          var focusable = target.querySelector('[data-holiday-ts-slot="' + currentLoc + '"] iframe[src], .vsl-holiday-form__fallback a');
+          if (focusable) setTimeout(function () { try { focusable.focus({ preventScroll: true }); } catch (err) {} }, reduce ? 0 : 450);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

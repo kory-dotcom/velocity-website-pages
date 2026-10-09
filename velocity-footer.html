@@ -134,8 +134,25 @@
   text-transform: none;
 }
 
-.vsl-site-footer__contact-block + .vsl-site-footer__heading {
+.vsl-site-footer__contact-block + .vsl-site-footer__heading,
+.vsl-site-footer__loc + .vsl-site-footer__heading {
   margin-top: calc(22px * var(--vsl-ui-scale));
+}
+.vsl-site-footer__loc + .vsl-site-footer__loc {
+  margin-top: calc(16px * var(--vsl-ui-scale));
+}
+.vsl-site-footer__loc-name {
+  margin: 0 0 6px;
+  font-family: var(--font-head);
+  font-size: calc(0.85rem * var(--vsl-ui-scale));
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.vsl-site-footer__loc.is-current .vsl-site-footer__loc-name {
+  color: var(--magenta);
 }
 
 .vsl-site-footer__contact-line {
@@ -263,15 +280,29 @@
       </div>
 
       <div class="vsl-site-footer__contact-col">
-        <h2 class="vsl-site-footer__heading vsl-site-footer__heading--plain">Contact Us</h2>
-        <div class="vsl-site-footer__contact-block">
+        <h2 class="vsl-site-footer__heading vsl-site-footer__heading--plain">Locations</h2>
+        <div class="vsl-site-footer__loc" data-footer-loc="houston">
+          <p class="vsl-site-footer__loc-name">Houston</p>
           <p class="vsl-site-footer__contact-line">
-            <a data-vsl-footer-address href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer">
-              <span data-vsl-footer-address-text>2110 Edwards St, (Sawyer Yards) · Houston, TX 77007</span>
-            </a>
+            <a href="https://maps.app.goo.gl/B9jCNecVWwU5HsVo6" target="_blank" rel="noopener noreferrer">2110 Edwards St, (Sawyer Yards) · Houston, TX 77007</a>
           </p>
-          <p class="vsl-site-footer__contact-line" data-vsl-footer-phone-row>
-            <a data-vsl-footer-phone href="tel:+18326274981"><span data-vsl-footer-phone-text>832-627-4981</span></a>
+          <p class="vsl-site-footer__contact-line">
+            <a href="tel:+18326274981">832-627-4981</a>
+          </p>
+          <p class="vsl-site-footer__contact-line">
+            <a href="https://velocitysimlounge.com/">Houston lounge</a>
+          </p>
+        </div>
+        <div class="vsl-site-footer__loc" data-footer-loc="dallas">
+          <p class="vsl-site-footer__loc-name">Dallas</p>
+          <p class="vsl-site-footer__contact-line">
+            <a href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer">9830 N Central Expy #400, (The Hill) · Dallas, TX 75231</a>
+          </p>
+          <p class="vsl-site-footer__contact-line">
+            <a href="tel:+19722095215">972-209-5215</a>
+          </p>
+          <p class="vsl-site-footer__contact-line">
+            <a href="https://velocitysimlounge.com/dallas/">Dallas lounge</a>
           </p>
         </div>
         <h2 class="vsl-site-footer__heading vsl-site-footer__heading--plain">Careers</h2>
@@ -288,6 +319,7 @@
             <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5L6 8.5L10 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a href="https://velocitysimlounge.com/membership/" class="vsl-site-footer__ql-link" data-footer-nav>Membership</a>
+          <a href="https://velocitysimlounge.com/gift-cards/" class="vsl-site-footer__ql-link" data-footer-nav>Gift Cards</a>
           <a href="https://velocitysimlounge.com/group-events/" class="vsl-site-footer__ql-link" data-footer-nav>
             Parties &amp; Events
           </a>
@@ -349,11 +381,6 @@
   var root = document.getElementById('vsl-site-footer');
   if (!root) return;
 
-  var addrA = root.querySelector('[data-vsl-footer-address]');
-  var addrText = root.querySelector('[data-vsl-footer-address-text]');
-  var phoneRow = root.querySelector('[data-vsl-footer-phone-row]');
-  var phoneA = root.querySelector('[data-vsl-footer-phone]');
-  var phoneText = root.querySelector('[data-vsl-footer-phone-text]');
   var yearEl = root.querySelector('[data-vsl-footer-year]');
   var careersA = root.querySelector('[data-vsl-footer-careers-mail]');
 
@@ -399,36 +426,14 @@
   }
 
   function applyLocation(key) {
-    var loc = LOC[normalize(key)] || LOC.houston;
+    var active = normalize(key);
+    root.querySelectorAll('[data-footer-loc]').forEach(function (block) {
+      block.classList.toggle('is-current', block.getAttribute('data-footer-loc') === active);
+    });
 
-    if (addrText) addrText.textContent = loc.addressLine;
-    if (addrA) {
-      if (loc.mapsUrl) {
-        addrA.setAttribute('href', loc.mapsUrl);
-        addrA.hidden = false;
-      } else {
-        addrA.removeAttribute('href');
-        addrA.hidden = true;
-      }
-    }
-
-    if (careersA && loc.careersMail) {
-      careersA.setAttribute('href', 'mailto:' + loc.careersMail);
-      careersA.textContent = loc.careersMail;
-    }
-
-    if (phoneRow && phoneA && phoneText) {
-      if (loc.phone && loc.phoneTel) {
-        phoneA.setAttribute('href', loc.phoneTel);
-        phoneText.textContent = loc.phone;
-        phoneA.hidden = false;
-        phoneRow.style.display = '';
-      } else {
-        phoneA.setAttribute('href', loc.emailLink || ('mailto:' + loc.careersMail));
-        phoneText.textContent = loc.careersMail || 'Contact us by email';
-        phoneA.hidden = false;
-        phoneRow.style.display = '';
-      }
+    if (careersA && LOC[active] && LOC[active].careersMail) {
+      careersA.setAttribute('href', 'mailto:' + LOC[active].careersMail);
+      careersA.textContent = LOC[active].careersMail;
     }
   }
 

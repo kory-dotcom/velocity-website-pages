@@ -1,0 +1,1483 @@
+<!--
+Velocity Sim Racing Lounge — Million Lap Monday
+  Elementor Custom HTML module  ·  v2.0.0  ·  build 20260930c
+
+  ── SEO Handoff ──
+  Meta title:    Million Lap Monday | Velocity Sim Racing Lounge
+  Meta desc:     Velocity is celebrating 1,000,000 laps. Monday, October 5 only: Racer $10, Pro $20, Ultimate $30 in Houston and Dallas. No time slot — buy tickets and walk in.
+  Canonical:     https://velocitysimlounge.com/million-laps/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg
+  Robots:        noindex after October 5, 2026 (one-day promo)
+
+  ── How it works ──
+  One page for both lounges (like Gift Cards). The lounge toggle follows the
+  navbar's saved city (window.VSL_LOCATION) and can be overridden with ?loc=dallas.
+  Picking sims + the main driver's name happens here; "Pay" POSTs to the members
+  app (config.api) which creates a Stripe Checkout on that lounge's own Stripe
+  account and this page redirects the guest to Stripe. If that call fails, the
+  error stays on this page. Guests never land on the members site to pay.
+
+  ── Config (data-vsl-config on .vsl-million) ──
+  api        POST endpoint on the members app.
+  saleEnds   Last calendar day tickets are sold (Chicago time). After this the
+             picker is replaced with "tickets have ended" copy.
+  cancelUrl  Where Stripe's back arrow returns. Defaults to this page's URL.
+
+  Images are existing Media Library assets (home page sim cards + event photo).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://velocitysimlounge.com">
+<link rel="preconnect" href="https://members.velocitysimlounge.com" crossorigin>
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  .elementor-widget-html a[class*="vsl-mlm"] {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  /* ── Page shell: full-bleed like the other Velocity modules ──────────── */
+  .vsl-million {
+    --navy: #10182B;
+    --deep-indigo: #191B4D;
+    --magenta: #EE265F;
+    --blue: #293893;
+    --yellow: #FDC70C;
+    --red: #D22026;
+    --circuit-white: #EAEAEA;
+    --mist: #B2AEBF;
+    --slate-violet: #5F5782;
+    --ink: #393452;
+    --muted: #574E76;
+    --page-margin: 64px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
+    --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+
+    font-family: var(--font-body);
+    color: var(--navy);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    overflow: visible;
+  }
+  .vsl-million *,
+  .vsl-million *::before,
+  .vsl-million *::after { box-sizing: border-box; }
+  /* :where() keeps this reset at zero specificity, so the component
+     margins below (hero sub, section subcopy, etc.) actually apply. */
+  :where(.vsl-million) :where(h1, h2, h3, p, ul, ol, dl, dd) {
+    margin: 0;
+    padding: 0;
+  }
+  .vsl-million ul, .vsl-million ol { list-style: none; }
+  .vsl-million button { font: inherit; }
+  .vsl-million > main {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: var(--navy);
+    overflow: visible;
+    min-height: min-content;
+  }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-million) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+  .elementor-section:has(.vsl-million),
+  .elementor-container:has(.vsl-million),
+  .elementor-column:has(.vsl-million),
+  .elementor-column-wrap:has(.vsl-million),
+  .elementor-widget-wrap:has(.vsl-million),
+  .elementor-widget:has(.vsl-million),
+  .e-con:has(.vsl-million),
+  .e-con-inner:has(.vsl-million) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  html:has(.vsl-million),
+  body:has(.vsl-million) {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  .vsl-mlm-grid {
+    width: min(1320px, calc(100% - 2 * clamp(20px, 5vw, var(--page-margin))));
+    margin-inline: auto;
+  }
+  .vsl-mlm-section-title {
+    margin: 0 auto 0.3em;
+    font-family: var(--font-display);
+    font-size: var(--text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.15;
+    text-align: center;
+    text-wrap: balance;
+    color: var(--circuit-white);
+  }
+  .vsl-mlm-section-title em { font-style: italic; color: var(--magenta); }
+  .vsl-mlm-section-sub {
+    margin: 0 auto clamp(2rem, 3.5vh, 2.75rem);
+    text-align: center;
+    font-size: var(--text-section-sub);
+    font-weight: 500;
+    line-height: 1.55;
+    max-width: 56ch;
+    color: rgba(234,234,234,0.78);
+  }
+  .vsl-mlm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 12px 30px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 2px solid var(--magenta);
+    border-radius: 8px;
+    background-color: var(--magenta);
+    box-shadow: 0 4px 16px rgba(238,38,95,0.25);
+    transition: background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, transform 0.14s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vsl-mlm-btn:hover { background-color: #d41e52; border-color: #d41e52; box-shadow: 0 8px 28px rgba(238,38,95,0.35); }
+  .vsl-mlm-btn:active { transform: scale(0.98); }
+  .vsl-mlm-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-mlm-btn--ghost {
+    background: transparent;
+    border-color: rgba(234,234,234,0.35);
+    box-shadow: none;
+  }
+  .vsl-mlm-btn--ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(234,234,234,0.6); box-shadow: none; }
+
+  /* ── Hero ────────────────────────────────────────────────────────────── */
+  .vsl-mlm-hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    isolation: isolate;
+    width: 100%;
+    min-height: 68vh;
+    min-height: 68svh;
+    background-color: var(--navy);
+    color: var(--circuit-white);
+  }
+  .vsl-mlm-hero__photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-color: var(--navy);
+  }
+  .vsl-mlm-hero__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+    transform: scale(1.04);
+  }
+  .vsl-mlm-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(16,24,43,0.5) 0%, rgba(16,24,43,0.86) 100%),
+      linear-gradient(90deg, rgba(16,24,43,0.6) 0%, rgba(16,24,43,0.15) 55%, rgba(16,24,43,0.4) 100%),
+      radial-gradient(ellipse 55% 45% at 75% 20%, rgba(238,38,95,0.2) 0%, transparent 70%);
+  }
+  .vsl-mlm-hero__inner {
+    position: relative;
+    z-index: 3;
+    flex: 1 1 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+    align-items: center;
+    gap: clamp(28px, 4vw, 56px);
+    padding: clamp(56px, 12vw, 108px) clamp(20px, 5vw, var(--page-margin)) clamp(40px, 7vw, 64px);
+    width: min(1480px, 100%);
+    margin: 0 auto;
+  }
+  .vsl-mlm-hero__copy { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+  .vsl-mlm-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 20px;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 0.7rem + 0.9vw, 1.1rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(135deg, var(--red) 0%, var(--magenta) 100%);
+  }
+  .vsl-mlm-hero__title {
+    margin: 0 0 0.35em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: 0.02em;
+    color: #fff;
+  }
+  .vsl-mlm-hero__number {
+    display: block;
+    font-size: clamp(3.4rem, 1.2rem + 9.5vw, 6.9rem);
+    color: var(--yellow);
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  }
+  .vsl-mlm-hero__word {
+    display: block;
+    font-size: clamp(1.9rem, 0.8rem + 4.6vw, 3.6rem);
+    letter-spacing: 0.22em;
+  }
+  .vsl-mlm-hero__sub {
+    margin: 0 0 1.6rem;
+    font-size: clamp(1.02rem, 0.94rem + 0.4vw, 1.18rem);
+    line-height: 1.6;
+    color: rgba(234,234,234,0.9);
+    max-width: 46ch;
+  }
+  .vsl-mlm-hero__sub strong { color: #fff; font-weight: 700; }
+  .vsl-mlm-hero__actions { display: flex; flex-wrap: wrap; gap: 12px 14px; align-items: center; }
+
+  /* Lounge segmented control (shared by hero + checkout) */
+  .vsl-mlm-loc { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin: 0 0 1.5rem; }
+  .vsl-mlm-loc__label {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(234,234,234,0.78);
+  }
+  .vsl-mlm-loc__seg {
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(234,234,234,0.22);
+    backdrop-filter: blur(6px);
+  }
+  .vsl-mlm-loc__btn {
+    min-height: 40px;
+    padding: 6px 22px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(234,234,234,0.85);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  .vsl-mlm-loc__btn[aria-checked="true"] { background: var(--magenta); color: #fff; box-shadow: 0 4px 14px rgba(238,38,95,0.4); }
+  .vsl-mlm-loc__btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+  /* Hero ticket visual */
+  .vsl-mlm-hero__visual { display: flex; justify-content: center; align-items: center; min-width: 0; }
+  .vsl-mlm-ticket {
+    --tk-check: 20px;
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    border-radius: 24px;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse 70% 55% at 18% -4%, rgba(255,255,255,0.10) 0%, transparent 62%),
+      linear-gradient(135deg, #222567 0%, var(--deep-indigo) 42%, var(--navy) 100%);
+    border: 1px solid rgba(234,234,234,0.16);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.18), 0 26px 60px rgba(0,0,0,0.35);
+    color: #fff;
+    transform: rotate(-2deg);
+  }
+  .vsl-mlm-ticket::before,
+  .vsl-mlm-ticket::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: var(--tk-check);
+    background: repeating-conic-gradient(rgba(255,255,255,0.92) 0 25%, transparent 0 50%);
+    background-size: var(--tk-check) var(--tk-check);
+    z-index: 1;
+  }
+  .vsl-mlm-ticket::before { top: 0; }
+  .vsl-mlm-ticket::after { bottom: 0; }
+  .vsl-mlm-ticket__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: calc(var(--tk-check) + 22px) 32px 0;
+  }
+  .vsl-mlm-ticket__logo {
+    display: block;
+    height: 46px;
+    width: calc(46px * 230 / 48);
+    background-color: #fff;
+    -webkit-mask-image: url("https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png");
+    mask-image: url("https://velocitysimlounge.com/wp-content/uploads/2026/05/Asset-36@300x.png");
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: left center; mask-position: left center;
+    -webkit-mask-size: contain; mask-size: contain;
+  }
+  .vsl-mlm-ticket__tag {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    white-space: nowrap;
+  }
+  .vsl-mlm-ticket__title {
+    padding: 18px 32px 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.2rem + 2vw, 2.85rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+  }
+  .vsl-mlm-ticket__date {
+    padding: 10px 32px 0;
+    font-size: 1.12rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-mlm-ticket__prices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 24px 32px calc(var(--tk-check) + 26px);
+  }
+  .vsl-mlm-ticket__prices li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    padding: 18px 8px 16px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(234,234,234,0.14);
+  }
+  .vsl-mlm-ticket__amount {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 1.4rem + 2.4vw, 3.4rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: #fff;
+  }
+  .vsl-mlm-ticket__rig {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
+  .vsl-mlm-hero__finish {
+    position: relative;
+    z-index: 4;
+    flex-shrink: 0;
+    width: 100%;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 100%;
+    border-bottom: 1px solid #000;
+  }
+
+  /* ── Pick your sims (photo cards with steppers) ──────────────────────── */
+  .vsl-mlm-pick {
+    position: relative;
+    background: var(--navy);
+    padding: clamp(56px, 8vh, 96px) 0 clamp(24px, 4vh, 40px);
+    color: var(--circuit-white);
+  }
+  .vsl-mlm-rigs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2.4vw, 28px);
+  }
+  .vsl-mlm-rig {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+    color: var(--navy);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.38);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .vsl-mlm-rig::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    z-index: 3;
+    background: var(--blue);
+  }
+  .vsl-mlm-rig[data-mlm-rig="pro"]::before { background: var(--red); }
+  .vsl-mlm-rig[data-mlm-rig="ultimate"]::before { background: var(--yellow); }
+  .vsl-mlm-rig:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 52px rgba(0,0,0,0.48);
+  }
+  .vsl-mlm-rig.is-selected {
+    border-color: var(--magenta);
+    box-shadow: 0 0 0 3px var(--magenta), 0 26px 52px rgba(0,0,0,0.48);
+  }
+  .vsl-mlm-rig__media { position: relative; aspect-ratio: 8 / 5; overflow: hidden; background: var(--navy); }
+  .vsl-mlm-rig__media img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .vsl-mlm-rig:hover .vsl-mlm-rig__media img { transform: scale(1.04); }
+  .vsl-mlm-rig__price-row { display: flex; align-items: center; margin-bottom: 12px; }
+  .vsl-million .vsl-mlm-rig__price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 8px;
+    background: var(--magenta) !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.1;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+  }
+  .vsl-million .vsl-mlm-rig__price small {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: 0.42em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-million .vsl-mlm-rig__was {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px;
+    max-width: calc(100% - 28px);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+    background: var(--yellow);
+    padding: 10px 14px 11px;
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.38);
+  }
+  .vsl-million .vsl-mlm-rig__was strong {
+    font-size: 1.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+  }
+  .vsl-million .vsl-mlm-rig__valid {
+    margin-top: 6px;
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    line-height: 1.15;
+    color: var(--navy) !important;
+    -webkit-text-fill-color: var(--navy) !important;
+  }
+  .vsl-mlm-rig__body { display: flex; flex-direction: column; flex: 1; padding: 18px 20px 20px; }
+  .vsl-million h3.vsl-mlm-rig__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1vw, 1.9rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--blue);
+  }
+  .vsl-million .vsl-mlm-rig[data-mlm-rig="pro"] h3.vsl-mlm-rig__name { color: var(--red); }
+  .vsl-million .vsl-mlm-rig[data-mlm-rig="ultimate"] h3.vsl-mlm-rig__name { color: var(--navy); }
+  .vsl-mlm-rig__tag { margin-top: 6px; font-size: 0.98rem; color: var(--muted); }
+  .vsl-mlm-rig__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+  }
+  .vsl-mlm-rig__row-label {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate-violet);
+  }
+  .vsl-mlm-stepper { display: flex; align-items: center; gap: 10px; }
+  .vsl-mlm-stepper button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 10px;
+    border: 1px solid rgba(16,24,43,0.16);
+    background: #fff;
+    color: var(--navy);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  }
+  .vsl-mlm-stepper button:enabled:hover { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+  .vsl-mlm-stepper button:enabled:active { transform: scale(0.94); }
+  .vsl-mlm-stepper button:disabled { opacity: 0.3; cursor: default; }
+  .vsl-mlm-stepper button:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+  .vsl-mlm-stepper output {
+    min-width: 28px;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Checkout panel ──────────────────────────────────────────────────── */
+  .vsl-mlm-checkout { background: var(--navy); padding: clamp(24px, 4vh, 40px) 0 clamp(64px, 9vh, 104px); }
+  .vsl-mlm-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    gap: clamp(20px, 3vw, 40px);
+    padding: clamp(22px, 3vw, 36px);
+    border-radius: 20px;
+    background: #fff;
+    color: var(--navy);
+    box-shadow: 0 26px 60px rgba(0,0,0,0.35);
+  }
+  .vsl-million h2.vsl-mlm-panel__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--navy);
+  }
+  .vsl-mlm-panel__note { margin-top: 6px; font-size: 0.98rem; color: var(--muted); line-height: 1.5; }
+  .vsl-million p.vsl-mlm-disclaimer {
+    margin-top: 10px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    color: var(--slate-violet);
+  }
+  .vsl-mlm-field { margin-top: 18px; }
+  .vsl-mlm-field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-violet);
+  }
+  .vsl-mlm-field input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    min-height: 52px;
+    padding: 0 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(41,56,147,0.28);
+    background: #F6F7FB;
+    color: var(--navy);
+    font: inherit;
+    font-size: 1.05rem;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .vsl-mlm-field input:focus { border-color: var(--magenta); box-shadow: 0 0 0 3px rgba(238,38,95,0.18); background: #fff; }
+  .vsl-mlm-panel .vsl-mlm-loc { margin: 18px 0 0; }
+  .vsl-mlm-panel .vsl-mlm-loc__label { color: var(--slate-violet); }
+  .vsl-mlm-panel .vsl-mlm-loc__seg { background: #F6F7FB; border-color: rgba(41,56,147,0.22); backdrop-filter: none; }
+  .vsl-mlm-panel .vsl-mlm-loc__btn { color: var(--navy); }
+  .vsl-mlm-panel .vsl-mlm-loc__btn[aria-checked="true"] { color: #fff; }
+
+  .vsl-mlm-order {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 22px;
+    border-radius: 14px;
+    background: var(--navy);
+    color: var(--circuit-white);
+    min-height: 100%;
+  }
+  .vsl-mlm-order__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-mlm-order__list { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+  .vsl-mlm-order__list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .vsl-mlm-order__sim { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .vsl-million .vsl-mlm-order__sim strong {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-mlm-order__sim span { font-size: 0.95rem; color: var(--mist); }
+  .vsl-mlm-order__amt {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+  }
+  .vsl-mlm-order__empty { margin-top: 12px; padding: 14px; border: 1px dashed rgba(234,234,234,0.3); border-radius: 10px; color: var(--mist); font-size: 0.98rem; }
+  .vsl-mlm-order__sum { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .vsl-mlm-order__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 1.05rem;
+    color: var(--mist);
+    font-variant-numeric: tabular-nums;
+  }
+  .vsl-mlm-order__row span:last-child { color: var(--circuit-white); }
+  .vsl-mlm-order__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(234,234,234,0.18);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .vsl-mlm-order__total span:first-child { font-size: 1rem; color: var(--mist); }
+  .vsl-mlm-order__total span:last-child { font-size: 2rem; line-height: 1; color: var(--yellow); font-variant-numeric: tabular-nums; }
+  .vsl-mlm-order__meta {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+    line-height: 1.35;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-mlm-order__meta strong { color: #fff; }
+  .vsl-mlm-error {
+    margin-top: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(238,38,95,0.5);
+    background: rgba(238,38,95,0.14);
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+  .vsl-mlm-pay {
+    margin-top: 18px;
+    width: 100%;
+    min-height: 56px;
+    font-size: 1.1rem;
+  }
+  .vsl-mlm-pay:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: none; }
+  .vsl-mlm-fine { margin-top: 12px; font-size: 0.86rem; line-height: 1.5; color: var(--mist); }
+
+  /* ── How it works ────────────────────────────────────────────────────── */
+  .vsl-mlm-how { background: #F4F5F9; padding: clamp(56px, 8vh, 96px) 0; color: var(--navy); }
+  .vsl-mlm-how .vsl-mlm-section-title { color: var(--navy); }
+  .vsl-mlm-how .vsl-mlm-section-sub { color: var(--muted); }
+  .vsl-mlm-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); counter-reset: step; }
+  .vsl-mlm-steps li {
+    position: relative;
+    padding: 28px 24px 26px;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid rgba(41,56,147,0.12);
+    box-shadow: 0 16px 40px -28px rgba(16,24,43,0.4);
+  }
+  .vsl-mlm-steps li::before {
+    counter-increment: step;
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--magenta);
+  }
+  .vsl-mlm-steps h3 {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: var(--navy);
+  }
+  .vsl-mlm-steps p { margin-top: 8px; font-size: 1rem; line-height: 1.55; color: var(--muted); }
+
+  /* ── Good to know ────────────────────────────────────────────────────── */
+  .vsl-mlm-faq { background: var(--navy); padding: clamp(56px, 8vh, 96px) 0; color: var(--circuit-white); }
+  .vsl-mlm-faq dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 22px); max-width: 1040px; margin-inline: auto; }
+  .vsl-mlm-faq__item { padding: 22px 24px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(234,234,234,0.12); }
+  .vsl-mlm-faq dt {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .vsl-mlm-faq dd { margin-top: 8px; font-size: 1rem; line-height: 1.55; color: rgba(234,234,234,0.78); }
+
+  /* ── Closing CTA ─────────────────────────────────────────────────────── */
+  .vsl-mlm-cta {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 80% at 10% 50%, rgba(253,199,12,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 50%, rgba(238,38,95,0.22) 0%, transparent 60%),
+      linear-gradient(160deg, var(--deep-indigo) 0%, var(--navy) 100%);
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: #fff;
+    text-align: center;
+    border-top: 1px solid rgba(234,234,234,0.1);
+  }
+  .vsl-mlm-cta::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 10px;
+    background: repeating-conic-gradient(rgba(255,255,255,0.85) 0 25%, transparent 0 50%);
+    background-size: 10px 10px;
+    opacity: 0.8;
+  }
+  .vsl-mlm-cta .vsl-mlm-section-sub { margin-bottom: 1.6rem; }
+
+  .vsl-mlm-closed {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 26px;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--navy);
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.55;
+  }
+  .vsl-mlm-closed a { color: var(--magenta); font-weight: 700; }
+
+  .vsl-million [hidden] { display: none !important; }
+
+  /* The site reveal script shifts sections with translateX(-40px) until an
+     observer fires. On mobile that observer can miss, so the page loads
+     sitting off to the left. Keep every section in place. */
+  .vsl-million [class*="vsl-reveal"],
+  .vsl-million [class*="vsl-reveal"] [data-vsl-stagger] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ── Responsive ──────────────────────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .vsl-mlm-hero__inner { grid-template-columns: minmax(0, 1fr); }
+    .vsl-mlm-hero__visual { display: none; }
+    .vsl-mlm-panel { grid-template-columns: minmax(0, 1fr); }
+    .vsl-mlm-hero__copy { align-items: center; text-align: center; }
+    .vsl-mlm-hero__sub { margin-inline: auto; }
+    .vsl-mlm-loc,
+    .vsl-mlm-hero__actions { justify-content: center; }
+  }
+  @media (max-width: 860px) {
+    .vsl-mlm-rigs { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
+    .vsl-mlm-rig__media { aspect-ratio: 16 / 9; }
+    .vsl-mlm-steps { grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto; }
+    .vsl-mlm-faq dl { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .vsl-mlm-hero { min-height: 0; }
+    .vsl-mlm-hero__inner { padding-top: 64px; }
+    .vsl-mlm-hero__actions .vsl-mlm-btn { width: 100%; }
+    .vsl-mlm-loc__btn { padding: 6px 18px; }
+    .vsl-mlm-hero__word { letter-spacing: 0.16em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-million * { transition: none !important; }
+  }
+</style>
+
+<div class="vsl-million" data-vsl-config='{"api":"https://members.velocitysimlounge.com/api/million/checkout","saleEnds":"2026-10-05","cancelUrl":"https://velocitysimlounge.com/millionlaps/"}'>
+  <main id="primary-content">
+
+    <!-- ═══════ HERO ═══════ -->
+    <section class="vsl-mlm-hero" id="mlm-hero" aria-labelledby="mlm-hero-title">
+      <div class="vsl-mlm-hero__photo" aria-hidden="true">
+        <img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" alt="" width="1600" height="1000" decoding="async" fetchpriority="high">
+      </div>
+      <div class="vsl-mlm-hero__inner">
+        <div class="vsl-mlm-hero__copy">
+          <span class="vsl-mlm-hero__eyebrow">Velocity is celebrating</span>
+          <h1 class="vsl-mlm-hero__title" id="mlm-hero-title">
+            <span class="vsl-mlm-hero__number">1,000,000</span>
+            <span class="vsl-mlm-hero__word">laps</span>
+          </h1>
+          <p class="vsl-mlm-hero__sub">
+            A million laps driven at Velocity. To say thanks, Houston and Dallas are running one-day race prices on
+            <strong>Monday, October 5</strong> &mdash; <strong>Racer $10, Pro $20, Ultimate $30</strong>. No time slot.
+            Buy your tickets, walk in, show them at the desk, and we&rsquo;ll put you on a sim.
+          </p>
+          <div class="vsl-mlm-loc" role="radiogroup" aria-label="Lounge">
+            <span class="vsl-mlm-loc__label">Racing at</span>
+            <span class="vsl-mlm-loc__seg">
+              <button type="button" class="vsl-mlm-loc__btn" role="radio" aria-checked="false" data-mlm-loc="houston">Houston</button>
+              <button type="button" class="vsl-mlm-loc__btn" role="radio" aria-checked="false" data-mlm-loc="dallas">Dallas</button>
+            </span>
+          </div>
+          <div class="vsl-mlm-hero__actions">
+            <a class="vsl-mlm-btn" href="#mlm-pick" data-mlm-scroll>Get tickets</a>
+            <a class="vsl-mlm-btn vsl-mlm-btn--ghost" href="#mlm-how" data-mlm-scroll>How it works</a>
+          </div>
+        </div>
+        <div class="vsl-mlm-hero__visual" aria-hidden="true">
+          <div class="vsl-mlm-ticket">
+            <div class="vsl-mlm-ticket__top">
+              <span class="vsl-mlm-ticket__logo"></span>
+              <span class="vsl-mlm-ticket__tag">One day only</span>
+            </div>
+            <p class="vsl-mlm-ticket__title">Million Lap Monday</p>
+            <p class="vsl-mlm-ticket__date">October 5, 2026 &middot; Houston &amp; Dallas</p>
+            <ul class="vsl-mlm-ticket__prices">
+              <li><span class="vsl-mlm-ticket__amount">$10</span><span class="vsl-mlm-ticket__rig">Racer</span></li>
+              <li><span class="vsl-mlm-ticket__amount">$20</span><span class="vsl-mlm-ticket__rig">Pro</span></li>
+              <li><span class="vsl-mlm-ticket__amount">$30</span><span class="vsl-mlm-ticket__rig">Ultimate</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="vsl-mlm-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <form data-mlm-form novalidate>
+      <!-- ═══════ PICK YOUR SIMS ═══════ -->
+      <section class="vsl-mlm-pick" id="mlm-pick" aria-labelledby="mlm-pick-title">
+        <div class="vsl-mlm-grid">
+          <h2 class="vsl-mlm-section-title" id="mlm-pick-title">Pick your <em>sims</em></h2>
+          <p class="vsl-mlm-section-sub">One ticket per driver per race. Up to 6 Racers, 6 Pros in Houston or 10 in Dallas, and 1 Ultimate &mdash; your whole crew checks out together.</p>
+
+          <div class="vsl-mlm-rigs">
+            <article class="vsl-mlm-rig" data-mlm-rig="racer">
+              <div class="vsl-mlm-rig__media">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-768x480.webp"
+                     srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Racer-card-photo-1024x640.webp 1024w"
+                     sizes="(max-width: 860px) 92vw, 30vw" alt="Velocity Racer simulator cockpit with ultrawide display" width="768" height="480" loading="lazy" decoding="async">
+                <span class="vsl-mlm-rig__was">Monday<strong>October 5</strong><span class="vsl-mlm-rig__valid">Valid only for that day</span></span>
+              </div>
+              <div class="vsl-mlm-rig__body">
+                <div class="vsl-mlm-rig__price-row"><span class="vsl-mlm-rig__price">$10<small>/ driver</small></span></div>
+                <h3 class="vsl-mlm-rig__name">Racer</h3>
+                <p class="vsl-mlm-rig__tag">The classic Velocity racing rig. Beginner friendly with motion.</p>
+                <div class="vsl-mlm-rig__row">
+                  <span class="vsl-mlm-rig__row-label">Drivers</span>
+                  <div class="vsl-mlm-stepper">
+                    <button type="button" data-mlm-step="-1" aria-label="Remove one Racer sim" disabled>&minus;</button>
+                    <output data-mlm-count aria-live="polite">0</output>
+                    <button type="button" data-mlm-step="1" aria-label="Add one Racer sim">+</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="vsl-mlm-rig" data-mlm-rig="pro">
+              <div class="vsl-mlm-rig__media">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-768x480.webp"
+                     srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-600x375.webp 600w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-768x480.webp 768w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp 1024w"
+                     sizes="(max-width: 860px) 92vw, 30vw" alt="Velocity Pro simulator with panoramic triple-screen setup" width="768" height="480" loading="lazy" decoding="async">
+                <span class="vsl-mlm-rig__was">Monday<strong>October 5</strong><span class="vsl-mlm-rig__valid">Valid only for that day</span></span>
+              </div>
+              <div class="vsl-mlm-rig__body">
+                <div class="vsl-mlm-rig__price-row"><span class="vsl-mlm-rig__price">$20<small>/ driver</small></span></div>
+                <h3 class="vsl-mlm-rig__name">Pro</h3>
+                <p class="vsl-mlm-rig__tag">Our top-spec racing simulator. Advanced motion and triple screens.</p>
+                <div class="vsl-mlm-rig__row">
+                  <span class="vsl-mlm-rig__row-label">Drivers</span>
+                  <div class="vsl-mlm-stepper">
+                    <button type="button" data-mlm-step="-1" aria-label="Remove one Pro sim" disabled>&minus;</button>
+                    <output data-mlm-count aria-live="polite">0</output>
+                    <button type="button" data-mlm-step="1" aria-label="Add one Pro sim">+</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="vsl-mlm-rig" data-mlm-rig="ultimate">
+              <div class="vsl-mlm-rig__media">
+                <img src="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg"
+                     sizes="(max-width: 860px) 92vw, 30vw" alt="Velocity Ultimate simulator with advanced motion platform and premium displays" width="768" height="480" loading="lazy" decoding="async">
+                <span class="vsl-mlm-rig__was">Monday<strong>October 5</strong><span class="vsl-mlm-rig__valid">Valid only for that day</span></span>
+              </div>
+              <div class="vsl-mlm-rig__body">
+                <div class="vsl-mlm-rig__price-row"><span class="vsl-mlm-rig__price">$30<small>/ driver</small></span></div>
+                <h3 class="vsl-mlm-rig__name">Ultimate</h3>
+                <p class="vsl-mlm-rig__tag">The one-of-a-kind Ultimate sim. The most immersive drive in the building.</p>
+                <div class="vsl-mlm-rig__row">
+                  <span class="vsl-mlm-rig__row-label">Drivers</span>
+                  <div class="vsl-mlm-stepper">
+                    <button type="button" data-mlm-step="-1" aria-label="Remove one Ultimate sim" disabled>&minus;</button>
+                    <output data-mlm-count aria-live="polite">0</output>
+                    <button type="button" data-mlm-step="1" aria-label="Add one Ultimate sim">+</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ CHECKOUT ═══════ -->
+      <section class="vsl-mlm-checkout" id="mlm-checkout" aria-labelledby="mlm-checkout-title">
+        <div class="vsl-mlm-grid">
+          <div class="vsl-mlm-panel">
+            <div>
+              <h2 class="vsl-mlm-panel__title" id="mlm-checkout-title">Who&rsquo;s the main driver?</h2>
+              <p class="vsl-mlm-panel__note">The ticket is held under this name at the front desk. Bring your crew with you &mdash; one name covers the whole order.</p>
+              <div class="vsl-mlm-field">
+                <label for="vsl-mlm-name">Main driver</label>
+                <input id="vsl-mlm-name" type="text" maxlength="40" autocomplete="name" autocapitalize="words"
+                       enterkeyhint="done" placeholder="First &amp; last name" data-mlm-name>
+              </div>
+              <div class="vsl-mlm-loc" role="radiogroup" aria-label="Lounge">
+                <span class="vsl-mlm-loc__label">Racing at</span>
+                <span class="vsl-mlm-loc__seg">
+                  <button type="button" class="vsl-mlm-loc__btn" role="radio" aria-checked="false" data-mlm-loc="houston">Houston</button>
+                  <button type="button" class="vsl-mlm-loc__btn" role="radio" aria-checked="false" data-mlm-loc="dallas">Dallas</button>
+                </span>
+              </div>
+              <p class="vsl-mlm-disclaimer">Your ticket is good only at the lounge you pick.</p>
+            </div>
+
+            <aside class="vsl-mlm-order" aria-label="Your tickets">
+              <p class="vsl-mlm-order__title">Your tickets</p>
+              <p class="vsl-mlm-order__empty" data-mlm-empty>Add a sim above to start your order.</p>
+              <ul class="vsl-mlm-order__list" data-mlm-summary-list hidden></ul>
+              <div class="vsl-mlm-order__sum">
+                <p class="vsl-mlm-order__row" data-mlm-subtotal-row hidden><span>Subtotal</span><span data-mlm-subtotal>$0</span></p>
+                <p class="vsl-mlm-order__row"><span>Sales tax 8.25%</span><span data-mlm-tax>$0</span></p>
+                <p class="vsl-mlm-order__total"><span>Total</span><span data-mlm-pay-total>$0</span></p>
+              </div>
+              <p class="vsl-mlm-order__meta"><span>Monday, October 5 &middot; no time slot</span><strong data-mlm-city>Pick a lounge</strong></p>
+              <p class="vsl-mlm-error" role="alert" data-mlm-error hidden></p>
+              <button type="submit" class="vsl-mlm-btn vsl-mlm-pay" data-mlm-pay disabled>
+                <span data-mlm-pay-label>Pick a lounge to continue</span>
+              </button>
+              <p class="vsl-mlm-fine">Your ticket is the confirmation page and the emailed receipt &mdash; show either at the desk.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <section class="vsl-mlm-checkout" data-mlm-closed hidden>
+      <div class="vsl-mlm-grid">
+        <div class="vsl-mlm-closed">
+          Million Lap Monday tickets have ended. Thanks for a million laps &mdash; regular race prices are back.
+          <br><a href="https://velocitysimlounge.com/book-now/">Book a race</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ HOW IT WORKS ═══════ -->
+    <section class="vsl-mlm-how" id="mlm-how" aria-labelledby="mlm-how-title">
+      <div class="vsl-mlm-grid">
+        <h2 class="vsl-mlm-section-title" id="mlm-how-title">How it works</h2>
+        <p class="vsl-mlm-section-sub">No booking, no time slot. Monday is first come, first served all day.</p>
+        <ol class="vsl-mlm-steps">
+          <li>
+            <h3>Buy online</h3>
+            <p>Pick how many drivers on each sim, add the main driver&rsquo;s name, and pay. You&rsquo;ll get a confirmation page and a Stripe receipt by email.</p>
+          </li>
+          <li>
+            <h3>Walk in Monday</h3>
+            <p>Come to the lounge you picked any time we&rsquo;re open on Monday, October 5. Bring your crew &mdash; the ticket covers everyone on the order.</p>
+          </li>
+          <li>
+            <h3>Show &amp; race</h3>
+            <p>Show your ticket at the front desk and we&rsquo;ll get you on the next open sims. Then go chase lap 1,000,001.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══════ GOOD TO KNOW ═══════ -->
+    <section class="vsl-mlm-faq" id="mlm-faq" aria-labelledby="mlm-faq-title">
+      <div class="vsl-mlm-grid">
+        <h2 class="vsl-mlm-section-title" id="mlm-faq-title">Good to know</h2>
+        <p class="vsl-mlm-section-sub">The short version of the fine print.</p>
+        <dl>
+          <div class="vsl-mlm-faq__item">
+            <dt>Is it really one day?</dt>
+            <dd>Yes. Tickets are good on Monday, October 5, 2026 only, at Monday&rsquo;s celebration prices. Tuesday the regular race prices are back.</dd>
+          </div>
+          <div class="vsl-mlm-faq__item">
+            <dt>Do I need to book a time?</dt>
+            <dd>No. There&rsquo;s no time slot &mdash; walk in whenever suits you on Monday and we&rsquo;ll seat you on the next open sims.</dd>
+          </div>
+          <div class="vsl-mlm-faq__item">
+            <dt>Houston or Dallas?</dt>
+            <dd>Both lounges are celebrating. Each runs its own checkout, so pick the lounge you&rsquo;ll actually visit &mdash; a Houston ticket isn&rsquo;t valid in Dallas and vice versa.</dd>
+          </div>
+          <div class="vsl-mlm-faq__item">
+            <dt>What do I show at the desk?</dt>
+            <dd>The confirmation page from checkout or the Stripe receipt in your email, under the main driver&rsquo;s name. One ticket covers everyone on the order.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ═══════ CTA ═══════ -->
+    <section class="vsl-mlm-cta" aria-labelledby="mlm-cta-title">
+      <div class="vsl-mlm-grid">
+        <h2 class="vsl-mlm-section-title" id="mlm-cta-title">A million laps. <em>Thank you.</em></h2>
+        <p class="vsl-mlm-section-sub">Every one of them was driven by someone like you. Come celebrate with us on Monday, October 5.</p>
+        <a class="vsl-mlm-btn" href="#mlm-pick" data-mlm-scroll>Get tickets</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var RIGS = [
+    { rig: 'racer', label: 'Racer', unitAmount: 1000 },
+    { rig: 'pro', label: 'Pro', unitAmount: 2000 },
+    { rig: 'ultimate', label: 'Ultimate', unitAmount: 3000 }
+  ];
+  var CAPS = {
+    houston: { racer: 6, pro: 6, ultimate: 1 },
+    dallas: { racer: 6, pro: 10, ultimate: 1 }
+  };
+  var CITY = { houston: 'Houston', dallas: 'Dallas' };
+
+  /* Same rules as the members app: first + last required, capitalize word starts
+     without lowercasing what the guest typed. */
+  function isCompleteName(raw) {
+    return String(raw || '').trim().split(/\s+/).filter(Boolean).length >= 2;
+  }
+  function capitalizeAsTyped(raw) {
+    var out = '', start = true, ch;
+    for (var i = 0; i < raw.length; i++) {
+      ch = raw.charAt(i);
+      out += start ? ch.toUpperCase() : ch;
+      start = ch === ' ' || ch === '-' || ch === "'";
+    }
+    return out;
+  }
+  function capitalizeName(raw) {
+    return capitalizeAsTyped(String(raw || '').trim().replace(/\s+/g, ' '));
+  }
+  function money(cents) { return '$' + Math.round(cents / 100); }
+  /* Same half-up cent rounding Stripe uses on each line. */
+  function salesTax(cents) { return Math.round(cents * 825 / 10000); }
+  function moneyExact(cents) {
+    var dollars = Math.floor(Math.abs(cents) / 100);
+    var rem = Math.abs(cents) % 100;
+    if (rem === 0) return '$' + dollars;
+    return '$' + dollars + '.' + (rem < 10 ? '0' : '') + rem;
+  }
+
+  function chicagoToday() {
+    try {
+      return new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit'
+      }).format(new Date());
+    } catch (e) {
+      var d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+  }
+
+  function navbarLocation() {
+    try {
+      if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readLocation === 'function') {
+        var shown = window.VSL_LOCATION.readLocation();
+        if (shown === 'dallas' || shown === 'houston') return shown;
+      }
+    } catch (e0) {}
+    try {
+      var ls = window.localStorage.getItem('vslPreferredLocation');
+      if (ls === 'dallas' || ls === 'houston') return ls;
+    } catch (e1) {}
+    return '';
+  }
+
+  function init() {
+    var root = document.querySelector('.vsl-million');
+    if (!root || root._vslMillionInit) return;
+    root._vslMillionInit = true;
+
+    var config = {};
+    try { config = JSON.parse(root.getAttribute('data-vsl-config') || '{}') || {}; } catch (e) { config = {}; }
+    var API = config.api || '';
+    var SALE_ENDS = config.saleEnds || '2026-10-05';
+    var CANCEL_URL = config.cancelUrl || (window.location.origin + window.location.pathname);
+
+    var form = root.querySelector('[data-mlm-form]');
+    var closed = root.querySelector('[data-mlm-closed]');
+
+    /* Smooth-scroll the in-page CTAs (offset for the fixed navbar). */
+    root.querySelectorAll('[data-mlm-scroll]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = root.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 84;
+        try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, top); }
+      });
+    });
+
+    if (chicagoToday() > SALE_ENDS) {
+      form.hidden = true;
+      closed.hidden = false;
+      root.querySelectorAll('[data-mlm-scroll][href="#mlm-pick"]').forEach(function (a) {
+        a.setAttribute('href', 'https://velocitysimlounge.com/book-now/');
+        a.removeAttribute('data-mlm-scroll');
+        a.textContent = 'Book a race';
+      });
+      return;
+    }
+
+    var nameInput = root.querySelector('[data-mlm-name]');
+    var emptyEl = root.querySelector('[data-mlm-empty]');
+    var summaryList = root.querySelector('[data-mlm-summary-list]');
+    var errorEl = root.querySelector('[data-mlm-error]');
+    var payBtn = root.querySelector('[data-mlm-pay]');
+    var payLabel = root.querySelector('[data-mlm-pay-label]');
+    var payTotal = root.querySelector('[data-mlm-pay-total]');
+    var subtotalEl = root.querySelector('[data-mlm-subtotal]');
+    var taxEl = root.querySelector('[data-mlm-tax]');
+    var cityEl = root.querySelector('[data-mlm-city]');
+
+    var location = null;
+    function cap(rig) {
+      var loc = location === 'dallas' ? 'dallas' : 'houston';
+      return CAPS[loc][rig];
+    }
+    var counts = { racer: 0, pro: 0, ultimate: 0 };
+    var name = '';
+    var submitting = false;
+
+    /* Capitalize word starts as the guest types without moving the caret. */
+    nameInput.addEventListener('input', function () {
+      var pos = nameInput.selectionStart;
+      var next = capitalizeAsTyped(nameInput.value);
+      if (next !== nameInput.value) {
+        nameInput.value = next;
+        try { nameInput.setSelectionRange(pos, pos); } catch (e) {}
+      }
+      name = next;
+      render();
+    });
+    nameInput.addEventListener('blur', function () {
+      name = capitalizeName(nameInput.value);
+      nameInput.value = name;
+      render();
+    });
+
+    function seats() { return counts.racer + counts.pro + counts.ultimate; }
+    function subtotal() {
+      return RIGS.reduce(function (sum, o) { return sum + o.unitAmount * counts[o.rig]; }, 0);
+    }
+    function tax() {
+      return RIGS.reduce(function (sum, o) {
+        return sum + salesTax(o.unitAmount * counts[o.rig]);
+      }, 0);
+    }
+
+    function render() {
+      var n = seats();
+
+      RIGS.forEach(function (offer) {
+        var card = root.querySelector('[data-mlm-rig="' + offer.rig + '"]');
+        var count = counts[offer.rig];
+        card.classList.toggle('is-selected', count > 0);
+        card.querySelector('[data-mlm-count]').textContent = String(count);
+        card.querySelector('[data-mlm-step="-1"]').disabled = count <= 0;
+        card.querySelector('[data-mlm-step="1"]').disabled = count >= cap(offer.rig);
+      });
+
+      emptyEl.hidden = n > 0;
+      summaryList.hidden = n === 0;
+      summaryList.innerHTML = '';
+      var kinds = 0;
+      RIGS.forEach(function (offer) {
+        if (!counts[offer.rig]) return;
+        kinds += 1;
+        var li = document.createElement('li');
+        var sim = document.createElement('span');
+        sim.className = 'vsl-mlm-order__sim';
+        var label = document.createElement('strong');
+        label.textContent = offer.label;
+        var qty = document.createElement('span');
+        qty.textContent = counts[offer.rig] + ' \u00d7 ' + money(offer.unitAmount);
+        sim.appendChild(label);
+        sim.appendChild(qty);
+        var amt = document.createElement('span');
+        amt.className = 'vsl-mlm-order__amt';
+        amt.textContent = money(offer.unitAmount * counts[offer.rig]);
+        li.appendChild(sim);
+        li.appendChild(amt);
+        summaryList.appendChild(li);
+      });
+      root.querySelector('[data-mlm-subtotal-row]').hidden = kinds < 2;
+
+      var due = subtotal() + tax();
+      subtotalEl.textContent = money(subtotal());
+      taxEl.textContent = moneyExact(tax());
+      payTotal.textContent = moneyExact(due);
+      cityEl.textContent = location ? 'Velocity ' + CITY[location] : 'Pick a lounge';
+
+      var ready = n > 0 && isCompleteName(name) && !!location;
+      payBtn.disabled = !ready || submitting;
+      payLabel.textContent = submitting
+        ? 'Starting checkout\u2026'
+        : !location ? 'Pick a lounge to continue'
+        : n === 0 ? 'Add a sim to continue'
+        : !isCompleteName(name) ? 'Enter the main driver\u2019s name'
+        : 'Pay ' + moneyExact(due) + ' \u00b7 ' + CITY[location];
+    }
+
+    function setLocation(loc) {
+      if (loc !== 'houston' && loc !== 'dallas') return;
+      location = loc;
+      RIGS.forEach(function (offer) {
+        counts[offer.rig] = Math.min(counts[offer.rig], cap(offer.rig));
+      });
+      root.setAttribute('data-mlm-location', loc);
+      root.querySelectorAll('[data-mlm-loc]').forEach(function (btn) {
+        var on = btn.getAttribute('data-mlm-loc') === loc;
+        btn.setAttribute('aria-checked', on ? 'true' : 'false');
+        btn.tabIndex = on ? 0 : -1;
+      });
+      render();
+    }
+
+    var locked = false;
+    root.querySelectorAll('[data-mlm-loc]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        locked = true;
+        setLocation(btn.getAttribute('data-mlm-loc'));
+      });
+    });
+
+    root.querySelectorAll('[data-mlm-rig]').forEach(function (card) {
+      var rig = card.getAttribute('data-mlm-rig');
+      card.querySelectorAll('[data-mlm-step]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var delta = parseInt(btn.getAttribute('data-mlm-step'), 10) || 0;
+          counts[rig] = Math.max(0, Math.min(cap(rig), counts[rig] + delta));
+          render();
+        });
+      });
+    });
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.hidden = !msg;
+    }
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      showError('');
+      if (!location) { showError('Pick Houston or Dallas'); return; }
+      if (payBtn.disabled) return;
+
+      var payload = {
+        location: location,
+        racer: counts.racer,
+        pro: counts.pro,
+        ultimate: counts.ultimate,
+        name: name,
+        cancelUrl: CANCEL_URL
+      };
+
+      if (!API || typeof window.fetch !== 'function') {
+        showError('Checkout is temporarily unavailable. Ask the front desk.');
+        return;
+      }
+
+      submitting = true;
+      render();
+
+      var status = 0;
+      window.fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        status = res.status;
+        return res.json().catch(function () { return {}; });
+      }).then(function (data) {
+        if (status >= 200 && status < 300 && data && data.url) {
+          window.location.assign(data.url);
+          return;
+        }
+        submitting = false;
+        render();
+        showError((data && data.error) || 'Checkout is temporarily unavailable. Ask the front desk.');
+      }).catch(function () {
+        submitting = false;
+        render();
+        showError('Checkout is temporarily unavailable. Ask the front desk.');
+      });
+    });
+
+    /* Initial lounge: ?loc= wins, then the navbar's saved city, else leave unpicked. */
+    var q = '';
+    try { q = new URLSearchParams(window.location.search).get('loc') || ''; } catch (e) {}
+    if (q === 'dallas' || q === 'houston') setLocation(q);
+    else {
+      var fromNav = navbarLocation();
+      if (fromNav) setLocation(fromNav);
+    }
+
+    /* Follow the navbar toggle until the guest picks a lounge on this page. */
+    window.addEventListener('_vslLocationChanged', function (e) {
+      if (locked) return;
+      var loc = e && e.detail && (e.detail.location || e.detail);
+      if (loc === 'dallas' || loc === 'houston') setLocation(loc);
+    });
+
+    render();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>

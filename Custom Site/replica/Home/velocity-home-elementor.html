@@ -2916,38 +2916,24 @@
       img.src = imgBase + img.getAttribute('data-vsl-home-img');
     });
 
-    /* ── Sync home page (city names, variant text, CTAs) with navbar location switcher ── */
-    var VSL_HOME_LOCATIONS = {
-      houston: {
-        label: 'Houston',
-        ctas: {
-          /* Mirrors navbar bookingUrl pattern so the active city carries through */
-          book:       'https://velocitysimlounge.com/book-now/?loc=houston',
-          events:     'https://velocitysimlounge.com/group-events/',
-          menu:       'https://velocitysimlounge.com/food-and-drink/',
-          promotions: 'https://velocitysimlounge.com/promotions/',
-          reviews:    'https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0'
-        }
-      },
-      dallas: {
-        label: 'Dallas',
-        ctas: {
-          /* Mirrors navbar bookingUrl pattern for Dallas */
-          book:       'https://velocitysimlounge.com/dallas/book-now/',
-          events:     'https://velocitysimlounge.com/dallas/group-events/',
-          menu:       'https://velocitysimlounge.com/dallas/food-and-drink/',
-          promotions: 'https://velocitysimlounge.com/dallas/promotions/',
-          reviews:    'https://velocitysimlounge.com/dallas/'
-        }
+    /* ── Houston home is Houston-only (no client-side city swap) ── */
+    var VSL_HOME_HOUSTON = {
+      label: 'Houston',
+      ctas: {
+        book:       'https://velocitysimlounge.com/book-now/',
+        events:     'https://velocitysimlounge.com/group-events/',
+        menu:       'https://velocitysimlounge.com/food-and-drink/',
+        promotions: 'https://velocitysimlounge.com/promotions/',
+        reviews:    'https://search.google.com/local/reviews?placeid=ChIJHT65HNy_QIYREdWfPgLQ_w0'
       }
     };
-    function vslHomeApplyLocation(key) {
-      var cfg = VSL_HOME_LOCATIONS[key] || VSL_HOME_LOCATIONS.houston;
+    function vslHomeApplyLocation() {
+      var cfg = VSL_HOME_HOUSTON;
       root.querySelectorAll('[data-vsl-city-name]').forEach(function(el) {
         el.textContent = cfg.label;
       });
       root.querySelectorAll('[data-vsl-city-variant]').forEach(function(el) {
-        var text = el.getAttribute('data-' + key);
+        var text = el.getAttribute('data-houston');
         if (text) el.textContent = text;
       });
       root.querySelectorAll('[data-vsl-cta-key]').forEach(function(el) {
@@ -2961,26 +2947,7 @@
         }
       });
     }
-    function vslHomeReadLocationKey() {
-      if (window.VSL_LOCATION) return window.VSL_LOCATION.readLocation();
-      try {
-        var fromUrl = new URLSearchParams(window.location.search).get('loc');
-        if (fromUrl === 'dallas' || fromUrl === 'houston') {
-          localStorage.setItem('vslPreferredLocation', fromUrl);
-          return fromUrl;
-        }
-      } catch (_) {}
-      try {
-        var stored = localStorage.getItem('vslPreferredLocation');
-        if (stored && VSL_HOME_LOCATIONS[stored]) return stored;
-      } catch (_) {}
-      return 'houston';
-    }
-    vslHomeApplyLocation(vslHomeReadLocationKey());
-    window.addEventListener('_vslLocationChanged', function(e) {
-      var key = e && e.detail && e.detail.location;
-      if (key && VSL_HOME_LOCATIONS[key]) vslHomeApplyLocation(key);
-    });
+    vslHomeApplyLocation();
 
     /* ── Eat. Drink. Race. hero: trigger staggered reveal when in view ── */
     if (hero) {

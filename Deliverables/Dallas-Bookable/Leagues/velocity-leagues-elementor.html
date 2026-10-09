@@ -1,0 +1,787 @@
+<!-- Velocity Dallas Leagues Landing — Coming Soon — VSL 1.1.0 -->
+<!-- Paste into an Elementor HTML widget on /dallas/leagues/. Coming-soon holding page: no registration, leaderboard, calendar, cars or tracks. The full fall-2026 season build is archived in Dallas/Leagues/archive/. Config lives in data-vsl-config on .vsl-leagues. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+  /* vsl-elementor-no-underline-buttons: Elementor / WP themes often underline <a>; keep Velocity CTA-style links clean */
+  .elementor-widget-html a[class*="vsl-lg-"][class*="btn"],
+  .elementor-widget-html a[class*="vsl-lg-"][class*="__cta"],
+  .elementor-widget-html a[class*="vsl-lg-"][class*="-link"],
+  .elementor-widget-html a.vsl-lg-btn,
+  .elementor-widget-html a.vsl-lg-btn * {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+  .elementor-widget-html a[class*="vsl-lg-"][class*="btn"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a[class*="vsl-lg-"][class*="__cta"]:is(:hover, :focus, :focus-visible, :visited, :active),
+  .elementor-widget-html a.vsl-lg-btn:is(:hover, :focus, :focus-visible, :visited, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════
+     Velocity Dallas Leagues — Coming Soon — VSL 1.1.0
+     Scoped to .vsl-leagues
+     ═══════════════════════════════════════════════ */
+
+  /* ── TOKENS ── */
+  .vsl-leagues {
+    --red:      #D22026;
+    --magenta:  #EE265F;
+    --yellow:   #FDC70C;
+    --blue:     #293893;
+    --navy:     #10182B;
+    --deep-indigo: #191B4D;
+    --indigo:   #191840;
+    --circuit-white: #EAEAEA;
+    --silver:   #DFDFDE;
+    --mist:     #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --font-fine: 'Inter', system-ui, sans-serif;
+    --vsl-text-body: 1rem;
+    --vsl-text-body-lg: 1.333rem;
+    --vsl-text-section: clamp(1.5rem, 0.6rem + 4vw, 2.5rem);
+    --vsl-text-section-sub: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+    --vsl-hero-bleed-top: -32px;
+    --vsl-hero-bleed-bottom: -12px;
+  }
+
+  /* ── ROOT + RESET ── */
+  .vsl-leagues {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--navy);
+    box-sizing: border-box;
+    position: relative;
+    /* Full-bleed past Elementor boxed containers (same pattern as Membership / Party Packs) */
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc((100% - 100vw) / 2);
+    margin-right: calc((100% - 100vw) / 2);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    background: var(--navy);
+    overflow-x: clip;
+  }
+  .vsl-leagues:has(> main > section.vsl-lg-hero:first-of-type) {
+    margin-top: var(--vsl-hero-bleed-top);
+    margin-bottom: var(--vsl-hero-bleed-bottom);
+  }
+  .vsl-leagues > main { display: block; margin: 0; padding: 0; }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-leagues) {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    overflow: visible !important;
+    background: #10182B !important;
+    background-color: #10182B !important;
+  }
+  .elementor-section:has(.vsl-leagues),
+  .elementor-container:has(.vsl-leagues),
+  .elementor-column:has(.vsl-leagues),
+  .elementor-column-wrap:has(.vsl-leagues),
+  .elementor-widget-wrap:has(.vsl-leagues),
+  .elementor-widget:has(.vsl-leagues),
+  .e-con:has(.vsl-leagues),
+  .e-con-inner:has(.vsl-leagues),
+  .elementor-element:has(> .elementor-widget-container > .vsl-leagues) {
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    background: #10182B !important;
+    background-color: #10182B !important;
+    max-width: none !important;
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+  }
+  .vsl-leagues *,
+  .vsl-leagues *::before,
+  .vsl-leagues *::after { box-sizing: border-box; }
+  @media (max-width: 800px) {
+    .vsl-leagues {
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc((100% - 100vw) / 2) !important;
+      margin-right: calc((100% - 100vw) / 2) !important;
+    }
+  }
+  html:has(.vsl-leagues),
+  body:has(.vsl-leagues),
+  .site-content:has(.vsl-leagues),
+  #content:has(.vsl-leagues),
+  #primary:has(.vsl-leagues),
+  .content-area:has(.vsl-leagues),
+  .entry-content:has(.vsl-leagues),
+  .page-content:has(.vsl-leagues),
+  .hentry:has(.vsl-leagues),
+  .ast-container:has(.vsl-leagues) {
+    background: #10182B;
+    background-color: #10182B;
+  }
+  html:has(.vsl-leagues),
+  body:has(.vsl-leagues) { overflow-x: clip; max-width: 100%; }
+  .vsl-leagues section[id] { scroll-margin-top: 5.5rem; }
+  .vsl-leagues img, .vsl-leagues svg { max-width: 100%; }
+  .vsl-leagues h1, .vsl-leagues h2, .vsl-leagues h3, .vsl-leagues h4,
+  .vsl-leagues p, .vsl-leagues ul, .vsl-leagues ol, .vsl-leagues figure { margin: 0; }
+  .vsl-leagues ul, .vsl-leagues ol { padding: 0; list-style: none; }
+  .vsl-leagues button { font: inherit; }
+
+  /* ── LAYOUT PRIMITIVES ── */
+  .vsl-lg-wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-left: clamp(20px, 5vw, var(--page-margin));
+    padding-right: clamp(20px, 5vw, var(--page-margin));
+  }
+  .vsl-lg-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+  .vsl-lg-section { position: relative; padding: clamp(56px, 8vw, 96px) 0; }
+  .vsl-lg-section--navy { background: var(--navy); color: var(--circuit-white); }
+  .vsl-lg-section--indigo { background: var(--deep-indigo); color: var(--circuit-white); }
+  .vsl-lg-section--light { background: #fafafa; color: var(--navy); }
+  .vsl-lg-section--gradient {
+    background: linear-gradient(120deg, var(--indigo) 0%, var(--blue) 100%);
+    color: var(--circuit-white);
+  }
+
+  .vsl-lg-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--magenta) !important;
+    -webkit-text-fill-color: var(--magenta) !important;
+    margin-bottom: 0.75rem;
+  }
+  .vsl-lg-kicker::before {
+    content: '';
+    width: 1.6rem;
+    height: 2px;
+    background: currentColor;
+  }
+  .vsl-lg-section--light .vsl-lg-kicker { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-leagues .vsl-lg-h2 {
+    font-family: var(--font-display);
+    font-size: var(--vsl-text-section);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    text-wrap: balance;
+    color: inherit !important;
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important;
+    max-width: 22ch;
+  }
+  .vsl-leagues .vsl-lg-h2 em { font-style: italic; color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important; }
+  .vsl-lg-section--light .vsl-lg-h2 em { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-lg-sub {
+    margin-top: 0.9rem;
+    font-size: var(--vsl-text-section-sub);
+    line-height: 1.45;
+    max-width: 58ch;
+    color: var(--mist);
+  }
+  .vsl-lg-section--light .vsl-lg-sub { color: var(--slate-violet); }
+  .vsl-lg-head { grid-column: 1 / -1; margin-bottom: clamp(28px, 4vw, 44px); }
+
+  /* ── BUTTONS ── */
+  .vsl-lg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 48px;
+    padding: 12px 24px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 8px;
+    background: linear-gradient(105deg, var(--magenta) 0%, var(--red) 100%);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+    transition: filter 0.18s ease, transform 0.14s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
+  }
+  .vsl-lg-btn svg { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease; }
+  .vsl-lg-btn:hover { filter: brightness(1.06); transform: translateY(-1px); border-color: rgba(255, 255, 255, 0.4); }
+  .vsl-lg-btn:hover svg { transform: translateX(3px); }
+  .vsl-lg-btn:active { filter: brightness(0.94); transform: translateY(1px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35); }
+  .vsl-lg-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-lg-btn--outline {
+    background: transparent;
+    border: 2px solid rgba(234, 234, 234, 0.6);
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+    box-shadow: none;
+  }
+  .vsl-lg-btn--outline:hover { background: rgba(234, 234, 234, 0.08); border-color: var(--circuit-white); filter: none; }
+  .vsl-lg-section--light .vsl-lg-btn--outline { border-color: var(--navy); color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-lg-section--light .vsl-lg-btn--outline:hover { background: rgba(16, 24, 43, 0.07); }
+  .vsl-lg-btn--dark {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-lg-btn--dark:hover { background: var(--deep-indigo); border-color: var(--deep-indigo); filter: none; }
+  /* Coming-soon state (leaderboard not built yet) */
+  .vsl-lg-btn.is-soon,
+  .vsl-lg-btn.is-soon:hover {
+    cursor: default;
+    pointer-events: none;
+    filter: none;
+    transform: none;
+    background: rgba(234, 234, 234, 0.06);
+    border: 1px dashed rgba(234, 234, 234, 0.42);
+    color: var(--mist) !important;
+    -webkit-text-fill-color: var(--mist) !important;
+    box-shadow: none;
+  }
+  .vsl-lg-section--light .vsl-lg-btn.is-soon { background: rgba(16, 24, 43, 0.05); border-color: rgba(16, 24, 43, 0.3); color: var(--slate-violet) !important; -webkit-text-fill-color: var(--slate-violet) !important; }
+  .vsl-lg-btn.is-soon svg { display: none; }
+  .vsl-lg-btn.is-soon::before {
+    content: '';
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 0 0 0 4px rgba(253, 199, 12, 0.18);
+    flex-shrink: 0;
+  }
+  .vsl-lg-textlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--mist) !important;
+    -webkit-text-fill-color: var(--mist) !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid rgba(178, 174, 191, 0.4);
+    padding-bottom: 1px;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .vsl-lg-textlink:hover { color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; border-color: var(--circuit-white); }
+  .vsl-lg-textlink.is-soon { cursor: default; pointer-events: none; border-bottom-style: dashed; }
+  .vsl-lg-textlink.is-soon::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--yellow); }
+  .vsl-lg-btn .vsl-lg-btn__price { font-weight: 500; opacity: 0.9; }
+
+  /* ── HERO ── */
+  .vsl-lg-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Fill the first screen; JS sets the exact height so the checkered line lands on the bottom edge. */
+    min-height: calc(100svh - var(--vsl-nav-offset, 86px));
+    background: var(--navy);
+    color: var(--circuit-white);
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+  }
+  .vsl-lg-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(160deg, var(--indigo) 0%, var(--navy) 60%);
+  }
+  .vsl-lg-hero__bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.32;
+    filter: saturate(0.85);
+  }
+  .vsl-lg-hero__bg img[hidden] { display: none; }
+  /* This week's circuit: upright, fully inside the open right side, so the stroke stays sharp */
+  .vsl-lg-hero__circuit {
+    position: absolute;
+    top: 7%;
+    right: 3%;
+    width: min(46%, 640px);
+    height: 58%;
+    color: rgba(234, 234, 234, 0.34);
+    z-index: 1;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 10%);
+  }
+  .vsl-lg-hero__circuit svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    shape-rendering: geometricPrecision;
+  }
+  .vsl-lg-hero__inner {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    padding-top: clamp(72px, 8vh, 96px);
+    padding-bottom: clamp(28px, 4vh, 48px);
+  }
+  .vsl-lg-hero__copy { grid-column: 1 / span 8; }
+  .vsl-leagues p.vsl-lg-hero__eyebrow {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--circuit-white) !important;
+    -webkit-text-fill-color: var(--circuit-white) !important;
+  }
+  .vsl-lg-hero__eyebrow .vsl-lg-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 4px 10px 3px;
+    border-radius: 999px;
+    background: var(--magenta);
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+  .vsl-lg-hero__eyebrow .vsl-lg-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+  .vsl-lg-hero__eyebrow span[aria-hidden] { color: var(--mist); }
+  .vsl-lg-hero__when {
+    flex-basis: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    width: fit-content;
+    max-width: 100%;
+    margin-top: 2px;
+    padding: 8px 12px 7px;
+    border-radius: 8px;
+    background: rgba(16, 24, 43, 0.82);
+    border: 1px solid rgba(253, 199, 12, 0.7);
+  }
+  .vsl-lg-hero__when-time {
+    font-size: 1.2rem;
+    letter-spacing: 0.06em;
+    color: var(--yellow) !important;
+    -webkit-text-fill-color: var(--yellow) !important;
+  }
+  .vsl-lg-hero__when-day {
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-lg-hero__when-dates {
+    flex-basis: 100%;
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-leagues .vsl-lg-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 1.2rem + 6.5vw, 5.25rem);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: 0.98;
+    letter-spacing: 0.02em;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    text-wrap: balance;
+    max-width: 14ch;
+  }
+  .vsl-leagues .vsl-lg-hero__title .vsl-lg-hero__accent { color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important; }
+  .vsl-lg-hero__sub {
+    margin-top: 1.25rem;
+    font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 44ch;
+    color: var(--circuit-white);
+  }
+  .vsl-lg-hero__sub strong { color: #fff; font-weight: 700; }
+  .vsl-lg-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 16px;
+    margin-top: 1.9rem;
+  }
+  .vsl-lg-hero__standings { margin-top: 1.1rem; }
+  .vsl-lg-hero__facts {
+    grid-column: 9 / span 4;
+    align-self: end;
+    display: grid;
+    gap: 10px;
+  }
+  .vsl-lg-fact {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 14px;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .vsl-lg-fact__k {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--yellow) !important;
+    -webkit-text-fill-color: var(--yellow) !important;
+    min-width: 3.2ch;
+  }
+  .vsl-lg-fact__v {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: var(--circuit-white);
+  }
+  .vsl-lg-fact__v small { display: block; color: var(--mist); font-size: 0.82rem; }
+  /* Coming-soon holding page: centre the hero content in the first screen */
+  .vsl-leagues.is-coming-soon .vsl-lg-hero__inner {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: clamp(40px, 6vh, 72px);
+    padding-bottom: clamp(40px, 6vh, 72px);
+  }
+  .vsl-leagues.is-coming-soon .vsl-lg-hero__facts { align-self: center; }
+  /* Coming-soon notify card (sits where the season facts used to) */
+  .vsl-lg-notify {
+    padding: 22px 22px 24px;
+    border-radius: 14px;
+    background: rgba(16, 24, 43, 0.82);
+    border: 1px solid rgba(253, 199, 12, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .vsl-leagues .vsl-lg-notify__kicker {
+    font-family: var(--font-display);
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.9rem;
+    color: var(--yellow) !important;
+    -webkit-text-fill-color: var(--yellow) !important;
+  }
+  .vsl-leagues .vsl-lg-notify__title {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    line-height: 1;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-leagues .vsl-lg-notify p { margin-top: 10px; color: var(--circuit-white); font-size: 0.98rem; line-height: 1.45; }
+  .vsl-lg-notify .vsl-lg-btn { margin-top: 16px; width: 100%; justify-content: center; }
+  .vsl-leagues .vsl-lg-notify__alt { margin-top: 12px; font-size: 0.88rem; color: var(--mist); }
+  .vsl-leagues .vsl-lg-notify__alt a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  .vsl-lg-hero__finish {
+    position: relative;
+    z-index: 3;
+    display: block;
+    width: 100%;
+    margin-top: auto;
+    flex: 0 0 auto;
+    height: var(--vsl-hero-finish-h);
+    background-color: var(--navy);
+    background-image: var(--vsl-hero-finish);
+    background-repeat: repeat-x;
+    background-position: center;
+    background-size: auto 100%;
+  }
+
+  /* ── LOCATION ── */
+  .vsl-lg-loc__copy { grid-column: 1 / span 6; }
+  .vsl-lg-loc__copy .vsl-lg-h2 { max-width: none; }
+  .vsl-lg-loc__details { margin-top: 1.4rem; display: grid; gap: 16px; }
+  .vsl-lg-loc__details li { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: flex-start; font-size: 1rem; line-height: 1.45; color: var(--navy); }
+  .vsl-lg-loc__details li svg { width: 22px; height: 22px; flex-shrink: 0; fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; margin-top: 2px; }
+  .vsl-lg-loc__details a { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; text-decoration: none !important; font-weight: 600; border-bottom: 1px solid rgba(41, 56, 147, 0.3); }
+  .vsl-lg-loc__details a:hover { border-color: var(--blue); }
+  .vsl-lg-loc__details small { display: block; color: var(--slate-violet); font-size: 0.9rem; }
+  .vsl-lg-loc__notice {
+    grid-column: 8 / -1;
+    align-self: start;
+    padding: 24px 24px 22px;
+    border-radius: 12px;
+    background: var(--navy);
+    color: var(--circuit-white);
+    border-left: 5px solid var(--yellow);
+  }
+  .vsl-leagues .vsl-lg-loc__notice h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.06em; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-lg-loc__notice p { margin-top: 8px; font-size: 0.98rem; line-height: 1.45; color: var(--circuit-white); }
+  .vsl-lg-loc__notice .vsl-lg-textlink { margin-top: 14px; }
+  .vsl-lg-loc__hours { margin-top: 1.6rem; grid-column: 1 / span 6; }
+  .vsl-leagues .vsl-lg-loc__hours h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-lg-loc__hours ul { margin-top: 10px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px 12px; max-width: 640px; }
+  .vsl-lg-loc__hours li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border-radius: 6px; background: rgba(16, 24, 43, 0.05); font-size: 0.92rem; color: var(--navy); }
+  .vsl-lg-loc__hours li b { font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .vsl-lg-loc__hours li span { color: var(--slate-violet); white-space: nowrap; }
+  .vsl-lg-loc__hours li.is-race { background: rgba(238, 38, 95, 0.1); outline: 1px solid rgba(238, 38, 95, 0.35); }
+  .vsl-lg-loc__hours li.is-race b::after { content: 'League'; display: inline-block; margin-left: 8px; padding: 1px 6px; border-radius: 4px; background: var(--magenta); color: #fff; font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.68rem; vertical-align: middle; }
+  @media (max-width: 560px) {
+    .vsl-lg-loc__hours ul { grid-template-columns: 1fr; }
+  }
+
+  /* ── MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-leagues *, .vsl-leagues *::before, .vsl-leagues *::after { transition: none !important; animation: none !important; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html:has(.vsl-leagues) { scroll-behavior: smooth; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .vsl-lg-hero__copy { grid-column: 1 / span 7; }
+    .vsl-lg-hero__facts { grid-column: 8 / span 5; }
+  }
+  @media (max-width: 900px) {
+    .vsl-lg-hero__copy, .vsl-lg-hero__facts { grid-column: 1 / -1; }
+    .vsl-lg-hero__facts { margin-top: 8px; }
+    .vsl-lg-hero__circuit {
+      width: min(168vw, 760px);
+      height: auto;
+      top: 7%;
+      bottom: auto;
+      right: -34%;
+      color: rgba(234, 234, 234, 0.22);
+      transform: rotate(-8deg);
+      transform-origin: 62% 40%;
+      -webkit-mask-image: linear-gradient(105deg, transparent 0%, #000 42%);
+      mask-image: linear-gradient(105deg, transparent 0%, #000 42%);
+    }
+    .vsl-lg-hero__circuit svg { height: auto; }
+    .vsl-lg-loc__copy, .vsl-lg-loc__notice, .vsl-lg-loc__hours { grid-column: 1 / -1; }
+  }
+  @media (max-width: 800px) {
+    .vsl-leagues { padding-bottom: 0; }
+  }
+  @media (max-width: 560px) {
+    .vsl-lg-hero__ctas .vsl-lg-btn { width: 100%; }
+  }
+</style>
+
+<div class="vsl-leagues is-coming-soon" data-vsl-config='{"location":"dallas","status":"coming-soon","links":{"register":"","leaderboard":"","bookNow":"https://velocitysimlounge.com/dallas/book-now/","contact":"https://velocitysimlounge.com/dallas/contact/","membership":"https://velocitysimlounge.com/membership/","maps":"https://maps.app.goo.gl/teXX8C3U46jsjQNk6","notify":"mailto:infodtx@velocitysimlounge.com?subject=Dallas%20League%20%E2%80%94%20let%20me%20know%20when%20registration%20opens"},"images":{"hero":"","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
+
+  <!-- Decorative circuit outline behind the hero -->
+  <svg width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <symbol id="vsl-lg-trk-watkins" viewBox="-37.0 -38.5 3076.6 1409.6"><!-- Generator: Adobe Illustrator 28.7.1, SVG Export Plug-In . SVG Version: 1.2.0 Build 142) --><g><g><path d="M2899.1,996.1c-2-25.6-11.8-50.6-29.4-69.6-17.4-18.8-42.6-31.8-68.1-34.4-13.6-1.3-27.4-.6-40.9-.4-9.8.1-19.5.2-29.3.4-12.3.2-24.6.3-36.9.5-14.2.2-28.4.4-42.6.5-15.5.2-31,.4-46.5.6-16.2.2-32.4.4-48.6.6-16.2.2-32.5.4-48.7.6-15.7.2-31.4.4-47.1.6-14.5.2-29,.4-43.5.6-12.7.2-25.4.3-38.1.5-10.3.1-20.6.3-30.9.4-7.3,0-14.5.2-21.8.3-8.1.1-16.1.3-24.1-.2-24.9-1.8-49.1-11.9-67.9-28.1-19.6-16.9-31.8-41.5-35.3-67.1-3.7-26.7,2.3-54.7,17.8-76.9,9.6-13.8,22.8-24.8,36.2-34.8.7-.5,1.3-1,2-1.5,4.8-3.5,9.5-7,14.2-10.6,8.5-6.3,17.1-12.7,25.6-19,11.4-8.4,22.8-16.9,34.1-25.3,13.3-9.8,26.6-19.7,39.8-29.5,14.2-10.5,28.4-21.1,42.7-31.7,14.2-10.5,28.4-21.1,42.7-31.7,13.3-9.8,26.5-19.7,39.8-29.5,11.4-8.4,22.8-16.9,34.1-25.3,6.1-4.5,12.2-9.1,18.2-13.6,10.8-8.1,21.9-15.7,32-24.8,9.8-8.9,19-18.7,26.8-29.3,15.8-21.4,27.7-46.3,33.8-72.2,6.6-28.1,7.2-58.4,2.4-86.8-4.7-28-15.6-54.5-32.4-77.5-12.1-16.7-26.5-31.7-43-44.1-16.5-12.5-34.9-22.3-54.9-28-14.5-4.1-29.4-6.1-44.3-7.3-7.6-.6-15.2-1-22.9-1.1-4.3,0-8.6-.1-12.9-.1h-119.8c-5.8,0-11.5.7-17.1,2.7-9.2,3.3-16.4,10-23.3,16.7-.6.6-1.1,1.1-1.7,1.7-8.1,7.8-16.2,15.5-24.6,23-2.3,2.1-4.5,4.3-7,6.1-6.9,5-15.6,5.8-23.9,5.8h-73.7c-14.4,0-27.2-5.1-37.9-14.6-.2-.1-.3-.3-.5-.4-7.8-6.9-15.4-14.3-22.9-21.6-6.6-6.7-13.8-12.5-22.4-16.3-7.8-3.5-16.4-3.1-24.8-3.1h-812.8c-14.5,0-29.1,0-43.6,0-30.6.1-61.3,2.1-91.5,7.3-29.7,5.1-58.7,13.6-87,24-27.4,10.1-54,22.2-79.5,36.3-25.3,13.9-49,30.6-71.1,49.2-22.1,18.6-42,39.4-61.5,60.8-20.4,22.3-39.5,45.7-60.3,67.6-19.2,20.1-40.5,38.1-63.5,53.6-23.4,15.8-48.9,27.8-76,35.6-28.4,8.1-58,12.1-87.4,14.2-30,2.1-60.3,5.5-89.5,12.6-28,6.9-55.1,18.5-80.4,32.3-24.4,13.3-46.8,30.5-66.2,50.3-19.2,19.6-35.1,41.8-46.9,66.6-12.4,26.2-19.9,54.6-27.4,82.5-3.1,11.5-6.2,22.9-9.3,34.4-4,14.8-8,29.7-12,44.5-4.4,16.3-8.8,32.7-13.2,49-4.3,16-8.6,32-12.9,48-3.7,13.7-7.4,27.5-11.1,41.2-2.6,9.6-5.2,19.2-7.8,28.9-1,3.6-1.9,7.3-2.9,10.9,0,0-18.7,64.2-14.4,97.9.4,3.3,1,6.5,1.8,9.7,4.7,18.8,16.2,36.8,33.1,46.8,8.4,5,18.1,7.6,27.7,8.8,61.2,7.4,122.4,15.1,183.7,22.3,56.9,6.8,113.7,13.2,170.6,19.6,28.4,3.1,56.7,6.2,85.1,9.3,34.3,3.8,68.7,7.5,103,11.3,37.3,4.1,74.6,8.2,111.9,12.2,37.3,4.1,74.5,8.2,111.8,12.2,34.2,3.7,68.4,7.5,102.6,11.2,28.2,3.1,56.3,6.2,84.5,9.2,19.1,2.1,38.2,4.2,57.3,6.3,7,.8,14.1,1.6,21.1,2.2,9,.8,18.1,1.3,27.1,1,27.8-1.1,54.7-12.6,76.7-29.2,21.3-16,37.9-36.5,44.4-62.7,4.6-18.6,5.1-37.8,7.2-56.8,5-46.7,9.9-93.4,14.7-140.2,3.1-30.7,6.2-61.4,8.8-92.2,3.8-45.7,5.9-89.5,37.5-126.2,4.9-5.7,10.3-11,16.1-15.8,21-17.6,46.5-27.8,73.3-32.6,7.6-1.3,15.1-2.8,22.6-4.1,0,0,387.5-69.5,387.6-69.5,19.7-3.5,41.6-2.9,59.9,5.8,16.2,7.7,30,20.3,39,35.8,1,1.7,1.9,3.5,2.8,5.3,1.9,3.9,3.5,8,4.9,12.1,4.2,13.2,5.4,27.4,2.5,41-3,13.7-9.5,26.2-16.1,38.4-5.4,10.1-10.9,20.2-16.3,30.3-7.6,14.2-15.3,28.3-22.9,42.5-8.7,16.2-17.4,32.4-26.2,48.6-8.7,16.2-17.4,32.4-26.1,48.5-7.6,14.1-15.2,28.3-22.8,42.4-8.2,15.2-16.7,30.4-24.2,46-12.4,25.7-21.1,54.5-18,83.3,2.6,23.7,12.3,47.3,32.3,61.4,14.3,10.1,32.7,17.2,50.5,16.4,0,0,736.3-35.1,762.9-36.2,10.9-.5,21.8-.9,32.7-1.6,28.8-1.6,58.7-1.9,86.2-11.5,10.5-3.6,20.5-8.6,29.8-14.7,10.7-7,20.4-15.5,28.7-25.1,8.8-10.1,17-21.3,21.7-34,4.7-12.8,5.4-26.8,4.3-40.3h0ZM1034.5,1189c-8.3-.8-16.7-1.8-25-2.6-15-1.6-30.1-3.2-45.1-4.8-20.3-2.2-40.6-4.4-60.9-6.6-24.1-2.6-48.3-5.2-72.4-7.8-26.5-2.9-53.1-5.7-79.6-8.6-27.5-3-55-5.9-82.5-8.9-27-2.9-54.1-5.8-81.1-8.8-25.2-2.7-50.3-5.4-75.5-8.2-21.8-2.4-43.6-4.7-65.5-7.1-17.1-1.8-34.1-3.7-51.2-5.6-32-3.5-63.9-7.3-95.8-11.6-23.9-3.2-47.8-6.2-71.7-9.4-12-1.6-23.9-3.3-35.8-5.2-18.1-2.9-35.1-3.2-49-16.7-10.8-10.6-16.9-25.4-18.5-40.2-1-8.9-.3-17.8,1.1-26.6,2-12.2,5.5-24.3,8.4-36.4,1.4-5.7,2.8-11.5,4.2-17.2,0,25.3,5.2,47.6,15.4,66.2,13.4,24.4,34.7,43.4,60.1,53.4,22.8,9,47.7,14,71.2,20,36.1,9.3,72.9,16.3,110,20.3.1,0,.3,0,.5,0,17.1,1.8,34.1,3.7,51.2,5.6,21.8,2.4,43.6,4.7,65.5,7.1,25.2,2.7,50.3,5.4,75.5,8.2,27,2.9,54.1,5.8,81.1,8.8,27.5,3,55,5.9,82.5,8.9,26.5,2.9,53.1,5.7,79.6,8.6,24.1,2.6,48.3,5.2,72.4,7.8,20.3,2.2,40.6,4.4,60.9,6.6,15,1.6,30.1,3.2,45.1,4.8,8.3.9,16.7,1.8,25,2.6,0,0,0,0,.1,0,22.1,2.2,43.9,6.2,65.9,9.8,2.8.4,5.5.9,8.3,1.4-29.4-4-38.2-4.4-74.2-8,0,0,0,0-.1,0h0ZM2850.2,1064.8c-5.4,5.2-11.2,9.8-17.4,13.9-14.1,9.3-29.5,15.2-46,18.6-29.2,6.1-59.6,7.2-89.4,8.6-10.6.5-21.2,1-31.9,1.5-13.5.7-27.1,1.3-40.6,1.9-16,.8-32.1,1.5-48.1,2.3-18.1.9-36.3,1.8-54.4,2.6-19.8.9-39.6,1.9-59.5,2.9-21.1,1-42.2,2-63.3,3.1-22,1.1-44,2.1-66,3.2-22.5,1.1-44.9,2.2-67.4,3.2-22.5,1.1-45.1,2.2-67.6,3.2-22.2,1.1-44.4,2.1-66.6,3.2-21.4,1-42.9,2.1-64.4,3.1-20.3,1-40.6,1.9-60.9,2.9-18.8.9-37.5,1.8-56.3,2.7-.3,0-.7,0-1,0-10.2.5-20.1.6-30.1-1.9-9.7-2.4-18.9-6.7-27.1-12.5-3.7-2.6-7.1-5.8-9.9-9.3-19.5-24.3-17.3-57.8-8.8-86,5.9-19.4,15.4-37.4,24.6-55.3,10.2-20,21.1-39.9,31.6-59.5,8.7-16.2,17.4-32.4,26.1-48.5,3.6-6.7,7.2-13.4,10.8-20.1,12.7-23.5,25.3-47,38-70.5,5.9-11,11.8-22,18.1-32.7,10.4-17.6,17.7-37.3,18.8-57.8.2-4.3.2-8.7-.2-13-3.1-39.8-29.4-73.3-66.8-86.9-19.7-7.2-42.2-5.8-62.7-3l-412.1,73.9c-31.8,5.7-63,18.3-84.8,36.6-6.5,5.4-12.5,11.3-18,17.7-33.5,38.8-37.2,84.4-40.8,128.5l-.6,6.9c-2.5,30.3-2.5,61.2-5.5,91.1v.8c-4.4,42.8-9.2,88.6-14.8,140.1-3.5,32.4-6.5,65.5-31.2,89.8-19.1,18.8-45.6,32.1-72.3,34.6-18.1,1.7-37,.6-54.8-3.3-7.7-1.7-15.3-3.4-23-5.2-18.9-4.3-38-8.2-57.1-11.8-37.2-6.9-74.7-12.8-88.8-15-3.7-.6-6.8-2.8-8.7-6-1.9-3.4-5.3-5.6-9.2-6l-672.8-72.5c-29.7-3.2-60.1-6.1-88.8-14.8-3.7-1.1-7.4-2.4-11-3.8-23.1-9.1-42.6-26.7-54.4-48.4-11.3-20.7-14.8-44.5-14-67.9.2-5.5.6-11,1.2-16.5,0-.2,0-.5,0-.7s0-.4,0-.7c2.2-22.3,4.4-44.8,10-66.6,5.7-22.2,11.2-44.6,16.7-66.8.2-.7.3-1.3.5-2,5.7-22.5,12.4-44.7,18.2-67.1,5.8-22,9.9-44.6,16.1-66.4,4.2-17.5,11.8-34.5,20-50.5,19.1-37.3,46.3-68,81.5-90.8,3.8-2.5,7.7-4.9,11.7-7.2,37.9-22.1,79.7-37,123-43.9,21.7-3.4,44-3.8,65.8-5.6,22.3-1.9,44.7-4.6,66.3-10.5,20.3-5.5,40-13.5,58.7-23.2,36-18.7,67.2-45.5,95-74.6,12.4-13,24.3-26.6,35.8-39.8,8.1-9.3,16.4-18.9,24.8-28,7.1-7.8,14.4-15.4,21.9-22.9,20.5-20.4,42.2-39.5,65.8-56.2,23.9-16.9,49.9-31,76.4-43.4,26.7-12.6,54.4-22.9,82.9-30.7,20.6-5.7,41.6-10,62.8-13.1,30.1-4.3,60.6-4.9,90.9-5,7.3,0,14.5,0,21.8,0h803.2s16.2-1.2,29.6,11.4c13.4,12.6,40,38.1,40,38.1,0,0,8.3,8.3,22.3,8.3h113.4c6.4,0,13.4-.6,19.2-3.6,5.5-2.8,9.8-7.5,14.2-11.8,4.4-4.4,9.3-8.4,14.3-12.2,10.9-8.3,22.8-15.6,35.5-20.8,12.5-5.2,25.1-7.2,38.5-8.2,23.1-1.6,71.5-.3,72.6-.2,6.4.1,12.7.2,19.1.4.7,0,1.4,0,2.1,0,28.2.9,57.5,4.1,83.2,16.3,24.5,11.7,45.9,29.1,62.7,50.4,17.3,21.9,28.7,48.1,33.4,75.6,4.6,27.3,3.8,55.1-2.2,80.4-5.5,23.3-16.3,46.3-31.1,66.4-14.1,19-32.1,33.1-50.5,47.7-36,28.6-72.6,56.1-109.5,83.4-16.7,12.4-33.4,24.8-50,37.1-16.6,12.3-33.1,24.6-49.7,36.9-8.6,6.4-17.2,12.8-25.8,19.1-18.4,13.7-36.6,27.5-55.6,40.5-8.6,5.9-17.2,12-25,19-7.7,7-14.8,14.6-20.8,23.1-17.3,24.9-24.8,57.1-20.5,88.3,4.2,30.3,19,58.4,40.8,77.1,21.5,18.5,47.5,30.7,75.8,32.8,7.7.6,20.8.4,28,.3l435.1-6.5c17.6-.2,34.1-.2,51.1,5.2,16.4,5.2,31.6,14.2,43,27.2,5.7,6.5,10.5,13.8,14.1,21.6,15.7,34,9.6,77.3-17.7,103.6h0Z" fill="currentColor" stroke="currentColor" stroke-width="15.4" stroke-linejoin="round"/></g></g></symbol>
+  </svg>
+
+  <main>
+
+    <!-- ▸ Hero -->
+    <section class="vsl-lg-hero" id="lg-hero" aria-labelledby="lg-hero-title">
+      <div class="vsl-lg-hero__bg" aria-hidden="true">
+        <img data-vsl-lg-img="hero" alt="" decoding="async" fetchpriority="high" width="1920" height="1080" hidden>
+      </div>
+      <div class="vsl-lg-hero__circuit" data-vsl-lg-hero-track aria-hidden="true">
+        <svg viewBox="-37 -38.5 3076.6 1409.6" preserveAspectRatio="xMaxYMid meet"><use href="#vsl-lg-trk-watkins"></use></svg>
+      </div>
+      <div class="vsl-lg-wrap vsl-lg-hero__inner">
+        <div class="vsl-lg-grid">
+          <div class="vsl-lg-hero__copy">
+            <p class="vsl-lg-hero__eyebrow">
+              <span class="vsl-lg-pill">Coming soon</span>
+            </p>
+            <h1 class="vsl-lg-hero__title" id="lg-hero-title">Velocity Dallas <span class="vsl-lg-hero__accent">GT3</span> League</h1>
+            <p class="vsl-lg-hero__sub">Our Dallas league is in the works. Close racing on equal GT3 machinery against drivers at your level, with trophies on the line at <strong>Velocity Sim Racing Lounge Dallas</strong>. Dates and registration will be announced here first.</p>
+            <div class="vsl-lg-hero__ctas">
+              <a class="vsl-lg-btn" data-vsl-lg-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book a race today
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="vsl-lg-btn vsl-lg-btn--outline" data-vsl-soft-scroll href="#lg-location">Visit Velocity Dallas</a>
+            </div>
+          </div>
+          <div class="vsl-lg-hero__facts">
+            <div class="vsl-lg-notify">
+              <p class="vsl-lg-notify__kicker">Be first on the grid</p>
+              <h2 class="vsl-lg-notify__title">Get the green light</h2>
+              <p>Drop us a line and we'll email you the moment league dates and registration go live.</p>
+              <a class="vsl-lg-btn vsl-lg-btn--outline" data-vsl-lg-link="notify" href="mailto:infodtx@velocitysimlounge.com?subject=Dallas%20League%20%E2%80%94%20let%20me%20know%20when%20registration%20opens">Email me when it opens</a>
+              <p class="vsl-lg-notify__alt">Prefer to call or text? <a href="tel:+19722095215">972-209-5215</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vsl-lg-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ Location -->
+    <section class="vsl-lg-section vsl-lg-section--light" id="lg-location" aria-labelledby="lg-location-heading">
+      <div class="vsl-lg-wrap vsl-lg-grid">
+        <div class="vsl-lg-loc__copy">
+          <p class="vsl-lg-kicker">Where we race</p>
+          <h2 class="vsl-lg-h2" id="lg-location-heading">Velocity Sim Racing Lounge <em>Dallas</em></h2>
+          <p class="vsl-lg-sub">The largest simulation racing entertainment destination in Texas — 32 simulators, a full kitchen and bar, and room for 400 guests at The Hill.</p>
+          <ul class="vsl-lg-loc__details">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg><span><a data-vsl-lg-link="maps" href="https://maps.app.goo.gl/teXX8C3U46jsjQNk6" target="_blank" rel="noopener noreferrer">9830 N Central Expy #400, Dallas, TX 75231</a><small>Located in The Hill · free parking</small></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6.2 6.2l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span><a href="tel:+19722095215">972-209-5215</a><small>Questions about the upcoming league? Call or text.</small></span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m4 7 8 6 8-6"/></svg><span><a href="mailto:infodtx@velocitysimlounge.com">infodtx@velocitysimlounge.com</a><small>Group and corporate league inquiries welcome.</small></span></li>
+          </ul>
+          <div class="vsl-lg-loc__hours">
+            <h3>Hours</h3>
+            <ul>
+              <li><b>Mon</b><span>12 PM – 10 PM</span></li>
+              <li><b>Tue</b><span>12 PM – 10 PM</span></li>
+              <li><b>Wed – Thu</b><span>12 PM – 11 PM</span></li>
+              <li><b>Fri</b><span>12 PM – 12 AM</span></li>
+              <li><b>Sat</b><span>11 AM – 12 AM</span></li>
+              <li><b>Sun</b><span>11 AM – 10 PM</span></li>
+            </ul>
+          </div>
+        </div>
+        <aside class="vsl-lg-loc__notice">
+          <h3>This page is for Dallas</h3>
+          <p>League news here is for <strong>Velocity Dallas</strong>. VSL Leagues in Houston are announced separately.</p>
+          <p>Until race night arrives, you can book a Quick Race, Double Race or Leaderboard Challenge any day of the week.</p>
+          <a class="vsl-lg-textlink" data-vsl-lg-link="bookNow" href="https://velocitysimlounge.com/dallas/book-now/">Book a race at Velocity Dallas
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('.vsl-leagues');
+  if (!root) return;
+
+  /* Elementor/theme overflow/padding on ancestors clips full-bleed and leaves white gaps */
+  function fixAncestorScrollTraps(el) {
+    var p = el.parentElement;
+    while (p && p !== document.documentElement && p !== document.body) {
+      var cs = getComputedStyle(p);
+      if (cs.overflowX === 'hidden') p.style.setProperty('overflow-x', 'clip', 'important');
+      if (cs.overflowY === 'hidden') p.style.setProperty('overflow-y', 'clip', 'important');
+      var cls = typeof p.className === 'string' ? p.className : '';
+      var bg = cs.backgroundColor || '';
+      var light = /rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/.exec(bg);
+      if (light && +light[1] > 220 && +light[2] > 220 && +light[3] > 220) {
+        p.style.setProperty('background', '#10182B', 'important');
+        p.style.setProperty('background-color', '#10182B', 'important');
+      }
+      if (/elementor|e-con|site-content|content-area|entry-content|page-content|hentry|ast-container/.test(cls) || p.id === 'content' || p.id === 'primary') {
+        if ((parseFloat(cs.paddingLeft) || 0) > 0) p.style.setProperty('padding-left', '0', 'important');
+        if ((parseFloat(cs.paddingRight) || 0) > 0) p.style.setProperty('padding-right', '0', 'important');
+        if ((parseFloat(cs.paddingTop) || 0) > 0) p.style.setProperty('padding-top', '0', 'important');
+        if ((parseFloat(cs.marginTop) || 0) > 0) p.style.setProperty('margin-top', '0', 'important');
+      }
+      p = p.parentElement;
+    }
+  }
+  fixAncestorScrollTraps(root);
+
+  /* Pin the checkered line to the bottom of the first screen, above any mobile dock. */
+  function fitHeroToScreen() {
+    var heroEl = root.querySelector('.vsl-lg-hero');
+    if (!heroEl) return;
+    var docTop = heroEl.getBoundingClientRect().top + window.scrollY;
+    var dockH = 0;
+    if (window.matchMedia('(max-width: 1024px)').matches) {
+      var dockCss = getComputedStyle(document.documentElement).getPropertyValue('--vsl-mobile-dock-height').trim()
+        || getComputedStyle(document.documentElement).getPropertyValue('--vsl-mobile-dock-h').trim();
+      dockH = parseFloat(dockCss) || 0;
+    }
+    var h = Math.round(window.innerHeight - docTop - dockH);
+    if (h > 520) heroEl.style.minHeight = h + 'px';
+  }
+  fitHeroToScreen();
+  window.addEventListener('resize', fitHeroToScreen);
+  window.addEventListener('load', fitHeroToScreen);
+
+  /* ── Config ── */
+  var cfg = {};
+  try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }
+  var links = cfg.links || {};
+  var images = cfg.images || {};
+  window.VSL_LG_CONFIG = cfg;
+  root.classList.add('is-coming-soon');
+
+  function isUrl(v) { return typeof v === 'string' && /^(https?:\/\/|mailto:|tel:)/i.test(v.trim()); }
+
+  /* Other simple links */
+  ['bookNow', 'contact', 'membership', 'maps', 'notify'].forEach(function (k) {
+    if (!isUrl(links[k])) return;
+    root.querySelectorAll('a[data-vsl-lg-link="' + k + '"]').forEach(function (a) { a.setAttribute('href', links[k].trim()); });
+  });
+
+  /* Hero image (optional) */
+  var heroImg = root.querySelector('img[data-vsl-lg-img="hero"]');
+  if (heroImg && isUrl(images.hero)) { heroImg.src = images.hero.trim(); heroImg.hidden = false; }
+  if (isUrl(images.heroFinishLine)) root.style.setProperty('--vsl-hero-finish', 'url("' + images.heroFinishLine.trim() + '")');
+
+  var px = typeof cfg.elementorColumnOutdentPx === 'number' ? cfg.elementorColumnOutdentPx : 0;
+  if (px > 0) root.style.setProperty('--vsl-outdent', px + 'px');
+
+  /* ── Soft scroll for in-page anchors ── */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  root.querySelectorAll('a[data-vsl-soft-scroll][href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = root.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+
+})();
+</script>

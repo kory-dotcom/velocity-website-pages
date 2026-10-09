@@ -27,6 +27,10 @@
 
   var HOUSTON_ONLY_SLUGS = {
     about: true,
+    'gift-cards': true,
+    'holiday-parties': true,
+    'millionlaps': true,
+    'lemans': true,
     ignition: true,
     'summer-special': true,
     'fathers-day': true,
@@ -53,6 +57,10 @@
     '/fathers-day/': 'fathers-day',
     '/spring-bundles/': 'fathers-day',
     '/blog/': 'blog',
+    '/gift-cards/': 'gift-cards',
+    '/holiday-parties/': 'holiday-parties',
+    '/millionlaps/': 'millionlaps',
+    '/lemans/': 'lemans',
     '/dallas/': 'home',
     '/dallas/book-now/': 'book-now',
     '/dallas/contact/': 'contact',
@@ -155,7 +163,11 @@
       if (/^\/dallas(\/|$)/.test(path)) return 'dallas';
       /* `/` is a routing hub, not Houston, for persistence */
       if (path === '/') return null;
-      if (INTERNAL_PATH_SLUGS[path]) return 'houston';
+      if (INTERNAL_PATH_SLUGS[path]) {
+        /* Gift cards and holiday parties are one URL for both lounges. Don't force the pill to Houston. */
+        if (INTERNAL_PATH_SLUGS[path] === 'gift-cards' || INTERNAL_PATH_SLUGS[path] === 'holiday-parties' || INTERNAL_PATH_SLUGS[path] === 'millionlaps' || INTERNAL_PATH_SLUGS[path] === 'lemans') return null;
+        return 'houston';
+      }
     } catch (_) {}
     return null;
   }
@@ -175,7 +187,7 @@
       if (!global.__VSL_SITE_REPLICA__) return null;
       var p = new URLSearchParams(global.location.search).get('p') || 'home';
       if (p.indexOf('dallas-') === 0 || p === 'dallas-home') return 'dallas';
-      if (p === 'home') return null;
+      if (p === 'home' || p === 'gift-cards' || p === 'holiday-parties' || p === 'millionlaps' || p === 'lemans') return null;
       return 'houston';
     } catch (_) {}
     return null;
@@ -198,9 +210,21 @@
 
     var fromPath = readFromPath() || readFromStagingPageKey();
 
-    if (fromPath === 'dallas') {
-      return 'dallas';
-    }
+    if (fromPath === 'dallas') return 'dallas';
+    if (fromPath === 'houston') return 'houston';
+
+    /* Shared pages have no city in the URL. Show the navbar's saved city. */
+    try {
+      var path = normalizePathname(global.location.pathname);
+      var stagingPage = global.__VSL_SITE_REPLICA__
+        ? (new URLSearchParams(global.location.search).get('p') || 'home')
+        : '';
+      var sharedSlug = INTERNAL_PATH_SLUGS[path] || stagingPage;
+      if (sharedSlug === 'gift-cards' || sharedSlug === 'holiday-parties' || sharedSlug === 'millionlaps' || sharedSlug === 'lemans') {
+        var stored = readStoredLocation();
+        if (stored) return stored;
+      }
+    } catch (_) {}
 
     /* Houston service URL or hub: display Houston. Do not clobber storage. */
     return 'houston';
@@ -240,6 +264,10 @@
   function buildLocationUrl(loc, slug) {
     loc = normalize(loc);
     slug = slug || getPageSlug();
+    /* One URL for both lounges — switching the navbar stays on this page. */
+    if (slug === 'gift-cards' || slug === 'holiday-parties' || slug === 'millionlaps' || slug === 'lemans') {
+      return SITE_ORIGIN + '/' + slug + '/';
+    }
     if (loc === 'dallas') {
       slug = dallasSlugFor(slug);
       if (DALLAS_PAGES.indexOf(slug) === -1) slug = 'home';
@@ -294,6 +322,8 @@
 
   function locationFromPageKey(pageKey) {
     pageKey = String(pageKey || 'home');
+    /* One page for both lounges — arriving there does not change the city. */
+    if (pageKey === 'gift-cards' || pageKey === 'holiday-parties' || pageKey === 'millionlaps' || pageKey === 'lemans') return null;
     if (pageKey.indexOf('dallas-') === 0 || pageKey === 'dallas-home') return 'dallas';
     return 'houston';
   }
