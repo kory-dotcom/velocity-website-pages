@@ -5,7 +5,7 @@
      /halloween/spookeasy/ (Ignition, Houston only).
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.3.1 · 20261009e -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.3.2 · 20261009f -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -744,13 +744,15 @@
 		} catch (e) { return false; }
 	}
 
-	/* Houston and Dallas home pages only (plus the staging preview key). */
+	/* Houston and Dallas home pages only (plus the staging preview key).
+	   The staging site's home is /VelocityStagingSite/ with no ?p= — replica
+	   still treats that as the Houston home, so the popup has to as well. */
 	function hwIsAllowedPage() {
 		if (hwIsHalloweenPage()) return false;
 		try {
 			var u = hwPathInfo();
 			if (u.pageKey) return u.pageKey === 'home' || u.pageKey === 'dallas-home' || u.pageKey === 'halloween-banner';
-			if (u.path === '' || u.path === '/dallas') return true;
+			if (u.path === '' || u.path === '/dallas' || u.path === '/velocitystagingsite' || u.path === '/velocitystagingsite/index.html') return true;
 			var bc = document.body && document.body.className || '';
 			if (/\bhome\b/.test(bc)) return true;
 		} catch (e) {}
