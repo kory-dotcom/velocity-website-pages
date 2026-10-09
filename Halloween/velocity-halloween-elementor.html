@@ -1,6 +1,6 @@
 <!--
 Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dallas)
-  Elementor Custom HTML module  ·  v4.0.3  ·  build 20261009e
+  Elementor Custom HTML module  ·  v4.0.4  ·  build 20261009f
   (v1.x–v3.x history: this file was the Spookeasy ticket page. v4.0.0 splits it:
    this page is the free main-floor costume party for BOTH lounges; the Houston-only
    21+ Spookeasy checkout moved to Halloween/velocity-spookeasy-elementor.html at
@@ -1001,7 +1001,31 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
   .vsl-hw-tile__text a { color: var(--magenta); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
   /* ── Two lounges ─────────────────────────────────────────────────────── */
-  .vsl-hw-lounges-sec { position: relative; background: var(--navy); padding: clamp(56px, 8vh, 96px) 0; color: var(--circuit-white); overflow: hidden; }
+  .vsl-hw-lounges-sec {
+    position: relative;
+    background:
+      radial-gradient(ellipse 42% 55% at 0% 8%, rgba(var(--pumpkin-rgb), 0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 34% 48% at 100% 100%, rgba(238,38,95,0.16) 0%, transparent 68%),
+      var(--navy);
+    padding: clamp(56px, 8vh, 96px) 0;
+    color: var(--circuit-white);
+    overflow: hidden;
+  }
+  .vsl-hw-lounges-sec .vsl-hw-grid { position: relative; z-index: 3; }
+  .vsl-hw-lounges-sec .vsl-hw-bat { color: rgba(234,234,234,0.82); }
+  .vsl-hw-lounges-sec__moon {
+    position: absolute;
+    z-index: 1;
+    top: -48px;
+    left: -28px;
+    width: clamp(120px, 16vw, 200px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle at 38% 36%, #ffe3a8 0%, #ffb24d 45%, var(--pumpkin) 78%, var(--pumpkin-deep) 100%);
+    box-shadow: 0 0 40px rgba(var(--pumpkin-rgb), 0.5), 0 0 120px rgba(var(--pumpkin-rgb), 0.28);
+    opacity: 0.9;
+  }
   .vsl-hw-lounges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 24px); max-width: 1040px; margin-inline: auto; }
   .vsl-hw-lounge {
     position: relative;
@@ -1086,6 +1110,10 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
   @media (max-width: 860px) {
     .vsl-hw-faq dl { grid-template-columns: minmax(0, 1fr); }
     .vsl-hw-bat { --bat-w: 38px; }
+    .vsl-hw-lounges-sec .vsl-hw-pumpkin { --pk-w: 72px; }
+    .vsl-hw-lounges-sec__moon { width: 100px; top: -30px; left: -24px; }
+    .vsl-hw-lounges-sec .vsl-hw-spider,
+    .vsl-hw-lounges-sec .vsl-hw-bat { display: none; }
     .vsl-hw-patch .vsl-hw-pumpkin { --pk-w: 72px; }
     .vsl-hw-patch .vsl-hw-pumpkin--sm { display: none; }
     .vsl-hw-cta .vsl-hw-pumpkin { --pk-w: 70px; }
@@ -1398,8 +1426,15 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
 
     <!-- ═══════ TWO LOUNGES ═══════ -->
     <section class="vsl-hw-lounges-sec" id="hw-lounges" aria-labelledby="hw-lounges-title">
-      <svg class="vsl-hw-bat" style="top:8%;left:6%;--bat-w:40px;--bat-dur:7s;--bat-delay:-2.5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
-      <svg class="vsl-hw-bat" style="top:16%;right:8%;--bat-w:30px;--bat-dur:9s;--bat-delay:-5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <div class="vsl-hw-lounges-sec__moon" aria-hidden="true"></div>
+      <svg class="vsl-hw-web vsl-hw-web--tl" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <svg class="vsl-hw-web vsl-hw-web--br" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
+      <div class="vsl-hw-spider" style="--sp-left:93%;--sp-drop:28px" aria-hidden="true"><svg viewBox="0 0 60 60"><use href="#vsl-hw-sym-spider"/></svg></div>
+      <svg class="vsl-hw-bat" style="top:14%;left:2%;--bat-w:40px;--bat-dur:7s;--bat-delay:-2.5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="top:8%;right:3%;--bat-w:32px;--bat-dur:9s;--bat-delay:-5s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg class="vsl-hw-bat" style="bottom:16%;left:3%;--bat-w:26px;--bat-dur:8s;--bat-delay:-3s" aria-hidden="true"><use href="#vsl-hw-sym-bat"/></svg>
+      <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow" style="left:-18px;bottom:-22px;--pk-w:clamp(84px,10vw,130px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-helmet"/></svg>
+      <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow vsl-hw-pumpkin--flip" style="right:-16px;bottom:-8px;--pk-w:clamp(72px,8vw,112px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
       <div class="vsl-hw-grid">
         <h2 class="vsl-hw-section-title" id="hw-lounges-title">Two locations, <span class="vsl-hw-moon-text">one night</span></h2>
         <p class="vsl-hw-section-sub">Houston and Dallas each host their own Halloween night. Both start at 7pm. The tournament is walk-in only. Book ahead if you want a guaranteed simulator for the rest of the night.</p>
