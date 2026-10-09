@@ -5,7 +5,7 @@
      /halloween/spookeasy/ (Ignition, Houston only).
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.2.0 · 20261009c -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.3.0 · 20261009d -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -36,7 +36,8 @@
 		z-index: var(--hwp-banner-z);
 		background: white;
 		border-radius: 24px;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 		box-shadow:
 			0 30px 70px rgba(16, 24, 43, 0.55),
 			0 10px 24px rgba(16, 24, 43, 0.3),
@@ -632,29 +633,23 @@
 			<div class="hwp-price"><span>$25</span><small>Tournament entry</small></div>
 			<div class="hwp-price hwp-price--hot"><span>$12.50</span><small>In costume</small></div>
 		</div>
-		<div class="hwp-subtitle">Sim racing <span>tournament</span> for all guests</div>
 		<p class="hwp-valid">Walk-ins only</p>
 		<ul class="hwp-facts" aria-label="Party details">
 			<li>Free admission</li>
 			<li>Spooky drinks</li>
 			<li>Candy station</li>
-			<li data-hwp-only="houston" hidden>GTR vs Supra meet &bull; 10am&ndash;1pm</li>
-			
+			<li>Costume contest</li>
+			<li data-hwp-only="houston" hidden>GTR meet &bull; 10am</li>
 		</ul>
 		<p class="hwp-urgency" id="hw-urgency"><b id="hw-countdown">Saturday, October 31</b></p>
 
 		<div class="hwp-card-cta-row">
-			<!-- Both lounges land on the Fast & Frightening page; it follows the navbar's saved lounge. -->
 			<a class="hwp-card-btn" href="https://velocitysimlounge.com/halloween/">
 				<span class="hwp-btn-title">See the full lineup</span>
-				<span class="hwp-btn-meta">Costume contest &bull; 10-pack prizes &bull; spooky drinks</span>
 			</a>
-			<!-- Houston (and no saved lounge): the 21+ Spookeasy in Ignition is Houston only. -->
-			<a class="hwp-card-link" data-hwp-only="houston" href="https://velocitysimlounge.com/halloween/spookeasy/">21+? Spookeasy after-party tickets &middot; $45 &rarr;</a>
-			<a class="hwp-card-link" data-hwp-only="none" hidden href="https://velocitysimlounge.com/halloween/spookeasy/">21+? Spookeasy after-party in Houston &middot; $45 &rarr;</a>
+			<a class="hwp-card-link" data-hwp-only="houston" href="https://velocitysimlounge.com/halloween/spookeasy/">21+ Spookeasy tickets &middot; $45</a>
+			<a class="hwp-card-link" data-hwp-only="none" hidden href="https://velocitysimlounge.com/halloween/spookeasy/">21+ Spookeasy in Houston &middot; $45</a>
 		</div>
-
-		<p class="hwp-fineprint">Tournament entry is paid at the front desk on the night &mdash; no online sign-up. Costumes are checked at check-in.</p>
 	</div>
 </div>
 
