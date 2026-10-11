@@ -1,12 +1,12 @@
 <!--
 Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
-  Elementor Custom HTML module  ·  v1.2.0  ·  build 20261009b
+  Elementor Custom HTML module  ·  v1.4.0  ·  build 20261010
 
   ── SEO Handoff ──
   Meta title:    3-Hour Le Mans Endurance | Velocity Sim Racing Lounge
   Meta desc:     Race a 3-hour Le Mans endurance in an Oreca 07 LMP2 at Velocity Houston or Dallas on November 15, 2026. Solo $85, teams from $110. Practice included.
-  Canonical:     https://velocitysimlounge.com/lemans/
-  OG image:      https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg
+  Canonical:     https://velocitysimlounge.com/endurance/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/04/Dedicated_Sims-2048x1365.webp
   Robots:        noindex after November 15, 2026 (race day)
 
   Schema (page level, SEO plugin):
@@ -20,7 +20,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     Solo Driver, 85
     2-Driver Team, 110
     3-Driver Team, 120
-  FAQPage with the seven questions in the Good to know section.
+  FAQPage with the nine questions in the Good to know section.
 
   ── How it works ──
   One page for both lounges (like Million Lap Monday). The lounge toggle follows
@@ -32,12 +32,13 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   Stripe tax rate). This page redirects to the returned url. If the call
   fails, the error stays on this page.
 
-  The captain pays for the whole car. Teammates are NOT collected here: after
-  payment the captain gets a members-app account (Endurance event access
-  through Nov 22) and invites drivers by email from their dashboard. Each
-  driver who accepts gets the same event access.
+  The person who pays gets a Velocity account. Teammates are NOT collected
+  here: after payment they invite drivers in the Velocity app. Each driver
+  who accepts claims a seat and gets event access through Nov 22. A solo
+  entry uses the same app and does not invite anyone.
 
-  Capacity is 23 cars in Houston and 20 in Dallas. On load (and when the lounge changes) the
+  Do not put car counts in customer copy, SEO, schema, aria labels, or errors.
+  Grid size stays in the availability API and the internal cap defaults. On load (and when the lounge changes) the
   page GETs config.availability; a lounge with 0 remaining shows "Sold out"
   and the pay button is disabled. The checkout API also returns
   409 { "error", "soldOut": true } if the last car went while they typed.
@@ -64,7 +65,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="dns-prefetch" href="https://velocitysimlounge.com">
 <link rel="preconnect" href="https://members.velocitysimlounge.com" crossorigin>
-<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/Dedicated_Sims-2048x1365.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
   .elementor-widget-html .vsl-lemans a.vsl-lm-btn {
@@ -72,6 +73,10 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     text-decoration-line: none !important;
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
+  }
+  .elementor-widget-html .vsl-lemans a.vsl-lm-btn.vsl-lm-btn--light {
+    color: #10182B !important;
+    -webkit-text-fill-color: #10182B !important;
   }
 
   /* ── Page shell: full-bleed like the other Velocity modules ──────────── */
@@ -92,7 +97,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
     --text-section: clamp(1.9rem, 0.85rem + 4.8vw, 3.15rem);
     --text-section-sub: clamp(1rem, 0.86rem + 0.42vw, 1.125rem);
-    --lm-hero: url("https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg");
+    --lm-hero: url("https://velocitysimlounge.com/wp-content/uploads/2026/04/Dedicated_Sims-2048x1365.webp");
     --lm-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     --lm-finish-h: clamp(16px, 2.8vw + 9px, 39px);
     --soft: var(--red);
@@ -201,8 +206,8 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-height: 48px;
-    padding: 12px 30px;
+    min-height: 52px;
+    padding: 14px 28px;
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
@@ -227,16 +232,17 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   }
   .vsl-lemans .vsl-lm-btn:active { transform: scale(0.98); }
   .vsl-lemans .vsl-lm-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
-  .vsl-lemans .vsl-lm-btn--ghost {
-    background: transparent;
-    border-color: rgba(234, 234, 234, 0.35);
-    box-shadow: none;
-    color: #fff;
+  .vsl-lemans .vsl-lm-btn--light {
+    background: #fff;
+    border-color: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    color: var(--navy);
   }
-  .vsl-lemans .vsl-lm-btn--ghost:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(234, 234, 234, 0.6);
-    box-shadow: none;
+  .vsl-lemans .vsl-lm-btn--light:hover {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--navy);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   }
 
   /* ── Hero ────────────────────────────────────────────────────────────── */
@@ -252,10 +258,10 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     color: var(--circuit-white);
     background-color: var(--navy);
     background-image:
-      linear-gradient(165deg, rgba(16, 24, 43, 0.88) 0%, rgba(16, 24, 43, 0.72) 42%, rgba(25, 27, 77, 0.9) 100%),
+      linear-gradient(165deg, rgba(16, 24, 43, 0.9) 0%, rgba(16, 24, 43, 0.74) 45%, rgba(25, 27, 77, 0.9) 100%),
       var(--lm-hero);
     background-repeat: no-repeat;
-    background-position: center 42%;
+    background-position: center 55%;
     background-size: cover;
   }
   .vsl-lemans .vsl-lm-hero__inner {
@@ -316,7 +322,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     font-size: clamp(1.02rem, 0.94rem + 0.4vw, 1.18rem);
     line-height: 1.55;
     color: rgba(234, 234, 234, 0.9);
-    max-width: 42ch;
+    max-width: 48ch;
   }
   .vsl-lemans .vsl-lm-hero__actions {
     display: flex;
@@ -343,37 +349,186 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   }
   .vsl-lemans .vsl-lm-loc__seg {
     display: inline-flex;
+    gap: 0;
     padding: 4px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(234, 234, 234, 0.22);
+    border: 1px solid rgba(234, 234, 234, 0.32);
+    background: rgba(16, 24, 43, 0.82);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
   }
   .vsl-lemans .vsl-lm-loc__btn {
-    min-height: 40px;
-    padding: 6px 22px;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    min-height: 44px;
+    min-width: 112px;
+    padding: 8px 22px;
     border: 0;
     border-radius: 999px;
     background: transparent;
-    color: rgba(234, 234, 234, 0.85);
+    color: rgba(234, 234, 234, 0.72);
     font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
     font-style: italic;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    line-height: 1;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.18s ease, color 0.18s ease;
+    transition: background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
   }
+  .vsl-lemans .vsl-lm-loc__btn:hover { color: #fff; }
   .vsl-lemans .vsl-lm-loc__btn[aria-checked="true"] {
     background: var(--magenta);
     color: #fff;
-    box-shadow: 0 4px 14px rgba(238, 38, 95, 0.4);
+    box-shadow: 0 4px 14px rgba(238, 38, 95, 0.45);
   }
   .vsl-lemans .vsl-lm-loc__btn:focus-visible {
     outline: 3px solid var(--yellow);
     outline-offset: 2px;
+  }
+
+  /* Hero proof line under the CTAs */
+  .vsl-lemans .vsl-lm-hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    margin: 18px 0 0;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mist);
+  }
+  .vsl-lemans .vsl-lm-hero__proof strong {
+    color: #fff;
+    font-weight: 700;
+  }
+  .vsl-lemans .vsl-lm-hero__proof i {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--magenta);
+    align-self: center;
+  }
+
+  /* Hero photo card with the headline numbers */
+  .vsl-lemans .vsl-lm-hero__media {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--navy);
+    border: 1px solid rgba(234, 234, 234, 0.18);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18), 0 26px 60px rgba(0, 0, 0, 0.35);
+  }
+  .vsl-lemans .vsl-lm-hero__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 40%;
+  }
+  .vsl-lemans .vsl-lm-hero__tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy);
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .vsl-lemans .vsl-lm-hero__stats {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 16px 20px 18px;
+    background: rgba(16, 24, 43, 0.92);
+    border-top: 1px solid rgba(234, 234, 234, 0.14);
+  }
+  .vsl-lemans .vsl-lm-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .vsl-lemans .vsl-lm-stats li {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    text-align: left;
+  }
+  .vsl-lemans .vsl-lm-stats li + li {
+    padding-left: 14px;
+    border-left: 1px solid rgba(234, 234, 234, 0.16);
+  }
+  .vsl-lemans .vsl-lm-stats strong {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 0.9rem + 1.1vw, 1.8rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .vsl-lemans .vsl-lm-stats span {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    color: var(--mist);
+  }
+
+  /* At-a-glance strip at the foot of the hero */
+  .vsl-lemans .vsl-lm-strip {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 32px;
+    width: min(1480px, 100%);
+    margin: 0 auto;
+    padding: 18px clamp(20px, 5vw, var(--page-margin));
+    border-top: 1px solid rgba(234, 234, 234, 0.14);
+  }
+  .vsl-lemans .vsl-lm-strip li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--circuit-white);
+    white-space: nowrap;
+  }
+  .vsl-lemans .vsl-lm-strip li::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--yellow);
+    flex-shrink: 0;
   }
 
   /* Pit wall strategy card */
@@ -532,11 +687,21 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   .vsl-lemans .vsl-lm-faq .vsl-lm-section-sub { color: var(--muted); }
 
   .vsl-lemans .vsl-lm-spec,
-  .vsl-lemans .vsl-lm-timeline {
+  .vsl-lemans .vsl-lm-timeline,
+  .vsl-lemans .vsl-lm-app {
     padding: clamp(56px, 8vh, 96px) 0;
     color: var(--circuit-white);
   }
-  .vsl-lemans .vsl-lm-spec { background: var(--navy); }
+  .vsl-lemans .vsl-lm-spec,
+  .vsl-lemans .vsl-lm-app { background: var(--navy); }
+  .vsl-lemans .vsl-lm-app__solo {
+    margin: 24px 0 0;
+    max-width: 36rem;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(234, 234, 234, 0.88);
+  }
   .vsl-lemans .vsl-lm-timeline {
     background: linear-gradient(160deg, var(--deep-indigo) 0%, var(--blue) 100%);
   }
@@ -592,6 +757,72 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     color: var(--muted);
   }
 
+  .vsl-lemans .vsl-lm-run {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .vsl-lemans .vsl-lm-run li {
+    grid-column: span 4;
+    padding: 24px 22px 22px;
+    border-radius: 16px;
+    background: rgba(234, 234, 234, 0.04);
+    border: 1px solid rgba(234, 234, 234, 0.14);
+  }
+  .vsl-lemans .vsl-lm-run__n {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1;
+    color: var(--yellow);
+  }
+  .vsl-lemans .vsl-lm-run h3 {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    color: #fff;
+  }
+  .vsl-lemans .vsl-lm-run p {
+    margin-top: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(234, 234, 234, 0.88);
+  }
+  .vsl-lemans .vsl-lm-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 0;
+    list-style: none;
+  }
+  .vsl-lemans .vsl-lm-facts li {
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(234, 234, 234, 0.22);
+    color: #fff;
+    font-size: 0.98rem;
+    line-height: 1.3;
+  }
+  .vsl-lemans .vsl-lm-facts span {
+    margin-right: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--yellow);
+  }
   /* ── Spec sheet ──────────────────────────────────────────────────────── */
   .vsl-lemans .vsl-lm-spec__list { gap: 14px 24px; }
   .vsl-lemans .vsl-lm-spec__row {
@@ -677,10 +908,48 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     color: var(--navy);
   }
   .vsl-lemans .vsl-lm-tyres__note {
-    margin-top: 22px;
+    margin-top: 18px;
     max-width: 68ch;
     font-size: 1.05rem;
     line-height: 1.5;
+    color: var(--ink);
+  }
+  .vsl-lemans .vsl-lm-tyres__rule {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 12px;
+    border-left: 4px solid var(--magenta);
+    background: #fff;
+    color: var(--navy);
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  .vsl-lemans .vsl-lm-tyres__choices {
+    margin-top: 28px;
+  }
+  .vsl-lemans .vsl-lm-tyres__choices-label {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-tyres__choices .vsl-lm-compounds { margin-top: 12px; }
+  .vsl-lemans .vsl-lm-tyres__plain {
+    margin-top: 14px;
+    max-width: 42ch;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .vsl-lemans .vsl-lm-tyre-tile__rule {
+    margin-top: 8px;
+    max-width: 36ch;
+    font-size: 1rem;
+    line-height: 1.45;
     color: var(--ink);
   }
 
@@ -751,20 +1020,42 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     padding: 22px 22px 20px;
     border-radius: 16px;
     background: #fff;
-    border: 1px solid rgba(16, 24, 43, 0.12);
-    box-shadow: 0 16px 40px -28px rgba(16, 24, 43, 0.45);
+    border: 2px solid rgba(16, 24, 43, 0.28);
+    box-shadow: 0 14px 28px -10px rgba(16, 24, 43, 0.4);
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    text-align: left;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .vsl-lemans .vsl-lm-plan:hover { border-color: rgba(238, 38, 95, 0.55); }
+  .vsl-lemans .vsl-lm-plan:hover {
+    border-color: var(--magenta);
+    box-shadow: 0 18px 32px -8px rgba(16, 24, 43, 0.42);
+    transform: translateY(-4px);
+  }
   .vsl-lemans .vsl-lm-plan.is-selected {
     background: var(--navy);
     border-color: var(--navy);
     box-shadow: 0 18px 40px rgba(16, 24, 43, 0.18);
   }
-  .vsl-lemans .vsl-lm-plan:focus-within {
+  .vsl-lemans .vsl-lm-plan.is-selected:hover,
+  .vsl-lemans .vsl-lm-plan.is-selected:focus-within,
+  .vsl-lemans .vsl-lm-plan.is-selected:focus-visible,
+  .vsl-lemans .vsl-lm-plan.is-selected:hover:focus-within,
+  .vsl-lemans .vsl-lm-plan.is-selected:hover:focus-visible {
+    border-color: var(--yellow);
+    outline: none;
+    box-shadow: 0 18px 40px rgba(16, 24, 43, 0.18);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected:hover {
+    transform: translateY(-4px);
+  }
+  .vsl-lemans .vsl-lm-plan:focus-within,
+  .vsl-lemans .vsl-lm-plan:focus-visible {
     outline: 3px solid var(--yellow);
     outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-lemans .vsl-lm-plan:hover,
+    .vsl-lemans .vsl-lm-plan.is-selected:hover { transform: none; }
   }
   .vsl-lemans .vsl-lm-plan__input {
     position: absolute;
@@ -777,32 +1068,22 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     white-space: nowrap;
     border: 0;
   }
-  .vsl-lemans .vsl-lm-plan__top {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .vsl-lemans .vsl-lm-plan__seats {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .vsl-lemans .vsl-lm-seat {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: #fff;
+  .vsl-lemans .vsl-lm-plan__count {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--circuit-white);
+    color: var(--navy);
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
     font-style: italic;
-    line-height: 1;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    text-transform: uppercase;
   }
-  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-seat { background: var(--magenta); }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__count { color: var(--magenta); }
   .vsl-lemans .vsl-lm-plan h3 { margin-top: 16px; }
   .vsl-lemans .vsl-lm-plan.is-selected h3 { color: #fff; }
   .vsl-lemans .vsl-lm-plan__line {
@@ -839,6 +1120,70 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     color: var(--muted);
   }
   .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__per { color: var(--mist); }
+  .vsl-lemans .vsl-lm-plan__choose {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin-top: 16px;
+    padding: 0 18px;
+    border-radius: 8px;
+    background: var(--magenta);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .vsl-lemans .vsl-lm-plan__choose-on { display: none; }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__choose {
+    background: var(--yellow);
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__choose-off { display: none; }
+  .vsl-lemans .vsl-lm-plan.is-selected .vsl-lm-plan__choose-on { display: inline; }
+
+  .vsl-lemans .vsl-lm-steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    margin: 0 0 8px;
+    padding: 0;
+    list-style: none;
+  }
+  .vsl-lemans .vsl-lm-steps li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--navy);
+  }
+  .vsl-lemans .vsl-lm-steps span {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--magenta);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+  .vsl-lemans .vsl-lm-capacity {
+    margin: 4px auto 22px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: var(--muted);
+  }
 
   /* ── Checkout ────────────────────────────────────────────────────────── */
   .vsl-lemans .vsl-lm-checkout {
@@ -1029,8 +1374,9 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   .vsl-lemans .vsl-lm-pay {
     margin-top: 18px;
     width: 100%;
-    min-height: 56px;
-    font-size: 1.1rem;
+    min-height: 60px;
+    font-size: 1.2rem;
+    box-shadow: 0 8px 22px rgba(238, 38, 95, 0.4);
   }
   .vsl-lemans .vsl-lm-pay:disabled {
     opacity: 0.45;
@@ -1084,8 +1430,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     grid-column: span 6;
     padding: 22px 24px;
     border-radius: 14px;
-    background-color: #fff;
-    background-image: linear-gradient(rgba(16, 24, 43, 0.07), rgba(16, 24, 43, 0.07));
+    background: #fff;
     border: 1px solid rgba(41, 56, 147, 0.12);
   }
   .vsl-lemans .vsl-lm-faq dt {
@@ -1102,7 +1447,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     margin-top: 8px;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--muted);
+    color: var(--ink);
   }
   .vsl-lemans .vsl-lm-faq a {
     color: var(--magenta);
@@ -1129,6 +1474,16 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     margin-bottom: 1.6rem;
     color: rgba(255, 255, 255, 0.92);
   }
+  .vsl-lemans .vsl-lm-cta__urgency {
+    margin: 0 auto 1.4rem;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+  }
   .vsl-lemans .vsl-lm-cta .vsl-lm-btn {
     background-color: var(--navy);
     border-color: var(--navy);
@@ -1154,10 +1509,10 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
 
   @media (max-width: 1024px) {
     .vsl-lemans .vsl-lm-hero__inner { grid-template-columns: minmax(0, 1fr); }
-    .vsl-lemans .vsl-lm-pitwall { display: none; }
     .vsl-lemans .vsl-lm-hero__copy { align-items: center; text-align: center; }
     .vsl-lemans .vsl-lm-hero__sub { margin-inline: auto; }
     .vsl-lemans .vsl-lm-loc,
+    .vsl-lemans .vsl-lm-hero__proof,
     .vsl-lemans .vsl-lm-hero__actions { justify-content: center; }
     .vsl-lemans .vsl-lm-checkout { grid-template-columns: minmax(0, 1fr); }
   }
@@ -1167,10 +1522,14 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     .vsl-lemans .vsl-lm-tyre-tile,
     .vsl-lemans .vsl-lm-node,
     .vsl-lemans .vsl-lm-spec__row,
+    .vsl-lemans .vsl-lm-run li,
     .vsl-lemans .vsl-lm-faq__item { grid-column: span 12; }
     .vsl-lemans .vsl-lm-pillars,
     .vsl-lemans .vsl-lm-plans,
-    .vsl-lemans .vsl-lm-tyre-grid { max-width: 560px; margin-inline: auto; }
+    .vsl-lemans .vsl-lm-tyre-grid,
+    .vsl-lemans .vsl-lm-tyres__choices,
+    .vsl-lemans .vsl-lm-run,
+    .vsl-lemans .vsl-lm-app__solo { max-width: 560px; margin-inline: auto; }
   }
   @media (max-width: 640px) {
     .vsl-lemans .vsl-lm-hero { min-height: 0; }
@@ -1179,8 +1538,28 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     .vsl-lemans .vsl-lm-hero__actions { width: 100%; }
     .vsl-lemans .vsl-lm-hero__actions .vsl-lm-btn,
     .vsl-lemans .vsl-lm-cta .vsl-lm-btn { width: 100%; }
-    .vsl-lemans .vsl-lm-loc__btn { padding: 6px 16px; }
+    .vsl-lemans .vsl-lm-loc__btn { min-width: 96px; padding: 8px 16px; }
+    .vsl-lemans .vsl-lm-hero__proof { flex-direction: column; align-items: center; gap: 4px; }
+    .vsl-lemans .vsl-lm-hero__proof i { display: none; }
+    .vsl-lemans .vsl-lm-hero__stats { padding: 12px 14px 14px; }
+    .vsl-lemans .vsl-lm-stats { gap: 8px; }
+    .vsl-lemans .vsl-lm-stats li + li { padding-left: 8px; }
+    .vsl-lemans .vsl-lm-stats span { font-size: 0.8rem; }
+    .vsl-lemans .vsl-lm-strip {
+      flex-direction: column;
+      align-items: flex-start;
+      width: max-content;
+      max-width: 100%;
+      gap: 8px;
+    }
+    .vsl-lemans .vsl-lm-strip li { white-space: normal; font-size: 0.9rem; }
     .vsl-lemans .vsl-lm-plan__price { font-size: 2.2rem; }
+    .vsl-lemans .vsl-lm-steps {
+      flex-direction: column;
+      align-items: flex-start;
+      width: max-content;
+      margin-inline: auto;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .vsl-lemans *,
@@ -1192,18 +1571,18 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
   }
 </style>
 
-<div class="vsl-lemans" data-vsl-config='{"api":"https://members.velocitysimlounge.com/api/lemans/checkout","availability":"https://members.velocitysimlounge.com/api/lemans/availability","saleEnds":"2026-11-14","cancelUrl":"https://velocitysimlounge.com/lemans/"}'>
+<div class="vsl-lemans" data-vsl-config='{"api":"https://members.velocitysimlounge.com/api/lemans/checkout","availability":"https://members.velocitysimlounge.com/api/lemans/availability","saleEnds":"2026-11-14","cancelUrl":"https://velocitysimlounge.com/endurance/"}'>
   <main id="primary-content">
 
     <section class="vsl-lm-hero" id="lm-hero" aria-labelledby="lm-hero-title">
       <div class="vsl-lm-hero__inner">
         <div class="vsl-lm-hero__copy">
-          <span class="vsl-lm-hero__eyebrow">Endurance Series · Nov 15, 2026</span>
+          <span class="vsl-lm-hero__eyebrow">Race day · Nov 15, 2026</span>
           <h1 class="vsl-lm-hero__title" id="lm-hero-title">
             <span class="vsl-lm-hero__kicker">3-Hour</span>
             <span class="vsl-lm-hero__name">Le Mans Endurance</span>
           </h1>
-          <p class="vsl-lm-hero__sub">Shorter, accessible endurance with real strategy. Race solo or as a team.</p>
+          <p class="vsl-lm-hero__sub">Three hours at Le Mans in an Oreca 07, <span style="white-space:nowrap">with real pit stops.</span> Drive it solo or as a team.</p>
           <div class="vsl-lm-loc" id="lm-loc" role="radiogroup" aria-labelledby="lm-loc-label">
             <span class="vsl-lm-loc__label" id="lm-loc-label">Racing at</span>
             <span class="vsl-lm-loc__seg">
@@ -1213,59 +1592,54 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
           </div>
           <div class="vsl-lm-hero__actions">
             <a class="vsl-lm-btn" href="#lm-entry" data-lm-scroll>Enter the race</a>
-            <a class="vsl-lm-btn vsl-lm-btn--ghost" href="#lm-format" data-lm-scroll>See the format</a>
+            <a class="vsl-lm-btn vsl-lm-btn--light" href="#lm-format" data-lm-scroll>See the format</a>
           </div>
+          <p class="vsl-lm-hero__proof"><span>Solo <strong>$85</strong></span><i aria-hidden="true"></i><span>Teams from <strong>$40</strong> per driver</span><i aria-hidden="true"></i><span>Practice night included</span></p>
         </div>
-        <aside class="vsl-lm-pitwall" aria-hidden="true">
-          <p class="vsl-lm-pitwall__head"><span>Pit wall ·</span><span>3h00</span></p>
-          <div class="vsl-lm-bar">
-            <div class="vsl-lm-bar__segs">
-              <span class="vsl-lm-seg vsl-lm-seg--s">S</span>
-              <span class="vsl-lm-seg vsl-lm-seg--m">M</span>
-              <span class="vsl-lm-seg vsl-lm-seg--h">H</span>
-              <span class="vsl-lm-seg vsl-lm-seg--m">M</span>
-            </div>
-            <div class="vsl-lm-bar__ticks">
-              <span>0:00</span>
-              <span>1:00</span>
-              <span>2:00</span>
-              <span>3:00</span>
-            </div>
-          </div>
-          <ul class="vsl-lm-compounds">
-            <li class="vsl-lm-chip"><i></i> Soft</li>
-            <li class="vsl-lm-chip vsl-lm-chip--m"><i></i> Medium</li>
-            <li class="vsl-lm-chip vsl-lm-chip--h"><i></i> Hard</li>
-          </ul>
-          <ul class="vsl-lm-flags">
-            <li>Fuel ON</li>
-            <li>Tyre wear ON</li>
-            <li>Damage ON</li>
-          </ul>
-        </aside>
+        <figure class="vsl-lm-hero__media">
+          <img class="vsl-lm-hero__photo"
+               src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp"
+               srcset="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp 1024w, https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1536x960.webp 1536w"
+               sizes="(max-width: 1024px) 92vw, 48vw"
+               width="1024" height="640"
+               alt="A male driver in a cap and headset at the wheel of a Velocity pro sim"
+               loading="eager" decoding="async" fetchpriority="high">
+          <span class="vsl-lm-hero__tag">Sunday, Nov 15 · Houston &amp; Dallas</span>
+          <figcaption class="vsl-lm-hero__stats">
+            <ul class="vsl-lm-stats" aria-label="Headline numbers">
+              <li><strong>3 hrs</strong><span>Circuit de la Sarthe</span></li>
+              <li><strong>Oreca 07</strong><span>LMP2 prototype</span></li>
+              <li><strong>From $40</strong><span>per driver, plus tax</span></li>
+            </ul>
+          </figcaption>
+        </figure>
       </div>
+      <ul class="vsl-lm-strip" aria-label="At a glance">
+        <li>Entries close Nov 14</li>
+        <li>Practice night Oct 27 included</li>
+      </ul>
       <div class="vsl-lm-hero__finish" role="presentation" aria-hidden="true"></div>
     </section>
 
     <section class="vsl-lm-why" id="lm-why" aria-labelledby="lm-why-title">
       <div class="vsl-lm-grid">
-        <h2 class="vsl-lm-section-title" id="lm-why-title">Endurance, without the all-nighter</h2>
-        <p class="vsl-lm-section-sub">A full endurance race that fits an evening. Solo or with a team.</p>
+        <h2 class="vsl-lm-section-title" id="lm-why-title">Same Le Mans. One evening.</h2>
+        <p class="vsl-lm-section-sub">You still manage fuel, tyres, and the clock.</p>
         <div class="vsl-lm-pillars">
           <article class="vsl-lm-pillar">
             <span class="vsl-lm-pillar__index">01</span>
             <h3>3 hours, not 24</h3>
-            <p>Circuit de la Sarthe in one evening. The race is short enough to finish the same night, and long enough that the plan still matters.</p>
+            <p>The full Circuit de la Sarthe, finished the same night.</p>
           </article>
           <article class="vsl-lm-pillar">
             <span class="vsl-lm-pillar__index">02</span>
             <h3>Solo entries welcome</h3>
-            <p>Drive the whole three hours yourself, or share an Oreca 07 with one or two teammates. You do not need a full crew to enter.</p>
+            <p>Drive it yourself, or share the car with one or two teammates.</p>
           </article>
           <article class="vsl-lm-pillar">
             <span class="vsl-lm-pillar__index">03</span>
             <h3>Real strategy</h3>
-            <p>Fuel, tyre wear, and damage are enabled. Pit stops, compound choice, and when you come in are part of the race.</p>
+            <p>Fuel burns, tyres fade, and damage sticks. Your pit stops decide the race.</p>
           </article>
         </div>
       </div>
@@ -1274,74 +1648,66 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     <section class="vsl-lm-spec" id="lm-format" aria-labelledby="lm-format-title">
       <div class="vsl-lm-grid">
         <h2 class="vsl-lm-section-title" id="lm-format-title">Race format</h2>
-        <p class="vsl-lm-section-sub">Oreca 07 LMP2 at Circuit de la Sarthe. Same race in Houston and Dallas.</p>
-        <dl class="vsl-lm-spec__list">
-          <div class="vsl-lm-spec__row">
-            <dt>Car</dt>
-            <dd>Oreca 07 LMP2</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Circuit</dt>
-            <dd>Circuit de la Sarthe, Le Mans</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Duration</dt>
-            <dd>3 hours</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Race day</dt>
-            <dd>Sunday, Nov 15, 2026 (start time confirmed to entrants)</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Entries</dt>
-            <dd>Solo, 2-driver or 3-driver teams</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Simulation</dt>
-            <dd>Fuel, tyre wear and damage enabled</dd>
-          </div>
-          <div class="vsl-lm-spec__row">
-            <dt>Lounge</dt>
-            <dd>
-              <span data-lm-only="none">Houston &amp; Dallas</span><span data-lm-only="houston" hidden>Velocity Houston · Sawyer Yards</span><span data-lm-only="dallas" hidden>Velocity Dallas · The Hill</span>
-              <span class="vsl-lm-spec__addr" data-lm-only="none">2110 Edwards St, Houston, TX 77007 · 9830 N Central Expy #400, Dallas, TX 75231</span>
-              <span class="vsl-lm-spec__addr" data-lm-only="houston" hidden>2110 Edwards St, Houston, TX 77007</span>
-              <span class="vsl-lm-spec__addr" data-lm-only="dallas" hidden>9830 N Central Expy #400, Dallas, TX 75231</span>
-            </dd>
-          </div>
-        </dl>
+        <p class="vsl-lm-section-sub">Qualifying, then the 3-hour race.</p>
+        <ol class="vsl-lm-run">
+          <li>
+            <span class="vsl-lm-run__n">01</span>
+            <h3>Qualifying</h3>
+            <p>One set. Any compound.</p>
+          </li>
+          <li>
+            <span class="vsl-lm-run__n">02</span>
+            <h3>3-hour race</h3>
+            <p>Three sets. Any mix.</p>
+          </li>
+          <li>
+            <span class="vsl-lm-run__n">03</span>
+            <h3>One car</h3>
+            <p>Solo, two drivers, or three. Teams change drivers in the pits.</p>
+          </li>
+        </ol>
+        <ul class="vsl-lm-facts">
+          <li><span>Car</span> Oreca 07 LMP2</li>
+          <li><span>Circuit</span> Circuit de la Sarthe</li>
+          <li><span>Date</span> Sunday, Nov 15, 2026</li>
+          <li><span>Lounges</span> Houston and Dallas</li>
+          <li><span>Sim</span> Fuel, tyre wear, and damage on</li>
+        </ul>
       </div>
     </section>
 
     <section class="vsl-lm-tyres" id="lm-tyres" aria-labelledby="lm-tyres-title">
       <div class="vsl-lm-grid">
         <h2 class="vsl-lm-section-title" id="lm-tyres-title">Tyre allocation</h2>
-        <p class="vsl-lm-section-sub">Qualifying is one set. The race gives you three. Compounds are your call.</p>
+        <p class="vsl-lm-section-sub">Any compound on every set.</p>
         <div class="vsl-lm-tyre-grid">
           <article class="vsl-lm-tyre-tile">
-            <div class="vsl-lm-ring-row" aria-hidden="true"><div class="vsl-lm-ring vsl-lm-ring--hard"></div></div>
             <p class="vsl-lm-tyre-tile__num">1 <span>set</span></p>
             <h3>Qualifying</h3>
+            <p class="vsl-lm-tyre-tile__rule">Pick one compound for that session.</p>
           </article>
           <article class="vsl-lm-tyre-tile">
-            <div class="vsl-lm-ring-row" aria-hidden="true"><div class="vsl-lm-ring vsl-lm-ring--soft"></div><div class="vsl-lm-ring vsl-lm-ring--medium"></div><div class="vsl-lm-ring vsl-lm-ring--hard"></div></div>
             <p class="vsl-lm-tyre-tile__num">3 <span>sets</span></p>
             <h3>Race</h3>
+            <p class="vsl-lm-tyre-tile__rule">Pick a compound for each set.</p>
           </article>
         </div>
-        <ul class="vsl-lm-compounds vsl-lm-compounds--light">
-          <li class="vsl-lm-chip"><i></i> Soft</li>
-          <li class="vsl-lm-chip vsl-lm-chip--m"><i></i> Medium</li>
-          <li class="vsl-lm-chip vsl-lm-chip--h"><i></i> Hard</li>
-        </ul>
-        <p class="vsl-lm-tyres__note">Manage Soft, Medium, and Hard across your stints. Tyre management is a key part of strategy.</p>
+        <div class="vsl-lm-tyres__choices">
+          <p class="vsl-lm-tyres__choices-label">Your choices</p>
+          <ul class="vsl-lm-compounds vsl-lm-compounds--light">
+            <li class="vsl-lm-chip"><i></i> Soft</li>
+            <li class="vsl-lm-chip vsl-lm-chip--m"><i></i> Medium</li>
+            <li class="vsl-lm-chip vsl-lm-chip--h"><i></i> Hard</li>
+          </ul>
+          <p class="vsl-lm-tyres__plain">Repeat one compound or mix them. One of each is not required.</p>
+        </div>
       </div>
     </section>
 
     <section class="vsl-lm-timeline" id="lm-timeline" aria-labelledby="lm-timeline-title">
       <div class="vsl-lm-grid">
         <h2 class="vsl-lm-section-title" id="lm-timeline-title">Race weekend</h2>
-        <p class="vsl-lm-section-sub">Practice is included with every entry. Race day is Sunday, November 15.</p>
+        <p class="vsl-lm-section-sub">Practice night is included. You race Sunday, November 15.</p>
         <ol class="vsl-lm-rail">
           <li class="vsl-lm-node">
             <h3>Tue Oct 27, 2026 · 7:00 PM</h3>
@@ -1370,13 +1736,16 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
       <section class="vsl-lm-entry" id="lm-entry" aria-labelledby="lm-entry-title">
         <div class="vsl-lm-grid">
           <h2 class="vsl-lm-section-title" id="lm-entry-title">Pick your entry <span class="vsl-lm-soldout" data-lm-soldout-badge hidden>Sold out</span></h2>
-          <p class="vsl-lm-section-sub">One payment for the car, plus sales tax. Practice is included. 23 cars in Houston, 20 in Dallas.</p>
+          <p class="vsl-lm-section-sub">One payment for the car, plus sales tax. Practice is included.</p>
+          <ol class="vsl-lm-steps" aria-label="How to enter">
+            <li><span>1</span> Choose an entry</li>
+            <li><span>2</span> Add a name</li>
+            <li><span>3</span> Pay</li>
+          </ol>
           <div class="vsl-lm-plans" role="radiogroup" aria-labelledby="lm-entry-title">
             <label class="vsl-lm-plan" data-lm-plan="solo">
               <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="solo" id="lm-entry-solo">
-              <span class="vsl-lm-plan__top">
-                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span></span>
-              </span>
+              <span class="vsl-lm-plan__count">1 driver</span>
               <div class="vsl-lm-plan__copy">
                 <h3>Solo Driver</h3>
                 <p class="vsl-lm-plan__line">You drive all three hours.</p>
@@ -1385,12 +1754,11 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
                 <p class="vsl-lm-plan__price">$85</p>
                 <p class="vsl-lm-plan__per">Full race</p>
               </div>
+              <span class="vsl-lm-plan__choose" aria-hidden="true"><span class="vsl-lm-plan__choose-off">Select</span><span class="vsl-lm-plan__choose-on">Selected</span></span>
             </label>
             <label class="vsl-lm-plan" data-lm-plan="duo">
               <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="duo" id="lm-entry-duo">
-              <span class="vsl-lm-plan__top">
-                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span><span class="vsl-lm-seat">2</span></span>
-              </span>
+              <span class="vsl-lm-plan__count">2 drivers</span>
               <div class="vsl-lm-plan__copy">
                 <h3>2-Driver Team</h3>
                 <p class="vsl-lm-plan__line">Share the stints on one car.</p>
@@ -1399,12 +1767,11 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
                 <p class="vsl-lm-plan__price">$110</p>
                 <p class="vsl-lm-plan__per">$55 each</p>
               </div>
+              <span class="vsl-lm-plan__choose" aria-hidden="true"><span class="vsl-lm-plan__choose-off">Select</span><span class="vsl-lm-plan__choose-on">Selected</span></span>
             </label>
             <label class="vsl-lm-plan" data-lm-plan="trio">
               <input class="vsl-lm-plan__input" type="radio" name="lm-entry" value="trio" id="lm-entry-trio">
-              <span class="vsl-lm-plan__top">
-                <span class="vsl-lm-plan__seats" aria-hidden="true"><span class="vsl-lm-seat">1</span><span class="vsl-lm-seat">2</span><span class="vsl-lm-seat">3</span></span>
-              </span>
+              <span class="vsl-lm-plan__count">3 drivers</span>
               <div class="vsl-lm-plan__copy">
                 <h3>3-Driver Team</h3>
                 <p class="vsl-lm-plan__line">Three drivers, one checkout.</p>
@@ -1413,18 +1780,19 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
                 <p class="vsl-lm-plan__price">$120</p>
                 <p class="vsl-lm-plan__per">$40 each</p>
               </div>
+              <span class="vsl-lm-plan__choose" aria-hidden="true"><span class="vsl-lm-plan__choose-off">Select</span><span class="vsl-lm-plan__choose-on">Selected</span></span>
             </label>
           </div>
 
-          <div class="vsl-lm-checkout" data-lm-checkout hidden>
+          <div class="vsl-lm-checkout" data-lm-checkout>
             <div>
-              <p class="vsl-lm-checkout__title" data-lm-checkout-title>Your name</p>
-              <p class="vsl-lm-checkout__note" data-lm-checkout-note>This name goes on the entry.</p>
+              <p class="vsl-lm-checkout__title" data-lm-checkout-title>Choose your team name</p>
+              <p class="vsl-lm-checkout__note" data-lm-checkout-note>This is the name on the car.</p>
               <div class="vsl-lm-field">
                 <label for="vsl-lm-team" data-lm-team-label>Team name (or your name for solo)</label>
                 <input id="vsl-lm-team" type="text" minlength="2" maxlength="60" autocomplete="name" autocapitalize="words" required aria-required="true" placeholder="Your name" data-lm-team>
               </div>
-              <p class="vsl-lm-invite-note" data-lm-invite-note hidden>After payment you&rsquo;ll invite your drivers by email from your Velocity account. Each driver gets event access through November 22.</p>
+              <p class="vsl-lm-invite-note" data-lm-invite-note hidden>After you pay, invite your drivers in the Velocity app. Each driver gets event access through November 22.</p>
               <div class="vsl-lm-lounge">
                 <p>Racing at <strong data-lm-city>Pick Houston or Dallas</strong></p>
                 <a class="vsl-lm-change" href="#lm-loc" data-lm-scroll>Change</a>
@@ -1460,6 +1828,31 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
       </div>
     </section>
 
+    <section class="vsl-lm-app" id="lm-app" aria-labelledby="lm-app-title">
+      <div class="vsl-lm-grid">
+        <h2 class="vsl-lm-section-title" id="lm-app-title">Your entry lives in the app</h2>
+        <p class="vsl-lm-section-sub">After you pay, your race access lives in the Velocity app.</p>
+        <ol class="vsl-lm-run">
+          <li>
+            <span class="vsl-lm-run__n">01</span>
+            <h3>Invite your drivers</h3>
+            <p>You send each invite in the Velocity app.</p>
+          </li>
+          <li>
+            <span class="vsl-lm-run__n">02</span>
+            <h3>They claim a seat</h3>
+            <p>Each driver accepts and joins your car.</p>
+          </li>
+          <li>
+            <span class="vsl-lm-run__n">03</span>
+            <h3>Through November 22</h3>
+            <p>Practice night and race day stay open until then.</p>
+          </li>
+        </ol>
+        <p class="vsl-lm-app__solo">Racing solo? Your entry is already in the app. You do not invite anyone.</p>
+      </div>
+    </section>
+
     <section class="vsl-lm-faq" id="lm-faq" aria-labelledby="lm-faq-title">
       <div class="vsl-lm-grid">
         <h2 class="vsl-lm-section-title" id="lm-faq-title">Good to know</h2>
@@ -1471,7 +1864,13 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
           </div>
           <div class="vsl-lm-faq__item">
             <dt>How do I add my teammates?</dt>
-            <dd>One person pays for the car and becomes the captain. After checkout you get a Velocity Members account; from your dashboard you invite each driver by email and they claim their seat. Everyone on the car gets event access through November 22.</dd>
+            <dd>One person pays for the car and becomes the captain. After checkout you get a Velocity account. Invite each driver in the Velocity app and they claim their seat. Everyone on the team gets event access through November 22.</dd>
+          </div>
+          <div class="vsl-lm-faq__item">
+            <dt>What if I find a driver after I pay?</dt>
+            <dd>A 2-driver or 3-driver entry already includes those seats. After checkout you invite each driver in the Velocity app. You do not pay again. A solo entry is one driver at $85. If you paid that and later want to add someone, call us and we will change the entry.
+              <span data-lm-only="none">Houston <a href="tel:+18326274981">832-627-4981</a> · Dallas <a href="tel:+19722095215">972-209-5215</a></span><span data-lm-only="houston" hidden>Houston <a href="tel:+18326274981">832-627-4981</a></span><span data-lm-only="dallas" hidden>Dallas <a href="tel:+19722095215">972-209-5215</a></span>
+            </dd>
           </div>
           <div class="vsl-lm-faq__item">
             <dt>How do driver swaps work for teams?</dt>
@@ -1506,7 +1905,8 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     <section class="vsl-lm-cta" id="lm-cta" aria-labelledby="lm-cta-title">
       <div class="vsl-lm-grid">
         <h2 class="vsl-lm-section-title" id="lm-cta-title">Lock in your stint</h2>
-        <p class="vsl-lm-section-sub">Solo or team, the grid is the same three hours.</p>
+        <p class="vsl-lm-section-sub">Solo $85. Teams from $40 per driver. Practice night included.</p>
+        <p class="vsl-lm-cta__urgency">Entries close Nov 14</p>
         <a class="vsl-lm-btn" href="#lm-entry" data-lm-scroll>Enter the race</a>
       </div>
     </section>
@@ -1529,16 +1929,16 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
     },
     duo: {
       label: '2-Driver Team', total: 110, size: 2,
-      title: 'Name the team',
-      note: 'One payment covers the car. You\u2019ll invite your teammate after checkout.',
+      title: 'Choose your team name',
+      note: 'One payment covers the car. You\u2019ll invite your teammate in the Velocity app.',
       teamLabel: 'Team name',
       teamPlaceholder: 'Team name',
       meta: '$55 per driver, plus sales tax. Practice on Oct 27 is included.'
     },
     trio: {
       label: '3-Driver Team', total: 120, size: 3,
-      title: 'Name the team',
-      note: 'One payment covers the car. You\u2019ll invite your teammates after checkout.',
+      title: 'Choose your team name',
+      note: 'One payment covers the car. You\u2019ll invite your teammates in the Velocity app.',
       teamLabel: 'Team name',
       teamPlaceholder: 'Team name',
       meta: '$40 per driver, plus sales tax. Practice on Oct 27 is included.'
@@ -1766,11 +2166,12 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
 
     function render() {
       var offer = ENTRIES[entry] || null;
-      var opening = !!offer && checkoutEl.hidden;
+      var opening = !!offer && !root.hasAttribute('data-lm-opened');
       root.querySelectorAll('.vsl-lm-plan').forEach(function (card) {
         card.classList.toggle('is-selected', card.getAttribute('data-lm-plan') === entry);
       });
-      checkoutEl.hidden = !offer;
+      checkoutEl.hidden = false;
+      if (offer) root.setAttribute('data-lm-opened', '');
       summaryEmpty.hidden = !!offer;
       summaryRow.hidden = !offer;
       summaryMeta.hidden = !offer;
@@ -1797,7 +2198,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
         : soldOut ? (CITY[location] + ' is sold out')
         : 'Continue to payment';
       statusEl.hidden = ready || submitting;
-      statusEl.textContent = soldOut ? ('All ' + cap[location] + ' cars in ' + CITY[location] + ' are taken. Try the other lounge.')
+      statusEl.textContent = soldOut ? (CITY[location] + ' is sold out. Try ' + CITY[location === 'houston' ? 'dallas' : 'houston'] + '.')
         : !offer ? 'Select an entry to continue.'
         : !location ? 'Pick Houston or Dallas.'
         : (offer.size === 1 ? 'Add your name.' : 'Add a team name (2+ characters).');
@@ -1826,7 +2227,7 @@ Velocity Sim Racing Lounge — 3-Hour Le Mans Endurance
       teamInput.value = teamName;
       if (!offer) { showError('Select an entry.'); return; }
       if (!location) { showError('Pick Houston or Dallas.'); return; }
-      if (soldOutHere()) { showError(CITY[location] + ' is sold out. Try the other lounge.'); return; }
+      if (soldOutHere()) { showError(CITY[location] + ' is sold out. Try ' + CITY[location === 'houston' ? 'dallas' : 'houston'] + '.'); return; }
       if (teamName.length < 2) { showError(offer.size === 1 ? 'Add your name.' : 'Add a team name (2+ characters).'); return; }
       if (submitting) return;
 
