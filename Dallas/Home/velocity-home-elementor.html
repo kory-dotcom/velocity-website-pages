@@ -4,8 +4,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
 <!-- Hero sizzler posters — the LCP element. The browser fetches the one that matches the viewport. Swap both to WordPress URLs with the videos (see HERO VIDEO note in the markup) -->
-<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-poster.webp" media="(min-width: 641px)" fetchpriority="high">
-<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-poster.webp" media="(max-width: 640px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-horizontal-poster.webp" media="(min-width: 641px)" fetchpriority="high">
+<link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-poster.webp" media="(max-width: 640px)" fetchpriority="high">
 
 <!-- Racers step card photos + “Our simulators” tier cards: early preload; low priority so hero LCP stays first -->
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-e1777680071473.webp" fetchpriority="low">
@@ -1609,15 +1609,16 @@
 <div class="vsl-home">
   <main>
     <!-- ═══════ HERO: sizzler video band ═══════
-         HERO VIDEO — two web cuts of sizzle reel v4. The ~65 MB originals are
-         too heavy to autoplay, so upload these four files (wp-admin → Media →
-         Add New), all in Home/assets/wordpress-upload/:
+         HERO VIDEO — two web cuts of sizzle reel v4, already in the Media Library
+         (uploads/2026/10). The ~65 MB originals are too heavy to autoplay. Repo
+         copies live in Home/assets/wordpress-upload/:
              Velocity-sizzle-reel-v4-horizontal-web.mp4      (1920×1080, desktop + tablet)
              Velocity-sizzle-reel-v4-horizontal-poster.webp
              Velocity-sizzle-reel-v4-web.mp4                 (720×1280, phones)
              Velocity-sizzle-reel-v4-poster.webp
-         then swap the matching URLs: the two preload links at the top of this
-         file, the data-vsl-hero-* attributes, and both <source> tags below.
+         Re-cutting? Upload the new files, then update the two preload links at
+         the top of this file, the data-vsl-hero-* attributes, and both <source>
+         tags below.
          The browser picks the cut from the viewport — horizontal at ≥641px,
          vertical at ≤640px. Both play muted (no audio track, no sound control). -->
     <section class="vsl-home-hero" id="home-hero" aria-labelledby="vsl-home-hero-title">
@@ -1632,12 +1633,12 @@
         <div class="vsl-home-hero__frame">
           <div class="vsl-home-hero__media">
             <video class="vsl-home-hero__video" data-vsl-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback
-              data-vsl-hero-wide-src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-web.mp4"
-              data-vsl-hero-wide-poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-poster.webp"
-              data-vsl-hero-tall-src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-web.mp4"
-              data-vsl-hero-tall-poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-poster.webp">
-              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-web.mp4" type="video/mp4" media="(min-width: 641px)">
-              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-web.mp4" type="video/mp4" media="(max-width: 640px)">
+              data-vsl-hero-wide-src="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-horizontal-web.mp4"
+              data-vsl-hero-wide-poster="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-horizontal-poster.webp"
+              data-vsl-hero-tall-src="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-web.mp4"
+              data-vsl-hero-tall-poster="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-poster.webp">
+              <source src="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-horizontal-web.mp4" type="video/mp4" media="(min-width: 641px)">
+              <source src="https://velocitysimlounge.com/wp-content/uploads/2026/10/Velocity-sizzle-reel-v4-web.mp4" type="video/mp4" media="(max-width: 640px)">
             </video>
             <script>
               (function () {
