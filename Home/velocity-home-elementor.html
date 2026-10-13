@@ -1695,7 +1695,13 @@
          filters for its own lounge. Card order = the order below; delete a card by deleting
          its <li>. If nothing matches, the dashed “nothing on the calendar” note shows instead.
          Images: 4:5 or squarer crops look best (≈800×1000). Tag colours: default magenta, or
-         add vsl-home-upcoming__tag--blue / --yellow / --red. -->
+         add vsl-home-upcoming__tag--blue / --yellow / --red.
+         Timed cards (optional attributes on the <li>, ISO dates with a timezone offset):
+           • data-vsl-hide-after="…"  → the card drops off the row after that moment
+           • data-vsl-flip-at="…" + a <template data-vsl-flip> inside the <li> holding a
+             replacement <a class="vsl-home-upcoming__card">…</a> → the card swaps to that
+             version after that moment (used for “event → results”). If the <li> also has
+             data-vsl-results-href, the flipped card's link is set to it. -->
     <section class="vsl-home-upcoming" id="home-upcoming" data-vsl-upcoming-city="houston" aria-labelledby="vsl-home-upcoming-title">
       <div class="vsl-home-upcoming__inner">
         <div class="vsl-home-upcoming__header">
@@ -1725,7 +1731,13 @@
               </a>
             </li>
 
-            <li class="vsl-home-upcoming__item" data-vsl-city="both">
+            <!-- Flips to the results card at data-vsl-flip-at (9 PM Central, race day) and
+                 drops off the row at data-vsl-hide-after. Point data-vsl-results-href at
+                 wherever the final standings get posted. -->
+            <li class="vsl-home-upcoming__item" data-vsl-city="both"
+                data-vsl-flip-at="2026-11-15T21:00:00-06:00"
+                data-vsl-hide-after="2026-12-15T00:00:00-06:00"
+                data-vsl-results-href="https://velocitysimlounge.com/endurance/?loc=houston#results">
               <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/endurance/?loc=houston">
                 <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" alt="" loading="lazy" decoding="async">
                 <span class="vsl-home-upcoming__tag vsl-home-upcoming__tag--blue">Nov 15</span>
@@ -1736,6 +1748,18 @@
                   <span class="vsl-home-upcoming__cta">Enter the race <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
                 </div>
               </a>
+              <template data-vsl-flip>
+                <a class="vsl-home-upcoming__card" href="https://velocitysimlounge.com/endurance/?loc=houston#results">
+                  <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pro-card-photo-1024x640.webp" alt="" loading="lazy" decoding="async">
+                  <span class="vsl-home-upcoming__tag vsl-home-upcoming__tag--yellow">Results</span>
+                  <div class="vsl-home-upcoming__body">
+                    <span class="vsl-home-upcoming__when">Sunday, Nov 15 &middot; Final standings</span>
+                    <h3 class="vsl-home-upcoming__name">Le Mans Endurance Results</h3>
+                    <p class="vsl-home-upcoming__desc">Three hours at Circuit de la Sarthe are in the books. See who took the win in Houston and Dallas.</p>
+                    <span class="vsl-home-upcoming__cta">See the results <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></span>
+                  </div>
+                </a>
+              </template>
             </li>
 
             <li class="vsl-home-upcoming__item" data-vsl-city="both">
@@ -2295,9 +2319,32 @@
       var upCity = String(upcoming.getAttribute('data-vsl-upcoming-city') || 'houston').toLowerCase();
       var upTrack = upcoming.querySelector('[data-vsl-upcoming-track]');
       var upShown = 0;
+      var upNow = Date.now();
+      var upWhen = function (iso) {
+        if (!iso) return NaN;
+        var t = Date.parse(iso);
+        return isNaN(t) ? NaN : t;
+      };
       upcoming.querySelectorAll('.vsl-home-upcoming__item').forEach(function (li) {
         var city = String(li.getAttribute('data-vsl-city') || 'both').toLowerCase();
         var show = city === 'both' || city === upCity;
+        /* Timed cards: drop after data-vsl-hide-after; swap to the <template data-vsl-flip>
+           version (e.g. event → results) once data-vsl-flip-at has passed. */
+        var hideAt = upWhen(li.getAttribute('data-vsl-hide-after'));
+        if (show && !isNaN(hideAt) && upNow >= hideAt) show = false;
+        var flipAt = upWhen(li.getAttribute('data-vsl-flip-at'));
+        var flipTpl = li.querySelector('template[data-vsl-flip]');
+        if (show && flipTpl && !isNaN(flipAt) && upNow >= flipAt && !li.hasAttribute('data-vsl-flipped')) {
+          var current = li.querySelector(':scope > .vsl-home-upcoming__card');
+          var next = flipTpl.content ? flipTpl.content.querySelector('.vsl-home-upcoming__card') : null;
+          if (current && next) {
+            next = next.cloneNode(true);
+            var resultsHref = li.getAttribute('data-vsl-results-href');
+            if (resultsHref) next.setAttribute('href', resultsHref);
+            li.replaceChild(next, current);
+            li.setAttribute('data-vsl-flipped', '');
+          }
+        }
         li.hidden = !show;
         if (show) upShown++;
       });
