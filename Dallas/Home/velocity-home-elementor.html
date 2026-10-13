@@ -3,8 +3,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
-<!-- Hero sizzler poster — this is the LCP element, fetch it first. Swap to the WordPress URL with the video (see HERO VIDEO note in the markup) -->
-<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v3-poster.webp" fetchpriority="high">
+<!-- Hero sizzler posters — the LCP element. The browser fetches the one that matches the viewport. Swap both to WordPress URLs with the videos (see HERO VIDEO note in the markup) -->
+<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-poster.webp" media="(min-width: 641px)" fetchpriority="high">
+<link rel="preload" as="image" href="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-poster.webp" media="(max-width: 640px)" fetchpriority="high">
 
 <!-- Racers step card photos + “Our simulators” tier cards: early preload; low priority so hero LCP stays first -->
 <link rel="preload" as="image" href="https://velocitysimlounge.com/wp-content/uploads/2026/04/book_online-e1777680071473.webp" fetchpriority="low">
@@ -161,19 +162,19 @@
   }
 
   /* ── HERO: sizzler video band ──────────────────────────────────────────────
-     Topgolf-style first screen: the portrait (9:16) sizzle reel owns the top
-     ~60% of the viewport and “What’s Coming Up” starts right underneath it.
-       • Phone (≤640px): the reel fills the band edge to edge (center crop);
-         kicker, EAT. DRINK. RACE. and the stacked CTAs sit over a navy scrim.
-       • Tablet + desktop (≥641px): the sharp reel is a centered 4:5 column at
-         full band height (center crop of the 9:16 frame) whose edges feather
-         into a blurred, dimmed copy of the same clip — the whole band reads as
-         one full-width video wall. Copy + CTAs are centered over it.
-     Video + poster URLs live in the markup — see the “HERO VIDEO” note there. ── */
+     First screen: the sizzle reel owns the top of the viewport and "What's
+     Coming Up" starts right underneath it. Two cuts, picked by viewport:
+       • Phone (≤640px): the vertical 9:16 reel, full bleed, sized to its own
+         frame so it isn't zoomed in. Kicker, EAT. DRINK. RACE. and the stacked
+         CTAs sit over a navy scrim.
+       • Tablet + desktop (≥641px): the horizontal 16:9 reel, full bleed. The
+         band stays as close to 16:9 as the viewport allows while still leaving
+         the next section peeking in. Copy + CTAs are centered over it.
+     Video + poster URLs live in the markup — see the HERO VIDEO note there. ── */
   .vsl-home-hero {
     --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
     --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
-    --vsl-hero-h: clamp(460px, calc((100vh - var(--vsl-nav-offset, 0px)) * 0.62), 720px);
+    --vsl-hero-h: clamp(440px, min(calc(100vw * 9 / 16), calc((100vh - var(--vsl-nav-offset, 0px)) * 0.78)), 860px);
     --vsl-hero-ease: cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     display: block;
@@ -188,12 +189,13 @@
   }
   @supports (height: 1svh) {
     .vsl-home-hero {
-      --vsl-hero-h: clamp(460px, calc((100svh - var(--vsl-nav-offset, 0px)) * 0.62), 720px);
+      --vsl-hero-h: clamp(440px, min(calc(100vw * 9 / 16), calc((100svh - var(--vsl-nav-offset, 0px)) * 0.78)), 860px);
     }
   }
 
-  /* Blurred video wall behind the sharp column (tablet + desktop) */
+  /* Blurred side wall is unused now that both cuts fill the band edge to edge */
   .vsl-home-hero__backdrop {
+    display: none;
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -243,7 +245,7 @@
     pointer-events: none;
   }
 
-  /* Sharp reel: 4:5 center crop of the 9:16 clip, feathered into the blur */
+  /* Sharp reel, full bleed. Desktop biases slightly up so faces survive the 16:9 crop. */
   .vsl-home-hero__stage {
     position: absolute;
     inset: 0 0 var(--vsl-hero-finish-h) 0;
@@ -256,11 +258,11 @@
   .vsl-home-hero__frame {
     position: relative;
     height: 100%;
-    width: calc((var(--vsl-hero-h) - var(--vsl-hero-finish-h)) * 0.8);
+    width: 100%;
     max-width: 100%;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 13%, #000 87%, transparent 100%);
+    -webkit-mask-image: none;
+            mask-image: none;
     opacity: 0;
     transform: scale(1.03);
     transition: opacity 0.7s var(--vsl-hero-ease), transform 1.2s var(--vsl-hero-ease);
@@ -285,7 +287,7 @@
     border: 0 !important;
     display: block !important;
     object-fit: cover !important;
-    object-position: center !important;
+    object-position: center 36% !important;
     background: var(--navy);
   }
 
@@ -472,6 +474,7 @@
       }
     }
     .vsl-home-hero__backdrop { display: none; }
+    .vsl-home-hero__video { object-position: center center !important; }
     .vsl-home-hero__frame {
       width: 100%;
       -webkit-mask-image: none;
@@ -1606,18 +1609,17 @@
 <div class="vsl-home">
   <main>
     <!-- ═══════ HERO: sizzler video band ═══════
-         HERO VIDEO — the reel is a web-optimized cut of Velocity-sizzle-reel-v3.mp4
-         (720×1280, ~7 MB). The 65 MB original in the Media Library is too heavy to
-         autoplay, so upload these two files (wp-admin → Media → Add New), both in
-         Home/assets/wordpress-upload/:
-             Velocity-sizzle-reel-v3-web.mp4   and   Velocity-sizzle-reel-v3-poster.webp
-         then swap the three URLs below to the WordPress “File URL”s:
-           1. <link rel="preload" … href="…poster.webp">   near the top of this file
-           2. <video … poster="…poster.webp">              (below)
-           3. <source src="…web.mp4">                      (below)
-         Re-cutting the reel? Export H.264 MP4, 1080×1920 or 720×1280, ≤3 Mbps, 15–30 s,
-         “fast start”, plus a matching .webp still for the poster. The reel plays muted
-         and the file has no audio track — there is no sound control by design. -->
+         HERO VIDEO — two web cuts of sizzle reel v4. The ~65 MB originals are
+         too heavy to autoplay, so upload these four files (wp-admin → Media →
+         Add New), all in Home/assets/wordpress-upload/:
+             Velocity-sizzle-reel-v4-horizontal-web.mp4      (1920×1080, desktop + tablet)
+             Velocity-sizzle-reel-v4-horizontal-poster.webp
+             Velocity-sizzle-reel-v4-web.mp4                 (720×1280, phones)
+             Velocity-sizzle-reel-v4-poster.webp
+         then swap the matching URLs: the two preload links at the top of this
+         file, the data-vsl-hero-* attributes, and both <source> tags below.
+         The browser picks the cut from the viewport — horizontal at ≥641px,
+         vertical at ≤640px. Both play muted (no audio track, no sound control). -->
     <section class="vsl-home-hero" id="home-hero" aria-labelledby="vsl-home-hero-title">
       <div class="vsl-home-hero__backdrop" aria-hidden="true">
         <img class="vsl-home-hero__backdrop-still" alt="" decoding="async" loading="eager" data-vsl-hero-still>
@@ -1630,9 +1632,22 @@
         <div class="vsl-home-hero__frame">
           <div class="vsl-home-hero__media">
             <video class="vsl-home-hero__video" data-vsl-hero-video autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback
-              poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v3-poster.webp">
-              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v3-web.mp4" type="video/mp4">
+              data-vsl-hero-wide-src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-web.mp4"
+              data-vsl-hero-wide-poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-poster.webp"
+              data-vsl-hero-tall-src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-web.mp4"
+              data-vsl-hero-tall-poster="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-poster.webp">
+              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-horizontal-web.mp4" type="video/mp4" media="(min-width: 641px)">
+              <source src="../Home/assets/wordpress-upload/Velocity-sizzle-reel-v4-web.mp4" type="video/mp4" media="(max-width: 640px)">
             </video>
+            <script>
+              (function () {
+                var v = document.currentScript && document.currentScript.previousElementSibling;
+                if (!v || !v.classList || !v.classList.contains('vsl-home-hero__video') || !window.matchMedia) return;
+                var tall = window.matchMedia('(max-width: 640px)').matches;
+                var poster = v.getAttribute(tall ? 'data-vsl-hero-tall-poster' : 'data-vsl-hero-wide-poster');
+                if (poster) v.poster = poster;
+              })();
+            </script>
           </div>
         </div>
       </div>
@@ -2066,11 +2081,10 @@
     }
     vslHomeApplyLocation();
 
-    /* ── Hero: vertical sizzler video — reveal, muted autoplay, blurred backdrop, pause off-screen ── */
+    /* ── Hero: sizzler video — reveal, muted autoplay, horizontal/vertical cut, pause off-screen ── */
     var hero = root.querySelector('.vsl-home-hero');
     if (hero) {
       var heroReduceMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
-      var heroBackdropMql = window.matchMedia ? window.matchMedia('(min-width: 641px)') : { matches: true };
       var heroConn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
       var heroSaveData = !!heroConn.saveData;
       var heroVideo = hero.querySelector('[data-vsl-hero-video]');
@@ -2111,12 +2125,6 @@
         heroVideo.playsInline = true;
         heroVideo.setAttribute('muted', '');
 
-        var heroPosterUrl = heroVideo.getAttribute('poster') || '';
-        var heroSourceEl = heroVideo.querySelector('source');
-        var heroSrcUrl = function () {
-          return heroVideo.currentSrc || (heroSourceEl && heroSourceEl.getAttribute('src')) || heroVideo.getAttribute('src') || '';
-        };
-
         heroVideo.addEventListener('playing', function () {
           hero.classList.remove('is-autoplay-blocked');
           hero.classList.add('is-playing');
@@ -2129,10 +2137,6 @@
           if (e) { e.preventDefault(); e.stopPropagation(); }
           var p = safePlay(heroVideo);
           if (p) p.catch(function () {});
-          if (heroBackdrop && heroBackdrop.getAttribute('src')) {
-            var bp = safePlay(heroBackdrop);
-            if (bp) bp.catch(function () {});
-          }
         };
         if (heroPlayBtn) heroPlayBtn.addEventListener('click', resumeHero);
 
@@ -2153,52 +2157,38 @@
           }
         }
 
-        /* Blurred backdrop (tablet + desktop only): poster still first, then the same clip once it plays */
-        if (heroStill && heroPosterUrl && heroBackdropMql.matches) {
-          heroStill.setAttribute('src', heroPosterUrl);
-        }
-        var heroBackdropArmed = false;
-        var armHeroBackdrop = function () {
-          if (heroBackdropArmed || !heroBackdrop) return;
-          if (!heroBackdropMql.matches || heroReduceMotion.matches || heroSaveData) return;
-          var src = heroSrcUrl();
-          if (!src) return;
-          heroBackdropArmed = true;
-          if (heroStill && heroPosterUrl && !heroStill.getAttribute('src')) heroStill.setAttribute('src', heroPosterUrl);
-          heroBackdrop.muted = true;
-          heroBackdrop.defaultMuted = true;
-          heroBackdrop.loop = true;
-          heroBackdrop.playsInline = true;
-          heroBackdrop.setAttribute('muted', '');
-          heroBackdrop.addEventListener('playing', function () { hero.classList.add('is-backdrop-ready'); });
-          var syncBackdropTime = function () {
-            try {
-              if (Math.abs(heroBackdrop.currentTime - heroVideo.currentTime) > 0.5) {
-                heroBackdrop.currentTime = heroVideo.currentTime;
-              }
-            } catch (_) {}
-          };
-          heroVideo.addEventListener('play', function () {
-            syncBackdropTime();
-            var p = safePlay(heroBackdrop);
-            if (p) p.catch(function () {});
-          });
-          heroVideo.addEventListener('pause', function () {
-            try { heroBackdrop.pause(); } catch (_) {}
-          });
-          heroVideo.addEventListener('seeked', syncBackdropTime);
-          heroVideo.addEventListener('timeupdate', syncBackdropTime);
-          heroBackdrop.src = src;
-          if (!heroVideo.paused) {
-            var bp0 = safePlay(heroBackdrop);
-            if (bp0) bp0.catch(function () {});
-          }
+        /* Two cuts: horizontal ≥641px, vertical ≤640px. <source media> picks the
+           first download; this swaps the file if the viewport crosses 640px. */
+        var heroCutMql = window.matchMedia ? window.matchMedia('(max-width: 640px)') : { matches: false };
+        var heroCutFile = function (url) {
+          var i = String(url || '').lastIndexOf('/');
+          return i >= 0 ? url.slice(i + 1) : String(url || '');
         };
-        armHeroBackdrop();
-        if (typeof heroBackdropMql.addEventListener === 'function') {
-          heroBackdropMql.addEventListener('change', armHeroBackdrop);
-        } else if (typeof heroBackdropMql.addListener === 'function') {
-          heroBackdropMql.addListener(armHeroBackdrop);
+        var applyHeroCut = function (force) {
+          var tall = !!heroCutMql.matches;
+          var src = heroVideo.getAttribute(tall ? 'data-vsl-hero-tall-src' : 'data-vsl-hero-wide-src') || '';
+          var poster = heroVideo.getAttribute(tall ? 'data-vsl-hero-tall-poster' : 'data-vsl-hero-wide-poster') || '';
+          if (poster) heroVideo.poster = poster;
+          if (!src) return;
+          var current = heroVideo.currentSrc || '';
+          if (!force && !current) return;
+          if (current && current.indexOf(heroCutFile(src)) !== -1) return;
+          heroVideo.src = src;
+          try { heroVideo.load(); } catch (_) {}
+          if (heroReduceMotion.matches || heroSaveData) {
+            try { heroVideo.pause(); } catch (_) {}
+            return;
+          }
+          var p = safePlay(heroVideo);
+          if (p) p.catch(function () {
+            if (heroVideo.paused) hero.classList.add('is-autoplay-blocked');
+          });
+        };
+        applyHeroCut(false);
+        if (typeof heroCutMql.addEventListener === 'function') {
+          heroCutMql.addEventListener('change', function () { applyHeroCut(true); });
+        } else if (typeof heroCutMql.addListener === 'function') {
+          heroCutMql.addListener(function () { applyHeroCut(true); });
         }
 
         /* Battery / CPU: pause when the hero scrolls out of view or the tab is hidden; resume when back */
