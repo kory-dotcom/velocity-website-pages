@@ -1,11 +1,13 @@
 <!-- Halloween at Velocity — home-page popup. Shows on the Houston and Dallas home pages.
-     Free main-floor party Sat Oct 31, 7–10pm: $25 sim racing tournament, 50% off in costume,
-     WALK-INS ONLY (no online entry). Main CTA (both lounges) goes to the Fast & Frightening
-     page at /halloween/; Houston also gets a text link to the $45 21+ Spookeasy checkout at
-     /halloween/spookeasy/ (Ignition, Houston only).
+     Free main-floor party Sat Oct 31: $25 sim racing tournament, 50% off in costume,
+     WALK-INS ONLY (no online entry). Dallas runs all day; Houston runs 1pm–close after the
+     $25 GTR vs Supra meet (10am–1pm). Costume contest 10pm, gift card prizes. The time line
+     under the headline swaps by lounge (data-hwp-only). Main CTA (both lounges) goes to the
+     Fast & Frightening page at /halloween/; Houston also gets a text link to the $45 21+
+     Spookeasy checkout at /halloween/spookeasy/ (Ignition, Houston only).
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.3.2 · 20261009f -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.4.0 · 20261013a -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -353,7 +355,8 @@
 		padding: 4px 11px;
 		line-height: 1.2;
 	}
-	.hwp-facts li[hidden] { display: none; }
+	.hwp-facts li[hidden],
+	.hwp-header-sub [hidden] { display: none; }
 
 	.hwp-urgency {
 		font-size: 14px;
@@ -622,7 +625,7 @@
 		<svg class="hwp-pumpkin-icon" viewBox="0 0 120 112" aria-hidden="true" focusable="false"><use href="#hwp-sym-pumpkin"/></svg>
 		<div class="hwp-eyebrow">Saturday &bull; October 31</div>
 		<h2 class="hwp-headline"><small>Halloween at Velocity</small>Fast &amp;<br><span>Frightening</span></h2>
-		<p class="hwp-header-sub">Free &bull; All ages &bull; 7&ndash;10pm</p>
+		<p class="hwp-header-sub">Free &bull; All ages &bull; <span data-hwp-only="houston">1pm&ndash;close</span><span data-hwp-only="dallas" hidden>All day</span><span data-hwp-only="none" hidden>Walk-ins only</span></p>
 	</div>
 
 	<div class="hwp-finish-line"></div>
@@ -641,8 +644,8 @@
 			<li>Free admission</li>
 			<li>Spooky drinks</li>
 			<li>Candy station</li>
-			<li>Costume contest</li>
-			<li data-hwp-only="houston" hidden>GTR meet &bull; 10am</li>
+			<li>Costume contest &bull; 10pm</li>
+			<li data-hwp-only="houston" hidden>GTR meet &bull; 10am &bull; $25</li>
 		</ul>
 		<p class="hwp-urgency" id="hw-urgency"><b id="hw-countdown">Saturday, October 31</b></p>
 
@@ -723,7 +726,8 @@
 		return;
 	}
 
-	var version = 'vsl-hw-2026-10-31';
+	/* Bumped 2026-10-13: times/prizes changed, so re-show once to guests who closed the old card. */
+	var version = 'vsl-hw-2026-10-31-b';
 	if (hwRead('hwPromoVersion') !== version) {
 		hwRemove('hwCardMin');
 		hwWrite('hwPromoVersion', version);
