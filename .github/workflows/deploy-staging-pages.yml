@@ -43,6 +43,11 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # Pages occasionally sits in "updating_pages" past the default 10 min; give it
+    # 20 min before the action cancels the deployment.
+    timeout-minutes: 25
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 1200000
