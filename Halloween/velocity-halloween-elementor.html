@@ -1,17 +1,18 @@
 <!--
 Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dallas)
-  Elementor Custom HTML module  ·  v4.1.0  ·  build 20261013a
+  Elementor Custom HTML module  ·  v4.2.0  ·  build 20261014a
   (v1.x–v3.x history: this file was the Spookeasy ticket page. v4.0.0 splits it:
    this page is the free main-floor costume party for BOTH lounges; the Houston-only
    21+ Spookeasy checkout moved to Halloween/velocity-spookeasy-elementor.html at
    /halloween/spookeasy/.
-   v4.1.0 (Oct 13 doc): no more 7–10pm window. Dallas runs the special all day;
-   Houston runs the $25 GTR vs Supra meet 10am–1pm then the special 1pm–close.
-   Costume contest winners at 10pm; prizes are Velocity gift cards, not 10-packs.)
+   v4.1.0 (Oct 13 doc): no more 7–10pm window. Costume contest at 10pm; prizes are
+   Velocity gift cards, not 10-packs.
+   v4.2.0 (Oct 14): the $25 sim racing tournament is Houston only, 10am–1pm
+   ($12.50 in costume). Dallas has no tournament — 50% off all day in costume.)
 
   ── SEO Handoff ──
   Meta title:    Fast & Frightening Halloween Party | Velocity Sim Racing Lounge
-  Meta desc:     Halloween at Velocity, Saturday October 31 in Houston and Dallas. Free, all ages: a $25 walk-in sim racing tournament (50% off in costume), a 10pm costume contest with Velocity gift card prizes, spooky drinks and a candy station. All day in Dallas, 1pm–close in Houston after the $25 GTR vs Supra meet.
+  Meta desc:     Halloween at Velocity, Saturday October 31. Houston only: a $25 walk-in sim racing tournament from 10am to 1pm (50% off in costume), then 50% off in costume from 1pm to close. Dallas has no tournament — 50% off all day if you dress up. Costume contest at 10pm, gift card prizes, both lounges.
   Canonical:     https://velocitysimlounge.com/halloween/
   OG image:      https://velocitysimlounge.com/wp-content/uploads/2025/10/Velocity__QUITNGUYEN_DSCF8939-Enhanced-NR.jpg
   Robots:        noindex after October 31, 2026 (one-night event)
@@ -22,9 +23,9 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
   front desk. The page follows the navbar's saved lounge (VSL_LOCATION.readLocation(),
   then localStorage vslPreferredLocation, then ?loc=): that lounge's card is
   highlighted, and elements with data-hw-only="houston|dallas" show only for that
-  lounge (the GTR vs Supra meet and the Spookeasy after-party are Houston only; the
-  hero/tournament time chips swap between "1pm–close" and "All day"). With no saved
-  lounge the page shows the Houston copy. Re-applies on _vslLocationChanged.
+  lounge (the GTR vs Supra meet, the $25 tournament, and the Spookeasy are Houston
+  only; Dallas shows the all-day 50% off tile instead of a tournament). With no
+  saved lounge the page shows the Houston copy. Re-applies on _vslLocationChanged.
 
   ── CONFIRM before launch (search "CONFIRM") ──
   · GTR vs Supra Halloween Meet (10am–1pm, $25 entry) is shown as Houston only,
@@ -1286,15 +1287,19 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
             <span class="vsl-hw-hero__title-amp">&amp;</span>
             <span class="vsl-hw-hero__title-line vsl-hw-hero__title-line--fright">Frightening</span>
           </h1>
-          <p class="vsl-hw-hero__sub">
-            A free, family-friendly Halloween party on the main floor at <strong>both locations</strong>.
-            Race in the $25 sim racing tournament (half price if you come in costume), enter the costume
-            contest to win Velocity gift cards, grab a spooky drink and hit the candy station.
-            <strong>Walk-ins only &mdash; just show up.</strong>
+          <p class="vsl-hw-hero__sub" data-hw-only="houston">
+            Free to get in, all ages, at Velocity Houston. The <strong>$25 sim racing tournament is Houston only, 10am to 1pm</strong>
+            (half price in costume). From 1pm to close, 50% off if you dress up. Costume contest at 10pm
+            with Velocity gift cards. <strong>Walk-ins only &mdash; Dallas has no tournament.</strong>
+          </p>
+          <p class="vsl-hw-hero__sub" data-hw-only="dallas">
+            Free to get in, all ages, all day at Velocity Dallas. <strong>50% off if you dress up in costume, all day.</strong>
+            There is no tournament in Dallas &mdash; the $25 sim racing tournament is at Velocity Houston only, 10am to 1pm.
+            Costume contest at 10pm with Velocity gift cards. <strong>Walk-ins only.</strong>
           </p>
           <ul class="vsl-hw-stats" aria-label="Event details">
             <li><span>Date</span><strong>Sat, Oct 31</strong></li>
-            <li><span>Time</span><strong data-hw-only="houston">1pm&ndash;close</strong><strong data-hw-only="dallas">All day</strong></li>
+            <li><span data-hw-only="houston">Tournament</span><span data-hw-only="dallas">In costume</span><strong data-hw-only="houston">10am&ndash;1pm</strong><strong data-hw-only="dallas">50% off</strong></li>
             <li><span>Who</span><strong>All ages</strong></li>
             <li class="is-pumpkin"><span>Admission</span><strong>Free</strong></li>
           </ul>
@@ -1337,10 +1342,15 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
               </div>
             </div>
             <ul class="vsl-hw-poster__rows">
-              <li>
-                <strong>Tournament entry</strong>
-                <span>$12.50 in costume &middot; walk-ins only</span>
+              <li data-hw-only="houston">
+                <strong>Tournament &middot; Houston</strong>
+                <span>10am&ndash;1pm &middot; $12.50 in costume</span>
                 <span class="vsl-hw-poster__price">$25</span>
+              </li>
+              <li data-hw-only="dallas">
+                <strong>Dallas &middot; no tournament</strong>
+                <span>Dress up and race half price</span>
+                <span class="vsl-hw-poster__price">50% off</span>
               </li>
               <li>
                 <strong>Costume contest</strong>
@@ -1360,7 +1370,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
       <svg class="vsl-hw-web vsl-hw-web--tr" aria-hidden="true"><use href="#vsl-hw-sym-web"/></svg>
       <div class="vsl-hw-grid">
         <h2 class="vsl-hw-section-title" id="hw-lineup-title">The <span class="vsl-hw-moon-text">lineup</span></h2>
-        <p class="vsl-hw-section-sub">Free to get in, all ages, walk-ins only. Here&rsquo;s what&rsquo;s happening on the main floor at Velocity Houston and Velocity Dallas.</p>
+        <p class="vsl-hw-section-sub">The $25 tournament is Houston only, 10am to 1pm. Dallas has no tournament &mdash; 50% off all day if you dress up.</p>
         <div class="vsl-hw-tiles">
 
           <article class="vsl-hw-tile vsl-hw-tile--meet" data-hw-only="houston">
@@ -1375,15 +1385,24 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
             </div>
           </article>
 
-          <article class="vsl-hw-tile">
+          <article class="vsl-hw-tile" data-hw-only="houston">
             <span class="vsl-hw-tile__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M4 21V4"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg>
             </span>
-            <span class="vsl-hw-tile__time" data-hw-only="houston">1pm&ndash;close &middot; Walk-ins only</span>
-            <span class="vsl-hw-tile__time" data-hw-only="dallas">All day &middot; Walk-ins only</span>
+            <span class="vsl-hw-tile__time">10am&ndash;1pm &middot; Houston only</span>
             <h3 class="vsl-hw-tile__title">Sim racing tournament</h3>
             <span class="vsl-hw-tile__price">$25 <small>&middot; $12.50 in costume</small></span>
-            <p class="vsl-hw-tile__text">Open to every guest, all ages. In person only &mdash; entry is paid at the front desk on the day, no online sign-up. <strong>Come in costume and race for half price.</strong></p>
+            <p class="vsl-hw-tile__text">Houston only &mdash; there is no tournament in Dallas. In person at the front desk, no online sign-up. <strong>Come in costume and race for half price.</strong></p>
+          </article>
+
+          <article class="vsl-hw-tile" data-hw-only="dallas">
+            <span class="vsl-hw-tile__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 21V4"/><path d="M4 4h13l-2.5 4L17 12H4"/></svg>
+            </span>
+            <span class="vsl-hw-tile__time">All day &middot; Dallas</span>
+            <h3 class="vsl-hw-tile__title">50% off in costume</h3>
+            <span class="vsl-hw-tile__price">50% <small>&middot; off all day</small></span>
+            <p class="vsl-hw-tile__text"><strong>No tournament in Dallas.</strong> Dress up and race for half price, all day, walk-ins only. The $25 tournament is at Velocity Houston, 10am to 1pm.</p>
           </article>
 
           <article class="vsl-hw-tile">
@@ -1444,7 +1463,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
       <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow vsl-hw-pumpkin--flip" style="right:-16px;bottom:36px;--pk-w:clamp(72px,8vw,112px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
       <div class="vsl-hw-grid">
         <h2 class="vsl-hw-section-title" id="hw-lounges-title">Two locations, <span class="vsl-hw-moon-text">one night</span></h2>
-        <p class="vsl-hw-section-sub">Dallas runs all day; Houston kicks off at 1pm after the GTR vs Supra meet. The tournament is walk-in only &mdash; book ahead for a guaranteed simulator.</p>
+        <p class="vsl-hw-section-sub">The $25 tournament is Houston only, 10am to 1pm. Dallas has no tournament &mdash; 50% off all day in costume.</p>
         <ul class="vsl-hw-lounges">
           <li class="vsl-hw-lounge" data-hw-lounge="houston">
             <span class="vsl-hw-lounge__you" data-hw-you hidden>Your location</span>
@@ -1454,7 +1473,8 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
             <ul class="vsl-hw-lounge__facts">
               <li><strong>GTR vs Supra meet</strong> &middot; 10am&ndash;1pm in the lot &middot; $25 entry</li>
               <li><strong>Free party</strong> &middot; 1pm&ndash;close &middot; all ages</li>
-              <li><strong>$25 tournament</strong> &middot; $12.50 in costume &middot; walk-ins only</li>
+              <li><strong>$25 tournament</strong> &middot; 10am&ndash;1pm &middot; Houston only &middot; $12.50 in costume</li>
+              <li><strong>50% off in costume</strong> &middot; 1pm&ndash;close</li>
               <li><strong>Costume contest</strong> &middot; 10pm &middot; gift card prizes</li>
               <li><strong>21+ Spookeasy after-party</strong> &middot; Ignition &middot; $45 ticket</li>
             </ul>
@@ -1469,7 +1489,8 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
             <p class="vsl-hw-lounge__addr">9830 N Central Expy #400, Dallas, TX 75231<br><a href="tel:+19722095215">972-209-5215</a></p>
             <ul class="vsl-hw-lounge__facts">
               <li><strong>Free party</strong> &middot; all day &middot; all ages</li>
-              <li><strong>$25 tournament</strong> &middot; $12.50 in costume &middot; walk-ins only</li>
+              <li><strong>50% off in costume</strong> &middot; all day &middot; walk-ins only</li>
+              <li><strong>No tournament</strong> &middot; the $25 tournament is Houston only</li>
               <li><strong>Costume contest</strong> &middot; 10pm &middot; gift card prizes</li>
             </ul>
           </li>
@@ -1547,15 +1568,15 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
         <dl>
           <div class="vsl-hw-faq__item">
             <dt>Is it really free?</dt>
-            <dd>Yes. Admission is free and the party is open to the public, all ages, at both locations &mdash; all day in Dallas, 1pm to close in Houston. The only things with a price are the sim racing tournament ($25 a racer, paid at the front desk) and, in Houston, the $25 GTR vs Supra meet entry.</dd>
+            <dd>Yes. Admission is free and the party is open to the public, all ages. Dallas runs all day. Houston&rsquo;s $25 tournament is 10am to 1pm, then the party runs 1pm to close. The tournament and the $25 GTR vs Supra meet are Houston only.</dd>
           </div>
           <div class="vsl-hw-faq__item">
             <dt>How does the costume discount work?</dt>
-            <dd>Show up in costume and tournament entry drops to $12.50. Costumes are checked when you pay at the desk &mdash; a hat alone won&rsquo;t cut it, but you don&rsquo;t need to win the contest to get the discount.</dd>
+            <dd>In Houston, tournament entry (10am&ndash;1pm) drops to $12.50 in costume, and racing is 50% off in costume from 1pm to close. In Dallas there is no tournament &mdash; dress up and it&rsquo;s 50% off all day. A hat alone won&rsquo;t cut it, and you don&rsquo;t need to win the contest to get the discount.</dd>
           </div>
           <div class="vsl-hw-faq__item">
             <dt>Do I need to book?</dt>
-            <dd>Not for the party or the tournament &mdash; both are in person, walk-in only. If you want a guaranteed simulator for the rest of the day, <a href="https://velocitysimlounge.com/book-now/" data-hw-book>book a regular session</a> and come early for the festivities.</dd>
+            <dd>No. The party, the Dallas all-day discount, and the Houston tournament are all walk-in. The tournament is in person at Velocity Houston only, 10am to 1pm. If you want a guaranteed simulator, <a href="https://velocitysimlounge.com/book-now/" data-hw-book>book a regular session</a>.</dd>
           </div>
           <div class="vsl-hw-faq__item">
             <dt>How does the costume contest work?</dt>
@@ -1563,7 +1584,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
           </div>
           <div class="vsl-hw-faq__item">
             <dt>Is it at Houston and Dallas?</dt>
-            <dd>Both. Velocity Houston (2110 Edwards St, Sawyer Yards) and Velocity Dallas (9830 N Central Expy #400, The Hill) each host their own day. Dallas runs all day; Houston starts at 1pm after the $25 GTR vs Supra morning meet. The meet and the 21+ Spookeasy are Houston only.</dd>
+            <dd>Both host the free party and the 10pm costume contest. The $25 sim racing tournament is Houston only, 10am to 1pm &mdash; there is no tournament in Dallas. Dallas is 50% off all day if you dress up. The GTR vs Supra meet and the 21+ Spookeasy are Houston only too.</dd>
           </div>
           <div class="vsl-hw-faq__item">
             <dt>Is there anything for the 21+ crowd?</dt>
@@ -1581,7 +1602,7 @@ Velocity Sim Racing Lounge — Fast & Frightening Halloween Party (Houston & Dal
       <svg viewBox="0 0 120 112" class="vsl-hw-pumpkin vsl-hw-pumpkin--glow vsl-hw-pumpkin--flip" style="right:clamp(12px,4vw,72px);--pk-w:clamp(70px,9vw,140px)" aria-hidden="true"><use href="#vsl-hw-sym-pumpkin-b"/></svg>
       <div class="vsl-hw-grid">
         <h2 class="vsl-hw-section-title" id="hw-cta-title">Dress up. <span class="vsl-hw-moon-text">Drive fast.</span></h2>
-        <p class="vsl-hw-section-sub">Saturday, October 31 on the main floor at Velocity Houston and Velocity Dallas &mdash; all day in Dallas, 1pm to close in Houston. Free to get in &mdash; see you in costume.</p>
+        <p class="vsl-hw-section-sub">Saturday, October 31. Houston: $25 tournament 10am&ndash;1pm, then 50% off in costume. Dallas: 50% off in costume all day, no tournament.</p>
         <div class="vsl-hw-cta__actions">
           <a class="vsl-hw-btn vsl-hw-btn--moon" href="#hw-lineup" data-hw-scroll>See the lineup</a>
           <a class="vsl-hw-btn vsl-hw-btn--ghost" href="https://velocitysimlounge.com/halloween/spookeasy/" data-hw-only="houston">21+ Spookeasy tickets</a>

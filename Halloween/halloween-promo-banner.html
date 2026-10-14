@@ -1,13 +1,13 @@
 <!-- Halloween at Velocity — home-page popup. Shows on the Houston and Dallas home pages.
-     Free main-floor party Sat Oct 31: $25 sim racing tournament, 50% off in costume,
-     WALK-INS ONLY (no online entry). Dallas runs all day; Houston runs 1pm–close after the
-     $25 GTR vs Supra meet (10am–1pm). Costume contest 10pm, gift card prizes. The time line
-     under the headline swaps by lounge (data-hwp-only). Main CTA (both lounges) goes to the
+     Free main-floor party Sat Oct 31. The $25 sim racing tournament is HOUSTON ONLY,
+     10am–1pm ($12.50 in costume), walk-ins only. Dallas has no tournament — 50% off
+     all day in costume. Costume contest 10pm, gift card prizes. Price block and the
+     line under the headline swap by lounge (data-hwp-only). Main CTA (both lounges) goes to the
      Fast & Frightening page at /halloween/; Houston also gets a text link to the $45 21+
      Spookeasy checkout at /halloween/spookeasy/ (Ignition, Houston only).
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.4.0 · 20261013a -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.5.0 · 20261014a -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -302,6 +302,15 @@
 		color: var(--hwp-slate);
 		margin-top: 2px;
 	}
+	.hwp-dallas-note {
+		margin: 2px auto 6px;
+		max-width: 28ch;
+		font-size: 15px;
+		font-weight: 600;
+		font-style: italic;
+		line-height: 1.3;
+		color: var(--hwp-navy);
+	}
 	.hwp-price--hot { background: var(--hwp-navy); border-color: var(--hwp-navy); }
 	.hwp-price--hot span { color: var(--hwp-pumpkin); }
 	.hwp-price--hot small { color: rgba(234, 234, 234, 0.85); }
@@ -356,7 +365,10 @@
 		line-height: 1.2;
 	}
 	.hwp-facts li[hidden],
-	.hwp-header-sub [hidden] { display: none; }
+	.hwp-header-sub [hidden],
+	.hwp-prices[hidden],
+	.hwp-deal-label[hidden],
+	.hwp-dallas-note[hidden] { display: none !important; }
 
 	.hwp-urgency {
 		font-size: 14px;
@@ -625,20 +637,23 @@
 		<svg class="hwp-pumpkin-icon" viewBox="0 0 120 112" aria-hidden="true" focusable="false"><use href="#hwp-sym-pumpkin"/></svg>
 		<div class="hwp-eyebrow">Saturday &bull; October 31</div>
 		<h2 class="hwp-headline"><small>Halloween at Velocity</small>Fast &amp;<br><span>Frightening</span></h2>
-		<p class="hwp-header-sub">Free &bull; All ages &bull; <span data-hwp-only="houston">1pm&ndash;close</span><span data-hwp-only="dallas" hidden>All day</span><span data-hwp-only="none" hidden>Walk-ins only</span></p>
+		<p class="hwp-header-sub">Free &bull; All ages &bull; <span data-hwp-only="houston">Tournament 10am&ndash;1pm</span><span data-hwp-only="dallas" hidden>All day &bull; no tournament</span><span data-hwp-only="none" hidden>Walk-ins only</span></p>
 	</div>
 
 	<div class="hwp-finish-line"></div>
 
 	<div class="hwp-card-body">
-		<div class="hwp-deal" aria-label="50% off tournament entry in costume">
+		<div class="hwp-deal" aria-label="50% off in costume">
 			<span class="hwp-deal-amount">50% off</span>
-			<span class="hwp-deal-label">when you race in costume</span>
+			<span class="hwp-deal-label" data-hwp-only="houston">Houston tournament &bull; 10am&ndash;1pm</span>
+			<span class="hwp-deal-label" data-hwp-only="dallas" hidden>all day in costume</span>
+			<span class="hwp-deal-label" data-hwp-only="none" hidden>when you race in costume</span>
 		</div>
-		<div class="hwp-prices" aria-label="Tournament entry prices">
-			<div class="hwp-price"><span>$25</span><small>Tournament entry</small></div>
+		<div class="hwp-prices" data-hwp-only="houston" hidden aria-label="Houston tournament entry, 10am to 1pm">
+			<div class="hwp-price"><span>$25</span><small>Tournament &bull; Houston</small></div>
 			<div class="hwp-price hwp-price--hot"><span>$12.50</span><small>In costume</small></div>
 		</div>
+		<p class="hwp-dallas-note" data-hwp-only="dallas" hidden>No tournament in Dallas. The $25 tournament is Houston only, 10am&ndash;1pm.</p>
 		<p class="hwp-valid">Walk-ins only</p>
 		<ul class="hwp-facts" aria-label="Party details">
 			<li>Free admission</li>
@@ -726,8 +741,8 @@
 		return;
 	}
 
-	/* Bumped 2026-10-13: times/prizes changed, so re-show once to guests who closed the old card. */
-	var version = 'vsl-hw-2026-10-31-b';
+	/* Bumped 2026-10-14: tournament is Houston-only. Re-show once. */
+	var version = 'vsl-hw-2026-10-31-c';
 	if (hwRead('hwPromoVersion') !== version) {
 		hwRemove('hwCardMin');
 		hwWrite('hwPromoVersion', version);
