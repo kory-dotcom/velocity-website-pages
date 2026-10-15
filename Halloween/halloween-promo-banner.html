@@ -1,13 +1,13 @@
 <!-- Halloween at Velocity — home-page popup. Shows on the Houston and Dallas home pages.
      Free main-floor party Sat Oct 31. The $25 sim racing tournament is HOUSTON ONLY,
      10am–1pm ($12.50 in costume), walk-ins only. The Spookeasy is Houston only too.
-     Dallas is 50% off all day in costume. Costume contest 10pm, gift card prizes. Price block and the
-     line under the headline swap by lounge (data-hwp-only). Main CTA (both lounges) goes to the
-     Fast & Frightening page at /halloween/; Houston also gets a text link to the $45 21+
-     Spookeasy checkout at /halloween/spookeasy/ (Ignition, Houston only).
+     Dallas is 50% off all day in costume. Costume contest 10pm, gift card prizes. The deal label and
+     the line under the headline swap by lounge (data-hwp-only); no price tiles. Main CTA (both
+     lounges) goes to the Fast & Frightening page at /halloween/; both lounges also get a text link
+     to the $45 21+ Spookeasy checkout at /halloween/spookeasy/ with a "Houston only" pill.
      Hidden on /halloween/ and after Saturday, October 31, 2026 (Chicago).
      Built from Million Laps/million-lap-monday-banner.html (same card + pill behaviour, no Book Now strip).
-     Paste once: navbar HTML widget or the snippet plugin. v1.5.0 · 20261014a -->
+     Paste once: navbar HTML widget or the snippet plugin. v1.6.0 · 20261015a -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&display=swap');
 
@@ -267,45 +267,6 @@
 		margin-top: 2px;
 	}
 
-	.hwp-prices {
-		display: flex;
-		width: 100%;
-		max-width: 22rem;
-		gap: 8px;
-		justify-content: center;
-		margin: 2px 0 4px;
-	}
-	.hwp-price {
-		flex: 1;
-		min-width: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		padding: 8px 8px 7px;
-		border-radius: 12px;
-		background: rgba(41, 56, 147, 0.06);
-		border: 1px solid rgba(41, 56, 147, 0.14);
-	}
-	.hwp-price span {
-		font-size: 30px;
-		line-height: 1;
-		font-weight: 700;
-		font-style: italic;
-		color: var(--hwp-navy);
-	}
-	.hwp-price small {
-		font-size: 12px;
-		font-weight: 700;
-		font-style: italic;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--hwp-slate);
-		margin-top: 2px;
-	}
-	.hwp-price--hot { background: var(--hwp-navy); border-color: var(--hwp-navy); }
-	.hwp-price--hot span { color: var(--hwp-pumpkin); }
-	.hwp-price--hot small { color: rgba(234, 234, 234, 0.85); }
-
 	.hwp-subtitle {
 		font-size: 21px;
 		text-transform: uppercase;
@@ -357,7 +318,6 @@
 	}
 	.hwp-facts li[hidden],
 	.hwp-header-sub [hidden],
-	.hwp-prices[hidden],
 	.hwp-deal-label[hidden] { display: none !important; }
 
 	.hwp-urgency {
@@ -470,6 +430,19 @@
 	}
 	.hwp-card-link:hover { color: var(--hwp-magenta); text-decoration-color: var(--hwp-magenta); }
 	.hwp-card-link[hidden] { display: none; }
+	/* inline-block so the link underline doesn't run under the pill */
+	.hwp-card-link__tag {
+		display: inline-block;
+		margin-left: 6px;
+		padding: 2px 9px 3px;
+		border-radius: 999px;
+		background: var(--hwp-navy);
+		color: #fff;
+		font-size: 11px;
+		letter-spacing: 0.1em;
+		line-height: 1.2;
+		vertical-align: 2px;
+	}
 
 	.hwp-fineprint {
 		font-size: 12px;
@@ -515,8 +488,6 @@
 		.hwp-deal { padding: 8px 22px 7px; }
 		.hwp-deal-amount { font-size: 36px; }
 		.hwp-deal-label { font-size: 11.5px; }
-		.hwp-price span { font-size: 26px; }
-		.hwp-price small { font-size: 11px; }
 		.hwp-subtitle { font-size: 18px; }
 		.hwp-valid { font-size: 17px; padding: 6px 12px 7px; }
 		.hwp-facts li { font-size: 11px; padding: 3px 9px; }
@@ -538,10 +509,8 @@
 		.hwp-urgency { font-size: 12px; }
 		.hwp-urgency b { font-size: 11px; }
 		.hwp-urgency--deal b { font-size: 21px; }
-		.hwp-prices { gap: 6px; }
-		.hwp-price { padding: 7px 4px 6px; border-radius: 10px; }
-		.hwp-price span { font-size: 23px; }
-		.hwp-price small { font-size: 10px; letter-spacing: 0.06em; }
+		.hwp-card-link { font-size: 14px; }
+		.hwp-card-link__tag { font-size: 10px; margin-left: 4px; }
 	}
 	/* Short phones: let the card scroll instead of running under the dock */
 	@media (max-height: 700px) {
@@ -635,13 +604,9 @@
 	<div class="hwp-card-body">
 		<div class="hwp-deal" aria-label="50% off in costume">
 			<span class="hwp-deal-amount">50% off</span>
-			<span class="hwp-deal-label" data-hwp-only="houston">Houston tournament &bull; 10am&ndash;1pm</span>
+			<span class="hwp-deal-label" data-hwp-only="houston">when you race in costume</span>
 			<span class="hwp-deal-label" data-hwp-only="dallas" hidden>all day in costume</span>
 			<span class="hwp-deal-label" data-hwp-only="none" hidden>when you race in costume</span>
-		</div>
-		<div class="hwp-prices" data-hwp-only="houston" hidden aria-label="Houston tournament entry, 10am to 1pm">
-			<div class="hwp-price"><span>$25</span><small>Tournament &bull; Houston</small></div>
-			<div class="hwp-price hwp-price--hot"><span>$12.50</span><small>In costume</small></div>
 		</div>
 		<p class="hwp-valid">Walk-ins only</p>
 		<ul class="hwp-facts" aria-label="Party details">
@@ -657,8 +622,7 @@
 			<a class="hwp-card-btn" href="https://velocitysimlounge.com/halloween/">
 				<span class="hwp-btn-title">See the full lineup</span>
 			</a>
-			<a class="hwp-card-link" data-hwp-only="houston" href="https://velocitysimlounge.com/halloween/spookeasy/">21+ Spookeasy tickets &middot; $45</a>
-			<a class="hwp-card-link" data-hwp-only="none" hidden href="https://velocitysimlounge.com/halloween/spookeasy/">21+ Spookeasy in Houston &middot; $45</a>
+			<a class="hwp-card-link" href="https://velocitysimlounge.com/halloween/spookeasy/">21+ Spookeasy tickets &middot; $45 <span class="hwp-card-link__tag">Houston only</span></a>
 		</div>
 	</div>
 </div>
@@ -731,7 +695,7 @@
 	}
 
 	/* Bumped 2026-10-14: tournament is Houston-only. Re-show once. */
-	var version = 'vsl-hw-2026-10-31-c';
+	var version = 'vsl-hw-2026-10-31-d';
 	if (hwRead('hwPromoVersion') !== version) {
 		hwRemove('hwCardMin');
 		hwWrite('hwPromoVersion', version);
