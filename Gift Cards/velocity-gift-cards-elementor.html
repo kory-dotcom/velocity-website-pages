@@ -376,7 +376,8 @@
     --face-check: rgba(255,220,210,0.94);
   }
   .vsl-gift-face--200,
-  .vsl-gift-face--popular {
+  .vsl-gift-face--popular,
+  .vsl-gift-face--custom {
     --face-bg: linear-gradient(135deg, #ee265f 0%, #c21850 46%, #4a1028 100%);
     --face-glare: radial-gradient(ellipse 70% 55% at 18% -4%, rgba(255,180,210,0.28) 0%, transparent 62%);
     --face-amount: var(--yellow);
@@ -400,6 +401,11 @@
   }
   .vsl-gift-face--500 .vsl-gift-face__loc,
   .vsl-gift-face--premium .vsl-gift-face__loc { color: var(--yellow); }
+  .vsl-gift-face--custom .vsl-gift-face__amount {
+    font-size: clamp(1.55rem, 13cqi, 2.6rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
 
   
   .vsl-gift-hero {
@@ -1415,13 +1421,13 @@
               <span class="vsl-gift-face__check"></span>
             </span>
           </a>
-          <a class="vsl-gift-hero__card vsl-gift-hero__card--front" href="https://book.velocitysimlounge.com/card/create/200" data-gift-open data-gift-amount="200" data-gift-title="$200 Gift Card" aria-label="Buy a $200 gift card">
-            <span class="vsl-gift-face vsl-gift-face--200">
+          <a class="vsl-gift-hero__card vsl-gift-hero__card--front" href="https://book.velocitysimlounge.com/card/create/150" data-gift-open data-gift-amount="150" data-gift-title="$150 Gift Card" aria-label="Buy a $150 gift card">
+            <span class="vsl-gift-face vsl-gift-face--150">
               <span class="vsl-gift-face__top">
                 <span class="vsl-gift-face__logo" role="img" aria-label="Velocity"></span>
                 <span class="vsl-gift-face__label">Gift card</span>
               </span>
-              <span class="vsl-gift-face__amount"><span class="vsl-gift-face__cur">$</span>200</span>
+              <span class="vsl-gift-face__amount"><span class="vsl-gift-face__cur">$</span>150</span>
               <span class="vsl-gift-face__bottom">
                 <span class="vsl-gift-face__loc" data-gift-loc-name>Houston</span>
                 <span class="vsl-gift-face__site">velocitysimlounge.com</span>
@@ -1473,22 +1479,6 @@
             </span>
           </a>
 
-          <a class="vsl-gift-card" href="https://book.velocitysimlounge.com/card/create/75" data-gift-open data-gift-amount="75" data-gift-title="$75 Gift Card" aria-label="$75 gift card. Buy now">
-            <span class="vsl-gift-face vsl-gift-face--75">
-              <span class="vsl-gift-face__top">
-                <span class="vsl-gift-face__logo" role="img" aria-label="Velocity"></span>
-                <span class="vsl-gift-face__label">Gift card</span>
-              </span>
-              <span class="vsl-gift-face__amount"><span class="vsl-gift-face__cur">$</span>75</span>
-              <span class="vsl-gift-face__bottom">
-                <span class="vsl-gift-face__loc" data-gift-loc-name>Houston</span>
-                <span class="vsl-gift-face__site">velocitysimlounge.com</span>
-              </span>
-              <span class="vsl-gift-face__buy" aria-hidden="true"><span class="vsl-gift-buy__desk">Buy <span data-gift-loc-name>Houston</span></span><span class="vsl-gift-buy__phone">Tap to buy</span></span>
-              <span class="vsl-gift-face__check"></span>
-            </span>
-          </a>
-
           <a class="vsl-gift-card" href="https://book.velocitysimlounge.com/card/create/100" data-gift-open data-gift-amount="100" data-gift-title="$100 Gift Card" aria-label="$100 gift card. Buy now">
             <span class="vsl-gift-face vsl-gift-face--100">
               <span class="vsl-gift-face__top">
@@ -1521,32 +1511,13 @@
             </span>
           </a>
 
-          <a class="vsl-gift-card" href="https://book.velocitysimlounge.com/card/create/200" data-gift-open data-gift-amount="200" data-gift-title="$200 Gift Card" aria-label="$200 gift card. Most popular. Buy now">
-            <span class="vsl-gift-card__stage">
-              <span class="vsl-gift-card__badge">Most popular</span>
-              <span class="vsl-gift-face vsl-gift-face--200">
-                <span class="vsl-gift-face__top">
-                  <span class="vsl-gift-face__logo" role="img" aria-label="Velocity"></span>
-                  <span class="vsl-gift-face__label">Gift card</span>
-                </span>
-                <span class="vsl-gift-face__amount"><span class="vsl-gift-face__cur">$</span>200</span>
-                <span class="vsl-gift-face__bottom">
-                  <span class="vsl-gift-face__loc" data-gift-loc-name>Houston</span>
-                  <span class="vsl-gift-face__site">velocitysimlounge.com</span>
-                </span>
-                <span class="vsl-gift-face__buy" aria-hidden="true"><span class="vsl-gift-buy__desk">Buy <span data-gift-loc-name>Houston</span></span><span class="vsl-gift-buy__phone">Tap to buy</span></span>
-              <span class="vsl-gift-face__check"></span>
-              </span>
-            </span>
-          </a>
-
-          <a class="vsl-gift-card" href="https://book.velocitysimlounge.com/card/create/500" data-gift-open data-gift-amount="500" data-gift-title="$500 Gift Card" aria-label="$500 gift card. Buy now">
-            <span class="vsl-gift-face vsl-gift-face--500">
+          <a class="vsl-gift-card" href="https://book.velocitysimlounge.com/card/create" data-gift-open data-gift-amount="custom" data-gift-title="Custom Gift Card" aria-label="Custom amount gift card. Buy now">
+            <span class="vsl-gift-face vsl-gift-face--custom">
               <span class="vsl-gift-face__top">
                 <span class="vsl-gift-face__logo" role="img" aria-label="Velocity"></span>
                 <span class="vsl-gift-face__label">Gift card</span>
               </span>
-              <span class="vsl-gift-face__amount"><span class="vsl-gift-face__cur">$</span>500</span>
+              <span class="vsl-gift-face__amount">Custom</span>
               <span class="vsl-gift-face__bottom">
                 <span class="vsl-gift-face__loc" data-gift-loc-name>Houston</span>
                 <span class="vsl-gift-face__site">velocitysimlounge.com</span>
@@ -1645,8 +1616,8 @@
       <div class="vsl-gift-grid">
         <div class="vsl-gift-cta__panel">
           <h2 id="gift-cta-heading">Ready to send it?</h2>
-          <a class="vsl-gift-btn" href="https://book.velocitysimlounge.com/card/create/200" data-gift-open data-gift-amount="200" data-gift-title="$200 Gift Card">
-            Buy a $200 gift card
+          <a class="vsl-gift-btn" href="https://book.velocitysimlounge.com/card/create/150" data-gift-open data-gift-amount="150" data-gift-title="$150 Gift Card">
+            Buy a $150 gift card
             <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1687,18 +1658,15 @@
       "@type": "WebPage",
       "name": "Gift Cards | Velocity Sim Racing Lounge — Houston & Dallas",
       "url": "https://velocitysimlounge.com/gift-cards/",
-      "description": "Buy a Velocity gift card online for Houston or Dallas. Choose $50, $75, $100, $150, $200, or $500 and redeem it when booking a race."
+      "description": "Buy a Velocity gift card online for Houston or Dallas. Choose $50, $100, $150, or a custom amount and redeem it when booking a race."
     },
     {
       "@type": "OfferCatalog",
       "name": "Velocity gift cards — Houston & Dallas",
       "itemListElement": [
         { "@type": "Offer", "name": "$50 gift card", "price": "50.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" },
-        { "@type": "Offer", "name": "$75 gift card", "price": "75.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" },
         { "@type": "Offer", "name": "$100 gift card", "price": "100.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" },
-        { "@type": "Offer", "name": "$150 gift card", "price": "150.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" },
-        { "@type": "Offer", "name": "$200 gift card", "price": "200.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" },
-        { "@type": "Offer", "name": "$500 gift card", "price": "500.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" }
+        { "@type": "Offer", "name": "$150 gift card", "price": "150.00", "priceCurrency": "USD", "url": "https://velocitysimlounge.com/gift-cards/" }
       ]
     },
     {
@@ -1779,7 +1747,9 @@
       root.querySelectorAll('[data-gift-loc-name]').forEach(function (el) { el.textContent = cfg.label || loc; });
       root.querySelectorAll('[data-gift-open][data-gift-amount]').forEach(function (a) {
         var amt = a.getAttribute('data-gift-amount');
-        if (cfg.checkout && amt) a.setAttribute('href', cfg.checkout.replace(/\/+$/, '') + '/' + amt);
+        if (!cfg.checkout || !amt) return;
+        var base = cfg.checkout.replace(/\/+$/, '');
+        a.setAttribute('href', amt === 'custom' ? base : base + '/' + amt);
       });
       root.querySelectorAll('[data-gift-loc]').forEach(function (btn) {
         var on = btn.getAttribute('data-gift-loc') === loc;
@@ -1846,7 +1816,7 @@
       lastFocused = document.activeElement;
       if (titleEl) titleEl.textContent = title || 'Buy a Gift Card';
       if (amountEl) {
-        if (amount) { amountEl.textContent = '$' + amount; amountEl.hidden = false; }
+        if (amount && amount !== 'custom') { amountEl.textContent = '$' + amount; amountEl.hidden = false; }
         else { amountEl.hidden = true; }
       }
       if (hintEl) {
@@ -1918,7 +1888,7 @@
       var held = -1;
       var homeIndex = 0;
       cards.forEach(function (card, i) {
-        if (card.getAttribute('data-gift-amount') === '200') homeIndex = i;
+        if (card.getAttribute('data-gift-amount') === '150') homeIndex = i;
       });
 
       function padLeft() {
