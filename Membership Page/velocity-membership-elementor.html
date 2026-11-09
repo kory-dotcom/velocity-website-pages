@@ -2,6 +2,17 @@
 <!-- Paste into an Elementor HTML widget on /membership/. One page for Houston and Dallas. /dallas/membership/ redirects here. -->
 <!-- Config lives in data-vsl-config on .vsl-membership: lounge, join/login links, contact, tier numbers, "New" pill label for app features. -->
 <!--
+  ── Sale promo (data-vsl-config.promo) ──
+  Date-gated, no manual takedown needed. Days are America/Chicago (timeZone). All promo markup ships `hidden`
+  and the script only reveals it while the promo is live:
+    announceFrom ≤ today < start  → "coming up" copy (dates + "first month free, applied at checkout during the sale")
+    start ≤ today ≤ end           → "live" copy ($0 first month on the tier cards)
+    today > end (or no promo key) → nothing shows; cards and hero are the everyday page
+  Keys: id, label, start, end (YYYY-MM-DD), announceFrom (optional, defaults to 21 days before start), timeZone,
+  tiers (slugs that get the first month free), dealsUrl (optional "See all deals" link — leave empty until that page is published).
+  The members app reads the same dates from app_config.bf_join_offer, so keep the two in sync.
+-->
+<!--
   ── SEO Handoff (set in Yoast on this WordPress page; this widget cannot set the document title) ──
   Meta title:    Velocity Membership | Plans from $99/mo
   Meta desc:     Join a Velocity membership from $99 a month. Monthly race credits, member pricing, a digital membership card, and the members app for booking, leaderboards, and badges.
@@ -1288,6 +1299,121 @@
   .vsl-mb-dock__inner { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 10px; }
   .vsl-mb-dock .vsl-mb-btn { min-height: 46px; padding: 10px 14px; font-size: 0.9rem; letter-spacing: 0.08em; white-space: normal; text-align: center; line-height: 1.1; }
 
+  /* ── SALE PROMO (date-gated; everything below is hidden until the script turns it on) ── */
+  .vsl-membership [data-vsl-mb-promo][hidden],
+  .vsl-membership [data-vsl-mb-promo-pricing][hidden],
+  .vsl-membership [data-vsl-mb-promo-link][hidden],
+  .vsl-membership [data-vsl-mb-tier-promo][hidden] { display: none !important; }
+  .vsl-mb-pill--promo { background: var(--yellow); color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-mb-pill--promo::before { background: var(--navy); }
+  .vsl-mb-promo {
+    position: relative;
+    isolation: isolate;
+    padding: clamp(28px, 4vw, 44px) 0;
+    background: linear-gradient(100deg, var(--red) 0%, var(--magenta) 100%);
+    color: #fff;
+    overflow: hidden;
+  }
+  .vsl-mb-promo::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0 14px, transparent 14px 28px);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .vsl-mb-promo__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 20px var(--gutter);
+    align-items: center;
+  }
+  .vsl-mb-promo__kicker {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 600; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #fff !important; -webkit-text-fill-color: #fff !important;
+  }
+  .vsl-mb-promo__pill {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 5px 12px 4px; border-radius: 999px;
+    background: var(--yellow);
+    color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important;
+    font-size: 0.78rem; letter-spacing: 0.14em;
+  }
+  .vsl-mb-promo__pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--navy); }
+  .vsl-membership .vsl-mb-promo__title {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 1.1rem + 3.2vw, 3rem);
+    font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.02em; line-height: 0.98;
+    color: #fff !important; -webkit-text-fill-color: #fff !important;
+    text-wrap: balance;
+  }
+  .vsl-membership .vsl-mb-promo__title em { font-style: italic; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-mb-promo__text { margin-top: 12px; max-width: 58ch; font-size: var(--vsl-text-section-sub); line-height: 1.5; color: #fff; }
+  .vsl-mb-promo__text strong { color: #fff; font-weight: 700; }
+  .vsl-mb-promo__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; align-items: center; }
+  .vsl-mb-promo .vsl-mb-btn { background: var(--navy); border-color: var(--navy); color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-mb-promo .vsl-mb-btn:hover { background: var(--deep-indigo); border-color: var(--deep-indigo); filter: none; }
+  .vsl-mb-promo .vsl-mb-textlink { color: #fff !important; -webkit-text-fill-color: #fff !important; border-color: rgba(255, 255, 255, 0.55); }
+  .vsl-mb-promo .vsl-mb-textlink:hover { border-color: #fff; }
+  .vsl-mb-promo__deals {
+    display: grid; gap: 10px;
+    padding: 18px 18px 16px;
+    border-radius: 12px;
+    background: rgba(16, 24, 43, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+  .vsl-mb-promo__deals li {
+    position: relative;
+    display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; align-items: baseline;
+    padding-left: 18px;
+    font-size: 0.98rem; line-height: 1.4; color: var(--circuit-white);
+  }
+  .vsl-mb-promo__deals li::before { content: ''; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); }
+  .vsl-mb-promo__deals li b {
+    font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    font-size: 1rem; color: #fff;
+  }
+  .vsl-mb-promo__deals li span { grid-column: 2; }
+  .vsl-mb-promo__deals li small { display: block; color: var(--mist); font-size: 0.85rem; }
+  .vsl-mb-sub--promo { margin-top: 14px; }
+  .vsl-mb-sub--promo strong { color: var(--yellow); }
+  .vsl-mb-tier--promo { border-color: rgba(253, 199, 12, 0.75); }
+  .vsl-mb-tier--promo::after {
+    content: attr(data-vsl-mb-promo-tag);
+    position: absolute; top: 14px; right: -34px;
+    padding: 5px 40px 4px;
+    transform: rotate(32deg);
+    background: var(--yellow); color: var(--navy);
+    font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .vsl-mb-tier__promo {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;
+    font-size: 0.95rem; line-height: 1.35; color: var(--slate-violet);
+  }
+  .vsl-mb-tier__promo b {
+    font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    font-size: 1.05rem; color: var(--navy);
+  }
+  .vsl-mb-tier--promo.is-live .vsl-mb-tier__price { text-decoration: line-through !important; text-decoration-color: rgba(16, 24, 43, 0.35) !important; text-decoration-thickness: 3px !important; opacity: 0.55; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); }
+  .vsl-mb-tier--promo.is-live .vsl-mb-tier__promo b { color: var(--magenta); font-size: clamp(2rem, 1.7rem + 1.2vw, 2.6rem); line-height: 1; }
+  .vsl-mb-tier--racer.is-live .vsl-mb-tier__promo b { color: var(--navy); }
+  .vsl-mb-tier--ultimate.is-live .vsl-mb-tier__promo b { color: #b97b00; }
+  @media (max-width: 900px) {
+    .vsl-mb-promo__inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .vsl-mb-promo__ctas .vsl-mb-btn { width: 100%; }
+    .vsl-mb-promo__deals li { grid-template-columns: 1fr; }
+    .vsl-mb-promo__deals li span { grid-column: 1; }
+  }
+
   /* ── MOTION ── */
   @media (prefers-reduced-motion: reduce) {
     .vsl-membership *, .vsl-membership *::before, .vsl-membership *::after { transition: none !important; animation: none !important; }
@@ -1364,7 +1490,7 @@
   }
 </style>
 
-<div class="vsl-membership" data-vsl-config='{"location":"houston","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps","bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","leagues":"https://velocitysimlounge.com/leagues/"},"contact":{"phone":"832-627-4981","phoneHref":"+18326274981","email":"info@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
+<div class="vsl-membership" data-vsl-config='{"location":"houston","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps","bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","leagues":"https://velocitysimlounge.com/leagues/"},"contact":{"phone":"832-627-4981","phoneHref":"+18326274981","email":"info@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"promo":{"id":"bf2026","label":"Black Friday","start":"2026-11-27","end":"2026-11-30","announceFrom":"2026-11-06","timeZone":"America/Chicago","tiers":["racer","pro","ultimate"],"dealsUrl":"https://velocitysimlounge.com/blackfriday/"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
 
   <main id="primary-content">
 
@@ -1378,7 +1504,7 @@
         <div class="vsl-mb-grid">
           <div class="vsl-mb-hero__copy">
             <p class="vsl-mb-hero__eyebrow">
-              <span class="vsl-mb-pill">New: the Velocity Members app</span>
+              <span class="vsl-mb-pill" data-vsl-mb-hero-pill>New: the Velocity Members app</span>
               <span aria-hidden="true">·</span>
               <span>Houston &amp; Dallas</span>
             </p>
@@ -1446,6 +1572,34 @@
         </div>
       </div>
       <div class="vsl-mb-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ Sale promo band (date-gated by data-vsl-config.promo; stays hidden outside the window) -->
+    <section class="vsl-mb-promo" id="membership-promo" data-vsl-mb-promo hidden aria-labelledby="membership-promo-heading">
+      <div class="vsl-mb-wrap vsl-mb-promo__inner">
+        <div>
+          <p class="vsl-mb-promo__kicker">
+            <span class="vsl-mb-promo__pill" data-vsl-mb-promo-pill>Black Friday · coming up</span>
+            <span data-vsl-mb-promo-dates>Nov 27 – Nov 30</span>
+          </p>
+          <h2 class="vsl-mb-promo__title" id="membership-promo-heading">First month <em>free</em> on every membership</h2>
+          <p class="vsl-mb-promo__text" data-vsl-mb-promo-text>Join Nov 27 – Nov 30 and your first month is free — applied automatically at checkout during the sale.</p>
+          <div class="vsl-mb-promo__ctas">
+            <a class="vsl-mb-btn" data-vsl-soft-scroll href="#memberships">See the plans
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="vsl-mb-textlink" data-vsl-mb-promo-link href="https://velocitysimlounge.com/blackfriday/" hidden>All Black Friday deals
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+        <ul class="vsl-mb-promo__deals" aria-label="Black Friday deals">
+          <li><b>Memberships</b><span>First month free on Racer, Pro and Ultimate<small data-vsl-mb-promo-dates>Nov 27 – Nov 30</small></span></li>
+          <li><b>Races</b><span>Buy a race, get a free race emailed to you for a return visit<small>Nov 27 – Nov 30 · free race good through Dec 31, 2027</small></span></li>
+          <li><b>Family Grid</b><span>Four seats together, 4 Quick Races $99 or 4 Double Races $159<small>Sat Nov 28 – Sun Nov 29</small></span></li>
+          <li><b>Doorbusters</b><span>First 50 racers each day take home a gift<small>While they last</small></span></li>
+        </ul>
+      </div>
     </section>
 
     <!-- ▸ Member perks at the lounge -->
@@ -1648,6 +1802,7 @@
           <p class="vsl-mb-kicker">Plans &amp; pricing</p>
           <h2 class="vsl-mb-h2" id="pricing-heading">Choose your <em>membership</em></h2>
           <p class="vsl-mb-sub">Three plans, one app. Every plan includes member pricing at the bar and kitchen, live watch parties and members-only events. Pick how much seat time you want each month.</p>
+          <p class="vsl-mb-sub vsl-mb-sub--promo" data-vsl-mb-promo-pricing hidden><strong>Black Friday:</strong> <span data-vsl-mb-promo-text>Join Nov 27 – Nov 30 and your first month is free — applied automatically at checkout during the sale.</span></p>
           <div class="vsl-mb-home">
             <label class="vsl-mb-home__label" for="vsl-mb-home-plans">Confirm home location</label>
             <select class="vsl-mb-home__select" id="vsl-mb-home-plans" data-vsl-mb-home>
@@ -1662,6 +1817,7 @@
             <span class="vsl-mb-tier__ribbon">Get on the grid</span>
             <p class="vsl-mb-tier__name">Racer</p>
             <p class="vsl-mb-tier__price">$<span data-vsl-mb-price="racer">99</span><small>/ month</small></p>
+            <p class="vsl-mb-tier__promo" data-vsl-mb-tier-promo="racer" hidden></p>
             <span class="vsl-mb-tier__burst"><b data-vsl-mb-sessions="racer">4</b> races a month</span>
             <p class="vsl-mb-tier__tag">Weeknight racing at your home location. Drive more, save more.</p>
             <hr class="vsl-mb-tier__rule">
@@ -1685,6 +1841,7 @@
             <span class="vsl-mb-tier__ribbon">Most popular</span>
             <p class="vsl-mb-tier__name">Pro</p>
             <p class="vsl-mb-tier__price">$<span data-vsl-mb-price="pro">169</span><small>/ month</small></p>
+            <p class="vsl-mb-tier__promo" data-vsl-mb-tier-promo="pro" hidden></p>
             <span class="vsl-mb-tier__burst"><b data-vsl-mb-sessions="pro">6</b> races a month</span>
             <p class="vsl-mb-tier__tag">More races, Pro sims and Sundays. Can't get enough? We've got you.</p>
             <hr class="vsl-mb-tier__rule">
@@ -1709,6 +1866,7 @@
             <span class="vsl-mb-tier__ribbon">Any day · both lounges</span>
             <p class="vsl-mb-tier__name">Ultimate</p>
             <p class="vsl-mb-tier__price">$<span data-vsl-mb-price="ultimate">299</span><small>/ month</small></p>
+            <p class="vsl-mb-tier__promo" data-vsl-mb-tier-promo="ultimate" hidden></p>
             <span class="vsl-mb-tier__burst"><b data-vsl-mb-sessions="ultimate">8</b> races a month</span>
             <p class="vsl-mb-tier__tag">Everything in Pro, dialed to eleven. Any day, any sim, both lounges.</p>
             <hr class="vsl-mb-tier__rule">
@@ -2310,6 +2468,105 @@
       else { el.hidden = true; }
     });
   }
+
+  /* ── Sale promo (data-vsl-config.promo): date-gated, auto-hides after `end` ──
+     Everything promo-related ships `hidden`; this is the only place that reveals it. */
+  (function () {
+    var promo = cfg.promo;
+    var dayRe = /^\d{4}-\d{2}-\d{2}$/;
+    if (!promo || typeof promo !== 'object' || !dayRe.test(promo.start || '') || !dayRe.test(promo.end || '') || promo.end < promo.start) return;
+    var tz = typeof promo.timeZone === 'string' && promo.timeZone ? promo.timeZone : 'America/Chicago';
+    var label = typeof promo.label === 'string' && promo.label.trim() ? promo.label.trim() : 'Black Friday';
+    var promoTiers = Array.isArray(promo.tiers) ? promo.tiers.filter(function (t) { return typeof t === 'string'; }) : [];
+    if (!promoTiers.length) return;
+
+    function utcDay(day) { var p = day.split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); }
+    function fmtDay(day, withWeekday) {
+      try {
+        var o = { timeZone: 'UTC', month: 'short', day: 'numeric' };
+        if (withWeekday) o.weekday = 'short';
+        return new Intl.DateTimeFormat('en-US', o).format(utcDay(day));
+      } catch (e) { return day; }
+    }
+    function addDays(day, n) { var d = utcDay(day); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+    /* Calendar day in the lounge's time zone (en-CA gives YYYY-MM-DD) */
+    var today;
+    try { today = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date()); }
+    catch (e) { today = new Date().toISOString().slice(0, 10); }
+    if (!dayRe.test(today)) return;
+
+    var announceFrom = dayRe.test(promo.announceFrom || '') && promo.announceFrom <= promo.start ? promo.announceFrom : addDays(promo.start, -21);
+    var phase = today > promo.end ? 'after' : (today >= promo.start ? 'open' : (today >= announceFrom ? 'upcoming' : 'before'));
+    if (phase === 'after' || phase === 'before') return;  /* automatic shutoff: nothing is revealed */
+    var live = phase === 'open';
+
+    var windowLabel = fmtDay(promo.start) + ' – ' + fmtDay(promo.end);
+    var throughLabel = fmtDay(promo.end);
+    var startLabel = fmtDay(promo.start, true);
+    var text = live
+      ? 'Join through ' + throughLabel + ' and your first month is free. Full credits from day one; your card is first charged at next month\u2019s renewal. Applied automatically at checkout.'
+      : 'Join ' + windowLabel + ' and your first month is free \u2014 applied automatically at checkout during the sale. Memberships started before ' + startLabel + ' bill the regular price.';
+
+    root.setAttribute('data-vsl-mb-promo-phase', phase);
+    root.querySelectorAll('[data-vsl-mb-promo-dates]').forEach(function (el) { el.textContent = windowLabel; });
+    root.querySelectorAll('[data-vsl-mb-promo-text]').forEach(function (el) { el.textContent = text; });
+    root.querySelectorAll('[data-vsl-mb-promo-pill]').forEach(function (el) { el.textContent = live ? label + ' \u00b7 on now' : label + ' \u00b7 coming up'; });
+    /* "All deals" link: only shown once the deals page actually resolves (same-origin HEAD check), so a
+       not-yet-published landing page never leaves a dead link on this page. */
+    (function () {
+      var dealLinks = root.querySelectorAll('[data-vsl-mb-promo-link]');
+      if (!dealLinks.length) return;
+      if (!isUrl(promo.dealsUrl)) { dealLinks.forEach(function (a) { a.hidden = true; }); return; }
+      var href = promo.dealsUrl.trim();
+      function reveal() { dealLinks.forEach(function (a) { a.setAttribute('href', href); a.hidden = false; }); }
+      var sameOrigin = false;
+      try { sameOrigin = new URL(href, window.location.href).origin === window.location.origin; } catch (e) {}
+      if (!sameOrigin || typeof fetch !== 'function') { reveal(); return; }
+      fetch(href, { method: 'HEAD', credentials: 'same-origin', redirect: 'follow' })
+        .then(function (res) { if (res.ok) reveal(); })
+        .catch(function () { /* leave hidden */ });
+    })();
+
+    /* Hero pill: the sale headline replaces the "New app" pill while the promo is live */
+    root.querySelectorAll('[data-vsl-mb-hero-pill]').forEach(function (el) {
+      el.textContent = live ? label + ': first month free' : label + ' ' + windowLabel + ': first month free';
+      el.classList.add('vsl-mb-pill--promo');
+    });
+
+    /* Tier cards: promo line under the price, corner tag, aria-label. Live phase shows $0 first month. */
+    promoTiers.forEach(function (slug) {
+      var line = root.querySelector('[data-vsl-mb-tier-promo="' + slug + '"]');
+      var card = root.querySelector('.vsl-mb-tier[data-vsl-join="' + slug + '"]');
+      var t = tiers[slug] || {};
+      var price = typeof t.price === 'number' ? t.price : null;
+      if (line) {
+        line.textContent = '';
+        var b = document.createElement('b');
+        var s = document.createElement('span');
+        if (live) {
+          b.textContent = '$0 first month';
+          s.textContent = (price !== null ? 'then $' + price + '/mo' : 'then the regular price') + ' \u00b7 cancel anytime';
+        } else {
+          b.textContent = 'First month free';
+          s.textContent = label + ' \u00b7 ' + windowLabel;
+        }
+        line.appendChild(b); line.appendChild(s);
+        line.hidden = false;
+      }
+      if (card) {
+        card.classList.add('vsl-mb-tier--promo');
+        if (live) card.classList.add('is-live');
+        card.setAttribute('data-vsl-mb-promo-tag', label);
+        var aria = card.getAttribute('aria-label') || '';
+        if (aria && aria.indexOf('first month free') === -1) {
+          card.setAttribute('aria-label', aria.replace(/ \(opens in new tab\)$/, '') + (live ? ', first month free' : ', first month free ' + windowLabel) + ' (opens in new tab)');
+        }
+      }
+    });
+
+    root.querySelectorAll('[data-vsl-mb-promo], [data-vsl-mb-promo-pricing]').forEach(function (el) { el.hidden = false; });
+    window.VSL_MB_PROMO = { id: promo.id || null, phase: phase, start: promo.start, end: promo.end, today: today };
+  })();
 
   /* Hero image (optional) */
   var heroImg = root.querySelector('img[data-vsl-mb-img="hero"]');

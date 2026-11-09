@@ -1,0 +1,986 @@
+<!-- Velocity Black Friday 2026 — VSL 1.0.0 -->
+<!-- Paste into the Elementor HTML widget on /blackfriday/ (post 8768). One page for Houston and Dallas. -->
+<!-- Design language follows Membership Page/velocity-membership-elementor.html: Khand italic caps, white + magenta hero,
+     yellow tagline, red→magenta gradient buttons, kicker lines, white tier cards, navy / indigo / light section rhythm. -->
+<!--
+  ── SEO Handoff (set in Yoast on this WordPress page; this widget cannot set the document title) ──
+  Meta title:    Black Friday 2026 at Velocity | BOGO Races, First Month Free, Family Grid
+  Meta desc:     Four days of deals Nov 27–30 at Velocity Houston and Dallas. Buy a race and get one free, join a membership
+                 and your first month is free, bring the whole crew for one price, and the first 50 in each day take home a gift.
+  Canonical:     https://velocitysimlounge.com/blackfriday/
+  OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp
+  JSON-LD in this widget covers the FAQ. Do not add a second FAQ schema in Yoast.
+
+  ── Lounge behaviour ──
+  Follows the navbar city (readStoredLocation / localStorage vslPreferredLocation). Every booking CTA shows both lounges;
+  the visitor's lounge is the filled button, the other is the outline. Join / Family Grid links carry ?lounge=.
+  This page never writes vslPreferredLocation or notifies the navbar (shared-location-pages rule).
+
+  ── Dates / copy knobs ──
+  data-vsl-config on .vsl-blackfriday: sale dates, Family Grid race days, booking links, doorbuster gifts.
+  Roverd popup: every race link carries .rvrd-trigger-widget so Dallas opens in the modal too (widget.js binds that class).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Khand:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<style>
+  /* Elementor / WP themes often underline <a>; keep Velocity CTA-style links clean */
+  .elementor-widget-html a.vsl-bf-btn, .elementor-widget-html a.vsl-bf-btn *,
+  .elementor-widget-html a.vsl-bf-textlink, .elementor-widget-html a.vsl-bf-tier, .elementor-widget-html a.vsl-bf-tier * {
+    text-decoration: none !important; text-decoration-line: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════
+     Velocity Black Friday — VSL 1.0.0
+     Scoped to .vsl-blackfriday (component prefix vsl-bf-)
+     ═══════════════════════════════════════════════ */
+
+  /* ── TOKENS (same as Membership) ── */
+  .vsl-blackfriday {
+    --red:      #D22026;
+    --magenta:  #EE265F;
+    --yellow:   #FDC70C;
+    --blue:     #293893;
+    --navy:     #10182B;
+    --deep-indigo: #191B4D;
+    --indigo:   #191840;
+    --circuit-white: #EAEAEA;
+    --silver:   #DFDFDE;
+    --mist:     #B2AEBF;
+    --slate-violet: #5F5782;
+    --gutter: 24px;
+    --page-margin: 64px;
+    --soft: 8px;
+    --font-display: 'Khand', system-ui, sans-serif;
+    --font-body: 'Archivo Narrow', 'Inter', system-ui, sans-serif;
+    --font-fine: 'Inter', system-ui, sans-serif;
+    --vsl-text-section: clamp(1.5rem, 0.6rem + 4vw, 2.5rem);
+    --vsl-text-section-sub: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+    --vsl-hero-bleed-top: -32px;
+    --vsl-hero-bleed-bottom: -12px;
+  }
+
+  /* ── ROOT + RESET ── */
+  .vsl-blackfriday {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--navy);
+    box-sizing: border-box;
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc((100% - 100vw) / 2);
+    margin-right: calc((100% - 100vw) / 2);
+    margin-top: var(--vsl-hero-bleed-top);
+    margin-bottom: var(--vsl-hero-bleed-bottom);
+    padding: 0;
+    background: var(--navy);
+    overflow-x: clip;
+  }
+  .vsl-blackfriday > main { display: block; margin: 0; padding: 0; }
+  .elementor-widget-html .elementor-widget-container:has(> .vsl-blackfriday) {
+    padding: 0 !important; margin: 0 !important; max-width: none !important; overflow: visible !important;
+    background: #10182B !important;
+  }
+  .elementor-section:has(.vsl-blackfriday), .elementor-container:has(.vsl-blackfriday), .elementor-column:has(.vsl-blackfriday),
+  .elementor-column-wrap:has(.vsl-blackfriday), .elementor-widget-wrap:has(.vsl-blackfriday), .elementor-widget:has(.vsl-blackfriday),
+  .e-con:has(.vsl-blackfriday), .e-con-inner:has(.vsl-blackfriday), .elementor-element:has(> .elementor-widget-container > .vsl-blackfriday) {
+    padding: 0 !important; margin-left: 0 !important; margin-right: 0 !important; margin-top: 0 !important;
+    background: #10182B !important; max-width: none !important; width: 100% !important; overflow: visible !important;
+    height: auto !important; max-height: none !important; min-height: auto !important;
+  }
+  .vsl-blackfriday *, .vsl-blackfriday *::before, .vsl-blackfriday *::after { box-sizing: border-box; }
+  html:has(.vsl-blackfriday), body:has(.vsl-blackfriday), .site-content:has(.vsl-blackfriday), #content:has(.vsl-blackfriday),
+  #primary:has(.vsl-blackfriday), .content-area:has(.vsl-blackfriday), .entry-content:has(.vsl-blackfriday), .page-content:has(.vsl-blackfriday),
+  .hentry:has(.vsl-blackfriday), .ast-container:has(.vsl-blackfriday) { background: #10182B; }
+  html:has(.vsl-blackfriday), body:has(.vsl-blackfriday) { overflow-x: clip; max-width: 100%; }
+  .vsl-blackfriday section[id] { scroll-margin-top: 5.5rem; }
+  .vsl-blackfriday img, .vsl-blackfriday svg { max-width: 100%; }
+  .vsl-blackfriday h1, .vsl-blackfriday h2, .vsl-blackfriday h3, .vsl-blackfriday h4,
+  .vsl-blackfriday p, .vsl-blackfriday ul, .vsl-blackfriday ol { margin: 0; }
+  .vsl-blackfriday ul, .vsl-blackfriday ol { padding: 0; list-style: none; }
+  .vsl-blackfriday button { font: inherit; }
+
+  /* ── LAYOUT PRIMITIVES ── */
+  .vsl-bf-wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding-left: clamp(20px, 5vw, var(--page-margin)); padding-right: clamp(20px, 5vw, var(--page-margin)); }
+  .vsl-bf-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); }
+  .vsl-bf-section { position: relative; padding: clamp(56px, 8vw, 96px) 0; }
+  .vsl-bf-section--navy { background: var(--navy); color: var(--circuit-white); }
+  .vsl-bf-section--indigo { background: var(--deep-indigo); color: var(--circuit-white); }
+  .vsl-bf-section--light { background: #fafafa; color: var(--navy); }
+  .vsl-bf-section--gradient { background: linear-gradient(120deg, var(--indigo) 0%, var(--blue) 100%); color: var(--circuit-white); }
+  .vsl-bf-head { grid-column: 1 / -1; margin-bottom: clamp(28px, 4vw, 44px); }
+
+  .vsl-bf-kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-size: 0.8rem; font-weight: 700; font-style: italic; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important;
+    margin-bottom: 0.75rem;
+  }
+  .vsl-bf-kicker::before { content: ''; width: 1.6rem; height: 2px; background: currentColor; }
+  .vsl-bf-section--light .vsl-bf-kicker { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-bf-kicker--yellow { color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-blackfriday .vsl-bf-h2 {
+    font-family: var(--font-display); font-size: var(--vsl-text-section); font-weight: 700; font-style: italic; text-transform: uppercase;
+    letter-spacing: 0.04em; line-height: 1.1; text-wrap: balance;
+    color: inherit !important; -webkit-text-fill-color: currentColor !important; background: none !important; max-width: 22ch;
+  }
+  .vsl-blackfriday .vsl-bf-h2 em { font-style: italic; color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important; }
+  .vsl-blackfriday .vsl-bf-h2 em.vsl-bf-em--yellow { color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-bf-section--light .vsl-bf-h2 em { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; }
+  .vsl-bf-sub { margin-top: 0.9rem; font-size: var(--vsl-text-section-sub); line-height: 1.45; max-width: 58ch; color: var(--circuit-white); }
+  .vsl-bf-sub strong { color: #fff; font-weight: 600; }
+  .vsl-bf-section--light .vsl-bf-sub { color: var(--slate-violet); }
+  .vsl-bf-section--light .vsl-bf-sub strong { color: var(--navy); }
+  .vsl-bf-fine { margin-top: clamp(20px, 3vw, 28px); font-family: var(--font-fine); font-size: 0.85rem; line-height: 1.5; color: var(--mist); max-width: 78ch; }
+  .vsl-bf-fine strong { color: var(--circuit-white); font-weight: 600; }
+  .vsl-bf-section--light .vsl-bf-fine { color: var(--slate-violet); }
+  .vsl-bf-section--light .vsl-bf-fine strong { color: var(--navy); }
+
+  /* ── PILLS ── */
+  .vsl-bf-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 4px 10px 3px; border-radius: 999px;
+    background: var(--magenta); color: #fff !important; -webkit-text-fill-color: #fff !important;
+    font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.2;
+  }
+  .vsl-bf-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+  .vsl-bf-pill--yellow { background: var(--yellow); color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-bf-pill--yellow::before { background: var(--navy); }
+
+  /* ── BUTTONS (Membership pattern) ── */
+  .vsl-bf-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem;
+    min-height: 48px; padding: 12px 24px;
+    font-family: var(--font-display); font-size: 1rem; font-weight: 700; font-style: italic; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none !important; color: #fff !important; -webkit-text-fill-color: #fff !important;
+    cursor: pointer; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 8px;
+    background: linear-gradient(105deg, var(--magenta) 0%, var(--red) 100%);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+    transition: filter 0.18s ease, transform 0.14s ease, box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+    white-space: nowrap;
+  }
+  .vsl-bf-btn svg { width: 1rem; height: 1rem; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease; }
+  .vsl-bf-btn:hover { filter: brightness(1.06); transform: translateY(-1px); border-color: rgba(255, 255, 255, 0.4); }
+  .vsl-bf-btn:hover svg { transform: translateX(3px); }
+  .vsl-bf-btn:active { filter: brightness(0.94); transform: translateY(1px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35); }
+  .vsl-bf-btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 4px; }
+  .vsl-bf-btn--outline {
+    background: transparent; border: 2px solid rgba(234, 234, 234, 0.6);
+    color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; box-shadow: none;
+  }
+  .vsl-bf-btn--outline:hover { background: rgba(234, 234, 234, 0.08); border-color: var(--circuit-white); filter: none; }
+  .vsl-bf-section--light .vsl-bf-btn--outline { border-color: var(--navy); color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-bf-section--light .vsl-bf-btn--outline:hover { background: rgba(16, 24, 43, 0.07); }
+  .vsl-bf-btn--dark { background: var(--navy); border-color: var(--navy); color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-bf-btn--dark:hover { background: var(--deep-indigo); border-color: var(--deep-indigo); filter: none; }
+  .vsl-bf-btn small { font-weight: 500; opacity: 0.9; letter-spacing: 0.06em; }
+  .vsl-bf-textlink {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--mist) !important; -webkit-text-fill-color: var(--mist) !important; text-decoration: none !important;
+    border-bottom: 1px solid rgba(178, 174, 191, 0.4); padding-bottom: 1px; transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .vsl-bf-textlink:hover { color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; border-color: var(--circuit-white); }
+  .vsl-bf-section--light .vsl-bf-textlink { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; border-color: rgba(41, 56, 147, 0.35); }
+  .vsl-bf-section--light .vsl-bf-textlink:hover { color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; border-color: var(--navy); }
+  .vsl-bf-textlink svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Lounge pair: the visitor's lounge is filled, the other is the outline */
+  .vsl-bf-pair { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
+  .vsl-bf-pair .vsl-bf-btn { min-width: 11rem; }
+
+  /* ── HERO ── */
+  .vsl-bf-hero {
+    position: relative; isolation: isolate; overflow: hidden;
+    display: flex; flex-direction: column;
+    min-height: calc(100svh - var(--vsl-nav-offset, 86px));
+    background: var(--navy); color: var(--circuit-white);
+    --vsl-hero-finish: url("https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png");
+    --vsl-hero-finish-h: clamp(16px, 2.8vw + 9px, 39px);
+  }
+  .vsl-bf-hero__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(160deg, var(--indigo) 0%, var(--navy) 60%); }
+  .vsl-bf-hero__bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 40%; opacity: 0.3; filter: saturate(0.8); }
+  .vsl-bf-hero__bg::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 78% 45%, rgba(210, 32, 38, 0.28) 0%, transparent 60%),
+      linear-gradient(90deg, rgba(16, 24, 43, 0.94) 0%, rgba(16, 24, 43, 0.66) 48%, rgba(16, 24, 43, 0.38) 100%);
+  }
+  .vsl-bf-hero__lines {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    background: repeating-linear-gradient(115deg, rgba(234, 234, 234, 0.045) 0 2px, transparent 2px 30px);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 45%, #000 80%);
+    mask-image: linear-gradient(90deg, transparent 0%, transparent 45%, #000 80%);
+  }
+  .vsl-bf-hero__inner { position: relative; z-index: 2; flex: 1 0 auto; display: flex; align-items: center; padding-top: clamp(64px, 7vh, 88px); padding-bottom: clamp(32px, 4vh, 56px); }
+  .vsl-bf-hero__inner > .vsl-bf-grid { width: 100%; align-items: center; }
+  .vsl-bf-hero__copy { grid-column: 1 / span 7; }
+  .vsl-blackfriday p.vsl-bf-hero__eyebrow {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin-bottom: 1.5rem;
+    font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; font-style: italic; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important;
+  }
+  .vsl-bf-hero__eyebrow span[aria-hidden] { color: var(--mist); }
+  .vsl-blackfriday .vsl-bf-hero__title {
+    font-family: var(--font-display); font-size: clamp(2.5rem, 1.2rem + 6.5vw, 5.25rem); font-weight: 700; font-style: italic; text-transform: uppercase;
+    line-height: 0.98; letter-spacing: 0.02em; color: #fff !important; -webkit-text-fill-color: #fff !important; text-wrap: balance; max-width: 12ch;
+  }
+  .vsl-blackfriday .vsl-bf-hero__title .vsl-bf-hero__accent { color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important; }
+  .vsl-blackfriday .vsl-bf-hero__tag {
+    margin-top: 0.9rem; font-family: var(--font-display); font-size: clamp(1.25rem, 0.9rem + 1.6vw, 1.9rem); font-weight: 600; font-style: italic;
+    text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.1; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important;
+  }
+  .vsl-bf-hero__sub { margin-top: 1.1rem; font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.3rem); font-weight: 500; line-height: 1.4; max-width: 46ch; color: var(--circuit-white); }
+  .vsl-bf-hero__sub strong { color: #fff; font-weight: 700; }
+  .vsl-bf-hero__ctas { margin-top: 1.9rem; }
+  .vsl-bf-hero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 1.9rem; max-width: 760px; }
+  .vsl-bf-fact {
+    display: grid; gap: 2px; padding: 12px 14px; border-radius: 10px;
+    background: rgba(234, 234, 234, 0.04); border: 1px solid rgba(234, 234, 234, 0.1);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    color: inherit !important; text-decoration: none !important; transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+  }
+  a.vsl-bf-fact:hover { border-color: rgba(253, 199, 12, 0.5); background: rgba(234, 234, 234, 0.07); transform: translateY(-2px); }
+  .vsl-bf-fact__k { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; font-style: italic; line-height: 1; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-bf-fact__k small { font-size: 0.55em; letter-spacing: 0.04em; margin-left: 2px; }
+  .vsl-bf-fact__v { font-size: 0.92rem; line-height: 1.3; color: var(--circuit-white); }
+  .vsl-bf-fact__v small { display: block; color: rgba(234, 234, 234, 0.82); font-size: 0.8rem; }
+
+  /* Right side: the four deals as a stacked "race card" */
+  .vsl-bf-hero__visual { grid-column: 8 / span 5; display: flex; justify-content: flex-end; }
+  .vsl-bf-card {
+    width: min(100%, 420px);
+    border-radius: 16px; overflow: hidden;
+    background: #fff; color: var(--navy);
+    box-shadow: 0 32px 72px rgba(0, 0, 0, 0.45);
+    transform: rotate(-2deg);
+  }
+  .vsl-bf-card__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; background: var(--navy); color: #fff; }
+  .vsl-bf-card__head b { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.05rem; }
+  .vsl-bf-card__head span { font-family: var(--font-fine); font-size: 0.78rem; color: var(--mist); letter-spacing: 0.04em; text-align: right; }
+  .vsl-bf-card__list { display: grid; }
+  .vsl-bf-card__list li { display: grid; grid-template-columns: 2.4rem 1fr auto; gap: 12px; align-items: center; padding: 13px 18px; border-bottom: 1px solid rgba(16, 24, 43, 0.1); }
+  .vsl-bf-card__list li:last-child { border-bottom: none; }
+  .vsl-bf-card__num { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.25rem; color: var(--magenta); line-height: 1; }
+  .vsl-bf-card__name { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-size: 1rem; line-height: 1.1; color: var(--navy); }
+  .vsl-bf-card__name small { display: block; font-family: var(--font-body); font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: 0.9rem; color: var(--slate-violet); margin-top: 2px; }
+  .vsl-bf-card__when { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: rgba(253, 199, 12, 0.85); padding: 4px 8px 3px; border-radius: 6px; white-space: nowrap; }
+  .vsl-bf-card__foot { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #fafafa; font-family: var(--font-fine); font-size: 0.8rem; color: var(--slate-violet); }
+  .vsl-bf-card__foot::before { content: ''; width: 36px; height: 10px; background: repeating-linear-gradient(90deg, var(--navy) 0 5px, transparent 5px 10px), repeating-linear-gradient(90deg, transparent 0 5px, var(--navy) 5px 10px); background-size: 100% 50%; background-repeat: no-repeat; background-position: 0 0, 0 100%; }
+  .vsl-bf-hero__finish {
+    position: relative; z-index: 3; display: block; width: 100%; margin-top: auto; flex: 0 0 auto;
+    height: var(--vsl-hero-finish-h); background-color: var(--navy);
+    background-image: var(--vsl-hero-finish); background-repeat: repeat-x; background-position: center; background-size: auto 100%;
+  }
+
+  /* ── STEPS (BOGO) ── */
+  .vsl-bf-steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+  .vsl-bf-step {
+    position: relative; display: grid; gap: 8px; align-content: start;
+    padding: 24px 22px 22px; border-radius: 14px;
+    background: rgba(234, 234, 234, 0.04); border: 1px solid rgba(234, 234, 234, 0.12);
+  }
+  .vsl-bf-step::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3px; border-radius: 14px 14px 0 0; background: var(--magenta); }
+  .vsl-bf-step:nth-child(2)::before { background: var(--yellow); }
+  .vsl-bf-step:nth-child(3)::before { background: var(--blue); }
+  .vsl-bf-step__num { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 2.2rem; line-height: 1; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-blackfriday .vsl-bf-step h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.1; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-bf-step p { font-size: 1rem; line-height: 1.5; color: var(--circuit-white); }
+  .vsl-bf-step p strong { color: #fff; font-weight: 700; }
+  .vsl-bf-bookrow { grid-column: 1 / -1; margin-top: clamp(24px, 3vw, 36px); display: grid; gap: 14px; }
+  .vsl-bf-bookrow__label { font-family: var(--font-display); font-style: italic; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.85rem; color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; }
+  .vsl-bf-bookrow__lounge { display: grid; grid-template-columns: 9rem 1fr; align-items: center; gap: 10px 16px; }
+  .vsl-bf-bookrow__city { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.1rem; color: #fff; display: inline-flex; align-items: center; gap: 8px; }
+  .vsl-bf-bookrow__you { display: none; }
+  .vsl-bf-bookrow__lounge.is-you .vsl-bf-bookrow__you { display: inline-flex; }
+  .vsl-bf-bookrow__btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .vsl-bf-bookrow__after { margin-top: 6px; }
+
+  /* ── TIER CARDS (Membership pattern) ── */
+  .vsl-bf-tiers { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); align-items: stretch; }
+  .vsl-bf-tier {
+    position: relative; display: flex; flex-direction: column;
+    padding: 28px 24px 26px; border-radius: 14px;
+    background: #fff; color: var(--navy);
+    border: 1px solid rgba(16, 24, 43, 0.15); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    overflow: hidden; text-decoration: none !important; cursor: pointer;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.28s ease;
+  }
+  .vsl-bf-tier :is(p, span, li, em, strong, ul, hr, small, b) { text-decoration: none !important; }
+  .vsl-bf-tier::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: rgba(16, 24, 43, 0.35); }
+  .vsl-bf-tier--racer::before { background: linear-gradient(90deg, #8d93a1 0%, #c9ccd1 100%); }
+  .vsl-bf-tier--pro::before { background: linear-gradient(90deg, var(--red) 0%, var(--magenta) 100%); }
+  .vsl-bf-tier--ultimate::before { background: var(--yellow); }
+  @media (hover: hover) and (pointer: fine) {
+    .vsl-bf-tiers .vsl-bf-tier:hover { transform: translateY(-6px); z-index: 3; box-shadow: 0 32px 72px rgba(0, 0, 0, 0.42); }
+  }
+  .vsl-bf-tier--pro { border-color: rgba(238, 38, 95, 0.55); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 60px rgba(238, 38, 95, 0.18); }
+  /* Corner tag: the sale. The ribbon below stays the tier's own label, so the two never run together. */
+  .vsl-bf-tier::after {
+    content: 'Black Friday'; position: absolute; top: 16px; right: -36px; padding: 5px 44px 4px; transform: rotate(32deg);
+    background: var(--yellow); color: var(--navy);
+    font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+  }
+  .vsl-bf-tier__ribbon {
+    align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 10px 4px; border-radius: 999px; background: rgba(16, 24, 43, 0.07);
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important;
+  }
+  .vsl-bf-tier__ribbon::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #8d93a1; }
+  .vsl-bf-tier--pro .vsl-bf-tier__ribbon { background: var(--magenta); color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-bf-tier--pro .vsl-bf-tier__ribbon::before { background: #fff; }
+  .vsl-bf-tier--ultimate .vsl-bf-tier__ribbon { background: rgba(253, 199, 12, 0.18); border: 1px solid rgba(185, 123, 0, 0.4); }
+  .vsl-bf-tier--ultimate .vsl-bf-tier__ribbon::before { background: #b97b00; }
+  .vsl-blackfriday .vsl-bf-tier__name { margin-top: 14px; font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.06em; line-height: 1; color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-bf-tier__was { margin-top: 12px; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.3rem; line-height: 1; color: var(--slate-violet) !important; -webkit-text-fill-color: var(--slate-violet) !important; text-decoration: line-through !important; text-decoration-color: rgba(95, 87, 130, 0.6) !important; text-decoration-thickness: 2px !important; }
+  .vsl-bf-tier__was small { font-size: 0.6em; font-weight: 600; letter-spacing: 0.04em; }
+  .vsl-blackfriday .vsl-bf-tier__price {
+    margin-top: 4px; display: flex; align-items: baseline; gap: 8px;
+    font-family: var(--font-display); font-size: clamp(2.4rem, 1.9rem + 1.8vw, 3.3rem); font-weight: 700; font-style: italic; line-height: 1;
+    color: var(--magenta) !important; -webkit-text-fill-color: var(--magenta) !important;
+  }
+  .vsl-bf-tier--racer .vsl-bf-tier__price { color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-bf-tier--ultimate .vsl-bf-tier__price { color: #b97b00 !important; -webkit-text-fill-color: #b97b00 !important; }
+  .vsl-bf-tier__price small { font-size: 0.38em; font-weight: 600; color: var(--slate-violet) !important; -webkit-text-fill-color: var(--slate-violet) !important; letter-spacing: 0.04em; }
+  .vsl-bf-tier__then { margin-top: 6px; font-size: 0.95rem; color: var(--slate-violet); }
+  .vsl-bf-tier__then strong { color: var(--navy); font-weight: 600; }
+  .vsl-bf-tier__burst {
+    margin-top: 14px; display: inline-flex; align-self: flex-start; align-items: baseline; gap: 6px;
+    padding: 6px 12px; border-radius: 8px; background: var(--navy); color: #fff;
+    font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.85rem;
+  }
+  .vsl-bf-tier__burst b { font-size: 1.35rem; line-height: 1; color: var(--yellow); }
+  .vsl-bf-tier__rule { height: 1px; border: 0; background: rgba(16, 24, 43, 0.14); margin: 18px 0; }
+  .vsl-bf-tier__list { display: grid; gap: 11px; flex: 1; }
+  .vsl-bf-tier__list li { position: relative; padding-left: 24px; font-size: 0.98rem; line-height: 1.4; color: var(--slate-violet); }
+  .vsl-bf-tier__list li strong { color: var(--navy); font-weight: 600; }
+  .vsl-bf-tier__list li::before {
+    content: ''; position: absolute; left: 0; top: 0.32em; width: 14px; height: 14px; border-radius: 50%; background: var(--navy);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  .vsl-bf-tier--pro .vsl-bf-tier__list li::before { background: var(--magenta); }
+  .vsl-bf-tier--ultimate .vsl-bf-tier__list li::before { background: #b97b00; }
+  .vsl-bf-tier .vsl-bf-btn { width: 100%; margin-top: 24px; }
+  .vsl-bf-tier--racer .vsl-bf-btn { background: var(--navy); border-color: var(--navy); }
+  .vsl-bf-tier--ultimate .vsl-bf-btn { background: var(--yellow); border-color: var(--yellow); color: var(--navy) !important; -webkit-text-fill-color: var(--navy) !important; }
+  .vsl-bf-tier__fine { margin-top: 12px; font-family: var(--font-fine); font-size: 0.78rem; line-height: 1.45; color: var(--slate-violet); }
+
+  /* ── FAMILY GRID ── */
+  .vsl-bf-family { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(24px, 4vw, 48px); align-items: start; }
+  .vsl-bf-family__ctas .vsl-bf-btn { min-width: 0; }
+  .vsl-bf-family__copy .vsl-bf-h2 { max-width: none; }
+  .vsl-bf-family__points { margin-top: 1.2rem; display: grid; gap: 10px; }
+  .vsl-bf-family__points li { position: relative; padding-left: 26px; font-size: 1.02rem; line-height: 1.45; color: var(--slate-violet); }
+  .vsl-bf-family__points li strong { color: var(--navy); font-weight: 600; }
+  .vsl-bf-family__points li::before {
+    content: ''; position: absolute; left: 0; top: 0.3em; width: 15px; height: 15px; border-radius: 50%; background: var(--blue);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 6 9 17l-5-5' fill='none' stroke='%23000' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  .vsl-bf-family__ctas { margin-top: 1.6rem; }
+  .vsl-bf-bundles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+  .vsl-bf-bundle {
+    position: relative; display: flex; flex-direction: column; gap: 6px;
+    padding: 26px 24px 24px; border-radius: 14px; overflow: hidden;
+    background: var(--navy); color: var(--circuit-white);
+    box-shadow: 0 24px 60px rgba(16, 24, 43, 0.25);
+  }
+  .vsl-bf-bundle::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--magenta); }
+  .vsl-bf-bundle--double::before { background: var(--yellow); }
+  .vsl-bf-bundle__tag { align-self: flex-start; }
+  .vsl-blackfriday .vsl-bf-bundle h3 { margin-top: 10px; font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.05; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-bf-bundle__price { display: flex; align-items: baseline; gap: 10px; margin-top: 6px; font-family: var(--font-display); font-style: italic; font-weight: 700; line-height: 1; }
+  .vsl-bf-bundle__price b { font-size: clamp(2.4rem, 1.9rem + 1.8vw, 3.2rem); color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-bf-bundle__price s { font-size: 1.2rem; color: var(--mist); text-decoration-thickness: 2px; }
+  .vsl-bf-bundle__price small { font-family: var(--font-fine); font-style: normal; font-weight: 500; font-size: 0.8rem; color: var(--mist); letter-spacing: 0.02em; }
+  .vsl-bf-bundle p { font-size: 1rem; line-height: 1.5; color: var(--circuit-white); }
+  .vsl-bf-bundle__save { display: inline-flex; align-self: flex-start; margin-top: 6px; padding: 4px 10px 3px; border-radius: 6px; background: rgba(253, 199, 12, 0.14); border: 1px solid rgba(253, 199, 12, 0.4); font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.78rem; color: var(--yellow); }
+
+  /* ── DOORBUSTERS ── */
+  .vsl-bf-days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+  .vsl-bf-day {
+    position: relative; display: grid; gap: 6px; align-content: start;
+    padding: 22px 20px 20px; border-radius: 14px;
+    background: rgba(16, 24, 43, 0.55); border: 1px solid rgba(234, 234, 234, 0.14);
+  }
+  .vsl-bf-day__label { font-family: var(--font-display); font-style: italic; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.8rem; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-bf-day__label small { display: block; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--mist) !important; -webkit-text-fill-color: var(--mist) !important; margin-top: 2px; }
+  .vsl-blackfriday .vsl-bf-day h3 { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.05; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-bf-day p { font-size: 0.95rem; line-height: 1.45; color: var(--circuit-white); }
+  .vsl-bf-day__count { position: absolute; top: 16px; right: 16px; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.8rem; line-height: 1; color: rgba(234, 234, 234, 0.14); }
+
+  /* ── FAQ (Membership accordion pattern) ── */
+  .vsl-bf-faq__inner { grid-column: 3 / span 8; }
+  .vsl-bf-faq__inner .vsl-bf-h2 { max-width: none; }
+  .vsl-bf-faq__list { margin-top: clamp(24px, 3vw, 32px); background: #fff; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32), 0 4px 12px rgba(0, 0, 0, 0.18); overflow: hidden; text-align: left; }
+  .vsl-bf-faq__item { border-bottom: 1px solid rgba(16, 24, 43, 0.1); background: #fff; }
+  .vsl-bf-faq__item:last-child { border-bottom: none; }
+  .vsl-blackfriday #bf-faq button.vsl-bf-faq__trigger {
+    width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; min-height: 52px; padding: clamp(14px, 3vw, 18px);
+    font-family: var(--font-body); font-size: 1.02rem; font-weight: 600; letter-spacing: 0.02em; line-height: 1.45; text-align: left;
+    color: #111 !important; -webkit-text-fill-color: #111 !important; white-space: normal !important;
+    background: #fff !important; background-image: none !important; border: none; border-radius: 0; box-shadow: none !important; cursor: pointer; transition: background-color 0.22s ease;
+  }
+  .vsl-blackfriday #bf-faq button.vsl-bf-faq__trigger:hover, .vsl-blackfriday #bf-faq button.vsl-bf-faq__trigger:focus { background: rgba(16, 24, 43, 0.04) !important; }
+  .vsl-blackfriday #bf-faq button.vsl-bf-faq__trigger:focus-visible { outline: 3px solid var(--blue); outline-offset: -3px; }
+  .vsl-bf-faq__label { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .vsl-bf-faq__chev { flex-shrink: 0; width: 1.25rem; height: 1.25rem; margin-top: 2px; background: transparent center / 100% 100% no-repeat; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M7 10l5 5 5-5' stroke='%2310182b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .vsl-bf-faq__item.is-open .vsl-bf-faq__chev { transform: rotate(180deg); }
+  .vsl-bf-faq__panel { padding: 0 22px 22px; font-size: 1rem; line-height: 1.45; color: var(--slate-violet); background: #fff; }
+  .vsl-bf-faq__panel[hidden] { display: none; }
+  .vsl-bf-faq__panel p { max-width: 64ch; }
+  .vsl-bf-faq__panel a { color: var(--blue) !important; -webkit-text-fill-color: var(--blue) !important; font-weight: 600; }
+  .vsl-bf-faq__panel strong { color: var(--navy); font-weight: 600; }
+
+  /* ── CLOSING CTA ── */
+  .vsl-bf-cta__inner {
+    grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--gutter) 40px; align-items: center;
+    padding: clamp(28px, 4vw, 44px); border-radius: 16px;
+    background: linear-gradient(120deg, var(--indigo) 0%, var(--blue) 100%); border: 1px solid rgba(234, 234, 234, 0.12);
+  }
+  .vsl-bf-cta__inner .vsl-bf-h2 { max-width: none; }
+  .vsl-bf-cta__p { margin-top: 0.6rem; font-size: 1.05rem; color: var(--circuit-white); max-width: 52ch; }
+  .vsl-bf-cta__btns { justify-content: flex-end; }
+
+  /* ── SPACING (outranks the p/ul reset above) ── */
+  .vsl-blackfriday .vsl-bf-sub { margin-top: 0.9rem; }
+  .vsl-blackfriday .vsl-bf-fine { margin-top: clamp(20px, 3vw, 28px); }
+  .vsl-blackfriday .vsl-bf-hero__sub { margin-top: 1.1rem; }
+  .vsl-blackfriday .vsl-bf-hero__facts { margin-top: 1.9rem; }
+  .vsl-blackfriday .vsl-bf-tier__was { margin-top: 12px; }
+  .vsl-blackfriday .vsl-bf-tier__price { margin-top: 4px; }
+  .vsl-blackfriday .vsl-bf-tier__then { margin-top: 6px; }
+  .vsl-blackfriday .vsl-bf-tier__fine { margin-top: 12px; }
+  .vsl-blackfriday .vsl-bf-family__points { margin-top: 1.2rem; }
+  .vsl-blackfriday .vsl-bf-family__copy .vsl-bf-fine { margin-top: 16px; }
+  .vsl-blackfriday .vsl-bf-bundle__price { margin-top: 6px; }
+  .vsl-blackfriday .vsl-bf-bookrow__after { margin-top: 6px; }
+  .vsl-blackfriday .vsl-bf-cta__p { margin-top: 0.6rem; }
+  .vsl-blackfriday .vsl-bf-step p, .vsl-blackfriday .vsl-bf-day p, .vsl-blackfriday .vsl-bf-bundle p { margin-top: 2px; }
+  .vsl-blackfriday .vsl-bf-pill, .vsl-blackfriday .vsl-bf-card__when { white-space: nowrap; }
+
+  /* ── MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-blackfriday *, .vsl-blackfriday *::before, .vsl-blackfriday *::after { transition: none !important; animation: none !important; }
+  }
+  @media (prefers-reduced-motion: no-preference) { html:has(.vsl-blackfriday) { scroll-behavior: smooth; } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .vsl-bf-hero__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .vsl-bf-faq__inner { grid-column: 2 / span 10; }
+    .vsl-bf-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 900px) {
+    .vsl-bf-hero__copy, .vsl-bf-hero__visual { grid-column: 1 / -1; }
+    .vsl-bf-hero__visual { justify-content: flex-start; margin-top: 12px; }
+    .vsl-bf-card { transform: none; width: 100%; }
+    .vsl-bf-steps { grid-template-columns: 1fr; }
+    .vsl-bf-tiers { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .vsl-bf-tiers .vsl-bf-tier--pro { order: -1; }
+    .vsl-bf-family { grid-template-columns: 1fr; }
+    .vsl-bf-faq__inner { grid-column: 1 / -1; }
+    .vsl-bf-cta__inner { grid-template-columns: 1fr; }
+    .vsl-bf-cta__btns { justify-content: flex-start; }
+    .vsl-bf-bookrow__lounge { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .vsl-bf-hero__facts { gap: 8px; }
+    .vsl-bf-fact { padding: 10px 10px; }
+    .vsl-bf-fact__k { font-size: 1.35rem; }
+    .vsl-bf-fact__v { font-size: 0.82rem; }
+    .vsl-bf-fact__v small { display: none; }
+    .vsl-bf-hero__eyebrow span[aria-hidden] { display: none; }
+    .vsl-bf-pair .vsl-bf-btn, .vsl-bf-bookrow__btns .vsl-bf-btn, .vsl-bf-cta__btns .vsl-bf-btn, .vsl-bf-family__ctas .vsl-bf-btn { width: 100%; min-width: 0; }
+    .vsl-bf-bundles { grid-template-columns: 1fr; }
+    .vsl-bf-days { grid-template-columns: 1fr; }
+    .vsl-bf-tier { padding: 26px 20px 24px; }
+    .vsl-bf-card__list li { grid-template-columns: 2rem 1fr; }
+    .vsl-bf-card__when { grid-column: 2; justify-self: start; }
+  }
+</style>
+
+<div class="vsl-blackfriday" data-vsl-config='{"sale":{"start":"2026-11-27","end":"2026-11-30","label":"Nov 27 – 30"},"familyGrid":{"start":"2026-11-28","end":"2026-11-29","label":"Sat Nov 28 – Sun Nov 29"},"links":{"houston":{"quick":"https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1","double":"https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2"},"dallas":{"quick":"https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1","double":"https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2"},"signup":"https://members.velocitysimlounge.com/signup","familyGrid":"https://members.velocitysimlounge.com/family-grid","lookup":"https://members.velocitysimlounge.com/bogo/lookup","membership":"https://velocitysimlounge.com/membership/"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp"}}'>
+
+  <main id="primary-content">
+
+    <!-- ▸ Hero -->
+    <section class="vsl-bf-hero" id="bf-hero" aria-labelledby="bf-hero-heading">
+      <div class="vsl-bf-hero__bg" aria-hidden="true">
+        <img data-vsl-bf-img="hero" alt="" decoding="async" fetchpriority="high" width="1536" height="1024" hidden>
+      </div>
+      <div class="vsl-bf-hero__lines" aria-hidden="true"></div>
+      <div class="vsl-bf-wrap vsl-bf-hero__inner">
+        <div class="vsl-bf-grid">
+          <div class="vsl-bf-hero__copy">
+            <p class="vsl-bf-hero__eyebrow">
+              <span class="vsl-bf-pill">Black Friday · Nov 27 – 30</span>
+              <span aria-hidden="true">·</span>
+              <span>Houston &amp; Dallas</span>
+            </p>
+            <h1 class="vsl-bf-hero__title" id="bf-hero-heading">Black Friday <span class="vsl-bf-hero__accent">on the grid</span></h1>
+            <p class="vsl-bf-hero__tag">Race free. Join free. Bring everyone.</p>
+            <p class="vsl-bf-hero__sub">
+              Four days, four deals, both lounges. <strong>Book any race Nov 27 – 30 and a free one lands in your inbox</strong> for your next visit.
+              Start a membership and your first month is on us. Bring the whole crew for one price on the weekend. And the first 50 through the door each day leave with a gift.
+            </p>
+            <div class="vsl-bf-hero__ctas vsl-bf-pair" data-vsl-bf-pair>
+              <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1">Book Houston
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1">Book Dallas
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <ul class="vsl-bf-hero__facts" aria-label="The four deals">
+              <li><a class="vsl-bf-fact" href="#bf-bogo"><span class="vsl-bf-fact__k">2<small>for 1</small></span><span class="vsl-bf-fact__v">Races <small>Book one, get one free</small></span></a></li>
+              <li><a class="vsl-bf-fact" href="#bf-members"><span class="vsl-bf-fact__k">$0</span><span class="vsl-bf-fact__v">First month <small>Any membership</small></span></a></li>
+              <li><a class="vsl-bf-fact" href="#bf-family"><span class="vsl-bf-fact__k">$99</span><span class="vsl-bf-fact__v">Family Grid <small>Four seats, one race</small></span></a></li>
+              <li><a class="vsl-bf-fact" href="#bf-doorbusters"><span class="vsl-bf-fact__k">50</span><span class="vsl-bf-fact__v">Doorbusters <small>A gift a day</small></span></a></li>
+            </ul>
+          </div>
+
+          <div class="vsl-bf-hero__visual" aria-hidden="true">
+            <div class="vsl-bf-card">
+              <div class="vsl-bf-card__head"><b>Race weekend</b><span>Nov 27 – 30 · Houston &amp; Dallas</span></div>
+              <ul class="vsl-bf-card__list">
+                <li><span class="vsl-bf-card__num">01</span><span class="vsl-bf-card__name">BOGO races<small>Every paid seat earns a free race</small></span><span class="vsl-bf-card__when">Fri – Mon</span></li>
+                <li><span class="vsl-bf-card__num">02</span><span class="vsl-bf-card__name">First month free<small>Racer, Pro &amp; Ultimate</small></span><span class="vsl-bf-card__when">Fri – Mon</span></li>
+                <li><span class="vsl-bf-card__num">03</span><span class="vsl-bf-card__name">Family Grid<small>4 racers from $99</small></span><span class="vsl-bf-card__when">Sat – Sun</span></li>
+                <li><span class="vsl-bf-card__num">04</span><span class="vsl-bf-card__name">Doorbusters<small>First 50 each day</small></span><span class="vsl-bf-card__when">Daily</span></li>
+              </ul>
+              <div class="vsl-bf-card__foot">No codes. No sign-ups. Just show up and race.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="vsl-bf-hero__finish" role="presentation" aria-hidden="true"></div>
+    </section>
+
+    <!-- ▸ Deal 01 — BOGO -->
+    <section class="vsl-bf-section vsl-bf-section--navy" id="bf-bogo" aria-labelledby="bf-bogo-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-head">
+          <p class="vsl-bf-kicker">Deal 01 · Fri Nov 27 – Mon Nov 30</p>
+          <h2 class="vsl-bf-h2" id="bf-bogo-heading">Buy a race, <em>get one free</em></h2>
+          <p class="vsl-bf-sub">
+            Every Quick Race or Double Race you book between Friday and Monday earns a second one on the house — <strong>one free race for every seat you pay for</strong>.
+            Race it this weekend, race it next summer; your free one is good through the end of 2027.
+          </p>
+        </div>
+        <div class="vsl-bf-steps">
+          <div class="vsl-bf-step">
+            <span class="vsl-bf-step__num">01</span>
+            <h3>Book your race</h3>
+            <p>Grab a Quick or Double Race at Houston or Dallas any time <strong>Nov 27 – 30</strong>. Online or at the front desk, both count.</p>
+          </div>
+          <div class="vsl-bf-step">
+            <span class="vsl-bf-step__num">02</span>
+            <h3>Check your inbox</h3>
+            <p>Within minutes of your booking confirming, we send a <strong>free-race link</strong> to the email on the booking. Three seats? Three free races, one email.</p>
+          </div>
+          <div class="vsl-bf-step">
+            <span class="vsl-bf-step__num">03</span>
+            <h3>Come back and race</h3>
+            <p>Tap the link, pick any open time, and you're back on the grid. <strong>Good through Dec 31, 2027</strong>, so there's no rush.</p>
+          </div>
+        </div>
+        <div class="vsl-bf-bookrow">
+          <p class="vsl-bf-bookrow__label">Book a Black Friday race</p>
+          <div class="vsl-bf-bookrow__lounge" data-vsl-bf-lounge="houston">
+            <span class="vsl-bf-bookrow__city">Houston <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bookrow__you">Your lounge</span></span>
+            <div class="vsl-bf-bookrow__btns">
+              <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1">Quick Race <small>· 30 min</small></a>
+              <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="houston:double" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
+            </div>
+          </div>
+          <div class="vsl-bf-bookrow__lounge" data-vsl-bf-lounge="dallas">
+            <span class="vsl-bf-bookrow__city">Dallas <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bookrow__you">Your lounge</span></span>
+            <div class="vsl-bf-bookrow__btns">
+              <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1">Quick Race <small>· 30 min</small></a>
+              <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
+            </div>
+          </div>
+          <p class="vsl-bf-bookrow__after">
+            <a class="vsl-bf-textlink" data-vsl-bf-link="lookup" href="https://members.velocitysimlounge.com/bogo/lookup">Already raced? Find your free-race email
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </p>
+        </div>
+        <p class="vsl-bf-fine" style="grid-column: 1 / -1;">
+          <strong>The fine print:</strong> your free race matches the one you paid for — same race type, same sim, same lounge — and arrives as one email per booking.
+          Member credits, discount codes, 2-seater sims and Family Grid bookings are already a deal, so they don't stack with BOGO.
+        </p>
+      </div>
+    </section>
+
+    <!-- ▸ Deal 02 — Memberships -->
+    <section class="vsl-bf-section vsl-bf-section--indigo" id="bf-members" aria-labelledby="bf-members-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-head">
+          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Deal 02 · Join Fri Nov 27 – Mon Nov 30</p>
+          <h2 class="vsl-bf-h2" id="bf-members-heading">Join this weekend, <em class="vsl-bf-em--yellow">first month free</em></h2>
+          <p class="vsl-bf-sub">
+            Start any Velocity membership between Friday and Monday and <strong>your first month costs $0</strong>. Full race credits from day one, member pricing on everything else,
+            and the regular price only kicks in at your renewal a month later. No code — it's applied automatically at checkout.
+          </p>
+        </div>
+        <div class="vsl-bf-tiers">
+
+          <a class="vsl-bf-tier vsl-bf-tier--racer" data-vsl-bf-join="racer" href="https://members.velocitysimlounge.com/signup?tier=racer" target="_blank" rel="noopener noreferrer" aria-label="Join Racer — first month free, then $99 a month (opens in new tab)">
+            <span class="vsl-bf-tier__ribbon">Get on the grid</span>
+            <p class="vsl-bf-tier__name">Racer</p>
+            <p class="vsl-bf-tier__was">$99<small> / month</small></p>
+            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
+            <p class="vsl-bf-tier__then">then <strong>$99/mo</strong> · cancel anytime</p>
+            <span class="vsl-bf-tier__burst"><b>4</b> races a month</span>
+            <hr class="vsl-bf-tier__rule">
+            <ul class="vsl-bf-tier__list">
+              <li><strong>4 Quick Race credits</strong> every month</li>
+              <li>Monday – Friday at your home lounge</li>
+              <li>Racer simulators</li>
+              <li><strong>10% off</strong> extra sessions</li>
+              <li>Member pricing at the bar &amp; kitchen</li>
+            </ul>
+            <span class="vsl-bf-btn">Join Racer free
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p class="vsl-bf-tier__fine">$0 today. $99 at your first renewal.</p>
+          </a>
+
+          <a class="vsl-bf-tier vsl-bf-tier--pro" data-vsl-bf-join="pro" href="https://members.velocitysimlounge.com/signup?tier=pro" target="_blank" rel="noopener noreferrer" aria-label="Join Pro — first month free, then $169 a month, most popular (opens in new tab)">
+            <span class="vsl-bf-tier__ribbon">Most popular</span>
+            <p class="vsl-bf-tier__name">Pro</p>
+            <p class="vsl-bf-tier__was">$169<small> / month</small></p>
+            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
+            <p class="vsl-bf-tier__then">then <strong>$169/mo</strong> · cancel anytime</p>
+            <span class="vsl-bf-tier__burst"><b>6</b> races a month</span>
+            <hr class="vsl-bf-tier__rule">
+            <ul class="vsl-bf-tier__list">
+              <li><strong>6 Quick Race credits</strong> every month</li>
+              <li>Sunday – Friday at your home lounge</li>
+              <li>Racer <strong>and Pro</strong> simulators</li>
+              <li><strong>15% off</strong> extra sessions, 10% off leagues</li>
+              <li>Member pricing at the bar &amp; kitchen</li>
+            </ul>
+            <span class="vsl-bf-btn">Join Pro free
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p class="vsl-bf-tier__fine">$0 today. $169 at your first renewal.</p>
+          </a>
+
+          <a class="vsl-bf-tier vsl-bf-tier--ultimate" data-vsl-bf-join="ultimate" href="https://members.velocitysimlounge.com/signup?tier=ultimate" target="_blank" rel="noopener noreferrer" aria-label="Join Ultimate — first month free, then $299 a month, any day at both lounges (opens in new tab)">
+            <span class="vsl-bf-tier__ribbon">Any day · both lounges</span>
+            <p class="vsl-bf-tier__name">Ultimate</p>
+            <p class="vsl-bf-tier__was">$299<small> / month</small></p>
+            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
+            <p class="vsl-bf-tier__then">then <strong>$299/mo</strong> · cancel anytime</p>
+            <span class="vsl-bf-tier__burst"><b>8</b> races a month</span>
+            <hr class="vsl-bf-tier__rule">
+            <ul class="vsl-bf-tier__list">
+              <li><strong>8 Quick Race credits</strong> every month</li>
+              <li><strong>Any day</strong>, Houston <strong>and</strong> Dallas</li>
+              <li><strong>Any simulator</strong>, including Ultimate rigs</li>
+              <li><strong>20% off</strong> extra sessions, 10% off leagues</li>
+              <li>Reserved watch-party seating, VIP events</li>
+            </ul>
+            <span class="vsl-bf-btn">Join Ultimate free
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+            <p class="vsl-bf-tier__fine">$0 today. $299 at your first renewal. Limited availability.</p>
+          </a>
+
+        </div>
+        <p class="vsl-bf-fine" style="grid-column: 1 / -1;">
+          <strong>The fine print:</strong> new memberships started Nov 27 – 30. Your first invoice is $0 and the regular price bills at your first renewal a month later — cancel before then and you owe nothing.
+          Credits reset each billing cycle. Pick Houston or Dallas as your home lounge at signup.
+          <a class="vsl-bf-textlink" data-vsl-bf-link="membership" href="https://velocitysimlounge.com/membership/">Compare every plan in detail</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ▸ Deal 03 — Family Grid -->
+    <section class="vsl-bf-section vsl-bf-section--light" id="bf-family" aria-labelledby="bf-family-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-family">
+          <div class="vsl-bf-family__copy">
+            <p class="vsl-bf-kicker">Deal 03 · Races Sat Nov 28 – Sun Nov 29 · Book now</p>
+            <h2 class="vsl-bf-h2" id="bf-family-heading">Bring the <em>whole crew</em></h2>
+            <p class="vsl-bf-sub">
+              Four racers, one grid, one price. Pick your lounge and a start time on Black Friday Saturday or Sunday, and everyone lines up together on our racer sims.
+              <strong>Pre-booking is open now</strong> — lock in your time before the grid fills.
+            </p>
+            <ul class="vsl-bf-family__points">
+              <li><strong>Four seats, one start time</strong> — booked the moment payment clears</li>
+              <li><strong>Races run Saturday and Sunday</strong> of Black Friday weekend, at Houston or Dallas</li>
+              <li><strong>Name your drivers</strong> at checkout and they're on the grid board at check-in</li>
+            </ul>
+            <div class="vsl-bf-family__ctas vsl-bf-pair" data-vsl-bf-pair>
+              <a class="vsl-bf-btn" data-vsl-bf-family="houston" href="https://members.velocitysimlounge.com/family-grid?lounge=houston">Family Grid · Houston
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a class="vsl-bf-btn vsl-bf-btn--outline" data-vsl-bf-family="dallas" href="https://members.velocitysimlounge.com/family-grid?lounge=dallas">Family Grid · Dallas
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+            </div>
+            <p class="vsl-bf-fine">Plus sales tax. If your time fills while you're paying, you're refunded automatically. Family Grid is already the deal, so it doesn't earn BOGO races.</p>
+          </div>
+          <div class="vsl-bf-bundles">
+            <div class="vsl-bf-bundle vsl-bf-bundle--quick">
+              <span class="vsl-bf-pill vsl-bf-bundle__tag">4 seats</span>
+              <h3>4 × Quick Race</h3>
+              <p class="vsl-bf-bundle__price"><b>$99</b><s>$120</s><small>+ tax</small></p>
+              <p>About 20 minutes of wheel-to-wheel racing for all four of you. Perfect first lap for the family.</p>
+              <span class="vsl-bf-bundle__save">Save $21</span>
+            </div>
+            <div class="vsl-bf-bundle vsl-bf-bundle--double">
+              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bundle__tag">4 seats · 2 sessions</span>
+              <h3>4 × Double Race</h3>
+              <p class="vsl-bf-bundle__price"><b>$159</b><s>$200</s><small>+ tax</small></p>
+              <p>Two back-to-back sessions for everyone. Qualify in the first, settle the family rivalry in the second.</p>
+              <span class="vsl-bf-bundle__save">Save $41</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Deal 04 — Doorbusters -->
+    <section class="vsl-bf-section vsl-bf-section--gradient" id="bf-doorbusters" aria-labelledby="bf-doorbusters-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-head">
+          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Deal 04 · Every day, both lounges</p>
+          <h2 class="vsl-bf-h2" id="bf-doorbusters-heading">First 50 through the door <em class="vsl-bf-em--yellow">take something home</em></h2>
+          <p class="vsl-bf-sub">Each day of the sale, the first 50 guests to check in at Houston and the first 50 at Dallas walk out with a gift. Get here early — when they're gone, they're gone.</p>
+        </div>
+        <ul class="vsl-bf-days">
+          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">01</span><span class="vsl-bf-day__label">Friday<small>Nov 27</small></span><h3 data-vsl-bf-gift="fri">Pair of racing gloves</h3><p>Grip up for Black Friday and every race after it.</p></li>
+          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">02</span><span class="vsl-bf-day__label">Saturday<small>Nov 28</small></span><h3 data-vsl-bf-gift="sat">Velocity keychain</h3><p>Small, loud, and good for finding your keys after the podium.</p></li>
+          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">03</span><span class="vsl-bf-day__label">Sunday<small>Nov 29</small></span><h3 data-vsl-bf-gift="sun">Free appetizer</h3><p>Fuel up on us before the green flag drops.</p></li>
+          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">04</span><span class="vsl-bf-day__label">Monday<small>Nov 30</small></span><h3 data-vsl-bf-gift="mon">Free drink</h3><p>Cyber Monday, Velocity style. Cheers to the last lap of the sale.</p></li>
+        </ul>
+        <p class="vsl-bf-fine" style="grid-column: 1 / -1;">One per guest, per day, while supplies last. Just ask at the front desk when you check in.</p>
+      </div>
+    </section>
+
+    <!-- ▸ FAQ -->
+    <section class="vsl-bf-section vsl-bf-section--indigo" id="bf-faq" aria-labelledby="bf-faq-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-faq__inner">
+          <p class="vsl-bf-kicker">Good to know</p>
+          <h2 class="vsl-bf-h2" id="bf-faq-heading">Black Friday, <em>answered</em></h2>
+          <div class="vsl-bf-faq__list" data-vsl-bf-faq>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a1" id="bf-faq-q1"><span class="vsl-bf-faq__label">Do walk-in bookings get the free race?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a1" role="region" aria-labelledby="bf-faq-q1" hidden><p>Yes. Any Quick or Double Race booked Nov 27 – 30 at full price counts, whether you booked online or at the desk. Just make sure the email on your booking is right — that's where your free-race link goes.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a2" id="bf-faq-q2"><span class="vsl-bf-faq__label">When does the free-race email arrive?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a2" role="region" aria-labelledby="bf-faq-q2" hidden><p>Usually within 10 – 15 minutes of your booking confirming. Check spam first, then use the <a data-vsl-bf-link="lookup" href="https://members.velocitysimlounge.com/bogo/lookup">lookup page</a> to have it re-sent.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a3" id="bf-faq-q3"><span class="vsl-bf-faq__label">I booked 3 seats. How many free races do I get?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a3" role="region" aria-labelledby="bf-faq-q3" hidden><p>Three — one for every paid seat — in a single email. You book them together for one time slot, so your group comes back as a group.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a4" id="bf-faq-q4"><span class="vsl-bf-faq__label">Can I use the free race on a different sim or at the other lounge?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a4" role="region" aria-labelledby="bf-faq-q4" hidden><p>Your free race matches what you paid for: same race type (Quick or Double), same sim type, same lounge. It's good through Dec 31, 2027.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a5" id="bf-faq-q5"><span class="vsl-bf-faq__label">Does the Family Grid earn free races too?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a5" role="region" aria-labelledby="bf-faq-q5" hidden><p>No — the Family Grid is already the discount. Member-credit and discount-code bookings don't earn free races either.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a6" id="bf-faq-q6"><span class="vsl-bf-faq__label">How does the free month actually work?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a6" role="region" aria-labelledby="bf-faq-q6" hidden><p>Join at <a data-vsl-bf-link="signup" href="https://members.velocitysimlounge.com/signup">members.velocitysimlounge.com</a> between Nov 27 and 30. Checkout shows $0 due today, your credits land immediately, and your card is charged the regular price at your renewal a month later. Cancel before then and you pay nothing.</p></div>
+            </div>
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a7" id="bf-faq-q7"><span class="vsl-bf-faq__label">I'm already a member. What's in it for me?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a7" role="region" aria-labelledby="bf-faq-q7" hidden><p>Plenty. BOGO works on any full-price race you book, the Family Grid is open to everyone, and the doorbusters go to whoever walks in first — members included.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ▸ Closing CTA -->
+    <section class="vsl-bf-section vsl-bf-section--navy vsl-bf-cta" id="bf-cta" aria-labelledby="bf-cta-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-cta__inner">
+          <div>
+            <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Nov 27 – 30 · Houston &amp; Dallas</p>
+            <h2 class="vsl-bf-h2" id="bf-cta-heading">See you <em class="vsl-bf-em--yellow">on the grid</em></h2>
+            <p class="vsl-bf-cta__p">Book a race for Black Friday weekend and the free one follows in your inbox. Four days only — then it's back to regular racing.</p>
+          </div>
+          <div class="vsl-bf-cta__btns vsl-bf-pair" data-vsl-bf-pair>
+            <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1">Book Houston</a>
+            <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1">Book Dallas</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Do walk-in bookings get the free race?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Any Quick or Double Race booked Nov 27–30 at full price counts, whether you booked online or at the desk. Make sure the email on your booking is right — that's where your free-race link goes." } },
+    { "@type": "Question", "name": "When does the free-race email arrive?", "acceptedAnswer": { "@type": "Answer", "text": "Usually within 10–15 minutes of your booking confirming. Check spam first, then use the lookup page at members.velocitysimlounge.com/bogo/lookup to have it re-sent." } },
+    { "@type": "Question", "name": "I booked 3 seats. How many free races do I get?", "acceptedAnswer": { "@type": "Answer", "text": "Three — one for every paid seat — in a single email. You book them together for one time slot." } },
+    { "@type": "Question", "name": "Can I use the free race on a different sim or at the other lounge?", "acceptedAnswer": { "@type": "Answer", "text": "Your free race matches what you paid for: same race type, same sim type, same lounge. Good through Dec 31, 2027." } },
+    { "@type": "Question", "name": "Does the Family Grid earn free races too?", "acceptedAnswer": { "@type": "Answer", "text": "No — the Family Grid is already the discount. Member-credit and discount-code bookings don't earn free races either." } },
+    { "@type": "Question", "name": "How does the free month actually work?", "acceptedAnswer": { "@type": "Answer", "text": "Join at members.velocitysimlounge.com between Nov 27 and 30. Checkout shows $0 due today, credits land immediately, and your card is charged the regular price at your renewal a month later. Cancel before then and you pay nothing." } },
+    { "@type": "Question", "name": "I'm already a member. What's in it for me?", "acceptedAnswer": { "@type": "Answer", "text": "BOGO works on any full-price race you book, the Family Grid is open to everyone, and the doorbusters go to whoever walks in first — members included." } }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var root = document.querySelector('.vsl-blackfriday');
+  if (!root || root._vslBfInit) return;
+  root._vslBfInit = true;
+
+  /* Elementor/theme overflow/padding on ancestors clips full-bleed and leaves light gaps */
+  (function fixAncestors(el) {
+    var p = el.parentElement;
+    while (p && p !== document.documentElement && p !== document.body) {
+      var cs = getComputedStyle(p);
+      if (cs.overflowX === 'hidden') p.style.setProperty('overflow-x', 'clip', 'important');
+      if (cs.overflowY === 'hidden') p.style.setProperty('overflow-y', 'clip', 'important');
+      var cls = typeof p.className === 'string' ? p.className : '';
+      var light = /rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/.exec(cs.backgroundColor || '');
+      if (light && +light[1] > 220 && +light[2] > 220 && +light[3] > 220) p.style.setProperty('background', '#10182B', 'important');
+      if (/elementor|e-con|site-content|content-area|entry-content|page-content|hentry|ast-container/.test(cls) || p.id === 'content' || p.id === 'primary') {
+        ['padding-left', 'padding-right', 'padding-top', 'margin-top'].forEach(function (prop) {
+          if ((parseFloat(cs.getPropertyValue(prop)) || 0) > 0) p.style.setProperty(prop, '0', 'important');
+        });
+      }
+      p = p.parentElement;
+    }
+  })(root);
+
+  /* Pin the checkered line to the bottom of the first screen */
+  function fitHero() {
+    var hero = root.querySelector('.vsl-bf-hero');
+    if (!hero) return;
+    var top = hero.getBoundingClientRect().top + window.scrollY;
+    var h = Math.round(window.innerHeight - top);
+    if (h > 560) hero.style.minHeight = h + 'px';
+  }
+  fitHero();
+  window.addEventListener('resize', fitHero);
+  window.addEventListener('load', fitHero);
+
+  /* ── Config ── */
+  var cfg = {};
+  try { cfg = JSON.parse(root.getAttribute('data-vsl-config') || '{}'); } catch (e) { cfg = {}; }
+  var links = cfg.links || {};
+  var images = cfg.images || {};
+  function isUrl(v) { return typeof v === 'string' && /^https?:\/\//i.test(v.trim()); }
+
+  var heroImg = root.querySelector('img[data-vsl-bf-img="hero"]');
+  if (heroImg && isUrl(images.hero)) { heroImg.src = images.hero.trim(); heroImg.hidden = false; }
+
+  /* Race booking links from config (so a Roverd activity change is a one-line edit) */
+  root.querySelectorAll('a[data-vsl-bf-book]').forEach(function (a) {
+    var parts = (a.getAttribute('data-vsl-bf-book') || '').split(':');
+    var l = links[parts[0]] || {};
+    if (isUrl(l[parts[1]])) a.setAttribute('href', l[parts[1]].trim());
+  });
+  ['lookup', 'signup', 'membership'].forEach(function (k) {
+    if (!isUrl(links[k])) return;
+    root.querySelectorAll('a[data-vsl-bf-link="' + k + '"]').forEach(function (a) { a.setAttribute('href', links[k].trim()); });
+  });
+
+  /* ── Navbar lounge (read only — this page never writes it) ── */
+  function navbarLocation() {
+    try {
+      if (window.VSL_LOCATION && typeof window.VSL_LOCATION.readStoredLocation === 'function') {
+        var s = window.VSL_LOCATION.readStoredLocation();
+        if (s === 'dallas' || s === 'houston') return s;
+      }
+    } catch (e0) {}
+    try {
+      var ls = window.localStorage.getItem('vslPreferredLocation');
+      if (ls === 'dallas' || ls === 'houston') return ls;
+    } catch (e1) {}
+    try {
+      var q = new URLSearchParams(window.location.search).get('loc');
+      if (q === 'dallas' || q === 'houston') return q;
+    } catch (e2) {}
+    return 'houston';
+  }
+
+  function paint(loc) {
+    if (loc !== 'dallas' && loc !== 'houston') loc = 'houston';
+    root.setAttribute('data-vsl-bf-location', loc);
+    /* Lounge pairs: visitor's lounge is the filled button, the other the outline; put it first */
+    root.querySelectorAll('[data-vsl-bf-pair]').forEach(function (pair) {
+      var btns = Array.prototype.slice.call(pair.querySelectorAll('.vsl-bf-btn'));
+      btns.forEach(function (b) {
+        var key = (b.getAttribute('data-vsl-bf-book') || b.getAttribute('data-vsl-bf-family') || '').split(':')[0];
+        var mine = key === loc;
+        b.classList.toggle('vsl-bf-btn--outline', !mine);
+        if (mine && b !== pair.firstElementChild) pair.insertBefore(b, pair.firstElementChild);
+      });
+    });
+    root.querySelectorAll('[data-vsl-bf-lounge]').forEach(function (row) {
+      row.classList.toggle('is-you', row.getAttribute('data-vsl-bf-lounge') === loc);
+    });
+    /* Join / signup links carry the lounge so the members app pre-selects it */
+    root.querySelectorAll('a[data-vsl-bf-join], a[data-vsl-bf-link="signup"]').forEach(function (a) {
+      try {
+        var u = new URL(a.getAttribute('href'), window.location.href);
+        u.searchParams.set('lounge', loc);
+        a.setAttribute('href', u.toString());
+      } catch (e3) {}
+    });
+  }
+  paint(navbarLocation());
+  window.addEventListener('_vslLocationChanged', function (e) {
+    if (e && e.detail && (e.detail.location === 'houston' || e.detail.location === 'dallas')) paint(e.detail.location);
+  });
+
+  /* ── FAQ accordion ── */
+  var items = root.querySelectorAll('.vsl-bf-faq__item');
+  items.forEach(function (item) {
+    var btn = item.querySelector('.vsl-bf-faq__trigger');
+    var panel = item.querySelector('.vsl-bf-faq__panel');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      var willClose = item.classList.contains('is-open');
+      items.forEach(function (other) {
+        if (other === item) return;
+        other.classList.remove('is-open');
+        var ob = other.querySelector('.vsl-bf-faq__trigger');
+        var op = other.querySelector('.vsl-bf-faq__panel');
+        if (ob && op) { ob.setAttribute('aria-expanded', 'false'); op.hidden = true; }
+      });
+      item.classList.toggle('is-open', !willClose);
+      btn.setAttribute('aria-expanded', willClose ? 'false' : 'true');
+      panel.hidden = willClose;
+    });
+  });
+
+  /* In-page anchors: smooth scroll under the fixed navbar */
+  root.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      var id = a.getAttribute('href').slice(1);
+      var target = id && document.getElementById(id);
+      if (!target) return;
+      ev.preventDefault();
+      target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    });
+  });
+})();
+</script>
