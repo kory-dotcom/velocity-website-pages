@@ -297,6 +297,20 @@
   .vsl-bf-bookrow__you { display: none; letter-spacing: 0.08em; }
   .vsl-bf-bookrow__lounge.is-you .vsl-bf-bookrow__you { display: inline-flex; }
   .vsl-bf-bookrow__btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  /* Both race lengths are choices, so neither gets the filled "selected" treatment. */
+  .vsl-bf-bookrow__btns .vsl-bf-btn {
+    flex: 1 1 15rem;
+    background: transparent;
+    border: 2px solid rgba(234, 234, 234, 0.6);
+    color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important;
+    box-shadow: none;
+  }
+  .vsl-bf-bookrow__btns .vsl-bf-btn:hover {
+    background: linear-gradient(105deg, var(--magenta) 0%, var(--red) 100%);
+    border-color: transparent;
+    color: #fff !important; -webkit-text-fill-color: #fff !important;
+    filter: none;
+  }
   .vsl-bf-bookrow__after { margin-top: 6px; }
 
   /* ── TIER CARDS (Membership pattern) ── */
@@ -615,14 +629,14 @@
             <span class="vsl-bf-bookrow__city">Houston <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bookrow__you">Your lounge</span></span>
             <div class="vsl-bf-bookrow__btns">
               <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1">Quick Race <small>· 30 min</small></a>
-              <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="houston:double" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
+              <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:double" href="https://book.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
             </div>
           </div>
           <div class="vsl-bf-bookrow__lounge" data-vsl-bf-lounge="dallas">
             <span class="vsl-bf-bookrow__city">Dallas <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bookrow__you">Your lounge</span></span>
             <div class="vsl-bf-bookrow__btns">
               <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/quick-race-approx-30-mins/1">Quick Race <small>· 30 min</small></a>
-              <a class="vsl-bf-btn vsl-bf-btn--outline rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
+              <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/double-race-approx-60-mins/2">Double Race <small>· 60 min</small></a>
             </div>
           </div>
           <p class="vsl-bf-bookrow__after">
