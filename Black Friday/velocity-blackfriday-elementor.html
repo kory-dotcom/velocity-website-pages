@@ -318,11 +318,30 @@
     .vsl-bf-tiers .vsl-bf-tier:hover { transform: translateY(-6px); z-index: 3; box-shadow: 0 32px 72px rgba(0, 0, 0, 0.42); }
   }
   .vsl-bf-tier--pro { border-color: rgba(238, 38, 95, 0.55); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 60px rgba(238, 38, 95, 0.18); }
-  /* Corner tag: the sale. The ribbon below stays the tier's own label, so the two never run together. */
+  /* Corner sash: the sale. Black band, checkered-flag edges, a slow shine sweep.
+     The ribbon below stays the tier's own label, so the two never run together. */
   .vsl-bf-tier::after {
-    content: 'Black Friday'; position: absolute; top: 16px; right: -36px; padding: 5px 44px 4px; transform: rotate(32deg);
-    background: var(--yellow); color: var(--navy);
-    font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    content: 'Black Friday'; position: absolute; top: 22px; right: -44px; padding: 8px 56px 7px; transform: rotate(32deg);
+    background:
+      linear-gradient(110deg, transparent 0 38%, rgba(255, 255, 255, 0.28) 46%, rgba(255, 255, 255, 0.42) 50%, rgba(255, 255, 255, 0.28) 54%, transparent 62% 100%) no-repeat,
+      repeating-linear-gradient(90deg, var(--yellow) 0 6px, var(--navy) 6px 12px) 0 0 / 100% 4px no-repeat,
+      repeating-linear-gradient(90deg, var(--navy) 0 6px, var(--yellow) 6px 12px) 0 100% / 100% 4px no-repeat,
+      linear-gradient(180deg, #10182B 0%, #050912 100%);
+    background-size: 220% 100%, 100% 4px, 100% 4px, 100% 100%;
+    background-position: 220% 0, 0 0, 0 100%, 0 0;
+    color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+    font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; pointer-events: none;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 22px rgba(253, 199, 12, 0.35);
+    animation: vsl-bf-sash-shine 4.5s ease-in-out infinite;
+  }
+  @keyframes vsl-bf-sash-shine {
+    0%, 55% { background-position: 220% 0, 0 0, 0 100%, 0 0; }
+    85%, 100% { background-position: -120% 0, 0 0, 0 100%, 0 0; }
+  }
+  /* The sash casts a soft yellow glow onto the card corner so the deal reads before the copy does. */
+  .vsl-bf-tier {
+    background: radial-gradient(circle at 100% 0%, rgba(253, 199, 12, 0.22) 0%, rgba(253, 199, 12, 0) 34%), #fff;
   }
   .vsl-bf-tier__ribbon {
     align-self: flex-start; display: inline-flex; align-items: center; gap: 8px;
