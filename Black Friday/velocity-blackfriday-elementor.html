@@ -292,9 +292,9 @@
   .vsl-bf-step p strong { color: #fff; font-weight: 700; }
   .vsl-bf-bookrow { grid-column: 1 / -1; margin-top: clamp(24px, 3vw, 36px); display: grid; gap: 14px; }
   .vsl-bf-bookrow__label { font-family: var(--font-display); font-style: italic; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.85rem; color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; }
-  .vsl-bf-bookrow__lounge { display: grid; grid-template-columns: 9rem 1fr; align-items: center; gap: 10px 16px; }
-  .vsl-bf-bookrow__city { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.1rem; color: #fff; display: inline-flex; align-items: center; gap: 8px; }
-  .vsl-bf-bookrow__you { display: none; }
+  .vsl-bf-bookrow__lounge { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 10px 20px; }
+  .vsl-bf-bookrow__city { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.1rem; color: #fff; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .vsl-bf-bookrow__you { display: none; letter-spacing: 0.08em; }
   .vsl-bf-bookrow__lounge.is-you .vsl-bf-bookrow__you { display: inline-flex; }
   .vsl-bf-bookrow__btns { display: flex; flex-wrap: wrap; gap: 10px; }
   .vsl-bf-bookrow__after { margin-top: 6px; }
