@@ -16,6 +16,7 @@
     lemans: { title: "3-Hour Le Mans Endurance", modulePath: "../Le Mans Endurance/velocity-le-mans-elementor.html" },
     halloween: { title: "Fast & Frightening Halloween Party", modulePath: "../Halloween/velocity-halloween-elementor.html" },
     spookeasy: { title: "Spookeasy Halloween Party (tickets)", modulePath: "../Halloween/velocity-spookeasy-elementor.html" },
+    blackfriday: { title: "Black Friday 2026", modulePath: "../Black Friday/velocity-blackfriday-elementor.html" },
     "parties-events": { title: "Group Events", modulePath: "../Parties & Events/velocity-parties-events-elementor.html" },
     "party-packs": { title: "Party Packs", modulePath: "../Party Packs/velocity-party-packs-elementor.html" },
     "semi-private": { title: "Semi-Private", modulePath: "../Semi-Private/velocity-semi-private-elementor.html" },
@@ -65,6 +66,8 @@
     "/halloween": "index.html?p=halloween",
     "/halloween/spookeasy/": "index.html?p=spookeasy",
     "/halloween/spookeasy": "index.html?p=spookeasy",
+    "/blackfriday/": "index.html?p=blackfriday",
+    "/blackfriday": "index.html?p=blackfriday",
     "/food-and-drink/": "index.html?p=food-drink",
     "/food-and-drink": "index.html?p=food-drink",
     "/ignition/": "index.html?p=ignition",
@@ -183,11 +186,12 @@
     lemans: 1,
     halloween: 1,
     spookeasy: 1,
+    blackfriday: 1,
     blog: 1
   };
 
   /* One URL serves both lounges; arriving here must not overwrite the visitor's saved city. */
-  var SHARED_LOCATION_PAGE_KEYS = { "gift-cards": 1, "holiday-parties": 1, lemans: 1, halloween: 1, membership: 1 };
+  var SHARED_LOCATION_PAGE_KEYS = { "gift-cards": 1, "holiday-parties": 1, lemans: 1, halloween: 1, membership: 1, blackfriday: 1 };
 
   var REPLICA_SLUG_PAGE_KEYS = {
     home: { houston: "home", dallas: "dallas-home" },
