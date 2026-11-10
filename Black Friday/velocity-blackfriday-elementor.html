@@ -249,27 +249,39 @@
   .vsl-bf-fact__v { font-size: 0.92rem; line-height: 1.3; color: var(--circuit-white); }
   .vsl-bf-fact__v small { display: block; color: rgba(234, 234, 234, 0.82); font-size: 0.8rem; }
 
-  /* Right side: the four deals as a stacked "race card" */
+  /* Right side: the one deal as a race ticket. The wrapper carries the tilt and shadow
+     because the card is masked (side notches at the stub) and a mask would clip a box-shadow. */
   .vsl-bf-hero__visual { grid-column: 8 / span 5; display: flex; justify-content: flex-end; }
+  .vsl-bf-ticket { width: min(100%, 430px); transform: rotate(-2deg); filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.5)); }
   .vsl-bf-card {
-    width: min(100%, 420px);
+    --stub-h: 58px; --notch: 11px;
     border-radius: 16px; overflow: hidden;
     background: #fff; color: var(--navy);
-    box-shadow: 0 32px 72px rgba(0, 0, 0, 0.45);
-    transform: rotate(-2deg);
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - var(--stub-h)), transparent calc(var(--notch) - 0.5px), #000 var(--notch)) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - var(--stub-h)), transparent calc(var(--notch) - 0.5px), #000 var(--notch)) right / 51% 100% no-repeat;
+    mask:
+      radial-gradient(circle var(--notch) at 0 calc(100% - var(--stub-h)), transparent calc(var(--notch) - 0.5px), #000 var(--notch)) left / 51% 100% no-repeat,
+      radial-gradient(circle var(--notch) at 100% calc(100% - var(--stub-h)), transparent calc(var(--notch) - 0.5px), #000 var(--notch)) right / 51% 100% no-repeat;
   }
-  .vsl-bf-card__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; background: var(--navy); color: #fff; }
+  .vsl-bf-card__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; background: var(--navy); color: #fff; }
   .vsl-bf-card__head b { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.05rem; }
   .vsl-bf-card__head span { font-family: var(--font-fine); font-size: 0.78rem; color: var(--mist); letter-spacing: 0.04em; text-align: right; }
-  .vsl-bf-card__list { display: grid; }
-  .vsl-bf-card__list li { display: grid; grid-template-columns: 2.4rem 1fr auto; gap: 12px; align-items: center; padding: 13px 18px; border-bottom: 1px solid rgba(16, 24, 43, 0.1); }
-  .vsl-bf-card__list li:last-child { border-bottom: none; }
-  .vsl-bf-card__num { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.25rem; color: var(--magenta); line-height: 1; }
-  .vsl-bf-card__name { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; font-size: 1rem; line-height: 1.1; color: var(--navy); }
-  .vsl-bf-card__name small { display: block; font-family: var(--font-body); font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; font-size: 0.9rem; color: var(--slate-violet); margin-top: 2px; }
-  .vsl-bf-card__when { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); background: rgba(253, 199, 12, 0.85); padding: 4px 8px 3px; border-radius: 6px; white-space: nowrap; }
-  .vsl-bf-card__foot { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #fafafa; font-family: var(--font-fine); font-size: 0.8rem; color: var(--slate-violet); }
-  .vsl-bf-card__foot::before { content: ''; width: 36px; height: 10px; background: repeating-linear-gradient(90deg, var(--navy) 0 5px, transparent 5px 10px), repeating-linear-gradient(90deg, transparent 0 5px, var(--navy) 5px 10px); background-size: 100% 50%; background-repeat: no-repeat; background-position: 0 0, 0 100%; }
+  .vsl-bf-card__body { padding: 22px 20px 24px; }
+  .vsl-bf-card__offer { display: grid; font-family: var(--font-display); font-style: italic; font-weight: 700; text-transform: uppercase; color: var(--navy); }
+  .vsl-bf-card__offer span { font-size: 1.35rem; letter-spacing: 0.06em; line-height: 1.1; color: var(--slate-violet); }
+  .vsl-bf-card__offer strong { font-size: clamp(2.6rem, 1.6rem + 3.4vw, 3.5rem); font-weight: 700; letter-spacing: 0.02em; line-height: 0.95; color: var(--navy); }
+  .vsl-bf-card__offer em { font-style: italic; color: var(--magenta); }
+  .vsl-bf-card__pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: stretch; margin-top: 18px; }
+  .vsl-bf-card__race { display: grid; align-content: start; gap: 3px; padding: 12px 12px 11px; border-radius: 10px; border: 1px solid rgba(16, 24, 43, 0.14); background: #fafafa; }
+  .vsl-bf-card__race--free { border-color: var(--yellow); background: var(--yellow); }
+  .vsl-bf-card__tag { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.2; color: var(--slate-violet); }
+  .vsl-bf-card__race b { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.12rem; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.05; color: var(--navy); }
+  .vsl-bf-card__race small { font-family: var(--font-body); font-size: 0.86rem; font-weight: 500; line-height: 1.25; color: var(--slate-violet); }
+  .vsl-bf-card__race--free .vsl-bf-card__tag, .vsl-bf-card__race--free small { color: var(--navy); }
+  .vsl-bf-card__plus { align-self: center; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; line-height: 1; color: var(--magenta); }
+  .vsl-bf-card__foot { display: flex; align-items: center; gap: 10px; height: var(--stub-h); padding: 0 20px; background: #fafafa; border-top: 2px dashed rgba(16, 24, 43, 0.2); font-family: var(--font-fine); font-size: 0.8rem; line-height: 1.3; color: var(--slate-violet); }
+  .vsl-bf-card__foot::before { content: ''; flex: 0 0 36px; width: 36px; height: 10px; background: repeating-linear-gradient(90deg, var(--navy) 0 5px, transparent 5px 10px), repeating-linear-gradient(90deg, transparent 0 5px, var(--navy) 5px 10px); background-size: 100% 50%; background-repeat: no-repeat; background-position: 0 0, 0 100%; }
   .vsl-bf-hero__finish {
     position: relative; z-index: 3; display: block; width: 100%; margin-top: auto; flex: 0 0 auto;
     height: var(--vsl-hero-finish-h); background-color: var(--navy);
@@ -494,7 +506,7 @@
   .vsl-blackfriday .vsl-bf-bookrow__after { margin-top: 6px; }
   .vsl-blackfriday .vsl-bf-cta__p { margin-top: 0.6rem; }
   .vsl-blackfriday .vsl-bf-step p, .vsl-blackfriday .vsl-bf-day p, .vsl-blackfriday .vsl-bf-bundle p { margin-top: 2px; }
-  .vsl-blackfriday .vsl-bf-pill, .vsl-blackfriday .vsl-bf-card__when { white-space: nowrap; }
+  .vsl-blackfriday .vsl-bf-pill { white-space: nowrap; }
 
   /* ── MOTION ── */
   @media (prefers-reduced-motion: reduce) {
@@ -511,7 +523,7 @@
   @media (max-width: 900px) {
     .vsl-bf-hero__copy, .vsl-bf-hero__visual { grid-column: 1 / -1; }
     .vsl-bf-hero__visual { justify-content: flex-start; margin-top: 12px; }
-    .vsl-bf-card { transform: none; width: 100%; }
+    .vsl-bf-ticket { transform: none; width: min(100%, 480px); }
     .vsl-bf-steps { grid-template-columns: 1fr; }
     .vsl-bf-tiers { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
     .vsl-bf-tiers .vsl-bf-tier--pro { order: -1; }
@@ -532,8 +544,11 @@
     .vsl-bf-bundles { grid-template-columns: 1fr; }
     .vsl-bf-days { grid-template-columns: 1fr; }
     .vsl-bf-tier { padding: 26px 20px 24px; }
-    .vsl-bf-card__list li { grid-template-columns: 2rem 1fr; }
-    .vsl-bf-card__when { grid-column: 2; justify-self: start; }
+    .vsl-bf-card__head span { font-size: 0.72rem; }
+    .vsl-bf-card__body { padding: 18px 16px 20px; }
+    .vsl-bf-card__race { padding: 10px 10px 9px; }
+    .vsl-bf-card__race b { font-size: 1rem; }
+    .vsl-bf-card__foot { padding: 0 16px; font-size: 0.76rem; }
   }
 </style>
 
@@ -574,12 +589,27 @@
           </div>
 
           <div class="vsl-bf-hero__visual" aria-hidden="true">
-            <div class="vsl-bf-card">
-              <div class="vsl-bf-card__head"><b>Race weekend</b><span>Nov 27 – 30 · Houston &amp; Dallas</span></div>
-              <ul class="vsl-bf-card__list">
-                <li><span class="vsl-bf-card__num">01</span><span class="vsl-bf-card__name">BOGO races<small>Every Quick &amp; Double that weekend</small></span><span class="vsl-bf-card__when">Fri – Mon</span></li>
-              </ul>
-              <div class="vsl-bf-card__foot">No codes. No sign-ups. Just show up and race.</div>
+            <div class="vsl-bf-ticket">
+              <div class="vsl-bf-card">
+                <div class="vsl-bf-card__head"><b>Black Friday</b><span>Nov 27 – 30 · Houston &amp; Dallas</span></div>
+                <div class="vsl-bf-card__body">
+                  <div class="vsl-bf-card__offer"><span>Buy one race</span><strong>Get one <em>free</em></strong></div>
+                  <div class="vsl-bf-card__pair">
+                    <div class="vsl-bf-card__race">
+                      <span class="vsl-bf-card__tag">You book</span>
+                      <b>Quick or Double</b>
+                      <small>Any race Nov 27 – 30</small>
+                    </div>
+                    <span class="vsl-bf-card__plus">+</span>
+                    <div class="vsl-bf-card__race vsl-bf-card__race--free">
+                      <span class="vsl-bf-card__tag">On us</span>
+                      <b>The same race</b>
+                      <small>Any day through 2027</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="vsl-bf-card__foot">No code needed. Your free race arrives by email.</div>
+              </div>
             </div>
           </div>
         </div>
