@@ -9,7 +9,8 @@
     start ≤ today ≤ end           → "live" copy ($0 first month on the tier cards)
     today > end (or no promo key) → nothing shows; cards and hero are the everyday page
   Keys: id, label, start, end (YYYY-MM-DD), announceFrom (optional, defaults to 21 days before start), timeZone,
-  tiers (slugs that get the first month free), dealsUrl (optional "See all deals" link — leave empty until that page is published).
+  tiers (slugs that get the first month free), dealsUrl, enabled (false parks the whole promo; markup stays in this file).
+  Parked for Black Friday 2026 — the sale is BOGO only. Set enabled back to true, and the matching bf_join_offer window, when this runs.
   The members app reads the same dates from app_config.bf_join_offer, so keep the two in sync.
 -->
 <!--
@@ -1490,7 +1491,7 @@
   }
 </style>
 
-<div class="vsl-membership" data-vsl-config='{"location":"houston","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps","bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","leagues":"https://velocitysimlounge.com/leagues/"},"contact":{"phone":"832-627-4981","phoneHref":"+18326274981","email":"info@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"promo":{"id":"bf2026","label":"Black Friday","start":"2026-11-27","end":"2026-11-30","announceFrom":"2026-11-06","timeZone":"America/Chicago","tiers":["racer","pro","ultimate"],"dealsUrl":"https://velocitysimlounge.com/blackfriday/"},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
+<div class="vsl-membership" data-vsl-config='{"location":"houston","links":{"login":"https://members.velocitysimlounge.com/login","dashboard":"https://members.velocitysimlounge.com/dashboard","join":"https://members.velocitysimlounge.com/signup","joinRacer":"https://members.velocitysimlounge.com/signup?tier=racer","joinPro":"https://members.velocitysimlounge.com/signup?tier=pro","joinUltimate":"https://members.velocitysimlounge.com/signup?tier=ultimate","laps":"https://members.velocitysimlounge.com/laps","bookNow":"https://velocitysimlounge.com/book-now/","contact":"https://velocitysimlounge.com/contact/","leagues":"https://velocitysimlounge.com/leagues/"},"contact":{"phone":"832-627-4981","phoneHref":"+18326274981","email":"info@velocitysimlounge.com"},"tiers":{"racer":{"price":99,"sessions":4,"discount":10},"pro":{"price":169,"sessions":6,"discount":15},"ultimate":{"price":299,"sessions":8,"discount":20}},"app":{"newLabel":"New"},"promo":{"id":"bf2026","label":"Black Friday","start":"2026-11-27","end":"2026-11-30","announceFrom":"2026-11-06","timeZone":"America/Chicago","tiers":["racer","pro","ultimate"],"dealsUrl":"https://velocitysimlounge.com/blackfriday/","enabled":false},"images":{"hero":"https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1536x1024.webp","heroFinishLine":"https://velocitysimlounge.com/wp-content/uploads/2026/03/Finish-LineAsset-179@300x.png"},"elementorColumnOutdentPx":0}'>
 
   <main id="primary-content">
 
@@ -2474,7 +2475,7 @@
   (function () {
     var promo = cfg.promo;
     var dayRe = /^\d{4}-\d{2}-\d{2}$/;
-    if (!promo || typeof promo !== 'object' || !dayRe.test(promo.start || '') || !dayRe.test(promo.end || '') || promo.end < promo.start) return;
+    if (!promo || promo.enabled === false || typeof promo !== 'object' || !dayRe.test(promo.start || '') || !dayRe.test(promo.end || '') || promo.end < promo.start) return;
     var tz = typeof promo.timeZone === 'string' && promo.timeZone ? promo.timeZone : 'America/Chicago';
     var label = typeof promo.label === 'string' && promo.label.trim() ? promo.label.trim() : 'Black Friday';
     var promoTiers = Array.isArray(promo.tiers) ? promo.tiers.filter(function (t) { return typeof t === 'string'; }) : [];
