@@ -4,20 +4,20 @@
      yellow tagline, red→magenta gradient buttons, kicker lines, white tier cards, navy / indigo / light section rhythm. -->
 <!--
   ── SEO Handoff (set in Yoast on this WordPress page; this widget cannot set the document title) ──
-  Meta title:    Black Friday 2026 at Velocity | BOGO Races, First Month Free, Family Grid
-  Meta desc:     Four days of deals Nov 27–30 at Velocity Houston and Dallas. Every Quick or Double Race that weekend earns a free one, join a membership
-                 and your first month is free, bring the whole crew for one price, and the first 50 in each day take home a gift.
+  Meta title:    Black Friday 2026 at Velocity | Buy One Get One Free Races
+  Meta desc:     Buy one Quick or Double Race, get one free. Every race that starts Nov 27–30 at Velocity Houston or Dallas earns a free one, good through 2027.
   Canonical:     https://velocitysimlounge.com/blackfriday/
   OG image:      https://velocitysimlounge.com/wp-content/uploads/2026/03/DSC02956-1024x640.webp
   JSON-LD in this widget covers the FAQ. Do not add a second FAQ schema in Yoast.
 
   ── Lounge behaviour ──
   Follows the navbar city (readStoredLocation / localStorage vslPreferredLocation). Every booking CTA shows both lounges;
-  the visitor's lounge is the filled button, the other is the outline. Join / Family Grid links carry ?lounge=.
+  the visitor's lounge is the filled button, the other is the outline.
   This page never writes vslPreferredLocation or notifies the navbar (shared-location-pages rule).
 
   ── Dates / copy knobs ──
-  data-vsl-config on .vsl-blackfriday: sale dates, Family Grid race days, booking links, doorbuster gifts.
+  data-vsl-config on .vsl-blackfriday: sale dates and booking links.
+  This sale is BOGO only. Membership, Family Grid, and doorbuster markup is not on this page.
   Roverd popup: every race link carries .rvrd-trigger-widget so Dallas opens in the modal too (widget.js binds that class).
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -235,7 +235,8 @@
   .vsl-bf-hero__deals li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--yellow); }
   .vsl-bf-hero__sub strong { color: #fff; font-weight: 700; }
   .vsl-bf-hero__ctas { margin-top: 1.9rem; }
-  .vsl-bf-hero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 1.9rem; max-width: 760px; }
+  .vsl-bf-hero__facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.9rem; max-width: 760px; }
+  .vsl-bf-hero__facts > li { flex: 0 1 180px; }
   .vsl-bf-fact {
     display: grid; gap: 2px; padding: 12px 14px; border-radius: 10px;
     background: rgba(234, 234, 234, 0.04); border: 1px solid rgba(234, 234, 234, 0.1);
@@ -558,9 +559,6 @@
             <p class="vsl-bf-hero__sub">Four days of unbeatable deals from Black Friday through Cyber Monday:</p>
             <ul class="vsl-bf-hero__deals">
               <li>Buy One Get One Free with all bookings from Nov 27 – 30</li>
-              <li>Start a monthly Membership and get your first month free</li>
-              <li>Bundle packages for groups of 4</li>
-              <li>Doorbuster gifts each day for the first 50 guests</li>
             </ul>
             <div class="vsl-bf-hero__ctas vsl-bf-pair" data-vsl-bf-pair>
               <a class="vsl-bf-btn rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/grand-prix-approx-30-mins/1">Book Houston
@@ -570,11 +568,8 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
             </div>
-            <ul class="vsl-bf-hero__facts" aria-label="The four deals">
+            <ul class="vsl-bf-hero__facts" aria-label="The deal">
               <li><a class="vsl-bf-fact" href="#bf-bogo"><span class="vsl-bf-fact__k">2<small>for 1</small></span><span class="vsl-bf-fact__v">Races <small>Every Quick &amp; Double</small></span></a></li>
-              <li><a class="vsl-bf-fact" href="#bf-members"><span class="vsl-bf-fact__k">$0</span><span class="vsl-bf-fact__v">First month <small>Any membership</small></span></a></li>
-              <li><a class="vsl-bf-fact" href="#bf-family"><span class="vsl-bf-fact__k">$99</span><span class="vsl-bf-fact__v">Family Grid <small>Four seats, one race</small></span></a></li>
-              <li><a class="vsl-bf-fact" href="#bf-doorbusters"><span class="vsl-bf-fact__k">50</span><span class="vsl-bf-fact__v">Doorbusters <small>A gift a day</small></span></a></li>
             </ul>
           </div>
 
@@ -583,9 +578,6 @@
               <div class="vsl-bf-card__head"><b>Race weekend</b><span>Nov 27 – 30 · Houston &amp; Dallas</span></div>
               <ul class="vsl-bf-card__list">
                 <li><span class="vsl-bf-card__num">01</span><span class="vsl-bf-card__name">BOGO races<small>Every Quick &amp; Double that weekend</small></span><span class="vsl-bf-card__when">Fri – Mon</span></li>
-                <li><span class="vsl-bf-card__num">02</span><span class="vsl-bf-card__name">First month free<small>Racer, Pro &amp; Ultimate</small></span><span class="vsl-bf-card__when">Fri – Mon</span></li>
-                <li><span class="vsl-bf-card__num">03</span><span class="vsl-bf-card__name">Family Grid<small>4 racers from $99</small></span><span class="vsl-bf-card__when">Sat – Sun</span></li>
-                <li><span class="vsl-bf-card__num">04</span><span class="vsl-bf-card__name">Doorbusters<small>First 50 each day</small></span><span class="vsl-bf-card__when">Daily</span></li>
               </ul>
               <div class="vsl-bf-card__foot">No codes. No sign-ups. Just show up and race.</div>
             </div>
@@ -599,7 +591,7 @@
     <section class="vsl-bf-section vsl-bf-section--navy" id="bf-bogo" aria-labelledby="bf-bogo-heading">
       <div class="vsl-bf-wrap vsl-bf-grid">
         <div class="vsl-bf-head">
-          <p class="vsl-bf-kicker">Deal 01 · Fri Nov 27 – Mon Nov 30</p>
+          <p class="vsl-bf-kicker">Fri Nov 27 – Mon Nov 30</p>
           <h2 class="vsl-bf-h2" id="bf-bogo-heading">Buy a race, <em>get one free</em></h2>
           <p class="vsl-bf-sub">
             Quick Race or Double Race, Houston or Dallas. If it starts Friday, Saturday, Sunday, or Monday, it earns a free race of the same kind. <strong>Not just the first one — every race on those four days</strong>, and one free race for every seat you pay for.
@@ -647,155 +639,8 @@
         </div>
         <p class="vsl-bf-fine" style="grid-column: 1 / -1;">
           <strong>The fine print:</strong> Quick Race and Double Race only, and the race has to start Nov 27 – 30. Your free race matches the one you paid for — same length, same sim, same lounge — and arrives as one email per booking.
-          2-seater sims, member credits, discount codes, and Family Grid are already a deal, so they don't earn another free race.
+          2-seater sims, member credits, and discount codes don't earn a free race.
         </p>
-      </div>
-    </section>
-
-    <!-- ▸ Deal 02 — Memberships -->
-    <section class="vsl-bf-section vsl-bf-section--indigo" id="bf-members" aria-labelledby="bf-members-heading">
-      <div class="vsl-bf-wrap vsl-bf-grid">
-        <div class="vsl-bf-head">
-          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Deal 02 · Join Fri Nov 27 – Mon Nov 30</p>
-          <h2 class="vsl-bf-h2" id="bf-members-heading">Join this weekend, <em class="vsl-bf-em--yellow">first month free</em></h2>
-          <p class="vsl-bf-sub">
-            Start any Velocity membership between Friday and Monday and <strong>your first month costs $0</strong>. Full race credits from day one, member pricing on everything else,
-            and the regular price only kicks in at your renewal a month later. No code — it's applied automatically at checkout.
-          </p>
-        </div>
-        <div class="vsl-bf-tiers">
-
-          <a class="vsl-bf-tier vsl-bf-tier--racer" data-vsl-bf-join="racer" href="https://members.velocitysimlounge.com/signup?tier=racer" target="_blank" rel="noopener noreferrer" aria-label="Join Racer — first month free, then $99 a month (opens in new tab)">
-            <span class="vsl-bf-tier__ribbon">Get on the grid</span>
-            <p class="vsl-bf-tier__name">Racer</p>
-            <p class="vsl-bf-tier__was">$99<small> / month</small></p>
-            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
-            <p class="vsl-bf-tier__then">then <strong>$99/mo</strong> · cancel anytime</p>
-            <span class="vsl-bf-tier__burst"><b>4</b> races a month</span>
-            <hr class="vsl-bf-tier__rule">
-            <ul class="vsl-bf-tier__list">
-              <li><strong>4 Quick Race credits</strong> every month</li>
-              <li>Monday – Friday at your home lounge</li>
-              <li>Racer simulators</li>
-              <li><strong>10% off</strong> extra sessions</li>
-              <li>Member pricing at the bar &amp; kitchen</li>
-            </ul>
-            <span class="vsl-bf-btn">Join Racer free
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-            <p class="vsl-bf-tier__fine">$0 today. $99 at your first renewal.</p>
-          </a>
-
-          <a class="vsl-bf-tier vsl-bf-tier--pro" data-vsl-bf-join="pro" href="https://members.velocitysimlounge.com/signup?tier=pro" target="_blank" rel="noopener noreferrer" aria-label="Join Pro — first month free, then $169 a month, most popular (opens in new tab)">
-            <span class="vsl-bf-tier__ribbon">Most popular</span>
-            <p class="vsl-bf-tier__name">Pro</p>
-            <p class="vsl-bf-tier__was">$169<small> / month</small></p>
-            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
-            <p class="vsl-bf-tier__then">then <strong>$169/mo</strong> · cancel anytime</p>
-            <span class="vsl-bf-tier__burst"><b>6</b> races a month</span>
-            <hr class="vsl-bf-tier__rule">
-            <ul class="vsl-bf-tier__list">
-              <li><strong>6 Quick Race credits</strong> every month</li>
-              <li>Sunday – Friday at your home lounge</li>
-              <li>Racer <strong>and Pro</strong> simulators</li>
-              <li><strong>15% off</strong> extra sessions, 10% off leagues</li>
-              <li>Member pricing at the bar &amp; kitchen</li>
-            </ul>
-            <span class="vsl-bf-btn">Join Pro free
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-            <p class="vsl-bf-tier__fine">$0 today. $169 at your first renewal.</p>
-          </a>
-
-          <a class="vsl-bf-tier vsl-bf-tier--ultimate" data-vsl-bf-join="ultimate" href="https://members.velocitysimlounge.com/signup?tier=ultimate" target="_blank" rel="noopener noreferrer" aria-label="Join Ultimate — first month free, then $299 a month, any day at both lounges (opens in new tab)">
-            <span class="vsl-bf-tier__ribbon">Any day · both lounges</span>
-            <p class="vsl-bf-tier__name">Ultimate</p>
-            <p class="vsl-bf-tier__was">$299<small> / month</small></p>
-            <p class="vsl-bf-tier__price">$0<small>first month</small></p>
-            <p class="vsl-bf-tier__then">then <strong>$299/mo</strong> · cancel anytime</p>
-            <span class="vsl-bf-tier__burst"><b>8</b> races a month</span>
-            <hr class="vsl-bf-tier__rule">
-            <ul class="vsl-bf-tier__list">
-              <li><strong>8 Quick Race credits</strong> every month</li>
-              <li><strong>Any day</strong>, Houston <strong>and</strong> Dallas</li>
-              <li><strong>Any simulator</strong>, including Ultimate rigs</li>
-              <li><strong>20% off</strong> extra sessions, 10% off leagues</li>
-              <li>Reserved watch-party seating, VIP events</li>
-            </ul>
-            <span class="vsl-bf-btn">Join Ultimate free
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-            <p class="vsl-bf-tier__fine">$0 today. $299 at your first renewal. Limited availability.</p>
-          </a>
-
-        </div>
-        <p class="vsl-bf-fine" style="grid-column: 1 / -1;">
-          <strong>The fine print:</strong> new memberships started Nov 27 – 30. Your first invoice is $0 and the regular price bills at your first renewal a month later — cancel before then and you owe nothing.
-          Credits reset each billing cycle. Pick Houston or Dallas as your home lounge at signup.
-          <a class="vsl-bf-textlink" data-vsl-bf-link="membership" href="https://velocitysimlounge.com/membership/">Compare every plan in detail</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- ▸ Deal 03 — Family Grid -->
-    <section class="vsl-bf-section vsl-bf-section--light" id="bf-family" aria-labelledby="bf-family-heading">
-      <div class="vsl-bf-wrap vsl-bf-grid">
-        <div class="vsl-bf-family">
-          <div class="vsl-bf-family__copy">
-            <p class="vsl-bf-kicker">Deal 03 · Races Sat Nov 28 – Sun Nov 29 · Book now</p>
-            <h2 class="vsl-bf-h2" id="bf-family-heading">Bring the <em>whole crew</em></h2>
-            <p class="vsl-bf-sub">
-              Four racers, one grid, one price. Pick your lounge and a start time on Black Friday Saturday or Sunday, and everyone lines up together on our racer sims.
-              <strong>Pre-booking is open now</strong> — lock in your time before the grid fills.
-            </p>
-            <ul class="vsl-bf-family__points">
-              <li><strong>Four seats, one start time</strong> — booked the moment payment clears</li>
-              <li><strong>Races run Saturday and Sunday</strong> of Black Friday weekend, at Houston or Dallas</li>
-              <li><strong>Name your drivers</strong> at checkout and they're on the grid board at check-in</li>
-            </ul>
-            <div class="vsl-bf-family__ctas vsl-bf-pair" data-vsl-bf-pair>
-              <a class="vsl-bf-btn" data-vsl-bf-family="houston" href="https://members.velocitysimlounge.com/family-grid?lounge=houston">Family Grid · Houston
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-              <a class="vsl-bf-btn vsl-bf-btn--outline" data-vsl-bf-family="dallas" href="https://members.velocitysimlounge.com/family-grid?lounge=dallas">Family Grid · Dallas
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
-            </div>
-            <p class="vsl-bf-fine">Plus sales tax. If your time fills while you're paying, you're refunded automatically. Family Grid is already the deal, so it doesn't earn BOGO races.</p>
-          </div>
-          <div class="vsl-bf-bundles">
-            <div class="vsl-bf-bundle vsl-bf-bundle--quick">
-              <span class="vsl-bf-pill vsl-bf-bundle__tag">4 seats</span>
-              <h3>4 × Quick Race</h3>
-              <p class="vsl-bf-bundle__price"><b>$99</b><s>$120</s><small>+ tax</small></p>
-              <p>About 20 minutes of wheel-to-wheel racing for all four of you. Perfect first lap for the family.</p>
-            </div>
-            <div class="vsl-bf-bundle vsl-bf-bundle--double">
-              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-bundle__tag">4 seats · 2 sessions</span>
-              <h3>4 × Double Race</h3>
-              <p class="vsl-bf-bundle__price"><b>$159</b><s>$200</s><small>+ tax</small></p>
-              <p>Two back-to-back sessions for everyone. Qualify in the first, settle the family rivalry in the second.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ▸ Deal 04 — Doorbusters -->
-    <section class="vsl-bf-section vsl-bf-section--gradient" id="bf-doorbusters" aria-labelledby="bf-doorbusters-heading">
-      <div class="vsl-bf-wrap vsl-bf-grid">
-        <div class="vsl-bf-head">
-          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Deal 04 · Every day, both lounges</p>
-          <h2 class="vsl-bf-h2" id="bf-doorbusters-heading">First 50 through the door <em class="vsl-bf-em--yellow">take something home</em></h2>
-          <p class="vsl-bf-sub">Each day of the sale, the first 50 guests to check in at Houston and the first 50 at Dallas walk out with a gift. Get here early — when they're gone, they're gone.</p>
-        </div>
-        <ul class="vsl-bf-days">
-          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">01</span><span class="vsl-bf-day__label">Friday<small>Nov 27</small></span><h3 data-vsl-bf-gift="fri">Pair of racing gloves</h3><p>Grip up for Black Friday and every race after it.</p></li>
-          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">02</span><span class="vsl-bf-day__label">Saturday<small>Nov 28</small></span><h3 data-vsl-bf-gift="sat">Velocity keychain</h3><p>Small, loud, and good for finding your keys after the podium.</p></li>
-          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">03</span><span class="vsl-bf-day__label">Sunday<small>Nov 29</small></span><h3 data-vsl-bf-gift="sun">Free appetizer</h3><p>Fuel up on us before the green flag drops.</p></li>
-          <li class="vsl-bf-day"><span class="vsl-bf-day__count" aria-hidden="true">04</span><span class="vsl-bf-day__label">Monday<small>Nov 30</small></span><h3 data-vsl-bf-gift="mon">Free drink</h3><p>Cyber Monday, Velocity style. Cheers to the last lap of the sale.</p></li>
-        </ul>
-        <p class="vsl-bf-fine" style="grid-column: 1 / -1;">One per guest, per day, while supplies last. Just ask at the front desk when you check in.</p>
       </div>
     </section>
 
@@ -808,7 +653,7 @@
           <div class="vsl-bf-faq__list" data-vsl-bf-faq>
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a0" id="bf-faq-q0"><span class="vsl-bf-faq__label">Which races earn a free one?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-bf-faq__panel" id="bf-faq-a0" role="region" aria-labelledby="bf-faq-q0" hidden><p>Any Quick Race or Double Race that starts Nov 27, 28, 29, or 30, at Houston or Dallas. Every one of them — book one that weekend or book five. Each paid seat earns its own free race. 2-seater sims, member-credit seats, discount codes, and Family Grid don't.</p></div>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a0" role="region" aria-labelledby="bf-faq-q0" hidden><p>Any Quick Race or Double Race that starts Nov 27, 28, 29, or 30, at Houston or Dallas. Every one of them — book one that weekend or book five. Each paid seat earns its own free race. 2-seater sims, member-credit seats, and discount codes don't.</p></div>
             </div>
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a1" id="bf-faq-q1"><span class="vsl-bf-faq__label">Do walk-in bookings get the free race?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
@@ -826,17 +671,11 @@
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a4" id="bf-faq-q4"><span class="vsl-bf-faq__label">Can I use the free race on a different sim or at the other lounge?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
               <div class="vsl-bf-faq__panel" id="bf-faq-a4" role="region" aria-labelledby="bf-faq-q4" hidden><p>Your free race matches what you paid for: same race type (Quick or Double), same sim type, same lounge. It's good through Dec 31, 2027.</p></div>
             </div>
-            <div class="vsl-bf-faq__item">
-              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a5" id="bf-faq-q5"><span class="vsl-bf-faq__label">Does the Family Grid earn free races too?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-bf-faq__panel" id="bf-faq-a5" role="region" aria-labelledby="bf-faq-q5" hidden><p>No — the Family Grid is already the discount. Member-credit and discount-code bookings don't earn free races either.</p></div>
-            </div>
-            <div class="vsl-bf-faq__item">
-              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a6" id="bf-faq-q6"><span class="vsl-bf-faq__label">How does the free month actually work?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-bf-faq__panel" id="bf-faq-a6" role="region" aria-labelledby="bf-faq-q6" hidden><p>Join at <a data-vsl-bf-link="signup" href="https://members.velocitysimlounge.com/signup">members.velocitysimlounge.com</a> between Nov 27 and 30. Checkout shows $0 due today, your credits land immediately, and your card is charged the regular price at your renewal a month later. Cancel before then and you pay nothing.</p></div>
-            </div>
+
+
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a7" id="bf-faq-q7"><span class="vsl-bf-faq__label">I'm already a member. What's in it for me?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-bf-faq__panel" id="bf-faq-a7" role="region" aria-labelledby="bf-faq-q7" hidden><p>The free race is on every full-price Quick or Double you race Nov 27 – 30. The Family Grid is open to everyone, and the doorbusters go to whoever walks in first — members included.</p></div>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a7" role="region" aria-labelledby="bf-faq-q7" hidden><p>The free race is on every full-price Quick or Double you race Nov 27 – 30. Book it the same way everyone else does.</p></div>
             </div>
           </div>
         </div>
@@ -868,14 +707,12 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Which races earn a free one?", "acceptedAnswer": { "@type": "Answer", "text": "Any Quick Race or Double Race that starts Nov 27, 28, 29, or 30, at Houston or Dallas. Every one of them — book one that weekend or book five. Each paid seat earns its own free race. 2-seater sims, member-credit seats, discount codes, and Family Grid don't." } },
+    { "@type": "Question", "name": "Which races earn a free one?", "acceptedAnswer": { "@type": "Answer", "text": "Any Quick Race or Double Race that starts Nov 27, 28, 29, or 30, at Houston or Dallas. Every one of them — book one that weekend or book five. Each paid seat earns its own free race. 2-seater sims, member-credit seats, and discount codes don't." } },
     { "@type": "Question", "name": "Do walk-in bookings get the free race?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Any Quick or Double Race that runs Nov 27–30 at full price counts, whether you booked it ahead online or walked in. Make sure the email on your booking is right — that's where your free-race link goes." } },
     { "@type": "Question", "name": "When does the free-race email arrive?", "acceptedAnswer": { "@type": "Answer", "text": "Usually within 10–15 minutes of your booking confirming. Check spam first, then use the lookup page at members.velocitysimlounge.com/bogo/lookup to have it re-sent." } },
     { "@type": "Question", "name": "I booked 3 seats. How many free races do I get?", "acceptedAnswer": { "@type": "Answer", "text": "Three — one for every paid seat — in a single email. You book them together for one time slot." } },
     { "@type": "Question", "name": "Can I use the free race on a different sim or at the other lounge?", "acceptedAnswer": { "@type": "Answer", "text": "Your free race matches what you paid for: same race type, same sim type, same lounge. Good through Dec 31, 2027." } },
-    { "@type": "Question", "name": "Does the Family Grid earn free races too?", "acceptedAnswer": { "@type": "Answer", "text": "No — the Family Grid is already the discount. Member-credit and discount-code bookings don't earn free races either." } },
-    { "@type": "Question", "name": "How does the free month actually work?", "acceptedAnswer": { "@type": "Answer", "text": "Join at members.velocitysimlounge.com between Nov 27 and 30. Checkout shows $0 due today, credits land immediately, and your card is charged the regular price at your renewal a month later. Cancel before then and you pay nothing." } },
-    { "@type": "Question", "name": "I'm already a member. What's in it for me?", "acceptedAnswer": { "@type": "Answer", "text": "The free race is on every full-price Quick or Double you race Nov 27–30. The Family Grid is open to everyone, and the doorbusters go to whoever walks in first — members included." } }
+    { "@type": "Question", "name": "I'm already a member. What's in it for me?", "acceptedAnswer": { "@type": "Answer", "text": "The free race is on every full-price Quick or Double you race Nov 27–30. Book it the same way everyone else does." } }
   ]
 }
 </script>
