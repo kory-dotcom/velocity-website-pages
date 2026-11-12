@@ -134,6 +134,64 @@
     // "velocitysimracinglounge.tripleseat.com" intentionally omitted if staging differs
   };
 
+  /* Velocity Bookings trial, staging only.
+     On the Houston Book Now page the races open the practice lounge of the new
+     booking system instead of Roverd. Nothing booked there is real: test cards
+     only, and no seat at a real lounge is held. The page module itself keeps its
+     Roverd links, so what gets pasted into the live site is unchanged. Party
+     packs are not sold in the practice lounge yet and stay on Roverd.
+     To go back to Roverd on staging, empty PRACTICE_BOOKING_PAGES. */
+  var PRACTICE_BOOKING_BASE = "https://members.velocitysimlounge.com/reserve/test/";
+  var PRACTICE_BOOKING_PAGES = { "book-now": true };
+  var PRACTICE_BOOKING_RACES = {
+    "/book/grand-prix-approx-30-mins/1": "quick-race",
+    "/book/double-race-approx-60-mins/2": "double-race",
+    "/book/610-challenge/15": "610-challenge",
+    "/book/monthly-hot-lap-challenge-30-mins/6": "leaderboard-challenge",
+    "/book/2-seater-quick-race/22": "2-seater-quick-race",
+    "/book/2-seater-double-race/23": "2-seater-double-race"
+  };
+
+  function practiceBookingHref(href) {
+    if (typeof href !== "string" || href.indexOf("book.velocitysimlounge.com") === -1) return null;
+    var parsed;
+    try {
+      parsed = new URL(href);
+    } catch (e) {
+      return null;
+    }
+    if (parsed.hostname !== "book.velocitysimlounge.com") return null;
+    var race = PRACTICE_BOOKING_RACES[parsed.pathname.replace(/\/+$/, "")];
+    return race ? PRACTICE_BOOKING_BASE + race : null;
+  }
+
+  /* Runs on the module before it is mounted, so the page's own script reads the
+     practice links from data-cfg when it sets up its cards. */
+  function applyPracticeBooking(scope, moduleKey) {
+    if (!scope || !PRACTICE_BOOKING_PAGES[moduleKey]) return;
+    scope.querySelectorAll("a[href]").forEach(function (a) {
+      var practice = practiceBookingHref(a.getAttribute("href"));
+      if (practice) a.setAttribute("href", practice);
+    });
+    scope.querySelectorAll("[data-cfg]").forEach(function (el) {
+      var cfg;
+      try {
+        cfg = JSON.parse(el.getAttribute("data-cfg"));
+      } catch (e) {
+        return;
+      }
+      if (!cfg || !cfg.links) return;
+      var changed = false;
+      Object.keys(cfg.links).forEach(function (key) {
+        var practice = practiceBookingHref(cfg.links[key]);
+        if (!practice) return;
+        cfg.links[key] = practice;
+        changed = true;
+      });
+      if (changed) el.setAttribute("data-cfg", JSON.stringify(cfg));
+    });
+  }
+
   /** Browser tab: 'Page name' : Velocity Staging Site */
   function replicaDocumentTitle(pageTitle) {
     return "'" + pageTitle + "' : Velocity Staging Site";
@@ -877,6 +935,7 @@
       el.setAttribute("data-vsl-module-asset", moduleKey);
       document.head.appendChild(el);
     });
+    applyPracticeBooking(wrapper, moduleKey);
     pageRoot.innerHTML = wrapper.innerHTML;
   }
 
