@@ -192,6 +192,118 @@
     });
   }
 
+  /* "Already booked?", staging only, on the same page as the practice lounge.
+     The customer types the email they booked with; the Velocity API emails them a
+     private link to their bookings (members.velocitysimlounge.com/my-bookings).
+     The answer is the same whether or not anything is booked under the email.
+     Like the practice links, this is added here and not in the page module, so
+     what gets pasted into the live site is unchanged. */
+  var MY_BOOKINGS_API = "https://members.velocitysimlounge.com/api/my-bookings/link";
+  var MY_BOOKINGS_CSS =
+    ".vsl-mb{margin:14px auto 22px;max-width:560px;text-align:center;font-family:var(--f1,inherit);color:#fff}" +
+    ".vsl-mb__toggle{appearance:none;border:0;background:none;padding:6px 8px;color:rgba(255,255,255,.78);font:inherit;font-size:.95rem;cursor:pointer}" +
+    ".vsl-mb__toggle b{color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px}" +
+    ".vsl-mb__toggle:hover b,.vsl-mb__toggle:focus-visible b{color:var(--c2,#fdc70c)}" +
+    ".vsl-mb__form{margin-top:10px;padding:16px;border:1px solid rgba(104,124,238,.4);border-radius:12px;background:rgba(41,56,147,.28);text-align:left}" +
+    ".vsl-mb__form[hidden]{display:none}" +
+    ".vsl-mb__form label{display:block;margin:0 0 6px;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.8)}" +
+    ".vsl-mb__row{display:flex;gap:10px}" +
+    ".vsl-mb__row input{flex:1 1 auto;min-width:0;height:46px;padding:0 14px;border:1px solid rgba(255,255,255,.3);border-radius:8px;background:rgba(8,12,34,.6);color:#fff;font:inherit;font-size:1rem}" +
+    ".vsl-mb__row input::placeholder{color:rgba(255,255,255,.45)}" +
+    ".vsl-mb__row input:focus{outline:2px solid var(--c2,#fdc70c);outline-offset:1px}" +
+    ".vsl-mb__send{flex:0 0 auto;height:46px;padding:0 18px;border:0;border-radius:8px;background:var(--c2,#ee265f);color:#fff;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer;white-space:nowrap}" +
+    ".vsl-mb__send:hover{filter:brightness(1.12)}" +
+    ".vsl-mb__send[disabled]{opacity:.6;cursor:default}" +
+    ".vsl-mb__note{margin:10px 0 0;font-size:.88rem;line-height:1.45;color:rgba(255,255,255,.78)}" +
+    ".vsl-mb__note[data-tone='ok']{color:#3ddc97}" +
+    ".vsl-mb__note[data-tone='bad']{color:#ff9aa0}" +
+    "@media (max-width:520px){.vsl-mb__row{flex-direction:column}.vsl-mb__send{width:100%}}";
+  var MY_BOOKINGS_HTML =
+    '<div class="vsl-mb" data-vsl-my-bookings>' +
+    '<button type="button" class="vsl-mb__toggle" aria-expanded="false" aria-controls="vsl-mb-form">Already booked? <b>Find my booking</b></button>' +
+    '<form class="vsl-mb__form" id="vsl-mb-form" hidden novalidate>' +
+    '<label for="vsl-mb-email">Email you booked with</label>' +
+    '<div class="vsl-mb__row">' +
+    '<input id="vsl-mb-email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>' +
+    '<button type="submit" class="vsl-mb__send">Email me my link</button>' +
+    "</div>" +
+    '<p class="vsl-mb__note" role="status" aria-live="polite">We will email you a private link to your bookings. No account, no password.</p>' +
+    "</form>" +
+    "</div>";
+
+  /* Runs on the module before it is mounted, like applyPracticeBooking. */
+  function applyMyBookings(scope, moduleKey) {
+    if (!scope || !PRACTICE_BOOKING_PAGES[moduleKey]) return;
+    var heading = scope.querySelector(".vsl-bn-heading-row");
+    if (!heading || scope.querySelector("[data-vsl-my-bookings]")) return;
+    heading.insertAdjacentHTML("afterend", MY_BOOKINGS_HTML);
+    var style = document.createElement("style");
+    style.setAttribute("data-vsl-module-asset", moduleKey);
+    style.textContent = MY_BOOKINGS_CSS;
+    document.head.appendChild(style);
+  }
+
+  function myBookingsNote(form, text, tone) {
+    var note = form.querySelector(".vsl-mb__note");
+    if (!note) return;
+    note.textContent = text;
+    if (tone) note.setAttribute("data-tone", tone);
+    else note.removeAttribute("data-tone");
+  }
+
+  /* The module is mounted as HTML, so the form is listened for on the document. */
+  document.addEventListener("click", function (event) {
+    var toggle = event.target && event.target.closest ? event.target.closest(".vsl-mb__toggle") : null;
+    if (!toggle) return;
+    var form = toggle.parentNode.querySelector(".vsl-mb__form");
+    if (!form) return;
+    form.hidden = !form.hidden;
+    toggle.setAttribute("aria-expanded", form.hidden ? "false" : "true");
+    if (!form.hidden) {
+      var input = form.querySelector("input");
+      if (input) input.focus();
+    }
+  });
+  document.addEventListener("submit", function (event) {
+    var form = event.target;
+    if (!form || !form.classList || !form.classList.contains("vsl-mb__form")) return;
+    event.preventDefault();
+    var input = form.querySelector("input");
+    var send = form.querySelector(".vsl-mb__send");
+    var email = input ? input.value.trim() : "";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      myBookingsNote(form, "Enter the email address you booked with.", "bad");
+      return;
+    }
+    if (send.disabled) return;
+    send.disabled = true;
+    send.textContent = "Sending…";
+    fetch(MY_BOOKINGS_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email })
+    })
+      .then(function (res) {
+        if (res.ok) {
+          myBookingsNote(form, "Check your email. If there is a booking under " + email + ", a link to it is on its way. It can take a minute, and it sometimes lands in spam.", "ok");
+          input.value = "";
+        } else if (res.status === 429) {
+          myBookingsNote(form, "Too many tries. Wait a minute, then try again.", "bad");
+        } else if (res.status === 400) {
+          myBookingsNote(form, "Enter the email address you booked with.", "bad");
+        } else {
+          myBookingsNote(form, "We could not send the link just now. Try again in a minute.", "bad");
+        }
+      })
+      .catch(function () {
+        myBookingsNote(form, "We could not reach Velocity. Check your connection and try again.", "bad");
+      })
+      .then(function () {
+        send.disabled = false;
+        send.textContent = "Email me my link";
+      });
+  });
+
   /** Browser tab: 'Page name' : Velocity Staging Site */
   function replicaDocumentTitle(pageTitle) {
     return "'" + pageTitle + "' : Velocity Staging Site";
@@ -936,6 +1048,7 @@
       document.head.appendChild(el);
     });
     applyPracticeBooking(wrapper, moduleKey);
+    applyMyBookings(wrapper, moduleKey);
     pageRoot.innerHTML = wrapper.innerHTML;
   }
 
