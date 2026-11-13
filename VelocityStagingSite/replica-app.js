@@ -192,6 +192,474 @@
     });
   }
 
+  /* Sign in, staging only (the Velocity Bookings trial).
+     A small account button in the header. Signed out, it asks for an email and the
+     Velocity API emails a sign-in link: no password. Opening the link comes back to
+     this page with a key after the # in the address. The key is kept on this browser
+     and only reads: first name, membership level and bookings (no card or contact
+     details). Signed in, the panel shows what is coming up, with the group page and
+     calendar, and "Book again" for what was booked before. Members sign in the same
+     way, and the link signs them in to their member account on the members site too.
+     Added here and not in velocity-navbar.html, so what gets pasted into the live
+     site is unchanged. */
+  var ACCOUNT_BASE = "https://members.velocitysimlounge.com";
+  var ACCOUNT_STORE = "vsl-signin";
+  try {
+    /* A developer's machine can point at a local members app. */
+    if (/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) && window.localStorage.getItem("vsl-members-base")) {
+      ACCOUNT_BASE = window.localStorage.getItem("vsl-members-base");
+    }
+  } catch (e) {}
+  var ACCOUNT_CSS =
+    ".vsl-acct{position:relative;flex:0 0 auto;display:flex;align-items:stretch;font-family:var(--font-body,'Archivo Narrow',sans-serif)}" +
+    ".vsl-acct--open{z-index:calc(var(--z-overlay,10000) + 1)}" +
+    ".vsl-acct__btn{appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;gap:8px;min-height:calc(44px * var(--vsl-ui-scale,1));padding:0 calc(12px * var(--vsl-ui-scale,1));border:1px solid rgba(234,234,234,.14);border-radius:calc(8px * var(--vsl-ui-scale,1));background:rgba(41,56,147,.35);color:#fff;cursor:pointer;font-family:var(--font-head,'Khand',sans-serif);font-size:calc(14px * var(--vsl-ui-scale,1));font-weight:700;font-style:italic;letter-spacing:.08em;text-transform:uppercase;line-height:1;white-space:nowrap;transition:background .2s ease,border-color .2s ease}" +
+    ".vsl-acct__btn:hover,.vsl-acct--open .vsl-acct__btn{background:rgba(41,56,147,.55);border-color:rgba(234,234,234,.26)}" +
+    ".vsl-acct__btn:focus-visible{outline:2px solid var(--yellow,#fdc70c);outline-offset:2px}" +
+    ".vsl-acct__btn svg{width:18px;height:18px;flex:0 0 auto;stroke:var(--yellow,#fdc70c);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}" +
+    ".vsl-acct__avatar{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--magenta,#ee265f);color:#fff;font-style:normal;font-size:14px;letter-spacing:0;box-shadow:0 0 0 2px rgba(255,255,255,.18)}" +
+    ".vsl-acct__name{max-width:9ch;overflow:hidden;text-overflow:ellipsis}" +
+    ".vsl-acct__panel{position:absolute;top:calc(100% + 8px);right:0;width:min(380px,calc(100vw - 24px));max-height:min(620px,calc(100vh - 120px));overflow:auto;overscroll-behavior:contain;background:var(--navy-deep,#191840);border:1px solid rgba(104,124,238,.3);border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.2);color:#fff;text-align:left;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s ease,transform .2s ease,visibility .2s ease}" +
+    ".vsl-acct--open .vsl-acct__panel{opacity:1;visibility:visible;transform:none}" +
+    ".vsl-acct__pad{padding:18px}" +
+    ".vsl-acct__title{margin:0 0 6px;font-family:var(--font-head,'Khand',sans-serif);font-size:24px;font-weight:700;font-style:italic;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}" +
+    ".vsl-acct__text{margin:0 0 14px;font-size:15px;line-height:1.45;color:rgba(234,234,234,.82)}" +
+    ".vsl-acct__text b{color:#fff}" +
+    ".vsl-acct__form label{display:block;margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(234,234,234,.75)}" +
+    ".vsl-acct__form input{display:block;width:100%;box-sizing:border-box;height:46px;margin:0 0 10px;padding:0 14px;border:1px solid rgba(255,255,255,.28);border-radius:8px;background:rgba(8,12,34,.6);color:#fff;font:inherit;font-size:16px}" +
+    ".vsl-acct__form input::placeholder{color:rgba(255,255,255,.4)}" +
+    ".vsl-acct__form input:focus{outline:2px solid var(--yellow,#fdc70c);outline-offset:1px}" +
+    ".vsl-acct__send{appearance:none;display:block;width:100%;height:46px;border:0;border-radius:8px;background:var(--magenta,#ee265f);color:#fff;cursor:pointer;font-family:var(--font-head,'Khand',sans-serif);font-size:17px;font-weight:700;font-style:italic;letter-spacing:.08em;text-transform:uppercase}" +
+    ".vsl-acct__send:hover{filter:brightness(1.1)}" +
+    ".vsl-acct__send[disabled]{opacity:.6;cursor:default}" +
+    ".vsl-acct__note{margin:10px 0 0;font-size:13.5px;line-height:1.4;color:rgba(234,234,234,.7)}" +
+    ".vsl-acct__note[data-tone='bad']{color:#ff9aa0}" +
+    ".vsl-acct__link{appearance:none;border:0;background:none;padding:0;color:#fff;font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}" +
+    ".vsl-acct__link:hover{color:var(--yellow,#fdc70c)}" +
+    ".vsl-acct__head{padding:16px 18px 14px;border-bottom:1px solid rgba(234,234,234,.1);background:linear-gradient(135deg,rgba(41,56,147,.5),rgba(41,56,147,.12))}" +
+    ".vsl-acct__hello{font-family:var(--font-head,'Khand',sans-serif);font-size:24px;font-weight:700;font-style:italic;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}" +
+    ".vsl-acct__sub{margin-top:4px;font-size:14px;color:rgba(234,234,234,.78)}" +
+    ".vsl-acct__member{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;background:rgba(253,199,12,.14);border:1px solid rgba(253,199,12,.45);color:var(--yellow,#fdc70c);font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}" +
+    ".vsl-acct__member i{font-style:normal;font-weight:600;color:rgba(255,255,255,.85);text-transform:none;letter-spacing:0}" +
+    ".vsl-acct__sec{padding:14px 18px 4px}" +
+    ".vsl-acct__sec h4{margin:0 0 8px;font-family:var(--font-body,'Archivo Narrow',sans-serif);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(234,234,234,.6)}" +
+    ".vsl-acct__bk{margin:0 0 10px;padding:12px;border:1px solid rgba(234,234,234,.12);border-radius:10px;background:rgba(255,255,255,.04)}" +
+    ".vsl-acct__bk[data-off='1']{opacity:.6}" +
+    ".vsl-acct__bk-top{display:flex;align-items:center;justify-content:space-between;gap:10px}" +
+    ".vsl-acct__bk-top strong{font-family:var(--font-head,'Khand',sans-serif);font-size:19px;font-weight:700;font-style:italic;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}" +
+    ".vsl-acct__chip{flex:0 0 auto;padding:3px 8px;border-radius:999px;background:rgba(61,220,151,.14);border:1px solid rgba(61,220,151,.4);color:#3ddc97;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}" +
+    ".vsl-acct__chip[data-tone='off']{background:rgba(255,154,160,.1);border-color:rgba(255,154,160,.4);color:#ff9aa0}" +
+    ".vsl-acct__bk-when{margin-top:4px;font-size:14.5px;line-height:1.35;color:rgba(234,234,234,.85)}" +
+    ".vsl-acct__bk-acts{display:flex;gap:8px;margin-top:10px}" +
+    ".vsl-acct__act{flex:1 1 0;display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 10px;border:1px solid rgba(234,234,234,.2);border-radius:7px;background:rgba(255,255,255,.05);color:#fff;font-family:var(--font-head,'Khand',sans-serif);font-size:13.5px;font-weight:700;font-style:italic;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;white-space:nowrap}" +
+    ".vsl-acct__act:hover{background:rgba(41,56,147,.5);border-color:rgba(234,234,234,.34);color:#fff}" +
+    ".vsl-acct__act--go{border-color:transparent;background:var(--magenta,#ee265f)}" +
+    ".vsl-acct__act--go:hover{background:var(--magenta,#ee265f);filter:brightness(1.1)}" +
+    ".vsl-acct__again{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px;padding:10px 12px;border:1px solid rgba(234,234,234,.12);border-radius:10px;background:rgba(255,255,255,.04)}" +
+    ".vsl-acct__again div{min-width:0}" +
+    ".vsl-acct__again strong{display:block;font-size:15.5px;font-weight:700;line-height:1.25}" +
+    ".vsl-acct__again span{display:block;font-size:13px;color:rgba(234,234,234,.65)}" +
+    ".vsl-acct__again .vsl-acct__act{flex:0 0 auto}" +
+    ".vsl-acct__empty{margin:0 0 12px;font-size:14.5px;line-height:1.45;color:rgba(234,234,234,.78)}" +
+    ".vsl-acct__foot{display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin-top:8px;padding:12px 18px 14px;border-top:1px solid rgba(234,234,234,.1)}" +
+    ".vsl-acct__foot a{color:#fff;font-size:14px;text-decoration:underline;text-underline-offset:3px}" +
+    ".vsl-acct__foot a:hover{color:var(--yellow,#fdc70c)}" +
+    ".vsl-acct__foot .vsl-acct__link{margin-left:auto;color:rgba(234,234,234,.7)}" +
+    /* The header is tight: the name only shows where there is room for it. */
+    "@media (max-width:1759px){.vsl-acct__btn .vsl-acct__name{display:none}.vsl-acct__btn{padding:0 calc(11px * var(--vsl-ui-scale,1))}}" +
+    /* ...and on laptop-width screens the menu links sit a little closer together, which pays for the
+       button's width, so Book Now is no further right than it was without it. */
+    "@media (min-width:1025px) and (max-width:1759px){.vsl-navbar .vsl-navbar__menu .vsl-navbar__link{padding-left:calc(11px * var(--vsl-ui-scale,1));padding-right:calc(11px * var(--vsl-ui-scale,1))}.vsl-navbar .vsl-navbar__menu .vsl-navbar__link.vsl-navbar__race-trigger{padding-left:calc(16px * var(--vsl-ui-scale,1));padding-right:calc(16px * var(--vsl-ui-scale,1))}}" +
+    "@media (max-width:1024px){.vsl-acct{margin-left:8px;align-items:center}.vsl-acct__btn{min-height:44px;padding:0 11px;border-radius:8px}.vsl-acct__panel{position:fixed;top:var(--vsl-acct-top,70px);left:12px;right:12px;width:auto;max-height:calc(100vh - var(--vsl-acct-top,70px) - var(--vsl-acct-gap,16px))}}" +
+    "@media (prefers-reduced-motion:reduce){.vsl-acct__panel,.vsl-acct__btn{transition:none}}";
+
+  var account = { key: null, name: null, me: null, loadedAt: 0, loading: false, failed: false, sentTo: null, fresh: false, el: null };
+
+  function accountEsc(text) {
+    return String(text == null ? "" : text).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function accountRead() {
+    try {
+      var saved = JSON.parse(window.localStorage.getItem(ACCOUNT_STORE) || "null");
+      if (saved && /^[A-Za-z0-9_-]{32}$/.test(saved.key)) {
+        account.key = saved.key;
+        account.name = typeof saved.name === "string" ? saved.name : null;
+        return;
+      }
+    } catch (e) {}
+    account.key = null;
+    account.name = null;
+  }
+
+  function accountSave() {
+    try {
+      if (account.key) window.localStorage.setItem(ACCOUNT_STORE, JSON.stringify({ key: account.key, name: account.name }));
+      else window.localStorage.removeItem(ACCOUNT_STORE);
+    } catch (e) {}
+  }
+
+  /* Back from the emailed link: the key is after the # and is taken out of the address at once. */
+  function accountTakeKey() {
+    var found = /(?:^#|&)vb-signin=([A-Za-z0-9_-]{32})(?:&|$)/.exec(window.location.hash || "");
+    if (!found) return false;
+    account.key = found[1];
+    account.name = null;
+    account.me = null;
+    account.fresh = true;
+    accountSave();
+    try {
+      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+    } catch (e) {}
+    return true;
+  }
+
+  function accountWhen(b) {
+    try {
+      var at = new Date(b.starts_at);
+      var day = new Intl.DateTimeFormat("en-US", { timeZone: b.timezone, weekday: "short", month: "short", day: "numeric" }).format(at);
+      var time = new Intl.DateTimeFormat("en-US", { timeZone: b.timezone, hour: "numeric", minute: "2-digit" }).format(at);
+      return { day: day, time: time };
+    } catch (e) {
+      return { day: "", time: "" };
+    }
+  }
+
+  function accountDrivers(n) {
+    return n === 1 ? "1 driver" : n + " drivers";
+  }
+
+  function accountButtonHtml() {
+    if (account.key) {
+      var name = (account.me && account.me.first_name) || account.name || "";
+      var initial = name ? name.charAt(0).toUpperCase() : "";
+      return (
+        '<span class="vsl-acct__avatar" aria-hidden="true">' +
+        (initial ? accountEsc(initial) : '<svg viewBox="0 0 24 24" style="stroke:#fff;width:15px;height:15px"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>') +
+        "</span>" +
+        '<span class="vsl-acct__name">' + accountEsc(name || "Account") + "</span>"
+      );
+    }
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg><span class="vsl-acct__name">Sign in</span>';
+  }
+
+  function accountSignedOutHtml() {
+    if (account.sentTo) {
+      return (
+        '<div class="vsl-acct__pad">' +
+        '<p class="vsl-acct__title">Check your email</p>' +
+        '<p class="vsl-acct__text">If <b>' + accountEsc(account.sentTo) + "</b> has booked with us or is a member, a sign-in link is on its way. Open it on this device and you will land back here, signed in.</p>" +
+        '<p class="vsl-acct__text">It can take a minute, and it sometimes lands in spam. New here? Just book: your booking will be waiting here next time.</p>' +
+        '<button type="button" class="vsl-acct__link" data-acct="retry">Use a different email</button>' +
+        "</div>"
+      );
+    }
+    return (
+      '<form class="vsl-acct__form vsl-acct__pad" novalidate>' +
+      '<p class="vsl-acct__title">Sign in</p>' +
+      '<p class="vsl-acct__text">See what you have booked, open your group page and book the same again in a few taps. Members, use your member email.</p>' +
+      '<label for="vsl-acct-email">Email</label>' +
+      '<input id="vsl-acct-email" type="email" inputmode="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>' +
+      '<button type="submit" class="vsl-acct__send">Email me a sign-in link</button>' +
+      '<p class="vsl-acct__note" role="status" aria-live="polite">No password. We email you a link that signs you in.</p>' +
+      "</form>"
+    );
+  }
+
+  function accountBookingHtml(b, index) {
+    var when = accountWhen(b);
+    var chip = b.cancelled ? '<span class="vsl-acct__chip" data-tone="off">Cancelled</span>' : b.when ? '<span class="vsl-acct__chip">' + accountEsc(b.when) + "</span>" : "";
+    var acts =
+      !b.cancelled && (b.group_url || b.calendar_url)
+        ? '<div class="vsl-acct__bk-acts">' +
+          (b.group_url ? '<a class="vsl-acct__act' + (index === 0 ? " vsl-acct__act--go" : "") + '" href="' + accountEsc(b.group_url) + '" title="Your drivers, their waivers, and the track and car">Group page</a>' : "") +
+          (b.calendar_url ? '<a class="vsl-acct__act" href="' + accountEsc(b.calendar_url) + '">Add to calendar</a>' : "") +
+          "</div>"
+        : "";
+    return (
+      '<div class="vsl-acct__bk"' + (b.cancelled ? ' data-off="1"' : "") + ">" +
+      '<div class="vsl-acct__bk-top"><strong>' + accountEsc(b.activity) + "</strong>" + chip + "</div>" +
+      '<div class="vsl-acct__bk-when">' + accountEsc(when.day) + " at " + accountEsc(when.time) + " · " + accountEsc(accountDrivers(b.drivers)) + " · " + accountEsc(b.lounge) + "</div>" +
+      acts +
+      "</div>"
+    );
+  }
+
+  /* What can be booked again: the latest of each race-and-tickets combination, most recent first. */
+  function accountAgainList(me) {
+    var seen = {};
+    var out = [];
+    var all = (me.past || []).concat(me.upcoming || []);
+    all.forEach(function (b) {
+      if (!b.again || b.cancelled || out.length >= 3) return;
+      var sig = b.again.url + "|" + b.again.tickets.map(function (t) { return t.option_id + ":" + t.quantity; }).join(",");
+      if (seen[sig]) return;
+      seen[sig] = true;
+      out.push(b);
+    });
+    return out;
+  }
+
+  function accountSignedInHtml() {
+    var me = account.me;
+    var name = (me && me.first_name) || account.name;
+    var head =
+      '<div class="vsl-acct__head">' +
+      '<div class="vsl-acct__hello">' + (name ? "Hi, " + accountEsc(name) : "You are signed in") + "</div>" +
+      (account.fresh ? '<div class="vsl-acct__sub">You are signed in on this browser.</div>' : "") +
+      (me && me.member
+        ? '<div class="vsl-acct__member">' + accountEsc(me.member.tier) + " member" + (me.member.discount_pct > 0 ? " <i>" + accountEsc(me.member.discount_pct) + "% off your own ticket</i>" : "") + "</div>"
+        : "") +
+      "</div>";
+    if (!me) {
+      return (
+        head +
+        '<div class="vsl-acct__sec"><p class="vsl-acct__empty">' +
+        (account.failed ? 'We could not load your bookings. <button type="button" class="vsl-acct__link" data-acct="reload">Try again</button>' : "Loading your bookings…") +
+        "</p></div>" +
+        '<div class="vsl-acct__foot"><button type="button" class="vsl-acct__link" data-acct="out">Sign out</button></div>'
+      );
+    }
+    var upcoming = me.upcoming || [];
+    var again = accountAgainList(me);
+    var coming =
+      '<div class="vsl-acct__sec"><h4>Coming up</h4>' +
+      (upcoming.length
+        ? upcoming.slice(0, 4).map(accountBookingHtml).join("") + (upcoming.length > 4 ? '<p class="vsl-acct__empty">And ' + (upcoming.length - 4) + " more in all my bookings.</p>" : "")
+        : '<p class="vsl-acct__empty">Nothing booked right now.' + (again.length ? "" : " Pick a race and it will show up here.") + "</p>") +
+      "</div>";
+    var rebook = again.length
+      ? '<div class="vsl-acct__sec"><h4>Book again</h4>' +
+        again
+          .map(function (b) {
+            var when = accountWhen(b);
+            return (
+              '<div class="vsl-acct__again"><div><strong>' + accountEsc(b.activity) + " · " + accountEsc(accountDrivers(b.drivers)) + "</strong>" +
+              "<span>" + (b.when ? "Booked for " : "Last raced ") + accountEsc(when.day) + " · " + accountEsc(b.lounge) + "</span></div>" +
+              '<a class="vsl-acct__act vsl-acct__act--go" href="' + accountEsc(b.again.url + "#again=" + encodeURIComponent(b.id) + "&k=" + account.key) + '" title="Same race and tickets. You pick the new day and time.">Book again</a></div>'
+            );
+          })
+          .join("") +
+        "</div>"
+      : "";
+    var foot =
+      '<div class="vsl-acct__foot">' +
+      (me.bookings_url && (upcoming.length || (me.past || []).length) ? '<a href="' + accountEsc(me.bookings_url) + '">All my bookings</a>' : "") +
+      (me.account_url ? '<a href="' + accountEsc(me.account_url) + '">' + (me.member ? "Member dashboard" : "My account") + "</a>" : "") +
+      '<button type="button" class="vsl-acct__link" data-acct="out">Sign out</button>' +
+      "</div>";
+    return head + coming + rebook + foot;
+  }
+
+  function accountRender() {
+    var el = account.el;
+    if (!el) return;
+    var btn = el.querySelector(".vsl-acct__btn");
+    var panel = el.querySelector(".vsl-acct__panel");
+    btn.innerHTML = accountButtonHtml();
+    btn.setAttribute("data-in", account.key ? "1" : "0");
+    btn.setAttribute("aria-label", account.key ? "Your bookings" : "Sign in");
+    /* Typing is not thrown away by a redraw of the same form. */
+    var typed = panel.querySelector("#vsl-acct-email");
+    var keep = typed ? typed.value : "";
+    panel.innerHTML = account.key ? accountSignedInHtml() : accountSignedOutHtml();
+    var input = panel.querySelector("#vsl-acct-email");
+    if (input && keep) input.value = keep;
+  }
+
+  function accountOpen(open) {
+    var el = account.el;
+    if (!el) return;
+    var btn = el.querySelector(".vsl-acct__btn");
+    el.classList.toggle("vsl-acct--open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open) return;
+    /* On a phone the panel hangs under the header, edge to edge. */
+    el.style.setProperty("--vsl-acct-top", Math.round(btn.getBoundingClientRect().bottom + 8) + "px");
+    /* ...and stops above the Book Now bar pinned to the bottom of the screen. */
+    var pinned = document.querySelector(".vsl-navbar__mcta");
+    var below = pinned ? pinned.getBoundingClientRect() : null;
+    el.style.setProperty("--vsl-acct-gap", (below && below.height && below.top < window.innerHeight ? Math.round(window.innerHeight - below.top + 10) : 16) + "px");
+    if (account.key) {
+      if (!account.loading && Date.now() - account.loadedAt > 60000) accountLoad();
+    } else {
+      var input = el.querySelector("#vsl-acct-email");
+      if (input && window.matchMedia && window.matchMedia("(pointer:fine)").matches) input.focus();
+    }
+  }
+
+  function accountLoad() {
+    if (!account.key || account.loading) return;
+    var key = account.key;
+    account.loading = true;
+    account.failed = false;
+    fetch(ACCOUNT_BASE + "/api/my-bookings/me", { headers: { Authorization: "Bearer " + key }, cache: "no-store" })
+      .then(function (res) {
+        if (res.status === 401) return { signedOut: true };
+        if (!res.ok) throw new Error("status " + res.status);
+        return res.json();
+      })
+      .then(function (out) {
+        if (account.key !== key) return;
+        if (out.signedOut) {
+          /* The key ran out, or was signed out somewhere else. */
+          account.key = null;
+          account.name = null;
+          account.me = null;
+          accountSave();
+        } else {
+          account.me = out;
+          account.loadedAt = Date.now();
+          if (out.first_name && out.first_name !== account.name) {
+            account.name = out.first_name;
+            accountSave();
+          }
+        }
+      })
+      .catch(function () {
+        if (account.key === key) account.failed = true;
+      })
+      .then(function () {
+        account.loading = false;
+        accountRender();
+      });
+  }
+
+  function accountNote(form, text, tone) {
+    var note = form.querySelector(".vsl-acct__note");
+    if (!note) return;
+    note.textContent = text;
+    if (tone) note.setAttribute("data-tone", tone);
+    else note.removeAttribute("data-tone");
+  }
+
+  function accountSend(form) {
+    var input = form.querySelector("input");
+    var send = form.querySelector(".vsl-acct__send");
+    var email = input ? input.value.trim() : "";
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      accountNote(form, "Enter your email address.", "bad");
+      return;
+    }
+    if (send.disabled) return;
+    send.disabled = true;
+    send.textContent = "Sending…";
+    fetch(ACCOUNT_BASE + "/api/my-bookings/link", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      /* The page to come back to once the link is opened. */
+      body: JSON.stringify({ email: email, back: window.location.href.split("#")[0] })
+    })
+      .then(function (res) {
+        if (res.ok) {
+          account.sentTo = email;
+          accountRender();
+          return;
+        }
+        send.disabled = false;
+        send.textContent = "Email me a sign-in link";
+        if (res.status === 429) accountNote(form, "Too many tries. Wait a minute, then try again.", "bad");
+        else if (res.status === 400) accountNote(form, "Enter your email address.", "bad");
+        else accountNote(form, "We could not send the link just now. Try again in a minute.", "bad");
+      })
+      .catch(function () {
+        send.disabled = false;
+        send.textContent = "Email me a sign-in link";
+        accountNote(form, "We could not reach Velocity. Check your connection and try again.", "bad");
+      });
+  }
+
+  function accountSignOut() {
+    var key = account.key;
+    account.key = null;
+    account.name = null;
+    account.me = null;
+    account.fresh = false;
+    account.sentTo = null;
+    accountSave();
+    accountRender();
+    /* The key stops working, not just forgotten here. */
+    if (key) fetch(ACCOUNT_BASE + "/api/my-bookings/me", { method: "DELETE", headers: { Authorization: "Bearer " + key }, keepalive: true }).catch(function () {});
+  }
+
+  /* Puts the button in the header, between the lounge picker and Book Now. Safe to call again. */
+  function mountAccount(root) {
+    var actions = root && root.querySelector ? root.querySelector(".vsl-navbar__actions") : null;
+    if (!actions || actions.querySelector(".vsl-acct")) return;
+    if (!document.querySelector("style[data-vsl-acct]")) {
+      var style = document.createElement("style");
+      style.setAttribute("data-vsl-acct", "");
+      /* Under .vsl-navbar, so the header's own reset (".vsl-navbar *") does not undo the spacing. */
+      style.textContent = ACCOUNT_CSS.replace(/(^|[{},])(\.vsl-acct)/g, "$1.vsl-navbar $2");
+      document.head.appendChild(style);
+    }
+    var el = document.createElement("div");
+    el.className = "vsl-acct";
+    el.innerHTML =
+      '<button type="button" class="vsl-acct__btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="vsl-acct-panel"></button>' +
+      '<div class="vsl-acct__panel" id="vsl-acct-panel" role="dialog" aria-label="Your Velocity bookings"></div>';
+    var cta = actions.querySelector(".vsl-navbar__cta");
+    if (cta && cta.parentNode === actions) actions.insertBefore(el, cta);
+    else actions.appendChild(el);
+    account.el = el;
+
+    /* A click in the panel can redraw it, taking the clicked thing off the page: noted here, so it is not read as a click outside. */
+    var clickedInside = false;
+    el.addEventListener("click", function (event) {
+      var target = event.target;
+      clickedInside = true;
+      if (target.closest(".vsl-acct__btn")) {
+        accountOpen(!el.classList.contains("vsl-acct--open"));
+        return;
+      }
+      var act = target.closest("[data-acct]");
+      if (!act) return;
+      var what = act.getAttribute("data-acct");
+      if (what === "out") accountSignOut();
+      else if (what === "reload") accountLoad();
+      else if (what === "retry") {
+        account.sentTo = null;
+        accountRender();
+        var input = el.querySelector("#vsl-acct-email");
+        if (input) input.focus();
+      }
+    });
+    el.addEventListener("submit", function (event) {
+      if (!event.target.classList.contains("vsl-acct__form")) return;
+      event.preventDefault();
+      accountSend(event.target);
+    });
+    document.addEventListener("click", function (event) {
+      var inside = clickedInside || el.contains(event.target);
+      clickedInside = false;
+      if (el.classList.contains("vsl-acct--open") && !inside) accountOpen(false);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape" || !el.classList.contains("vsl-acct--open")) return;
+      accountOpen(false);
+      el.querySelector(".vsl-acct__btn").focus();
+    });
+    /* Signed in (or out) in another tab: the link from the email often opens in a new one. */
+    window.addEventListener("storage", function (event) {
+      if (event.key !== ACCOUNT_STORE) return;
+      accountRead();
+      account.me = null;
+      account.loadedAt = 0;
+      account.sentTo = null;
+      accountRender();
+      if (account.key) accountLoad();
+    });
+
+    accountRead();
+    var arrived = accountTakeKey();
+    accountRender();
+    if (account.key) accountLoad();
+    /* Straight back from the email: show them they are in. */
+    if (arrived) accountOpen(true);
+  }
+
   /** Browser tab: 'Page name' : Velocity Staging Site */
   function replicaDocumentTitle(pageTitle) {
     return "'" + pageTitle + "' : Velocity Staging Site";
@@ -1118,6 +1586,7 @@
       }
       setLocationFromQuery();
       if (window.VSL_LOCATION) syncNavbarLocationDom(window.VSL_LOCATION.readLocation());
+      mountAccount(navbarRoot);
       return loadModulePage();
     })
     .then(loadFooter)
