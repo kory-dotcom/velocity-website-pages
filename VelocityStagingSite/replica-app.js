@@ -266,7 +266,10 @@
     ".vsl-acct__foot a:hover{color:var(--yellow,#fdc70c)}" +
     ".vsl-acct__foot .vsl-acct__link{margin-left:auto;color:rgba(234,234,234,.7)}" +
     /* The header is tight: the name only shows where there is room for it. */
-    "@media (max-width:1679px){.vsl-acct__btn .vsl-acct__name{display:none}.vsl-acct__btn{padding:0 calc(13px * var(--vsl-ui-scale,1))}}" +
+    "@media (max-width:1759px){.vsl-acct__btn .vsl-acct__name{display:none}.vsl-acct__btn{padding:0 calc(11px * var(--vsl-ui-scale,1))}}" +
+    /* ...and on laptop-width screens the menu links sit a little closer together, which pays for the
+       button's width, so Book Now is no further right than it was without it. */
+    "@media (min-width:1025px) and (max-width:1759px){.vsl-navbar .vsl-navbar__menu .vsl-navbar__link{padding-left:calc(11px * var(--vsl-ui-scale,1));padding-right:calc(11px * var(--vsl-ui-scale,1))}.vsl-navbar .vsl-navbar__menu .vsl-navbar__link.vsl-navbar__race-trigger{padding-left:calc(16px * var(--vsl-ui-scale,1));padding-right:calc(16px * var(--vsl-ui-scale,1))}}" +
     "@media (max-width:1024px){.vsl-acct{margin-left:8px;align-items:center}.vsl-acct__btn{min-height:44px;padding:0 11px;border-radius:8px}.vsl-acct__panel{position:fixed;top:var(--vsl-acct-top,70px);left:12px;right:12px;width:auto;max-height:calc(100vh - var(--vsl-acct-top,70px) - var(--vsl-acct-gap,16px))}}" +
     "@media (prefers-reduced-motion:reduce){.vsl-acct__panel,.vsl-acct__btn{transition:none}}";
 
