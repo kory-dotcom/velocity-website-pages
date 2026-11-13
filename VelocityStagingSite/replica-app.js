@@ -142,6 +142,12 @@
      packs are not sold in the practice lounge yet and stay on Roverd.
      To go back to Roverd on staging, empty PRACTICE_BOOKING_PAGES. */
   var PRACTICE_BOOKING_BASE = "https://members.velocitysimlounge.com/reserve/test/";
+  try {
+    /* A developer's machine can point at a local booking app (the same setting the sign-in uses). */
+    if (/^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) && window.localStorage.getItem("vsl-members-base")) {
+      PRACTICE_BOOKING_BASE = window.localStorage.getItem("vsl-members-base").replace(/\/+$/, "") + "/reserve/test/";
+    }
+  } catch (e) {}
   var PRACTICE_BOOKING_PAGES = { "book-now": true };
   var PRACTICE_BOOKING_RACES = {
     "/book/grand-prix-approx-30-mins/1": "quick-race",
@@ -191,6 +197,139 @@
       if (changed) el.setAttribute("data-cfg", JSON.stringify(cfg));
     });
   }
+
+  /* The booking window, staging only (the Velocity Bookings trial).
+     A race from the new booking system opens full screen, not in the small window:
+     the Book Now page's own window, stretched to the whole screen. Roverd pages
+     (party packs) open as they always have.
+
+     One bar, not two. The window has a title bar ("Quick Race — Houston" and the
+     close button) and the booking page names the race again right below it. So the
+     two agree on one: the booking page says hello, this window answers, the page
+     shows a single bar of its own (the race, how long, from how much, and Close)
+     and says so, and only then is the window's title bar hidden. Close on the page
+     closes this window.
+
+     The title bar is the customer's way out, so it is never hidden on a guess: it
+     shows while a page loads and comes back unless the page that loaded says it has
+     a bar. A booking page that does not know how to answer keeps the title bar.
+
+     Added here and not in the Book Now module, so what gets pasted into the live
+     site is unchanged. */
+  var BOOKING_TALK = "velocity-booking";
+  var BOOKING_ANSWER_MS = 1200;
+  var BOOKING_ORIGIN = "";
+  try {
+    BOOKING_ORIGIN = new URL(PRACTICE_BOOKING_BASE).origin;
+  } catch (e) {}
+  var BOOKING_CSS =
+    "#vsl-bn-modal.vsl-bn-modal.vsl-bn-modal--full{padding:0}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__window{width:100%;max-width:none;height:100%;max-height:none;border-radius:0;box-shadow:none;background:#0b1736;animation-name:vsl-modal-fadeIn}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__header{min-height:64px;background:#0b1736;border-bottom:1px solid rgba(255,255,255,.15);box-sizing:border-box}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__body,#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__loader{background:#0b1736}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__spinner{border-color:rgba(255,255,255,.16);border-top-color:#EE265F}" +
+    /* The spinner stays until the page and the window have agreed on the bar, so nothing jumps in view. */
+    "#vsl-bn-modal.vsl-bn-modal--wait .vsl-bn-modal__loader{opacity:1!important;pointer-events:auto!important}" +
+    "#vsl-bn-modal.vsl-bn-modal--bar .vsl-bn-modal__header{display:none}";
+  var bookingTimer = 0;
+
+  function bookingWindow() {
+    return document.getElementById("vsl-bn-modal");
+  }
+
+  function bookingFrame() {
+    return document.getElementById("vsl-bn-modal-iframe");
+  }
+
+  /* The window is showing a page of the new booking system (any of its pages, not only a race). */
+  function isPracticeBooking(frame) {
+    var src = frame ? frame.getAttribute("src") : "";
+    return !!src && !!BOOKING_ORIGIN && src.indexOf(BOOKING_ORIGIN + "/reserve/") === 0;
+  }
+
+  function bookingSay(word) {
+    var frame = bookingFrame();
+    if (!frame || !frame.contentWindow || !BOOKING_ORIGIN) return;
+    try {
+      frame.contentWindow.postMessage({ type: BOOKING_TALK, say: word }, BOOKING_ORIGIN);
+    } catch (e) {}
+  }
+
+  /* The page has a bar of its own (true), or the window keeps its title bar (false). */
+  function bookingSettle(pageHasBar) {
+    window.clearTimeout(bookingTimer);
+    bookingTimer = 0;
+    var modal = bookingWindow();
+    if (!modal) return;
+    var header = modal.querySelector(".vsl-bn-modal__header");
+    var focusWasInTitleBar = pageHasBar && header && header.contains(document.activeElement);
+    modal.classList.toggle("vsl-bn-modal--bar", pageHasBar);
+    modal.classList.remove("vsl-bn-modal--wait");
+    if (focusWasInTitleBar) {
+      try {
+        bookingFrame().focus();
+      } catch (e) {}
+    }
+  }
+
+  /* The window was pointed at a page: opened on a race, or emptied when it closed. */
+  function bookingOpened(frame) {
+    var modal = bookingWindow();
+    if (!modal) return;
+    var ours = isPracticeBooking(frame);
+    window.clearTimeout(bookingTimer);
+    bookingTimer = 0;
+    modal.classList.toggle("vsl-bn-modal--full", ours);
+    modal.classList.toggle("vsl-bn-modal--wait", ours);
+    modal.classList.remove("vsl-bn-modal--bar");
+  }
+
+  /* A page finished loading in the window. Ask it; with no answer the title bar is back. */
+  function bookingLoaded(frame) {
+    if (!isPracticeBooking(frame)) return;
+    window.clearTimeout(bookingTimer);
+    bookingTimer = window.setTimeout(function () {
+      bookingSettle(false);
+    }, BOOKING_ANSWER_MS);
+    bookingSay("host");
+  }
+
+  (function setUpBookingWindow() {
+    if (!BOOKING_ORIGIN || typeof MutationObserver !== "function") return;
+    var style = document.createElement("style");
+    style.setAttribute("data-vsl-booking-window", "");
+    style.textContent = BOOKING_CSS;
+    document.head.appendChild(style);
+
+    new MutationObserver(function (records) {
+      records.forEach(function (record) {
+        if (record.target && record.target.id === "vsl-bn-modal-iframe") bookingOpened(record.target);
+      });
+    }).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ["src"] });
+
+    /* "load" does not bubble, but it can be caught on the way down. */
+    document.addEventListener(
+      "load",
+      function (e) {
+        if (e.target && e.target.id === "vsl-bn-modal-iframe") bookingLoaded(e.target);
+      },
+      true
+    );
+
+    window.addEventListener("message", function (e) {
+      var frame = bookingFrame();
+      if (!frame || e.source !== frame.contentWindow || e.origin !== BOOKING_ORIGIN) return;
+      if (!e.data || e.data.type !== BOOKING_TALK || !isPracticeBooking(frame)) return;
+      if (e.data.say === "hello") bookingSay("host");
+      else if (e.data.say === "bar") bookingSettle(true);
+      else if (e.data.say === "nobar") bookingSettle(false);
+      else if (e.data.say === "close") {
+        var modal = bookingWindow();
+        var close = modal && modal.querySelector(".vsl-bn-modal__close");
+        if (close) close.click();
+      }
+    });
+  })();
 
   /* Sign in, staging only (the Velocity Bookings trial).
      A small account button in the header. Signed out, it asks for an email and the
