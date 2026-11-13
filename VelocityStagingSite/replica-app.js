@@ -415,6 +415,15 @@
        button's width, so Book Now is no further right than it was without it. */
     "@media (min-width:1025px) and (max-width:1759px){.vsl-navbar .vsl-navbar__menu .vsl-navbar__link{padding-left:calc(11px * var(--vsl-ui-scale,1));padding-right:calc(11px * var(--vsl-ui-scale,1))}.vsl-navbar .vsl-navbar__menu .vsl-navbar__link.vsl-navbar__race-trigger{padding-left:calc(16px * var(--vsl-ui-scale,1));padding-right:calc(16px * var(--vsl-ui-scale,1))}}" +
     "@media (max-width:1024px){.vsl-acct{margin-left:8px;align-items:center}.vsl-acct__btn{min-height:44px;padding:0 11px;border-radius:8px}.vsl-acct__panel{position:fixed;top:var(--vsl-acct-top,70px);left:12px;right:12px;width:auto;max-height:calc(100vh - var(--vsl-acct-top,70px) - var(--vsl-acct-gap,16px))}}" +
+    /* On a phone the button shares one row with the logo and the location pill. The pill keeps
+       one fixed width (its widest lounge and day), and that width was worked out for a row
+       without this button, so it could slide left over the logo. Here it is never wider than
+       the room it has (text that still does not fit ends in "…"), and on a narrow phone the
+       row is packed a little tighter so the day's hours fit in full. The panel that opens
+       under the pill hangs from the pill's right edge, so it is kept on the screen too. */
+    "@media (max-width:1024px){.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill{max-width:100%}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill[data-vsl-size-locked]{width:min(var(--vsl-loc-pill-w),100%)!important;min-width:0!important;max-width:100%!important;flex-shrink:1}}" +
+    "@media (max-width:480px){.vsl-acct{margin-left:0}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-panel{width:min(300px,calc(100vw - 76px))}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill{padding-left:8px;padding-right:8px;gap:6px}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill-body{gap:8px}}" +
+    "@media (max-width:380px){.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill{padding-left:6px;padding-right:6px;gap:5px}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill-body{gap:6px}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill-city{letter-spacing:.06em}.vsl-navbar .vsl-navbar__actions .vsl-navbar__loc-pill-hours{letter-spacing:.02em}}" +
     "@media (prefers-reduced-motion:reduce){.vsl-acct__panel,.vsl-acct__btn{transition:none}}";
 
   var account = { key: null, name: null, me: null, loadedAt: 0, loading: false, failed: false, sentTo: null, fresh: false, el: null };
