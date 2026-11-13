@@ -199,11 +199,12 @@
   }
 
   /* The booking window, staging only (the Velocity Bookings trial).
-     A race from the new booking system opens full screen, not in the small window:
-     the Book Now page's own window, stretched to the whole screen. Roverd pages
-     (party packs) open as they always have.
+     Whatever is booked from the Book Now page opens full screen, not in the small
+     window: the page's own window, stretched to the whole screen. That goes for the
+     races on the new booking system and for what is still on Roverd (party packs,
+     Dallas), which keeps the window's title bar and its light background.
 
-     One bar, not two. The window has a title bar ("Quick Race — Houston" and the
+     One bar, not two, for the new booking system. The window has a title bar ("Quick Race — Houston" and the
      close button) and the booking page names the race again right below it. So the
      two agree on one: the booking page says hello, this window answers, the page
      shows a single bar of its own (the race, how long, from how much, and Close)
@@ -224,10 +225,12 @@
   } catch (e) {}
   var BOOKING_CSS =
     "#vsl-bn-modal.vsl-bn-modal.vsl-bn-modal--full{padding:0}" +
-    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__window{width:100%;max-width:none;height:100%;max-height:none;border-radius:0;box-shadow:none;background:#0b1736;animation-name:vsl-modal-fadeIn}" +
-    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__header{min-height:64px;background:#0b1736;border-bottom:1px solid rgba(255,255,255,.15);box-sizing:border-box}" +
-    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__body,#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__loader{background:#0b1736}" +
-    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__spinner{border-color:rgba(255,255,255,.16);border-top-color:#EE265F}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__window{width:100%;max-width:none;height:100%;max-height:none;border-radius:0;box-shadow:none;animation-name:vsl-modal-fadeIn}" +
+    "#vsl-bn-modal.vsl-bn-modal--full .vsl-bn-modal__header{min-height:64px;box-sizing:border-box}" +
+    /* The new booking pages are navy: the window matches while they load, so nothing flashes white. */
+    "#vsl-bn-modal.vsl-bn-modal--ours .vsl-bn-modal__window,#vsl-bn-modal.vsl-bn-modal--ours .vsl-bn-modal__body,#vsl-bn-modal.vsl-bn-modal--ours .vsl-bn-modal__loader{background:#0b1736}" +
+    "#vsl-bn-modal.vsl-bn-modal--ours .vsl-bn-modal__header{background:#0b1736;border-bottom:1px solid rgba(255,255,255,.15)}" +
+    "#vsl-bn-modal.vsl-bn-modal--ours .vsl-bn-modal__spinner{border-color:rgba(255,255,255,.16);border-top-color:#EE265F}" +
     /* The spinner stays until the page and the window have agreed on the bar, so nothing jumps in view. */
     "#vsl-bn-modal.vsl-bn-modal--wait .vsl-bn-modal__loader{opacity:1!important;pointer-events:auto!important}" +
     "#vsl-bn-modal.vsl-bn-modal--bar .vsl-bn-modal__header{display:none}";
@@ -276,10 +279,12 @@
   function bookingOpened(frame) {
     var modal = bookingWindow();
     if (!modal) return;
+    var src = frame.getAttribute("src") || "";
     var ours = isPracticeBooking(frame);
     window.clearTimeout(bookingTimer);
     bookingTimer = 0;
-    modal.classList.toggle("vsl-bn-modal--full", ours);
+    modal.classList.toggle("vsl-bn-modal--full", src !== "" && src !== "about:blank");
+    modal.classList.toggle("vsl-bn-modal--ours", ours);
     modal.classList.toggle("vsl-bn-modal--wait", ours);
     modal.classList.remove("vsl-bn-modal--bar");
   }
