@@ -226,6 +226,14 @@
      For that, the window's page is swapped in place rather than loaded as a new
      page, so the page inside adds nothing to the history by itself.
 
+     A member stays signed in. A member who signs in on the booking page is
+     remembered by this website the same way as one who used the sign-in button in
+     the header: the booking page hands over the same kind of key (it only reads; see
+     "Sign in" below), and the header shows them signed in. Whenever a booking is
+     opened, the key is handed to the booking page, which gives the member their
+     rate with no sign-in. "Not you? Sign out" on the booking page signs out here too.
+     The key is only ever sent to the booking system's own address.
+
      Added here and not in the Book Now module, so what gets pasted into the live
      site is unchanged. */
   var BOOKING_TALK = "velocity-booking";
@@ -278,6 +286,39 @@
     try {
       frame.contentWindow.postMessage(message, BOOKING_ORIGIN);
     } catch (e) {}
+  }
+
+  /* Tells the booking page who this website remembers (see bookingMember), if anyone. */
+  function bookingSayMember() {
+    var frame = bookingFrame();
+    /* (The header may not have read it yet.) */
+    if (!account.key) accountRead();
+    if (!account.key || !frame || !frame.contentWindow || !BOOKING_ORIGIN || !isPracticeBooking(frame)) return;
+    try {
+      frame.contentWindow.postMessage({ type: BOOKING_TALK, say: "member", key: account.key }, BOOKING_ORIGIN);
+    } catch (e) {}
+  }
+
+  /* The booking page's word on who is booking: a member signed in there (their key, to keep), or signed out (null). */
+  function bookingMember(data) {
+    if (data.key === null) {
+      if (account.key) accountSignOut();
+      return;
+    }
+    if (typeof data.key !== "string" || !/^[A-Za-z0-9_-]{32}$/.test(data.key) || data.key === account.key) return;
+    var old = account.key;
+    account.key = data.key;
+    account.name = typeof data.name === "string" && data.name ? data.name.slice(0, 40) : null;
+    account.me = null;
+    account.loadedAt = 0;
+    account.loading = false;
+    account.sentTo = null;
+    account.fresh = false;
+    accountSave();
+    accountRender();
+    accountLoad();
+    /* Whoever was signed in here before is signed out: their key stops working. */
+    if (old) fetch(ACCOUNT_BASE + "/api/my-bookings/me", { method: "DELETE", headers: { Authorization: "Bearer " + old }, keepalive: true }).catch(function () {});
   }
 
   /* The place in the history is a step of an open booking (1, 2 or 3), or it is not (0). */
@@ -423,6 +464,7 @@
       bookingSettle(false);
     }, BOOKING_ANSWER_MS);
     bookingSay("host");
+    bookingSayMember();
   }
 
   (function setUpBookingWindow() {
@@ -497,7 +539,10 @@
       var frame = bookingFrame();
       if (!frame || e.source !== frame.contentWindow || e.origin !== BOOKING_ORIGIN) return;
       if (!e.data || e.data.type !== BOOKING_TALK || !isPracticeBooking(frame)) return;
-      if (e.data.say === "hello") bookingSay("host");
+      if (e.data.say === "hello") {
+        bookingSay("host");
+        bookingSayMember();
+      } else if (e.data.say === "member") bookingMember(e.data);
       else if (e.data.say === "bar") bookingSettle(true);
       else if (e.data.say === "nobar") bookingSettle(false);
       else if (e.data.say === "step") bookingMoved(e.data.step);
