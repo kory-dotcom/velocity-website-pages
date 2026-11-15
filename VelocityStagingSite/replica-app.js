@@ -215,9 +215,21 @@
      shows while a page loads and comes back unless the page that loaded says it has
      a bar. A booking page that does not know how to answer keeps the title bar.
 
+     The browser's back and forward buttons work in the booking window too. This
+     page keeps the history: opening a booking is one step in it, and each step of
+     the booking (date, tickets, payment) is one more, which the booking page
+     reports as the customer moves. Back goes to the step before, and from the
+     first step it closes the window and leaves the website where it was. Forward
+     opens it again. Closing the window any other way steps back out of all of it,
+     so nothing of the booking is left behind in the history. A refresh with the
+     window open opens it again, and the booking page picks up where it was.
+     For that, the window's page is swapped in place rather than loaded as a new
+     page, so the page inside adds nothing to the history by itself.
+
      Added here and not in the Book Now module, so what gets pasted into the live
      site is unchanged. */
   var BOOKING_TALK = "velocity-booking";
+  var BOOKING_KEPT = "vsl-booking-open";
   var BOOKING_ANSWER_MS = 1200;
   var BOOKING_ORIGIN = "";
   try {
@@ -235,6 +247,11 @@
     "#vsl-bn-modal.vsl-bn-modal--wait .vsl-bn-modal__loader{opacity:1!important;pointer-events:auto!important}" +
     "#vsl-bn-modal.vsl-bn-modal--bar .vsl-bn-modal__header{display:none}";
   var bookingTimer = 0;
+  /* What the window was last pointed at, and whether that is a booking of ours that is open now. */
+  var bookingShown = "";
+  var bookingOpen = false;
+  /* Moves through the history that this script made itself: nothing to do when they land. */
+  var bookingOwnMoves = 0;
 
   function bookingWindow() {
     return document.getElementById("vsl-bn-modal");
@@ -245,17 +262,126 @@
   }
 
   /* The window is showing a page of the new booking system (any of its pages, not only a race). */
-  function isPracticeBooking(frame) {
-    var src = frame ? frame.getAttribute("src") : "";
+  function isPracticeUrl(src) {
     return !!src && !!BOOKING_ORIGIN && src.indexOf(BOOKING_ORIGIN + "/reserve/") === 0;
   }
 
-  function bookingSay(word) {
+  function isPracticeBooking(frame) {
+    return !!frame && isPracticeUrl(bookingShown);
+  }
+
+  function bookingSay(word, step) {
     var frame = bookingFrame();
     if (!frame || !frame.contentWindow || !BOOKING_ORIGIN) return;
+    var message = { type: BOOKING_TALK, say: word };
+    if (step) message.step = step;
     try {
-      frame.contentWindow.postMessage({ type: BOOKING_TALK, say: word }, BOOKING_ORIGIN);
+      frame.contentWindow.postMessage(message, BOOKING_ORIGIN);
     } catch (e) {}
+  }
+
+  /* The place in the history is a step of an open booking (1, 2 or 3), or it is not (0). */
+  function bookingStep(state) {
+    return state && state.vslBooking ? state.step || 1 : 0;
+  }
+
+  function bookingPush(step) {
+    try {
+      history.pushState({ p: (history.state && history.state.p) || pageKey, vslBooking: true, step: step }, "");
+    } catch (e) {}
+  }
+
+  /* Our own move back through the history. */
+  function bookingBack(by) {
+    if (by <= 0) return;
+    bookingOwnMoves++;
+    try {
+      history.go(-by);
+    } catch (e) {
+      bookingOwnMoves--;
+    }
+  }
+
+  function bookingKept() {
+    try {
+      var kept = JSON.parse(window.sessionStorage.getItem(BOOKING_KEPT) || "null");
+      return kept && isPracticeUrl(kept.url) ? kept : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* A booking of ours was opened in the window: it becomes a step in the history. */
+  function bookingStarted(url) {
+    bookingOpen = true;
+    if (!bookingStep(history.state)) bookingPush(1);
+    try {
+      window.sessionStorage.setItem(BOOKING_KEPT, JSON.stringify({ url: url }));
+    } catch (e) {}
+  }
+
+  /* The window was closed (its button, Escape, or the booking page's own Close): step back out of the booking. */
+  function bookingEnded() {
+    if (!bookingOpen) return;
+    bookingOpen = false;
+    /* (Which booking it was stays noted, so Forward can open it again.) */
+    bookingBack(bookingStep(history.state));
+  }
+
+  /* The booking page moved to a step: the history follows it. */
+  function bookingMoved(step) {
+    if (!bookingOpen || !(step === 1 || step === 2 || step === 3)) return;
+    var at = bookingStep(history.state);
+    if (!at) return;
+    for (var k = at + 1; k <= step; k++) bookingPush(k);
+    if (step < at) bookingBack(at - step);
+  }
+
+  function bookingShut() {
+    var modal = bookingWindow();
+    var close = modal && modal.querySelector(".vsl-bn-modal__close");
+    if (close) close.click();
+  }
+
+  /* Opens the booking the history (or a refresh) says is open, by pressing its card on the page.
+     The page may still be loading, so it looks for the card for a few seconds. */
+  function bookingReopen() {
+    var kept = bookingKept();
+    var tries = 0;
+    function giveUp() {
+      bookingBack(bookingStep(history.state));
+    }
+    if (!kept) return giveUp();
+    (function look() {
+      if (bookingOpen || !bookingStep(history.state)) return;
+      var card = null;
+      /* (The Book Now module marks its cards as it takes charge of them: before that, a press would do nothing.) */
+      document.querySelectorAll('a.vsl-bn-card[href][data-elementor-open-lightbox="no"]').forEach(function (a) {
+        if (!card && a.getAttribute("href") === kept.url) card = a;
+      });
+      if (card) card.click();
+      if (bookingOpen) return;
+      if (++tries > 40) return giveUp();
+      window.setTimeout(look, 200);
+    })();
+  }
+
+  /* The window's page is set by the Book Now module ("iframe.src = ..."). The page is swapped in place
+     instead, so opening and closing the window are not steps in the history by themselves. */
+  function bookingPoint(frame, url, set) {
+    bookingShown = url;
+    var ours = isPracticeUrl(url);
+    var swapped = false;
+    if (frame.contentWindow) {
+      try {
+        frame.contentWindow.location.replace(url);
+        swapped = true;
+      } catch (e) {}
+    }
+    if (swapped) bookingOpened(frame);
+    else set.call(frame, url);
+    if (ours) bookingStarted(url);
+    else bookingEnded();
   }
 
   /* The page has a bar of its own (true), or the window keeps its title bar (false). */
@@ -279,7 +405,7 @@
   function bookingOpened(frame) {
     var modal = bookingWindow();
     if (!modal) return;
-    var src = frame.getAttribute("src") || "";
+    var src = bookingShown;
     var ours = isPracticeBooking(frame);
     window.clearTimeout(bookingTimer);
     bookingTimer = 0;
@@ -306,11 +432,57 @@
     style.textContent = BOOKING_CSS;
     document.head.appendChild(style);
 
+    /* Where the window is pointed goes through here first (see bookingPoint). */
+    var srcProp = null;
+    try {
+      srcProp = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, "src");
+    } catch (e) {}
+    var pointed = !!(srcProp && srcProp.get && srcProp.set && srcProp.configurable);
+    if (pointed) {
+      Object.defineProperty(HTMLIFrameElement.prototype, "src", {
+        configurable: true,
+        enumerable: srcProp.enumerable,
+        get: function () {
+          return srcProp.get.call(this);
+        },
+        set: function (value) {
+          if (this.id !== "vsl-bn-modal-iframe") return srcProp.set.call(this, value);
+          bookingPoint(this, String(value), srcProp.set);
+        }
+      });
+    }
+
     new MutationObserver(function (records) {
       records.forEach(function (record) {
-        if (record.target && record.target.id === "vsl-bn-modal-iframe") bookingOpened(record.target);
+        if (!record.target || record.target.id !== "vsl-bn-modal-iframe") return;
+        /* A browser that would not let the page be swapped in place: the window still works, without the history. */
+        if (!pointed) bookingShown = record.target.getAttribute("src") || "";
+        bookingOpened(record.target);
       });
     }).observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ["src"] });
+
+    /* Back and forward. Set up before the website's own, so a move inside a booking is not taken for a
+       move to another page of the website. */
+    window.addEventListener("popstate", function (evt) {
+      var step = bookingStep(evt.state);
+      if (bookingOwnMoves > 0) {
+        bookingOwnMoves--;
+        evt.stopImmediatePropagation();
+        /* Closed, and still on a step of the booking (the page inside had added to the history): keep going. */
+        if (!bookingOpen && step) bookingBack(1);
+        return;
+      }
+      if (bookingOpen) {
+        evt.stopImmediatePropagation();
+        if (step) bookingSay("step", step);
+        else bookingShut();
+        return;
+      }
+      if (step && evt.state.p === pageKey) {
+        evt.stopImmediatePropagation();
+        bookingReopen();
+      }
+    });
 
     /* "load" does not bubble, but it can be caught on the way down. */
     document.addEventListener(
@@ -328,11 +500,8 @@
       if (e.data.say === "hello") bookingSay("host");
       else if (e.data.say === "bar") bookingSettle(true);
       else if (e.data.say === "nobar") bookingSettle(false);
-      else if (e.data.say === "close") {
-        var modal = bookingWindow();
-        var close = modal && modal.querySelector(".vsl-bn-modal__close");
-        if (close) close.click();
-      }
+      else if (e.data.say === "step") bookingMoved(e.data.step);
+      else if (e.data.say === "close") bookingShut();
     });
   })();
 
@@ -1749,7 +1918,10 @@
       }
       routerReady = true;
       try {
-        history.replaceState({ p: pageKey }, "", window.location.pathname + window.location.search + window.location.hash);
+        /* A refresh with a booking open keeps its place in the history, and the booking is opened again. */
+        var bookingWasOpen = bookingStep(history.state) > 0 && history.state.p === pageKey;
+        if (bookingWasOpen) bookingReopen();
+        else history.replaceState({ p: pageKey }, "", window.location.pathname + window.location.search + window.location.hash);
       } catch (e) {}
       return loadPromoBanner();
     })
