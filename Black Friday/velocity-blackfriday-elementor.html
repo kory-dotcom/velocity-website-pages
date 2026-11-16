@@ -11,19 +11,22 @@
   JSON-LD in this widget covers the FAQ. Do not add a second FAQ schema in Yoast.
 
   ── Lounge behaviour ──
-  Opens on the navbar city (readStoredLocation / localStorage vslPreferredLocation). Each booker (hero, how-it-works, doorbusters, closing)
+  Opens on the navbar city (readStoredLocation / localStorage vslPreferredLocation). Each booker (hero, how-it-works, closing)
   has a Houston / Dallas toggle and shows that lounge's Quick Race and Double Race buttons. Both lounges' buttons are in the
   markup with fixed hrefs; the toggle only shows one set. Once the visitor uses the toggle, navbar changes no longer move it.
   This page never writes vslPreferredLocation or notifies the navbar (shared-location-pages rule).
 
   ── Page order (built to get the booking) ──
-  Hero (offer in the h1, booker, large ticket) → how it works + booker → doorbusters + booker → resend-my-email card → FAQ → closing booker.
+  Hero (offer in the h1, booker, large ticket) → how it works + booker → doorbusters (walk-in note, no booker) → resend-my-email card → FAQ → closing booker.
   The hero is content height, not a full screen. "Resend my email" (links.lookup) sits in the hero, step 02, its own card, and the FAQ.
 
   ── Doorbusters (#bf-doorbusters) ──
-  Sunday Nov 29: the first 50 bookings get one free drink of their choice, alcohol included (21+ with ID).
-  Monday Nov 30: the first 50 bookings get a free pepperoni or cheese flatbread.
-  The copy lives in four places: the hero doorbuster block (under the race buttons), the two day cards, the FAQ item (plus its JSON-LD twin), and the closing line.
+  Walk-ins only: a race booked at the front desk on the day, for that day. Online bookings do not count (they still earn the free race).
+  The first 50 walk-ins at each lounge each day, one per booking. The Control Panel lists them (Members → Black Friday).
+  Sunday Nov 29: the first 50 walk-ins get one free drink of their choice, alcohol included (21+ with ID).
+  Monday Nov 30: the first 50 walk-ins get a free pepperoni or cheese flatbread.
+  The copy lives in five places: the hero doorbuster block (under the race buttons), the two day cards, the walk-in note under them, the FAQ item (plus its JSON-LD twin), and the closing line.
+  The section has no booker on purpose: booking online does not earn a doorbuster.
 
   ── Dates / copy knobs ──
   data-vsl-config on .vsl-blackfriday: sale dates and booking links.
@@ -495,7 +498,7 @@
   .vsl-bf-bundle__price small { font-family: var(--font-fine); font-style: normal; font-weight: 500; font-size: 0.8rem; color: var(--mist); letter-spacing: 0.02em; }
   .vsl-bf-bundle p { font-size: 1rem; line-height: 1.5; color: var(--circuit-white); }
 
-  /* ── DOORBUSTERS (Sunday drink, Monday flatbread: first 50 bookings each day) ── */
+  /* ── DOORBUSTERS (Sunday drink, Monday flatbread: first 50 walk-ins each day) ── */
   .vsl-blackfriday .vsl-bf-door .vsl-bf-h2 { max-width: 26ch; }
   .vsl-bf-days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
   .vsl-bf-day {
@@ -585,6 +588,7 @@
   .vsl-blackfriday .vsl-bf-hero__doors { margin-top: 1rem; }
   .vsl-blackfriday .vsl-bf-hero__resend { margin-top: 0.85rem; }
   .vsl-blackfriday .vsl-bf-bookpanel__p { margin-top: 0.5rem; }
+  .vsl-blackfriday .vsl-bf-bookpanel--walkin .vsl-bf-bookpanel__p { margin-top: 0; }
   .vsl-blackfriday .vsl-bf-step__more { margin-top: 4px; }
   .vsl-blackfriday .vsl-bf-tier__was { margin-top: 12px; }
   .vsl-blackfriday .vsl-bf-tier__price { margin-top: 4px; }
@@ -690,7 +694,7 @@
             <a class="vsl-bf-doors vsl-bf-hero__doors" href="#bf-doorbusters">
               <span class="vsl-bf-doors__head">
                 <span class="vsl-bf-pill vsl-bf-pill--yellow">Doorbusters</span>
-                <span class="vsl-bf-doors__who">First 50 bookings each day</span>
+                <span class="vsl-bf-doors__who">First 50 walk-ins each day</span>
                 <span class="vsl-bf-doors__more">Details <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
               </span>
               <span class="vsl-bf-doors__items">
@@ -811,60 +815,41 @@
     <section class="vsl-bf-section vsl-bf-section--gradient vsl-bf-door" id="bf-doorbusters" aria-labelledby="bf-doorbusters-heading">
       <div class="vsl-bf-wrap vsl-bf-grid">
         <div class="vsl-bf-head">
-          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Doorbusters · First 50 bookings each day</p>
+          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Doorbusters · First 50 walk-ins each day</p>
           <h2 class="vsl-bf-h2" id="bf-doorbusters-heading">Free drinks Sunday, <em class="vsl-bf-em--yellow">free flatbread Monday</em></h2>
           <p class="vsl-bf-sub">
-            Race on Sunday or Monday and your booking could come with more than a free race. <strong>The first 50 bookings for each day</strong> get a drink or a flatbread on us. Only 50 a day, so book before they're gone.
+            Walk in on Sunday or Monday and your race could come with more than a free race. <strong>The first 50 walk-ins each day</strong> get a drink or a flatbread on us. Only 50 a day at each lounge, so come early.
           </p>
         </div>
         <ul class="vsl-bf-days">
           <li class="vsl-bf-day vsl-bf-day--drink">
             <div class="vsl-bf-day__media">
               <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1280x853.webp" alt="Old Fashioned cocktail at Velocity Sim Racing Lounge." width="1280" height="853" loading="lazy" decoding="async" data-recalc-dims="0">
-              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 bookings</span>
+              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 walk-ins</span>
             </div>
             <div class="vsl-bf-day__body">
               <span class="vsl-bf-day__label">Sunday · Nov 29</span>
               <h3>Free drink, <em>your choice</em></h3>
-              <p>Pick <strong>any one drink on the menu</strong>, alcohol included. It's on us for the first 50 bookings for Sunday.</p>
-              <p class="vsl-bf-day__note">One drink per booking. Alcohol is for guests 21 and over with a valid ID.</p>
+              <p>Pick <strong>any one drink on the menu</strong>, alcohol included. It's on us for the first 50 walk-ins on Sunday.</p>
+              <p class="vsl-bf-day__note">One drink per walk-in booking. Alcohol is for guests 21 and over with a valid ID.</p>
             </div>
           </li>
           <li class="vsl-bf-day vsl-bf-day--flatbread">
             <div class="vsl-bf-day__media">
               <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x683.webp" alt="Pepperoni flatbread at Velocity Sim Racing Lounge." width="1024" height="683" loading="lazy" decoding="async" data-recalc-dims="0">
-              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 bookings</span>
+              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 walk-ins</span>
             </div>
             <div class="vsl-bf-day__body">
               <span class="vsl-bf-day__label">Monday · Nov 30</span>
               <h3>Free flatbread, <em>your choice</em></h3>
-              <p>Go <strong>pepperoni or cheese</strong>, your call. It's on us for the first 50 bookings for Monday.</p>
-              <p class="vsl-bf-day__note">One flatbread per booking.</p>
+              <p>Go <strong>pepperoni or cheese</strong>, your call. It's on us for the first 50 walk-ins on Monday.</p>
+              <p class="vsl-bf-day__note">One flatbread per walk-in booking.</p>
             </div>
           </li>
         </ul>
-        <div class="vsl-bf-bookpanel">
-          <div>
-            <h3>Be one of the first 50</h3>
-            <p class="vsl-bf-bookpanel__p">Book a Quick or Double Race and <strong>pick Sunday, Nov 29 or Monday, Nov 30</strong> as your race day. Your free race still comes by email. The doorbuster is extra.</p>
-          </div>
-          <div class="vsl-bf-booker">
-            <div class="vsl-bf-lounge" role="group" aria-label="Choose your lounge">
-              <span class="vsl-bf-lounge__label">Your lounge</span>
-              <span class="vsl-bf-lounge__seg">
-                <button type="button" class="vsl-bf-lounge__opt" data-vsl-bf-pick="houston" aria-pressed="false">Houston</button>
-                <button type="button" class="vsl-bf-lounge__opt" data-vsl-bf-pick="dallas" aria-pressed="false">Dallas</button>
-              </span>
-            </div>
-            <div class="vsl-bf-races" data-vsl-bf-lounge="houston">
-              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/copy-of-quick-race-approx-30-mins/34"><span class="vsl-bf-race__name">Book Quick Race</span><span class="vsl-bf-race__meta">30 min · Houston</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="houston:double" href="https://book.velocitysimlounge.com/book/copy-of-double-race-approx-60-mins/35"><span class="vsl-bf-race__name">Book Double Race</span><span class="vsl-bf-race__meta">60 min · Houston</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            </div>
-            <div class="vsl-bf-races" data-vsl-bf-lounge="dallas">
-              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/copy-of-quick-race-approx-30-mins/37"><span class="vsl-bf-race__name">Book Quick Race</span><span class="vsl-bf-race__meta">30 min · Dallas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/copy-of-double-race-approx-60-mins/38"><span class="vsl-bf-race__name">Book Double Race</span><span class="vsl-bf-race__meta">60 min · Dallas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            </div>
-          </div>
+        <div class="vsl-bf-bookpanel vsl-bf-bookpanel--walkin">
+          <h3>Doorbusters are for walk-ins</h3>
+          <p class="vsl-bf-bookpanel__p">Come in on <strong>Sunday, Nov 29 or Monday, Nov 30</strong> and book your race at the front desk. Races booked online don't count toward the first 50. They still earn the free race.</p>
         </div>
       </div>
     </section>
@@ -929,7 +914,7 @@
             </div>
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a11" id="bf-faq-q11"><span class="vsl-bf-faq__label">What are the Sunday and Monday doorbusters?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
-              <div class="vsl-bf-faq__panel" id="bf-faq-a11" role="region" aria-labelledby="bf-faq-q11" hidden><p>The first 50 bookings for Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 bookings for Monday, Nov 30 get a free pepperoni or cheese flatbread. It's one per booking, and it comes on top of your free race.</p></div>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a11" role="region" aria-labelledby="bf-faq-q11" hidden><p>The first 50 walk-ins on Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 walk-ins on Monday, Nov 30 get a free pepperoni or cheese flatbread. A walk-in is a race you book at the front desk that day, so races booked online don't count. It's one per booking at each lounge, and it comes on top of your free race.</p></div>
             </div>
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a7" id="bf-faq-q7"><span class="vsl-bf-faq__label">I'm already a member. What's in it for me?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
@@ -947,7 +932,7 @@
           <div>
             <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Nov 27 – 30 · Houston &amp; Dallas</p>
             <h2 class="vsl-bf-h2" id="bf-cta-heading">Four days, <em class="vsl-bf-em--yellow">then it's gone</em></h2>
-            <p class="vsl-bf-cta__p">Every Quick Race and Double Race on Nov 27 – 30 earns a free one. Last Black Friday sold out from 10 AM to midnight, so <strong>lock in your time now.</strong> Racing Sunday or Monday? The first 50 bookings each day get a free drink or flatbread.</p>
+            <p class="vsl-bf-cta__p">Every Quick Race and Double Race on Nov 27 – 30 earns a free one. Last Black Friday sold out from 10 AM to midnight, so <strong>lock in your time now.</strong> Walking in Sunday or Monday? The first 50 walk-ins each day get a free drink or flatbread.</p>
           </div>
           <div class="vsl-bf-booker">
             <div class="vsl-bf-lounge" role="group" aria-label="Choose your lounge">
@@ -986,7 +971,7 @@
     { "@type": "Question", "name": "I booked 3 seats. How many free races do I get?", "acceptedAnswer": { "@type": "Answer", "text": "Three — one for every paid seat — in a single email. You use them the way you booked them: all three together, in one time slot." } },
     { "@type": "Question", "name": "Can I use my free races one at a time, or on different days?", "acceptedAnswer": { "@type": "Answer", "text": "Not if they came from one booking. Free races are used the way they were booked: four seats booked together come back together, in one time slot. If you'd rather use them separately, book your Black Friday races separately. Each booking gets its own email, and you can use each one on its own." } },
     { "@type": "Question", "name": "Can I use the free race on a different sim or at the other lounge?", "acceptedAnswer": { "@type": "Answer", "text": "Your free race matches what you paid for: same race type, same sim type, same lounge. Good from Dec 1, 2026 through Dec 31, 2027." } },
-    { "@type": "Question", "name": "What are the Sunday and Monday doorbusters?", "acceptedAnswer": { "@type": "Answer", "text": "The first 50 bookings for Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 bookings for Monday, Nov 30 get a free pepperoni or cheese flatbread. It's one per booking, and it comes on top of your free race." } },
+    { "@type": "Question", "name": "What are the Sunday and Monday doorbusters?", "acceptedAnswer": { "@type": "Answer", "text": "The first 50 walk-ins on Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 walk-ins on Monday, Nov 30 get a free pepperoni or cheese flatbread. A walk-in is a race you book at the front desk that day, so races booked online don't count. It's one per booking at each lounge, and it comes on top of your free race." } },
     { "@type": "Question", "name": "I'm already a member. What's in it for me?", "acceptedAnswer": { "@type": "Answer", "text": "The free race is on every full-price Quick or Double you race Nov 27–30. Book it the same way everyone else does." } }
   ]
 }
