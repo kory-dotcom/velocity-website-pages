@@ -11,18 +11,23 @@
   JSON-LD in this widget covers the FAQ. Do not add a second FAQ schema in Yoast.
 
   ── Lounge behaviour ──
-  Opens on the navbar city (readStoredLocation / localStorage vslPreferredLocation). Each booker (hero, how-it-works, closing)
+  Opens on the navbar city (readStoredLocation / localStorage vslPreferredLocation). Each booker (hero, how-it-works, doorbusters, closing)
   has a Houston / Dallas toggle and shows that lounge's Quick Race and Double Race buttons. Both lounges' buttons are in the
   markup with fixed hrefs; the toggle only shows one set. Once the visitor uses the toggle, navbar changes no longer move it.
   This page never writes vslPreferredLocation or notifies the navbar (shared-location-pages rule).
 
   ── Page order (built to get the booking) ──
-  Hero (offer in the h1, booker, large ticket) → how it works + booker → resend-my-email card → FAQ → closing booker.
+  Hero (offer in the h1, booker, large ticket) → how it works + booker → doorbusters + booker → resend-my-email card → FAQ → closing booker.
   The hero is content height, not a full screen. "Resend my email" (links.lookup) sits in the hero, step 02, its own card, and the FAQ.
+
+  ── Doorbusters (#bf-doorbusters) ──
+  Sunday Nov 29: the first 50 bookings get one free drink of their choice, alcohol included (21+ with ID).
+  Monday Nov 30: the first 50 bookings get a free pepperoni or cheese flatbread.
+  The copy lives in four places: the hero doorbuster block (under the race buttons), the two day cards, the FAQ item (plus its JSON-LD twin), and the closing line.
 
   ── Dates / copy knobs ──
   data-vsl-config on .vsl-blackfriday: sale dates and booking links.
-  This sale is BOGO only. Membership, Family Grid, and doorbuster markup is not on this page.
+  The sale is the BOGO plus the Sunday and Monday doorbusters. Membership and Family Grid markup is not on this page.
   Race buttons open Roverd's Black Friday activities, not the regular Quick / Double Race: "BF Quick Race" and "BF Double Race"
   (Houston 34 / 35, Dallas 37 / 38). Same prices, times and sims as the regular races, bookable for Nov 27 – 30 only.
   The number at the end of each link is the Roverd activity id; the words before it are only a label.
@@ -36,6 +41,7 @@
   /* Elementor / WP themes often underline <a>; keep Velocity CTA-style links clean */
   .elementor-widget-html a.vsl-bf-btn, .elementor-widget-html a.vsl-bf-btn *,
   .elementor-widget-html a.vsl-bf-textlink, .elementor-widget-html a.vsl-bf-resend, .elementor-widget-html a.vsl-bf-resend *,
+  .elementor-widget-html a.vsl-bf-doors, .elementor-widget-html a.vsl-bf-doors *,
   .elementor-widget-html a.vsl-bf-tier, .elementor-widget-html a.vsl-bf-tier * {
     text-decoration: none !important; text-decoration-line: none !important;
   }
@@ -489,18 +495,54 @@
   .vsl-bf-bundle__price small { font-family: var(--font-fine); font-style: normal; font-weight: 500; font-size: 0.8rem; color: var(--mist); letter-spacing: 0.02em; }
   .vsl-bf-bundle p { font-size: 1rem; line-height: 1.5; color: var(--circuit-white); }
 
-  /* ── DOORBUSTERS ── */
-  .vsl-bf-days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+  /* ── DOORBUSTERS (Sunday drink, Monday flatbread: first 50 bookings each day) ── */
+  .vsl-blackfriday .vsl-bf-door .vsl-bf-h2 { max-width: 26ch; }
+  .vsl-bf-days { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
   .vsl-bf-day {
-    position: relative; display: grid; gap: 6px; align-content: start;
-    padding: 22px 20px 20px; border-radius: 14px;
-    background: rgba(16, 24, 43, 0.55); border: 1px solid rgba(234, 234, 234, 0.14);
+    position: relative; display: flex; flex-direction: column; overflow: hidden; border-radius: 14px;
+    background: var(--navy); border: 1px solid rgba(234, 234, 234, 0.16); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   }
-  .vsl-bf-day__label { font-family: var(--font-display); font-style: italic; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.8rem; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
-  .vsl-bf-day__label small { display: block; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--mist) !important; -webkit-text-fill-color: var(--mist) !important; margin-top: 2px; }
-  .vsl-blackfriday .vsl-bf-day h3 { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.05; color: #fff !important; -webkit-text-fill-color: #fff !important; }
-  .vsl-bf-day p { font-size: 0.95rem; line-height: 1.45; color: var(--circuit-white); }
-  .vsl-bf-day__count { position: absolute; top: 16px; right: 16px; font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 1.8rem; line-height: 1; color: rgba(234, 234, 234, 0.14); }
+  .vsl-bf-day__media { position: relative; aspect-ratio: 16 / 9; background: var(--indigo); overflow: hidden; }
+  .vsl-bf-day__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 50%; }
+  /* The cocktail photo is zoomed onto the glass so the red prop beside it stays at the edge of the frame. */
+  .vsl-bf-day--drink .vsl-bf-day__media img { object-position: 50% 30%; transform: scale(1.38); transform-origin: 100% 22%; }
+  .vsl-bf-day__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(16, 24, 43, 0.45) 0%, rgba(16, 24, 43, 0) 34%, rgba(16, 24, 43, 0) 62%, rgba(16, 24, 43, 0.9) 100%); pointer-events: none; }
+  .vsl-bf-day__flag { position: absolute; left: 16px; top: 16px; z-index: 1; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); }
+  .vsl-bf-pill.vsl-bf-day__flag { padding: 7px 14px 5px; font-size: 0.85rem; }
+  .vsl-bf-day__body { display: grid; gap: 8px; align-content: start; padding: 20px clamp(20px, 2.4vw, 28px) clamp(22px, 2.4vw, 28px); }
+  .vsl-bf-day__label { font-family: var(--font-display); font-style: italic; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; font-size: 0.9rem; line-height: 1.2; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-blackfriday .vsl-bf-day h3 { font-family: var(--font-display); font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.4rem); font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; text-wrap: balance; color: #fff !important; -webkit-text-fill-color: #fff !important; }
+  .vsl-blackfriday .vsl-bf-day h3 em { font-style: italic; color: var(--yellow) !important; -webkit-text-fill-color: var(--yellow) !important; }
+  .vsl-bf-day p { font-size: 1.05rem; line-height: 1.45; color: var(--circuit-white); }
+  .vsl-bf-day p strong { color: #fff; font-weight: 700; }
+  .vsl-bf-day p.vsl-bf-day__note { font-family: var(--font-fine); font-size: 0.82rem; line-height: 1.45; color: var(--mist); }
+  /* Cards on the indigo → blue band use the 7% light overlay */
+  .vsl-bf-section--gradient .vsl-bf-bookpanel { background: rgba(234, 234, 234, 0.07); border-color: rgba(234, 234, 234, 0.18); }
+  /* Hero doorbusters: one link block right under the race buttons (who gets it, then the two days with a photo each).
+     It sits in the copy column so it is on the first screen on phones too. The whole block jumps to #bf-doorbusters. */
+  .vsl-bf-doors {
+    display: grid; gap: 10px; max-width: 34rem; padding: 12px; border-radius: 12px;
+    background: rgba(16, 24, 43, 0.72); border: 1px solid rgba(253, 199, 12, 0.7);
+    color: var(--circuit-white) !important; -webkit-text-fill-color: var(--circuit-white) !important; text-decoration: none !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.14s ease;
+  }
+  .vsl-bf-doors:hover { border-color: var(--yellow); background: rgba(16, 24, 43, 0.88); transform: translateY(-1px); }
+  .vsl-bf-doors:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+  .vsl-bf-doors__head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .vsl-bf-doors__who { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; font-style: italic; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.2; color: #fff; -webkit-text-fill-color: #fff; }
+  .vsl-bf-doors__more { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; line-height: 1.2; color: var(--mist); -webkit-text-fill-color: var(--mist); }
+  .vsl-bf-doors__more svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease; }
+  .vsl-bf-doors:hover .vsl-bf-doors__more { color: var(--yellow); -webkit-text-fill-color: var(--yellow); }
+  .vsl-bf-doors:hover .vsl-bf-doors__more svg { transform: translateY(3px); }
+  /* Each day takes the width its words need, so "Free flatbread" stays on one line beside the shorter "Free drink". */
+  .vsl-bf-doors__items { display: flex; gap: 10px; }
+  .vsl-bf-doors__item { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: 68px minmax(0, 1fr); align-items: center; gap: 12px; border-radius: 8px; overflow: hidden; background: rgba(234, 234, 234, 0.07); }
+  .vsl-bf-doors__item img { display: block; align-self: stretch; width: 68px; height: auto; min-height: 68px; max-width: none; object-fit: cover; }
+  .vsl-bf-doors__item--drink img { object-position: 100% 30%; }
+  .vsl-bf-doors__txt { display: grid; gap: 4px; min-width: 0; padding: 6px 10px 6px 0; }
+  .vsl-bf-doors__txt small { font-family: var(--font-display); font-size: 0.76rem; font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.2; white-space: nowrap; color: var(--yellow); -webkit-text-fill-color: var(--yellow); }
+  .vsl-bf-doors__txt b { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; font-style: italic; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1; color: #fff; -webkit-text-fill-color: #fff; }
 
   /* ── FAQ (Membership accordion pattern) ── */
   .vsl-bf-faq__inner { grid-column: 3 / span 8; }
@@ -540,6 +582,7 @@
   .vsl-blackfriday .vsl-bf-fine { margin-top: clamp(20px, 3vw, 28px); }
   .vsl-blackfriday .vsl-bf-hero__sub { margin-top: 0.9rem; }
   .vsl-blackfriday .vsl-bf-hero__urgency { margin-top: 1rem; }
+  .vsl-blackfriday .vsl-bf-hero__doors { margin-top: 1rem; }
   .vsl-blackfriday .vsl-bf-hero__resend { margin-top: 0.85rem; }
   .vsl-blackfriday .vsl-bf-bookpanel__p { margin-top: 0.5rem; }
   .vsl-blackfriday .vsl-bf-step__more { margin-top: 4px; }
@@ -551,7 +594,7 @@
   .vsl-blackfriday .vsl-bf-family__copy .vsl-bf-fine { margin-top: 16px; }
   .vsl-blackfriday .vsl-bf-bundle__price { margin-top: 6px; }
   .vsl-blackfriday .vsl-bf-cta__p { margin-top: 0.6rem; }
-  .vsl-blackfriday .vsl-bf-step p, .vsl-blackfriday .vsl-bf-day p, .vsl-blackfriday .vsl-bf-bundle p { margin-top: 2px; }
+  .vsl-blackfriday .vsl-bf-step p, .vsl-blackfriday .vsl-bf-bundle p { margin-top: 2px; }
   .vsl-blackfriday .vsl-bf-pill { white-space: nowrap; }
 
   /* ── MOTION ── */
@@ -565,7 +608,11 @@
     .vsl-bf-hero__copy { grid-column: 1 / span 6; }
     .vsl-bf-hero__visual { grid-column: 7 / span 6; }
     .vsl-bf-faq__inner { grid-column: 2 / span 10; }
-    .vsl-bf-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    /* Narrower copy column: the hero doorbuster block shows "Sun · Nov 29" with a smaller photo and drops the "Details" label, so the header and each date stay on one line. */
+    .vsl-bf-doors__long, .vsl-bf-doors__more { display: none; }
+    .vsl-bf-doors__item { grid-template-columns: 60px minmax(0, 1fr); gap: 10px; }
+    .vsl-bf-doors__item img { width: 60px; min-height: 60px; }
+    .vsl-bf-doors__txt small { font-size: 0.72rem; letter-spacing: 0.08em; }
   }
   @media (max-width: 900px) {
     .vsl-bf-hero__copy, .vsl-bf-hero__visual { grid-column: 1 / -1; }
@@ -580,15 +627,21 @@
     .vsl-bf-resendcard { grid-template-columns: auto minmax(0, 1fr); }
     .vsl-bf-btn.vsl-bf-resendcard__btn { grid-column: 1 / -1; justify-self: start; }
   }
+  @media (max-width: 680px) {
+    .vsl-bf-days { grid-template-columns: 1fr; }
+  }
   @media (max-width: 560px) {
     .vsl-bf-hero__eyebrow span[aria-hidden] { display: none; }
     .vsl-bf-family__ctas .vsl-bf-btn { width: 100%; min-width: 0; }
     .vsl-bf-bundles { grid-template-columns: 1fr; }
-    .vsl-bf-days { grid-template-columns: 1fr; }
     .vsl-bf-tier { padding: 26px 20px 24px; }
     .vsl-bf-races { gap: 10px; }
     .vsl-bf-btn.vsl-bf-race { min-height: 60px; }
     .vsl-bf-resend { width: 100%; }
+    .vsl-bf-doors { padding: 10px; }
+    .vsl-bf-doors__item { flex: 1 1 0; }
+    .vsl-bf-doors__txt { padding-right: 6px; }
+    .vsl-bf-doors__txt b { font-size: 1.2rem; }
     .vsl-bf-resendcard { grid-template-columns: 1fr; }
     .vsl-bf-resendcard__icon { width: 48px; height: 48px; }
     .vsl-bf-btn.vsl-bf-resendcard__btn { width: 100%; justify-self: stretch; }
@@ -634,6 +687,23 @@
                 <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/copy-of-double-race-approx-60-mins/38"><span class="vsl-bf-race__name">Book Double Race</span><span class="vsl-bf-race__meta">60 min · Dallas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
               </div>
             </div>
+            <a class="vsl-bf-doors vsl-bf-hero__doors" href="#bf-doorbusters">
+              <span class="vsl-bf-doors__head">
+                <span class="vsl-bf-pill vsl-bf-pill--yellow">Doorbusters</span>
+                <span class="vsl-bf-doors__who">First 50 bookings each day</span>
+                <span class="vsl-bf-doors__more">Details <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+              </span>
+              <span class="vsl-bf-doors__items">
+                <span class="vsl-bf-doors__item vsl-bf-doors__item--drink">
+                  <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-300x200.webp" alt="" width="300" height="200" decoding="async" data-recalc-dims="0">
+                  <span class="vsl-bf-doors__txt"><small>Sun<span class="vsl-bf-doors__long">day</span> · Nov&nbsp;29</small><b>Free drink</b></span>
+                </span>
+                <span class="vsl-bf-doors__item vsl-bf-doors__item--flatbread">
+                  <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--300x200.webp" alt="" width="300" height="200" decoding="async" data-recalc-dims="0">
+                  <span class="vsl-bf-doors__txt"><small>Mon<span class="vsl-bf-doors__long">day</span> · Nov&nbsp;30</small><b>Free flatbread</b></span>
+                </span>
+              </span>
+            </a>
             <p class="vsl-bf-urgency vsl-bf-hero__urgency"><span>Last Black Friday sold out from 10 AM to midnight. <strong>Booking is open now.</strong></span></p>
             <p class="vsl-bf-hero__resend">
               <a class="vsl-bf-resend" data-vsl-bf-link="lookup" href="https://members.velocitysimlounge.com/bogo/lookup">
@@ -737,6 +807,68 @@
       </div>
     </section>
 
+    <!-- ▸ Doorbusters: Sunday drink, Monday flatbread -->
+    <section class="vsl-bf-section vsl-bf-section--gradient vsl-bf-door" id="bf-doorbusters" aria-labelledby="bf-doorbusters-heading">
+      <div class="vsl-bf-wrap vsl-bf-grid">
+        <div class="vsl-bf-head">
+          <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Doorbusters · First 50 bookings each day</p>
+          <h2 class="vsl-bf-h2" id="bf-doorbusters-heading">Free drinks Sunday, <em class="vsl-bf-em--yellow">free flatbread Monday</em></h2>
+          <p class="vsl-bf-sub">
+            Race on Sunday or Monday and your booking could come with more than a free race. <strong>The first 50 bookings for each day</strong> get a drink or a flatbread on us. Only 50 a day, so book before they're gone.
+          </p>
+        </div>
+        <ul class="vsl-bf-days">
+          <li class="vsl-bf-day vsl-bf-day--drink">
+            <div class="vsl-bf-day__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Suzuka-Old-Fashioned-cocktail-photo-1280x853.webp" alt="Old Fashioned cocktail at Velocity Sim Racing Lounge." width="1280" height="853" loading="lazy" decoding="async" data-recalc-dims="0">
+              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 bookings</span>
+            </div>
+            <div class="vsl-bf-day__body">
+              <span class="vsl-bf-day__label">Sunday · Nov 29</span>
+              <h3>Free drink, <em>your choice</em></h3>
+              <p>Pick <strong>any one drink on the menu</strong>, alcohol included. It's on us for the first 50 bookings for Sunday.</p>
+              <p class="vsl-bf-day__note">One drink per booking. Alcohol is for guests 21 and over with a valid ID.</p>
+            </div>
+          </li>
+          <li class="vsl-bf-day vsl-bf-day--flatbread">
+            <div class="vsl-bf-day__media">
+              <img src="https://velocitysimlounge.com/wp-content/uploads/2026/04/Pepperoni-Flatbread-new-item--1024x683.webp" alt="Pepperoni flatbread at Velocity Sim Racing Lounge." width="1024" height="683" loading="lazy" decoding="async" data-recalc-dims="0">
+              <span class="vsl-bf-pill vsl-bf-pill--yellow vsl-bf-day__flag">First 50 bookings</span>
+            </div>
+            <div class="vsl-bf-day__body">
+              <span class="vsl-bf-day__label">Monday · Nov 30</span>
+              <h3>Free flatbread, <em>your choice</em></h3>
+              <p>Go <strong>pepperoni or cheese</strong>, your call. It's on us for the first 50 bookings for Monday.</p>
+              <p class="vsl-bf-day__note">One flatbread per booking.</p>
+            </div>
+          </li>
+        </ul>
+        <div class="vsl-bf-bookpanel">
+          <div>
+            <h3>Be one of the first 50</h3>
+            <p class="vsl-bf-bookpanel__p">Book a Quick or Double Race and <strong>pick Sunday, Nov 29 or Monday, Nov 30</strong> as your race day. Your free race still comes by email. The doorbuster is extra.</p>
+          </div>
+          <div class="vsl-bf-booker">
+            <div class="vsl-bf-lounge" role="group" aria-label="Choose your lounge">
+              <span class="vsl-bf-lounge__label">Your lounge</span>
+              <span class="vsl-bf-lounge__seg">
+                <button type="button" class="vsl-bf-lounge__opt" data-vsl-bf-pick="houston" aria-pressed="false">Houston</button>
+                <button type="button" class="vsl-bf-lounge__opt" data-vsl-bf-pick="dallas" aria-pressed="false">Dallas</button>
+              </span>
+            </div>
+            <div class="vsl-bf-races" data-vsl-bf-lounge="houston">
+              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="houston:quick" href="https://book.velocitysimlounge.com/book/copy-of-quick-race-approx-30-mins/34"><span class="vsl-bf-race__name">Book Quick Race</span><span class="vsl-bf-race__meta">30 min · Houston</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="houston:double" href="https://book.velocitysimlounge.com/book/copy-of-double-race-approx-60-mins/35"><span class="vsl-bf-race__name">Book Double Race</span><span class="vsl-bf-race__meta">60 min · Houston</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+            <div class="vsl-bf-races" data-vsl-bf-lounge="dallas">
+              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="dallas:quick" href="https://book-dtx.velocitysimlounge.com/book/copy-of-quick-race-approx-30-mins/37"><span class="vsl-bf-race__name">Book Quick Race</span><span class="vsl-bf-race__meta">30 min · Dallas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="vsl-bf-btn vsl-bf-race rvrd-trigger-widget" data-vsl-bf-book="dallas:double" href="https://book-dtx.velocitysimlounge.com/book/copy-of-double-race-approx-60-mins/38"><span class="vsl-bf-race__name">Book Double Race</span><span class="vsl-bf-race__meta">60 min · Dallas</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ▸ Resend my free-race email -->
     <section class="vsl-bf-section vsl-bf-section--light vsl-bf-section--tight" id="bf-resend" aria-labelledby="bf-resend-heading">
       <div class="vsl-bf-wrap vsl-bf-grid">
@@ -795,8 +927,10 @@
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a4" id="bf-faq-q4"><span class="vsl-bf-faq__label">Can I use the free race on a different sim or at the other lounge?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
               <div class="vsl-bf-faq__panel" id="bf-faq-a4" role="region" aria-labelledby="bf-faq-q4" hidden><p>Your free race matches what you paid for: same race type (Quick or Double), same sim type, same lounge. It's good from Dec 1, 2026 through Dec 31, 2027.</p></div>
             </div>
-
-
+            <div class="vsl-bf-faq__item">
+              <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a11" id="bf-faq-q11"><span class="vsl-bf-faq__label">What are the Sunday and Monday doorbusters?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
+              <div class="vsl-bf-faq__panel" id="bf-faq-a11" role="region" aria-labelledby="bf-faq-q11" hidden><p>The first 50 bookings for Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 bookings for Monday, Nov 30 get a free pepperoni or cheese flatbread. It's one per booking, and it comes on top of your free race.</p></div>
+            </div>
             <div class="vsl-bf-faq__item">
               <button type="button" class="vsl-bf-faq__trigger" aria-expanded="false" aria-controls="bf-faq-a7" id="bf-faq-q7"><span class="vsl-bf-faq__label">I'm already a member. What's in it for me?</span><span class="vsl-bf-faq__chev" aria-hidden="true"></span></button>
               <div class="vsl-bf-faq__panel" id="bf-faq-a7" role="region" aria-labelledby="bf-faq-q7" hidden><p>The free race is on every full-price Quick or Double you race Nov 27 – 30. Book it the same way everyone else does.</p></div>
@@ -813,7 +947,7 @@
           <div>
             <p class="vsl-bf-kicker vsl-bf-kicker--yellow">Nov 27 – 30 · Houston &amp; Dallas</p>
             <h2 class="vsl-bf-h2" id="bf-cta-heading">Four days, <em class="vsl-bf-em--yellow">then it's gone</em></h2>
-            <p class="vsl-bf-cta__p">Every Quick Race and Double Race on Nov 27 – 30 earns a free one. Last Black Friday sold out from 10 AM to midnight, so <strong>lock in your time now.</strong></p>
+            <p class="vsl-bf-cta__p">Every Quick Race and Double Race on Nov 27 – 30 earns a free one. Last Black Friday sold out from 10 AM to midnight, so <strong>lock in your time now.</strong> Racing Sunday or Monday? The first 50 bookings each day get a free drink or flatbread.</p>
           </div>
           <div class="vsl-bf-booker">
             <div class="vsl-bf-lounge" role="group" aria-label="Choose your lounge">
@@ -852,6 +986,7 @@
     { "@type": "Question", "name": "I booked 3 seats. How many free races do I get?", "acceptedAnswer": { "@type": "Answer", "text": "Three — one for every paid seat — in a single email. You use them the way you booked them: all three together, in one time slot." } },
     { "@type": "Question", "name": "Can I use my free races one at a time, or on different days?", "acceptedAnswer": { "@type": "Answer", "text": "Not if they came from one booking. Free races are used the way they were booked: four seats booked together come back together, in one time slot. If you'd rather use them separately, book your Black Friday races separately. Each booking gets its own email, and you can use each one on its own." } },
     { "@type": "Question", "name": "Can I use the free race on a different sim or at the other lounge?", "acceptedAnswer": { "@type": "Answer", "text": "Your free race matches what you paid for: same race type, same sim type, same lounge. Good from Dec 1, 2026 through Dec 31, 2027." } },
+    { "@type": "Question", "name": "What are the Sunday and Monday doorbusters?", "acceptedAnswer": { "@type": "Answer", "text": "The first 50 bookings for Sunday, Nov 29 get one free drink of their choice, alcohol included for guests 21 and over. The first 50 bookings for Monday, Nov 30 get a free pepperoni or cheese flatbread. It's one per booking, and it comes on top of your free race." } },
     { "@type": "Question", "name": "I'm already a member. What's in it for me?", "acceptedAnswer": { "@type": "Answer", "text": "The free race is on every full-price Quick or Double you race Nov 27–30. Book it the same way everyone else does." } }
   ]
 }
